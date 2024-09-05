@@ -1,6 +1,6 @@
 ---
 cover: .gitbook/assets/ML_GroupCiti-4.jpg
-coverY: 169.56200527704488
+coverY: 293.1246719437115
 layout:
   cover:
     visible: true
