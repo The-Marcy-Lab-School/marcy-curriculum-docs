@@ -19,15 +19,15 @@ In this first lesson, we're going to learn the basics of Express and build and d
 
 **Table of Contents:**
 
-- [Terms](#terms)
-- [Client Server Interactions](#client-server-interactions)
-- [Express](#express)
-- [The `app` object is the hub of the server application](#the-app-object-is-the-hub-of-the-server-application)
-- [Endpoints](#endpoints)
-- [Controllers](#controllers)
-- [Query Parameters](#query-parameters)
-  - [Challenge](#challenge)
-- [Listening: Host \& Ports](#listening-host--ports)
+* [Terms](1-intro-to-express.md#terms)
+* [Client Server Interactions](1-intro-to-express.md#client-server-interactions)
+* [Express](1-intro-to-express.md#express)
+* [The `app` object is the hub of the server application](1-intro-to-express.md#the-app-object-is-the-hub-of-the-server-application)
+* [Endpoints](1-intro-to-express.md#endpoints)
+* [Controllers](1-intro-to-express.md#controllers)
+* [Query Parameters](1-intro-to-express.md#query-parameters)
+  * [Challenge](1-intro-to-express.md#challenge)
+* [Listening: Host & Ports](1-intro-to-express.md#listening-host--ports)
 
 ## Terms
 
@@ -43,16 +43,15 @@ In this first lesson, we're going to learn the basics of Express and build and d
 So how do the client and server interact?
 
 1. A client sends a **request** to the server
-1. The server receives the request and **routes** it to the proper **controller**
-1. The controller parses the request and sends a **response**
-1. The client receives the response and renders the data!
-  
-![express diagram](./images/express-diagram-simple.svg)
+2. The server receives the request and **routes** it to the proper **controller**
+3. The controller parses the request and sends a **response**
+4. The client receives the response and renders the data!
+
+![express diagram](images/express-diagram-simple.svg)
 
 <details>
-<summary style="color: purple">
-  Q: What are the responsibilities of a client?
-</summary>
+
+<summary>Q: What are the responsibilities of a client?</summary>
 
 * Rendering HTML, CSS, and JS
 * Request information from a server (get requests)
@@ -61,7 +60,9 @@ So how do the client and server interact?
 
 </details>
 
-**<details><summary style="color: purple">Q: What are the responsibilities of a server?</summary>**
+<details>
+
+<summary><strong>Q: What are the responsibilities of a server?</strong></summary>
 
 * Serving static files that live on the server (HTML, CSS, and JS files)
 * Fetching and serving data from a third-party API that requires an API key
@@ -149,15 +150,26 @@ app.get('/api/data', serveData);
 * The associated endpoints for each controller begin with `/` and are appended to the `host:port`
   * For example, sending a GET request to `http://localhost:8080/about` will invoke the `serveAbout` controller
 
-**<details><summary style="color: purple">Q: What does `.get` mean? Why is it called that?</summary>**
-> These endpoints are designed to handle GET requests. If we wanted to assign controllers for endpoints that handle POST/PATCH/DELETE requests, we could use `app.post` or `app.patch` or `app.delete`.
-</details><be>
+<details>
 
-**<details><summary style="color: purple">Q: Why do you think the `serveHello` and `serveData` endpoints begin with `/api` while the other two endpoints do not?</summary>**
-> Typically, endpoints that serve data will begin with `/api`, while endpoints that serve HTML do not.
-</details><br>
+<summary><strong>Q: What does <code>.get</code> mean? Why is it called that?</strong></summary>
 
-## Controllers
+These endpoints are designed to handle GET requests. If we wanted to assign controllers for endpoints that handle POST/PATCH/DELETE requests, we could use `app.post` or `app.patch` or `app.delete`.
+
+</details>
+
+<details>
+
+<summary><strong>Q: Why do you think the <code>serveHello</code> and <code>serveData</code> endpoints begin with <code>/api</code> while the other two endpoints do not?</strong></summary>
+
+Typically, endpoints that serve data will begin with `/api`, while endpoints that serve HTML do not.
+
+</details>
+
+\
+
+
+### Controllers
 
 **Controllers** in Express.js are JavaScript functions responsible for handling the logic associated with specific endpoints. When a client sends a request to a particular endpoint, Express invokes the corresponding controller to process the request and generate a response.
 
@@ -181,6 +193,7 @@ app.get('/about', serveAbout);
 app.get('/api/hello', serveHello);
 app.get('/api/data', serveData);
 ```
+
 * To keep things simple, these controllers only use the `res` object.
 * The `res.send` and `res.sendFile` methods allow us to send different kinds of data. `res.sendStatus` lets us send just a status code without data.
 * When sending files, the `__dirname` keyword returns the absolute path to the current file folder.
@@ -188,16 +201,13 @@ app.get('/api/data', serveData);
 **Key points about controllers:**
 
 * Invocation: Controllers are invoked by Express.js when a matching route (endpoint) is requested by a client.
-
 * Responsibilities: Controllers handle various tasks, including interacting with databases, processing data, and generating responses based on the request.
-
 * Function Parameters: Controllers typically receive three parameters:
-
   * `req`: An object containing information about the incoming request (the request method, URL, headers, query parameters, and body, etc...)
   * `res`: An object with functions for sending a response to the client (`res.send()`, `res.sendStatus()` etc...)
   * `next`: A function that passes control to the next middleware function in the request-response cycle. It is commonly used in middleware to delegate processing to subsequent functions.
 
-## Query Parameters
+### Query Parameters
 
 Our controllers feel stiff. Let's make them more dynamic using query parameters!
 
@@ -228,11 +238,13 @@ app.get('/api/hello', serveHello);
   * http://localhost:8080/api/hello?name=ben will send back `hello ben`
   * http://localhost:8080/api/hello will send back `hello stranger`
 
-### Challenge
+#### Challenge
 
 How can we modify the `serveData` function so that it filters the array of objects by the `.name` property using a `?filter=value` query parameter?
 
-**<details><summary style="color: purple">Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 const serveData = (req, res, next) => {
@@ -245,9 +257,12 @@ const serveData = (req, res, next) => {
 }
 ```
 
-</details><br>
+</details>
 
-## Listening: Host & Ports
+\
+
+
+### Listening: Host & Ports
 
 The last lines of code "turn on" the server. That is, they make the server start listening for requests.
 

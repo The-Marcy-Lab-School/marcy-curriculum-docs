@@ -1,6 +1,6 @@
 ---
-cover: https://gitbookio.github.io/onboarding-template-images/header.png
-coverY: 0
+cover: .gitbook/assets/ML_GroupCiti-4.jpg
+coverY: 169.56200527704488
 layout:
   cover:
     visible: true
