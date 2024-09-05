@@ -2,15 +2,20 @@
 
 **Table of Contents**
 
-- [Review Branching](#review-branching)
-- [Creating Branches](#creating-branches)
-- [Commit Changes](#commit-changes)
-- [Merge before you push](#merge-before-you-push)
-- [Push and make a PR](#push-and-make-a-pr)
+* [Review Branching](git-cheatsheet.md#review-branching)
+* [Creating Branches](git-cheatsheet.md#creating-branches)
+* [Commit Changes](git-cheatsheet.md#commit-changes)
+* [Merge before you push](git-cheatsheet.md#merge-before-you-push)
+* [Push and make a PR](git-cheatsheet.md#push-and-make-a-pr)
 
 ## Review Branching
 
-<details><summary>When should we create a new branch?</summary><br>
+<details>
+
+<summary>When should we create a new branch?</summary>
+
+\
+
 
 Branches are used to diverge from the main code base. They are useful because they create a copy of existing code without modifying the existing code. Think of it as your very own sandbox where you can create anything new.
 
@@ -18,18 +23,28 @@ Therefore, a new branch should be created for any new change to any of the files
 
 </details>
 
-<details><summary>When do merge conflicts occur?</summary><br>
+<details>
+
+<summary>When do merge conflicts occur?</summary>
+
+\
+
 
 Merge conflicts occur when we have code that could possibly overwrite code that was already there. They are bound to happen if multiple people are working on the same file.
 
 </details>
 
-<details><summary>Things to avoid</summary><br>
+<details>
+
+<summary>Things to avoid</summary>
+
+\
+
 
 The `main` branch should always have working code so as a best practice...
 
-- Don't work off of the `main` branch.
-- Avoid merging code that hasn't been tested or reviewed into the `main` branch.
+* Don't work off of the `main` branch.
+* Avoid merging code that hasn't been tested or reviewed into the `main` branch.
 
 </details>
 
@@ -101,7 +116,7 @@ git merge main
 
 You may need to resolve merge conflicts at this point. To resolve a conflict, delete the `<<<<<<< HEAD`, `=======`, and `>>>>>>> main` markers and keep the code that you want.
 
-![](./img/merge-conflict.png)
+![](img/merge-conflict.png)
 
 Finally, make a new commit to finish resolving these conflicts:
 
@@ -117,9 +132,9 @@ Once you have merged `main` into your branch, go ahead and `git push`.
 
 > If it is your first time pushing from this branch, you will be told to use the `--set-upstream` flag.
 
-- Go to Github.com and open up your repository.
-- Then, click on the <kbd>Pull Requests</kbd> tab to create a new pull request to merge your branch into `main`.
-- Ask your teammates to review your code and then merge!
-- If you want to continue working on your branch, do NOT delete the branch.
+* Go to Github.com and open up your repository.
+* Then, click on the Pull Requests tab to create a new pull request to merge your branch into `main`.
+* Ask your teammates to review your code and then merge!
+* If you want to continue working on your branch, do NOT delete the branch.
 
-Your teammates can then follow the steps listed in [merge before you push](#merge-before-you-push) to update their local repositories.
+Your teammates can then follow the steps listed in [merge before you push](git-cheatsheet.md#merge-before-you-push) to update their local repositories.

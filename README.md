@@ -1,10 +1,10 @@
 ---
-cover: .gitbook/assets/ML_GroupCiti-4.jpg
-coverY: 293.1246719437115
+cover: .gitbook/assets/Screenshot 2024-09-05 at 4.29.43 PM.png
+coverY: 0
 layout:
   cover:
     visible: true
-    size: hero
+    size: full
   title:
     visible: true
   description:

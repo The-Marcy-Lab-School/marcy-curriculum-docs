@@ -5,31 +5,32 @@ In the last lecture, we created a server that could send back HTML in a single f
 Let's make a static web server!
 
 **Table of Contents:**
-- [Terms](#terms)
-- [Controllers Review](#controllers-review)
-- [Middleware](#middleware)
-- [Serving Static Assets](#serving-static-assets)
-- [Summary](#summary)
+
+* [Terms](2-building-a-static-web-server-with-middleware.md#terms)
+* [Controllers Review](2-building-a-static-web-server-with-middleware.md#controllers-review)
+* [Middleware](2-building-a-static-web-server-with-middleware.md#middleware)
+* [Serving Static Assets](2-building-a-static-web-server-with-middleware.md#serving-static-assets)
+* [Summary](2-building-a-static-web-server-with-middleware.md#summary)
 
 ## Terms
 
-- **Middleware** - a function in express that intercepts and processes incoming HTTP requests. It can perform server-side actions such as parsing the request, modifying the response, or executing additional logic before passing control to the next middleware in the chain."
-- **`path` module** - a module for creating absolute paths to static assets
-- **Environment Variable** - a variable defined outside of the JavaScript execution context.
-- **`__dirname`** — an environment variable that returns the path to the parent directory of the current file.
-- **Static Assets** - unchanging files delivered to the client exactly as they are stored on a server. These include HTML, CSS, JavaScript files, images, videos, fonts, and documents. For React projects, we need to "build" our project to generate static assets (convert `.jsx` files to `.js` files).
+* **Middleware** - a function in express that intercepts and processes incoming HTTP requests. It can perform server-side actions such as parsing the request, modifying the response, or executing additional logic before passing control to the next middleware in the chain."
+* **`path` module** - a module for creating absolute paths to static assets
+* **Environment Variable** - a variable defined outside of the JavaScript execution context.
+* **`__dirname`** — an environment variable that returns the path to the parent directory of the current file.
+* **Static Assets** - unchanging files delivered to the client exactly as they are stored on a server. These include HTML, CSS, JavaScript files, images, videos, fonts, and documents. For React projects, we need to "build" our project to generate static assets (convert `.jsx` files to `.js` files).
 
 ## Controllers Review
 
 Remember how the Express app works?
 
 1. A client sends a **request** to the server.
-1. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
-1. The controller processes the request, interacts with any necessary data or services, and generates a **response**.
-1. The server sends the response back to the client.
-1. The client receives the response and renders the data or take further actions based on it.
-  
-![](./img/express-diagram-simple.svg)
+2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
+3. The controller processes the request, interacts with any necessary data or services, and generates a **response**.
+4. The server sends the response back to the client.
+5. The client receives the response and renders the data or take further actions based on it.
+
+![](img/express-diagram-simple.svg)
 
 ```js
 // controller
@@ -44,9 +45,9 @@ app.get('/api/hello', serveHello);
 // A GET request to /api/hello?name=ben will send the response "hello ben"
 ```
 
-- A **controller** is a callback function that parses a request and sends a response. It will be invoked by the Express `app` when the associated endpoint is sent a request.
-    - The controller receives a `req` object from the Express `app` which holds data about the request, including **query parameters**.
-    - It also receives a `res` object which has methods to send a response.
+* A **controller** is a callback function that parses a request and sends a response. It will be invoked by the Express `app` when the associated endpoint is sent a request.
+  * The controller receives a `req` object from the Express `app` which holds data about the request, including **query parameters**.
+  * It also receives a `res` object which has methods to send a response.
 
 What about `next`?
 
@@ -79,23 +80,35 @@ app.use(logRoutes);
 app.get('/api/hello', serveHello);
 ```
 
-- `app.use` is like `app.get` but for middleware
-- When `app.use` is invoked with just the middleware function, it executes that middleware for ALL routes
-- Notice that the `logRoutes` middleware controller doesn't use the `res` object at all and then invokes `next()` to pass control to the next controller in the chain.
+* `app.use` is like `app.get` but for middleware
+* When `app.use` is invoked with just the middleware function, it executes that middleware for ALL routes
+* Notice that the `logRoutes` middleware controller doesn't use the `res` object at all and then invokes `next()` to pass control to the next controller in the chain.
 
 Our diagram now looks like this:
 
-![](./img/express-middleware.svg)
+![](img/express-middleware.svg)
+
+<details>
+
+<summary><strong>Q: So, if a user sends a request to <code>http://localhost:8080/api/hello</code>, which controllers are invoked and in what order?</strong></summary>
+
+First the `logRoutes` middleware is invoked. The `next()` function is called which passes the request to the next controller, `serveHello`.
+
+</details>
+
+\
 
 
-**<details><summary style="color: purple">Q: So, if a user sends a request to `http://localhost:8080/api/hello`, which controllers are invoked and in what order?</summary>**
-> First the `logRoutes` middleware is invoked. The `next()` function is called which passes the request to the next controller, `serveHello`.
-</details><br>
+<details>
 
-**<details><summary style="color: purple">Q: What would happen if the `logRoutes` controller DID send a response to the client? What would happen if it didn't invoke `next()`?</summary>**
-> If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent.
-> If we simply didn't invoke `next()`, our server would "hang" — the response would never be completed and the client would likely receive a timeout error because the request took too long.
-</details><br>
+<summary><strong>Q: What would happen if the <code>logRoutes</code> controller DID send a response to the client? What would happen if it didn't invoke <code>next()</code>?</strong></summary>
+
+If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent. If we simply didn't invoke `next()`, our server would "hang" — the response would never be completed and the client would likely receive a timeout error because the request took too long.
+
+</details>
+
+\
+
 
 Middleware can be custom-made like this `logRoutes`. However, we can also utilize some of the out-of-the-box middleware controllers provided by Express.
 
@@ -127,10 +140,10 @@ app.use(serveStatic);
 
 Explanation:
 
-- The `path.join()` method constructs an absolute file path to the static assets folder, ensuring compatibility across different operating systems.
-- `__dirname` provides the absolute path of the current module's parent directory.
-- The `express.static()` middleware function makes static assets (such as HTML, CSS, and JS files) from the specified directory publicly available.
-- The middleware function `serveStatic` is used with app.use() to enable serving static assets to clients.
+* The `path.join()` method constructs an absolute file path to the static assets folder, ensuring compatibility across different operating systems.
+* `__dirname` provides the absolute path of the current module's parent directory.
+* The `express.static()` middleware function makes static assets (such as HTML, CSS, and JS files) from the specified directory publicly available.
+* The middleware function `serveStatic` is used with app.use() to enable serving static assets to clients.
 
 Now, if you run the server and visit the `http://host:port/index.html`, the server will send you the `index.html` file! (You can also just visit `http://host:port/` and it will automatically send you the index file).
 
@@ -143,10 +156,10 @@ http://host:port/bar.jpg
 
 ## Summary
 
-- **Controllers:** Callback functions that handle requests by parsing them and sending responses.
-- **Middleware Functions**: Functions similar to controllers but pass requests to the next middleware without sending a response. They can also be executed for all requests while controllers typically handle a single endpoint.
-- **Static Assets:** Unchanging files (e.g., HTML, CSS, JS) served by a web server. For React projects, we need to "build" the project to convert "dynamic" `.jsx` files to "static" `.js` files
-- **Serving Static Assets**:
+* **Controllers:** Callback functions that handle requests by parsing them and sending responses.
+* **Middleware Functions**: Functions similar to controllers but pass requests to the next middleware without sending a response. They can also be executed for all requests while controllers typically handle a single endpoint.
+* **Static Assets:** Unchanging files (e.g., HTML, CSS, JS) served by a web server. For React projects, we need to "build" the project to convert "dynamic" `.jsx` files to "static" `.js` files
+* **Serving Static Assets**:
   1. Construct an absolute file path to the static assets folder using `path.join()` and `__dirname`.
-  2. Use `express.static(filepath)` middleware to make static assets publicly available. 
+  2. Use `express.static(filepath)` middleware to make static assets publicly available.
   3. Register the middleware with `app.use()`

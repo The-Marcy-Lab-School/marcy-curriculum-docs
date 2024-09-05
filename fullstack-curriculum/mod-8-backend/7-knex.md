@@ -1,32 +1,31 @@
 # Knex
 
-TablePlus and `psql` in our terminal are great for testing out SQL statements, but they can only take us so far since we have to manually run the SQL statements ourselves. 
+TablePlus and `psql` in our terminal are great for testing out SQL statements, but they can only take us so far since we have to manually run the SQL statements ourselves.
 
 In this lesson, we will learn [Knex](https://knexjs.org/), a library that allows a Node project to connect to a databases and execute SQL queries. This will enable our server applications to access data from a Postgres database and have a persistent data layer.
 
 **Table of Contents**
 
-- [Terms](#terms)
-- [Getting Started: Setting up a Database](#getting-started-setting-up-a-database)
-- [What is Knex?](#what-is-knex)
-- [Configuring Knex](#configuring-knex)
-  - [0) Installing modules](#0-installing-modules)
-  - [1) Provide connection details with a `knexfile.js`](#1-provide-connection-details-with-a-knexfilejs)
-  - [2) Create a `knex` object to connect to the database](#2-create-a-knex-object-to-connect-to-the-database)
-  - [3) Use the `knex` connection object to execute queries](#3-use-the-knex-connection-object-to-execute-queries)
-- [Writing queries using `knex.raw`](#writing-queries-using-knexraw)
-  - [Multi-Line Queries](#multi-line-queries)
-  - [Dynamic Queries](#dynamic-queries)
-  - [A more complex example](#a-more-complex-example)
-  - [Create, Update, and Delete](#create-update-and-delete)
-- [Challenges](#challenges)
-
+* [Terms](7-knex.md#terms)
+* [Getting Started: Setting up a Database](7-knex.md#getting-started-setting-up-a-database)
+* [What is Knex?](7-knex.md#what-is-knex)
+* [Configuring Knex](7-knex.md#configuring-knex)
+  * [0) Installing modules](7-knex.md#0-installing-modules)
+  * [1) Provide connection details with a `knexfile.js`](7-knex.md#1-provide-connection-details-with-a-knexfilejs)
+  * [2) Create a `knex` object to connect to the database](7-knex.md#2-create-a-knex-object-to-connect-to-the-database)
+  * [3) Use the `knex` connection object to execute queries](7-knex.md#3-use-the-knex-connection-object-to-execute-queries)
+* [Writing queries using `knex.raw`](7-knex.md#writing-queries-using-knexraw)
+  * [Multi-Line Queries](7-knex.md#multi-line-queries)
+  * [Dynamic Queries](7-knex.md#dynamic-queries)
+  * [A more complex example](7-knex.md#a-more-complex-example)
+  * [Create, Update, and Delete](7-knex.md#create-update-and-delete)
+* [Challenges](7-knex.md#challenges)
 
 ## Terms
 
 * **Knex** - a library that allows a Node project to connect to a databases and execute SQL queries.
 * **Deployment Environment** - where an application is deployed. The two main ones are:
-  * Development Environment (your own computer) and 
+  * Development Environment (your own computer) and
   * Production Environment (a hosting service like Render)
 * **`knexfile.js`** - a file that holds configuration data for connecting to a database
 * **`knex.js`** - a file that exports a `knex` object which has been configured to execute SQL commands to a database.
@@ -37,27 +36,24 @@ In this lesson, we will learn [Knex](https://knexjs.org/), a library that allows
 Take a look at the `db.sql` file. It contains the SQL commands to create and populate a database called `playground`. This database will have five tables: `people`, `pets`, `customers`, `orders`, `products`.
 
 1. Turn on your Postgres server
-
    * Windows users open your Ubuntu Terminal and run: `sudo service postgresql start`
-   * Mac users open the Postgres app and click <kbd>Start</kbd>
-
+   * Mac users open the Postgres app and click Start
 2. Open up the TablePlus SQL query editor (or use the `psql` CLI)
-3. Run these commands:
+3.  Run these commands:
 
     ```sql
     DROP DATABASE playground;
     CREATE DATABASE playground;
     ```
-
 4. Connect to the `playground` database (or, in the `psql` CLI, run `\c playground`)
 
-![](./img/tableplus.png)
+![](img/tableplus.png)
 
-5. Copy-Paste the commands from `db.sql` into the TablePlus SQL query editor (or in `psql` connected to the `playground` database) and <kbd>Run All</kbd>
+5. Copy-Paste the commands from `db.sql` into the TablePlus SQL query editor (or in `psql` connected to the `playground` database) and Run All
 
-![](./img/tableplus-run-all.png)
+![](img/tableplus-run-all.png)
 
-1. Mac users can run <kbd>CMD+R</kbd> and you will see the tables!
+1. Mac users can run CMD+R and you will see the tables!
 
 ## What is Knex?
 
@@ -65,12 +61,13 @@ When we move the data of our server application out of the server's memory and i
 
 **Knex** is a library that allows a Node project to connect to a database and execute SQL queries using that database.
 
-![client server and database diagram](./img/client-server-database-diagram.svg)
+![client server and database diagram](img/client-server-database-diagram.svg)
 
 Assuming we already have a database, in order to use Knex in a server application, we must:
-1) Provide connection details (username, password, database name) with a `knexfile.js`
-2) Create a `knex` object to connect to the database
-3) Use the `knex.raw` method to execute SQL queries
+
+1. Provide connection details (username, password, database name) with a `knexfile.js`
+2. Create a `knex` object to connect to the database
+3. Use the `knex.raw` method to execute SQL queries
 
 ## Configuring Knex
 
@@ -87,6 +84,7 @@ npm i knex pg
 ### 1) Provide connection details with a `knexfile.js`
 
 In order to use a database, we need to tell our server:
+
 * the name of the database
 * the username we will connect to it with
 * the password for that username.
@@ -110,7 +108,7 @@ module.exports = {
 
 For now, we'll be working in the `development` environment and can wait to set up the other environment configurations.
 
-Each deployment environment needs a `client` that specifies the kind of database we're connecting to (we will use `pg` which is short for Postgres). 
+Each deployment environment needs a `client` that specifies the kind of database we're connecting to (we will use `pg` which is short for Postgres).
 
 ```js
   development: {
@@ -128,7 +126,7 @@ The `connection` object is where we provide the username, password, and specific
 
 ### 2) Create a `knex` object to connect to the database
 
-To actually use the database details specified by the `knexfile.js`, we need to create a `knex` object. 
+To actually use the database details specified by the `knexfile.js`, we need to create a `knex` object.
 
 ```js
 const makeKnex = require('knex');
@@ -138,6 +136,7 @@ const knex = makeKnex(knexConfigs[env]);
 
 module.exports = knex;
 ```
+
 * The `knex` module exports a function for creating a database connection. To use that function, we need a configuration from `knexfile.js`
 * Since our `knexfile.js` exports 3 configurations (`development`, `staging` and `production`), we specify which of those configurations we use with the `env` variable
   * We use `"development"` unless the `NODE_ENV` environment variable is set. [When we deploy using Render.com](https://docs.render.com/environment-variables#node), it will provide a `NODE_ENV` environment variable set to `"production"`.
@@ -147,7 +146,7 @@ module.exports = knex;
 
 ### 3) Use the `knex` connection object to execute queries
 
-We can play with our `knex` connection directly in our `index.js` file. 
+We can play with our `knex` connection directly in our `index.js` file.
 
 > 💡 NOTE: In future projects, only our `models` will interact with `knex`.
 
@@ -219,27 +218,29 @@ const createPet = async (name, type, owner_id) => {
 ```
 
 * In the `query` string, the `?`s act as placeholders.
-* To assign values to the `?`s, we pass an array of ordered values as a second argument to `knex.raw`. 
+* To assign values to the `?`s, we pass an array of ordered values as a second argument to `knex.raw`.
   * Order matters! In this example, `name` will be the first `?`, then `type`, then `owner_id`.
 * To avoid SQL injection attacks, we want to avoid inserting dynamic values into a SQL query through interpolation: `${}`
 
 ### A more complex example
 
-Consider the `pets` table below. 
+Consider the `pets` table below.
 
-| id  | name       | type | owner_id |
-| --- | ---------- | ---- | -------- |
-| 1   | Khalo      | dog  | 3        |
-| 2   | Juan Pablo | dog  | 2        |
-| 3   | Bora       | bird | 1        |
-| 4   | Tora       | dog  | 1        |
-| 5   | Frida      | cat  | 3        |
-| 6   | Pon Juablo | cat  | 2        |
-| 7   | Kora       | dog  | 1        |
+| id | name       | type | owner\_id |
+| -- | ---------- | ---- | --------- |
+| 1  | Khalo      | dog  | 3         |
+| 2  | Juan Pablo | dog  | 2         |
+| 3  | Bora       | bird | 1         |
+| 4  | Tora       | dog  | 1         |
+| 5  | Frida      | cat  | 3         |
+| 6  | Pon Juablo | cat  | 2         |
+| 7  | Kora       | dog  | 1         |
 
 **Q: What is the SQL query to find the name and id of the dogs owned by Ann Duong?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 ```sql
 SELECT pets.name, pets.id
@@ -250,7 +251,10 @@ WHERE people.name='Ann Duong' AND pets.type='dog'
 
 **Explanation:** We have to specify that we want the `name` and `id` columns from the `pets` table since the `people` table also has columns with those names. We then query from the join of `pets` and `people`, connecting rows from each table using the `pets.owner_id` foreign key and the `people.id` primary key. We finally filter the results to only show the rows where the person's name is `Ann Duong` and the pet's type is `dog`.
 
-</details><br>
+</details>
+
+\
+
 
 To turn this query into a function that can show us the pets of ANY given `type` owned by ANY given `owner_id`, we will need to create a **dynamic query**:
 
@@ -267,8 +271,9 @@ const getPetsByOwnerNameAndType = async (ownerName, type) => {
   return rows;
 }
 ```
+
 * In the query, the `?` act as placeholders.
-* If we pass an array of values as a second argument to `knex.raw`, we assign values for those placeholders. 
+* If we pass an array of values as a second argument to `knex.raw`, we assign values for those placeholders.
 * In this query, the first `?` will be replaced by the value of the `ownerName` parameter, and the second `?` will be replaced by the value of the `type` parameter.
 
 ### Create, Update, and Delete
@@ -328,9 +333,10 @@ const deletePetByName = async(name) => {
 
 These challenges illustrate many-to-many relationships:
 
-![erd with one to many and many to many relationships](./img/labeled-erd.png)
+![erd with one to many and many to many relationships](img/labeled-erd.png)
 
 **`authors`, `books`, and `author_book`**
+
 * get all the books that a certain author has ever written.
 * get all the authors of a certain book.
 * create a new book, by a provided author (make sure to connect them!)
@@ -338,6 +344,7 @@ These challenges illustrate many-to-many relationships:
 * delete a book (make sure to remove the associated connection as well)
 
 **`customers`, `products`, and `orders`**
+
 * get all the orders the belong to certain customer.
 * get all the products that a certain customer has ever bought.
 * get the top 3 most recent orders.
