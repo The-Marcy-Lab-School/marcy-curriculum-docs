@@ -6,14 +6,15 @@
   * [AI Policy](guidelines-and-policies/ai-policy.md)
 
 ## Fullstack Curriculum
-* **Cheatsheets**
-  * [Git Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/git-cheatsheet.md)
-  * [RegEx Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/regex-cheatsheet.md)
-  * [React Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/react-cheatsheet.md)
-  * [Backend Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/backend-cheatsheet.md)
-  * [Postgres Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/postgres-cheatsheet.md)
-* **Guides**
-  * [Deploying with Render](./fullstack-curriculum/cheatsheets-and-guides/deploying-using-render.md)
+
+* [Cheatsheets](fullstack-curriculum/cheatsheets/README.md)
+  * [Git Cheatsheet](fullstack-curriculum/cheatsheets-and-guides/git-cheatsheet.md)
+  * [RegEx Cheatsheet](fullstack-curriculum/cheatsheets-and-guides/regex-cheatsheet.md)
+  * [React Cheatsheet](fullstack-curriculum/cheatsheets-and-guides/react-cheatsheet.md)
+  * [Backend Cheatsheet](fullstack-curriculum/cheatsheets-and-guides/backend-cheatsheet.md)
+  * [Postgres Cheatsheet](fullstack-curriculum/cheatsheets-and-guides/postgres-cheatsheet.md)
+* [Guides](fullstack-curriculum/guides/README.md)
+  * [Deploying with Render](fullstack-curriculum/cheatsheets-and-guides/deploying-using-render.md)
 * [Mod 0 - Command Line Interfaces, Git, and GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/README.md)
   * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/command-line-interfaces.md)
 * [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
@@ -35,4 +36,3 @@
   * [Migrations & Seeds](fullstack-curriculum/mod-8-backend/9-migrations-and-seeds.md)
   * [Schema Design & Normalization](fullstack-curriculum/mod-8-backend/10-schema-design-and-normalization.md)
   * [Hashing Passwords with Bcrypt](fullstack-curriculum/mod-8-backend/11-hashing-passwords-with-bcrypt.md)
-
