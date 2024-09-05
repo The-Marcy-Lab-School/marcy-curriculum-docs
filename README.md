@@ -21,4 +21,4 @@ layout:
 
 Welcome to the Marcy Lab School docs! Here, you can find information about everything we do here at Marcy, from our curriculum, to the student handbook, and much more!
 
-To get started, check out the Fullstack Curriculum!
+To get started, head over to the [Guidelines & Policies](./guidelines-and-policies/README.md) or dive straight into the [Fullstack Curriculum](./fullstack-curriculum/README.md)!

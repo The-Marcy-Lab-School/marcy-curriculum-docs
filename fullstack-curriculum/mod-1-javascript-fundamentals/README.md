@@ -1,8 +1,7 @@
 ---
 description: >-
-  Learn how to interact with your computer's file system using the command line
-  interface (CLI) and manage projects with Git and GitHub.
+  From data types and variables to arrays and iteration, the skills you will learn in this module can be found in any programming language. In this module, we'll learn the particular syntax for JavaScript!
 ---
 
-# Mod 0 - Command Line Interfaces, Git, and GitHub
+# Mod 1 - JavaScript Fundamentals
 

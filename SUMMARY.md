@@ -1,12 +1,19 @@
 # Table of contents
 
 * [Welcome](README.md)
-* [Guidelines & Policies](guidelines-and-policies/README.md)
+* [Student Guidelines & Policies](guidelines-and-policies/README.md)
   * [Student Handbook](guidelines-and-policies/student-handbook.md)
   * [AI Policy](guidelines-and-policies/ai-policy.md)
 
 ## Fullstack Curriculum
-
+* **Cheatsheets**
+  * [Git Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/git-cheatsheet.md)
+  * [RegEx Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/regex-cheatsheet.md)
+  * [React Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/react-cheatsheet.md)
+  * [Backend Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/backend-cheatsheet.md)
+  * [Postgres Cheatsheet](./fullstack-curriculum/cheatsheets-and-guides/postgres-cheatsheet.md)
+* **Guides**
+  * [Deploying with Render](./fullstack-curriculum/cheatsheets-and-guides/deploying-using-render.md)
 * [Mod 0 - Command Line Interfaces, Git, and GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/README.md)
   * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/command-line-interfaces.md)
 * [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
@@ -18,3 +25,14 @@
 * [Mod 7 - React](fullstack-curriculum/mod-7-react/README.md)
 * [Mod 8 - Backend](fullstack-curriculum/mod-8-backend/README.md)
   * [Intro to Express](fullstack-curriculum/mod-8-backend/1-intro-to-express.md)
+  * [Building a Static Web Server with Middleware](fullstack-curriculum/mod-8-backend/2-building-a-static-web-server-with-middleware.md)
+  * [Securing API Keys with Environment Variables](fullstack-curriculum/mod-8-backend/3-securing-api-keys-with-environment-variables.md)
+  * [Building a RESTful API with MVC](fullstack-curriculum/mod-8-backend/4-building-a-rest-api-with-mvc.md)
+  * [SQL and Databases](fullstack-curriculum/mod-8-backend/5-sql-and-databases.md)
+  * [JOIN (Association) SQL Queries](fullstack-curriculum/mod-8-backend/6-join-sql-queries.md)
+  * [Knex](fullstack-curriculum/mod-8-backend/7-knex.md)
+  * [Your First Fullstack App!](fullstack-curriculum/mod-8-backend/8-your-first-fullstack-app.md)
+  * [Migrations & Seeds](fullstack-curriculum/mod-8-backend/9-migrations-and-seeds.md)
+  * [Schema Design & Normalization](fullstack-curriculum/mod-8-backend/10-schema-design-and-normalization.md)
+  * [Hashing Passwords with Bcrypt](fullstack-curriculum/mod-8-backend/11-hashing-passwords-with-bcrypt.md)
+
