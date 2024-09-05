@@ -28,3 +28,4 @@
 * [Mod 6 - Data Structures & Algorithms](fullstack-curriculum/mod-6-ds-a/README.md)
 * [Mod 7 - React](fullstack-curriculum/mod-7-react/README.md)
 * [Mod 8 - Backend](fullstack-curriculum/mod-8-backend/README.md)
+  * [Intro to Express](fullstack-curriculum/mod-8-backend/1-intro-to-express.md)
