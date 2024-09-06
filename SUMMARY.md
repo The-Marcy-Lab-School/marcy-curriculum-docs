@@ -15,7 +15,7 @@
   * [Postgres Cheatsheet](fullstack-curriculum/cheatsheets/postgres-cheatsheet.md)
 * [Guides](fullstack-curriculum/guides/README.md)
   * [Local Environment Setup - Mac](fullstack-curriculum/guides/local-environment-setup-mac.md)
-  * [Local Environment Setup - Windows](fullstack-curriculum/guides/local-environment-setup-windows.md.md)
+  * [Local Environment Setup - Windows](fullstack-curriculum/guides/local-environment-setup-windows.md)
   * [GitHub Setup](fullstack-curriculum/guides/github-setup.md)
   * [Getting Started with Vite](fullstack-curriculum/guides/getting-started-with-vite.md)
   * [Deploying on GitHub Pages](fullstack-curriculum/guides/deploying-vite-with-github-pages.md)
