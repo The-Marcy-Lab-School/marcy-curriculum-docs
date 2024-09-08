@@ -1,5 +1,9 @@
 # Your First Fullstack App!
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-2-3-fellows-tracker-refactor-with-database)!
+{% endhint %}
+
 Up until now, the app structure has looked like this:
 
 ![](./img/mvc-diagram.svg)

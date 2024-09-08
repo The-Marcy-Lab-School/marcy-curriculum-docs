@@ -1,5 +1,9 @@
 # Hashing Passwords with Bcrypt
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-4-0-hashing-salting-bcrypt)!
+{% endhint %}
+
 **Table of Contents:**
 - [Terms](#terms)
 - [Pre-Learning](#pre-learning)

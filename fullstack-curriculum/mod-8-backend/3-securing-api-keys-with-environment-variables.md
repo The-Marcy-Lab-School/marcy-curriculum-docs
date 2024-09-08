@@ -1,5 +1,9 @@
 # Securing API Keys with Environment Variables
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-2-express-api-middleman)!
+{% endhint %}
+
 Serving static assets is a core functionality of a server application.
 
 The second use case for a server is to perform 3rd-party API requests that require an API key in a manner that protects the developer's API key.

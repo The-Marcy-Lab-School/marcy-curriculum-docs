@@ -1,5 +1,9 @@
 # Building a RESTful API with MVC
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
+{% endhint %}
+
 In this lesson, we will introduce the Model layer to our server application design. At its core, a server manages data, defines API endpoints for accessing that data using CRUD operation, and provides frontend code to render a nice GUI for the user to more abstractly execute those CRUD operations.
 
 The Model is the portion of the server application that manages the CRUD operations for a server's collection of data. For example, a web-based todo application might:

@@ -1,5 +1,9 @@
 # Database Migrations and Seeds
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-3-2-migrations-seeds)!
+{% endhint %}
+
 So far, we've been setting up our databases by hand, executing SQL queries using `psql` or TablePlus. While this works when working on a project by yourself, it doesn't scale well. You would need to send them the exact SQL statements you ran and the order that you ran them in. If you ever make any changes, you would need to share those changes too!
 
 Migration files are a "formal" way to define a database schema and to update it over time. Let's learn!

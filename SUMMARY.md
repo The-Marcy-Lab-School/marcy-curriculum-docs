@@ -22,7 +22,7 @@
   * [Postgres Setup](fullstack-curriculum/guides/postgres-setup.md)
   * [Deploying with Render](fullstack-curriculum/guides/deploying-using-render.md)
 * [Mod 0 - Command Line Interfaces, Git, and GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/README.md)
-  * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/command-line-interfaces.md)
+  * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/1-command-line-interfaces.md)
 * [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
 * [Mod 2 - HTML, CSS & the DOM](fullstack-curriculum/mod-2-html-css-dom/README.md)
 * [Mod 3 - Async & APIs](fullstack-curriculum/mod-3-async/README.md)

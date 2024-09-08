@@ -1,19 +1,8 @@
 # Intro to Express
 
-Welcome to the world of backend! In this unit, we'll learn about:
-
-* **Backend** — the part of the application that the user can't access. For our purposes, this means a server application and a database.
-  * **Server Applications** — Application to receive requests and send back resources.
-    * **Express** — The npm package we'll use to build a server application.
-  * **Databases** — A place to put data and have it persist, even if the server turns off.
-    * **Postgres** — The type of database we'll use (tables, records, fields/properties).
-    * **SQL** — The language used to execute database commands.
-    * **Knex** — The npm package we'll use to send SQL queries to our Postgres database from our server application.
-  * **Model-Controller Design** — A framework for organizing the layers of software that make up the backend.
-  * **Authentication** — Ensuring that only valid users can access protected content.
-  * **Authorization** — Ensuring that a given user has permission to modify content.
-
-By the end of this unit you will be able to build an application using the [React + Express + Auth Template](https://github.com/The-Marcy-Lab-School/react-express-auth).
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-0-intro-to-express)!
+{% endhint %}
 
 In this first lesson, we're going to learn the basics of Express and build and deploy a simple server application.
 

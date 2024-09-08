@@ -1,5 +1,9 @@
 # Building a Static Web Server with Middleware
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-1-express-middleware)!
+{% endhint %}
+
 In the last lecture, we created a server that could send back HTML in a single file. But when we build our React projects, they are more than just a single file. React projects typically have HTML, CSS, and JS, and potentially images or other files. In order to serve all of these static assets, we need Express Middleware.
 
 Let's make a static web server!

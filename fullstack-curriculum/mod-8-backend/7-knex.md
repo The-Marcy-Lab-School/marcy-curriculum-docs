@@ -1,5 +1,9 @@
 # Knex
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-2-2-knex)!
+{% endhint %}
+
 TablePlus and `psql` in our terminal are great for testing out SQL statements, but they can only take us so far since we have to manually run the SQL statements ourselves.
 
 In this lesson, we will learn [Knex](https://knexjs.org/), a library that allows a Node project to connect to a databases and execute SQL queries. This will enable our server applications to access data from a Postgres database and have a persistent data layer.
@@ -226,15 +230,15 @@ const createPet = async (name, type, owner_id) => {
 
 Consider the `pets` table below.
 
-| id | name       | type | owner\_id |
-| -- | ---------- | ---- | --------- |
-| 1  | Khalo      | dog  | 3         |
-| 2  | Juan Pablo | dog  | 2         |
-| 3  | Bora       | bird | 1         |
-| 4  | Tora       | dog  | 1         |
-| 5  | Frida      | cat  | 3         |
-| 6  | Pon Juablo | cat  | 2         |
-| 7  | Kora       | dog  | 1         |
+| id  | name       | type | owner\_id |
+| --- | ---------- | ---- | --------- |
+| 1   | Khalo      | dog  | 3         |
+| 2   | Juan Pablo | dog  | 2         |
+| 3   | Bora       | bird | 1         |
+| 4   | Tora       | dog  | 1         |
+| 5   | Frida      | cat  | 3         |
+| 6   | Pon Juablo | cat  | 2         |
+| 7   | Kora       | dog  | 1         |
 
 **Q: What is the SQL query to find the name and id of the dogs owned by Ann Duong?**
 

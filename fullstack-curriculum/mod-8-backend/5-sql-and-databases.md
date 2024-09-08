@@ -1,5 +1,9 @@
 # SQL and Databases
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-2-0-sql-and-databases)!
+{% endhint %}
+
 We've learned how to build a server application using Express. It can serve the static assets for a frontend and can handle requests through an API. But the data is not persistent!
 
 This week, we'll learn about the tools needed to build a truly "fullstack" web application with a proper database.
