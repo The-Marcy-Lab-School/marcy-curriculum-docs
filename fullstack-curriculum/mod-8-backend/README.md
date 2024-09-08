@@ -19,14 +19,14 @@ By the end of this unit you will be able to build an application using the [Reac
 
 ## Lessons
 
-{% content-ref url="fullstack-curriculum/mod-8-backend/1-intro-to-express.md" %} Intro to Express {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/2-building-a-static-web-server-with-middleware.md" %} Building a Static Web Server with Middleware {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/3-securing-api-keys-with-environment-variables.md" %} Securing API Keys with Environment Variables {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/4-building-a-rest-api-with-mvc.md" %} Building a RESTful API with MVC {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/5-sql-and-databases.md" %} SQL and Databases {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/6-join-sql-queries.md" %} JOIN (Association) SQL Queries {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/7-knex.md" %} Knex {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/8-your-first-fullstack-app.md" %} Your First Fullstack App! {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/9-migrations-and-seeds.md" %} Migrations & Seeds {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/10-schema-design-and-normalization.md" %} Schema Design & Normalization {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-8-backend/11-hashing-passwords-with-bcrypt.md" %} Hashing Passwords with Bcrypt {% endcontent-ref %}
+{% content-ref url="./1-intro-to-express.md" %} Intro to Express {% endcontent-ref %}
+{% content-ref url="./2-building-a-static-web-server-with-middleware.md" %} Building a Static Web Server with Middleware {% endcontent-ref %}
+{% content-ref url="./3-securing-api-keys-with-environment-variables.md" %} Securing API Keys with Environment Variables {% endcontent-ref %}
+{% content-ref url="./4-building-a-rest-api-with-mvc.md" %} Building a RESTful API with MVC {% endcontent-ref %}
+{% content-ref url="./5-sql-and-databases.md" %} SQL and Databases {% endcontent-ref %}
+{% content-ref url="./6-join-sql-queries.md" %} JOIN (Association) SQL Queries {% endcontent-ref %}
+{% content-ref url="./7-knex.md" %} Knex {% endcontent-ref %}
+{% content-ref url="./8-your-first-fullstack-app.md" %} Your First Fullstack App! {% endcontent-ref %}
+{% content-ref url="./9-migrations-and-seeds.md" %} Migrations & Seeds {% endcontent-ref %}
+{% content-ref url="./10-schema-design-and-normalization.md" %} Schema Design & Normalization {% endcontent-ref %}
+{% content-ref url="./11-hashing-passwords-with-bcrypt.md" %} Hashing Passwords with Bcrypt {% endcontent-ref %}

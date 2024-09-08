@@ -4,6 +4,6 @@ At the end of the day, software is just a collection of text files saved on a co
 
 ## Lessons
 
-{% content-ref url="fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/1-command-line-interfaces.md" %} Command Line Interfaces {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/2-git-github.md" %} Git & GitHub {% endcontent-ref %}
-{% content-ref url="fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/3-git-branching-merging.md" %} Git Branching & Merging {% endcontent-ref %}
+{% content-ref url="./1-command-line-interfaces.md" %} Command Line Interfaces {% endcontent-ref %}
+{% content-ref url="./2-git-github.md" %} Git & GitHub {% endcontent-ref %}
+{% content-ref url="./3-git-branching-merging.md" %} Git Branching & Merging {% endcontent-ref %}
