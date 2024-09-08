@@ -120,7 +120,7 @@ The `pwd` command prints the full file path to the working directory while the `
 
 ### Navigating Between Directories with `cd`
 
-The `cd <directory>` command allows you to move to another directory in the file system. However, unlike the previous commands, it requires an **arguments**. 
+The `cd <directory>` command allows you to move to another directory in the file system. However, unlike the previous commands, it requires an **argument**. 
 
 An **argument** is an additional piece of information that changes that behavior of a given command. For the `cd` command, we have to also provide a destination.
 
