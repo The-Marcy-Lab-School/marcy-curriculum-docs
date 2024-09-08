@@ -110,7 +110,7 @@ A **directory** is another term for a "folder" in your computer's file system th
 
 The **working directory** is the current location of your terminal's navigation through that file system. Think of it as the "you are here" icon in a map.
 
-The `pwd` command prints the full file path to the working directory while the `ls` command prints the contents of hte working directory:
+The `pwd` command prints the full file path to the working directory while the `ls` command prints the contents of the working directory:
 
 ![](./img/ls.png)
 
