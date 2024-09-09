@@ -2,7 +2,7 @@
 
 Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheatsheets, guides, and miscellaneous resources.
 
-Before you begin, check out these amazing tips and tricks for success at Marcy.
+Before you begin, check out these tips and tricks for success at Marcy.
 
 **Tips & Tricks to Success at Marcy**
 
