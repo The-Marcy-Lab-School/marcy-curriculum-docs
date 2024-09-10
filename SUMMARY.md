@@ -5,90 +5,90 @@
   * [Student Handbook](guidelines-and-policies/student-handbook.md)
   * [AI Policy](guidelines-and-policies/ai-policy.md)
 
-## Fullstack Curriculum
+* [Fullstack Curriculum](fullstack-curriculum/README.md)
+  * [Cheatsheets](fullstack-curriculum/cheatsheets/README.md)
+    * [Git Cheatsheet](fullstack-curriculum/cheatsheets/git-cheatsheet.md)
+    * [RegEx Cheatsheet](fullstack-curriculum/cheatsheets/regex-cheatsheet.md)
+    * [React Cheatsheet](fullstack-curriculum/cheatsheets/react-cheatsheet.md)
+    * [Backend Cheatsheet](fullstack-curriculum/cheatsheets/backend-cheatsheet.md)
+    * [Postgres Cheatsheet](fullstack-curriculum/cheatsheets/postgres-cheatsheet.md)
 
-* [Cheatsheets](fullstack-curriculum/cheatsheets/README.md)
-  * [Git Cheatsheet](fullstack-curriculum/cheatsheets/git-cheatsheet.md)
-  * [RegEx Cheatsheet](fullstack-curriculum/cheatsheets/regex-cheatsheet.md)
-  * [React Cheatsheet](fullstack-curriculum/cheatsheets/react-cheatsheet.md)
-  * [Backend Cheatsheet](fullstack-curriculum/cheatsheets/backend-cheatsheet.md)
-  * [Postgres Cheatsheet](fullstack-curriculum/cheatsheets/postgres-cheatsheet.md)
-
-<!-- ------------------------------------- -->
-* [Guides](fullstack-curriculum/guides/README.md)
-  * [Local Environment Setup - Mac](fullstack-curriculum/guides/local-environment-setup-mac.md)
-  * [Local Environment Setup - Windows](fullstack-curriculum/guides/local-environment-setup-windows.md)
-  * [GitHub Setup](fullstack-curriculum/guides/github-setup.md)
-  * [Getting Started with Vite](fullstack-curriculum/guides/getting-started-with-vite.md)
-  * [Deploying on GitHub Pages](fullstack-curriculum/guides/deploying-vite-with-github-pages.md)
-  * [Postgres Setup](fullstack-curriculum/guides/postgres-setup.md)
-  * [Deploying with Render](fullstack-curriculum/guides/deploying-using-render.md)
-
-<!-- ------------------------------------- -->
-* [Mod 0 - Command Line Interfaces, Git, and GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/README.md)
-  * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/1-command-line-interfaces.md)
-  * [Git & GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/2-git-github.md)
-  * [Git Branching & Merging](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/3-git-branching-merging.md)
+  <!-- ------------------------------------- -->
+  * [Guides](fullstack-curriculum/guides/README.md)
+    * [Local Environment Setup - Mac](fullstack-curriculum/guides/local-environment-setup-mac.md)
+    * [Local Environment Setup - Windows](fullstack-curriculum/guides/local-environment-setup-windows.md)
+    * [GitHub Setup](fullstack-curriculum/guides/github-setup.md)
+    * [Getting Started with Vite](fullstack-curriculum/guides/getting-started-with-vite.md)
+    * [Deploying on GitHub Pages](fullstack-curriculum/guides/deploying-vite-with-github-pages.md)
+    * [Postgres Setup](fullstack-curriculum/guides/postgres-setup.md)
+    * [Deploying with Render](fullstack-curriculum/guides/deploying-using-render.md)
 
 <!-- ------------------------------------- -->
-* [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
 
-<!-- ------------------------------------- -->
-* [Mod 2 - HTML, CSS & the DOM](fullstack-curriculum/mod-2-html-css-dom/README.md)
-  * [HTML](fullstack-curriculum/mod-2-html-css-dom/1-html.md)
-  * [CSS](fullstack-curriculum/mod-2-html-css-dom/2-css.md)
-  * [Positioning and Spacing with The Box Model](fullstack-curriculum/mod-2-html-css-dom/3-box-model.md)
-  * [Accessibility (a11y)](fullstack-curriculum/mod-2-html-css-dom/4-accessibility.md)
-  * [Flexbox](fullstack-curriculum/mod-2-html-css-dom/5-flexbox.md)
-  * [Grid & Media Queries](fullstack-curriculum/mod-2-html-css-dom/6-grid-media-queries.md)
-  * [The DOM](fullstack-curriculum/mod-2-html-css-dom/7-intro-to-dom.md)
-  * [Events](fullstack-curriculum/mod-2-html-css-dom/8-events.md)
-  * [Forms](fullstack-curriculum/mod-2-html-css-dom/9-forms.md)
-  * [ESModules](fullstack-curriculum/mod-2-html-css-dom/10-esmodules.md)
-  * [LocalStorage](fullstack-curriculum/mod-2-html-css-dom/11-localStorage.md)
+  * [Mod 0 - Command Line Interfaces, Git, and GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/README.md)
+    * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/1-command-line-interfaces.md)
+    * [Git & GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/2-git-github.md)
+    * [Git Branching & Merging](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/3-git-branching-merging.md)
 
-<!-- ------------------------------------- -->
-* [Mod 3 - Async & APIs](fullstack-curriculum/mod-3-async/README.md)
-  * [Promises](fullstack-curriculum/mod-3-async/1-promises.md)
-  * [Fetch](fullstack-curriculum/mod-3-async/2-fetch.md)
-  * [Building a Fetching App](fullstack-curriculum/mod-3-async/3-building-a-fetching-app.md)
-  * [Async & Await](fullstack-curriculum/mod-3-async/4-async-await.md)
+  <!-- ------------------------------------- -->
+  * [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
 
-<!-- ------------------------------------- -->
-* [Mod 4 - Project Week!](fullstack-curriculum/mod-4-project-week/README.md)
+  <!-- ------------------------------------- -->
+  * [Mod 2 - HTML, CSS & the DOM](fullstack-curriculum/mod-2-html-css-dom/README.md)
+    * [HTML](fullstack-curriculum/mod-2-html-css-dom/1-html.md)
+    * [CSS](fullstack-curriculum/mod-2-html-css-dom/2-css.md)
+    * [Positioning and Spacing with The Box Model](fullstack-curriculum/mod-2-html-css-dom/3-box-model.md)
+    * [Accessibility (a11y)](fullstack-curriculum/mod-2-html-css-dom/4-accessibility.md)
+    * [Flexbox](fullstack-curriculum/mod-2-html-css-dom/5-flexbox.md)
+    * [Grid & Media Queries](fullstack-curriculum/mod-2-html-css-dom/6-grid-media-queries.md)
+    * [The DOM](fullstack-curriculum/mod-2-html-css-dom/7-intro-to-dom.md)
+    * [Events](fullstack-curriculum/mod-2-html-css-dom/8-events.md)
+    * [Forms](fullstack-curriculum/mod-2-html-css-dom/9-forms.md)
+    * [ESModules](fullstack-curriculum/mod-2-html-css-dom/10-esmodules.md)
+    * [LocalStorage](fullstack-curriculum/mod-2-html-css-dom/11-localStorage.md)
 
-<!-- ------------------------------------- -->
-* [Mod 5 - Object-Oriented Programming](fullstack-curriculum/mod-5-oop/README.md)
-  * [Intro to OOP, Encapsulation, Factory Functions, and Closure](fullstack-curriculum/mod-5-oop/1-encapsulation-factories-and-closure.md)
-  * [Classes](fullstack-curriculum/mod-5-oop/2-classes.md)
-  * [Private & Static](fullstack-curriculum/mod-5-oop/3-private-properties-static-methods.md)
-  * [Has Many/Belongs To](fullstack-curriculum/mod-5-oop/5-has-many-belongs-to.md)
-  * [Polymorphism](fullstack-curriculum/mod-5-oop/7-polymorphism.md)
+  <!-- ------------------------------------- -->
+  * [Mod 3 - Async & APIs](fullstack-curriculum/mod-3-async/README.md)
+    * [Promises](fullstack-curriculum/mod-3-async/1-promises.md)
+    * [Fetch](fullstack-curriculum/mod-3-async/2-fetch.md)
+    * [Building a Fetching App](fullstack-curriculum/mod-3-async/3-building-a-fetching-app.md)
+    * [Async & Await](fullstack-curriculum/mod-3-async/4-async-await.md)
 
-<!-- ------------------------------------- -->
-* [Mod 6 - Data Structures & Algorithms](fullstack-curriculum/mod-6-ds-a/README.md)
+  <!-- ------------------------------------- -->
+  * [Mod 4 - Project Week!](fullstack-curriculum/mod-4-project-week/README.md)
 
-<!-- ------------------------------------- -->
-* [Mod 7 - React](fullstack-curriculum/mod-7-react/README.md)
-  * [Intro to React](fullstack-curriculum/mod-7-react/1-intro-to-react.md)
-  * [Events, State, and Forms](fullstack-curriculum/mod-7-react/2-events-state-and-forms.md)
-  * [Fetching with useEffect](fullstack-curriculum/mod-7-react/3-fetching-useeffect.md)
-  * [Building a Flashcards App](fullstack-curriculum/mod-7-react/4-flashcards-app.md)
-  * [React Context](fullstack-curriculum/mod-7-react/5-react-context.md)
-  * [Global Context Pattern](fullstack-curriculum/mod-7-react/6-global-context-pattern.md)
-  * [React Router](fullstack-curriculum/mod-7-react/7-react-router.md)
+  <!-- ------------------------------------- -->
+  * [Mod 5 - Object-Oriented Programming](fullstack-curriculum/mod-5-oop/README.md)
+    * [Intro to OOP, Encapsulation, Factory Functions, and Closure](fullstack-curriculum/mod-5-oop/1-encapsulation-factories-and-closure.md)
+    * [Classes](fullstack-curriculum/mod-5-oop/2-classes.md)
+    * [Private & Static](fullstack-curriculum/mod-5-oop/3-private-properties-static-methods.md)
+    * [Has Many/Belongs To](fullstack-curriculum/mod-5-oop/5-has-many-belongs-to.md)
+    * [Polymorphism](fullstack-curriculum/mod-5-oop/7-polymorphism.md)
+
+  <!-- ------------------------------------- -->
+  * [Mod 6 - Data Structures & Algorithms](fullstack-curriculum/mod-6-ds-a/README.md)
+
+  <!-- ------------------------------------- -->
+  * [Mod 7 - React](fullstack-curriculum/mod-7-react/README.md)
+    * [Intro to React](fullstack-curriculum/mod-7-react/1-intro-to-react.md)
+    * [Events, State, and Forms](fullstack-curriculum/mod-7-react/2-events-state-and-forms.md)
+    * [Fetching with useEffect](fullstack-curriculum/mod-7-react/3-fetching-useeffect.md)
+    * [Building a Flashcards App](fullstack-curriculum/mod-7-react/4-flashcards-app.md)
+    * [React Context](fullstack-curriculum/mod-7-react/5-react-context.md)
+    * [Global Context Pattern](fullstack-curriculum/mod-7-react/6-global-context-pattern.md)
+    * [React Router](fullstack-curriculum/mod-7-react/7-react-router.md)
 
 
-<!-- ------------------------------------- -->
-* [Mod 8 - Backend](fullstack-curriculum/mod-8-backend/README.md)
-  * [Intro to Express](fullstack-curriculum/mod-8-backend/1-intro-to-express.md)
-  * [Building a Static Web Server with Middleware](fullstack-curriculum/mod-8-backend/2-building-a-static-web-server-with-middleware.md)
-  * [Securing API Keys with Environment Variables](fullstack-curriculum/mod-8-backend/3-securing-api-keys-with-environment-variables.md)
-  * [Building a RESTful API with MVC](fullstack-curriculum/mod-8-backend/4-building-a-rest-api-with-mvc.md)
-  * [SQL and Databases](fullstack-curriculum/mod-8-backend/5-sql-and-databases.md)
-  * [JOIN (Association) SQL Queries](fullstack-curriculum/mod-8-backend/6-join-sql-queries.md)
-  * [Knex](fullstack-curriculum/mod-8-backend/7-knex.md)
-  * [Your First Fullstack App!](fullstack-curriculum/mod-8-backend/8-your-first-fullstack-app.md)
-  * [Migrations & Seeds](fullstack-curriculum/mod-8-backend/9-migrations-and-seeds.md)
-  * [Schema Design & Normalization](fullstack-curriculum/mod-8-backend/10-schema-design-and-normalization.md)
-  * [Hashing Passwords with Bcrypt](fullstack-curriculum/mod-8-backend/11-hashing-passwords-with-bcrypt.md)
+  <!-- ------------------------------------- -->
+  * [Mod 8 - Backend](fullstack-curriculum/mod-8-backend/README.md)
+    * [Intro to Express](fullstack-curriculum/mod-8-backend/1-intro-to-express.md)
+    * [Building a Static Web Server with Middleware](fullstack-curriculum/mod-8-backend/2-building-a-static-web-server-with-middleware.md)
+    * [Securing API Keys with Environment Variables](fullstack-curriculum/mod-8-backend/3-securing-api-keys-with-environment-variables.md)
+    * [Building a RESTful API with MVC](fullstack-curriculum/mod-8-backend/4-building-a-rest-api-with-mvc.md)
+    * [SQL and Databases](fullstack-curriculum/mod-8-backend/5-sql-and-databases.md)
+    * [JOIN (Association) SQL Queries](fullstack-curriculum/mod-8-backend/6-join-sql-queries.md)
+    * [Knex](fullstack-curriculum/mod-8-backend/7-knex.md)
+    * [Your First Fullstack App!](fullstack-curriculum/mod-8-backend/8-your-first-fullstack-app.md)
+    * [Migrations & Seeds](fullstack-curriculum/mod-8-backend/9-migrations-and-seeds.md)
+    * [Schema Design & Normalization](fullstack-curriculum/mod-8-backend/10-schema-design-and-normalization.md)
+    * [Hashing Passwords with Bcrypt](fullstack-curriculum/mod-8-backend/11-hashing-passwords-with-bcrypt.md)

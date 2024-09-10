@@ -18,7 +18,7 @@
 
 ## Slides
 
-{% embed url="https://docs.google.com/presentation/d/1ZJZB_i15KlU1h6fO_3Up50PFv_c6juj5oRCCIhChK2o/embed?start=false&loop=false&delayms=3000" %}
+{% embed url="https://docs.google.com/presentation/d/1IA9kq0wCzPmeEfel3CwN-KiRev959AWaZ2xQnW0p1uo/embed?start=false&loop=false&delayms=3000" %}
 
 
 ## Overview

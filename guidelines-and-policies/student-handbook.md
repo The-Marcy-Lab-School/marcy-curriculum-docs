@@ -22,7 +22,7 @@ By the end of this year, you will know yourself, your worth, and your standard o
 
 <details>
 
-<summary><strong>Unwavering Discipline 🏃🏾‍♂️</strong></summary>
+<summary>Unwavering Discipline 🏃🏾‍♂️</summary>
 
 We hold ourselves accountable to a relentlessly high bar day in and day out, in ways big and small.
 

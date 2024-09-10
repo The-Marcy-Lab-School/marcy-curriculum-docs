@@ -1,6 +1,5 @@
 # Command Line Interfaces
 
-- [Watch](#watch)
 - [Slides](#slides)
 - [Overview](#overview)
 - [Terminal vs. Finder/Explorer](#terminal-vs-finderexplorer)
@@ -13,14 +12,9 @@
   - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
 - [Challenge](#challenge)
 
-## Watch
-
-{% embed url="https://www.youtube.com/watch?v=7SpoQeMzjSs" %}
-
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1JCyTysddqGIObjgmGS6iLcIcvyyFXKFe6wMVsnSYh64/embed?start=false&loop=false&delayms=3000" %}
-
 
 ## Overview
 

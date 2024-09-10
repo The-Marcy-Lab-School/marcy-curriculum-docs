@@ -156,9 +156,6 @@ Typically, endpoints that serve data will begin with `/api`, while endpoints tha
 
 </details>
 
-\
-
-
 ### Controllers
 
 **Controllers** in Express.js are JavaScript functions responsible for handling the logic associated with specific endpoints. When a client sends a request to a particular endpoint, Express invokes the corresponding controller to process the request and generate a response.
