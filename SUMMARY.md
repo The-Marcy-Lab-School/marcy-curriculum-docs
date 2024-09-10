@@ -21,7 +21,7 @@
     * [Postgres Setup](fullstack-curriculum/guides/postgres-setup.md)
     * [Deploying with Render](fullstack-curriculum/guides/deploying-using-render.md)
   * [Mod 0 - Command Line Interfaces, Git, and GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/README.md)
-    * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/1-command-line-interfaces.md)
+    * [Command Line Interfaces](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/1-clis.md)
     * [Git & GitHub](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/2-git-github.md)
     * [Git Branching & Merging](fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/3-git-branching-merging.md)
   * [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
