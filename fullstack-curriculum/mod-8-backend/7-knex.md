@@ -230,15 +230,15 @@ const createPet = async (name, type, owner_id) => {
 
 Consider the `pets` table below.
 
-| id  | name       | type | owner\_id |
-| --- | ---------- | ---- | --------- |
-| 1   | Khalo      | dog  | 3         |
-| 2   | Juan Pablo | dog  | 2         |
-| 3   | Bora       | bird | 1         |
-| 4   | Tora       | dog  | 1         |
-| 5   | Frida      | cat  | 3         |
-| 6   | Pon Juablo | cat  | 2         |
-| 7   | Kora       | dog  | 1         |
+| id  | name       | type | owner_id |
+| --- | ---------- | ---- | -------- |
+| 1   | Khalo      | dog  | 3        |
+| 2   | Juan Pablo | dog  | 2        |
+| 3   | Bora       | bird | 1        |
+| 4   | Tora       | dog  | 1        |
+| 5   | Frida      | cat  | 3        |
+| 6   | Pon Juablo | cat  | 2        |
+| 7   | Kora       | dog  | 1        |
 
 **Q: What is the SQL query to find the name and id of the dogs owned by Ann Duong?**
 
@@ -256,8 +256,6 @@ WHERE people.name='Ann Duong' AND pets.type='dog'
 **Explanation:** We have to specify that we want the `name` and `id` columns from the `pets` table since the `people` table also has columns with those names. We then query from the join of `pets` and `people`, connecting rows from each table using the `pets.owner_id` foreign key and the `people.id` primary key. We finally filter the results to only show the rows where the person's name is `Ann Duong` and the pet's type is `dog`.
 
 </details>
-
-\
 
 
 To turn this query into a function that can show us the pets of ANY given `type` owned by ANY given `owner_id`, we will need to create a **dynamic query**:

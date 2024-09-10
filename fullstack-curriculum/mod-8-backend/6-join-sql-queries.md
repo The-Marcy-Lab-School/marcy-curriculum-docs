@@ -48,7 +48,7 @@ CREATE TABLE all_data (
 
 **`all_data` Table:**
 
-| id  | owner\_name    | pet\_name  | type |
+| id  | owner_name     | pet_name   | type |
 | --- | -------------- | ---------- | ---- |
 | 1   | Ann Duong      | Bora       | bird |
 | 2   | Ann Duong      | Tora       | dog  |
@@ -63,7 +63,7 @@ CREATE TABLE all_data (
 
 <summary><strong>Q: What are the issues with storing the data in this way?</strong></summary>
 
-\* There is a lot of duplicate data in the `owner_name` column
+* There is a lot of duplicate data in the `owner_name` column
 
 </details>
 
@@ -100,15 +100,15 @@ CREATE TABLE pets (
 
 **`pets` Table:**
 
-| id  | name       | type | owner\_id |
-| --- | ---------- | ---- | --------- |
-| 1   | Khalo      | dog  | 3         |
-| 2   | Juan Pablo | dog  | 2         |
-| 3   | Bora       | bird | 1         |
-| 4   | Frida      | cat  | 3         |
-| 5   | Tora       | dog  | 1         |
-| 6   | Pon Juablo | cat  | 2         |
-| 7   | Kora       | dog  | 1         |
+| id  | name       | type | owner_id |
+| --- | ---------- | ---- | -------- |
+| 1   | Khalo      | dog  | 3        |
+| 2   | Juan Pablo | dog  | 2        |
+| 3   | Bora       | bird | 1        |
+| 4   | Frida      | cat  | 3        |
+| 5   | Tora       | dog  | 1        |
+| 6   | Pon Juablo | cat  | 2        |
+| 7   | Kora       | dog  | 1        |
 
 <details>
 
@@ -117,8 +117,6 @@ CREATE TABLE pets (
 We no longer have duplicate data It is not exactly clear anymore the name of the person who owns each pet
 
 </details>
-
-\
 
 
 With these two tables, a **one-to-many relationship** has been formed: a person can have many pets. This is one of the most common relationships between tables in a database. Some other examples include:
@@ -197,8 +195,6 @@ WHERE type = 'dog' OR type = 'bird';
 
 </details>
 
-\
-
 
 Now let's try a harder one: What are the names of all the pets owned by Ann?
 
@@ -210,15 +206,15 @@ FROM people
 	JOIN pets ON people.id = pets.owner_id;
 ```
 
-| person.id | name           | pet.id | name       | type | owner\_id |
-| --------- | -------------- | ------ | ---------- | ---- | --------- |
-| 1         | Ann Duong      | 3      | Bora       | bird | 1         |
-| 1         | Ann Duong      | 4      | Tora       | dog  | 1         |
-| 1         | Ann Duong      | 7      | Kora       | dog  | 1         |
-| 2         | Reuben Ogbonna | 2      | Juan Pablo | dog  | 2         |
-| 2         | Reuben Ogbonna | 6      | Pon Juablo | cat  | 2         |
-| 3         | Carmen Salas   | 1      | Khalo      | dog  | 3         |
-| 3         | Maya Salas     | 5      | Frida      | cat  | 3         |
+| person.id | name           | pet.id | name       | type | owner_id |
+| --------- | -------------- | ------ | ---------- | ---- | -------- |
+| 1         | Ann Duong      | 3      | Bora       | bird | 1        |
+| 1         | Ann Duong      | 4      | Tora       | dog  | 1        |
+| 1         | Ann Duong      | 7      | Kora       | dog  | 1        |
+| 2         | Reuben Ogbonna | 2      | Juan Pablo | dog  | 2        |
+| 2         | Reuben Ogbonna | 6      | Pon Juablo | cat  | 2        |
+| 3         | Carmen Salas   | 1      | Khalo      | dog  | 3        |
+| 3         | Maya Salas     | 5      | Frida      | cat  | 3        |
 
 We can modify our `SELECT` and add a `WHERE` clause to answer our question!
 
@@ -257,8 +253,6 @@ WHERE	people.name = 'Carmen Salas';
 ```
 
 </details>
-
-\
 
 
 ## Entity Relation Diagrams & Many To Many Relationships

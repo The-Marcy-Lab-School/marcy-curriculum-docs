@@ -63,8 +63,6 @@ The API key is a way to verify your identity as a developer. Some APIs will char
 
 </details>
 
-\
-
 
 ### Why We Make API Requests from the Server
 
@@ -187,8 +185,6 @@ The built "production/distribution" version in the `frontend/dist` folder!
 Remember, the server can only serve static assets. The development version is not "static" because it contains dynamic JSX React code. It must be compiled into plain JS first.
 
 </details>
-
-\
 
 
 ### Proxy Requests

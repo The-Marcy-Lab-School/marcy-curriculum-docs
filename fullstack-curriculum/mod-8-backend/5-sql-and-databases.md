@@ -90,8 +90,6 @@ The title and release year of the movies that are 90 minutes or less in length f
 
 </details>
 
-\
-
 
 ```sql
 SELECT * FROM films;
@@ -106,8 +104,6 @@ SELECT * FROM films;
 This query will get all of the data from the films table.
 
 </details>
-
-\
 
 
 ### Tips to avoid SQL errors

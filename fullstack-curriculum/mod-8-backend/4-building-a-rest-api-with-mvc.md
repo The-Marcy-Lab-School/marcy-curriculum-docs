@@ -145,8 +145,6 @@ Representational state transfer (REST) is a design pattern for creating APIs tha
 
 </details>
 
-\
-
 
 <details>
 
@@ -158,8 +156,6 @@ Representational state transfer (REST) is a design pattern for creating APIs tha
 
 </details>
 
-\
-
 
 <details>
 
@@ -170,18 +166,16 @@ Representational state transfer (REST) is a design pattern for creating APIs tha
 
 </details>
 
-\
-
 
 <details>
 
 <summary>Layered System</summary>
 
-\* As a rule of thumb, don’t assume that the client, and server applications connect directly to each other. There may be a number of different intermediaries in the communication loop. \* REST APIs need to be designed so that neither the client nor the server can tell whether it communicates with the end application or an intermediary.
+* As a rule of thumb, don’t assume that the client, and server applications connect directly to each other. There may be a number of different intermediaries in the communication loop. 
+* REST APIs need to be designed so that neither the client nor the server can tell whether it communicates with the end application or an intermediary.
 
 </details>
 
-\
 
 
 <details>
@@ -194,7 +188,6 @@ Representational state transfer (REST) is a design pattern for creating APIs tha
 
 </details>
 
-\
 
 
 <details>
@@ -204,8 +197,6 @@ Representational state transfer (REST) is a design pattern for creating APIs tha
 * REST APIs usually send static resources, but in certain cases, responses can also contain executable code (such as Java applets). In these cases, the code should only run on-demand.
 
 </details>
-
-\
 
 
 ## Server Organization
