@@ -2,13 +2,26 @@
 
 You will be using Github individually and collaboratively. We will set up your development environment to be able to communicate with your Github account. You'll be able to clone code from a remote repo using SSH and make changes to it on your computer.
 
+**Table of Contents:**
+- [Create a Github Account](#create-a-github-account)
+- [Configuring Github with your Terminal](#configuring-github-with-your-terminal)
+- [Create a Repository on Github](#create-a-repository-on-github)
+- [Name your repository](#name-your-repository)
+- [Add SSH Key](#add-ssh-key)
+- [Clone Using SSH](#clone-using-ssh)
+
+
 ## Create a Github Account
 
 [Create a free Github Account](https://github.com/join). Remember the email and username that you enter. If you already have one, you can skip to the next step.
 
 ## Configuring Github with your Terminal
 
-1. In your Terminal, Run the following lines. Be sure to replace `Your Name` and `Your Github Email Address` with your actual Github login information:
+1. In your Terminal application (the folder you're in doesn't matter), we first want to ensure that you can use the `git` tool for the next few steps. 
+   1. Start by running the command `git -v` which will print the current version of the `git` tool on your computer. 
+   2. If you are using a Mac and this is your first time, a popup called **Install Command Line Developer Tools** will appear. Follow the instructions to install on your computer.
+
+2. Once this is done, in your Terminal, run the following lines. Be sure to replace `Your Name` and `Your Github Email Address` with your actual Github login information:
 
 ```sh
 git config --global user.name "Your Name"
@@ -33,15 +46,18 @@ Name your repository `my-first-repo`. Choose to add a README.md file. Create the
 
 While we're configuring GitHub, we should add a new SSH key to allow you to push and pull from Github using SSH. 
 
-1. First, check if you already have an SSH key by running `cat ~/.ssh/id_rsa.pub`. If the terminal prints out a long string of characters starting with ssh-rsa, you've already got a key.
+1. First, check if you already have an SSH key by running `ls ~/.ssh`. If the terminal prints out a file(s) that look like `id_ed25519.pub` then you already have a key.
 
-2. If the running previous step printed "No such file or directory", then run `ssh-keygen` to create a key. Leave everything blank and press enter for the default location and no passphrase. You should be prompted to select a file and passphrase for your new key. Leave everything blank and press enter for the default location and no passphrase. If you’re asked if you want to overwrite, then you already have an SSH key, and you do not want to overwrite it. If you've done every correctly, you should be something like this printed to your terminal:
+2. If the running previous step printed "No such file or directory", then run `ssh-keygen -t ed25519` to create a key.
+    - It will ask you to enter a file to save the key, leave it blank and press enter. It will say that it created the directory `/Users/<your_username>/.ssh`
+    - It will ask you to enter a passphrase, leave it blank and press enter twice to confirm.
+    - If you've done every correctly, you should be something like this printed to your terminal:
 
-![4](./img/github-setup-4.png)
+![4](./img/ed25519.png)
 
-Run `cat ~/.ssh/id_rsa.pub` in your terminal. Copy the output (starting from `ssh-rsa`). You'll need it for the next step
+Run `cat ~/.ssh/ed25519.pub` in your terminal. Copy the output (starting from `ssh-ed25519` and ending in `.local`). You'll need it for the next step
 
-3. Navigate to the homepage of Github in your browser. Go to your account settings:
+1. Navigate to the homepage of Github in your browser. Go to your account settings:
 
 ![5](./img/github-setup-5.png)
 
@@ -55,7 +71,7 @@ Click the "New SSH key" button:
 
 Put a description title about what environment the SSH key is associated to. For example, if you are setting up a Marcy Macbook, name it something like "Marcy Macbook", or if it's your personal laptop you can name it "Personal Marcy Computer". Open the 'Key type' dropdown and select 'Authentication Key'. Paste the key in the text area and click "Add SSH key".
 
-![9](./img/github-setup-9.png)
+![9](./img/addSSHkey.png)
 
 ## Clone Using SSH
 

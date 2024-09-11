@@ -1,15 +1,16 @@
 # Local Environment Setup: Windows
 
-Today, we'll be setting up our local development environment for Windows 10. For the Mac instructions, see [here](./local-environment-setup-mac.md).
+Today, we'll be setting up our local development environment for Windows 10. For the Mac instructions, see [here](https://github.com/The-Marcy-Lab-School/local-environment-setup-mac).
 
 ## Table of Contents
 
-0. [Set up Windows Subsystem for Linux (WSL)](#enable-wsl)
-1. [Download VS Code for Windows and command line tools](#download-vscode-for-windows)
-2. [Ensure you are using WSL2](#ensure-you-are-using-wsl-2)
-3. [Install Node and NPM](#download-node-and-npm)
-4. [Set up local Development directory](#set-up-local-development-directory)
-5. [Configuring Github with your Terminal](#configure-your-github-using-the-terminal)
+- [Table of Contents](#table-of-contents)
+- [Enable WSL](#enable-wsl)
+- [Download VSCode for Windows](#download-vscode-for-windows)
+- [Ensure you are using WSL 2](#ensure-you-are-using-wsl-2)
+- [Download Node and NPM](#download-node-and-npm)
+- [Set up local Development directory](#set-up-local-development-directory)
+- [Configure your Github using the Terminal](#configure-your-github-using-the-terminal)
 
 ## Enable WSL
 
@@ -94,6 +95,7 @@ You should pin Ubuntu Terminal and VS Code to the taskbar since you'll be using 
 3. If the version is 2, you are good to go! You may close Powershell.
 4. If the version is 1, you can change it to version 2 with a command like `wsl --set-version Ubuntu-22.04 2` where you would replace `Ubuntu-22.04` with the name listed under `NAME` from the command in step 2.
    - You should see "Conversion in progress, this may take a few minutes (it can take as long as 30 minutes or more)
+   - If you see a warning telling you to install/update the WSL 2 kernel, you may be asked to visit https://aka.ms/wsl2kernel. Do so and install the WSL Linux kernel update package for x64 machines.
    - If you see "Please enable the Virtual Machine Platform Windows feature and ensure virtualization is enabled in the BIOS." do the following:
      - In the Windows search bar, look for "Turn Windows features on or off"
      - Scroll down and select "Virtual Machine Platform" and then click "Ok"
@@ -127,14 +129,7 @@ Every time you open your Terminal, you'll be in the home directory. Run `pwd` to
 
 Using your Terminal as a command line, create a folder structure where you can put all your Marcy Lab code. We recommend:
 
-```
-development
- |- unit-0
- |- unit-1
- .....
- |- unit-7
- |- unit-8
-```
+![folder-structure](./img/folder-structure.png)
 
 You can do using the following commands:
 
@@ -144,7 +139,7 @@ You can do using the following commands:
 - `mkdir unit-0 unit-1 unit-2` etc... to make multiple folders at once.
 - `ls` to list the contents of `development/` and ensure the folders were created.
 
-![commands](./img/commands-windows.png)
+![commands](./img/commands.png)
 
 If you ever want to view these files on your computer in File Explorer, run the command `explorer.exe .` in your terminal. File Explorer will open your current working directory.
 
@@ -158,10 +153,10 @@ Familiarize yourself with VS Code. This will be your new coding environment.
 - You can start a new "VS Code Terminal" by selecting View > Terminal from the top menu bar.
 - The "VS Code Terminal" works _exactly_ the same as your Ubuntu "Terminal"!
 
-![vscode](./img/vscode-windows.png)
+![vscode](./img/vscode.png)
 
 ## Configure your Github using the Terminal
 
 Follow these instructions to [set up Github in your terminal](https://github.com/The-Marcy-Lab-School/github-setup).
 
-### If everything has worked as expected, reach out to an instructor for a final validation!
+**If everything has worked as expected, reach out to an instructor for a final validation!**
