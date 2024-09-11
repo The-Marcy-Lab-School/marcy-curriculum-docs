@@ -93,6 +93,10 @@ Using git in a project involves moving our code between three phases:
 
 ![](./img/local-git.png)
 
+**<details><summary style="color: purple">Q: What is the point of temporarily storing changes before committing them?</summary>**
+> Check out [this StackOverflow post which does a great job of explaining!](https://stackoverflow.com/questions/49228209/whats-the-use-of-the-staging-area-in-git)
+</details><br>
+
 ### `git init` and `git status`
 
 To use Git in a project, we can start by turning the project into a Git repository with the command `git init`. We can then make changes and use `git status` to see what changes have been made:
