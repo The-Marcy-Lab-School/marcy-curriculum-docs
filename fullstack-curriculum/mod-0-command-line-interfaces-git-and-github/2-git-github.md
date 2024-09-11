@@ -8,13 +8,11 @@
   - [`git init` and `git status`](#git-init-and-git-status)
   - [`git add`, `git commit`, and `git log`](#git-add-git-commit-and-git-log)
 - [GitHub: What is It? Why Use It?](#github-what-is-it-why-use-it)
-- [Git \& GitHub Workflow](#git--github-workflow)
+- [GitHub Workflow](#github-workflow)
   - [1. Create A Repository On GitHub](#1-create-a-repository-on-github)
-  - [2. Make A Local Clone Of The Repository](#2-make-a-local-clone-of-the-repository)
-  - [3. Edit In VS Code](#3-edit-in-vs-code)
-  - [4. Prepare Changes In The Staging Area](#4-prepare-changes-in-the-staging-area)
-  - [5. Commit Changes To The Local Repository](#5-commit-changes-to-the-local-repository)
-  - [6. Push Commits To the Remote Repository (GitHub)](#6-push-commits-to-the-remote-repository-github)
+  - [2. Make A Local Clone Of The Repository with `git clone`](#2-make-a-local-clone-of-the-repository-with-git-clone)
+  - [3. Use the normal Git Workflow](#3-use-the-normal-git-workflow)
+  - [4. Upload local commits to GitHub with `git push`](#4-upload-local-commits-to-github-with-git-push)
 
 <!-- ## Watch -->
 <!-- {% embed url="" %} -->
@@ -120,33 +118,103 @@ One we have changes that we want to save in the repository, we use the `git add`
 
 ## GitHub: What is It? Why Use It?
 
-While maintaing a Git repository is a great way to keep track of changes on your own computer, what if we wanted to share the project with others? Or perhaps work on the project on a different computer?
+While maintaining a Git repo is a great way to keep track of changes on your own computer, what if we wanted to share the project with others? Or perhaps work on the project on a different computer? Do we upload the files to Google Drive or email them to ourselves?
 
-Git repositories are also often synchronized between a **remote** source (somewhere online like **Github.com**) and a **local** source (on your computer). This allows developers to easily share and collaborate on projects.
+These options work, but almost every developer uses **GitHub**.
 
-Online remote repositories, like **Github** make sharing and collaborating on projects easy.
+![github](./img/github.png)
 
-On GitHub, developers can...
-* View public repositories
-* Comment on new changes
-* Download repositories
-* Contribute new code to repositories
-* Get feedback on their additions
-* Submit suggestions for improvements
-* And more!
+**GitHub** is like a social network for developers, making it easy to backup, share and collaborate on projects.
 
-## Git & GitHub Workflow
+So, how do we use GitHub?
 
-When working with `GitHub`, we will introduce three new commands:
-1. `git clone` to create a local copy of a remote repository
-2. `git pull` to download changes from the remote repository
-3. `git push` to push upload changes to the remote repository
+## GitHub Workflow
+
+Storing our repos on GitHub involves a few steps:
+1. Create a new repo on GitHub. We call this a **remote repository**.
+2. **Clone** (copy) the repo from GitHub onto our own computer. Now we have a **local repository** that is linked to the remote repository.
+3. After making commits on our local repository, we **push** the changes to the remote repository.
+4. If the remote repository happens to have any changes that the local repository doesn't, we **pull** the changes from the remote repository.
 
 ![alt text](./img/git-github-workflow.png)
 
+Let's practice this:
+
 ### 1. Create A Repository On GitHub
-### 2. Make A Local Clone Of The Repository
-### 3. Edit In VS Code
-### 4. Prepare Changes In The Staging Area
-### 5. Commit Changes To The Local Repository
-### 6. Push Commits To the Remote Repository (GitHub)
+
+In the upper-right corner of any page, select <kbd>+</kbd>, then click **New repository**.
+
+![alt text](./img/new-repo.png)
+
+Choose an owner of the repository (you) and give the repository a name. 
+
+{% hint style="warning" %}
+Make sure to check the **Add a README file** box.
+{% endhint %}
+
+Then click **Create repository**.
+
+![alt text](./img/new-repo-settings.png)
+
+### 2. Make A Local Clone Of The Repository with `git clone`
+
+After setting up the repo, you should be brought to the repo's page on GitHub. Click on the **Code** button (1), make sure to select **SSH** (2), and then click on the **copy** button (3) to copy the git clone url beginning with `git@github.com:...`.
+
+![alt text](./img/new-repo-clone.png)
+
+Then, back in your Visual Studio Code terminal, run the command:
+
+```sh
+git clone <pasted git clone url>
+```
+
+For example, it could look like this:
+
+```sh
+git clone git@github.com:benspector-mls/my-first-repo.git
+```
+
+{% hint style="info" %}
+Wherever your VC Code terminal is, the repository will be downloaded. If you want to clone the repository to a different location, you need to first change the directory you're in using `cd` before using `git clone`.
+{% endhint %}
+
+### 3. Use the normal Git Workflow
+
+Now that you have cloned the repository, you can use the same Git workflow as above:
+1. Make edits (for example, edit the `README.md` file)
+2. Save your code
+3. Use `git add -A` to add ALL changes to the staging area.
+4. Use `git commit -m "commit message"` to commit those changes to your local repository
+
+### 4. Upload local commits to GitHub with `git push`
+
+Now here comes the fun part.
+
+![alt text](./img/commit-ahead.png)
+
+In the example above, notice how the first `git status` says 
+
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+```
+
+But the last `git status` says
+
+```
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+```
+
+Your local repository (on your computer) and your remote repository (on GitHub) are out of sync because I have a commit that exists locally but not on GitHub.
+
+To upload the local commits to GitHub, run the command `git push`.
+
+![alt text](./img/git-push.png)
+
+If we look at the repo on GitHub, we should see the latest commit message and the updated `README.md` file!
+
+![alt text](./img/updated-repo-with-commit.png)
+
+And that's it!
