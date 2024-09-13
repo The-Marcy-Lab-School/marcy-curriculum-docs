@@ -92,7 +92,7 @@ While you can use the Terminal application that comes with your laptop, it is of
 
 To open up the Terminal panel, go to **File** > **Terminal** and it should show up at the bottom:
 
-![alt text](./img/vscode-terminal.png)
+![](./img/vscode-terminal.png)
 
 ## Commands
 
@@ -120,7 +120,7 @@ An **argument** is an additional piece of information that changes that behavior
 
 For example, suppose we were located in the `/Users` directory inside the following file system:
 
-![alt text](./img/file-structure.png)
+![](./img/file-structure.png)
 
 I could navigate to "down" to the `/Users/smith` directory with the command:
 

@@ -78,7 +78,7 @@ A **Git repository** is one that makes use of the **version control system** cal
 
 Version control systems, like Git, maintain a history of every change made to a repo. These changes, called **commits**, are snapshots of a project's code after the completion of a feature.
 
-![alt text](./img/commit-history.png)
+![](./img/commit-history.png)
 
 **<details><summary style="color: purple">Q: What are the benefits of maintaining a commit history like this?</summary>**
 > Developers can revert to previous versions of their project if they need to (for example, if a feature is not working as expected).
@@ -126,7 +126,7 @@ While maintaining a Git repo is a great way to keep track of changes on your own
 
 These options work, but almost every developer uses **GitHub**.
 
-![github](./img/github.png)
+![](./img/github.png)
 
 **GitHub** is like a social network for developers, making it easy to backup, share and collaborate on projects.
 
@@ -144,7 +144,7 @@ After setup, whenever we want to make changes to the repo we:
 3. Use the normal git workflow (make changes › `git add` › `git commit`)
 4. After making commits on our local repository, we **push** the changes to the remote repository.
 
-![alt text](./img/git-github-workflow.png)
+![](./img/git-github-workflow.png)
 
 Let's practice this:
 
@@ -154,7 +154,7 @@ Instead of using the `git init` command to create a *local repository*. We're go
 
 In the upper-right corner of any page, select <kbd>+</kbd>, then click **New repository**.
 
-![alt text](./img/new-repo.png)
+![](./img/new-repo.png)
 
 Choose an owner of the repository (you) and give the repository a name. 
 
@@ -164,13 +164,13 @@ Make sure to check the **Add a README file** box.
 
 Then click **Create repository**.
 
-![alt text](./img/new-repo-settings.png)
+![](./img/new-repo-settings.png)
 
 ### 2. Make A Local Clone Of The Repository with `git clone`
 
 After setting up the repo, you should be brought to the repo's page on GitHub. Click on the **Code** button (1), make sure to select **SSH** (2), and then click on the **copy** button (3) to copy the git clone url beginning with `git@github.com:...`.
 
-![alt text](./img/new-repo-clone.png)
+![](./img/new-repo-clone.png)
 
 Then, back in your Visual Studio Code terminal, run the command:
 
@@ -200,7 +200,7 @@ Now that you have cloned the repository, you can use the same Git workflow as ab
 
 Now here comes the fun part.
 
-![alt text](./img/commit-ahead.png)
+![](./img/commit-ahead.png)
 
 In the example above, notice how the first `git status` says 
 
@@ -221,11 +221,11 @@ Your local repository (on your computer) and your remote repository (on GitHub) 
 
 To upload the local commits to GitHub, run the command `git push`.
 
-![alt text](./img/git-push.png)
+![](./img/git-push.png)
 
 If we look at the repo on GitHub, we should see the latest commit message and the updated `README.md` file!
 
-![alt text](./img/updated-repo-with-commit.png)
+![](./img/updated-repo-with-commit.png)
 
 For future changes, repeat steps 3 and 4! 
 
@@ -239,8 +239,8 @@ So, in summary, Git and GitHub are invaluable tools in the toolkit of a software
 
 Together, we can manage code in **local repositories** and sync them with **remote repositories**.
 
-![alt text](./img/git-github-workflow.png)
+![](./img/git-github-workflow.png)
 
-The one command in this diagram that we didn't cover is `git pull`. We'll learn more about this in the next lesson on collaborating with others using Git branching and merging.
+The one command in this diagram that we didn't cover is `git pull`. We'll learn more about this in the next lesson!
 
 Happy coding!
