@@ -13,8 +13,3 @@ In this module, we'll learn about:
 * **Catching Errors** — the process of preventing known and expected errors from crashing a program.
 
 ## Lessons
-
-{% content-ref url="./1-promises.md" %} Promises {% endcontent-ref %}
-{% content-ref url="./2-fetch.md" %} Fetch {% endcontent-ref %}
-{% content-ref url="./3-building-a-fetching-app.md" %} Building a Fetching App {% endcontent-ref %}
-{% content-ref url="./4-async-await.md" %} Async & Await {% endcontent-ref %}

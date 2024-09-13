@@ -16,17 +16,3 @@ In this module, we'll learn about:
   * **Authorization** — Ensuring that a given user has permission to modify content.
 
 By the end of this module you will be able to build an application using the [React + Express + Auth Template](https://github.com/The-Marcy-Lab-School/react-express-auth).
-
-## Lessons
-
-{% content-ref url="./1-intro-to-express.md" %} Intro to Express {% endcontent-ref %}
-{% content-ref url="./2-building-a-static-web-server-with-middleware.md" %} Building a Static Web Server with Middleware {% endcontent-ref %}
-{% content-ref url="./3-securing-api-keys-with-environment-variables.md" %} Securing API Keys with Environment Variables {% endcontent-ref %}
-{% content-ref url="./4-building-a-rest-api-with-mvc.md" %} Building a RESTful API with MVC {% endcontent-ref %}
-{% content-ref url="./5-sql-and-databases.md" %} SQL and Databases {% endcontent-ref %}
-{% content-ref url="./6-join-sql-queries.md" %} JOIN (Association) SQL Queries {% endcontent-ref %}
-{% content-ref url="./7-knex.md" %} Knex {% endcontent-ref %}
-{% content-ref url="./8-your-first-fullstack-app.md" %} Your First Fullstack App! {% endcontent-ref %}
-{% content-ref url="./9-migrations-and-seeds.md" %} Migrations & Seeds {% endcontent-ref %}
-{% content-ref url="./10-schema-design-and-normalization.md" %} Schema Design & Normalization {% endcontent-ref %}
-{% content-ref url="./11-hashing-passwords-with-bcrypt.md" %} Hashing Passwords with Bcrypt {% endcontent-ref %}

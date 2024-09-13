@@ -13,9 +13,3 @@ In this module, we'll learn about:
 * **Interface** — an abstraction layer of an application that provides methods for interacting with a hidden or controlled portion of the application. For example, user interfaces provide buttons (methods) that enable users to interact with your application's code in a controlled manner. 
 
 ## Lessons
-
-{% content-ref url="./1-encapsulation-factories-and-closure.md" %} Intro to OOP, Encapsulation, Factory Functions, and Closure {% endcontent-ref %}
-{% content-ref url="./2-classes.md" %} Classes {% endcontent-ref %}
-{% content-ref url="./3-private-properties-static-methods.md" %} Private & Static {% endcontent-ref %}
-{% content-ref url="./5-has-many-belongs-to.md" %} Has Many/Belongs To {% endcontent-ref %}
-{% content-ref url="./7-polymorphism.md" %} Polymorphism {% endcontent-ref %}

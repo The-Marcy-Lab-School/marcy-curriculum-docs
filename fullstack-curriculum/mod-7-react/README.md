@@ -12,11 +12,3 @@ In this module, we'll learn about:
 * **Server-Side Routing** — a strategy for frontend routing in which the server sends different static assets to the client depending on the current URL.
 
 ## Lessons
-
-{% content-ref url="./1-intro-to-react.md" %} Intro to React {% endcontent-ref %}
-{% content-ref url="./2-events-state-and-forms.md" %} Events, State, and Forms {% endcontent-ref %}
-{% content-ref url="./3-fetching-useeffect.md" %} Fetching with useEffect {% endcontent-ref %}
-{% content-ref url="./4-flashcards-app.md" %} Building a Flashcards App {% endcontent-ref %}
-{% content-ref url="./5-react-context.md" %} React Context {% endcontent-ref %}
-{% content-ref url="./6-global-context-pattern.md" %} Global Context Pattern {% endcontent-ref %}
-{% content-ref url="./7-react-router.md" %} React Router {% endcontent-ref %}
