@@ -4,15 +4,16 @@
 - [Overview](#overview)
 - [Introduction: Managing Files Can Be Tricky](#introduction-managing-files-can-be-tricky)
 - [What is a Git Repository?](#what-is-a-git-repository)
-- [Git Workflow](#git-workflow)
+  - [Git Workflow](#git-workflow)
   - [`git init` and `git status`](#git-init-and-git-status)
   - [`git add`, `git commit`, and `git log`](#git-add-git-commit-and-git-log)
 - [GitHub: What is It? Why Use It?](#github-what-is-it-why-use-it)
-- [GitHub Workflow](#github-workflow)
+  - [GitHub Workflow](#github-workflow)
   - [1. Create A Repository On GitHub](#1-create-a-repository-on-github)
   - [2. Make A Local Clone Of The Repository with `git clone`](#2-make-a-local-clone-of-the-repository-with-git-clone)
   - [3. Use the normal Git Workflow](#3-use-the-normal-git-workflow)
   - [4. Upload local commits to GitHub with `git push`](#4-upload-local-commits-to-github-with-git-push)
+- [Summary](#summary)
 
 <!-- ## Watch -->
 <!-- {% embed url="" %} -->
@@ -36,16 +37,15 @@ You will be able to…
 
 **Key Terms**
 
-* **Git** — A "version control system" that allows us to manage the history of changes made to a repo.
 * **Repository (or just "repo")** — A collection of files pertaining to a single project.
+* **Git** — A "version control system" that allows us to manage the history of changes made to a repo.
+* **Commit** — A "snapshot" of the changes made to a repo. A commit is typically created when a key milestone is reached in a project (e.g. a feature is completed).
+* **Staging Area** — A place to temporarily store changed files to include in the next commit.
+* **Github** — An online host of git repositories with tools for managing git projects and features for collaboration.
 * **Local Repository** — A repository stored on a developers computer.
 * **Remote Repository** — A repository stored online on a service like GitHub.
-* **Github** — An online host of git repositories with tools for managing git projects and features for collaboration.
 * **Clone** — Copy a remote repo's files and commit history and store them locally (creates a local repository)
-* **Staging Area** — A place to temporarily store changed files to include in the next commit.
-* **Commit** — A "snapshot" of the changes made to a repo. A commit is typically created when a key milestone is reached in a project (e.g. a feature is completed).
 * **Push** — Send a local repo's commit history to a remote repo to be synchronized.
-* **Pull** — Download a remote repo's files and commit history to be synchronized locally.
 
 **Important Git commands**
 
@@ -53,12 +53,12 @@ You will be able to…
 **Note:** In the commands below, argument placeholders will be written like this: `<argument>`. When using these commands, replace the `<argument>` with your desired inputs, making sure to leave out the `<>` as well.
 {% endhint %}
 
-* `git clone`
+* `git init`
 * `git status`
 * `git add`
 * `git commit`
+* `git clone`
 * `git push`
-* `git pull`
 
 ## Introduction: Managing Files Can Be Tricky
 
@@ -84,7 +84,7 @@ Version control systems, like Git, maintain a history of every change made to a 
 > Developers can revert to previous versions of their project if they need to (for example, if a feature is not working as expected).
 </details>
 
-## Git Workflow
+### Git Workflow
 
 Using git in a project involves moving our code between three phases:
 1. The working directory (where we are editing files)
@@ -132,19 +132,25 @@ These options work, but almost every developer uses **GitHub**.
 
 So, how do we use GitHub?
 
-## GitHub Workflow
+### GitHub Workflow
 
-Storing our repos on GitHub involves a few steps:
-1. Create a new repo on GitHub. We call this a **remote repository**.
+Storing our repos on GitHub involves a few setup steps...
+
+1. Create a new repo on GitHub. We call this a **remote repository**. This is the equivalent to using `git init`.
 2. **Clone** (copy) the repo from GitHub onto our own computer. Now we have a **local repository** that is linked to the remote repository.
-3. After making commits on our local repository, we **push** the changes to the remote repository.
-4. If the remote repository happens to have any changes that the local repository doesn't, we **pull** the changes from the remote repository.
+
+After setup, whenever we want to make changes to the repo we:
+
+3. Use the normal git workflow (make changes › `git add` › `git commit`)
+4. After making commits on our local repository, we **push** the changes to the remote repository.
 
 ![alt text](./img/git-github-workflow.png)
 
 Let's practice this:
 
 ### 1. Create A Repository On GitHub
+
+Instead of using the `git init` command to create a *local repository*. We're going to start by creating a *remote repository*.
 
 In the upper-right corner of any page, select <kbd>+</kbd>, then click **New repository**.
 
@@ -221,4 +227,20 @@ If we look at the repo on GitHub, we should see the latest commit message and th
 
 ![alt text](./img/updated-repo-with-commit.png)
 
-And that's it!
+For future changes, repeat steps 3 and 4! 
+
+## Summary
+
+So, in summary, Git and GitHub are invaluable tools in the toolkit of a software developer that make managing projects and versions easier!
+
+**Git** is a "version control system" that allows us to manage the history of changes made to a repo.
+
+**Github** is an online host of git repositories with tools for managing git projects and features for collaboration.
+
+Together, we can manage code in **local repositories** and sync them with **remote repositories**.
+
+![alt text](./img/git-github-workflow.png)
+
+The one command in this diagram that we didn't cover is `git pull`. We'll learn more about this in the next lesson on collaborating with others using Git branching and merging.
+
+Happy coding!
