@@ -1,6 +1,10 @@
 # Marcy Lab School Fullstack Software Engineering Curriculum
 
-Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheatsheets, guides, and miscellaneous resources.
+Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Over the next year you will learn how to be a Fullstack software engineer! You'll learn the basics of the JavaScript syntax, how to use JavaScript to solve real problems, and then how to organize and optimize your code like a pro!
+
+![](../.gitbook/assets/Programming-Hierarchy.png)
+
+Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheatsheets, guides, and miscellaneous resources.
 
 Before you begin, check out these tips and tricks for success at Marcy.
 
@@ -15,7 +19,7 @@ Before you begin, check out these tips and tricks for success at Marcy.
 - **Learning is a skill...**
     - …and it is the most important skill in the world.
     - ....and like all other skills, it can be developed and improved upon with intentional practice.
-    - We learn by repeated exposure. ****What was once intimidating becomes familiar and approachable through repetition.
+    - We learn by repeated exposure. What was once intimidating becomes familiar and approachable through repetition.
     - AI tools like ChatGPT are shortcuts for writing code, but they are not shortcuts for learning. Learn from your community (peers, Google, and StackOverflow, even)!
 
 ## Tips & Tricks to Success at Marcy
