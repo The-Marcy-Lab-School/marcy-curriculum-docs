@@ -1,5 +1,4 @@
-# TITLE
-description
+# Variables, Functions, and Strings
 
 ## Slides
 
