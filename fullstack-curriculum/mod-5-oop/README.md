@@ -11,5 +11,3 @@ In this module, we'll learn about:
 * **Polymorphism** - similar objects can be used interchangeably
 * **Class** — a blueprint for creating objects with shared methods and properties. Classes are particularly useful for creating interfaces.
 * **Interface** — an abstraction layer of an application that provides methods for interacting with a hidden or controlled portion of the application. For example, user interfaces provide buttons (methods) that enable users to interact with your application's code in a controlled manner. 
-
-## Lessons

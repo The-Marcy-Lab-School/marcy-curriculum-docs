@@ -11,5 +11,3 @@ In this module, we'll learn about:
 * **API (Application Programming Interface)** — a web service that manages a set (or sets) of data and provides access to that data through specific endpoints.
 * **Endpoint** — a URL address that a client can send HTTP requests to in order to interact with a portion of an API.
 * **Catching Errors** — the process of preventing known and expected errors from crashing a program.
-
-## Lessons

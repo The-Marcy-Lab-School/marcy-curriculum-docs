@@ -10,13 +10,13 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 
 - [Module 0: Command Line Interfaces, Git & GitHub](./mod-0-command-line-interfaces-git-and-github)
 - [Module 1: JavaScript Fundamentals](./mod-1-javascript-fundamentals)
-- [Module 2: Command Line Interfaces, Git & GitHub](./mod-2-html-css-dom/README.md)
-- [Module 3: Command Line Interfaces, Git & GitHub](./mod-3-async/README.md)
-- [Module 4: Command Line Interfaces, Git & GitHub](./mod-4-project-week/)
-- [Module 5: Command Line Interfaces, Git & GitHub](./mod-5-oop/)
-- [Module 6: Command Line Interfaces, Git & GitHub](./mod-6-ds-a/)
-- [Module 7: Command Line Interfaces, Git & GitHub](./mod-7-react/)
-- [Module 8: Command Line Interfaces, Git & GitHub](./mod-8-backend/)
+- [Module 2: HTML, CSS, and DOM](./mod-2-html-css-dom/README.md)
+- [Module 3: Asynchronous Programming with APIs](./mod-3-async/README.md)
+- [Module 4: Project Week!](./mod-4-project-week/)
+- [Module 5: Object-Oriented Programming (OOP)](./mod-5-oop/)
+- [Module 6: Data Structures & Algorithms](./mod-6-ds-a/)
+- [Module 7: React](./mod-7-react/)
+- [Module 8: Backend & Fullstack Development](./mod-8-backend/)
 - Module 9: Civic Tech Hackathon
 - Module 10: Capstone / Internship
 

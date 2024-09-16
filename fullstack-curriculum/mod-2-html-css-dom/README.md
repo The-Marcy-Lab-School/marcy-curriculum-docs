@@ -9,5 +9,3 @@ In this module, we'll learn about:
 * **Accessibility**
 * **The Document Object Model (DOM)**
 * **LocalStorage**
-
-## Lessons

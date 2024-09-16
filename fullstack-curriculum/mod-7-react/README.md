@@ -10,5 +10,3 @@ In this module, we'll learn about:
 * **Frontend Routing** — the act of showing different user interfaces depending on the current URL (e.g. the `/about` vs. the `/contact` page)
 * **Client-Side Routing** — a strategy for frontend routing in which the server sends a single set of static assets to the client that are able to change the user interface depending on the current URL.
 * **Server-Side Routing** — a strategy for frontend routing in which the server sends different static assets to the client depending on the current URL.
-
-## Lessons
