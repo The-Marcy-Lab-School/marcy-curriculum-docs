@@ -1,12 +1,24 @@
 # Marcy Lab School Fullstack Software Engineering Curriculum
 
-Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Over the next year you will learn how to be a Fullstack software engineer! You'll learn the basics of the JavaScript syntax, how to use JavaScript to solve real problems, and then how to organize and optimize your code like a pro!
+Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheatsheets, guides, and miscellaneous resources.
+
+Over the next year you will learn how to be a Fullstack software engineer! You'll learn the basics of the JavaScript syntax, how to use JavaScript to solve real problems, and then how to organize and optimize your code like a pro!
 
 ![](../.gitbook/assets/Programming-Hierarchy.png)
 
-Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheatsheets, guides, and miscellaneous resources.
+## Modules in this Curriculum
 
-Before you begin, check out these tips and tricks for success at Marcy.
+- [Module 0: Command Line Interfaces, Git & GitHub](./mod-0-command-line-interfaces-git-and-github)
+- [Module 1: JavaScript Fundamentals](./mod-1-javascript-fundamentals)
+- [Module 2: Command Line Interfaces, Git & GitHub](./mod-2-html-css-dom/README.md)
+- [Module 3: Command Line Interfaces, Git & GitHub](./mod-3-async/README.md)
+- [Module 4: Command Line Interfaces, Git & GitHub](./mod-4-project-week/)
+- [Module 5: Command Line Interfaces, Git & GitHub](./mod-5-oop/)
+- [Module 6: Command Line Interfaces, Git & GitHub](./mod-6-ds-a/)
+- [Module 7: Command Line Interfaces, Git & GitHub](./mod-7-react/)
+- [Module 8: Command Line Interfaces, Git & GitHub](./mod-8-backend/)
+- Module 9: Civic Tech Hackathon
+- Module 10: Capstone / Internship
 
 ## Learning Principles
 
