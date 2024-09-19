@@ -1,5 +1,9 @@
 # Node
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-0-intro-to-node)!
+{% endhint %}
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/10Op4ZnmbUbm1Zv48vcIR5h2vkr9wpZULwAg6NYbzd9w/embed?start=false&loop=false&delayms=3000" %}

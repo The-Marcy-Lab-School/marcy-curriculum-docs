@@ -1,5 +1,9 @@
 # Control Flow & Conditionals
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-2-control-flow)!
+{% endhint %}
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/102SIHvxRHHJ-_979yJdyq-3dI5NEVSME0uyBrSmgvrk/embed?start=false&loop=false&delayms=3000" %}

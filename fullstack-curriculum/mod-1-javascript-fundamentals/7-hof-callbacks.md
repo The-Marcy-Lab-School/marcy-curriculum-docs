@@ -1,5 +1,9 @@
 # Callbacks & Higher Order Functions
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-2-0-hof-callbacks)!
+{% endhint %}
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1ZoC1XUm9GJns3XqAYZGOIXt_LpUn9-VbQmdEZt_pf7M/embed?start=false&loop=false&delayms=3000" %}

@@ -1,5 +1,9 @@
 # Array Higher Order Methods - Key Terms
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-2-1-hof-array-methods)!
+{% endhint %}
+
 ## Declarative vs. Imperative
 
 * **Imperative code** provides explicit instructions for exactly HOW to complete a task.
