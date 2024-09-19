@@ -1,5 +1,9 @@
 # Variables, Functions, and Strings
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-1-data-types-variables-functions)!
+{% endhint %}
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1_BzZepwXrkVL-LzpkPA5ITvM-bH9n0_BnnrzwJJZByo/embed?start=false&loop=false&delayms=3000" %}

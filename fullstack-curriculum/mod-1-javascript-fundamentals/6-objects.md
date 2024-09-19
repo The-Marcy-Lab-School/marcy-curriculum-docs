@@ -1,5 +1,9 @@
 # Objects - Key Terms
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-1-2-objects)!
+{% endhint %}
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1uB1uPTGdaKhwvPD11kYyaiuh9I0j3zow6ZsW2UXDvvI/embed?start=false&loop=false&delayms=3000" %}
