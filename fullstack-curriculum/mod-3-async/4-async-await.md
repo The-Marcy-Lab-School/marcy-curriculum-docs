@@ -1,9 +1,14 @@
 # Async / Await
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-2-async-await)!
+{% endhint %}
+
 - [Fetching "Synchronously" with Async/Await](#fetching-synchronously-with-asyncawait)
 - [Handling Errors with Try/Catch](#handling-errors-with-trycatch)
 - [The benefits of `async`/`await`](#the-benefits-of-asyncawait)
 - [Making a generic fetch helper](#making-a-generic-fetch-helper)
+  - [Why return a tuple?](#why-return-a-tuple)
 
 ## Fetching "Synchronously" with Async/Await
 

@@ -1,5 +1,9 @@
 # Fetch
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch-f23)!
+{% endhint %}
+
 - [Cross-Application Communication](#cross-application-communication)
 - [HTTP Request / Response Cycle](#http-request--response-cycle)
 - [The `fetch()` function](#the-fetch-function)
