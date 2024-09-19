@@ -53,6 +53,7 @@
     * [Building a Fetching App](fullstack-curriculum/mod-3-async/3-building-a-fetching-app.md)
     * [Async & Await](fullstack-curriculum/mod-3-async/4-async-await.md)
   * [Mod 4 - Project Week!](fullstack-curriculum/mod-4-project-week/README.md)
+    * [Project Week Overview](fullstack-curriculum/mod-4-project-week/project-week-overview.md)
   * [Mod 5 - Object-Oriented Programming](fullstack-curriculum/mod-5-oop/README.md)
     * [Intro to OOP, Encapsulation, Factory Functions, and Closure](fullstack-curriculum/mod-5-oop/1-encapsulation-factories-and-closure.md)
     * [Classes](fullstack-curriculum/mod-5-oop/2-classes.md)
