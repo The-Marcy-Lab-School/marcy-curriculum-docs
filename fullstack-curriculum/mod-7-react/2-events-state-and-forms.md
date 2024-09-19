@@ -1,5 +1,9 @@
 # Event Handlers, State, and Forms
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-1-managing-state-and-forms)!
+{% endhint %}
+
 In this lesson, we will look at how to respond to events in React and use those events to manage the ever-changing state in our application. 
 
 **Table of Contents**

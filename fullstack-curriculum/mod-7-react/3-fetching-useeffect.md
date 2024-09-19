@@ -1,5 +1,9 @@
 # Fetching and useEffect
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-2-async-useEffect)!
+{% endhint %}
+
 We've already learned about one hook, `useState`. Time for another one! In this lesson, we'll learn how to use the `useEffect` hook to send API fetch requests.
 
 **Table of Contents**

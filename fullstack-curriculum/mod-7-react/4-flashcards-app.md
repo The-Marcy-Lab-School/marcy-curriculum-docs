@@ -1,5 +1,9 @@
 # React + Vite Flashcard App
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/benspector-mls/flashcards)!
+{% endhint %}
+
 ## Brainstorming
 
 I want to build a flashcard app. 

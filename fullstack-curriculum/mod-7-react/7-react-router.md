@@ -1,5 +1,9 @@
 # React Router
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-2-react-router)!
+{% endhint %}
+
 **Table of Contents**:
 
 - [Terms](#terms)

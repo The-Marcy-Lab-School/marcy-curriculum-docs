@@ -1,5 +1,9 @@
 # Global Context Design Pattern
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-1-global-context-pattern)!
+{% endhint %}
+
 **Table of Contents**:
 - [Global Context Design Pattern](#global-context-design-pattern-1)
   - [1) Create a `ContextProvider` wrapper component](#1-create-a-contextprovider-wrapper-component)
