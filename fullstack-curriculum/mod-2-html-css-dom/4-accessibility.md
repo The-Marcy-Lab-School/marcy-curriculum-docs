@@ -1,5 +1,9 @@
 # The Importance of Accessibility (A-11-y)
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-3-accessibility-html-best-practices)!
+{% endhint %}
+
 > A "eleven" y is an abbreviation of "accessibility". Why? Well there are 11 characters between the "a" and the "y".
 
 **Table of Contents**

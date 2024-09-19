@@ -1,5 +1,9 @@
 # Positioning and Spacing with The Box Model
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-2-css-positioning)!
+{% endhint %}
+
 **Table of Contents**
 - [Box Model](#box-model)
 - [Content Box](#content-box)

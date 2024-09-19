@@ -1,4 +1,8 @@
-# HTML - Key Terms
+# HTML
+
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-0-html)!
+{% endhint %}
 
 * [First, an Experiment](#first-an-experiment)
 * [The Browser is an HTML Viewer](#the-browser-is-an-html-viewer)
