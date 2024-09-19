@@ -1,5 +1,9 @@
 # 2-3-1-localStorage-f23
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-localStorage-f23)!
+{% endhint %}
+
 **Table of Contents**
 - [What is localStorage?](#what-is-localstorage)
 - [Setting and Getting Values](#setting-and-getting-values)

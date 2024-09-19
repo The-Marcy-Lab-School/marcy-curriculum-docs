@@ -1,6 +1,8 @@
-<style>.markdown-body{ min-width: 500px; }</style>
-
 # 2.1.1 Grid + Media Queries Lecture Plan
+
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-1-1-lecture-grid-media-queries)!
+{% endhint %}
 
 **Table of Contents:**
 

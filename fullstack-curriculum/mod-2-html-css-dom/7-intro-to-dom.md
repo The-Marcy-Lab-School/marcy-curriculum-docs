@@ -1,5 +1,9 @@
 # Intro to the Document Object Model
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-0-lecture-intro-to-dom)!
+{% endhint %}
+
 **Table of Contents**
 
 - [The Chrome Developer Tools](#the-chrome-developer-tools)

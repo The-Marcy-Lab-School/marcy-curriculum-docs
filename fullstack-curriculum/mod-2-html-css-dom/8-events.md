@@ -1,6 +1,8 @@
 # 2-2-1-dom-events
 
-An intro to events in the DOM
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-1-lecture-dom-events)!
+{% endhint %}
 
 **Table of Contents**
 - [Event Driven Architecture](#event-driven-architecture)

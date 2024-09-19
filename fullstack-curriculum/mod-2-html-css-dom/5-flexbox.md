@@ -1,5 +1,9 @@
 # 2.1.0 Flexbox Lecture Plan
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-1-0-lecture-flexbox)!
+{% endhint %}
+
 **Resources**:
 * [A guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 * [A great video to learn flexbox](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)

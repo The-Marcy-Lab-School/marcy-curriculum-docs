@@ -1,6 +1,8 @@
 # 2-3-3-esmodules-vite-f23
 
-Learn how to load JavaScript, CSS, and JSON files into your HTML using ESModules!
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-0-esmodules-f23)!
+{% endhint %}
 
 - [Loading JavaScript into our HTML](#loading-javascript-into-our-html)
   - [The OG Way](#the-og-way)
