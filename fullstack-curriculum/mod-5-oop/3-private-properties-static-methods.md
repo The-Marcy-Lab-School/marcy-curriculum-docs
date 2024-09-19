@@ -1,11 +1,18 @@
 # Private Properties and Static Methods
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-2-private-properties-static-methods)!
+{% endhint %}
+
 - [Private Properties](#private-properties)
-  - [Naming Convention](#naming-convention)
-  - [Using `#` Notation](#using--notation)
+- [Naming Convention](#naming-convention)
+- [Using `#` Notation](#using--notation)
 - [Static Properties and Methods](#static-properties-and-methods)
 - [Quiz!](#quiz)
-- [Challenge](#challenge-car-class)
+  - [What do you think will log to the console?](#what-do-you-think-will-log-to-the-console)
+  - [What is the purpose of using the # notation for a property in a class?](#what-is-the-purpose-of-using-the--notation-for-a-property-in-a-class)
+  - [How do you call a static method on a class?](#how-do-you-call-a-static-method-on-a-class)
+- [Challenge: Car Class](#challenge-car-class)
 - [Summary](#summary)
 
 ## Private Properties

@@ -1,5 +1,9 @@
 # Classes - The Basics
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-1-classes-f23)!
+{% endhint %}
+
 - [Intro](#intro)
 - [Factory Functions Waste Memory](#factory-functions-waste-memory)
 - [Classes](#classes)

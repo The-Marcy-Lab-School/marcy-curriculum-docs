@@ -1,5 +1,9 @@
 # Inheritance & Polymorphism
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-3-inheritance-polymorphism-f23)!
+{% endhint %}
+
 **Table of Contents:**
 - [Inheritance \& "Is A" Relationships](#inheritance--is-a-relationships)
 - [Array is a Subclass of Object](#array-is-a-subclass-of-object)

@@ -1,5 +1,9 @@
 # 5-0-3-oop-review
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to-f23)!
+{% endhint %}
+
 OOP can be defined by its 4 pillars:
 * **Encapsulation** - every object should control its own state. information hiding.
 * **Abstraction** - hiding complexity through functions and prototypes

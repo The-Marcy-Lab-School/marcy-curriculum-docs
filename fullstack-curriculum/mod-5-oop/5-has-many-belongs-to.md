@@ -1,6 +1,10 @@
 # Has Many / Belongs To
 
-## Class Diagrams
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to-f23)!
+{% endhint %}
+
+## Intro: Class Diagrams
 
 When building an application, the first step is always to make a plan. 
 * We plan the features of the application with **user stories**

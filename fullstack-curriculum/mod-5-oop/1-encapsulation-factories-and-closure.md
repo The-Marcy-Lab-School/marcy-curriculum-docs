@@ -1,5 +1,8 @@
 # Closures
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-0-encapsulation-factories-closure-f23)!
+{% endhint %}
 
 - [Intro to Mod 5: Object-Oriented Programming (OOP) — 5 minutes](#intro-to-mod-5-object-oriented-programming-oop--5-minutes)
 - [Encapsulation — 15 minutes](#encapsulation--15-minutes)
