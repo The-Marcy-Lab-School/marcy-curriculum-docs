@@ -5,8 +5,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Resources**:
-* [A guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-* [A great video to learn flexbox](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)
+* [A guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+* [A great video to learn Flexbox](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)
 
 **Table of Contents**:
 - [Part 0 - Explore Flexbox on Youtube](#part-0---explore-flexbox-on-youtube)
@@ -25,7 +25,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 ## Part 0 - Explore Flexbox on Youtube
 
 > **Pacing:** 5 minutes (5 minutes total)
-> **Learning Objectives:** See flexbox in the real world
+> **Learning Objectives:** See Flexbox in the real world
 > * Open https://www.youtube.com/ and see how elements shift in size as you resize the window. Point out the the videos that are aligned next to each other are NOT inline, they are flex items.
 
 Flex does two things: 
@@ -39,7 +39,7 @@ Flex does two things:
 
 > **Pacing**: 5 minutes (10 minutes total)
 > **Learning Objective:** identify flex containers / flex items
-> * Briefly define what flexbox is and make sure they can identify the terms "flex container" and "flex items"
+> * Briefly define what Flexbox is and make sure they can identify the terms "flex container" and "flex items"
 
 * Flexbox is used for **organizing elements in a single direction**
 * `display: flex` defines a **flex container**. 
@@ -51,8 +51,8 @@ Flex does two things:
 ## Part 2 - Demo Styling a Navbar using Flexbox Container Properties
 
 > **Pacing:** 15 minutes (25 minutes total)
-> **Learning Objective:** see what flexbox can do
-> * Have fellows follow along with you. This is just to show them what flexbox can do. After, we'll see what makes flexbox work. Open up the `1-navbar/` directory and the `index.html` and `index.css` files. 
+> **Learning Objective:** see what Flexbox can do
+> * Have fellows follow along with you. This is just to show them what Flexbox can do. After, we'll see what makes Flexbox work. Open up the `1-navbar/` directory and the `index.html` and `index.css` files. 
 > * Serve using live preview. Start by uncommenting the styles of the `ul` to show how `display: flex` styles the the block elements to be aligned horizontally. Then insert a gap. Then do the same for the `header`, discussing briefly `justify-content` and `align-items`
 
 * Ordinarily, elements are `display: block` elements are stacked on top of each other.

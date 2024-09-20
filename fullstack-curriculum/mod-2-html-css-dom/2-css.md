@@ -181,7 +181,7 @@ p {
 
 ![Alt text](./img/margin-padding-content.png)
 
-* By default, `width` and `heigth` refer to the size of the _content box_
+* By default, `width` and `height` refer to the size of the _content box_
 
 ```css
 img {

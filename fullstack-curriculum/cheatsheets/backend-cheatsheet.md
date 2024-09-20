@@ -1,4 +1,4 @@
-# cheatsheet-backend
+# Cheat Sheet Backend
 
 - [Express](#express)
   - [Express Basics](#express-basics)
@@ -228,7 +228,7 @@ WHERE people.name = 'Ann Duong';
 * The order that you select `FROM` and `JOIN` does not matter
 * The `ON` clause indicates the relationship between the two tables (the `pets.owner_id` column references the `people.id` column)
 * The `WHERE` clause filters down the result.
-* When dealing with mutliple tables, *always* specify the table that a value comes from.
+* When dealing with multiple tables, *always* specify the table that a value comes from.
 
 ### Many To Many Table
 

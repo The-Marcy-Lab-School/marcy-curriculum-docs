@@ -207,7 +207,7 @@ const getId = ((id = 1) => () => id++)();
 **<details><summary style="color: purple">Answer</summary>**
 > * The first function DOES NOT create a closure. Even though there is an inner arrow function defined, that function doesn't reference variables in the scope outside of it
 > * The second function DOES create a closure because the inner arrow function passed to `nums.map` references the `randomNum` variable in the scope outside of it.
-> * The third function DOES create a clsoure for the same reason as the function above. Referencing the parameter `amount` is the same. 
+> * The third function DOES create a closure for the same reason as the function above. Referencing the parameter `amount` is the same. 
 > * The fourth function DOES create a closure because we have an outer arrow function returning an inner arrow function. The inner arrow function `() => id++` references the `id` parameter in the outer arrow function.
 </details><br>
 
@@ -284,7 +284,7 @@ counter.value = 10; // BAD
   * Each **instance** of the outer function creates a new closure.
 * Benefits of Encapsulation:
   * We can create private variables
-  * access to state is provided only through predicatable **getter/setter** methods
+  * access to state is provided only through predictable **getter/setter** methods
 
 ```js
 const makeFriendsManager = (...initialFriends) => {

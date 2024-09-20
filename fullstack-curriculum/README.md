@@ -1,6 +1,6 @@
 # Marcy Lab School Fullstack Software Engineering Curriculum
 
-Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheatsheets, guides, and miscellaneous resources.
+Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Here, you will find all of the lecture notes, recordings, slides, and code examples as well as cheat sheets, guides, and miscellaneous resources.
 
 Over the next year you will learn how to be a Fullstack software engineer! You'll learn the basics of the JavaScript syntax, how to use JavaScript to solve real problems, and then how to organize and optimize your code like a pro!
 

@@ -4,19 +4,19 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-0-html)!
 {% endhint %}
 
-* [First, an Experiment](#first-an-experiment)
-* [The Browser is an HTML Viewer](#the-browser-is-an-html-viewer)
-* [Live Server](#live-server)
-* [What is HTML?](#what-is-html)
-* [HTML Elements](#html-elements)
-* [Nesting Elements](#nesting-elements)
-* [Self Closing Tags](#self-closing-tags)
-* [Opening Tag Attributes & Images](#opening-tag-attributes--images)
-* [Ids and Classes](#ids-and-classes)
-* [Links](#links)
-* [Properly formatted document](#properly-formatted-document)
-* [Semantic vs Non Semantic Elements](#semantic-vs-non-semantic-elements)
-* [Quiz](#quiz)
+- [First, an Experiment](#first-an-experiment)
+- [The Browser is an HTML Viewer](#the-browser-is-an-html-viewer)
+- [Live Server](#live-server)
+- [What is HTML?](#what-is-html)
+- [HTML Elements](#html-elements)
+- [Nesting Elements](#nesting-elements)
+- [Self Closing Tags](#self-closing-tags)
+- [Opening Tag Attributes \& Images](#opening-tag-attributes--images)
+- [Ids and Classes](#ids-and-classes)
+- [Links](#links)
+- [Properly formatted document](#properly-formatted-document)
+- [Semantic vs Non Semantic Elements](#semantic-vs-non-semantic-elements)
+- [Quiz](#quiz)
 
 ## First, an Experiment
 
@@ -49,7 +49,7 @@ Hello World
 
 ## Live Server
 
-* When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retreive the `.html` file from your file system.
+* When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retrieve the `.html` file from your file system.
 
 ![using the file protocol to get the html file](img/index-file-protocol.png)
 

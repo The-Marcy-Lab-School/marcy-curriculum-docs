@@ -140,5 +140,5 @@ To resolve this conflict we can:
 
 ## Tips for success
 
-* First, check out our [cheatsheet on Git](../cheatsheets/git-cheatsheet.md)
+* First, check out our [cheat sheet on Git](../cheatsheets/git-cheatsheet.md)
 * Pay attention to the details and take notes! Do not shy away from the messages in your terminal. Seek to understand them and you'll gain so much more confidence.

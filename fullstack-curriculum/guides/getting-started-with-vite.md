@@ -26,7 +26,7 @@ When it is time to **deploy** your project, it can **compile** the project into 
 
 Sure, you could build a project from scratch and manage your own "development" version and the "production" version. But **Vite is "lightweight"** (it doesn't slow down your process by using it) and the production version of your application will be **optimized for speed**.
 
-**Vite is also quite versaitle**. It can be used for both simple and complex projects, from front-end only applications that use nothing but Vanilla JS to robust full-stack applications using frameworks like React.
+**Vite is also quite versatile**. It can be used for both simple and complex projects, from front-end only applications that use nothing but Vanilla JS to robust full-stack applications using frameworks like React.
 
 ## Setup
 
@@ -59,7 +59,7 @@ At this point, you should be able to open up http://localhost:5173 to view the a
 
 ## Clean Up The Repo
 
-**Objective(s)**: remove unwanted code from the provided files and organizee all code into a src/ directory
+**Objective(s)**: remove unwanted code from the provided files and organize all code into a src/ directory
 
 Clean up the directory by removing some of the provided code. Delete the `counter.js` and `javascript.svg` files and move the `main.js` and `style.css` files into a `src` directory.
 

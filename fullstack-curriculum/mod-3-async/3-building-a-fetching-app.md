@@ -20,8 +20,8 @@ draw a wireframe
 
 plan out the logic:
 * When the page loads:
-  * fetch pikachu (make sure to catch any errors)
-  * render pikachu data to the screen
+  * fetch Pikachu (make sure to catch any errors)
+  * render Pikachu data to the screen
   * add an event listener for the form
 
 * When the form is submitted:

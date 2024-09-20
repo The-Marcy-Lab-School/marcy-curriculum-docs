@@ -9,7 +9,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [What is a form?](#what-is-a-form)
   - [Form Basic Structure](#form-basic-structure)
   - [Inputs](#inputs)
-  - [Accesibility: Labels and aria-label](#accesibility-labels-and-aria-label)
+  - [Accessibility: Labels and aria-label](#accessibility-labels-and-aria-label)
   - [Submit button](#submit-button)
 - [Handling Form Submissions](#handling-form-submissions)
   - [Original Form Submissions](#original-form-submissions)
@@ -93,7 +93,7 @@ Some other types of inputs Elements (other than the literal `input` tag) are the
 
 **Inputs must have a `name` attribute.** We'll use those later when we are getting data from the form when it is submitted.
 
-### Accesibility: Labels and aria-label
+### Accessibility: Labels and aria-label
 
 Right now, our form is just a bunch of inputs. But how does the user know which input is for which value? Well, for one, we could add a header:
 

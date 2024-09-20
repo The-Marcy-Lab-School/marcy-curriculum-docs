@@ -81,7 +81,7 @@ A **class** defines a type of object and the properties/methods that those objec
 
 **<details><summary style="color: purple">Q: Suppose we wanted to create a class to represent users. What would the default properties be? What methods would be shared by each instance? </summary>**
 
-> * The `User` class would have a **constructor function** for making a `User` isntance with properties like `username`, `email`, and `password`
+> * The `User` class would have a **constructor function** for making a `User` instance with properties like `username`, `email`, and `password`
 > * The `User` class might have methods like `changeUsername` or `setPassword`
 
 </details><br>

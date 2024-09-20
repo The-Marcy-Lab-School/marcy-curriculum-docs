@@ -1,4 +1,4 @@
-# React Cheatsheet
+# React Cheat Sheet
 
 React is a library for building reusable, composable, and scalable user-interfaces made up of components.
 

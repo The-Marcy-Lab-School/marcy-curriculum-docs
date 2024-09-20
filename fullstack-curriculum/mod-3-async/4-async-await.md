@@ -288,7 +288,7 @@ But if our `fetchData` function always returns a `[data, error]` tuple where one
 
 ```js
 const getDogImage = async () => {
-  const [dogImage, error] = await fetchData('htps://dog.ceo/api/breeds/image/random')
+  const [dogImage, error] = await fetchData('https://dog.ceo/api/breeds/image/random')
   
   if (error) {
     // handle the error

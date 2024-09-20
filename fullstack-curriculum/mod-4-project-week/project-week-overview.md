@@ -179,7 +179,7 @@ In order to see how well you're doing with this project, here are all the things
 - [ ] The project is created using Vite  
 - [ ] The code exists in more than one JS file  
 - [ ] The project is deployed via GitHub Pages properly  
-- [ ] CSS `flexbox` or `grid` was used  
+- [ ] CSS Flexbox or Grid was used  
 - [ ] The code does not render unescaped text directly to the DOM (`createElement` or other escape method used)
 
 ### Form Requirements

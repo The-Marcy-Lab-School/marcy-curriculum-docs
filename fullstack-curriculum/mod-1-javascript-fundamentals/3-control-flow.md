@@ -16,7 +16,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - (CORE) Comparison and logical operators **REVIEW**
 - (CORE) truthy/falsy values
 - guard clauses
-- ternarys
+- ternary
 - (CORE) scope to lift up variables
 - +,-,/,* **REVIEW**
 - **, %

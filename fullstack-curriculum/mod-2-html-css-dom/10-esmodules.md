@@ -205,7 +205,7 @@ First, we can't use ESModule syntax in normal .js files. We will get this error:
 Uncaught SyntaxError: Cannot use import statement outside a module
 ```
 
-We can easily fix this in our HTML by adding a `type="module"` to our `<script>` (and we can now remove `defer` since modules automaticaly defer)
+We can easily fix this in our HTML by adding a `type="module"` to our `<script>` (and we can now remove `defer` since modules automatically defer)
 
 ```html
 <head>

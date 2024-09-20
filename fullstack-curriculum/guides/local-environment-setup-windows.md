@@ -56,7 +56,7 @@ Download the latest build and install it in your PC.
 
 Now open VS Code. VS Code should automatically detect your WSL installation and suggest an extension.
 
-![extention](./img/extention.webp)
+![extension](./img/extension.webp)
 
 If not, you can click on the “Extensions” tab in VS Code. Search for "Remote - WSL" and install (I will have a penguin icon).
 

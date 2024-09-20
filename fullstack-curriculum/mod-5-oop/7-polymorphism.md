@@ -91,7 +91,7 @@ class Programmer {
 Q: What bad practice exists this code?
 
 ## Extends and Super
-To remove the repetitive code AND to establish a relationship betwen `Programmer` and `Person`, we use the `extends` and `super` keywords to define our `Programmer` class:
+To remove the repetitive code AND to establish a relationship between `Programmer` and `Person`, we use the `extends` and `super` keywords to define our `Programmer` class:
 
 ```js
 class Person {
@@ -138,7 +138,7 @@ Then, with a partner, discuss these questions:
 
 **Question 1: What does `extends` do?**
 
-**Quesiton 2: What does `super` do?**
+**Question 2: What does `super` do?**
 
 **Question 3: What do we know about the relationship between a `Programmer` and a `Person`?**
 

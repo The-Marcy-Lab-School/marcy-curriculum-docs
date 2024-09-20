@@ -97,7 +97,7 @@ You can now exit your psql shell by typing in `\q` and hitting enter
 
 Interacting with Postgres through the command-line interface may make you feel like a pro, but let's face it, it isn't the best. Tableplus is a GUI (graphical user interface) that makes viewing your databases much nicer.
 
-1. Download [tableplus](https://tableplus.com/) from their website. Make sure to download the corresponding version for your OS.
+1. Download [Tableplus](https://tableplus.com/) from their website. Make sure to download the corresponding version for your OS.
 2. After installing and opening the application, click the "Create A New Connection..." towards the bottom of the window. You will see a prompt to select the type of database you want to connect to. Select **Postgresql**.
 3. Now, you'll enter the configurations for this connection:
     - The name of the connection is up to you. You can call it `marcy` or `postgres` if you'd like. In the future, if you ever want to connect to a different database server, you would set up a new connection and give it a descriptive name.

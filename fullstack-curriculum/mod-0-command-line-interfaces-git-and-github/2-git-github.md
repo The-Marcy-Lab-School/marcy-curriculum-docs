@@ -89,7 +89,7 @@ Version control systems, like Git, maintain a history of every change made to a 
 Using git in a project involves moving our code between three phases:
 1. The working directory (where we are editing files)
 2. The staging area (where we temporarily store changes before committing them)
-3. The repository (where we store our comitted changes)
+3. The repository (where we store our committed changes)
 
 ![](./img/local-git.png)
 
@@ -105,7 +105,7 @@ To use Git in a project, we can start by turning the project into a Git reposito
 
 1. In the Terminal, we navigated to a folder ran `git init`, turning the folder into a Git repository.
 2. The `git status` command can be used at any time to see what changes have been made to the repository. At first, we can see that the repo has no changes.
-3. The `echo` command combined with the `>` operater creates a new file called `myfile.txt` with the text `"insert text here"`
+3. The `echo` command combined with the `>` operator creates a new file called `myfile.txt` with the text `"insert text here"`
 4. After the `ls` and `git status` commands, we can see that the `myfile.txt` file has been created.
 
 ### `git add`, `git commit`, and `git log`

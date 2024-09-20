@@ -21,7 +21,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 > * Using live server, render the page found in `0-photo-gallery-grid/` and demonstrate how the number of columns shown changes as the screen is resized. Have fellows follow along with their own copy if they would like.
 > * Explain that `display: grid` turns the `ul` into a grid
 > * You can mention the 2 grid properties shown in this example: `grid-template-columns`, `grid-auto-rows` but don't spend too much time. The next section you'll be able to go over it more in-depth
-> * Remind fellows that they have already seen `gap` in the flexbox lecture.
+> * Remind fellows that they have already seen `gap` in the Flexbox lecture.
 > * Briefly go over the concept of media queries and ask fellows why these may be useful.
 > * Take questions but be mindful of time.
 
@@ -35,8 +35,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 ## Part 1 - Grid vs Flexbox
 
 > **Pacing**: 5 minutes (15 minutes total)
-> **Learning Objectives:** Compare and contrast grid and flexbox. Understand that grid defines a layout with rows AND columns.
-> * Use the diagram below to explain the difference between flexbox and grid. Pose the question to the group, how many rows/columns are in the example pictured above?
+> **Learning Objectives:** Compare and contrast grid and Flexbox. Understand that grid defines a layout with rows AND columns.
+> * Use the diagram below to explain the difference between Flexbox and grid. Pose the question to the group, how many rows/columns are in the example pictured above?
 
 * Flexbox is a `display` type that allows us to arrange items in rows OR columns
 * Grid is a `display` type allows us to arrange items in rows AND columns
@@ -106,7 +106,7 @@ grid-template-columns: 1fr 2fr 2fr 1fr; /* make 4 equal-sized columns */
 > * Using live server, render the page found in `3-media-queries/`
 > * Have fellows look at the code in small groups and play with resizing their screen to see how the styles are applied
 > * Have fellows update the breakpoints to match bootstrap's breakpoint sizes.
-> * Review flexbox `flex-direction` and have fellows change the flex direction to `row` for Medium devices
+> * Review Flexbox `flex-direction` and have fellows change the flex direction to `row` for Medium devices
 
 * **Media queries** allow us to apply CSS _in response_ to changes to the device's screen size (and other things too!). Media queries are how we implement **responsive web design**, ensuring usability across all devices.
 

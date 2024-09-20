@@ -11,7 +11,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [What is the DOM?](#what-is-the-dom)
 - [The `document` object](#the-document-object)
   - [Selecting Single Elements in the DOM (Read)](#selecting-single-elements-in-the-dom-read)
-  - [Modifiying Elements in the DOM (Update / Delete)](#modifiying-elements-in-the-dom-update--delete)
+  - [Modifying Elements in the DOM (Update / Delete)](#modifying-elements-in-the-dom-update--delete)
   - [Selecting Multiple Elements (Read)](#selecting-multiple-elements-read)
   - [Creating Elements (Create)](#creating-elements-create)
 
@@ -142,7 +142,7 @@ const firstOrderedListItem = document.querySelector("ol > li:nth-child(1)")
 
 More Reading: [w3Schools](https://www.w3schools.com/js/js_htmldom_elements.asp)
 
-### Modifiying Elements in the DOM (Update / Delete)
+### Modifying Elements in the DOM (Update / Delete)
 
 Once an Element is grabbed from the DOM, we can modify it, and even delete it!
 
