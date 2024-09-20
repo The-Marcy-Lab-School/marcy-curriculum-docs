@@ -28,7 +28,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 > **Learning Objectives:** See Flexbox in the real world
 > * Open https://www.youtube.com/ and see how elements shift in size as you resize the window. Point out the the videos that are aligned next to each other are NOT inline, they are flex items.
 
-Flex does two things: 
+Flexbox does a few things: 
 1. puts things in a row (or column if you need to)
 2. makes things stretchy
 3. control the relative size of elements in a row
