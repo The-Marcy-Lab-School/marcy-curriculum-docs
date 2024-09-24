@@ -1,14 +1,66 @@
 # 2024-2025 Fellow Handbook
 
+- [**Mission, Our Promise, Pillars of Character**](#mission-our-promise-pillars-of-character)
+  - [The Marcy Lab School Mission:](#the-marcy-lab-school-mission)
+  - [Our Logo:](#our-logo)
+  - [Our Promise to You:](#our-promise-to-you)
+  - [Our Pillars of Character:](#our-pillars-of-character)
+- [**Schedules, Calendar \& Learning Expectations**](#schedules-calendar--learning-expectations)
+  - [Hybrid Weekly Schedule](#hybrid-weekly-schedule)
+  - [Daily Schedule](#daily-schedule)
+  - [Remote Learning Expectations](#remote-learning-expectations)
+  - [Attendance Expectations](#attendance-expectations)
+  - [Work Submission Expectations](#work-submission-expectations)
+  - [Academic Calendar](#academic-calendar)
+- [**Academic Course Outlines \& Graduation Requirements**](#academic-course-outlines--graduation-requirements)
+  - [Academic Graduation Requirements\*](#academic-graduation-requirements)
+  - [Software Engineering Curriculum Overview:](#software-engineering-curriculum-overview)
+  - [Data Analytics Curriculum Overview:\*](#data-analytics-curriculum-overview)
+  - [Leadership \& Development Curriculum Overview:\*](#leadership--development-curriculum-overview)
+- [**Student Culture \& Community**](#student-culture--community)
+  - [Fellow Of The Week:](#fellow-of-the-week)
+  - [Thoughtful Thursdays:](#thoughtful-thursdays)
+  - [Big / Little Tradition:](#big--little-tradition)
+  - [Young Trustee:](#young-trustee)
+  - [“Pass the Pin” Tradition:](#pass-the-pin-tradition)
+  - [Graduation Sash Tradition:](#graduation-sash-tradition)
+  - [Job Celebration Traditions:](#job-celebration-traditions)
+  - [Student \& Staff Events:](#student--staff-events)
+  - [Student Feedback and Input:](#student-feedback-and-input)
+  - [Feedback Thursday:](#feedback-thursday)
+  - [Surveys:](#surveys)
+- [**Student Supports \& Well-being**](#student-supports--well-being)
+  - [Coaching Conversations:](#coaching-conversations)
+  - [Family Chats:](#family-chats)
+  - [Transitions:](#transitions)
+  - [Student Well-Being Reporting:](#student-well-being-reporting)
+  - [Student Well-Being Resources](#student-well-being-resources)
+- [**Campus Facility \& Safety**](#campus-facility--safety)
+  - [Campus Safety](#campus-safety)
+  - [Emergency Procedures:](#emergency-procedures)
+- [**Behavioral Code of Conduct**](#behavioral-code-of-conduct)
+- [**Academic Integrity, Plagiarism \& AI Acceptable Use Policy**](#academic-integrity-plagiarism--ai-acceptable-use-policy)
+  - [Academic Integrity](#academic-integrity)
+  - [Plagiarism](#plagiarism)
+  - [AI Acceptable Use](#ai-acceptable-use)
+  - [Unacceptable Use of AI](#unacceptable-use-of-ai)
+- [**Neighborhood Guide \& Local Resources**](#neighborhood-guide--local-resources)
+  - [Neighborhood Guide](#neighborhood-guide)
+- [**Networking, Alumni-hood \& Beyond**](#networking-alumni-hood--beyond)
+  - [Career Talks and Guest Speakers:](#career-talks-and-guest-speakers)
+  - [Company Visits:](#company-visits)
+  - [Career Launch Accelerator:](#career-launch-accelerator)
+
+
 ## **Mission, Our Promise, Pillars of Character**
 
 Welcome to The Marcy Lab School!  We are so happy to have you as a part of our family. This handbook is designed to be a roadmap for you. Here, you'll understand our mission and values, our hybrid school culture, a look into the daily, weekly, and yearly life as a Fellow, what you can expect *from us* as a Marcy Lab Software Engineering Fellow, and what we expect *of you.* 
 
-### **The Marcy Lab School Mission:**
+### The Marcy Lab School Mission:
 
 Our mission is to build economic mobility. We help young people accelerate their careers. Our yearlong college alternative provides young adults from underestimated backgrounds with the skills, the habits, and the network necessary to launch a rewarding, purpose-driven career in the tech sector.
 
-### **Our Logo:**
+### Our Logo:
 
 The logo of The Marcy Lab School is the *Fawodhie,* the West African Adinkra Symbol that translates to "Independence, Freedom, and Emancipation." Directly translated, it means "that with independence comes great responsibility." This symbol is a source of inspiration for our community each day as we support our fellows in building their righteous pathways into the middle class for themselves and those who come after them. As they prepare to step into opportunity, independence, wealth, and mobility, this symbol brings us back to their driving force: that path they're building is not just for them to walk but, rather, the path that paves the way for all those to follow.
 
@@ -43,7 +95,7 @@ Our hybrid weekly schedule gives students the *best* of both worlds. Each week, 
 
 At The Marcy Lab School, you will typically be in class from roughly 9:00 a.m. to 4:30 p.m. on weekdays. Below, find descriptions of what you can expect within your daily schedule! We are so, so excited to present you all with a schedule that we believe will help you get every single drop out of what this program has to offer! 
 
-### **Hybrid Weekly Schedule**
+### Hybrid Weekly Schedule
   - **3 on-campus days (Tuesday, Wednesday, Thursday).** On in-person days, class begins at 9:30am, with our days still ending by 4:30pm.
   - **1 remote day (Monday).**
         
@@ -57,7 +109,7 @@ At The Marcy Lab School, you will typically be in class from roughly 9:00 a.m. t
     - **Student support** - check-ins with Program Managers, Lead Instructors or support sessions with Teaching Assistants and Resident Advisors.
     - **Student well-being** - taking time to rest and attend to personal needs and responsibilities; spending time on campus in community with other fellows.
     - **Important note** - if you are missing assignments and/or not on track to meeting Graduation Requirements, you may be required to have check-ins with Program Managers, Lead Instructors  or Teaching Assitants to support your continued success during the Fellowship.
-### **Daily Schedule**
+### Daily Schedule
     
 * **Mindful Morning:**
     
@@ -108,7 +160,7 @@ At The Marcy Lab School, you will typically be in class from roughly 9:00 a.m. t
     
     - Occasionally, we will add in a block to the schedule for Scoping & Goal Setting. Throughout your year at Marcy, you will be balancing multiple streams of work, and this shared space allows us to hold each other accountable to the work by naming our specific focus for the day.
 
-### **Remote Learning Expectations**
+### Remote Learning Expectations
     
 In 2020, The Marcy Lab School decided to be a remote-first school.  In this section, you'll learn about *how* we do it, and *why* these expectations will enable you to have a joyful and productive learning experience.
     
@@ -135,7 +187,7 @@ We are purposeful and intentional with how we use Zoom with a split of both "Cam
   - **Zoom Display Names:**  We create a safe remote space for all community members  and future employees by ensuring that our display names capture our full names and pronouns. More on this in Leadership Seminar!
   - **Honoring Privacy:** We also honor the privacy of each other and our loved ones, siblings, family members, by using zoom backgrounds whenever we want/need to!
 
-### **Attendance Expectations**
+### Attendance Expectations
     
 Just like any job, attendance at Marcy Lab is required and a key component of your success. Attendance means being on time and attending all scheduled sessions including mindful mornings, code challenges, tech discussion, classes (lecture and leadership seminar), community time, coaching and school meetings. **Every day, Instructors will take daily attendance in Mindful Morning.**  We expect you to be *on time and on camera* for **every** virtual or in-person class in our "Camera's On" spaces.  Failure to be on camera in these spaces will result in an absence.
     
@@ -147,7 +199,7 @@ Just like any job, attendance at Marcy Lab is required and a key component of yo
 
 A student who is ill, or who has a family emergency, should contact their Program Manager,  Associate Instructor, and Lead Instructor as soon as possible to let them know.  If absent, you will be held responsible for taking initiative to get caught up on anything you missed.
     
-### **Work Submission Expectations**
+### Work Submission Expectations
     
 This program is designed to provide fellows with the knowledge, versatility, skills, network, leadership, and career coaching to be employed as a software engineer in one year.  Thus, it is crucial that each assignment and deliverable is treated like an on-the-job assignment, project, or product for us to do right on our promise. To be able to fully prepare you for your career, we hold you to a high standard of excellence, marked by **firm deadlines** that you must meet *on time.* 
 
@@ -155,7 +207,7 @@ All fellows are **expected to meet deadlines at a rate of 90% (even if assignmen
 
 Because of our high standard of excellence, it is common for instructors to ask fellows to **resubmit work that has not yet met our bar**. If an instructor asks a fellow to resubmit an assignment, fellows are expected to implement the given feedback and turn in an improved version of their assignment *within 48 hours* of the when the feedback was given. 
     
-### **Academic Calendar**
+### Academic Calendar
 - [Fall 2024 School Year Calendar](https://docs.google.com/document/d/1T3tDmzUW762B8fi4oNPJoMxOCZ0eh3sKgM4lR5ka31Q/edit?usp=sharing)
 - [Spring 2024 School Year Calendar](https://www.notion.so/2f5ba2fb060f464a87ebffa55231fc25?pvs=21)
 
@@ -163,7 +215,7 @@ Because of our high standard of excellence, it is common for instructors to ask 
 
 We are excited to share an overview of our curriculum and academic requirements at Marcy.  In this section, you'll learn more about Marcy's academic requirements and our curriculum's ethos.
 
-### **Academic Graduation Requirements** 
+### Academic Graduation Requirements*
 
 On the first day of orientation, we share our promise to you: *“You will know yourself, your worth, and your standard of excellence. You will mobilize these to step into wealth and become a leader in your community.”* Part of fulfilling this promise means prioritizing academics at Marcy—from investing in instructor learning and development, refining the curriculum to be responsive to market needs, and setting clear academic expectations for Fellows that align with industry needs.
 
@@ -184,21 +236,21 @@ Over the next year, you will learn how to be a full-stack software engineer! You
 
 [Find our curriculum online here!](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum)
 
-### **Data Analytics Curriculum Overview:** 
+### Data Analytics Curriculum Overview:*
 
 Coming Soon!
 
-### **Leadership & Development Curriculum Overview:** 
+### Leadership & Development Curriculum Overview:*
 
 The concept of leadership is central to everything we do at The Marcy Lab School. It is our promise to help our Fellows prepare for the professional world, and this means fully understanding the systems that they are entering and being able to successfully navigate these spaces beyond their time in the Fellowship. Who each of our Fellows are and where they come from is an asset - their empowered story is something to contribute to each of the spaces they enter. By spending time on leadership and identity development, we are cultivating conversations with our Fellows that allow them to question the systems that they are a part of and to critically think through what meaningful change can look like in any opportunity they pursue beyond their time at Marcy.
 
 ## **Student Culture & Community**
 
-### **Fellow Of The Week:**
+### Fellow Of The Week:
 
 Every week, you and your peers select a Fellow of the Week who embodied or lived into our core values and embodies a specific Pillar of Character each week!  When you are selected as the fellow of the week, it's your job to keep an eye on your team and look for the ways they are shining.  During Weekly Closeout, you share the Pillar of Character you saw this person live into and what inspired you to choose them as our Fellow of the Week! It's up to them to choose the next Fellow of the Week! 🌟
 
-### **Thoughtful Thursdays:**
+### Thoughtful Thursdays:
 
 Every week, we will unite as a community in our ritual called "Thoughtful Thursdays!" We cherish this weekly ritual to be in community together as human beings. Thoughtful Thursdays is an unprompted and open space for each member of our community to share their feelings, *any* feelings, updates, thoughts, or reflections.  This space has been so helpful for our community in processing current events, supporting each other through hardships or times, reflecting on the week, or sharing anything in our hearts.  After each person shares, our community snaps, and the next community members get to share. 
 
@@ -236,25 +288,25 @@ Our job celebration traditions began at The Marcy Lab School with our very first
 
 Balancing our asynchronous banana bread celebrations, we also built upon this tradition in Spring 2024 by adding an on-campus celebration for when someone receives a job offer. At the front of our campus, you will notice that we have a bell affixed to the wall and when someone receives/signs a job offer, they ring the bell to announce to our community that a banana bread has taken place. Once the bell has been rung, that fellow or alumni will add a Polaroid photo of themselves to our “Wall of Banana Breads,” noting the company where they will launch their career and any words of advice for those job searching in our community. This wall has become a source of inspiration for our community through the fellowship and beyond!
 
-### **Student & Staff Events:**
+### Student & Staff Events:
 
 On our monthly calendar, we'll have a student and staff campus-wide event approximately once per month. Often, these events will build off a specific cultural, religious or specific Marcy tradition. We want to bring joy and celebration to our community and these events will be invaluable ways for you to forge deeper relationships on campus. 
 
-### **Student Feedback and Input:**
+### Student Feedback and Input:
 
 At The Marcy Lab School, we believe in "getting 1% better every day." And that applies to us as an organization, too! In your interviews, we reminded each of you that by joining us, you would be the pioneers of helping us build a remote world for the first time, and we meant it. We know that we are not perfect, and we constantly want your feedback, ideas, and honest take on your experience at The Marcy Lab School for all those who come after you. After every project, unit, or coaching conversation, we want to know how it *felt for you*, the highs and the lows, and what else you would like to see happen here at Marcy. 
 
-### **Feedback Thursday:**
+### Feedback Thursday:
 
 Every Friday, before Shout Outs and Fellow of the Week, we will ask you to reflect on the week that you had through a Weekly Survey called "Feedback Thursday" and share with us any highlights or challenges, moments or rituals you enjoyed, or ideas you have to make our program better. We read each piece of feedback carefully and work to respond to each idea, highlight, or challenge thoughtfully.
 
-### **Surveys:**
+### Surveys:
 
 We’ll use surveys throughout the year to learn more about your experience and how we can improve it! Every few months, we’ll use anonymous surveys to improve our practices and use named surveys to monitor the ebbs and flows of the year for each of you.
 
 ## **Student Supports & Well-being**
 
-### **Coaching Conversations:**
+### Coaching Conversations:
 
 One of the first things you read when you started reading this handbook was our promise that by the end of this year, you will know yourself, your worth, and your standard of excellence. Most of all, you will learn how to mobilize these to step into wealth and become a leader in your community and for all who come after you.  We know this is hard work you can't do alone — this is where your Program Managers come in! Your Program Managers are your in-house support system (in addition to your peers), academic advisor, career counselor, accountability partner, and biggest cheerleader.  Together, you set personal goals, and they help you reach them. Whether you are paralyzed with anxiety when public speaking, need help pushing your immigration paperwork through, or have surmountable at-home, personal, or family barriers, this is the kind of "executive coaching" that CEOs at Fortune 500 companies depend on. We believe that you deserve the same thing, future CEO! 
 
@@ -264,15 +316,15 @@ In many ways, Program Managers also serve as "HR" here at The Lab, and they are 
 
 You will have a "coaching conversation" every few weeks for 30-45 minutes. These will be planned sessions with activities around your goals and your mindsets, and this time is 100% for you. Coaching conversations are rooted in building trust and creating a safe space for you to process your progress towards your goals, cultivate leadership mindsets, process your challenges, wins, and disappointments, challenge any limiting beliefs, provide you with an empowering and personal toolkit, and most importantly, to remind you of your brilliance!
 
-### **Family Chats:**
+### Family Chats:
 
 There may be times this year when you need help to meet our academic or career-fluency expectations.  In these cases, we always want to support and get you back on track.  If there is a pattern of you falling behind, arriving late, missing assignments, or not showing up in the way that you need to, you may be invited to a "Family Chat" with your Program Managers and Instructors to problem-solve together and get you back on track. 💜 
 
-### **Transitions:**
+### Transitions:
 
 We recognize and honor that our fellows come from different backgrounds and bring  various strengths and needs to excel in their learning journeys. The fellowship is an incredible opportunity for self-discovery, and our staff is committed to supporting our fellows and ensuring that this fellowship is the right step at the right time. We are proud to meet fellows where they are and support them in transitioning to programs that continue to inspire and empower them to prepare for life-changing careers in technology and unlock their full potential as leaders in their community.
 
-### **Student Well-Being Reporting:**
+### Student Well-Being Reporting:
 
 We are committed to ensuring our community's health, safety, and well-being. 
 
@@ -280,7 +332,7 @@ We are committed to ensuring our community's health, safety, and well-being.
 
 This form is a resource for students and staff to share information about situations that may compromise your well-being or that of someone you know who could benefit from support. After we receive the report, we will discuss it with community members on a need-to-know basis to collaborate on the best ways to support it.
 
-### **Student Well-Being Resources**
+### Student Well-Being Resources
 
 - [**988 NYS Crisis Line**](https://nyc988.cityofnewyork.us/en/)
 - [**The Door Health Center**](https://www.door.org/health/) offers NYC young people ages 12 to 24 no-cost, confidential health services in a diverse and caring setting. If you are interested in using these services, please contact Motun Bolumole, Director of Leadership & Development, who will support you in accessing this resource.
@@ -289,7 +341,7 @@ This form is a resource for students and staff to share information about situat
 - [**Loveland Foundation**](https://thelovelandfoundation.org/) is committed to showing up for communities of color in unique and powerful ways, focusing on Black women and girls. Resources and initiatives are collaborative, and they prioritize opportunity, access, validation, and healing. With the barriers affecting access to treatment by members of diverse ethnic and racial groups, the Loveland Therapy Fund provides financial assistance to Black women and girls seeking therapy nationally.
 - [**The Boris Lawrence Henson Foundation’s**](https://borislhensonfoundation.org/) vision is to eradicate the stigma around mental health issues in the African-American community by providing support and bringing awareness to mental health issues that plague communities of color. Individuals can access 5 free sessions with a licensed therapist through their online directory.
 
-## Campus Facility & Safety
+## **Campus Facility & Safety**
 
 We've invested in a beautiful 16,000-square-foot campus to provide you all with an inspiring workspace you can call your own, and have found the most incredible Computer Science Instructors who will be leading your learning.  We've hired the best instructional team to support you technically on your in-person and remote days, and finally, the world's best Program Managers, your coaches, to support your leadership development through in-person Leadership Seminar, coaching conversations, and whole school moments!
 
@@ -476,7 +528,7 @@ Together, let’s create a thriving community!
 
 The Marcy Lab Fellows are expected to uphold their responsibilities with the utmost transparency and honesty in all aspects.  We know that by carving out this path, we are carving a path for all who come after us.  While we encourage collaboration, teamwork, and collective problem-solving, we do not condone cheating, plagiarism, or academic shortcuts.  Fellows who violate this policy or who are suspected to have violated this policy will be interviewed by relevant staff to determine the course of action. Below, find all things that we constitute as "cheating" or "plagiarism,” as well as our Acceptable Use of AI policy at Marcy. 
 
-### **Academic Integrity**
+### Academic Integrity
 
 *Cheating occurs when a fellow has availed him/herself of an unfair or disallowed advantage which includes but is not limited to:*
 
@@ -487,7 +539,7 @@ The Marcy Lab Fellows are expected to uphold their responsibilities with the utm
 - Submission or use of falsified data
 - Use of the Zoom chat feature to pass answers during an examination
 
-### **Plagiarism**
+### Plagiarism
 
 *Plagiarism is defined as the use of work or concepts contributed by other individuals without proper attribution or citation.  Unique ideas or materials taken from another source for either written or oral use must be fully acknowledged in written, academic work, or blog posts. Examples of sources expected to be referenced include but are not limited to:*
 
@@ -496,7 +548,7 @@ The Marcy Lab Fellows are expected to uphold their responsibilities with the utm
 - Scientific Data
 - Concepts or material derived from the work (published or unpublished) of another person
 
-### **AI Acceptable Use**
+### AI Acceptable Use
 
 Any student work submitted using AI tools should clearly indicate what work is the student’s work and what work is generated by the AI. For example, in your coding assignments, indicate with comments which portions of the assignment were completed using AI. To ensure your growth and development, **aim for no more than 25% of your work to be generated by AI.** Assignments that are in large part quoted from an AI assistant are very unlikely to be evaluated positively.
 
@@ -541,7 +593,7 @@ The use of generative AI tools like ChatGPT is permitted at Marcy for the follow
 ![](./img/chat-gpt-5.png)
 </details>    
 
-### **Unacceptable Use of AI**
+### Unacceptable Use of AI
 
 The use of generative AI tools is not permitted in this course for the following activities:
 
@@ -555,21 +607,21 @@ For additional details and recommended learning resources, please refer to our[A
 
 ## **Neighborhood Guide & Local Resources**
 
-### **Neighborhood Guide**
+### Neighborhood Guide
 
 [Industry City Visitor Map.pdf](https://prod-files-secure.s3.us-west-2.amazonaws.com/eff2afd5-228f-48a3-862f-ea6f644e2eb2/943c6454-5817-4285-8c7e-cc0801bffc19/Industry_City_Visitor_Map.pdf)
 
 ## **Networking, Alumni-hood & Beyond**
 
-### **Career Talks and Guest Speakers:**
+### Career Talks and Guest Speakers:
 
 At The Marcy Lab School, you will often hear us refer to "social capital," which for so many is the biggest benefit of colleges and universities.  At The Marcy Lab School, one of the most important things that we do is support you in building your network by bringing dynamic industry professionals and leaders in to meet you through "career talks."  When Career Talks and Guest Speakers come to The Lab, it's because they are people who you can learn from personally or professionally, who are interested in hiring Marcy Lab Engineers, or whom have power or influence at your dream companies.  During Career Talks and Guest Lectures, it is your chance to shine, to ask thoughtful questions, to engage fully, and most of all, to learn and enjoy! As the year goes on and you get closer to your first day on the job, our career talks and guest speakers become more and more frequent.  After each career talk, you get to add one more person to your LinkedIn network, and you have another professional relationship in your life who can serve as a cheerleader, thought partner, connector and resource for you. 🙏🏾
 
-### **Company Visits:**
+### Company Visits:
 
 In previous years, we often visited companies such as Google, Microsoft, 2U, Democracy Works, or The New York Times for you to get a feel of what "office life" you enjoy the most. The Partnerships Team will be planning visits to companies *and* visits to Marcy Lab HQ! We hope to be able to take you to a variety of company visits for you to get a feel for the kinds of offices you would like to show up to every day! Sometimes, we will also have virtual company visits ****in their place, where you will get a chance to meet members of the team virtually, learn more about the brand, and begin getting a sense of the company cultures that you enjoy the most.
 
-### **Career Launch Accelerator:**
+### Career Launch Accelerator:
 
 In response to the evolving tech industry hiring landscape, the Career Launch Accelerator AKA Job-Seekers Program was created to support a growing group of Marcy alumni with the advanced skills, habits, work products, and experiences necessary for success in the competitive tech job market.  
 
