@@ -1,23 +1,23 @@
 # 2024-2025 Fellow Handbook
 
-- [**Mission, Our Promise, Pillars of Character**](#mission-our-promise-pillars-of-character)
+- [Mission, Our Promise, Pillars of Character](#mission-our-promise-pillars-of-character)
   - [The Marcy Lab School Mission:](#the-marcy-lab-school-mission)
   - [Our Logo:](#our-logo)
   - [Our Promise to You:](#our-promise-to-you)
   - [Our Pillars of Character:](#our-pillars-of-character)
-- [**Schedules, Calendar \& Learning Expectations**](#schedules-calendar--learning-expectations)
+- [Schedules, Calendar \& Learning Expectations](#schedules-calendar--learning-expectations)
   - [Hybrid Weekly Schedule](#hybrid-weekly-schedule)
   - [Daily Schedule](#daily-schedule)
   - [Remote Learning Expectations](#remote-learning-expectations)
   - [Attendance Expectations](#attendance-expectations)
   - [Work Submission Expectations](#work-submission-expectations)
   - [Academic Calendar](#academic-calendar)
-- [**Academic Course Outlines \& Graduation Requirements**](#academic-course-outlines--graduation-requirements)
+- [Academic Course Outlines \& Graduation Requirements](#academic-course-outlines--graduation-requirements)
   - [Academic Graduation Requirements\*](#academic-graduation-requirements)
   - [Software Engineering Curriculum Overview:](#software-engineering-curriculum-overview)
   - [Data Analytics Curriculum Overview:\*](#data-analytics-curriculum-overview)
   - [Leadership \& Development Curriculum Overview:\*](#leadership--development-curriculum-overview)
-- [**Student Culture \& Community**](#student-culture--community)
+- [Student Culture \& Community](#student-culture--community)
   - [Fellow Of The Week:](#fellow-of-the-week)
   - [Thoughtful Thursdays:](#thoughtful-thursdays)
   - [Big / Little Tradition:](#big--little-tradition)
@@ -29,30 +29,30 @@
   - [Student Feedback and Input:](#student-feedback-and-input)
   - [Feedback Thursday:](#feedback-thursday)
   - [Surveys:](#surveys)
-- [**Student Supports \& Well-being**](#student-supports--well-being)
+- [Student Supports \& Well-being](#student-supports--well-being)
   - [Coaching Conversations:](#coaching-conversations)
   - [Family Chats:](#family-chats)
   - [Transitions:](#transitions)
   - [Student Well-Being Reporting:](#student-well-being-reporting)
   - [Student Well-Being Resources](#student-well-being-resources)
-- [**Campus Facility \& Safety**](#campus-facility--safety)
+- [Campus Facility \& Safety](#campus-facility--safety)
   - [Campus Safety](#campus-safety)
   - [Emergency Procedures:](#emergency-procedures)
-- [**Behavioral Code of Conduct**](#behavioral-code-of-conduct)
-- [**Academic Integrity, Plagiarism \& AI Acceptable Use Policy**](#academic-integrity-plagiarism--ai-acceptable-use-policy)
+- [Behavioral Code of Conduct](#behavioral-code-of-conduct)
+- [Academic Integrity, Plagiarism \& AI Acceptable Use Policy](#academic-integrity-plagiarism--ai-acceptable-use-policy)
   - [Academic Integrity](#academic-integrity)
   - [Plagiarism](#plagiarism)
   - [AI Acceptable Use](#ai-acceptable-use)
   - [Unacceptable Use of AI](#unacceptable-use-of-ai)
-- [**Neighborhood Guide \& Local Resources**](#neighborhood-guide--local-resources)
+- [Neighborhood Guide \& Local Resources](#neighborhood-guide--local-resources)
   - [Neighborhood Guide](#neighborhood-guide)
-- [**Networking, Alumni-hood \& Beyond**](#networking-alumni-hood--beyond)
+- [Networking, Alumni-hood \& Beyond](#networking-alumni-hood--beyond)
   - [Career Talks and Guest Speakers:](#career-talks-and-guest-speakers)
   - [Company Visits:](#company-visits)
   - [Career Launch Accelerator:](#career-launch-accelerator)
 
 
-## **Mission, Our Promise, Pillars of Character**
+## Mission, Our Promise, Pillars of Character
 
 Welcome to The Marcy Lab School!  We are so happy to have you as a part of our family. This handbook is designed to be a roadmap for you. Here, you'll understand our mission and values, our hybrid school culture, a look into the daily, weekly, and yearly life as a Fellow, what you can expect *from us* as a Marcy Lab Software Engineering Fellow, and what we expect *of you.* 
 
@@ -87,7 +87,7 @@ We are wildly talented, yet also have a world of brilliance and potential to unl
 - **Collective Responsibility 🌍**
 We care deeply for each other and are beholden to our networks and communities. We are responsible to them as much as to ourselves, in our daily work, in our future aspirations, and in our ultimate solutions. We are in this together, and we carry this value with us wherever we go.
 
-## **Schedules, Calendar & Learning Expectations**
+## Schedules, Calendar & Learning Expectations
 
 So, what does our hybrid weekly schedule include and what does it look like to be an engaged learner and member of our professional learning community?! The Marcy Lab School is an alternative to college, and we are proud to have created a warm, welcoming and supportive community. Through our in-person classes, community moments, company visits, brave discussions in Leadership Seminar, and countless hours studying beside each other, Fellows have the college experience that they always dreamed of but never got: deep friendships, personal and professional development, and the chance to hold each other down through the most rigorous computer science program in the country. 
 
@@ -211,7 +211,7 @@ Because of our high standard of excellence, it is common for instructors to ask 
 - [Fall 2024 School Year Calendar](https://docs.google.com/document/d/1T3tDmzUW762B8fi4oNPJoMxOCZ0eh3sKgM4lR5ka31Q/edit?usp=sharing)
 - [Spring 2024 School Year Calendar](https://www.notion.so/2f5ba2fb060f464a87ebffa55231fc25?pvs=21)
 
-## **Academic Course Outlines & Graduation Requirements**
+## Academic Course Outlines & Graduation Requirements
 
 We are excited to share an overview of our curriculum and academic requirements at Marcy.  In this section, you'll learn more about Marcy's academic requirements and our curriculum's ethos.
 
@@ -244,7 +244,7 @@ Coming Soon!
 
 The concept of leadership is central to everything we do at The Marcy Lab School. It is our promise to help our Fellows prepare for the professional world, and this means fully understanding the systems that they are entering and being able to successfully navigate these spaces beyond their time in the Fellowship. Who each of our Fellows are and where they come from is an asset - their empowered story is something to contribute to each of the spaces they enter. By spending time on leadership and identity development, we are cultivating conversations with our Fellows that allow them to question the systems that they are a part of and to critically think through what meaningful change can look like in any opportunity they pursue beyond their time at Marcy.
 
-## **Student Culture & Community**
+## Student Culture & Community
 
 ### Fellow Of The Week:
 
@@ -304,7 +304,7 @@ Every Friday, before Shout Outs and Fellow of the Week, we will ask you to refle
 
 We’ll use surveys throughout the year to learn more about your experience and how we can improve it! Every few months, we’ll use anonymous surveys to improve our practices and use named surveys to monitor the ebbs and flows of the year for each of you.
 
-## **Student Supports & Well-being**
+## Student Supports & Well-being
 
 ### Coaching Conversations:
 
@@ -341,7 +341,7 @@ This form is a resource for students and staff to share information about situat
 - [**Loveland Foundation**](https://thelovelandfoundation.org/) is committed to showing up for communities of color in unique and powerful ways, focusing on Black women and girls. Resources and initiatives are collaborative, and they prioritize opportunity, access, validation, and healing. With the barriers affecting access to treatment by members of diverse ethnic and racial groups, the Loveland Therapy Fund provides financial assistance to Black women and girls seeking therapy nationally.
 - [**The Boris Lawrence Henson Foundation’s**](https://borislhensonfoundation.org/) vision is to eradicate the stigma around mental health issues in the African-American community by providing support and bringing awareness to mental health issues that plague communities of color. Individuals can access 5 free sessions with a licensed therapist through their online directory.
 
-## **Campus Facility & Safety**
+## Campus Facility & Safety
 
 We've invested in a beautiful 16,000-square-foot campus to provide you all with an inspiring workspace you can call your own, and have found the most incredible Computer Science Instructors who will be leading your learning.  We've hired the best instructional team to support you technically on your in-person and remote days, and finally, the world's best Program Managers, your coaches, to support your leadership development through in-person Leadership Seminar, coaching conversations, and whole school moments!
 
@@ -506,7 +506,7 @@ You should use the Incident Report Form in the following situations:
 - Bullying
 </details>
 
-## **Behavioral Code of Conduct**
+## Behavioral Code of Conduct
 
 We take pride in the work we pour into helping you meet your bar for excellence, of the ways we prepare you for the industry, and finally, for the social and educational atmosphere of our campus.  Whether learning online or in person, the idea of learning as a connected community that supports and lifts one another up is central to our school culture as we work to create, to build, and to lead the tech sector.We emphasize excellence and foster a connected, supportive learning environment—whether online or in person—as we strive to lead in the tech sector.
 
@@ -524,7 +524,7 @@ Fellows who violate our Code of Conduct may be dismissed from the Fellowship.
 
 Together, let’s create a thriving community!
 
-## **Academic Integrity, Plagiarism & AI Acceptable Use Policy**
+## Academic Integrity, Plagiarism & AI Acceptable Use Policy
 
 The Marcy Lab Fellows are expected to uphold their responsibilities with the utmost transparency and honesty in all aspects.  We know that by carving out this path, we are carving a path for all who come after us.  While we encourage collaboration, teamwork, and collective problem-solving, we do not condone cheating, plagiarism, or academic shortcuts.  Fellows who violate this policy or who are suspected to have violated this policy will be interviewed by relevant staff to determine the course of action. Below, find all things that we constitute as "cheating" or "plagiarism,” as well as our Acceptable Use of AI policy at Marcy. 
 
@@ -605,13 +605,13 @@ The use of generative AI tools is not permitted in this course for the following
 
 For additional details and recommended learning resources, please refer to our [AI Policy](./ai-policy.md).
 
-## **Neighborhood Guide & Local Resources**
+## Neighborhood Guide & Local Resources
 
 ### Neighborhood Guide
 
 [Industry City Visitor Map.pdf](./img/Industry_City_Visitor_Map.pdf)
 
-## **Networking, Alumni-hood & Beyond**
+## Networking, Alumni-hood & Beyond
 
 ### Career Talks and Guest Speakers:
 
