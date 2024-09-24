@@ -15,23 +15,25 @@ Today, we'll be setting up our local development environment for Mac. For the Wi
 
 First, let's get familiar with the **Terminal**. It's an application that you can use to manage your file system. At first, it may seem slow but you'll quickly learn how to use it and see how powerful it can be!
 
-1. Open your Terminal. You can so this via Spotlight Search (Command+Spacebar)and type "Terminal":
+1. Open your Terminal. You can do this via Spotlight Search (Command+Spacebar)and type "Terminal":
 
     ![terminal](./img/terminal.png)
 
-2. Using your Terminal as a command line, create a folder structure where you can put all your Marcy Lab code. We recommend:
+2. Using your Terminal as a command line, create a folder structure where you can put all your Marcy Lab code. 
 
-    ![alt text](./img/folder-structure.png)
+    When you're done with this step your folder structure will look something like this: 
+
+    ![folder-structure in Finder](./img/folder-structure.png)
 
     However, instead of creating these folders using Finder, you will create them using your Terminal.
 
     You can do this by typing and then entering the following commands into your Terminal:
-    * `cd` to navigate to the home directory.
-    * `ls` to **MAKE SURE** you are in the home directory. You should see folders like "Desktop" and "Documents".
-    * `mkdir Development` to create a folder for *all* your work.
-    * `cd Development` where you will create more subdirectories.
-    * `mkdir unit-0 unit-1 unit-2 unit-3` and so on to make multiple folders at once.
-    * `ls` to ensure the folders were created. You should see folders for `unit-0` up to `unit-8`.
+   * `cd` to navigate to the home directory.
+   * `ls` to **MAKE SURE** you are in the home directory. You should see folders like "Desktop" and "Documents".
+   * `mkdir Development` to create a folder for *all* your work.
+   * `cd Development` where you will create more subdirectories.
+   * `mkdir unit-0 unit-1 unit-2 unit-3` and so on to make multiple folders at once.
+   * `ls` to ensure the folders were created. You should see folders for `unit-0` up to `unit-8`.
 
 ## Download VS Code
 
