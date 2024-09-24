@@ -13,10 +13,10 @@
   - [Work Submission Expectations](#work-submission-expectations)
   - [Academic Calendar](#academic-calendar)
 - [Academic Course Outlines \& Graduation Requirements](#academic-course-outlines--graduation-requirements)
-  - [Academic Graduation Requirements\*](#academic-graduation-requirements)
+  - [Academic Graduation Requirements](#academic-graduation-requirements)
   - [Software Engineering Curriculum Overview:](#software-engineering-curriculum-overview)
-  - [Data Analytics Curriculum Overview:\*](#data-analytics-curriculum-overview)
-  - [Leadership \& Development Curriculum Overview:\*](#leadership--development-curriculum-overview)
+  - [Data Analytics Curriculum Overview:](#data-analytics-curriculum-overview)
+  - [Leadership \& Development Curriculum Overview:](#leadership--development-curriculum-overview)
 - [Student Culture \& Community](#student-culture--community)
   - [Fellow Of The Week:](#fellow-of-the-week)
   - [Thoughtful Thursdays:](#thoughtful-thursdays)
@@ -215,7 +215,7 @@ Because of our high standard of excellence, it is common for instructors to ask 
 
 We are excited to share an overview of our curriculum and academic requirements at Marcy.  In this section, you'll learn more about Marcy's academic requirements and our curriculum's ethos.
 
-### Academic Graduation Requirements*
+### Academic Graduation Requirements
 
 On the first day of orientation, we share our promise to you: *“You will know yourself, your worth, and your standard of excellence. You will mobilize these to step into wealth and become a leader in your community.”* Part of fulfilling this promise means prioritizing academics at Marcy—from investing in instructor learning and development, refining the curriculum to be responsive to market needs, and setting clear academic expectations for Fellows that align with industry needs.
 
@@ -236,11 +236,11 @@ Over the next year, you will learn how to be a full-stack software engineer! You
 
 [Find our curriculum online here!](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum)
 
-### Data Analytics Curriculum Overview:*
+### Data Analytics Curriculum Overview:
 
 Coming Soon!
 
-### Leadership & Development Curriculum Overview:*
+### Leadership & Development Curriculum Overview:
 
 The concept of leadership is central to everything we do at The Marcy Lab School. It is our promise to help our Fellows prepare for the professional world, and this means fully understanding the systems that they are entering and being able to successfully navigate these spaces beyond their time in the Fellowship. Who each of our Fellows are and where they come from is an asset - their empowered story is something to contribute to each of the spaces they enter. By spending time on leadership and identity development, we are cultivating conversations with our Fellows that allow them to question the systems that they are a part of and to critically think through what meaningful change can look like in any opportunity they pursue beyond their time at Marcy.
 
