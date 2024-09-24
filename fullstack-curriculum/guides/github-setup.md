@@ -55,7 +55,7 @@ While we're configuring GitHub, we should add a new SSH key to allow you to push
 
 ![4](./img/ed25519.png)
 
-Run `cat ~/.ssh/ed25519.pub` in your terminal. Copy the output (starting from `ssh-ed25519` and ending in `.local`). You'll need it for the next step
+Run `cat ~/.ssh/id_ed25519.pub` in your terminal. Copy the output (starting from `ssh-ed25519` and ending in `.local`). You'll need it for the next step
 
 1. Navigate to the homepage of Github in your browser. Go to your account settings:
 
