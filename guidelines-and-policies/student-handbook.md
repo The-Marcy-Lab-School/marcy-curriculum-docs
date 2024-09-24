@@ -603,13 +603,13 @@ The use of generative AI tools is not permitted in this course for the following
 - Use in any form on the coding portion of a technical assessment.
 - Use of VS Code AI auto-complete extensions.
 
-For additional details and recommended learning resources, please refer to our[AI Policy ](https://www.notion.so/AI-Policy-a7aa77e1229742afaa495b6a1ee7312f?pvs=21).
+For additional details and recommended learning resources, please refer to our [AI Policy](./ai-policy.md).
 
 ## **Neighborhood Guide & Local Resources**
 
 ### Neighborhood Guide
 
-[Industry City Visitor Map.pdf](https://prod-files-secure.s3.us-west-2.amazonaws.com/eff2afd5-228f-48a3-862f-ea6f644e2eb2/943c6454-5817-4285-8c7e-cc0801bffc19/Industry_City_Visitor_Map.pdf)
+[Industry City Visitor Map.pdf](./img/Industry_City_Visitor_Map.pdf)
 
 ## **Networking, Alumni-hood & Beyond**
 
