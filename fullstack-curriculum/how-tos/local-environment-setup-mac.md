@@ -96,6 +96,6 @@ Now, in your VS Code Terminal, enter these commands:
    
 ## Configure your Github using the Terminal
 
-1. Follow these instructions to [set up Github in your terminal](https://github.com/The-Marcy-Lab-School/github-setup).  
+1. Follow these instructions to [set up Github in your terminal](./github-setup.md).  
 
 **If everything has worked as expected, reach out to an instructor for a final validation!!**

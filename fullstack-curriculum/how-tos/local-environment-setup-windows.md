@@ -157,6 +157,6 @@ Familiarize yourself with VS Code. This will be your new coding environment.
 
 ## Configure your Github using the Terminal
 
-Follow these instructions to [set up Github in your terminal](https://github.com/The-Marcy-Lab-School/github-setup).
+Follow these instructions to [set up Github in your terminal](./github-setup.md).
 
 **If everything has worked as expected, reach out to an instructor for a final validation!**
