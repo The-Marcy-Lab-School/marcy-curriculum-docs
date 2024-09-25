@@ -3,6 +3,7 @@
 - [Overview](#overview)
 - [Collaborating on a GitHub Repository](#collaborating-on-a-github-repository)
   - [`git pull` synchronizes local repositories](#git-pull-synchronizes-local-repositories)
+  - [Adding a Collaborator](#adding-a-collaborator)
   - [Creating a Merge Conflict](#creating-a-merge-conflict)
   - [Handling Merge Conflicts](#handling-merge-conflicts)
 - [Tips for success](#tips-for-success)
@@ -63,10 +64,9 @@ Tada! Now you have the same repository on two computers!
 
 In the last lesson, you learned about the `git push` command which uploads a local repository's commits to the remote repository (GitHub). 
 
-`git pull` does the opposite. If the remote repository on GitHub has commits that the local repository does not, `git pull` will download those commits.
+`git pull` does the opposite. If the local repository (on your computer) is missing commits that are on the remote repository (on GitHub), `git pull` will download those commits.
 
-
-Let's put this into practice. With your partner:
+Let's put this into practice. With your partner do the following:
 
 1. Have the developer who first created the repo on GitHub make some edits to `README.md`.
 2. That same developer should then stage their changes (`git add README.md`), commit (`git commit -m "description of commit"`) and then push that commit (`git push`)!
@@ -75,14 +75,18 @@ Let's put this into practice. With your partner:
 
 ![](./img/git-github-workflow.png)
 
-By storing repositories remotely on GitHub, any number of developers can have access to a single repository, and this push and pull mechanism is essential for collaboration. 
+By storing repositories remotely on GitHub, any number of developers can have access to a single repository. This push and pull mechanism is essential for collaboration. 
 
-### Creating a Merge Conflict
+### Adding a Collaborator
 
 So far only one developer was making changes, while the other developer simply "pulled down" those changes. But what if both developers want to work simultaneously?
 
 Before moving on, the owner of the shared repo should add their partner as a collaborator:
 1. Go into the settings of the repo, go to Collaborators, and add their partner as a collaborator using their GitHub username. 
+
+![add collaborators on GitHub(./img/add-collaborators.png)
+
+### Creating a Merge Conflict
 
 For this next part, it is going to be a race, so get your typing fingers ready!
 

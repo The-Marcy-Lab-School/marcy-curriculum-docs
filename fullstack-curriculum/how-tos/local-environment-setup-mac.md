@@ -9,7 +9,6 @@ Today, we'll be setting up our local development environment for Mac. For the Wi
 - [Familiarize yourself with VS Code](#familiarize-yourself-with-vs-code)
 - [Download Node and NPM](#download-node-and-npm)
 - [Write your first JavaScript program](#write-your-first-javascript-program)
-- [Configure your Github using the Terminal](#configure-your-github-using-the-terminal)
 
 ## Set up local `Development` directory
 
@@ -93,9 +92,3 @@ Now, in your VS Code Terminal, enter these commands:
 4. Open the file and add `console.log("Hello World!")`
 5. Save the file by pressing `⌘S` or by going to File > Save.
 6. Run the command `node index.js` and see the message!
-   
-## Configure your Github using the Terminal
-
-1. Follow these instructions to [set up Github in your terminal](./github-setup.md).  
-
-**If everything has worked as expected, reach out to an instructor for a final validation!!**

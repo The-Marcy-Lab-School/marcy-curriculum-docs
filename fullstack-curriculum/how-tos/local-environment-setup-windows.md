@@ -5,14 +5,21 @@ Today, we'll be setting up our local development environment for Windows 10. For
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [Enable WSL](#enable-wsl)
-- [Download VSCode for Windows](#download-vscode-for-windows)
-- [Ensure you are using WSL 2](#ensure-you-are-using-wsl-2)
-- [Download Node and NPM](#download-node-and-npm)
-- [Set up local Development directory](#set-up-local-development-directory)
-- [Configure your Github using the Terminal](#configure-your-github-using-the-terminal)
+- [WSL](#wsl)
+  - [Enable WSL](#enable-wsl)
+  - [Download WSL](#download-wsl)
+  - [Ensure you are using WSL 2](#ensure-you-are-using-wsl-2)
+- [Visual Studio Code, Node, and Your Local Development Environment](#visual-studio-code-node-and-your-local-development-environment)
+  - [Download VSCode for Windows](#download-vscode-for-windows)
+  - [Download Node and NPM](#download-node-and-npm)
+  - [Set up local Development directory](#set-up-local-development-directory)
 
-## Enable WSL
+## WSL
+
+
+Windows Subsystem for Linux (WSL) is a Linux distribution that allows you to run Windows applications in a Linux environment, the environment used by most software developers.
+
+### Enable WSL
 
 Within a few easy steps, you can get this done. Press **Windows Key + S** open up the search bar, and type “Windows Features.”
 
@@ -24,69 +31,20 @@ Click on the “Turn Windows features on or off”
 
 Select **Windows Subsystem for Linux** and click OK. (This will require a restart of Windows to get things installed).
 
-After your computer stars up again, open the Windows Store (Microsoft Store) app and search for Ubuntu. You will get the **Ubuntu 20.04.05 LTS** in the Windows Store and then click Install to download. _Don't download the latest Ubuntu 22.04.01. That version may not be compatible with our environment setup. If you're not able to complete the steps before, you can simply delete 22.04.01 from your computer and install the 20.04.05 version._
+### Download WSL
 
-![ubuntu](./img/ubuntu.png)
+After your computer starts up again, open the Windows Search, find the **Windows PowerShell** application, and **Run as Administrator**. 
 
-After installation, click the **Launch** button. For the first time, you see this screen that will require your attention to complete the installations. Press any key and wait for few seconds.
+Type the following commands in the **Windows PowerShell** application:
 
-![terminal](./img/terminal.webp)
-
-> From now on, we'll refer to your Ubuntu Terminal as just **Terminal** though other forms of documentation may refer to it as **WSL Terminal**.
-
-Finally, you will have to give a **username** (must be lowercase) and **password** to complete the installation. Use your first name as a username and the password `marcy` for simplicity. Don't forget this!
-
-If you ever forget your password to your Ubuntu terminal, you can read [these instructions](https://itsfoss.com/reset-linux-password-wsl/) to reset your password.
-
-Now you are all good to go. Let's do a quick check in the terminal.
-
-```
-lsb_release -a
+```sh
+wsl --update
+wsl --install
 ```
 
-Executing the above command in your terminal will return an output of what version of Ubuntu you have. Your version may differ from what you see in the screenshot.
+This will update and install WSL on your computer!
 
-![](./img/check.webp)
-
-## Download VSCode for Windows
-
-Visit [this web site](https://code.visualstudio.com/) and download VS Code.
-
-Download the latest build and install it in your PC.
-
-Now open VS Code. VS Code should automatically detect your WSL installation and suggest an extension.
-
-![extension](./img/extension.webp)
-
-If not, you can click on the “Extensions” tab in VS Code. Search for "Remote - WSL" and install (I will have a penguin icon).
-
-![vscode](./img/vscode.webp)
-
-Excellent, we have done our VS Code setup. Close VS Code and go back to the WSL terminal app.
-
-Type the following command
-
-```
-code .
-```
-
-This command will open up the VS Code from WSL. If this is the first time, the server will be setup for communication from WSL to VS Code. This is automatically done and you don’t need to worry about anything.
-
-![](./img/loading.webp)
-
-Visual Studio Code will open and will indicate its successfully connected to the server at WSL.
-
-![](./img/wslubuntu.webp)
-
-When you open the terminal from VS Code you will see the bash terminal at WSL.
-
-![](./img/terminalubuntu.webp)
-
-You should pin Ubuntu Terminal and VS Code to the taskbar since you'll be using them a lot.
-
-![taskbar](./img/taskbar.png)
-
-## Ensure you are using WSL 2
+### Ensure you are using WSL 2
 
 > Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/wsl/install). The instructions published by Microsoft will always be more accurate than the instructions found below. As of 9/27/2023, the instructions below are accurate.
 
@@ -102,7 +60,43 @@ You should pin Ubuntu Terminal and VS Code to the taskbar since you'll be using 
      - Reboot your computer.
      - Re-open Powershell and return to step 2
 
-## Download Node and NPM
+## Visual Studio Code, Node, and Your Local Development Environment
+
+Visual Studio Code is the standard IDE used by developers. 
+
+### Download VSCode for Windows
+
+Visit [this web site](https://code.visualstudio.com/) and download VS Code.
+
+Download the latest build and install it in your PC.
+
+Now open VS Code and press **Ctrl + Shift + P** to open the **Command Palette** and search "WSL". 
+
+Then, select **WSL: Connect to WSL in New Window**.
+
+This should open a new VS Code window running using WSL!
+
+VS Code should automatically detect your WSL installation and suggest an extension.
+
+![extension](./img/extension.webp)
+
+If not, you can click on the “Extensions” tab in VS Code. Search for "Remote - WSL" and install (I will have a penguin icon).
+
+![vscode](./img/vscode.webp)
+
+Visual Studio Code will open and will indicate its successfully connected to the server at WSL.
+
+![](./img/wslubuntu.webp)
+
+When you open the terminal from VS Code you will see the bash terminal at WSL.
+
+![](./img/terminalubuntu.webp)
+
+You should pin Ubuntu Terminal and VS Code to the taskbar since you'll be using them a lot.
+
+![taskbar](./img/taskbar.png)
+
+### Download Node and NPM
 
 > Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl). The instructions published by Microsoft will always be more accurate than the instructions found below. As of 9/27/2023, the instructions below are accurate.
 
@@ -121,7 +115,7 @@ You are now set up with Node and npm!
 
 ![.node](./img/node.webp)
 
-## Set up local Development directory
+### Set up local Development directory
 
 Every time you open your Terminal, you'll be in the home directory. Run `pwd` to see the current path. You'll see `home/your-user-name`.
 
@@ -154,9 +148,3 @@ Familiarize yourself with VS Code. This will be your new coding environment.
 - The "VS Code Terminal" works _exactly_ the same as your Ubuntu "Terminal"!
 
 ![vscode](./img/vscode.png)
-
-## Configure your Github using the Terminal
-
-Follow these instructions to [set up Github in your terminal](./github-setup.md).
-
-**If everything has worked as expected, reach out to an instructor for a final validation!**

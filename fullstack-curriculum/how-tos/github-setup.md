@@ -18,7 +18,7 @@ You will be using Github individually and collaboratively. We will set up your d
 ## Configuring Github with your Terminal
 
 1. In your Terminal application (the folder you're in doesn't matter), we first want to ensure that you can use the `git` tool for the next few steps. 
-   1. Start by running the command `git -v` which will print the current version of the `git` tool on your computer. 
+   1. Start by running the command `git --version` which will print the current version of the `git` tool on your computer. 
    2. If you are using a Mac and this is your first time, a popup called **Install Command Line Developer Tools** will appear. Follow the instructions to install on your computer.
 
 2. Once this is done, in your Terminal, run the following lines. Be sure to replace `Your Name` and `Your Github Email Address` with your actual Github login information:
@@ -29,7 +29,14 @@ git config --global user.email "Your Github Email Address"
 git config --global credential.helper store
 ```
 
-2. Confirm that the configuration was successful by running `git config --global user.name`. The terminal should print out your name. Next, run `git config --global user.email`. The terminal should print our your email address.
+3. Confirm that the configuration was successful by running 
+
+```sh
+git config --global user.name
+git config --global user.email
+```
+
+The terminal should print out your name and email.
 
 ## Create a Repository on Github
 
