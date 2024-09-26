@@ -187,7 +187,7 @@ Check out the process here:
 
 In this lesson, we learned how to create and manage branches in a project, and how to create a pull request!
 
-The diagram below does a great job of capturing the entire process:
+The diagram below illustrates the entire process:
 
 ![A diagram showing the 6 steps to working collaboratively on git: Clone/Pull; Create Branch; Stage/Add; Commit; Push and Make a Pull Request; Resolve and Merge](./img/git-workflow-diagram.svg)
 

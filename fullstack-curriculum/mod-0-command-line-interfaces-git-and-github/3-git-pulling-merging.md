@@ -117,8 +117,6 @@ In this case, developer 2 is missing the commit from developer 1 in their local 
 
 ![alt text](./img/failed-to-push-diagram.png)
 
-
-
 So, the developer who pushed last should run `git pull`
 
 However, in this situation, the conflict will cause a **Merge Conflict** like this:
