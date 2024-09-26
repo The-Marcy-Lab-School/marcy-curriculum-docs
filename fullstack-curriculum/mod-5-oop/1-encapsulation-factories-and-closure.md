@@ -1,28 +1,29 @@
-# Closures
+# Intro to OOP, Encapsulation, Factory Functions, and Closure
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-0-encapsulation-factories-closure-f23)!
 {% endhint %}
 
-- [Intro to Mod 5: Object-Oriented Programming (OOP) — 5 minutes](#intro-to-mod-5-object-oriented-programming-oop--5-minutes)
-- [Encapsulation — 15 minutes](#encapsulation--15-minutes)
-- [Designing A Consistent \& Predictable Interface — 5 minutes](#designing-a-consistent--predictable-interface--5-minutes)
-- [Factory Functions, Privacy, \& Closures — 30 minutes](#factory-functions-privacy--closures--30-minutes)
-- [Quiz!](#quiz)
-- [Challenge](#challenge)
-- [Summary](#summary)
+* [Intro to Mod 5: Object-Oriented Programming (OOP) — 5 minutes](1-encapsulation-factories-and-closure.md#intro-to-mod-5-object-oriented-programming-oop--5-minutes)
+* [Encapsulation — 15 minutes](1-encapsulation-factories-and-closure.md#encapsulation--15-minutes)
+* [Designing A Consistent & Predictable Interface — 5 minutes](1-encapsulation-factories-and-closure.md#designing-a-consistent--predictable-interface--5-minutes)
+* [Factory Functions, Privacy, & Closures — 30 minutes](1-encapsulation-factories-and-closure.md#factory-functions-privacy--closures--30-minutes)
+* [Quiz!](1-encapsulation-factories-and-closure.md#quiz)
+* [Challenge](1-encapsulation-factories-and-closure.md#challenge)
+* [Summary](1-encapsulation-factories-and-closure.md#summary)
 
 ## Intro to Mod 5: Object-Oriented Programming (OOP) — 5 minutes
 
 Object-Oriented Programming is a style of programming (a "paradigm") that uses **objects to manage state (data) and behavior** in an application. While OOP does let us do some new things, more than anything, it helps us write better, more organized code.
 
 It can be defined by its 4 pillars:
+
 * **Encapsulation** - bundling data and methods into a single unit while protecting the data
 * **Abstraction** - hiding complexity through functions and prototypes
 * **Inheritance** - sharing behavior between objects
 * **Polymorphism** - similar objects can be used interchangeably
 
-![The four pillars of object oriented programming are abstraction, inheritance, polymorphism, and encapsulation.](./img/oop-pillars.png)
+![The four pillars of object oriented programming are abstraction, inheritance, polymorphism, and encapsulation.](img/oop-pillars.png)
 
 Throughout this module, we will be learning about these four pillars and how we implement them in JavaScript using the `class` syntax.
 
@@ -61,17 +62,24 @@ friendsManager.addFriend('carmen');
 
 console.log(friendsManager.friends)
 ```
+
 **Side Note on `this`**:
+
 * When used as method of an object, **`this` refers to the object that invokes the method.**
-* `this` is one of the most complicated topics in JavaScript. Check out this video to learn more: [JavaScript this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM&ab_channel=ProgrammingwithMosh).
+* `this` is one of the most complicated topics in JavaScript. Check out this video to learn more: [JavaScript this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab\_channel=ProgrammingwithMosh).
 
-**<details><summary style="color: purple">Q: How does the `friendsManager` object demonstrate encapsulation compared to the first example? How does `this` enable encapsulation?</summary>**
+<details>
 
-> The `friendsManager` object stores the `friends` array inside alongside the `addFriend` method. 
-> 
-> When `friendsManager.addFriend()` is invoked, the `addFriend` method uses `this` to manipulate the `friendsManager`'s own `friends` array.
+<summary><strong>Q: How does the <code>friendsManager</code> object demonstrate encapsulation compared to the first example? How does <code>this</code> enable encapsulation?</strong></summary>
 
-</details><br>
+The `friendsManager` object stores the `friends` array inside alongside the `addFriend` method.
+
+When `friendsManager.addFriend()` is invoked, the `addFriend` method uses `this` to manipulate the `friendsManager`'s own `friends` array.
+
+</details>
+
+\
+
 
 ## Designing A Consistent & Predictable Interface — 5 minutes
 
@@ -95,11 +103,16 @@ friendsManager.friends.push('emmaneul');
 friendsManager.friends.push(42);
 ```
 
-**<details><summary style="color: purple">Q: What about the last two lines in the example are NOT consistent or predictable?</summary>**
+<details>
 
-> You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
+<summary><strong>Q: What about the last two lines in the example are NOT consistent or predictable?</strong></summary>
 
-</details><br>
+You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
+
+</details>
+
+\
+
 
 ## Factory Functions, Privacy, & Closures — 30 minutes
 
@@ -154,33 +167,43 @@ console.log(gonzalosFriendsManager.getFriends()) // ['carmen']
 
 The cool thing about closures is that each time we invoke this function, we will create a new `friends` array and a new object with methods that reference that specific **instance** of the friends array.
 
-**<details><summary style="color: purple">Q: In the example above, identify the "outer" function and the inner function involved in creating a closure</summary>**
+<details>
 
-> `makeFriendsManager` is the outer function and both `addFriend` and `getFriends` form a closure around the variable `friends`.
+<summary><strong>Q: In the example above, identify the "outer" function and the inner function involved in creating a closure</strong></summary>
 
-</details><br>
+`makeFriendsManager` is the outer function and both `addFriend` and `getFriends` form a closure around the variable `friends`.
 
-**<details><summary style="color: purple">Q: How can we modify the example above to be able to create a new friend manager with a starting set of `friends` as an argument?</summary>**
+</details>
 
-> ```js
-> const makeFriendsManager = (...initialFriends) => {
->   const friends = [...initialFriends];
-> 
->   const friendsManager = {
->     getFriends() {
->       return [...friends]; 
->     },
->     addFriend(newFriend) {
->       if (typeof newFriend !== 'string') return;
->       friends.push(newFriend);
->     }
->   }
->   return friendsManager;
-> }
-> const myFriendsManager = makeFriendsManager('ahmad', 'brandon', 'carmen');
-> ```
+\
 
-</details><br>
+
+<details>
+
+<summary><strong>Q: How can we modify the example above to be able to create a new friend manager with a starting set of <code>friends</code> as an argument?</strong></summary>
+
+```js
+const makeFriendsManager = (...initialFriends) => {
+  const friends = [...initialFriends];
+
+  const friendsManager = {
+    getFriends() {
+      return [...friends]; 
+    },
+    addFriend(newFriend) {
+      if (typeof newFriend !== 'string') return;
+      friends.push(newFriend);
+    }
+  }
+  return friendsManager;
+}
+const myFriendsManager = makeFriendsManager('ahmad', 'brandon', 'carmen');
+```
+
+</details>
+
+\
+
 
 ## Quiz!
 
@@ -204,12 +227,19 @@ const addAmountToNumbers = (nums, amount) => {
 const getId = ((id = 1) => () => id++)();
 ```
 
-**<details><summary style="color: purple">Answer</summary>**
-> * The first function DOES NOT create a closure. Even though there is an inner arrow function defined, that function doesn't reference variables in the scope outside of it
-> * The second function DOES create a closure because the inner arrow function passed to `nums.map` references the `randomNum` variable in the scope outside of it.
-> * The third function DOES create a closure for the same reason as the function above. Referencing the parameter `amount` is the same. 
-> * The fourth function DOES create a closure because we have an outer arrow function returning an inner arrow function. The inner arrow function `() => id++` references the `id` parameter in the outer arrow function.
-</details><br>
+<details>
+
+<summary><strong>Answer</strong></summary>
+
+* The first function DOES NOT create a closure. Even though there is an inner arrow function defined, that function doesn't reference variables in the scope outside of it
+* The second function DOES create a closure because the inner arrow function passed to `nums.map` references the `randomNum` variable in the scope outside of it.
+* The third function DOES create a closure for the same reason as the function above. Referencing the parameter `amount` is the same.
+* The fourth function DOES create a closure because we have an outer arrow function returning an inner arrow function. The inner arrow function `() => id++` references the `id` parameter in the outer arrow function.
+
+</details>
+
+\
+
 
 ## Challenge
 
@@ -239,40 +269,45 @@ console.log(counter.value); // 1
 counter.value = 10; // BAD
 ```
 
-**<details><summary style="color: purple">Solution</summary>**
+<details>
 
-> ```js
-> const makeCounter = (startingValue = 0) => {
->   let value = startingValue;
-> 
->   const counter = {  
->     getValue() {
->       return value;
->     },
->     increment() {
->       value++;
->     },
->     decrement() {
->       value--;
->     }
->   }
->   return counter;
-> }
-> 
-> const counter = makeCounter();
-> console.log(counter.getValue()); // 0
-> counter.increment();
-> counter.increment();
-> console.log(counter.getValue()); // 2
-> counter.decrement();
-> console.log(counter.getValue()); // 1
-> console.log(counter.value); // undefined
-> 
-> const counterFrom5 = makeCounter(5);
-> console.log(counterFrom5.getValue()); // 5
-> ```
+<summary><strong>Solution</strong></summary>
 
-</details><br>
+```js
+const makeCounter = (startingValue = 0) => {
+  let value = startingValue;
+
+  const counter = {  
+    getValue() {
+      return value;
+    },
+    increment() {
+      value++;
+    },
+    decrement() {
+      value--;
+    }
+  }
+  return counter;
+}
+
+const counter = makeCounter();
+console.log(counter.getValue()); // 0
+counter.increment();
+counter.increment();
+console.log(counter.getValue()); // 2
+counter.decrement();
+console.log(counter.getValue()); // 1
+console.log(counter.value); // undefined
+
+const counterFrom5 = makeCounter(5);
+console.log(counterFrom5.getValue()); // 5
+```
+
+</details>
+
+\
+
 
 ## Summary
 

@@ -1,15 +1,15 @@
 # Stacks & Queues
 
-- [Essential Questions](#essential-questions)
-- [Key Terms](#key-terms)
-- [Introduction: Why Learn Data Structures?](#introduction-why-learn-data-structures)
-- [Abstract Data Types](#abstract-data-types)
-- [What is a Stack?](#what-is-a-stack)
-  - [A Stack of Pancakes](#a-stack-of-pancakes)
-  - [Stack Implementation](#stack-implementation)
-  - [Use Cases in Programming: Stack Overflow](#use-cases-in-programming-stack-overflow)
-- [What is a Queue?](#what-is-a-queue)
-  - [Get in line!](#get-in-line)
+* [Essential Questions](1-stacks-queues.md#essential-questions)
+* [Key Terms](1-stacks-queues.md#key-terms)
+* [Introduction: Why Learn Data Structures?](1-stacks-queues.md#introduction-why-learn-data-structures)
+* [Abstract Data Types](1-stacks-queues.md#abstract-data-types)
+* [What is a Stack?](1-stacks-queues.md#what-is-a-stack)
+  * [A Stack of Pancakes](1-stacks-queues.md#a-stack-of-pancakes)
+  * [Stack Implementation](1-stacks-queues.md#stack-implementation)
+  * [Use Cases in Programming: Stack Overflow](1-stacks-queues.md#use-cases-in-programming-stack-overflow)
+* [What is a Queue?](1-stacks-queues.md#what-is-a-queue)
+  * [Get in line!](1-stacks-queues.md#get-in-line)
 
 ## Essential Questions
 
@@ -29,23 +29,30 @@
 
 ## Introduction: Why Learn Data Structures?
 
-Let's start with a question. 
+Let's start with a question.
 
-**<details><summary style="color: purple">Q: Why is it important to know different data structures? For example, if Arrays and Objects can both store collections of data, why should I know how to use both of them?</summary>**
-> Every data structure has advantages and disadvantages. While Arrays and Objects can both store collections of data, but the operations you can perform with them are different. Knowing their differences allows you to choose the right data structure for every situation.
-</details><br>
+<details>
+
+<summary><strong>Q: Why is it important to know different data structures? For example, if Arrays and Objects can both store collections of data, why should I know how to use both of them?</strong></summary>
+
+Every data structure has advantages and disadvantages. While Arrays and Objects can both store collections of data, but the operations you can perform with them are different. Knowing their differences allows you to choose the right data structure for every situation.
+
+</details>
+
+\
+
 
 ## Abstract Data Types
 
-An **abstract data type (ADT)** is a high-level ("abstract") description about how a particular type of data behaves *without concern for how it is implemented*. You already know about the Array and Object abstract data types!
+An **abstract data type (ADT)** is a high-level ("abstract") description about how a particular type of data behaves _without concern for how it is implemented_. You already know about the Array and Object abstract data types!
 
 * For example, we know that the Array abstract data type stores values in order and each value can be accessed by its index. In JavaScript, we know that the syntax to do this is `array[index]`, and yet we don't need to know how JavaScript implements this functionality "under the hood" in order to use it!
 * We also know that Objects store data in `key: value` pairs rather than using indexes.
-* Knowing *what* an Object can do compared to an Array is enough for us to decide which to use for a particular situation.
+* Knowing _what_ an Object can do compared to an Array is enough for us to decide which to use for a particular situation.
 
 Abstract data types are **language-agnostic** — they may be implemented differently in different programming languages but they will all have the same high-level behavior. Arrays in every programming language will have ordered values that are accessible via an index!
 
-![Thought cloud of cars](./img/abstract-cars.png)
+![Thought cloud of cars](img/abstract-cars.png)
 
 In the real world, the idea of a car is similar to an abstract data type. All cars have doors, wheels, and an engine and with my driver's license, I can operate pretty much any kind of car. However, each manufacturer has a different approach to creating their cars and, under the hood (literally), they may look very different.
 
@@ -64,19 +71,19 @@ If you're thinking — "hey these operations are the same as an Array!" — you'
 
 ### A Stack of Pancakes
 
-Imagine you are making pancakes. When each pancake is ready, you add it to a plate until you have a nice *stack* of pancakes. 
+Imagine you are making pancakes. When each pancake is ready, you add it to a plate until you have a nice _stack_ of pancakes.
 
-![](./img/pancakes.png)
+![](img/pancakes.png)
 
 Which pancake would you eat first? The first pancakes you added to the plate, or the last?
 
-The top one right? The *last* pancake that you added to the stack is the *first* one that you eat! 
+The top one right? The _last_ pancake that you added to the stack is the _first_ one that you eat!
 
 Another example! Let stay you have a bunch of plates you wouldn't try to take the one all of the way at the bottom. You need to take the one that is on the top of the stack ... again that was probably the last one in, so it would be the first one out.
 
 ### Stack Implementation
 
-In JavaScript, we will often implement abstract data types using a `class`. This let's us effectively create a new data type! Each implementation of a data type should have a way to store values and methods for accessing them. 
+In JavaScript, we will often implement abstract data types using a `class`. This let's us effectively create a new data type! Each implementation of a data type should have a way to store values and methods for accessing them.
 
 With a Stack, since we want the `push` and `pop` methods, we can use a private Array as the **underlying data structure** and then add methods for `push` and `pop` that access the private Array.
 
@@ -111,9 +118,9 @@ Queues are often referred to as "first in, first out" (FIFO) data structures.
 
 ### Get in line!
 
-Imagine you go to a restaurant. There's a line of people waiting. Some audacious, rule-breaking people may cut straight to the front, but they will likely receive some serious glares. 
+Imagine you go to a restaurant. There's a line of people waiting. Some audacious, rule-breaking people may cut straight to the front, but they will likely receive some serious glares.
 
-![credit: Royston Robertson](./img/queue-cartoon.png)
+![credit: Royston Robertson](img/queue-cartoon.png)
 
 According to the norms of society, the **first** person in line is the **first** person to be served.
 
@@ -135,3 +142,4 @@ class Queue {
     return this.#values.shift();
   }
 }
+```

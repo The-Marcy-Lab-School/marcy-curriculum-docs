@@ -4,7 +4,7 @@
 * [Student Guidelines & Policies](guidelines-and-policies/README.md)
   * [Student Handbook](guidelines-and-policies/student-handbook.md)
   * [AI Policy](guidelines-and-policies/ai-policy.md)
-  * [Academic Calendar](guidelines-and-policies/academic-calendar.md)
+  * [Academic Calendar](https://docs.google.com/document/d/1T3tDmzUW762B8fi4oNPJoMxOCZ0eh3sKgM4lR5ka31Q/view)
 * [Fullstack Curriculum](fullstack-curriculum/README.md)
   * [Style Guide & Cheat Sheets](fullstack-curriculum/cheatsheets/README.md)
     * [Style Guide](fullstack-curriculum/cheatsheets/style-guide.md)

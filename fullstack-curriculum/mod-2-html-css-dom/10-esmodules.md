@@ -1,18 +1,18 @@
-# 2-3-3-esmodules-vite-f23
+# ESModules
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-0-esmodules-f23)!
 {% endhint %}
 
-- [Loading JavaScript into our HTML](#loading-javascript-into-our-html)
-  - [The OG Way](#the-og-way)
-  - [DOMContentLoaded](#domcontentloaded)
-  - [Defer](#defer)
-- [Dealing with Multiple JavaScript Files](#dealing-with-multiple-javascript-files)
-  - [Order Matters \& Global Variables](#order-matters--global-variables)
-  - [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
-  - [We can't use ESModule with normal scripts](#we-cant-use-esmodule-with-normal-scripts)
-- [Summary](#summary)
+* [Loading JavaScript into our HTML](10-esmodules.md#loading-javascript-into-our-html)
+  * [The OG Way](10-esmodules.md#the-og-way)
+  * [DOMContentLoaded](10-esmodules.md#domcontentloaded)
+  * [Defer](10-esmodules.md#defer)
+* [Dealing with Multiple JavaScript Files](10-esmodules.md#dealing-with-multiple-javascript-files)
+  * [Order Matters & Global Variables](10-esmodules.md#order-matters--global-variables)
+  * [Importing and Exporting with ESModules](10-esmodules.md#importing-and-exporting-with-esmodules)
+  * [We can't use ESModule with normal scripts](10-esmodules.md#we-cant-use-esmodule-with-normal-scripts)
+* [Summary](10-esmodules.md#summary)
 
 ## Loading JavaScript into our HTML
 
@@ -27,7 +27,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Q: Why do we put the script at the end of the body?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 Because our JavaScript uses the Elements in the body. If those Elements haven't loaded yet, we can't referenced them! We'll get errors like this:
 
@@ -35,7 +37,10 @@ Because our JavaScript uses the Elements in the body. If those Elements haven't 
 Uncaught TypeError: Cannot set properties of null (setting 'textContent')
 ```
 
-</details><br>
+</details>
+
+\
+
 
 **Note**: this still works if we just open the `index.html` file
 
@@ -66,7 +71,9 @@ This lets us put the `<script>` in the `<head>` which means **the browser will s
 
 **Q: Is it still possible for us to have errors in our app?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 Yes! If accidentally put some DOM code outside of the safety of our `main` function.
 
@@ -83,7 +90,10 @@ const main = () => {
 document.addEventListener('DOMContentLoaded', main);
 ```
 
-</details><br>
+</details>
+
+\
+
 
 ### Defer
 
@@ -109,6 +119,7 @@ main();
 ```
 
 Now...
+
 * the `index.html` page can start loading the `index.js` file...
 * but it won't execute that code until the DOM is done loading
 
@@ -148,7 +159,9 @@ But if we swap the order of the scripts in HTML, we will get an error.
 
 **Q: Why will this cause an error?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 It will cause an error because `test` is defined in `other.js` which hasn't been executed yet!
 
@@ -156,7 +169,10 @@ It will cause an error because `test` is defined in `other.js` which hasn't been
 Uncaught ReferenceError: test is not defined
 ```
 
-</details><br>
+</details>
+
+\
+
 
 So, the order matters. With 2 files this is manageable, just swap them. But when our application has hundreds or even thousands of files, good luck. We need a better solution.
 
@@ -164,7 +180,9 @@ So, the order matters. With 2 files this is manageable, just swap them. But when
 
 In Node, we could share code by importing and exporting using the **CommonJS** syntax:
 
-<details><summary>See CommonJS Example</summary>
+<details>
+
+<summary>See CommonJS Example</summary>
 
 ```js
 /* other.js */
@@ -179,7 +197,10 @@ const test = require('./other.js'); // default import in CommonJS
 const { test } = require('./other.js'); // named import in CommonJS
 ```
 
-</details><br>
+</details>
+
+\
+
 
 In the browser, we need to use a different syntax called **ESModule** syntax:
 
@@ -214,9 +235,11 @@ We can easily fix this in our HTML by adding a `type="module"` to our `<script>`
 </head>
 ```
 
-But we will still get an error called a **Cross Origin Resource Sharing (CORS)** error. 
+But we will still get an error called a **Cross Origin Resource Sharing (CORS)** error.
 
-<details><summary>Details about CORS</summary>
+<details>
+
+<summary>Details about CORS</summary>
 
 The Cross-Origin Resource Sharing (CORS) policy is a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original web page. When you open a file using the `file://` protocol (local file system), it is treated as a different origin compared to the typical `http://` or `https://` origins.
 
@@ -226,10 +249,12 @@ To avoid CORS issues during development, it's recommended to set up a local deve
 
 ([Learn more about CORS here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)).
 
-</details><br>
+</details>
+
+\
 
 
-To get around this, **we need to serve our `html` file from a Server, not from our file system**. This helps the browser see that all of the files are coming from the same origin. 
+To get around this, **we need to serve our `html` file from a Server, not from our file system**. This helps the browser see that all of the files are coming from the same origin.
 
 **Just use Live Server!**
 

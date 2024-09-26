@@ -1,4 +1,4 @@
-# React + Vite Flashcard App
+# Building a Flashcards App
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/benspector-mls/flashcards)!
@@ -6,7 +6,7 @@ Follow along with code examples [here](https://github.com/benspector-mls/flashca
 
 ## Brainstorming
 
-I want to build a flashcard app. 
+I want to build a flashcard app.
 
 ### MVP
 
@@ -42,7 +42,7 @@ I know that I'll need some flashcard data to render.
 
 To get myself started, I used ChatGPT to give me a dataset of flashcards rather than come up with my own set of questions. I asked for the data in JSON format so that I could easily import it into my app.
 
-![I asked chat gpt to give me a dataset of flashcard to study react](./img/chatgpt-data-prompt.png)
+![I asked chat gpt to give me a dataset of flashcard to study react](img/chatgpt-data-prompt.png)
 
 I then stored the resulting data in a `.json` file called `src/db/flashcards.json` (I made a `src/db` folder since this is sort of like my "database").
 
@@ -69,7 +69,8 @@ I then stored the resulting data in a `.json` file called `src/db/flashcards.jso
 }
 ```
 
-ChatGPT did a great job of giving me data in a format that I could easily use. 
+ChatGPT did a great job of giving me data in a format that I could easily use.
+
 * The data was in an Array which means I can render a "card" for each object using `.map()` in a `ul`
 * Each flashcard object had:
   * an `id` which I can use for list item `key` props and much more
@@ -85,13 +86,13 @@ Using the JSON file we created above, we can create a mock API. To set it up we 
 
 1. Run `npm install -g json-server` to install json server globally
 2. Create the `.json` file. We did this already: `db/flashcards.json`
-3. From the root of your vite project, split your terminal and run `json-server --watch db/flashcards.json --port 4000` to start a mock back-end server on port 4000. 
+3. From the root of your vite project, split your terminal and run `json-server --watch db/flashcards.json --port 4000` to start a mock back-end server on port 4000.
 
-![](./img/split-terminal.gif)
+![](img/split-terminal.gif)
 
 4. Now, you will have an API that you can access via the URL http://localhost:4000/flashcards (try visiting that URL in your browser!)
 
-`json-server` only works if the `.json` file is in the proper format. The JSON file needs to store a JSON object with a top-level property that names the resource to be fetched. 
+`json-server` only works if the `.json` file is in the proper format. The JSON file needs to store a JSON object with a top-level property that names the resource to be fetched.
 
 Something like (feel free to copy this):
 
@@ -134,13 +135,23 @@ In this example, `"flashcards"` is the top-level property which makes http://loc
 }
 ```
 
-**<details><summary style="color: purple">Answer</summary>**
-> http://localhost:4000/friends and http://localhost:4000/messages
-</details><br>
+<details>
+
+<summary><strong>Answer</strong></summary>
+
+http://localhost:4000/friends and http://localhost:4000/messages
+
+</details>
+
+\
+
 
 **Q: How would I make a http://localhost:4000/flashcards/react or http://localhost:4000/flashcards/fetch endpoint?**
 
-**<details><summary style="color: purple">Answer</summary>**
+<details>
+
+<summary><strong>Answer</strong></summary>
+
 ```json
 {
   "flashcards": {
@@ -163,7 +174,11 @@ In this example, `"flashcards"` is the top-level property which makes http://loc
   }
 }
 ```
-</details><br>
+
+</details>
+
+\
+
 
 ## Component Structure
 
@@ -202,6 +217,7 @@ const Flashcard = ({ flashcard }) => {
   )
 }
 ```
+
 * The `Flashcard` component takes in a `flashcard` object as a prop.
 * It also keeps track of two state values: `text` and `backgroundColor` which can be toggled between showing the question and showing the answer
 * We provide a `style` prop to dynamically set the style of the component using the `backgroundColor` state
@@ -253,7 +269,8 @@ export default App
 ```
 
 Let's break it down:
-* The `App` keeps track of `flashcards` and `error` state. 
+
+* The `App` keeps track of `flashcards` and `error` state.
 * We use `useEffect` to fetch the flashcard data from our json-server when the component first renders (and only that one time).
   * Then we either invoke `setFlashcards` or `setError` depending on the returned data.
 * The `App` component maps over the `flashcards` data, creating a `Flashcard` component for each `flashcard` object.

@@ -1,20 +1,19 @@
-# Classes - The Basics
+# Classes
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-1-classes-f23)!
 {% endhint %}
 
-- [Intro](#intro)
-- [Factory Functions Waste Memory](#factory-functions-waste-memory)
-- [Classes](#classes)
-  - [Class Definition and `new`](#class-definition-and-new)
-  - [Instanceof](#instanceof)
-  - [Setting Properties With A Constructor](#setting-properties-with-a-constructor)
-  - [Defining Instance Methods](#defining-instance-methods)
-- [Quiz!](#quiz)
-- [Challenge](#challenge)
-- [Summary](#summary)
-
+* [Intro](2-classes.md#intro)
+* [Factory Functions Waste Memory](2-classes.md#factory-functions-waste-memory)
+* [Classes](2-classes.md#classes)
+  * [Class Definition and `new`](2-classes.md#class-definition-and-new)
+  * [Instanceof](2-classes.md#instanceof)
+  * [Setting Properties With A Constructor](2-classes.md#setting-properties-with-a-constructor)
+  * [Defining Instance Methods](2-classes.md#defining-instance-methods)
+* [Quiz!](2-classes.md#quiz)
+* [Challenge](2-classes.md#challenge)
+* [Summary](2-classes.md#summary)
 
 ## Intro
 
@@ -38,7 +37,7 @@ const makeFriendsManager = (...initialFriends) => {
 
 ## Factory Functions Waste Memory
 
-The nice thing about encapsulation is that we can re-use `makeFriendsManager` to create multiple objects that look alike: each friends manager has `getFriends` and `addFriends` methods. 
+The nice thing about encapsulation is that we can re-use `makeFriendsManager` to create multiple objects that look alike: each friends manager has `getFriends` and `addFriends` methods.
 
 This kind of function is called a **factory function** and each object created from this factory function is called an **instance**.
 
@@ -68,27 +67,38 @@ console.log(myFM === yourFM)
 console.log(myFM.addFriend === yourFM.addFriend)
 ```
 
-**<details><summary style="color: purple">Q: Are the methods `myFM.addFriend()` and `yourFM.addFriend()` referencing the same exact function?</summary>**
-> No! They are not the same. Each time the factory function is invoked, a brand new object is made and the methods are recreated as well. 
-> This is a waste of memory.
-</details><br>
+<details>
+
+<summary><strong>Q: Are the methods <code>myFM.addFriend()</code> and <code>yourFM.addFriend()</code> referencing the same exact function?</strong></summary>
+
+No! They are not the same. Each time the factory function is invoked, a brand new object is made and the methods are recreated as well. This is a waste of memory.
+
+</details>
+
+\
+
 
 ## Classes
 
-![classes define properties and methods that instances inherit](./img/classes.png)
+![classes define properties and methods that instances inherit](img/classes.png)
 
-A **class** defines a type of object and the properties/methods that those objects will share. 
+A **class** defines a type of object and the properties/methods that those objects will share.
 
-**<details><summary style="color: purple">Q: Suppose we wanted to create a class to represent users. What would the default properties be? What methods would be shared by each instance? </summary>**
+<details>
 
-> * The `User` class would have a **constructor function** for making a `User` instance with properties like `username`, `email`, and `password`
-> * The `User` class might have methods like `changeUsername` or `setPassword`
+<summary><strong>Q: Suppose we wanted to create a class to represent users. What would the default properties be? What methods would be shared by each instance?</strong></summary>
 
-</details><br>
+* The `User` class would have a **constructor function** for making a `User` instance with properties like `username`, `email`, and `password`
+* The `User` class might have methods like `changeUsername` or `setPassword`
+
+</details>
+
+\
+
 
 ### Class Definition and `new`
 
-Many programming languages implement classes in some manner. 
+Many programming languages implement classes in some manner.
 
 In JavaScript, it starts with the `class` keyword, an uppercase name, and curly braces. Like this:
 
@@ -136,9 +146,10 @@ console.log(clifford instanceof Pet); // true
 
 ### Setting Properties With A Constructor
 
-Right now, the class definitions only allow us to create blank objects. But objects are only useful if they have properties. 
+Right now, the class definitions only allow us to create blank objects. But objects are only useful if they have properties.
 
 There are two kinds of properties that instances of a class can have:
+
 1. Properties with default values that all instances start with
 2. Properties whose values are provided when the instance is made
 
@@ -165,6 +176,7 @@ console.log(ben, zo);
 ```
 
 Class `constructor` functions have some quirks to get used to:
+
 * `constructor` is a special method name. You must use this name. When you create a new instance of a class using `new`, JavaScript will look to see if the class has a `constructor` method and it will execute that method.
 * The `constructor` function can accept parameters whose values are provided when the instance is made
 * The `this` keyword, when used in a `constructor,` references the new instance object being created.
@@ -249,37 +261,45 @@ const Animal = {
 const dog = Animal('canine', 'woof');
 ```
 
-**<details><summary style="color: purple">Q: Answer</summary>**
-> The following mistakes are made:
-> * `const` is used instead of `class` to define the `Animal` class
-> * We don't need the `=` to create the class
-> * The `owners` property with the default value doesn't need `this`
-> * The `constructor` function should be written like this: `constructor () {}` without the `:` and `=>`
-> * We don't need a comma to separate the methods
-> * `makeSound` should use `this.sound`
-> * When creating an instance of `Animal`, the `new` keyword should be used.
->
-> ```js
-> class Animal {
->   owners = [];
-> 
->   constructor (species, sound) {
->     this.species = species;
->     this.sound = sound;
->   }
->   makeSound() {
->     console.log(this.sound)
->   }
-> }
-> 
-> const dog = new Animal('canine', 'woof');
-> ```
+<details>
 
-</details><br>
+<summary><strong>Q: Answer</strong></summary>
+
+The following mistakes are made:
+
+* `const` is used instead of `class` to define the `Animal` class
+* We don't need the `=` to create the class
+* The `owners` property with the default value doesn't need `this`
+* The `constructor` function should be written like this: `constructor () {}` without the `:` and `=>`
+* We don't need a comma to separate the methods
+* `makeSound` should use `this.sound`
+* When creating an instance of `Animal`, the `new` keyword should be used.
+
+```js
+class Animal {
+  owners = [];
+
+  constructor (species, sound) {
+    this.species = species;
+    this.sound = sound;
+  }
+  makeSound() {
+    console.log(this.sound)
+  }
+}
+
+const dog = new Animal('canine', 'woof');
+```
+
+</details>
+
+\
+
 
 ## Challenge
 
 Create a class called `FoodItem`. Every instance of `FoodItem` should have the following properties and methods
+
 * `name` — the name of the item
 * `price` - the price of the item in US dollars
 * `weight` - the weight of the item
@@ -296,7 +316,9 @@ console.log(apple.getPricePerPound());
 // 2
 ```
 
-**<details><summary style="color: purple">Q: Solution</summary>**
+<details>
+
+<summary><strong>Q: Solution</strong></summary>
 
 ```js
 class FoodItem {
@@ -310,9 +332,14 @@ class FoodItem {
   }
 }
 ```
-</details><br>
+
+</details>
+
+\
+
 
 Now, create a second class called `ShoppingCart`. Every instance of `ShoppingCart` should have the following properties and methods:
+
 * `items` — an array that starts empty. It should hold `FoodItem` instances.
 * `addItem(FoodItem)` — takes in a `FoodItem` instance and adds it to the `items` array.
 * `getTotalPrice()` - calculates the total price of all `FoodItems` in the `items` array
@@ -331,7 +358,9 @@ console.log(myCart); // ShoppingCart { items: Array(3) }
 console.log(myCart.getTotalPrice()); // 13
 ```
 
-**<details><summary style="color: purple">Q: Solution</summary>**
+<details>
+
+<summary><strong>Q: Solution</strong></summary>
 
 ```js
 class ShoppingCart {
@@ -349,13 +378,17 @@ class ShoppingCart {
   }
 }
 ```
-</details><br>
+
+</details>
+
+\
+
 
 ## Summary
 
 * A **class** defines a type of object with shared methods and properties
-  * It has a **constructor function** for defining the default properties that every **instance** of that class (objects of that type) will have. 
-  * All instances of that class inherit the class' methods. 
+  * It has a **constructor function** for defining the default properties that every **instance** of that class (objects of that type) will have.
+  * All instances of that class inherit the class' methods.
 * Classes are defined using the `class` keyword
 * Instances of a class are created using the `new` keyword and the class constructor.
 * When used in a constructor function, `this` points to the newly created object

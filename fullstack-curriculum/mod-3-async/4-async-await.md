@@ -1,14 +1,14 @@
-# Async / Await
+# Async & Await
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-2-async-await)!
 {% endhint %}
 
-- [Fetching "Synchronously" with Async/Await](#fetching-synchronously-with-asyncawait)
-- [Handling Errors with Try/Catch](#handling-errors-with-trycatch)
-- [The benefits of `async`/`await`](#the-benefits-of-asyncawait)
-- [Making a generic fetch helper](#making-a-generic-fetch-helper)
-  - [Why return a tuple?](#why-return-a-tuple)
+* [Fetching "Synchronously" with Async/Await](4-async-await.md#fetching-synchronously-with-asyncawait)
+* [Handling Errors with Try/Catch](4-async-await.md#handling-errors-with-trycatch)
+* [The benefits of `async`/`await`](4-async-await.md#the-benefits-of-asyncawait)
+* [Making a generic fetch helper](4-async-await.md#making-a-generic-fetch-helper)
+  * [Why return a tuple?](4-async-await.md#why-return-a-tuple)
 
 ## Fetching "Synchronously" with Async/Await
 
@@ -59,14 +59,14 @@ getPikachuData(); // non-blocking and returns a Promise (we can .then it if we w
 console.log('when does this happen?') 
 ```
 
-- The `await` keyword causes our code to pause and wait for the Promise to resolve. It then unpacks the Promise and returns the resolved value.
-- The `async` keyword does two things:
-    - First, it labels a function as asynchronous. This is required for any function that makes use of the `await` keyword
-    - Second, it wraps the function’s returned value in a Promise. If we were to store the returned value of `getPikachuData()`, it would be a Promise.
+* The `await` keyword causes our code to pause and wait for the Promise to resolve. It then unpacks the Promise and returns the resolved value.
+* The `async` keyword does two things:
+  * First, it labels a function as asynchronous. This is required for any function that makes use of the `await` keyword
+  * Second, it wraps the function’s returned value in a Promise. If we were to store the returned value of `getPikachuData()`, it would be a Promise.
 
 ## Handling Errors with Try/Catch
 
-There are some functions (like `fetch()`) that are capable of throwing an error. 
+There are some functions (like `fetch()`) that are capable of throwing an error.
 
 We can manually throw our own errors too using `throw new Error('message')`. When an error is thrown, the program crashes immediately:
 
@@ -122,16 +122,21 @@ getPikachuData();
 ## The benefits of `async`/`await`
 
 Using the `async`/`await` syntax with `try` and `catch` has a number of benefits. The main ones being **readability** and **debuggability**.
+
 * We can write async code in a synchronous-like manner
 * We avoid having to write a bunch of callbacks
 * We can avoid common mistakes made when using callbacks
 * `try/catch` is a more general-purpose way of handling errors that can be used for more than just fetching.
 
-<details><summary>For example, what's wrong with this code? Why does it print `undefined`?</summary>
+<details>
+
+<summary>For example, what's wrong with this code? Why does it print `undefined`?</summary>
 
 Forgot to return from the first `.then` when chaining to a second `.then`
 
-</details><br>
+</details>
+
+\
 
 
 ```js
@@ -153,10 +158,10 @@ promise
 
 ## Making a generic fetch helper
 
-The code for fetching data is almost always the same: 
+The code for fetching data is almost always the same:
 
-- In a `try` block, `fetch` from a URL and parse the response as JSON
-- In a `catch` block, log the caught `error`. Any error that occurs in the `try` block will be caught by this one shared `catch` block
+* In a `try` block, `fetch` from a URL and parse the response as JSON
+* In a `catch` block, log the caught `error`. Any error that occurs in the `try` block will be caught by this one shared `catch` block
 
 So, we can refactor our code a bit, add in some safety measures, and create a helper function that abstracts away this logic:
 
@@ -190,6 +195,7 @@ const fetchData = async (url, options = {}) => {
 ```
 
 Let's break down this `fetchData` helper
+
 * It accepts a `url` and an `options` argument allowing other types of requests to be made (POST, PATCH/PUT, DELETE, etc...). If the caller of `fetchData` does not provide `options`, it will default to an empty object.
 * If the `!response.ok` guard clause is triggered, an error is thrown instead of returning. This let's us handle `4xx` and `5xx` responses in the `catch` block and treat them the same as errors thrown by `fetch` and `response.json()`.
 * It checks the content type of the `response` to determine how to parse (with `response.json()` or `response.text()`)
