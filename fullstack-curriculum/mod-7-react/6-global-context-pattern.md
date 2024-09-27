@@ -1,21 +1,21 @@
-# Global Context Design Pattern
+# Global Context Pattern
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-1-global-context-pattern)!
 {% endhint %}
 
 **Table of Contents**:
-- [Global Context Design Pattern](#global-context-design-pattern-1)
-  - [1) Create a `ContextProvider` wrapper component](#1-create-a-contextprovider-wrapper-component)
-  - [2) Import and Render the ContextProvider component in main.jsx](#2-import-and-render-the-contextprovider-component-in-mainjsx)
-  - [3) Refactor other components as necessary](#3-refactor-other-components-as-necessary)
 
+* [Global Context Design Pattern](6-global-context-pattern.md#global-context-design-pattern-1)
+  * [1) Create a `ContextProvider` wrapper component](6-global-context-pattern.md#1-create-a-contextprovider-wrapper-component)
+  * [2) Import and Render the ContextProvider component in main.jsx](6-global-context-pattern.md#2-import-and-render-the-contextprovider-component-in-mainjsx)
+  * [3) Refactor other components as necessary](6-global-context-pattern.md#3-refactor-other-components-as-necessary)
 
 ## Global Context Design Pattern
 
-<img src='./img/instagram-context-diagram.svg' style='max-width: 1000px' />
+![](img/instagram-context-diagram.svg)
 
-The illustration above shows how we can **wrap the _entire_ `App` component in our context**, but in the example we only wrap the `PostList` component.
+The illustration above shows how we can **wrap the **_**entire**_ **`App` component in our context**, but in the example we only wrap the `PostList` component.
 
 ```jsx
 import Header from "./components/Header";
@@ -88,8 +88,8 @@ const InstagramContextProvider = ({ children }) => {
 export default InstagramContextProvider;
 ```
 
-- All of the global state for this application can be managed by this component.
-- Note how the `children` prop is used. This will become clearer next.
+* All of the global state for this application can be managed by this component.
+* Note how the `children` prop is used. This will become clearer next.
 
 ### 2) Import and Render the ContextProvider component in main.jsx
 

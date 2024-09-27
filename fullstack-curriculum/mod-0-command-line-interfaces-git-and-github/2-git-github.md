@@ -1,27 +1,23 @@
 # Git & GitHub
 
-- [Slides](#slides)
-- [Overview](#overview)
-- [Introduction: Managing Files Can Be Tricky](#introduction-managing-files-can-be-tricky)
-- [What is a Git Repository?](#what-is-a-git-repository)
-  - [Git Workflow](#git-workflow)
-  - [`git init` and `git status`](#git-init-and-git-status)
-  - [`git add`, `git commit`, and `git log`](#git-add-git-commit-and-git-log)
-- [GitHub: What is It? Why Use It?](#github-what-is-it-why-use-it)
-  - [GitHub Workflow](#github-workflow)
-  - [1. Create A Repository On GitHub](#1-create-a-repository-on-github)
-  - [2. Make A Local Clone Of The Repository with `git clone`](#2-make-a-local-clone-of-the-repository-with-git-clone)
-  - [3. Use the normal Git Workflow](#3-use-the-normal-git-workflow)
-  - [4. Upload local commits to GitHub with `git push`](#4-upload-local-commits-to-github-with-git-push)
-- [Summary](#summary)
-
-<!-- ## Watch -->
-<!-- {% embed url="" %} -->
+* [Slides](2-git-github.md#slides)
+* [Overview](2-git-github.md#overview)
+* [Introduction: Managing Files Can Be Tricky](2-git-github.md#introduction-managing-files-can-be-tricky)
+* [What is a Git Repository?](2-git-github.md#what-is-a-git-repository)
+  * [Git Workflow](2-git-github.md#git-workflow)
+  * [`git init` and `git status`](2-git-github.md#git-init-and-git-status)
+  * [`git add`, `git commit`, and `git log`](2-git-github.md#git-add-git-commit-and-git-log)
+* [GitHub: What is It? Why Use It?](2-git-github.md#github-what-is-it-why-use-it)
+  * [GitHub Workflow](2-git-github.md#github-workflow)
+  * [1. Create A Repository On GitHub](2-git-github.md#1-create-a-repository-on-github)
+  * [2. Make A Local Clone Of The Repository with `git clone`](2-git-github.md#2-make-a-local-clone-of-the-repository-with-git-clone)
+  * [3. Use the normal Git Workflow](2-git-github.md#3-use-the-normal-git-workflow)
+  * [4. Upload local commits to GitHub with `git push`](2-git-github.md#4-upload-local-commits-to-github-with-git-push)
+* [Summary](2-git-github.md#summary)
 
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1ZJZB_i15KlU1h6fO_3Up50PFv_c6juj5oRCCIhChK2o/embed?start=false&loop=false&delayms=3000" %}
-
 
 ## Overview
 
@@ -30,6 +26,7 @@ Managing versions of the same files can be tricky, but in this lesson, we'll lea
 **Objectives**
 
 You will be able to…
+
 * Learn what a repo is
 * Differentiate between local and remote repos
 * Create a remote repository on Github
@@ -64,7 +61,7 @@ You will be able to…
 
 Imagine you're working on a paper. You've got all of your drafts saved in a folder and it looks something like this:
 
-![](./img/my-paper-file-names.png)
+![](img/my-paper-file-names.png)
 
 Sound familiar? You don't want to delete them in case you want to go back to an older version. So what else can you do?
 
@@ -78,30 +75,42 @@ A **Git repository** is one that makes use of the **version control system** cal
 
 Version control systems, like Git, maintain a history of every change made to a repo. These changes, called **commits**, are snapshots of a project's code after the completion of a feature.
 
-![](./img/commit-history.png)
+![](img/commit-history.png)
 
-**<details><summary style="color: purple">Q: What are the benefits of maintaining a commit history like this?</summary>**
-> Developers can revert to previous versions of their project if they need to (for example, if a feature is not working as expected).
+<details>
+
+<summary><strong>Q: What are the benefits of maintaining a commit history like this?</strong></summary>
+
+Developers can revert to previous versions of their project if they need to (for example, if a feature is not working as expected).
+
 </details>
 
 ### Git Workflow
 
 Using git in a project involves moving our code between three phases:
+
 1. The working directory (where we are editing files)
 2. The staging area (where we temporarily store changes before committing them)
 3. The repository (where we store our committed changes)
 
-![](./img/local-git.png)
+![](img/local-git.png)
 
-**<details><summary style="color: purple">Q: What is the point of temporarily storing changes before committing them?</summary>**
-> Check out [this StackOverflow post which does a great job of explaining!](https://stackoverflow.com/questions/49228209/whats-the-use-of-the-staging-area-in-git)
-</details><br>
+<details>
+
+<summary><strong>Q: What is the point of temporarily storing changes before committing them?</strong></summary>
+
+Check out [this StackOverflow post which does a great job of explaining!](https://stackoverflow.com/questions/49228209/whats-the-use-of-the-staging-area-in-git)
+
+</details>
+
+\
+
 
 ### `git init` and `git status`
 
 To use Git in a project, we can start by turning the project into a Git repository with the command `git init`. We can then make changes and use `git status` to see what changes have been made:
 
-![](./img/git-init-git-status.png)
+![](img/git-init-git-status.png)
 
 1. In the Terminal, we navigated to a folder ran `git init`, turning the folder into a Git repository.
 2. The `git status` command can be used at any time to see what changes have been made to the repository. At first, we can see that the repo has no changes.
@@ -112,7 +121,7 @@ To use Git in a project, we can start by turning the project into a Git reposito
 
 One we have changes that we want to save in the repository, we use the `git add` command to "stage" the changes and `git commit` to save those changes!
 
-![](./img/git-add-git-commit.png)
+![](img/git-add-git-commit.png)
 
 1. In the Terminal, we use `git add myfile.txt` to move the `myfile.txt` file into the staging area.
 2. `git status` shows us that `myfile.txt` is ready to be committed.
@@ -126,7 +135,7 @@ While maintaining a Git repo is a great way to keep track of changes on your own
 
 These options work, but almost every developer uses **GitHub**.
 
-![](./img/github.png)
+![](img/github.png)
 
 **GitHub** is like a social network for developers, making it easy to backup, share and collaborate on projects.
 
@@ -144,19 +153,19 @@ After setup, whenever we want to make changes to the repo we:
 3. Use the normal git workflow (make changes › `git add` › `git commit`)
 4. After making commits on our local repository, we **push** the changes to the remote repository.
 
-![](./img/git-github-workflow.png)
+![](img/git-github-workflow.png)
 
 Let's practice this:
 
 ### 1. Create A Repository On GitHub
 
-Instead of using the `git init` command to create a *local repository*. We're going to start by creating a *remote repository*.
+Instead of using the `git init` command to create a _local repository_. We're going to start by creating a _remote repository_.
 
-In the upper-right corner of any page, select <kbd>+</kbd>, then click **New repository**.
+In the upper-right corner of any page, select +, then click **New repository**.
 
-![](./img/new-repo.png)
+![](img/new-repo.png)
 
-Choose an owner of the repository (you) and give the repository a name. 
+Choose an owner of the repository (you) and give the repository a name.
 
 {% hint style="warning" %}
 Make sure to check the **Add a README file** box.
@@ -164,13 +173,13 @@ Make sure to check the **Add a README file** box.
 
 Then click **Create repository**.
 
-![](./img/new-repo-settings.png)
+![](img/new-repo-settings.png)
 
 ### 2. Make A Local Clone Of The Repository with `git clone`
 
 After setting up the repo, you should be brought to the repo's page on GitHub. Click on the **Code** button (1), make sure to select **SSH** (2), and then click on the **copy** button (3) to copy the git clone url beginning with `git@github.com:...`.
 
-![](./img/new-repo-clone.png)
+![](img/new-repo-clone.png)
 
 Then, back in your Visual Studio Code terminal, run the command:
 
@@ -191,6 +200,7 @@ Wherever your VC Code terminal is, the repository will be downloaded. If you wan
 ### 3. Use the normal Git Workflow
 
 Now that you have cloned the repository, you can use the same Git workflow as above:
+
 1. Make edits (for example, edit the `README.md` file)
 2. Save your code
 3. Use `git add -A` to add ALL changes to the staging area.
@@ -200,9 +210,9 @@ Now that you have cloned the repository, you can use the same Git workflow as ab
 
 Now here comes the fun part.
 
-![](./img/commit-ahead.png)
+![](img/commit-ahead.png)
 
-In the example above, notice how the first `git status` says 
+In the example above, notice how the first `git status` says
 
 ```
 On branch main
@@ -221,13 +231,13 @@ Your local repository (on your computer) and your remote repository (on GitHub) 
 
 To upload the local commits to GitHub, run the command `git push`.
 
-![](./img/git-push.png)
+![](img/git-push.png)
 
 If we look at the repo on GitHub, we should see the latest commit message and the updated `README.md` file!
 
-![](./img/updated-repo-with-commit.png)
+![](img/updated-repo-with-commit.png)
 
-For future changes, repeat steps 3 and 4! 
+For future changes, repeat steps 3 and 4!
 
 ## Summary
 
@@ -239,7 +249,7 @@ So, in summary, Git and GitHub are invaluable tools in the toolkit of a software
 
 Together, we can manage code in **local repositories** and sync them with **remote repositories**.
 
-![](./img/git-github-workflow.png)
+![](img/git-github-workflow.png)
 
 The one command in this diagram that we didn't cover is `git pull`. We'll learn more about this in the next lesson!
 

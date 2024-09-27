@@ -1,35 +1,36 @@
-# Event Handlers, State, and Forms
+# Events, State, and Forms
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-1-managing-state-and-forms)!
 {% endhint %}
 
-In this lesson, we will look at how to respond to events in React and use those events to manage the ever-changing state in our application. 
+In this lesson, we will look at how to respond to events in React and use those events to manage the ever-changing state in our application.
 
 **Table of Contents**
-- [Terms](#terms)
-- [Instapets](#instapets)
-- [Handling Changing State](#handling-changing-state)
-  - [Our Components Already Render Data](#our-components-already-render-data)
-  - [Changing A Variable In Reaction to Events](#changing-a-variable-in-reaction-to-events)
-- [`useState`](#usestate)
-  - [Import useState from react](#import-usestate-from-react)
-  - [Invoke useState at the top of your component](#invoke-usestate-at-the-top-of-your-component)
-  - [Use the setter function to update the state](#use-the-setter-function-to-update-the-state)
-  - [All Together Now](#all-together-now)
-  - [`setLikes` does NOT change the value of `likes`](#setlikes-does-not-change-the-value-of-likes)
-- [Forms](#forms)
-  - [Controlled Forms](#controlled-forms)
-- [Discussion! Lifting State Up](#discussion-lifting-state-up)
+
+* [Terms](2-events-state-and-forms.md#terms)
+* [Instapets](2-events-state-and-forms.md#instapets)
+* [Handling Changing State](2-events-state-and-forms.md#handling-changing-state)
+  * [Our Components Already Render Data](2-events-state-and-forms.md#our-components-already-render-data)
+  * [Changing A Variable In Reaction to Events](2-events-state-and-forms.md#changing-a-variable-in-reaction-to-events)
+* [`useState`](2-events-state-and-forms.md#usestate)
+  * [Import useState from react](2-events-state-and-forms.md#import-usestate-from-react)
+  * [Invoke useState at the top of your component](2-events-state-and-forms.md#invoke-usestate-at-the-top-of-your-component)
+  * [Use the setter function to update the state](2-events-state-and-forms.md#use-the-setter-function-to-update-the-state)
+  * [All Together Now](2-events-state-and-forms.md#all-together-now)
+  * [`setLikes` does NOT change the value of `likes`](2-events-state-and-forms.md#setlikes-does-not-change-the-value-of-likes)
+* [Forms](2-events-state-and-forms.md#forms)
+  * [Controlled Forms](2-events-state-and-forms.md#controlled-forms)
+* [Discussion! Lifting State Up](2-events-state-and-forms.md#discussion-lifting-state-up)
 
 ## Terms
 
-- **State** — Data that is used by an application at a particular point in time. State is often mutable, meaning it can be changed over time, usually in response to user actions or other events
-- **Stateful Component** — A component that depends on state and is re-rendered whenever the state changes.
-- **Hooks** — Functions that provide a wide variety of features for React components. They all begin with `use()`.
-- **`useState`** – A react hook for managing state within a React component. It returns an array with a state value and a setter function. It triggers the component to re-render when the state changes.
-- **Lifting state up** — A practice where state is defined in a parent component so that it can be used by its child components.
-- **Controlled Form** — A form whose value changes are controlled by a piece of state.
+* **State** — Data that is used by an application at a particular point in time. State is often mutable, meaning it can be changed over time, usually in response to user actions or other events
+* **Stateful Component** — A component that depends on state and is re-rendered whenever the state changes.
+* **Hooks** — Functions that provide a wide variety of features for React components. They all begin with `use()`.
+* **`useState`** – A react hook for managing state within a React component. It returns an array with a state value and a setter function. It triggers the component to re-render when the state changes.
+* **Lifting state up** — A practice where state is defined in a parent component so that it can be used by its child components.
+* **Controlled Form** — A form whose value changes are controlled by a piece of state.
 
 ## Instapets
 
@@ -37,19 +38,19 @@ In this lesson, we'll be using an app called `instapets` to demonstrate building
 
 **State** is the data that is used by an application at a particular point in time. State is often mutable, meaning it can be changed over time, usually in response to user actions or other events
 
-Right now the app is not stateful. It renders 3 hard-coded pet pictures,  the form doesn't work and neither do the "Like" buttons.
+Right now the app is not stateful. It renders 3 hard-coded pet pictures, the form doesn't work and neither do the "Like" buttons.
 
-<img style="max-width: 1200px" src="./img/instapets-demo.png">
+![](img/instapets-demo.png)
 
-Let's build this thing! 
+Let's build this thing!
 
 ## Handling Changing State
 
-Let's tackle the likes buttons first. 
+Let's tackle the likes buttons first.
 
 ### Our Components Already Render Data
 
-Each `InstagramPost` component renders a picture, a caption and a button to increment and display likes. 
+Each `InstagramPost` component renders a picture, a caption and a button to increment and display likes.
 
 > Notice how we added an `onClick` prop with the `handleClick` callback function.
 
@@ -76,10 +77,16 @@ export default InstagramPost;
 
 A stateful component is one that renders state — data values that may change.
 
-**<details><summary style="color: purple">Q: What data values does this component render? Is any of that considered "state"?</summary>**
-> `likes` and `picture`
-> These values are not considered state because they are hard-coded! They will not change.
-</details><br>
+<details>
+
+<summary><strong>Q: What data values does this component render? Is any of that considered "state"?</strong></summary>
+
+`likes` and `picture` These values are not considered state because they are hard-coded! They will not change.
+
+</details>
+
+\
+
 
 ### Changing A Variable In Reaction to Events
 
@@ -108,24 +115,24 @@ const InstagramPost = ({ picture }) => {
 };
 ```
 
-While this *does* increment the `likes` value, it doesn't cause the component to re-render because React isn't watching this value for changes.
+While this _does_ increment the `likes` value, it doesn't cause the component to re-render because React isn't watching this value for changes.
 
 ## `useState`
 
 So how do we make the component re-render with the updated `likes` value?
 
 We need a **hook**. Hooks in react are functions that perform a variety of jobs. They can be identified by their name which starts with "use":
-- `useState()`
-- `useEffect()`
-- `useNavigate()`
-- `useParams()`
-- `useContext()`
-- etc...
+
+* `useState()`
+* `useEffect()`
+* `useNavigate()`
+* `useParams()`
+* `useContext()`
+* etc...
 
 The `useState` hook allows us to create a piece of state that React will watch and when the state changes, it will re-render.
 
 Here's how it works:
-
 
 ### Import useState from react
 
@@ -134,7 +141,7 @@ Here's how it works:
 import { useState } from "react";
 ```
 
-- `useState` is a _named export_ of the `react` package (note the `{}` around the function in the `import` statement).
+* `useState` is a _named export_ of the `react` package (note the `{}` around the function in the `import` statement).
 
 ### Invoke useState at the top of your component
 
@@ -146,11 +153,11 @@ const InstagramPost = () => {
 };
 ```
 
-- `useState` _must_ be called at the top of a component. [Otherwise weird stuff happens](https://legacy.reactjs.org/docs/hooks-rules.html).
-- `useState(0)` returns an array with two values:
+* `useState` _must_ be called at the top of a component. [Otherwise weird stuff happens](https://legacy.reactjs.org/docs/hooks-rules.html).
+* `useState(0)` returns an array with two values:
   1. A piece of state data (`likes`) with a starting value (`0`)
   2. A "setter" function for updating that state data (`likes`) and re-rendering the component
-- The convention is to name state variables like `[something, setSomething]` using array destructuring.
+* The convention is to name state variables like `[something, setSomething]` using array destructuring.
 
 ### Use the setter function to update the state
 
@@ -162,11 +169,11 @@ const handleClick = () => {
 };
 ```
 
-- When the event handler is clicked, we'll invoke `setLikes` which either accepts:
-  - the new value that we want to set `likes` to or...
-  - a callback function for turning the current value of `likes` into the next value of `likes`.
-- As we saw, incrementing `likes` directly does not cause the component to re-render
-- `setLikes` will cause the component to re-render with the provided value as the new value for `likes`
+* When the event handler is clicked, we'll invoke `setLikes` which either accepts:
+  * the new value that we want to set `likes` to or...
+  * a callback function for turning the current value of `likes` into the next value of `likes`.
+* As we saw, incrementing `likes` directly does not cause the component to re-render
+* `setLikes` will cause the component to re-render with the provided value as the new value for `likes`
 
 ### All Together Now
 
@@ -192,7 +199,7 @@ const InstagramPost = ({ picture }) => {
 
 **Quiz!**
 
-* Why did we pass in `0` when we invoked `useState`? 
+* Why did we pass in `0` when we invoked `useState`?
 * What does `useState()` return?
 * What does `setLikes()` do? What kinds of inputs does it take?
 
@@ -200,11 +207,11 @@ const InstagramPost = ({ picture }) => {
 
 Interestingly `setLikes` does NOT change the value of `likes` within the `handleClick` callback. It tells React to re-render the `InstagramPost` component with a new value of `likes`.
 
-![](./img/setLikes-rerender.svg)
+![](img/setLikes-rerender.svg)
 
 You can see this if you place a `console.log(likes)` statement inside of `handleClick` callback.
 
-This kind of makes sense: `setLikes` isn't actually changing any value. It's just saying what the next value *should* be.
+This kind of makes sense: `setLikes` isn't actually changing any value. It's just saying what the next value _should_ be.
 
 ## Forms
 
@@ -296,11 +303,11 @@ const NewPetForm = () => {
 
 ## Discussion! Lifting State Up
 
-The last step to putting this together is having the form submission actually add a new picture to the list of pictures. 
+The last step to putting this together is having the form submission actually add a new picture to the list of pictures.
 
 Here is the component tree of the application:
 
-<img style="max-width: 1200px" src="./img/instapets-component-tree.svg">
+![](img/instapets-component-tree.svg)
 
 The challenge is that `PicturesList` is where the `pictures` are defined but we want to update the list of pictures from `NewPetForm`.
 
@@ -310,14 +317,17 @@ If we were to turn the `pictures` array into some state like this:
 const [pictures, setPictures] = useState(initialPictures);
 ```
 
-**<details><summary style="color: purple">Q: Where should I put this? Why?</summary>**
+<details>
 
-> The state should be defined in the `App` which is the closest shared ancestor of the `NewPetForm` and the `PicturesList`. The `App` can then pass those values down to its children as props. This is called **"lifting state up"**. 
-> Check out the `1-instapets-final/` to see how this is done:
-> 
-> * `App` uses `useState` to define the `pictures` and `setPictures` values
-> * It passes down `pictures` to `PicturesList`
-> * It makes an `addPicture` helper function and passes it down to `NewPetForm` to invoke upon submission.
-> * Notice how `addPicture` sets the state by copying the existing array and adding a new object.
+<summary><strong>Q: Where should I put this? Why?</strong></summary>
 
-</details><br>
+The state should be defined in the `App` which is the closest shared ancestor of the `NewPetForm` and the `PicturesList`. The `App` can then pass those values down to its children as props. This is called **"lifting state up"**. Check out the `1-instapets-final/` to see how this is done:
+
+* `App` uses `useState` to define the `pictures` and `setPictures` values
+* It passes down `pictures` to `PicturesList`
+* It makes an `addPicture` helper function and passes it down to `NewPetForm` to invoke upon submission.
+* Notice how `addPicture` sets the state by copying the existing array and adding a new object.
+
+</details>
+
+\

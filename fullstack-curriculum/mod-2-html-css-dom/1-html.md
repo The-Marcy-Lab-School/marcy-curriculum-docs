@@ -4,19 +4,19 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-0-html)!
 {% endhint %}
 
-- [First, an Experiment](#first-an-experiment)
-- [The Browser is an HTML Viewer](#the-browser-is-an-html-viewer)
-- [Live Server](#live-server)
-- [What is HTML?](#what-is-html)
-- [HTML Elements](#html-elements)
-- [Nesting Elements](#nesting-elements)
-- [Self Closing Tags](#self-closing-tags)
-- [Opening Tag Attributes \& Images](#opening-tag-attributes--images)
-- [Ids and Classes](#ids-and-classes)
-- [Links](#links)
-- [Properly formatted document](#properly-formatted-document)
-- [Semantic vs Non Semantic Elements](#semantic-vs-non-semantic-elements)
-- [Quiz](#quiz)
+* [First, an Experiment](1-html.md#first-an-experiment)
+* [The Browser is an HTML Viewer](1-html.md#the-browser-is-an-html-viewer)
+* [Live Server](1-html.md#live-server)
+* [What is HTML?](1-html.md#what-is-html)
+* [HTML Elements](1-html.md#html-elements)
+* [Nesting Elements](1-html.md#nesting-elements)
+* [Self Closing Tags](1-html.md#self-closing-tags)
+* [Opening Tag Attributes & Images](1-html.md#opening-tag-attributes--images)
+* [Ids and Classes](1-html.md#ids-and-classes)
+* [Links](1-html.md#links)
+* [Properly formatted document](1-html.md#properly-formatted-document)
+* [Semantic vs Non Semantic Elements](1-html.md#semantic-vs-non-semantic-elements)
+* [Quiz](1-html.md#quiz)
 
 ## First, an Experiment
 
@@ -30,21 +30,20 @@ Hello World
 <h1>Hello World</h1>
 ```
 
-* Right click on the `index.html` file and select <kbd>Reveal in Finder/Explorer</kbd>
+* Right click on the `index.html` file and select Reveal in Finder/Explorer
 * Open Chrome. Then drag and drop the `index.html` into the tab bar (there should be a + icon)
-* Then do the same for your `index.txt` file. 
+* Then do the same for your `index.txt` file.
 
 > On WSL, your files will be located under _Linux_ in the File Explorer
 >
-> ![Alt text](./img/file-explorer-linux.png)
+> <img src="img/file-explorer-linux.png" alt="Alt text" data-size="original">
 
 ## The Browser is an HTML Viewer
 
-* **Your browser is essentially built to render text and images.** 
+* **Your browser is essentially built to render text and images.**
 * The browser can interpret `.html` files and render content with style. It can also execute JavaScript!
-
 * The first HTML file you should create for a new website should always be `index.html`
-  * `index.html` is a magic name that servers will automatically look for if a user enters a domain without a file extension: `test.com` is the same as `test.com/index.html`. 
+  * `index.html` is a magic name that servers will automatically look for if a user enters a domain without a file extension: `test.com` is the same as `test.com/index.html`.
 * `index.html` is commonly known as the **entry point**
 
 ## Live Server
@@ -99,11 +98,9 @@ Hello World
 * **Headers** are created using `h1`, `h2`, `h3`, `h4`, `h5`, or `h6`. There should only be one `h1` per page and they should flow in descending order.
 * **Paragraphs** are created using `p` and are for most normal text.
 
-
-
 ## Nesting Elements
 
-* Text is not the only thing that can go in a tag, in fact *most* tags **nest** other tags.
+* Text is not the only thing that can go in a tag, in fact _most_ tags **nest** other tags.
 
 ```html
 <div>
@@ -114,6 +111,7 @@ Hello World
   </div>
 </div>
 ```
+
 * Nested elements should always be indented one level for readability.
 * Good examples of this are the **ordered list** and **unordered list** tags and their **list items**:
 
@@ -133,10 +131,11 @@ Hello World
 </ul>
 ```
 
-* **Child tags** are those that are nested in a **parent tag**. 
+* **Child tags** are those that are nested in a **parent tag**.
 * Tags that are in the same nesting level next to each other are **sibling tags**.
 
 ## Self Closing Tags
+
 * Some HTML elements have **self-closing tags** like image elements (`<img />`), line-break elements (`<br />`), and horizontal-rule elements (`<hr />`).
 * These have no closing tag!
 
@@ -147,9 +146,8 @@ Hello World
 ```
 
 * Usually `br` is just a stop-gap for testing and rapid iteration
-* In reality breaks on the page should be controlled by css. 
+* In reality breaks on the page should be controlled by css.
 * `hr` tags can be styled to look like nice dividers
-
 
 ## Opening Tag Attributes & Images
 
@@ -161,13 +159,13 @@ Hello World
   alt="cat eating a record" 
 />
 ```
+
 * **Attributes** add additional information about an element and are listed in the opening tag.
 * `src` is the actual media source
 * `alt` tells bots and screen readers what the picture is. It's also what can show up if the link is broken.
-  * If the content is central to your site, you *must* include an `alt` attribute
-  * If the picture is just a decoration (like a background image) you do not need an `alt` attribute. 
+  * If the content is central to your site, you _must_ include an `alt` attribute
+  * If the picture is just a decoration (like a background image) you do not need an `alt` attribute.
   * In your `alt` do not say "picture of" or anything, just describe the image.
-
 * `src` can be a hyperlink or a local link:
 
 ```html
@@ -187,9 +185,9 @@ Hello World
 
 ## Ids and Classes
 
-* `id`s mark a tag as a *single*, unique, important item on your page. 
-* `class`es are for denoting a bunch of related tags, and can appear more than once per page. 
-* Both `id`s and `class`es are used to reference elements on pages so that they can be accessed, either by JS or CSS. 
+* `id`s mark a tag as a _single_, unique, important item on your page.
+* `class`es are for denoting a bunch of related tags, and can appear more than once per page.
+* Both `id`s and `class`es are used to reference elements on pages so that they can be accessed, either by JS or CSS.
 * They are a way to differentiate tags on your page from other identical tags.
 
 ```html
@@ -200,9 +198,9 @@ Hello World
 <p>lorem ipsum</p>
 ```
 
-* `id` and `class` names are case sensitive, cannot start with numbers, and can't have spaces. 
-* Stylistically, in pure html, you'll see `kebab-case` names. 
-* You can have multiple classes by separating with spaces, but only one id. 
+* `id` and `class` names are case sensitive, cannot start with numbers, and can't have spaces.
+* Stylistically, in pure html, you'll see `kebab-case` names.
+* You can have multiple classes by separating with spaces, but only one id.
 * You can include both an id and class on a single tag.
 
 ```html
@@ -232,23 +230,20 @@ Hello World
 <a href="./about">Our About Page</a>
 <a href="#more-information">See more information</a>
 ```
-* Be careful with relative links: `"/"` is the root of the *server* which may not be where you mean. 
+
+* Be careful with relative links: `"/"` is the root of the _server_ which may not be where you mean.
 * Local links `./`, `../` will direct you from your current directory.
-
 * Links can also be nested, but will still flow seamlessly in the final document.
-
 
 ```html
 <p> If you're looking for things <a href="https://google.com">Go to Google</a>, and you'll see ads</p>
 ```
 
-* Link text should *always* be descriptive of where you're going, never just put "click here."
-
-
+* Link text should _always_ be descriptive of where you're going, never just put "click here."
 
 ## Properly formatted document
 
-* The way that HTML works is it's a "document" filled with "tags". 
+* The way that HTML works is it's a "document" filled with "tags".
 * Let's start simple with some boilerplate to set up our document
 
 ```html
@@ -258,8 +253,8 @@ Hello World
 </html>
 ```
 
-* These two tags make sure our browser knows what we're dealing with. 
-* Just copy them in without worrying. 
+* These two tags make sure our browser knows what we're dealing with.
+* Just copy them in without worrying.
 * There are other doctypes and languages, but this is what we'll use
 
 ```html
@@ -270,8 +265,8 @@ Hello World
 </head>
 ```
 
-* The `head` tag is where we put meta information, scripts, links, and titles. 
-* The `title` tag is the only one visible to our users as what appears in the browser tag. 
+* The `head` tag is where we put meta information, scripts, links, and titles.
+* The `title` tag is the only one visible to our users as what appears in the browser tag.
 * `meta` does other things like tell the mobile browser how big to start the page and what character set we're using.
 
 ```html
@@ -288,15 +283,16 @@ Hello World
 </html>
 ```
 
-* The `body` tag is where we can put things for our users to see. 
+* The `body` tag is where we can put things for our users to see.
 * From here on out, always include the **boilerplate** above
-* VS Code users: start with an empty document, type `html` and then from the popup, select `html:5` and hit <kbd>Enter</kbd>
+* VS Code users: start with an empty document, type `html` and then from the popup, select `html:5` and hit Enter
 
 **Create a new HTML file and type in `html:5`**
 
 ## Semantic vs Non Semantic Elements
-* So far, all the tags we've made were **semantic** — their name told us about their function: `h` tags are headings, `a` are links, `p` are paragraphs. 
-* However, there's another kind of tag that conveys no meaning: **non-semantic**. 
+
+* So far, all the tags we've made were **semantic** — their name told us about their function: `h` tags are headings, `a` are links, `p` are paragraphs.
+* However, there's another kind of tag that conveys no meaning: **non-semantic**.
 * Pretty much the only non-semantic tags you'll see are `div` and `span`. These are just for grouping other related tags together (div) or calling out a particular section of text (span).
 
 ```html
@@ -326,15 +322,22 @@ Hello World
 
 **Q: What is different about how the browser shows the `.txt` and `.html` files?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 A browser can show the raw contents of any file, such as a `.txt` file but it can render a `.html` file with more style!
 
-</details><br>
+</details>
+
+\
+
 
 **Q: Browsers are specialized "viewer" applications for `.html` files. What are other examples of applications that are made to view specific kinds of files?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 There are tons of examples! But here are a few
 
@@ -343,17 +346,25 @@ There are tons of examples! But here are a few
 * iTunes is made to play `.mp3` files.
 * Microsoft Word is made to view and edit `.doc` files
 
-</details><br>
+</details>
+
+\
+
 
 **Q: How do you think these different tags affect what is displayed?**
 
-<details><summary>Answer</summary>
+<details>
 
-* The `h1` says to make a header. 
-* The `p` says to make a normal paragraph. 
+<summary>Answer</summary>
+
+* The `h1` says to make a header.
+* The `p` says to make a normal paragraph.
 * The `ul` says to make an unordered list with three list items (`li`) in it.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: What is wrong with the HTML below?**
 
@@ -363,32 +374,47 @@ Hello World!
 </h3>
 ```
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 The closing tag does not match the opening tag! The closing tag should be `</h1>`.
 
 Also, stylistically, we should indent the content of the element if we are putting each part of the tag on separate lines.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: When should you use `<ol>` and when should you use `<ul>`?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 Use `<ol>` when order matters, and `ul` when it doesn't.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: In the example above, which elements are parents, which elements are children, and which elements are siblings?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 * Both of the `h2` tags, the `ol` tag and the `ul` tag are sibling tags
 * The `ol` and the `ul` are both parent tags to their `li` tags
 * The `li` tags are all children tags of the `ol` or `ul` tags
 * The `li` tags are sibling tags within their own lists.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: What is wrong with this HTML element?**
 
@@ -396,23 +422,31 @@ Use `<ol>` when order matters, and `ul` when it doesn't.
 <img>cat-pizza.png</img>
 ```
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 The source of the image should be in the opening `<img>` tag as a `src` attribute.
 
 There should also be an `alt` attribute describing the picture.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: How would you create a `<p>` element with the id `"caption-1"` and the classes `"italic"` and `"centered"`?**
 
-<details><summary>Answer</summary>
+<details>
 
-<p id="caption-1" class="italic centered">
-  some text
-</p>
+<summary>Answer</summary>
 
-</details><br>
+some text
+
+</details>
+
+\
+
 
 **Q: What page does this anchor tag take us to?**
 
@@ -420,15 +454,22 @@ There should also be an `alt` attribute describing the picture.
 <a href="./">Go Home</a>
 ```
 
-<details><summary>Answer</summary>
+<details>
 
-The `index.html` page! 
+<summary>Answer</summary>
 
-</details><br>
+The `index.html` page!
+
+</details>
+
+\
+
 
 **Q: Which semantic tags should we use in the code snippet above?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 The outermost `div` is okay but the text `Hobbies` should be inside a `p` or a header and the hobbies themselves should be `li` elements inside of a `ul` or an `ol`.
 

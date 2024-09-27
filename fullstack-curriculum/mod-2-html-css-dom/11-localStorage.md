@@ -1,27 +1,28 @@
-# 2-3-1-localStorage-f23
+# LocalStorage
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-localStorage-f23)!
 {% endhint %}
 
 **Table of Contents**
-- [What is localStorage?](#what-is-localstorage)
-- [Setting and Getting Values](#setting-and-getting-values)
-- [toString() vs. JSON.stringify()](#tostring-vs-jsonstringify)
-- [Stringify and Parse](#stringify-and-parse)
-- [`localStorage` Helpers](#localstorage-helpers)
-- [Data Layer](#data-layer)
+
+* [What is localStorage?](11-localStorage.md#what-is-localstorage)
+* [Setting and Getting Values](11-localStorage.md#setting-and-getting-values)
+* [toString() vs. JSON.stringify()](11-localStorage.md#tostring-vs-jsonstringify)
+* [Stringify and Parse](11-localStorage.md#stringify-and-parse)
+* [`localStorage` Helpers](11-localStorage.md#localstorage-helpers)
+* [Data Layer](11-localStorage.md#data-layer)
 
 ## What is localStorage?
 
-The `localStorage` interface allows you to **store data across browser sessions**. 
+The `localStorage` interface allows you to **store data across browser sessions**.
 
 It is an Object that is available on the `window` (it is globally available) and it has 4 methods:
 
-- `localStorage.setItem(key, valueString)`
-- `localStorage.getItem(key)`
-- `localStorage.removeItem(key)`
-- `localStorage.clear()`
+* `localStorage.setItem(key, valueString)`
+* `localStorage.getItem(key)`
+* `localStorage.removeItem(key)`
+* `localStorage.clear()`
 
 ## Setting and Getting Values
 
@@ -44,8 +45,6 @@ console.log(storedColor);           // purple
 console.log(typeof storedNumber);   // string
 console.log(typeof storedColor);    // string
 ```
-
-
 
 ## toString() vs. JSON.stringify()
 
@@ -97,7 +96,7 @@ When retrieving a value from `localStorage`, we use the `JSON.parse()` method wh
 
 ## `localStorage` Helpers
 
-That's quite a bit of code to write and re-write every time we can to set or get values to/from `localStorage`. 
+That's quite a bit of code to write and re-write every time we can to set or get values to/from `localStorage`.
 
 To reduce repetition, we often write these two helper functions:
 
@@ -117,6 +116,7 @@ const getLocalStorageKey = (key) => {
 ```
 
 We wrap the `JSON.parse()` function invocation in a `try/catch` block in the event that `JSON.parse()` can't determine the value type of the given string.
+
 * If it can, it will return the value.
 * If it can't, the error will be printed (and not break everything) and `null` will be returned.
 
@@ -138,9 +138,10 @@ console.log(storedUser); // { name: 'ben' }
 As you can see, working with `localStorage` can be quite tricky. We want to ensure that our application works in a **consistent and predictable** manner.
 
 To achieve this, we will typically:
-* **isolate the logic** for dealing with `localStorage` in its own file. 
-* create functions for interacting with `localStorage`. 
-* **only export the functions that indirectly interact with `localStorage`**. 
+
+* **isolate the logic** for dealing with `localStorage` in its own file.
+* create functions for interacting with `localStorage`.
+* **only export the functions that indirectly interact with `localStorage`**.
 
 This way, we create a **consistent** and **predictable** interface.
 
@@ -198,21 +199,27 @@ console.log(getNames());  // ['gonzalo', 'motun', 'carmen', 'zo]
 
 **Q: What makes this predictable and consistent?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 This is predictable and consistent because
+
 * we control what the user of these functions can do (set, get, initialize, add, remove)
 * the caller of those exported functions doesn't directly interact with `localStorage`
 * the exported functions handle the interaction with `localStorage`
 
 Sure, we can interact with `localStorage` outside of this file too but we should avoid that if we want to maintain the predictable and consistent behavior.
 
-</details><br>
+</details>
+
+\
+
 
 That file acts as a **data layer**. We might also decide to isolate our DOM manipulation code and create a **DOM layer** or create an **event handling layer**.
 
-Using `localStorage`, we will build a **data layer** that is used to inform what is rendered, know as the **view layer**. When users interact with the view through the form, the data layer will be updated and we re-render the view. 
+Using `localStorage`, we will build a **data layer** that is used to inform what is rendered, know as the **view layer**. When users interact with the view through the form, the data layer will be updated and we re-render the view.
 
 This cycle of **data > view > handle events > data** looks like this:
 
-![](./img/data-layer-diagram.png)
+![](img/data-layer-diagram.png)

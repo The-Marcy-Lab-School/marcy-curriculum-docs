@@ -6,20 +6,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-- [What is CSS?](#what-is-css)
-- [Linking/Loading CSS Files](#linkingloading-css-files)
-- [Anatomy of CSS](#anatomy-of-css)
-- [Selectors](#selectors)
-- [Selector Specificity](#selector-specificity)
-- [Box Model](#box-model)
-    - [Solution: Border Box "Reset"](#solution-border-box-reset)
-- [Common CSS Tricks](#common-css-tricks)
-  - [Relative Units: `rems`](#relative-units-rems)
-  - [removing list styles](#removing-list-styles)
-  - [Centering things](#centering-things)
-  - [Image Fitting](#image-fitting)
-- [Homework](#homework)
-- [Quiz!](#quiz)
+* [What is CSS?](2-css.md#what-is-css)
+* [Linking/Loading CSS Files](2-css.md#linkingloading-css-files)
+* [Anatomy of CSS](2-css.md#anatomy-of-css)
+* [Selectors](2-css.md#selectors)
+* [Selector Specificity](2-css.md#selector-specificity)
+* [Box Model](2-css.md#box-model)
+  * [Solution: Border Box "Reset"](2-css.md#solution-border-box-reset)
+* [Common CSS Tricks](2-css.md#common-css-tricks)
+  * [Relative Units: `rems`](2-css.md#relative-units-rems)
+  * [removing list styles](2-css.md#removing-list-styles)
+  * [Centering things](2-css.md#centering-things)
+  * [Image Fitting](2-css.md#image-fitting)
+* [Homework](2-css.md#homework)
+* [Quiz!](2-css.md#quiz)
 
 ## What is CSS?
 
@@ -36,8 +36,8 @@ p.vivid {
 ```
 
 > CSS let's us say "I want all paragraph elements with the class "vivid" to have purple bold text in Helvetica font.
- 
-* The browser already has some **default styles** but we can override those styles with our own. 
+
+* The browser already has some **default styles** but we can override those styles with our own.
 * We can change the **color**, the **size**, the **font**, the **position**, and more of any element on the page.
 
 ## Linking/Loading CSS Files
@@ -70,11 +70,11 @@ p.vivid {
 
 ## Anatomy of CSS
 
-* A CSS rule is made up of a **selector** and a **declarations** 
+* A CSS rule is made up of a **selector** and a **declarations**
   * the **selector** is what chooses the element(s) that will be styled
   * the **declarations** are the actual styles that will be applied
 
-![Anatomy of a rule](./img/css-anatomy-of-a-rule.png)
+![Anatomy of a rule](img/css-anatomy-of-a-rule.png)
 
 * Declarations are made up of key/property and value pairs (just like an object)
 * each declaration MUST end with a semicolon (unlike an object)
@@ -95,7 +95,7 @@ h1 {
 
 ## Selectors
 
-* There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css_selectors.php)). The most common selectors are:
+* There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css\_selectors.php)). The most common selectors are:
   * By tag (select all `p` elements)
   * By class name (select all elements with `class="blue"`)
   * By id name (select the element with `id="email-form"`)
@@ -143,6 +143,7 @@ a:active { color: blue; } /* a link the moment it is clicked */
 ```
 
 ## Selector Specificity
+
 * **Selector specificity** determines how conflicting style rules are resolved
 * By default, "cascading" means that the rule that comes later, wins!
 
@@ -157,9 +158,8 @@ p {
 ```
 
 * CSS is read top-to-bottom and the last CSS rule said to make all `p` tags blue.
-
 * The more selectors you add, the more specific the rule is, and the more it will override other rules.
-  * `id` >  `class` > tag name
+  * `id` > `class` > tag name
 
 ```css
 p#subtitle {
@@ -171,15 +171,14 @@ p {
 }
 ```
 
-* Now, the `p` with the `id="subtitle"` attribute will be red, because it's more specific than the selector `p`. 
-
+* Now, the `p` with the `id="subtitle"` attribute will be red, because it's more specific than the selector `p`.
 
 ## Box Model
 
-* The **box model** is how the browser calculates the size of an element. 
-* It's made up of the **content**, **padding**, **border**, and **margin**. 
+* The **box model** is how the browser calculates the size of an element.
+* It's made up of the **content**, **padding**, **border**, and **margin**.
 
-![Alt text](./img/margin-padding-content.png)
+![Alt text](img/margin-padding-content.png)
 
 * By default, `width` and `height` refer to the size of the _content box_
 
@@ -206,16 +205,14 @@ img {
 }
 ```
 
-
 * This will make the `width` and `height` properties set the _total width_, not the content box width. The content box will squish down to the space remaining.
-
 * Learn more here: https://css-tricks.com/box-sizing/
 
 ## Common CSS Tricks
 
 ### Relative Units: `rems`
 
-* The browser has a **base font size**, typically 16 pixels by default. 
+* The browser has a **base font size**, typically 16 pixels by default.
 * This can be adjusted in accessibility settings for people who need larger font sizes.
 * The `px` size unit ignores the browser's settings on base font size
 * Use the `rem` unit to set font size relative to the base font size.
@@ -223,10 +220,9 @@ img {
   * If the base font size is `16px`, then `1.5rem` will be 24 pixels and `2rem` will be `32 pixels`
   * This is a good way to make sure your site is accessible to people who need larger font sizes.
 
-
 ### removing list styles
 
-* Below is a common "reset" style for unordered lists. 
+* Below is a common "reset" style for unordered lists.
 * The `ul` element is typically used to store links in a navigation bar. Understandably, we don't want bullet points in our nav bars.
 
 ```css
@@ -262,29 +258,33 @@ p {
 
 ### Image Fitting
 
-* Specify *one* height or width to get the image to maintain it's natural aspect ratio. 
+* Specify _one_ height or width to get the image to maintain it's natural aspect ratio.
 * If you specify both, it will stretch the image to fit the box, which may not be what you want.
 
 ## Homework
 
-So css has so many selectors, and it's helpful to know what they are! That's why the HW tonight is a game that runs through an incredible amount of them. There are lots of CSS properties to learn as well, but looking them up is simple. If you figure out how to *select* something, you'll be ok!
+So css has so many selectors, and it's helpful to know what they are! That's why the HW tonight is a game that runs through an incredible amount of them. There are lots of CSS properties to learn as well, but looking them up is simple. If you figure out how to _select_ something, you'll be ok!
 
 And remember, simplest is better. Writing your HTML to just include an id or class on a crucial element is better than trying to make some crazy selector. It's easier to read, and easier to maintain.
 
-**Link:** https://flukeout.github.io/
-**Goal:** Complete up to level 20. Take a screenshot/picture and upload it to Canvas.
+**Link:** https://flukeout.github.io/ **Goal:** Complete up to level 20. Take a screenshot/picture and upload it to Canvas.
 
 ## Quiz!
 
 **Q: The tags `h1`, `h2`, and `p` all have different default styles. How are they different?**
 
-<details><summary>Answer</summary>
+<details>
 
-Among other things, `h1` and `h2` elements are both bold compared to `p`. 
+<summary>Answer</summary>
+
+Among other things, `h1` and `h2` elements are both bold compared to `p`.
 
 `h1` elements have larger font than `h2` elements which have larger font than `p` elements.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: What is wrong with the CSS syntax below?**
 
@@ -302,13 +302,18 @@ p {
 }
 ```
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 1. In the first CSS rule, there is no selector.
 2. In the second rule, `[]` are used instead of `{}`
 3. In the third rule, the declarations need to end with semicolons.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: How would you make all `p` tags blue? How would you make only the `p` tags with `class="fun"` green? How would you make the second `p` tag `orange`?**
 
@@ -318,7 +323,9 @@ p {
 <p>third</p>
 ```
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 ```css
 p {
@@ -334,13 +341,17 @@ p {
 }
 ```
 
-</details><br>
+</details>
+
+\
+
 
 **Q: What will be the color of paragraph?**
 
 ```html
 <p class='fun'>Hello World</p> 
 ```
+
 ```css
 .fun {
   color: orange;
@@ -356,27 +367,42 @@ p {
 }
 ```
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 It will be blue! The selector `p.fun` is the most specific selector that applies to this element.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: what is the width of the `img` element based on the CSS above?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 A 200px wide element with 10px padding and 10px margin will actually be 220px wide.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: What issues might be caused by the width affecting the "content-box" and not the overall width?**
 
-<details><summary>Answer</summary>
+<details>
 
-To set the absolute size of an element, we have to calculate the width, padding, and border properties of the box model, which can either be challenging or annoying to maintain. 
+<summary>Answer</summary>
 
-</details><br>
+To set the absolute size of an element, we have to calculate the width, padding, and border properties of the box model, which can either be challenging or annoying to maintain.
+
+</details>
+
+\
+
 
 **Q: What will the total width of the `img` element be after applying the CSS rules below? What will the width of the content box be?**
 
@@ -392,18 +418,27 @@ img {
 }
 ```
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 The width of the entire `img` will be `200px` but the width of the image's content box will be `170px`.
 
 The `margin` will still add `10px` of space on all sides.
 
-</details><br>
+</details>
+
+\
+
 
 **Q: A user sets their font size to "extra-large" which changes the base font size to `32px`. What will the size of an element with `font-size: 2rem;` be in pixels?**
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 `1rem` is equal to the base font size of `32px` so `2rem` will be `64px`.
 
-</details><br>
+</details>
+
+\
