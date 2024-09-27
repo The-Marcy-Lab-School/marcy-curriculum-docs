@@ -92,8 +92,6 @@ For this particular task it might be faster to use a GUI file manager like Finde
 
 </details>
 
-\
-
 
 ## Using the Terminal in VS Code
 
@@ -167,8 +165,6 @@ cd ../../jones/Desktop
 
 </details>
 
-\
-
 
 ### Making Files and Directories with `mkdir` and `touch`
 
@@ -214,4 +210,4 @@ Create this file structure using the command line.
 
 </details>
 
-\
+

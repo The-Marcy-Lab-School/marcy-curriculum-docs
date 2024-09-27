@@ -5,7 +5,7 @@
 - [Intro to Branches](#intro-to-branches)
   - [Keep the Main Branch Stable](#keep-the-main-branch-stable)
   - [Commands for Working with Branches](#commands-for-working-with-branches)
-  - [Pull Requests \& Code Review](#pull-requests--code-review)
+  - [Pull Requests and Code Review](#pull-requests-and-code-review)
   - [Don't Forget to Pull!](#dont-forget-to-pull)
 - [How Teams Collaborate Using Branches](#how-teams-collaborate-using-branches)
 - [Summary](#summary)
@@ -113,7 +113,7 @@ Try these commands out for yourself! After you push your branch to GitHub, you s
 
 ![You can see your branches listed on GitHub](./img/view-branches-github.png)
 
-### Pull Requests & Code Review
+### Pull Requests and Code Review
 
 Now we have our code on GitHub in two branches: `main` and our new feature branch.
 

@@ -103,8 +103,6 @@ Check out [this StackOverflow post which does a great job of explaining!](https:
 
 </details>
 
-\
-
 
 ### `git init` and `git status`
 
