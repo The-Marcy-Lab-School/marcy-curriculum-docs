@@ -85,9 +85,6 @@ A stateful component is one that renders state — data values that may change.
 
 </details>
 
-\
-
-
 ### Changing A Variable In Reaction to Events
 
 Let's make `likes` a piece of mutable state.
@@ -329,5 +326,3 @@ The state should be defined in the `App` which is the closest shared ancestor of
 * Notice how `addPicture` sets the state by copying the existing array and adding a new object.
 
 </details>
-
-\

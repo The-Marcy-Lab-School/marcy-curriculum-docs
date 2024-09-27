@@ -53,7 +53,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 </details>
 
-\
 
 
 ## Part 2 - Grid Template Columns and Fractional Units
@@ -92,7 +91,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 </details>
 
-\
 
 
 **Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.**
@@ -109,7 +107,6 @@ grid-template-columns: 1fr 2fr 2fr 1fr; /* make 4 equal-sized columns */
 
 </details>
 
-\
 
 
 ## Part 3 - Media Queries
@@ -156,7 +153,6 @@ To set the number of grid columns to 2 at 700 pixels, we need to add a second ru
 
 </details>
 
-\
 
 
 ## Part 4 - Spanning Rows and Columns
@@ -179,7 +175,6 @@ To set the number of grid columns to 2 at 700 pixels, we need to add a second ru
 
 </details>
 
-\
 
 
 ### Grid Tracks
@@ -235,7 +230,6 @@ To set the number of grid columns to 2 at 700 pixels, we need to add a second ru
 
 </details>
 
-\
 
 
 ## Bonus! - Flexbox Media Query Challenge
@@ -255,4 +249,3 @@ Using media queries and the `display: flex` properties, achieve the responsive d
 
 </details>
 
-\

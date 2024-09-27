@@ -100,9 +100,6 @@ First the `logRoutes` middleware is invoked. The `next()` function is called whi
 
 </details>
 
-\
-
-
 <details>
 
 <summary><strong>Q: What would happen if the <code>logRoutes</code> controller DID send a response to the client? What would happen if it didn't invoke <code>next()</code>?</strong></summary>
@@ -110,9 +107,6 @@ First the `logRoutes` middleware is invoked. The `next()` function is called whi
 If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent. If we simply didn't invoke `next()`, our server would "hang" — the response would never be completed and the client would likely receive a timeout error because the request took too long.
 
 </details>
-
-\
-
 
 Middleware can be custom-made like this `logRoutes`. However, we can also utilize some of the out-of-the-box middleware controllers provided by Express.
 

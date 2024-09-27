@@ -54,9 +54,6 @@
     * `symbol`
     * `bigint`
 
-    \
-
-
     ```js
     const foo = 1;
     let bar = foo;
@@ -78,8 +75,7 @@
     * `array`
     * `function`
 
-    \
-
+    
 
     ```js
     const foo = [1, 2];

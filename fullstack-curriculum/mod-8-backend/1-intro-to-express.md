@@ -224,9 +224,6 @@ In this example, there are two parameters named `first` and `last` with the valu
 
 </details>
 
-\
-
-
 #### Accessing Query Parameter Values in a Controller
 
 In the server code, we can access the value of query parameters using `req.query` object.
@@ -273,9 +270,6 @@ const serveData = (req, res, next) => {
 ```
 
 </details>
-
-\
-
 
 ### Listening: Host & Ports
 

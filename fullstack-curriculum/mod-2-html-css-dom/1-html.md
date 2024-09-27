@@ -330,7 +330,6 @@ A browser can show the raw contents of any file, such as a `.txt` file but it ca
 
 </details>
 
-\
 
 
 **Q: Browsers are specialized "viewer" applications for `.html` files. What are other examples of applications that are made to view specific kinds of files?**
@@ -348,7 +347,6 @@ There are tons of examples! But here are a few
 
 </details>
 
-\
 
 
 **Q: How do you think these different tags affect what is displayed?**
@@ -363,7 +361,6 @@ There are tons of examples! But here are a few
 
 </details>
 
-\
 
 
 **Q: What is wrong with the HTML below?**
@@ -384,7 +381,6 @@ Also, stylistically, we should indent the content of the element if we are putti
 
 </details>
 
-\
 
 
 **Q: When should you use `<ol>` and when should you use `<ul>`?**
@@ -397,7 +393,6 @@ Use `<ol>` when order matters, and `ul` when it doesn't.
 
 </details>
 
-\
 
 
 **Q: In the example above, which elements are parents, which elements are children, and which elements are siblings?**
@@ -413,7 +408,6 @@ Use `<ol>` when order matters, and `ul` when it doesn't.
 
 </details>
 
-\
 
 
 **Q: What is wrong with this HTML element?**
@@ -432,7 +426,6 @@ There should also be an `alt` attribute describing the picture.
 
 </details>
 
-\
 
 
 **Q: How would you create a `<p>` element with the id `"caption-1"` and the classes `"italic"` and `"centered"`?**
@@ -445,7 +438,6 @@ some text
 
 </details>
 
-\
 
 
 **Q: What page does this anchor tag take us to?**
@@ -462,7 +454,6 @@ The `index.html` page!
 
 </details>
 
-\
 
 
 **Q: Which semantic tags should we use in the code snippet above?**

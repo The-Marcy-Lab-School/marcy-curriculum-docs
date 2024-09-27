@@ -39,7 +39,6 @@ Uncaught TypeError: Cannot set properties of null (setting 'textContent')
 
 </details>
 
-\
 
 
 **Note**: this still works if we just open the `index.html` file
@@ -91,8 +90,6 @@ document.addEventListener('DOMContentLoaded', main);
 ```
 
 </details>
-
-\
 
 
 ### Defer
@@ -171,8 +168,6 @@ Uncaught ReferenceError: test is not defined
 
 </details>
 
-\
-
 
 So, the order matters. With 2 files this is manageable, just swap them. But when our application has hundreds or even thousands of files, good luck. We need a better solution.
 
@@ -198,8 +193,6 @@ const { test } = require('./other.js'); // named import in CommonJS
 ```
 
 </details>
-
-\
 
 
 In the browser, we need to use a different syntax called **ESModule** syntax:
@@ -251,7 +244,6 @@ To avoid CORS issues during development, it's recommended to set up a local deve
 
 </details>
 
-\
 
 
 To get around this, **we need to serve our `html` file from a Server, not from our file system**. This helps the browser see that all of the files are coming from the same origin.

@@ -39,7 +39,6 @@ Every data structure has advantages and disadvantages. While Arrays and Objects 
 
 </details>
 
-\
 
 
 ## Abstract Data Types

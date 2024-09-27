@@ -78,7 +78,6 @@ When `friendsManager.addFriend()` is invoked, the `addFriend` method uses `this`
 
 </details>
 
-\
 
 
 ## Designing A Consistent & Predictable Interface — 5 minutes
@@ -111,7 +110,6 @@ You can modify the `friendsManager.friends` array either through the `addFriend(
 
 </details>
 
-\
 
 
 ## Factory Functions, Privacy, & Closures — 30 minutes
@@ -175,8 +173,6 @@ The cool thing about closures is that each time we invoke this function, we will
 
 </details>
 
-\
-
 
 <details>
 
@@ -201,8 +197,6 @@ const myFriendsManager = makeFriendsManager('ahmad', 'brandon', 'carmen');
 ```
 
 </details>
-
-\
 
 
 ## Quiz!
@@ -238,7 +232,6 @@ const getId = ((id = 1) => () => id++)();
 
 </details>
 
-\
 
 
 ## Challenge
@@ -306,7 +299,6 @@ console.log(counterFrom5.getValue()); // 5
 
 </details>
 
-\
 
 
 ## Summary

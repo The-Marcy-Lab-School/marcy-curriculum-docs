@@ -213,7 +213,6 @@ Sure, we can interact with `localStorage` outside of this file too but we should
 
 </details>
 
-\
 
 
 That file acts as a **data layer**. We might also decide to isolate our DOM manipulation code and create a **DOM layer** or create an **event handling layer**.

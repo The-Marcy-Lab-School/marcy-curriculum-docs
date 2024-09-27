@@ -94,7 +94,6 @@ In this diagram, we take it a step further and define the type of each property,
 
 </details>
 
-\
 
 
 ## Entity Relationships
@@ -116,7 +115,6 @@ A library has many books. A book belongs to a Library
 
 </details>
 
-\
 
 
 Later this week, we'll learn how to implement an "Is A" relationship with the `extends` keyword.
@@ -131,7 +129,6 @@ Later this week, we'll learn how to implement an "Is A" relationship with the `e
 
 </details>
 
-\
 
 
 ## Make some has many / belongs to class relationships

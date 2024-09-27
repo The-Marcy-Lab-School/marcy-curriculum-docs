@@ -84,7 +84,6 @@ If the timers are all set to `0`, `"starting!"` and `"done!"` will still be firs
 
 </details>
 
-\
 
 
 ### Limitations of Callbacks — Callback Hell
@@ -130,7 +129,6 @@ The ticket is the promise. The resulting value is the pizza!
 
 </details>
 
-\
 
 
 Using a Promise involves two steps:
@@ -153,8 +151,6 @@ As the asynchronous operation is carried out, the Promise will exist in one of t
 When the promise is fulfilled or rejected (step 5a, or 5b). NOT when it is initially passed to `.then()` or `.catch()` (step 2).
 
 </details>
-
-\
 
 
 ### Promise Syntax: Resolve and Then
@@ -197,8 +193,6 @@ console.log("when does this happen?");
 Synchronous code will **always** be executed before asynchronous code
 
 </details>
-
-\
 
 
 ### Promise Syntax: Reject and Catch

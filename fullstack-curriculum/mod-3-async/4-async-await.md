@@ -136,7 +136,6 @@ Forgot to return from the first `.then` when chaining to a second `.then`
 
 </details>
 
-\
 
 
 ```js

@@ -75,7 +75,6 @@ No! They are not the same. Each time the factory function is invoked, a brand ne
 
 </details>
 
-\
 
 
 ## Classes
@@ -93,7 +92,6 @@ A **class** defines a type of object and the properties/methods that those objec
 
 </details>
 
-\
 
 
 ### Class Definition and `new`
@@ -293,8 +291,6 @@ const dog = new Animal('canine', 'woof');
 
 </details>
 
-\
-
 
 ## Challenge
 
@@ -334,8 +330,6 @@ class FoodItem {
 ```
 
 </details>
-
-\
 
 
 Now, create a second class called `ShoppingCart`. Every instance of `ShoppingCart` should have the following properties and methods:
@@ -381,7 +375,6 @@ class ShoppingCart {
 
 </details>
 
-\
 
 
 ## Summary

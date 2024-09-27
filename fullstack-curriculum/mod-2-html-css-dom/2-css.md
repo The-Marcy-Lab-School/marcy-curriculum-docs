@@ -283,7 +283,6 @@ Among other things, `h1` and `h2` elements are both bold compared to `p`.
 
 </details>
 
-\
 
 
 **Q: What is wrong with the CSS syntax below?**
@@ -312,7 +311,6 @@ p {
 
 </details>
 
-\
 
 
 **Q: How would you make all `p` tags blue? How would you make only the `p` tags with `class="fun"` green? How would you make the second `p` tag `orange`?**
@@ -343,7 +341,6 @@ p {
 
 </details>
 
-\
 
 
 **Q: What will be the color of paragraph?**
@@ -375,7 +372,6 @@ It will be blue! The selector `p.fun` is the most specific selector that applies
 
 </details>
 
-\
 
 
 **Q: what is the width of the `img` element based on the CSS above?**
@@ -388,7 +384,6 @@ A 200px wide element with 10px padding and 10px margin will actually be 220px wi
 
 </details>
 
-\
 
 
 **Q: What issues might be caused by the width affecting the "content-box" and not the overall width?**
@@ -401,7 +396,6 @@ To set the absolute size of an element, we have to calculate the width, padding,
 
 </details>
 
-\
 
 
 **Q: What will the total width of the `img` element be after applying the CSS rules below? What will the width of the content box be?**
@@ -428,7 +422,6 @@ The `margin` will still add `10px` of space on all sides.
 
 </details>
 
-\
 
 
 **Q: A user sets their font size to "extra-large" which changes the base font size to `32px`. What will the size of an element with `font-size: 2rem;` be in pixels?**
@@ -441,4 +434,3 @@ The `margin` will still add `10px` of space on all sides.
 
 </details>
 
-\

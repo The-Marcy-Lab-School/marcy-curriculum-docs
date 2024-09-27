@@ -177,9 +177,6 @@ export default App
 
 </details>
 
-\
-
-
 ## useEffect
 
 There are two ways to perform a side effect like fetching:
@@ -328,9 +325,6 @@ export default App
 
 </details>
 
-\
-
-
 ## Fetching With a Form On Change
 
 A cool way to fetch is using a form whenever the text input changes:
@@ -387,9 +381,6 @@ function App() {
 Each time the `onChange` event fires (every input change)
 
 </details>
-
-\
-
 
 ## Quiz
 

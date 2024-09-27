@@ -289,7 +289,6 @@ const App = () => {
 
 <summary><strong>Q: What will this render?</strong></summary>
 
-\
 
 
 <img src="img/message-example.png" alt="" data-size="original">
@@ -305,8 +304,6 @@ The `for` attribute for `<label>` elements is another example of this. Instead, 
 <details>
 
 <summary><strong>Q: How can I add a <code>class="insta-pic"</code> attribute to the <code>img</code> in my <code>InstagramPost</code> component?</strong></summary>
-
-\
 
 
 ```jsx
@@ -469,13 +466,8 @@ const App = () => {
 
 JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It must first be **compiled** (converted) to vanilla JS.
 
-> <details>
->
-> <summary>See what this code would look like if it were written without JSX</summary>
->
-> \
->
->
+<details><summary>See what this code would look like if it were written without JSX</summary>
+
 > Note how we have to use `React.createElement` here
 >
 > ```js
@@ -485,6 +477,6 @@ JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It mu
 > root.render(React.createElement("h1", {}, "Hello World"));
 > ```
 >
-> </details>
+</details>
 
 Vite is doing the heavy lifting when it comes to the rendering.

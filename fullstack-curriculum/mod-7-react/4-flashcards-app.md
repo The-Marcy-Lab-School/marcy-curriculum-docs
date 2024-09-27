@@ -143,9 +143,6 @@ http://localhost:4000/friends and http://localhost:4000/messages
 
 </details>
 
-\
-
-
 **Q: How would I make a http://localhost:4000/flashcards/react or http://localhost:4000/flashcards/fetch endpoint?**
 
 <details>
@@ -176,9 +173,6 @@ http://localhost:4000/friends and http://localhost:4000/messages
 ```
 
 </details>
-
-\
-
 
 ## Component Structure
 
