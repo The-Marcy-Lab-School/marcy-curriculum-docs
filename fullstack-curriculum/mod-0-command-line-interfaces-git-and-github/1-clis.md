@@ -1,16 +1,21 @@
 # Command Line Interfaces
 
-* [Slides](1-clis.md#slides)
-* [Overview](1-clis.md#overview)
-* [Terminal vs. Finder/Explorer](1-clis.md#terminal-vs-finderexplorer)
-* [Using the Terminal in VS Code](1-clis.md#using-the-terminal-in-vs-code)
-* [Commands](1-clis.md#commands)
-  * [Printing Directory Information with `pwd` and `ls`](1-clis.md#printing-directory-information-with-pwd-and-ls)
-  * [Navigating Between Directories with `cd`](1-clis.md#navigating-between-directories-with-cd)
-  * [Making Files and Directories with `mkdir` and `touch`](1-clis.md#making-files-and-directories-with-mkdir-and-touch)
-  * [Executing JavaScript files with `node`](1-clis.md#executing-javascript-files-with-node)
-  * [Terminating a Program with `Control+C`](1-clis.md#terminating-a-program-with-controlc)
-* [Challenge](1-clis.md#challenge)
+- [Slides](#slides)
+- [Overview](#overview)
+- [Terminal vs. Finder/Explorer](#terminal-vs-finderexplorer)
+- [Using the Terminal in VS Code](#using-the-terminal-in-vs-code)
+- [Commands](#commands)
+  - [Printing Directory Information with `pwd` and `ls`](#printing-directory-information-with-pwd-and-ls)
+  - [Navigating Between Directories with `cd`](#navigating-between-directories-with-cd)
+  - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
+  - [Making Files and Directories with `mkdir` and `touch`](#making-files-and-directories-with-mkdir-and-touch)
+  - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
+  - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
+  - [Unfinished Double Quotes and `echo`](#unfinished-double-quotes-and-echo)
+  - [Combining Commands with `&&` and the `cat` command](#combining-commands-with--and-the-cat-command)
+  - [Removing, Renaming, and Copying](#removing-renaming-and-copying)
+- [Challenges](#challenges)
+
 
 ## Slides
 
