@@ -66,11 +66,11 @@ As a programmer, you must become a master of the files on your computer. If you'
 
 ![The finder program](img/finder.png)
 
-These applications allow you to manage files through a GUI (graphical user interface) — a user interface with buttons and icons that let you do things like click and drag-and-drop.
+These applications allow you to manage files through a **graphical user interface (GUI)** — a user interface with buttons and icons that let you do things like click and drag-and-drop.
 
 While these features are very beginner-friendly, they are often too slow for "power users" who want to perform more complex tasks or rapidly perform many repeated tasks.
 
-Instead, programmers typically use a tool called the Terminal. The Terminal is a program for interacting with a computer's files and executing programs through a command line interface (CLI).
+Instead, programmers typically use a tool called the **Terminal**. The Terminal is a program for interacting with a computer's files and executing programs through a **command line interface (CLI)**.
 
 ![The Terminal program](img/1-cli-terminal.png)
 
@@ -92,7 +92,7 @@ rm hey.txt && ls
 mv bye.txt goodbye.txt && ls
 ```
 
-See if you can interpret what each command is doing!
+Note that some commands like `pwd` can be entered on their own. Other commands like `mkdir` may use inputs called **arguments**. Some commands like `ls` can be used on their own or with arguments.
 
 <details>
 
@@ -116,7 +116,7 @@ While you can use the Terminal application that comes with your laptop, it is of
 
 To open up the Terminal panel, go to **File** > **Terminal** and it should show up at the bottom:
 
-![](img/vscode-terminal.png)
+![Use the keyboard shortcut Control+` to open/close the Terminal](img/vscode-terminal.png)
 
 ## Commands
 
@@ -126,7 +126,7 @@ Let's go through some of the most important and commonly used commands.
 
 A **directory** is another term for a "folder" in your computer's file system that contains references to files or possibly other directories.
 
-The **working directory** is the current location of your terminal's navigation through that file system. Think of it as the "you are here" icon in a map.
+The **working directory** is the current location of your terminal's navigation through that file system and where all commands are executed. Think of it as the "you are here" icon in a map.
 
 The `pwd` command prints the full file path to the working directory while the `ls` command prints the contents of the working directory:
 
@@ -184,7 +184,7 @@ cd ../../jones/Desktop
 
 ### Be Careful when using the `cd` command!
 
-Using the `cd` command on its own will send you to the root of your entire file system. This is the equivalent of using the command:
+Using the `cd` command on its own will send you to the root of your entire file system (`~/`). This is the equivalent of using the command:
 
 ```sh
 cd ~
@@ -196,6 +196,12 @@ cd ~
 
 `touch <file_name>` creates a new file in the working directory. Make sure to include the file extension!
 
+You can also create multiple files/directories at once by listing multiple file/directory names:
+
+```sh
+touch file1.txt file2.txt
+mkdir dir1 dir2 dir3
+```
 
 ### Executing JavaScript files with `node`
 
