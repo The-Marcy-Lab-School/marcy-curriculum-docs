@@ -42,6 +42,9 @@ true
 
 * **Statements** change the program.
 
+
+{% code title="index.js" lineNumbers="true" %}
+
 ```js
 // creating a variable increases the memory/storage used by the program
 let instructor = 'ben';
@@ -54,8 +57,10 @@ if (instructor !== 'ben') {
   mood = 'happy';
 }
 ```
+{% endcode %}
 
 * References to variables are also expressions, since they retrieve the raw data held inside of them.
+* Expressions can be composed of multiple smaller expressions! For example, the `instructor` and `'ben'` expressions are combined using the `!==` operator to create an expression that returns the value `false` 
 
 ## Running a file with Node
 
@@ -165,43 +170,17 @@ say("Fall 2024", "hi ben")
 
 ### Inspecting the Control Flow With Node
 
-You can view the exact control flow of a program by using the command:
+* You can view the exact control flow of a program by using the built in VS Code **Run and Debug panel**.
 
-```sh
-node inspect <file_name>
-```
+![The run and debug panel is found on the left side of the screen](./img/0-debugger-panel.png)
 
-And use the following commands:
+* Once you open the panel, open a `.js` file and add a `debugger;` statement wherever you would like to inspect your code. Then, click "Run and Debug" and select the "Node" configuration.
 
-```sh
-c # Continue execution (run until a debugger statement is reached)
-n # Execute the next statement
-s # Step into a function call
-o # Complete a function execution and step out of the function call
-pause # Pause running code (like pause button in Developer Tools)
-p variable_name # print the value of the given variable name
-.exit # Exit the Debugger
-```
+![](./img/0-debugger-running.png)
 
-For example, we can see the unique control flow of a `for` loop if we modify the `index.js` file to look like this:
+* At the top, you will see the debugger control panel where you can control the execution of the program.
 
-{% code title="index.js" lineNumbers="true" %}
-
-```js
-let x = 0;
-
-for (
-  let i = 0;
-  i < 10;
-  i++
-) {
-  x++;
-}
-```
-
-{% endcode %}
-
-Using the Node Debugger, we can see the control flow cycle through lines 5 › 8 › 6 › 5 › 8 › 6 › 5... and so on until the condition `i < 10` is no longer true.
+![](./img/0-debugger-explanation.svg)
 
 ## Code Style and Readability
 
