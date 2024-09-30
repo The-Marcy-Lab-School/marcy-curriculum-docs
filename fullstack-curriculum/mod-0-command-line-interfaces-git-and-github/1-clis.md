@@ -256,6 +256,10 @@ Check out these [awesome challenges](https://github.com/mssalvatore/command-line
 
 We're using Linux commands so whenever you are researching a topic, add "Linux" to the end of your search so that you get appropriate results! For example, for the first challenge you may search **"how to unzip .tar.gz file linux"**.
 
+Challenges 1-19 are the basics of what you'll want to know for this course.
+
+Challenges 20-50 are more advanced.
+
 </details>
 
 
