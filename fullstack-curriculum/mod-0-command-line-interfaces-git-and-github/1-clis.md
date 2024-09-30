@@ -254,6 +254,8 @@ For example, the command above lists the contents of the current working directo
 
 Check out these [awesome challenges](https://github.com/mssalvatore/command-line-challenges) for additional practice. A lot of these challenges go way beyond what we've learned in this lesson and will push you to research and learn on your own!
 
+We're using Linux commands so whenever you are researching a topic, add "Linux" to the end of your search so that you get appropriate results! For example, for the first challenge you may search **"how to unzip .tar.gz file linux"**.
+
 </details>
 
 
