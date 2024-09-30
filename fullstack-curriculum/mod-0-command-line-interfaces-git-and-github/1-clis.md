@@ -270,7 +270,9 @@ We're using Linux commands so whenever you are researching a topic, add "Linux" 
 
 Challenges 1-19 are the basics of what you'll want to know for this course.
 
-Challenges 20-50 are more advanced.
+Challenges 20 you should skip. It involves executing a file that we can't see the contents of.
+
+Challenges 21-50 are more advanced.
 
 </details>
 
