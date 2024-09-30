@@ -39,6 +39,7 @@ You will be able to…
 * **Command Line Interface** — a type of user interface (UI) that let's a users perform actions by entering text-based commands.
 * **Graphical User Interface** — a type of user interface that uses visual elements such as icons, buttons, windows, and dialog boxes, allowing users to perform actions such as clicking, drag-and-drop, and more.
 * **Directory** — Another term for a "folder" in your computer that contains references to files or possibly other directories.
+* **Working Directory** — The directory where your commands will be executed.
 * **Command** - A single action to be performed on your computer. Examples include creating a new file, listing the contents of the current directory, navigating to a different directory, or executing a program.
 * **Argument** — An additional piece of information provided to a command to change the command's behavior.
 * **Node** — A program for executing JavaScript code directly on your computer (as opposed to in a browser).
