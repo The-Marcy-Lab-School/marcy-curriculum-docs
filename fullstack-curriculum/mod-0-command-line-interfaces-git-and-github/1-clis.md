@@ -71,20 +71,36 @@ While these features are very beginner-friendly, they are often too slow for "po
 
 Instead, programmers typically use a tool called the Terminal. The Terminal is a program for interacting with a computer's files and executing programs through a command line interface (CLI).
 
-![The Terminal program](img/terminal-cli.png)
+![The Terminal program](img/1-cli-terminal.png)
 
 In the screenshot above, you can see this user entering commands:
 
-1. `ls` — list the contents of the current folder (a.k.a **directory**)
-2. `cd Documents` — change directories and move into the `Documents` directory
-3. `ls` — list the contents of the `Documents` directory
-4. `mkdir 2024-fall` — make a new directory inside of `Documents` called `2024-fall`
-5. `cd 2024-fall` — change directories and move into the `2024-fall` directory
-6. `pwd` — prints the full filepath to the current "working" directory
-7. `touch hello.txt` — create a new file called `hello.txt` inside of `2024-fall`
-8. `ls` — list the contents of the `2024-fall` directory
+```sh
+pwd
+ls
+mkdir unit-5
+ls
+ls unit-0
+cd unit-0
+touch bye.txt hey.txt
+ls
+echo "hello world"
+echo "hello world" >> output.txt
+ls && cat output.txt
+rm hey.txt && ls
+mv bye.txt goodbye.txt && ls
+```
+
+See if you can interpret what each command is doing!
 
 <details>
+
+{% hint style="info" %}
+
+Use the <kbd>Tab</kbd> key to autocomplete commands and filenames! Just start typing and hit <kbd>Tab</kbd> to autocomplete.
+
+{% endhint %}
+
 
 <summary><strong>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</strong></summary>
 
@@ -165,6 +181,13 @@ cd ../../jones/Desktop
 
 </details>
 
+### Be Careful when using the `cd` command!
+
+Using the `cd` command on its own will send you to the root of your entire file system. This is the equivalent of using the command:
+
+```sh
+cd ~
+```
 
 ### Making Files and Directories with `mkdir` and `touch`
 
@@ -172,7 +195,6 @@ cd ../../jones/Desktop
 
 `touch <file_name>` creates a new file in the working directory. Make sure to include the file extension!
 
-`cp <file_name> <dir_name>` copies a file into a directory
 
 ### Executing JavaScript files with `node`
 
@@ -186,27 +208,51 @@ To run the program, use the command `node hello.js`
 
 Many programs will end ("terminate") on their own when each statement has been executed.
 
-Other programs can run forever, requiring us to stop them ourselves. For example, the code below will run forever if we put it in our JavaScript program:
+Other programs can run forever, requiring us to stop them ourselves. For example, when we use the `node` command on its own, it will start the **Node REPL (Read, Evaluate, Print Loop)** program which just waits for Javascript input, executes it, and then prints the result:
 
-```js
-while (true) {
-  // this is an infinite loop!
-}
+![The Node REPL is useful for testing out expressions.](img/1-node-repl-expressions.png)
+
+To terminate the program, use the keyboard shortcut `Control+C` (you may need to cancel twice).
+
+### Unfinished Double Quotes and `echo`
+
+Another common occurrence is an unfinished string. You can test this with the `echo` command which will print a given string straight to the terminal.
+
+![An unfinished double quote will be produce `dquote>` in the Terminal, waiting for you to finish the string.](img/1-cli-echo-unfinished-dquote.png)
+
+You can also use the output from an `echo` command and send the output into another file using the `>>` append operator.
+
+For example, this command will take the text `"hello world"` and append it to the file `output.txt` (it will create `output.txt` if it doesn't exist)
+
+```sh
+echo "hello world" >> output.txt
 ```
 
-To terminate the program, use the keyboard shortcut `Control+C`
+### Combining Commands with `&&` and the `cat` command
 
-## Challenge
+The `cat` command is used to read the contents of a given file.
 
-Create this file structure using the command line.
+You can combine any two commands with the `&&` operator.
 
-![](img/cli-filestructure-challenge.png)
+```sh
+ls && cat output.txt
+```
 
-<details>
+For example, the command above lists the contents of the current working directory and print the contents of `output.txt`
 
-<summary><strong>Q: If I were in the hobbies folder, how would you navigate to the code folder?</strong></summary>
+### Removing, Renaming, and Copying
 
-`cd ../code`
+`rm <file_name>` removes a file from the working directory
+
+`rm -r <directory_name>` removes a directory and all of its contents from the working directory. `-r` stands for "recursive".
+
+`mv <file_name> <new_file_name>` renames a file in the working directory or allows you to move the file to another directory.
+
+`cp <file_name> <dir_name>` copies a file into a directory.
+
+## Challenges
+
+Check out these [awesome challenges](https://github.com/mssalvatore/command-line-challenges) for additional practice. A lot of these challenges go way beyond what we've learned in this lesson and will push you to research and learn on your own!
 
 </details>
 
