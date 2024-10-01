@@ -1,3 +1,1 @@
 # Mod 4 - Project Week!
-
-Woohoo! You've learned the basics of Web Development. You can now build an interactive frontend application using HTML, CSS, JavaScript, and third-party web services (APIs). Now its time to pull those skills together and build something. In this one-week module, you will work in small teams to build a unique project while learning important project-management skills like SCRUM, Kanban Boards, and the Agile Methodology!
