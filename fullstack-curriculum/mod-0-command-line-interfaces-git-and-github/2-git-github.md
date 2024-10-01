@@ -57,6 +57,10 @@ You will be able to…
 * `git clone`
 * `git push`
 
+## Setup
+
+To follow along in this lecture, navigate to your `development/unit-0` folder in your VS Code terminal and create a new folder inside called `2-git-lecture`.
+
 ## Introduction: Managing Files Can Be Tricky
 
 Imagine you're working on a paper. You've got all of your drafts saved in a folder and it looks something like this:
@@ -110,7 +114,7 @@ To use Git in a project, we can start by turning the project into a Git reposito
 
 ![](img/git-init-git-status.png)
 
-1. In the Terminal, we navigated to a folder ran `git init`, turning the folder into a Git repository.
+1. In the Terminal, we navigated to a folder and ran `git init`, turning the folder into a Git repository.
 2. The `git status` command can be used at any time to see what changes have been made to the repository. At first, we can see that the repo has no changes.
 3. The `echo` command combined with the `>` operator creates a new file called `myfile.txt` with the text `"insert text here"`
 4. After the `ls` and `git status` commands, we can see that the `myfile.txt` file has been created.
