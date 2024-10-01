@@ -3,11 +3,9 @@
 **Table of Contents:**
 - [What is a SWE Assignment?](#what-is-a-swe-assignment)
   - [Feedback on Coding Assignments](#feedback-on-coding-assignments)
-  - [Using AI on Code Assignments](#using-ai-on-code-assignments)
 - [What is a SWE-SR Assignment?](#what-is-a-swe-sr-assignment)
-  - [Intended Audience](#intended-audience)
   - [Feedback on Short Response Assignments](#feedback-on-short-response-assignments)
-  - [Using AI on Short Response Assignments](#using-ai-on-short-response-assignments)
+- [Using AI on Assignments](#using-ai-on-assignments)
 - [Submitting On Time](#submitting-on-time)
 - [How to Work On Assignments](#how-to-work-on-assignments)
   - [Assignment Setup](#assignment-setup)
@@ -23,7 +21,9 @@ Software Engineering (SWE) code assignments are opportunities for you to practic
 
 Code assignments will typically have an `src` directory where you will be writing your code. They will also have a `tests` directory with `.spec.js` test files that will automatically test your code each time you push to your repository.
 
-You are encouraged to look at these test files as they will show you exactly how we expect to be able to use your functions. **DO NOT MODIFY THE TESTS**.
+### Feedback on Coding Assignments
+
+You are encouraged to look at the `.spec.js` test files in the `tests` directory as they will show you exactly how we expect to be able to use your functions. **DO NOT MODIFY THE TESTS**.
 
 To run tests manually, you can use the command:
 
@@ -32,8 +32,6 @@ npm test # run the tests once
 # or
 npm run test:w # run the tests each time the file changes ("watch mode")
 ```
-
-### Feedback on Coding Assignments
 
 {% hint style="info" %}
 
@@ -75,39 +73,6 @@ To support you in your growth as a software engineer, your instructor may provid
   - Use of appropriate data structures and algorithms
   - Avoidance of unnecessary computations
 
-### Using AI on Code Assignments
-
-You may use generative AI tools like ChatGPT to help explain assignment instructions or test code. You may also use it to improve code that you've already written in areas such as code quality, structure, or efficiency.
-
-However, the majority of the code should be yours! As a rule, aim to have no more than about 25% of the content written by a generative AI assistant.
-
-**All code created using AI should be cited using comments. Every line of AI-generated code should be commented with an explanation of the code** 
-
-**<details><summary>See below for an example</summary>**
-
-> 
-> ```js
-> // Note: This solution was generated using ChatGPT
-> const sumArray = (arr) => {
->   // this variable will track the growing sum as we loop
->   let total = 0;
-> 
->   // this will loop over every index of arr from 0 to arr.length-1
->   for (let i = 0; i < arr.length; i++) {
->     // this will take the current value and add it to the total
->     total += arr[i];
->   }
-> 
->   // when we are done looping, return the count
->   return total;
-> }
-> ```
->
-
-</details>
-
-For more details on our AI Policy, refer to the [Marcy Lab School Docs](https://marcylabschool.gitbook.io/marcy-lab-school-docs/guidelines-and-policies/ai-policy).
-
 ## What is a SWE-SR Assignment?
 
 Software Engineering (SWE) Short Response (SR) assignments are opportunities to develop your technical communication skills. In these assignments, you may encounter the following types of questions:
@@ -116,8 +81,6 @@ Software Engineering (SWE) Short Response (SR) assignments are opportunities to 
 * Analyze a programming best practice and list its advantages and disadvantages.
 
 Short Response questions will always be found in the `short-responses` directory of your assignment. Each question will be in a file called `qX.md` and you should add your answer under the `# Answer` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
-
-### Intended Audience
 
 For these assignments, your intended audience should be someone with some experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough. Examples and analogies can often help!
 
@@ -149,13 +112,43 @@ To support you in your growth as a technical communicator, your instructor may a
 * **Accuracy**: The content is technically correct and adheres to current best practices and standards.
 * **Conciseness**: The communication is efficient, avoiding unnecessary detail or excessive language, while still being comprehensive.
 
-### Using AI on Short Response Assignments
+## Using AI on Assignments
 
-You may use generative AI tools like ChatGPT to help structure and refine your responses and to check for spelling and grammar mistakes. However, the majority of the writing should be yours! As a rule, aim to have no more than about 25% of the content written by a generative AI assistant. 
+On short response assignments, you may use generative AI tools like ChatGPT to help structure and refine your responses and to check for spelling and grammar mistakes. However, the majority of the writing should be yours! As a rule, aim to have no more than about 25% of the content written by a generative AI assistant. 
+
+On coding assignments, you may use generative AI tools like ChatGPT to help explain assignment instructions or test code. You may also use it to improve code that you've already written in areas such as code quality, structure, or efficiency. 
+
+If you are really stuck, you can use solutions generated by generative AI tools in the same way that you would use coding solutions found on the internet. However, the majority of the code should be yours! As a rule, aim to have no more than about 25% of the content written by someone other than you.
+
+**All code generated using AI or found on the internet should be cited using comments. Every line of found code should be commented with an explanation of the code** 
+
+**<details><summary>See below for an example</summary>**
+
+> 
+> ```js
+> // Note: I found this solution online: https://www.geeksforgeeks.org/how-to-find-the-sum-of-all-elements-of-a-given-array-in-javascript/# 
+> const sumArray = (arr) => {
+>   // this variable will track the growing sum as we loop
+>   let total = 0;
+> 
+>   // this will loop over every index of arr from 0 to arr.length-1
+>   for (let i = 0; i < arr.length; i++) {
+>     // this will take the current value and add it to the total
+>     total += arr[i];
+>   }
+> 
+>   // when we are done looping, return the count
+>   return total;
+> }
+> ```
+>
+
+</details>
 
 For more details on our AI Policy, refer to the [Marcy Lab School Docs](https://marcylabschool.gitbook.io/marcy-lab-school-docs/guidelines-and-policies/ai-policy).
 
 ## Submitting On Time
+ 
 "Grades" don't exist at Marcy. We only need performance data in order to know how you're doing, and make sure the people who need help get it as quickly as they can. It's ok if you didn't finish by the deadline! Just show us what you have. We'll have office hours and reviews, and we want to know what you are all struggling with so we can use those meetings effectively. **This is not about grades, its about seeing what you know, and where we can help!**
 
 ## How to Work On Assignments
