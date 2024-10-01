@@ -80,7 +80,18 @@ Software Engineering (SWE) Short Response (SR) assignments are opportunities to 
 * Explain a piece of syntax with examples and analogies.
 * Analyze a programming best practice and list its advantages and disadvantages.
 
-Short Response questions will always be found in the `short-responses` directory of your assignment. Each question will be in a file called `qX.md` and you should add your answer under the `# Answer` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
+Short Response questions will always be found in the `README.md` file of your assignment. Each question will be listed under a `## Question X` heading and you should add your responses under the `### Response X` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
+
+For example
+```markdown
+## Question 2
+
+Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
+
+### Response 2
+
+Response here...
+```
 
 For these assignments, your intended audience should be someone with some experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough. Examples and analogies can often help!
 
