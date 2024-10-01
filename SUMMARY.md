@@ -14,6 +14,7 @@
     * [Backend Cheat Sheet](fullstack-curriculum/cheatsheets/backend-cheatsheet.md)
     * [Postgres Cheat Sheet](fullstack-curriculum/cheatsheets/postgres-cheatsheet.md)
   * [How-Tos](fullstack-curriculum/how-tos/README.md)
+    * [Working with Short Response and Coding Assignments](fullstack-curriculum/how-tos/working-with-assignments.md)
     * [Local Environment Setup - Mac](fullstack-curriculum/how-tos/local-environment-setup-mac.md)
     * [Local Environment Setup - Windows](fullstack-curriculum/how-tos/local-environment-setup-windows.md)
     * [GitHub Setup](fullstack-curriculum/how-tos/github-setup.md)
