@@ -107,7 +107,6 @@ Check out [this StackOverflow post which does a great job of explaining!](https:
 
 </details>
 
-
 ### `git init` and `git status`
 
 To use Git in a project, we can start by turning the project into a Git repository with the command `git init`. We can then make changes and use `git status` to see what changes have been made:
@@ -137,7 +136,7 @@ While maintaining a Git repo is a great way to keep track of changes on your own
 
 These options work, but almost every developer uses **GitHub**.
 
-![](img/github.png)
+<figure><img src="img/github.png" alt="GitHub is a social network for developers to backup, share, and collaborate on projects." width="375"><figcaption><p>GitHub is a social network for developers to backup, share, and collaborate on projects.</p></figcaption></figure>
 
 **GitHub** is like a social network for developers, making it easy to backup, share and collaborate on projects.
 
