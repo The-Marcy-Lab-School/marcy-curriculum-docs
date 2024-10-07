@@ -205,7 +205,7 @@ This is a common pattern for modules.
 * The downloaded module will be placed in a folder called `node_modules/` along with any **sub-dependencies** that the module itself may require. 
 * You can see the sub-dependencies of a module by opening its own `package.json` file. All modules listed under `"dependencies"` will also be installed in `node_modules/`.
   * In `prompt-sync/package.json`, we can see it has `strip-ansi` as a dependency.
-  * In `strip-ansi/package.json`, we can see it has `ansi-regexs` as a dependency.
+  * In `strip-ansi/package.json`, we can see it has `ansi-regex` as a dependency.
 
 ![For `prompt-sync`, we can see that it has two of its own dependencies that were also added to `node_modules`: `ansi-regex` and `strip-ansi`:](img/1-prompt-sync-dependencies.png)
 
@@ -270,7 +270,7 @@ nodemon index.js
 
 ### `npm init -y`
 
-* When working on a new Node project, it is common to set up the `package.json` file prior to installing any depedencies.
+* When working on a new Node project, it is common to set up the `package.json` file prior to installing any dependencies.
 * This can be done using the command `npm init` which will ask you some questions to generate a `package.json` file.
 
 ```json
