@@ -1,4 +1,4 @@
-# Node Modules
+# Node & Node Modules
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-0-intro-to-node)!
@@ -9,11 +9,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [Overview](#overview)
   - [Key Terms](#key-terms)
 - [What is Node?](#what-is-node)
-- [Node Modules](#node-modules-1)
-  - [`module.exports`](#moduleexports)
-  - [`require()`](#require)
+- [Exporting and Importing Node Modules](#exporting-and-importing-node-modules)
+  - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
+  - [Importing with `require()` (CommonJS)](#importing-with-require-commonjs)
   - [Destructuring](#destructuring)
-- [NPM](#npm)
+- [Node Package Manager (NPM)](#node-package-manager-npm)
   - [Installing and Using Dependencies from NPM](#installing-and-using-dependencies-from-npm)
   - [`package.json` and `node_modules`](#packagejson-and-node_modules)
   - [Developer Dependencies](#developer-dependencies)
@@ -57,7 +57,7 @@ In this lesson we'll learn the history of Node and the fundamentals of using Nod
 
 ![The Node REPL is useful for testing out expressions.](../mod-0-command-line-interfaces-git-and-github/img/1-node-repl-expressions.png)
 
-## Node Modules
+## Exporting and Importing Node Modules
 
 * JavaScript projects are rarely built entirely in one file. Instead, code is separated into multiple files that share code with each other.
 * These shared pieces of code are called **modules**. A **module** is an exported chunk of code (typically a function or a set of functions) that can be used across our project.
@@ -70,7 +70,7 @@ In this lesson we'll learn the history of Node and the fundamentals of using Nod
 Separation of Concerns is a fundamental principle of software engineering. It emphasizes the importance of organizing our code into distinct functions and modules that each serve a singular and specific purpose. However, when put together, those individual pieces work in harmony.
 {% endhint %}
 
-### `module.exports`
+### Exporting with `module.exports` (CommonJS)
 
 * In a Node project, a file exports a module by assigning a value/function to `module.exports`.
 
@@ -111,7 +111,7 @@ module.exports = {
 ```
 {% endcode %}
 
-### `require()`
+### Importing with `require()` (CommonJS)
 
 * To import a value/function exported from another file, use the `require(filepath)` function and provide a `filepath` argument.
 
@@ -159,7 +159,7 @@ print(`circumference: ${circumference}`)
 
 {% endcode %}
 
-## NPM
+## Node Package Manager (NPM)
 
 * Modules can be downloaded from the **Node Package Manager (NPM)** online registry. 
 * When you download a package, it is called a **dependency**.

@@ -32,7 +32,7 @@
   * [Mod 1 - JavaScriptFundamentals](fullstack-curriculum/mod-1-javascript-fundamentals/README.md)
     * [Mod 1 Overview](fullstack-curriculum/mod-1-javascript-fundamentals/Overview.md)
     * [Intro to Programming](fullstack-curriculum/mod-1-javascript-fundamentals/0-intro-to-programming.md)
-    * [Node](fullstack-curriculum/mod-1-javascript-fundamentals/1-node.md)
+    * [Node & Modules](fullstack-curriculum/mod-1-javascript-fundamentals/1-node-and-modules.md)
     * [Variables, Functions & Strings](fullstack-curriculum/mod-1-javascript-fundamentals/2-variables-functions-strings.md)
     * [Control Flow](fullstack-curriculum/mod-1-javascript-fundamentals/3-control-flow.md)
     * [Loops](fullstack-curriculum/mod-1-javascript-fundamentals/4-loops.md)
