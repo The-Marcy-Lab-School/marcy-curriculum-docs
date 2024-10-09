@@ -5,6 +5,9 @@
 - [Variables](#variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
 - [Functions](#functions)
+  - [Arrow Functions](#arrow-functions)
+  - [Implicit Returns](#implicit-returns)
+  - [Function Calls, Parameters, Arguments, and Return Statements](#function-calls-parameters-arguments-and-return-statements)
 - [Scope](#scope)
 - [Zooming in on Strings](#zooming-in-on-strings)
   - [String Indexes and Bracket Notation](#string-indexes-and-bracket-notation)
@@ -155,6 +158,8 @@ Hoisting (like most weird JS things) stems from the fact that when JS was invent
 ## Functions
 
 * A **Function** is a named container for statements that can be **invoked** to execute its statements.
+
+### Arrow Functions 
 * There are many ways to create a function, we will use **Arrow Function** syntax:
 
 ```js
@@ -167,16 +172,25 @@ function add(x, y) {
 const multiply = (x, y) => {
   return x * y;
 }
-
-// Advanced — Good: If the function's body is just one line, you can omit the {}
-const negate = (x) => return -x;
-
-// Advanced - Better: If the function's body is just a return statement, you can omit the `return` keyword
-const isEven = (x) => x % 2 === 0;
-
-// Advanced - Best: If the function only has one parameter, the () can be omitted.
-const isOdd = x => x % 2 === 1;
 ```
+
+### Implicit Returns
+
+There are a couple of ways we can simplify our Arrow functions:
+* If the function's body is just one line, you can omit the {}
+* If the function's body is just a `return` statement, you can omit the `return` keyword too. This is called an **implicit return**
+
+```js
+// Okay - An explicit return
+const add = (a, b) => {
+  return a + b;
+}
+
+// Better - An "implicit return"
+const add = (a, b) => a + b;
+```
+
+### Function Calls, Parameters, Arguments, and Return Statements
 
 * A **function call** statement changes the control flow by "activating" the function. Calling a function sets the first line of code in the function as the next line of code to be executed.
 * **Parameters** are variables created when a function is invoked that reference the inputs (a.k.a. **arguments**) provided in the function call.
