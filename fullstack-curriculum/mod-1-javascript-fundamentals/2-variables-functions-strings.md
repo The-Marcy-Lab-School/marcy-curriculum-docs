@@ -44,7 +44,7 @@ const notANumber = NaN;
 const alsoNaN = 5 * "hello";
 
 // Booleans only have two values. They are case-sensitive!
-const boolean = true;
+let boolean = true;
 boolean = false;
 
 // Undefined is a type with only one value: undefined
@@ -57,12 +57,12 @@ const nullVariable = null;
 ```
 
 * There are also three **reference data types**: Objects, Arrays, and Functions (we'll talk about these later on).
-  * Technically, there is only 1 since Functions and Arrays are subsets of Objects
+  * Technically, there is only one reference data type: Objects. Functions and Arrays are subsets of Objects
   
 ## Variables
 
 * A **Variable** in JavaScript is a named container for data.
-* Technically, there are 4 ways to declare a new variable, but only two of them should be used:
+* There are 4 ways to declare a new variable, *but only the first two of should be used*:
     1. `const` declares a block-scoped variable that cannot be reassigned. This should be your go-to variable declaration.
     2. `let` declares a re-assignable block-scoped variable. Use only when reassignment is necessary.
     3. `var` declares a re-assignable, hoisted, function-scoped variable. **Do not use `var`**. Hoisting and function-scoped variables can cause unexpected behavior (read more below).
@@ -72,7 +72,7 @@ const nullVariable = null;
 // Good
 const myName = 'John';
 
-// Uncaught TypeError: Assignment to constant variable.
+// Uncaught TypeError: Assignment to constant variable. Hmm, time to use a let.
 myName = 'Johnny'; 
 
 // Also good
@@ -94,30 +94,33 @@ globalStatus = 'sad';
 // use let because we will reassign this variable
 let count = 0;
 
-// reference the count variable to access its current value
+// reference the count variable to access its current value, 0
 let message = `the count is ${count}`;
 
-console.log(message); // "the count is 0"
+// Prints "the count is 0"
+console.log(message); 
 
 // reference the count variable to reassign it
 count = 1;
 
-// reference the count variable again to access its new value
+// reference the count variable again to access its new value, 1
 message = `the count is now ${count}`
 
-console.log(message); // "the count is now 1
+// Prints "the count is now 1
+console.log(message); 
 ```
 
 ### Hoisting: Why We Don't Use `var`
 
 {% hint style="info" %}
-**TLDR:** Don't use `var` or `function`. Do not reference a variable before it has been declared.
+**TLDR:** Don't use `var` or `function`. Do not reference a variable or function before it has been declared.
 {% endhint %}
 
 * **Hoisting** is a feature of JavaScript that allows certain variables/functions to be referenced before they are declared.
-  * Variables declared with the `var` keyword and Functions declared with `function` keyword are hoisted
+  * Variables declared with the `var` keyword and Functions declared with the `function` keyword are hoisted.
   * Variables declared with `const` or `let` and Arrow Functions are NOT hoisted.
 * Variables declared with `var` will be given the value `undefined` until their assignment statement is reached. 
+* Functions declared with `function` are fully invoke-able anywhere within their scope.
 
 ```js
 // Good — Uncaught ReferenceError: Cannot access 'name' before initialization
@@ -135,6 +138,13 @@ var weird = 'Tom';
 // Confusing! — Throws an error but only because `undefined` doesn't have a `toUpperCase` method
 console.log(str.toUpperCase());
 var str = 'Some string';
+
+
+// Bad! - This works but it really shouldn't
+foo();
+function foo() {
+  console.log('foo!');
+}
 ```
 
 {% hint style="info" %}
@@ -144,7 +154,7 @@ Hoisting (like most weird JS things) stems from the fact that when JS was invent
 
 ## Functions
 
-* A **Function** is a named container for statements.
+* A **Function** is a named container for statements that can be **invoked** to execute its statements.
 * There are many ways to create a function, we will use **Arrow Function** syntax:
 
 ```js
@@ -153,19 +163,19 @@ function add(x, y) {
   return x + y;
 }
 
-// Good — Arrow Functions are stored in variables and aren't hoisted.
+// Good — Arrow Functions are stored in constant variables and aren't hoisted.
 const multiply = (x, y) => {
   return x * y;
 }
 
-// Advanced — Okay: If the function's body is just one line, you can omit the {}
-const divide = (x, y) => return x / y;
+// Advanced — Good: If the function's body is just one line, you can omit the {}
+const negate = (x) => return -x;
 
-// Advanced - Better: If the that one line is also a return statement, you can omit the `return` keyword
-const subtract = (x, y) => x - y;
+// Advanced - Better: If the function's body is just a return statement, you can omit the `return` keyword
+const isEven = (x) => x % 2 === 0;
 
-// Advanced - If the function only has one parameter, the () can be omitted.
-const greet = name => console.log(`hi ${name}`);
+// Advanced - Best: If the function only has one parameter, the () can be omitted.
+const isOdd = x => x % 2 === 1;
 ```
 
 * A **function call** statement changes the control flow by "activating" the function. Calling a function sets the first line of code in the function as the next line of code to be executed.
@@ -173,22 +183,25 @@ const greet = name => console.log(`hi ${name}`);
 * A **return statement** terminates a function and returns a value to the location of the function call.
 
 ```js
-// x and y are "parameters".
+// x and y reference the values provided when the function is called.
 const add = (x, y) => {
-  // x and y will reference the values provided in the function call.
   return x + y;
 }
 
-// 5 and 3 are the "arguments". The function call add(5, 3) will resolve to 8.
-const sum = add(5, 3);
+// 5 and 3 are the inputs (a.k.a arguments)
+const sum1 = add(5, 3);
 
-console.log(sum); // Prints 8
+// For this call, 10 and 2 are the arguments
+const sum2 = add(10, 2);
+
+console.log(sum1); // Prints 8
+console.log(sum2); // Prints 12
 ```
 
 ## Scope
 
 * **Scope** refers to where in our code variables can be referenced. Files, functions, and code blocks `{}` each create a new scope.
-* There are 2 scopes:
+* There can be any number of scopes in a single file but we will describe them as either:
   * **Global Scope** — Variables that are accessible across the entire file. Includes things like `console` and `Math` and variables/functions declared at the outermost scope of the file.
   * **Local Scope** — Variables that are accessible only in the current function or code block.
  
@@ -242,7 +255,7 @@ myName; // ReferenceError: myName is not defined
 
 * A string is a series of characters surrounded by `"double quotes"`, `'single quotes'` or `` `backticks` ``
 * Each character in a string, including spaces, has an **index** — a numbered position starting at `0`.
-* **Bracket Notation** is used to access a single character in a string by its index: `string[index]`
+* **Bracket Notation** is used to read a single character in a string by its index: `string[index]`
 
 ```js
 const message = 'Hello there!';
@@ -251,7 +264,7 @@ console.log( message[0] ); // Prints 'H'
 console.log( message[4] ); // Prints 'o'
 console.log( message[5] ); // Prints ' '
 
-console.log("abc"[1]); // Prints 'b'
+console.log( "abc"[1] ); // Prints 'b'
 ```
 
 * If you use bracket notation and there is no character at the given index, `undefined` will be returned:
@@ -301,7 +314,7 @@ console.log(message); // Prints "Hello there!"
 
 * A **method** is a function that is attached to a value. Often, methods are used to manipulate the value they are attached to.
 * Methods are invoked using **dot notation**: `value.method()`
-* First, let's look at some "read only" string methods:
+* First, let's look at some "read only" string methods: `includes`, `startsWith`, `endsWith`, `indexOf`, `lastIndexOf`
 
 ```js
 const fruits = 'apples, bananas, cherries';
@@ -324,8 +337,7 @@ console.log(hasOnlyOne('hello', 'h')) // Prints true
 console.log(hasOnlyOne('hello', 'l')) // Prints false
 ```
 
-* The following allow you to make a copy of a string.
-* Some let you also make some modifications to the string as you make the copy
+* The following methods make a copy of a string before performing some modifications: `slice`, `toUpperCase`, `toLowerCase`, `repeat`, `replace`, `replaceAll`
 
 ```js
 const fruits = 'apples, bananas, cherries';
