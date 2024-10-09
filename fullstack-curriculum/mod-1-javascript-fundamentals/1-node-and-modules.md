@@ -59,7 +59,50 @@ In this lesson we'll learn the history of Node and the fundamentals of using Nod
 
 ## Exporting and Importing Node Modules
 
-* JavaScript projects are rarely built entirely in one file. Instead, code is separated into multiple files that share code with each other.
+Consider the simple JavaScript program below. It declares a few functions for calculating data about a circle with a given radius and then prints them out.
+
+{% code title="index.js" overflow="wrap" lineNumbers="true" %}
+
+```js
+// functions for circle stuff
+const LAZY_PI = 3.14;
+
+const getArea = (radius) => {
+  return LAZY_PI * radius * radius;
+}
+
+const getDiameter = (radius) => {
+  return radius * 2;
+}
+
+const getCircumference = (radius) => {
+  return LAZY_PI * radius * 2;
+}
+
+// function for printing stuff. It is a "wrapper" for the console.log function
+const print = (input) => {
+  console.log(input);
+}
+
+// The main function just runs all of the other functions
+const main = () => {
+  const radius = 5;
+  const area = getArea(radius);
+  print(`the area of a circle with radius ${radius} is ${area}`);
+
+  const diameter = getDiameter(radius);
+  print(`the diameter of a circle with radius ${radius} is ${diameter}`);
+
+  const circumference = getCircumference(radius);
+  print(`the circumference of a circle with radius ${radius} is ${circumference}`);
+}
+
+main();
+```
+{% endcode %}
+
+* Notice that the `main` function just uses the other functions.
+* JavaScript projects are rarely built entirely in one file like this. Instead, code is separated into multiple files that share code with each other.
 * These shared pieces of code are called **modules**. A **module** is an exported chunk of code (typically a function or a set of functions) that can be used across our project.
   * For example, a file can create a function and then **export** it. 
   * Meanwhile, another file can **import** that function and use it.
@@ -120,15 +163,23 @@ module.exports = {
 ```javascript
 // The variable name here is up to you since only the value is exported, not the variable.
 const print = require('./print.js');
-print(`thank goodness I don't need to use console.log anymore!`);
-print(`this is so much easier!`);
-
-// Here, we're getting an object with functions inside (a.k.a. "methods")
+  
+// circleHelpers is what we'll call the object that is exported
 const circleHelpers = require('./circle-helpers.js');
-const radius = 5;
-const area = circleHelpers.getArea(radius);
 
-print(`the area of a circle with radius ${radius} is ${area}`);
+const main = () => {
+  const radius = 5;
+  
+  // the getArea method is INSIDE of the circleHelpers object so we use dot notation
+  const area = circleHelpers.getArea(radius);
+
+  // print was the default export of print.js so we can just invoke it.
+  print(`the area of a circle with radius ${radius} is ${area}`);
+
+  //... the rest of the code ...
+}
+
+main();
 ```
 
 {% endcode %}
@@ -140,16 +191,20 @@ print(`the area of a circle with radius ${radius} is ${area}`);
 {% code title="index.js" overflow="wrap" lineNumbers="true" %}
 
 ```javascript
+// With destructuring, we create a variable for each named export.
 const { getArea, getDiameter, getCircumference } = require('./circle-helpers.js');
 
-const radius = 5;
-const area = getArea(radius);
-const diameter = getDiameter(radius)
-const circumference = getCircumference(radius)
-print(`Here are the stats for a circle of radius 5:`)
-print(`area: ${area}`)
-print(`diameter: ${diameter}`)
-print(`circumference: ${circumference}`)
+const main = () => {
+  const radius = 5;
+  
+  // We can just invoke getArea now without digging through an object.
+  const area = getArea(radius);
+  print(`the area of a circle with radius ${radius} is ${area}`);
+
+  //... the rest of the code ...
+}
+
+main();
 ```
 
 * When destructuring:
