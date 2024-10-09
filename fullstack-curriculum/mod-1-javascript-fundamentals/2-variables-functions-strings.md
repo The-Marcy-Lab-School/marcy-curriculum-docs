@@ -272,7 +272,7 @@ console.log( "abc"[1] ); // Prints 'b'
 ```js
 const message = 'Hello there!';
 
-console.log( messages[50] ); // Prints undefined
+console.log( message[50] ); // Prints undefined
 ```
 
 ### String Length
@@ -346,7 +346,7 @@ const apples = fruits.slice(0, 6);
 console.log(apples); // Prints "apples"
 
 const loudFruits = fruits.toUpperCase()
-console.log(UppercaseFruits); // Prints 'APPLES, BANANAS, CHERRIES'
+console.log(loudFruits); // Prints 'APPLES, BANANAS, CHERRIES'
 
 console.log(apples.repeat(3)); // Prints 'applesapplesapples'
 
