@@ -46,11 +46,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 
 #### Logical Operators:
-| Operator | Name             | Example        |
-|----------|------------------|----------------|
-| &&       | AND               | `true && false`|
-| ||       | OR                | `true `||` false`|
-| !        | NOT               | `!true`        |
+| Operator | Name | Example           |
+| -------- | ---- | ----------------- |
+| &&       | AND  | `true && false`   |
+| \|\|     | OR   | `true \|\| false` |
+| !        | NOT  | `!true`           |
 
 ### `if/else` statements
 
