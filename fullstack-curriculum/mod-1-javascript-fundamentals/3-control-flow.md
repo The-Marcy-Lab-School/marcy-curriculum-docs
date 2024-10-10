@@ -20,37 +20,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 * **Scope** - Scope is the current context of execution in which values and expressions are "visible" or can be referenced
 
 
-## Flow Control Review
+## Control Flow Review
 
 - Programs usually change their behavior based on inputs.
 - Conditions and Booleans help decide if something is `true` or `false`.
-- Use `if/else`, `switch`, or `ternarys` to decide what to do in a given situation.
-
-### Conditions and Comparisons
-
-- Conditions evaluate to `true` or `false`.
-- They do this with Comparison Operators and Logical Operators.
-  - Comparison Operators compare two values of the same type.
-  - Logical Operators compare the outcomes of two conditions.
-
-#### Comparison Operators:
-
-| Operator | Name             | Example         |
-| -------- | ---------------- | --------------- |
-| ===      | Equal To         | `'Hi' === 'Hi'` |
-| !==      | Not Equal To     | `6 !== 7`       |
-| >        | Greater Than     | `10 > 1`        |
-| <        | Less Than        | `3 < 5`         |
-| >=       | Greater or Equal | `5 >= 5`        |
-| <=       | Less or Equal    | `2 <= 2`        |
-
-
-#### Logical Operators:
-| Operator | Name | Example           |
-| -------- | ---- | ----------------- |
-| &&       | AND  | `true && false`   |
-| \|\|     | OR   | `true \|\| false` |
-| !        | NOT  | `!true`           |
+- Use `if/else`, `switch`, or ternary operators to decide what to do in a given situation.
+- They do this with Comparison Operators and Logical Operators which return a Boolean.
 
 ### `if/else` statements
 
@@ -60,49 +35,146 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Example:**
 
-```javascript
-const happyBirthday = (age) => {
-  if (age === 25) {
-    return "Happy birthday, you can rent a car!";
-  } else if (age < 25) {
-    return "No rental cars on your birthday yet.";
+```js
+const isItHot = (temp) => {
+  if (temp > 75) {
+    return "it is hot!"
+  } else if (temp > 90) {
+    return "it is too hot!"
   } else {
-    return "Enjoy car rentals on your birthday!";
+    return "it is NOT!"
   }
-};
+}
+console.log(isItHot(80)); // Prints "it is hot"
+console.log(isItHot(95)); // Prints "it is too hot"
+console.log(isItHot(60)); // Prints "it is NOT"
+```
+
+- Conditions in an `if` statement must evaluate to `true` or `false`.
+
+### Comparison Operators:
+  
+* Comparison Operators compare two values of the same type.
+
+| Operator | Name               | Example         | Result  |
+| -------- | ------------------ | --------------- | ------- |
+| ===      | Equal To           | `'Hi' === 'Hi'` | `true`  |
+| !==      | Not Equal To       | `6 !== 7`       | `true`  |
+| !=       | Loose Equal To     | `"6" == 6`      | `true`  |
+| !=       | Loose Not Equal To | `6 != "6"`      | `false` |
+| >        | Greater Than       | `10 > 1`        | `true`  |
+| <        | Less Than          | `30 < 5`        | `false` |
+| >=       | Greater or Equal   | `5 >= 5`        | `true`  |
+| <=       | Less or Equal      | `2 <= 2`        | `true`  |
+
+
+### Logical Operators:
+
+* Logical Operators compare the outcomes of two conditions and let you be more expressive
+
+| Operator | Name | Example            | Result  |
+| -------- | ---- | ------------------ | ------- |
+| &&       | AND  | `5 > 3 && 2 > 3`   | `false` |
+|          |      | `5 > 3 && 4 > 3`   | `true`  |
+| \|\|     | OR   | `5 > 3 \|\| 2 > 3` | `true`  |
+| !        | NOT  | `!(5 > 3)`         | `false` |
+
+* We can use `()` to group together each condition
+
+```js
+const isItHot = (temp, isRaining) => {
+  // if it is at least 90 or it is over 75 and isn't raining, its hot
+  if (temp >= 90 || (temp > 75 && !isRaining)) {
+    return "it is hot!"
+  } else {
+    return "it is NOT!"
+  }
+}
+console.log(isItHot(90, true)); // Prints "it is hot"
+console.log(isItHot(90, false)); // Prints "it is hot"
+console.log(isItHot(80, false)); // Prints "it is hot"
+console.log(isItHot(80, true)); // Prints "it is NOT"
+console.log(isItHot(60, false)); // Prints "it is NOT"
 ```
 
 ### Coercions and Truthiness
 
-- Type Coercion — JavaScript will automatically convert (coerce) types when necessary. For example, `'1' + 1` results in `'11'`.
-- Strict Equality (`===`) — Strict equality is used to avoid type coercion, ensuring both value and type must match for a comparison to be true. This is preferred over loose equality (`==`), which allows type coercion.
-- Truthy/Falsy Values — A type of coercion where non-boolean values are coerced into `true` or `false` in contexts like conditionals. For example, `0`, `""`, `null`, `undefined`, and `NaN` are considered falsy, while all other values are truthy
+- **Type Coercion ("co-er-shun")** — JavaScript will automatically convert (coerce) types when necessary. For example, `'1' + 1` results in `'11'`.
+- **Truthy/Falsy Values** — any expression you use for an `if` statement's `(condition)` will be coerced into a Boolean.
+  - "Falsy" values are coerced to be `false` and only these 5 values will behave this way: `0`, `""`, `null`, `undefined`, and `NaN`
+  - All other values are truthy
+
+```js
+const isTruthy = (value) => {
+  if (value) { // the value will be coerced to be a Boolean. If it is true, we will return true.
+    return true;
+  }
+  else { // if not, we will return false.
+    return false;
+  }
+}
+
+console.log(isTruthy('')) // Prints false
+console.log(isTruthy(0)) // Prints false
+console.log(isTruthy(NaN)) // Prints false
+console.log(isTruthy(null)) // Prints false
+console.log(isTruthy(undefined)) // Prints false
+console.log(isTruthy('hello')) // Prints true
+console.log(isTruthy(' ')) // Prints true
+console.log(isTruthy(5)) // Prints true
+console.log(isTruthy([])) // Prints true
+console.log(isTruthy({})) // Prints true
+```
 
 ## Simplify Your Logic
 
-### Don’t nest too much
+### Guard Clauses & Ternary Operators
 
 - Code should be readable.
-- Avoid deeply nested `if/else` statements.
-- Use guard clauses and ternarys.
-  - A guard clause is an if statement that returns before subsequent has a chance to be executed.
-
-#### Example of nested vs. simplified code:
+- Avoid deeply nested `if/else` statements. Use guard clauses and ternary operators.
+- A guard clause is an if statement that returns before subsequent has a chance to be executed.
 
 ```javascript
-const doAdminThings = (role) => {
-  if (role === "admin") {
-    console.log("You can do admin things");
-  } else {
-    console.log("Nothing to do");
+// Okay - if and else statements that each return something
+const isTruthy = (value) => {
+  if (value) {
+    return true;
   }
-};
+  else {
+    return false;
+  }
+}
 
-const doAdminThingsBetter = (role) => {
-    // Guard clause: If role is not 'admin', exit early
-  if (role !== "admin") return console.log("Nothing to do");
-  console.log("You can do admin things");
+// Better - Guard clause lets us skip the else statement by exiting early
+const isTruthy = (role) => {
+  if (value) {
+    return true;
+  }
+  // if the guard clause above doesn't run, this line will!
+  return false;
 };
+```
+
+- `if` and `else` statements let you choose between one of two code blocks to execute.
+- The ternary operator `condition ? valA : valB` is used to choose between one of two values.
+
+```js
+// Okay - Use an If statement to choose which code block to execute
+const isThisEven = (num) => {
+  let message;
+  if (num % 2 === 0) {
+    message = 'it is even!';
+  } else {
+    message = 'it is odd!';
+  }
+  console.log(message);
+}
+
+// Better - Use a ternary to choose which value to assign to message
+const isThisEven = (num) => {
+  const message = num % 2 === 0 ? "it is even!" : "it is odd!";
+  console.log(message);
+}
 ```
 
 ### Scope and Variables
@@ -126,22 +198,37 @@ const getBioBest = (age, first, last) => {
 
 ## typeof Operator
 
-- `typeof` is used to check types. It’s an operator, not a function.
+- `typeof value` returns the type of a given `value` as a string. It’s an operator, not a function.
+  - Unfortunately, it tells us that arrays are objects (they are) so we have to use `Array.isArray()` to check if something is an array.
+  - It also tells us that `null` is an Object so we have to check that manually 
 - Example usages:
 
 ```javascript
-console.log(typeof "hi"); // string
-console.log(typeof 4); // number
-console.log(typeof true); // boolean
+console.log(typeof "hi"); // Prints "string"
+console.log(typeof 4); // Prints "number"
+console.log(typeof true); // Prints "boolean"
+console.log(typeof undefined); // Prints "undefined"
+console.log(typeof {}); // Prints "object"
+console.log(typeof console.log); // Prints "function"
+
+// null and arrays don't work well with this so we have to do something different
+console.log(typeof null); // Prints "object"
+console.log(typeof []); // Prints "object"
+
+const arr = [];
+console.log(Array.isArray(arr)); // Prints true
+
+const nullVal = null
+console.log(nullVal === null); // Prints true
 ```
 
 ## Math Operations
 
 - Use basic math operators: `+`, `-`, `/`, `*`.
 - The power operator `x ** y` raises x to the power of y.
-- `%` is modulo, meaning remainder division.
+- `%` returns the remainder after division.
 
-**Example:**
+**Examples:**
 
 ```javascript
 Math.round(2.5); // 3
