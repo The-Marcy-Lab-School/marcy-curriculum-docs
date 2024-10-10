@@ -1,4 +1,4 @@
-# Control Flow & Conditionals
+# Control Flow, Conditional Operators, and Math
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-2-control-flow)!
@@ -199,27 +199,35 @@ const getBioBest = (age, first, last) => {
 ## typeof Operator
 
 - `typeof value` returns the type of a given `value` as a string. It’s an operator, not a function.
-  - Unfortunately, it tells us that arrays are objects (they are) so we have to use `Array.isArray()` to check if something is an array.
-  - It also tells us that `null` is an Object so we have to check that manually 
 - Example usages:
 
 ```javascript
 console.log(typeof "hi"); // Prints "string"
 console.log(typeof 4); // Prints "number"
+console.log(typeof NaN); // Prints "number"
 console.log(typeof true); // Prints "boolean"
 console.log(typeof undefined); // Prints "undefined"
-console.log(typeof {}); // Prints "object"
 console.log(typeof console.log); // Prints "function"
-
-// null and arrays don't work well with this so we have to do something different
+console.log(typeof {}); // Prints "object"
 console.log(typeof null); // Prints "object"
 console.log(typeof []); // Prints "object"
+```
 
+### Identifying `null`, Arrays, and `NaN`
+
+- Unfortunately, `typeof` tells us that arrays are objects (they are) so we have to use `Array.isArray()` to check if something is an array.
+- It also tells us that `null` is an Object so we have to check that manually 
+- It also tells us that `NaN` is a number, which it is, but to know if something is `NaN`, we can use the `isNaN()` function
+- 
+```js 
 const arr = [];
 console.log(Array.isArray(arr)); // Prints true
 
 const nullVal = null
 console.log(nullVal === null); // Prints true
+
+const badNumber = NaN
+console.log(isNaN(badNumber)); // Prints true
 ```
 
 ## Math Operations
@@ -228,16 +236,31 @@ console.log(nullVal === null); // Prints true
 - The power operator `x ** y` raises x to the power of y.
 - `%` returns the remainder after division.
 
-**Examples:**
-
-```javascript
-Math.round(2.5); // 3
-Math.floor(2.99); // 2
-Math.ceil(2.01); // 3
-```
-
 ```javascript
 console.log(5 % 2); // 1 (5 divided by 2 is 2 with a remainder of 1)
 console.log(10 % 3); // 1 (10 divided by 3 is 3 with a remainder of 1)
 console.log(15 % 5); // 0 (15 divided by 5 is 3 with no remainder)
+```
+
+### The `Math` Object
+
+- In JavaScript `Math` is a globally available object with methods and properties for doing more complex math.
+```javascript
+console.log(Math.round(2.5))    // Prints 3
+console.log(Math.floor(2.99))   // Prints 2
+console.log(Math.ceil(2.01))    // Prints 3
+console.log(Math.random())      // Prints a random decimal from 0 to 1 (exclusive)
+console.log(Math.PI)            // Prints 3.141592653589793
+console.log(Math.sqrt(25));     // Prints 5
+console.log(Math.abs(-25));     // Prints 25
+console.log(Math.max(2, 5, 3))  // Prints 5
+console.log(Math.min(2, 5, 3))  // Prints 2
+```
+
+- Here is an example of a function that makes use of `Math.random()` to flip a coin
+
+```js
+const flipCoin = () => {
+  return Math.random() > 0.5 ? "Heads" : "Tails"
+}
 ```
