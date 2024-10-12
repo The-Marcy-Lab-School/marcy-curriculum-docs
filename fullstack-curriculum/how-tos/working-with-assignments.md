@@ -10,6 +10,7 @@
 - [How to Work On Assignments](#how-to-work-on-assignments)
   - [Assignment Setup](#assignment-setup)
   - [Submitting the Assignment](#submitting-the-assignment)
+  - [How to Undo a Merge (or really any Commit)](#how-to-undo-a-merge-or-really-any-commit)
 
 
 ## What is a SWE Assignment?
@@ -222,3 +223,18 @@ To submit an assignment, do the following:
 
 5. Tag your instructor as a **Reviewer**.
 6. Your instructor will provide feedback on GitHub and will either approve your branch to be merged or will request that you resubmit.
+
+### How to Undo a Merge (or really any Commit)
+
+If you've accidentally merged your `draft` branch into your `main` branch, not to worry. You can undo this by reverting your `main` branch to the previous commit.
+
+Do the following:
+
+1. On your own computer, `cd` into the repo and `git checkout main` and `git pull` to make sure your local main branch is in sync with the remote repository.
+2. Then `git checkout draft` and double check that the files in that branch contain your most up-to-date work. If it doesn't, follow the steps above to create a new branch from your `main` branch.
+3. Next, `git checkout main` and `git log` to see the full commit history. Find the commit you want to undo and then look at the commit that came before it that you want to return to. Copy the commit SHA code (a 40-digit code identifying the commit).
+4. Run the command `git reset --hard <commit_sha>` replacing `<commit_sha>` with the copied SHA from the last step. This will return your `main` branch back to that commit.
+5. `git checkout draft` to double-check that the `draft` branch still contains your work. 
+6. Finally, `git checkout main` and `git push -f` to make the remote `main` branch return to the previous commit as well. **DANGER: Running these next commands will permantly delete the most recent commit from your `main` branch's commit history.**
+
+Once you've done this, return to GitHub and confirm that the `main` branch has returned to the previous commit and that your `draft` branch still contains your work. Then follow the steps above to create a Pull Request.
