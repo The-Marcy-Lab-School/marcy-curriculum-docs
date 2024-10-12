@@ -184,7 +184,7 @@ To read the error, we want to look for the following:
   
 
 {% hint style="info" %}
-The **call stack** is a data structure that Node uses to keep track of the functions that are called while the program is running. It saves function calls in a first-in-last-out (LIFO) order which means that the most recent function call is always at the top, followed by the function that called it, and so on.
+The **call stack** is a data structure that Node uses to keep track of the functions that are called while the program is running. It saves function calls in a last-in-first-out (LIFO) order which means that the most recent function call is always at the top, followed by the function that called it, and so on.
 {% endhint %}
 
 ## Handling Errors
