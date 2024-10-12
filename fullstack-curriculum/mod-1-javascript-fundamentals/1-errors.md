@@ -176,7 +176,7 @@ To read the error, we want to look for the following:
 - The **error message** describing the problem.
     - `str.push is not a function`
 - The **error call stack**
-    - From most newest to oldest we see the function names, file names and line numbers tracing how we got to the error
+    - we see the function names, file names and line numbers tracing how we got to the error, with the most recently called function at the top.
         - `causeTrouble` in `index.js` on line `6` column `18` was invoked by…
         - `main` in `index.js` on line `14` column `2` which was invoked by…
         - `Object.<anonymous>` (which means the global scope) in `index.js` on line `17` column `1` which was executed by Node
