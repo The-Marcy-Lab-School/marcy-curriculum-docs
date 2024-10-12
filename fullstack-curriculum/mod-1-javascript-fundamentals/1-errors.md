@@ -6,7 +6,7 @@ Writing code with errors is a natural part of programming. But rather than avoid
 
 - An error is any code that prevents a program from running successfully.
 - In the world of programming, we say that **“an error is thrown”**.
-- An error that is not handled is considered **”uncaught”** until we fix it. Uncaught errors will cause the program to crash.
+- An error that is not handled is considered **”uncaught”** until we fix it (or catch it). Uncaught errors will cause the program to crash.
 
 ```jsx
 const str = 'hello world'
