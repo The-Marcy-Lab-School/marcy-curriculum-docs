@@ -174,7 +174,7 @@ To read the error, we want to look for the following:
 - The **error type** (`SyntaxError`, `ReferenceError`, `TypeError`, etc…)
     - In this case, we have a `TypeError`
 - The **error message** describing the problem.
-    - `z is not defined`
+    - `str.push is not a function`
 - The **error call stack**
     - From most newest to oldest we see the function names, file names and line numbers tracing how we got to the error
         - `causeTrouble` in `index.js` on line `6` column `18` was invoked by…
