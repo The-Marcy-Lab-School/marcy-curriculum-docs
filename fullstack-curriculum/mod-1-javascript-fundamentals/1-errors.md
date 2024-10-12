@@ -71,14 +71,12 @@ doesNotExist;
     
 #### `TypeError` 
 
-*Very common*. Indicates that a provided argument is not an allowable type. For example, passing a function to a parameter which expects a string would be a `TypeError`.
+*Very common*. Indicates that a provided argument is not an allowable type. For example, passing a function to a parameter which expects a string would cause a `TypeError`.
 
 ```jsx
 "hello".push('hi')
 // Uncaught TypeError: "hello".push is not a function
 ```
-
-Node.js will generate and throw `TypeError` instances *immediately* as a form of argument validation.
 
 #### `SystemError` 
 
@@ -174,7 +172,7 @@ Node.js v18.16.1
 To read the error, we want to look for the following:
 
 - The **error type** (`SyntaxError`, `ReferenceError`, `TypeError`, etc…)
-    - In this case, we have a `ReferenceError`
+    - In this case, we have a `TypeError`
 - The **error message** describing the problem.
     - `z is not defined`
 - The **error call stack**
