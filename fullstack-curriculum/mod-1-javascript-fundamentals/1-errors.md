@@ -6,7 +6,7 @@ Writing code with errors is a natural part of programming. But rather than avoid
 
 - An error is any code that prevents a program from running successfully.
 - In the world of programming, we say that **“an error is thrown”**.
-- An error that is not handled is considered **”uncaught”** until we fix it. Uncaught errors will cause the program to crash.
+- An error that is not handled is considered **”uncaught”** until we fix it (or catch it). Uncaught errors will cause the program to crash.
 
 ```jsx
 const str = 'hello world'
@@ -71,14 +71,12 @@ doesNotExist;
     
 #### `TypeError` 
 
-*Very common*. Indicates that a provided argument is not an allowable type. For example, passing a function to a parameter which expects a string would be a `TypeError`.
+*Very common*. Indicates that a provided argument is not an allowable type. For example, passing a function to a parameter which expects a string would cause a `TypeError`.
 
 ```jsx
 "hello".push('hi')
 // Uncaught TypeError: "hello".push is not a function
 ```
-
-Node.js will generate and throw `TypeError` instances *immediately* as a form of argument validation.
 
 #### `SystemError` 
 
@@ -174,19 +172,19 @@ Node.js v18.16.1
 To read the error, we want to look for the following:
 
 - The **error type** (`SyntaxError`, `ReferenceError`, `TypeError`, etc…)
-    - In this case, we have a `ReferenceError`
+    - In this case, we have a `TypeError`
 - The **error message** describing the problem.
-    - `z is not defined`
+    - `str.push is not a function`
 - The **error call stack**
-    - From most newest to oldest we see the function names, file names and line numbers tracing how we got to the error
-        - `causeTrouble` in `index.js` on line `6` column `18` was invoked by…
-        - `main` in `index.js` on line `14` column `2` which was invoked by…
-        - `Object.<anonymous>` (which means the global scope) in `index.js` on line `17` column `1` which was executed by Node
+    - we see the function names, file names and line numbers tracing how we got to the error, with the most recently called function at the top.
+        - `causeTrouble` in `index.js` on line `2` column `6` was invoked by…
+        - `main` in `index.js` on line `10` column `2` which was invoked by…
+        - `Object.<anonymous>` (which means the global scope) in `index.js` on line `14` column `1` which was executed by Node
         - Everything from `Module._compile` and below will almost always be there and will be the the same for runtime errors (for syntax errors, the error stack isn’t all that useful)
   
 
 {% hint style="info" %}
-The **call stack** is a data structure that Node uses to keep track of the functions that are called while the program is running. It saves function calls in a first-in-last-out (LIFO) order which means that the most recent function call is always at the top, followed by the function that called it, and so on.
+The **call stack** is a data structure that Node uses to keep track of the functions that are called while the program is running. It saves function calls in a last-in-first-out (LIFO) order which means that the most recent function call is always at the top, followed by the function that called it, and so on.
 {% endhint %}
 
 ## Handling Errors
