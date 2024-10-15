@@ -225,24 +225,37 @@ console.log("Thanks for playing!");
 A **nested loop** is a loop written inside the body of another loop. For each iteration of the outer loop, the inner loop will complete ALL of its iterations.
 
 ```js
-// The outer loops runs 2 times, for i = 0 and i = 1
-for (let i = 0; i < 2; i++) {
+// The outer loops runs 3 times, for i = 0 through i = 2
+for (let i = 0; i < 3; i++) {
+
+  // This statement is executed 3 times, once per outer loop.
+  console.log(`Outer loop ${i}:`)
+
   // The inner loop runs 5 times, for j = 0 through j = 4
   for (let j = 0; j < 5; j++) {
-    // This statement is executed a total of 10 times
-    console.log(i.toString() + j.toString());
+    // This statement is executed a total of 15 times, 5 times per outer loop
+    console.log(`  ${i} - ${j}`);
   }
 }
-/* 
-00
-01
-02
-03
-04
-10
-11
-12
-13
-14
+
+/*
+Outer loop 0:
+  0 - 0
+  0 - 1
+  0 - 2
+  0 - 3
+  0 - 4
+Outer loop 1:
+  1 - 0
+  1 - 1
+  1 - 2
+  1 - 3
+  1 - 4
+Outer loop 2:
+  2 - 0
+  2 - 1
+  2 - 2
+  2 - 3
+  2 - 4
 */
 ```
