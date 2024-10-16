@@ -163,7 +163,7 @@ const emptyTheArray = (arr) => {
 const letters = ['a', 'b', 'c'];
 
 // 2. When we invoke emptyTheArray, we "pass the reference" to the function
-emptyTheArray(letters):
+emptyTheArray(letters);
 
 // 4. The array referenced by letters has been modified by the function!
 console.log(letters); // Prints []
