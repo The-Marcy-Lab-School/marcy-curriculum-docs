@@ -247,6 +247,17 @@ console.log(letters); // Prints ['a', 'b', 'c']
 console.log(moreLetters); // Prints ['a', 'b', 'c', 'd'];
 ```
 
+### Copying Array Challenge
+
+Make this impure array function pure!
+
+```js
+const shorten = (arr) => {
+  arr.pop();
+  return arr;
+}
+```
+
 ## Advanced Array Syntax
 
 ### 2D Arrays
@@ -260,6 +271,8 @@ const coordinates = [
   [30, 90],
   [40, 74],
   [34, 118],
+  [42, 88],
+  [39, 77]
 ];
 
 const newOrleans = coordinates[0];
@@ -304,7 +317,7 @@ In the example above, we only unpacked the first 3 values of `coordinates`.
 If we want to, we can use the "rest" operator (`...rest`) to store the remaining unpacked values in a variable:
 
 ```js
-const [newOrleans, newYork, ...lesserCities] = coordinates;
+const [, , ...lesserCities] = coordinates;
 
 console.log(lesserCities);
 /* 
