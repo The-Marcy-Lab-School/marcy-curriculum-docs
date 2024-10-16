@@ -13,11 +13,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - Arrays are lists of data (order matters). Values in an array are called **elements of the array**.
 - Arrays use square brackets `[]` to encapsulate the data
 - Arrays are a type of object
-- Like strings Arrays also...
+- Like strings arrays also...
   - have indexes starting at `0`
   - use bracket notation to access individual elements: `array[index]`
   - have a `.length` property that returns the number of elements in the array
   - have many of the same read-only methods like `slice`, `indexOf` and `includes`
+- Unlike strings, arrays are mutable.
 
 ```js
 const friends = ['bert', 'ernie', 'big bird', 'kermit', 'miss piggy', 'elmo'];
@@ -68,9 +69,40 @@ console.log(hasValue(letters, 'e')); // Prints false
 ```
 </details>
 
+### Arrays Are Mutable
+
+
+Strings have read-only methods like `toUpperCase()` and `slice()` that make a copy of the string but don't change the original string.
+
+```js
+const myName = 'ben';
+myName.toUpperCase(); // doesn't mutate the string, it makes a copy
+myName[0] = "J"; // doesn't even do anything
+console.log(myName);  // still 'ben'
+```
+
+Unlike strings, arrays let you **mutate** them directly (change their contents without reassignment).
+
+```js
+const endLetters = ["x", "y", "z"];
+endLetters[1] = "foo";
+console.log(endLetters); // ["x", "foo", "z"]
+```
+
+We can even modify the `.length` of an Array to empty them:
+
+```js
+endLetters.length = 0; // endLetters now has no values
+console.log(endLetters); // []
+```
+
+**<details><summary>Question: How are we allowed to modify the array if it is stored in a `const` variable?</summary>**
+> `const` prevents us from reassigning the variable. Notice that we never reassign `endLetters`! The variable still references the same array, we're just changing the contents of the array. 
+</details>
+
 ### Array Methods for Adding and/or Removing Values
 
-The fact that arrays are mutable makes them incredibly useful! Let's see how to mutate arrays with methods.
+Since arrays are mutable, they not only have read-only methods like `slice`, `indexOf`, and `includes`, they also have methods for adding to and removing from the array.
 
 These methods let you add values to an array
 * `arr.push(value)` — adds a given value to the end of an array, increasing the length by 1
@@ -107,38 +139,6 @@ console.log(letters); // Prints ['a', 'b', 'Nope', 'Bye!', 'd', 'e']
 ## Reference vs. Primitive Values
 
 Arrays and Objects are considered **reference types**. Let's see why.
-
-### Arrays are Mutable, Strings (and Other Primitive Values) Are Not
-
-Arrays can be **mutated** (their contents can be modified). Notice that we're not reassigning the variable! The variable still references the same array, we're just changing the contents of the array.
-
-```js
-const endLetters = ["x", "y", "z"];
-endLetters[1] = "foo";
-console.log(endLetters); // ["x", "foo", "z"]
-```
-
-Strings *cannot* be mutated, we can only make copies with modifications:
-
-```js
-// We can try reassigning an index but myName is still "ben"
-let myName = "ben";
-myName[0] = "J";
-console.log(myName); // Prints "ben"
-
-// myName is reassigned to "Ben"
-myName = myName[0].toUpperCase() + myName.slice(1);
-console.log(myName); // Prints "Ben"
-```
-
-We can even modify the `.length` of an Array to empty them:
-
-```js
-endLetters.length = 0; // endLetters now has no values
-console.log(endLetters); // []
-```
-
-**But how does this work??????**
 
 ### How Reference Types (Arrays and Objects) are Stored in Memory
 
