@@ -59,6 +59,7 @@ const hasValue = (arr, value) => {
     if (arr[i] === value) { // Check each element of arr to see if it matches the value   
       return true; // If it does, we can immediately return true
     }
+    // if it doesn't, keep going!
   }
   return false; // If we make it to the end of the loop, we must not have found it. Return false.
 }
@@ -146,7 +147,7 @@ When a variable is created, a chunk of your computer's RAM is assigned to hold s
 
 So, instead, they are stored in an area called the **heap** and a **reference to their heap address** is stored in the variable instead.
 
-{% embed url="https: //docs.google.com/presentation/d/13d9TXTogmt4hV9DLuHzARExbcu3A7Nr9dnY69Zz5fKw/embed?start=false&loop=false&delayms=3000" %}
+{% embed url="https://docs.google.com/presentation/d/13d9TXTogmt4hV9DLuHzARExbcu3A7Nr9dnY69Zz5fKw/embed?start=false&loop=false&delayms=3000" %}
 
 As a result, we can mutate the contents of an array without reassigning the variable because the variable doesn't hold the array, it holds a reference to the array!
 
