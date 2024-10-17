@@ -11,133 +11,228 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 ## The basics
 
 - Objects are a data type that can store multiple pieces of data as **key:value** pairs called **properties**
-- Objects are best used for collections of data where each value needs a name
+- In other languages, they are referred to as **dictionaries**:
 
 ```js
-// This object has two properties with the keys "name" and "maker"
-const car = {
-  name: "Camry",
-  maker: "Toyota",
-};
+// Arrays store values in an order
+const words = [
+  "hello",
+  "rainbow",
+  "cat"
+]
+
+// Objects/Dictionaries store key:value pairs
+const dictionary = {
+  "hello": "a casual greeting",
+  "rainbow": "a colorful arc of light",
+  "cat": "the superior pet"
+}
 ```
 
+- Objects are useful for storing collections of data related to a single "thing", like data about a user.
+- Objects can have arrays and other objects nested inside.
+
+```js
+const user = {
+  "userId": 44292,
+  "username": 'c0d3rkid',
+  "password": 'jswiz1234',
+  "friends": ['iLoveSoccer123', 'pythonNinja', 'messiGOAT'],
+  "favoriteMeal": {
+    "name": 'PB&J',
+    "ingredients": ['peanut butter', 'jelly', 'bread']
+  }
+}
+```
+
+- When creating an object, the quotes around the key name are optional, except when the key includes spaces or begins with a number:
+
+```js
+const dictionary = {
+  hello: "a casual greeting",
+  rainbow: "a colorful arc of light",
+  cat: "the superior pet",
+  "see ya": "a casual way to say 'see you later'"
+}
+```
+
+### Accessing Objects with Dot Notation and Bracket Notation
 - Object values can be accessed and/or modified using dot notation or bracket notation
 
 ```js
-// add key/value pairs
-car.color = "blue"; // dot notation
-car["model-year"] = 2018; // bracket notation
+// Dot notation is the faster to type and easier to read than bracket notation
+console.log(`Hi, my name is ${user.username}`);
 
-// access values
-console.log(car.color); // blue
-console.log(car["model-year"]); // 2018
+// Bracket notation requires a string to be provided
+console.log(`Hi, my name is ${user["username"]}`);
+
+// Dot (and bracket) notation can be used to modify existing values, or create new ones!
+user.password = 'try to break in now!';
+user.isAdmin = false;
+
+console.log(user);
+
+// If a property holds an object or array, we can use dot/bracket notation on that value!
+console.log(`My favorite meal is ${user.favoriteMeal.name}`);
+console.log(`My best friend is ${user.friends[0]}`);
+
+// Delete properties by using the `delete` keyword followed by dot/bracket notation
+delete user.userId;
+delete user["friends"];
 ```
 
-- Delete properties by using the `delete` keyword and dot/bracket notation
+### Dynamic Properties Challenge
+
+When the key name of a property is stored in a variable, we _must_ use bracket notation (we can't use dot notation). 
 
 ```js
-// delete values
-delete car.color;
-delete car["model-year"];
+const key = 'some key value';
+myObj[key] = 'newValue';
+
+// Using dot notation here with the variable won't work.
+// JS will think that "key" is the name of the key
+myObj.key = 'newValue';
 ```
 
-## Dynamic Properties
-
-When the key name of a property is not known until you run the program, we can add "dynamic" properties using bracket notation (we can't use dot notation)
+Complete the program below so that it lets users add words to the dictionary!
 
 ```js
 const prompt = require("prompt-sync")({ sigint: true });
 
-const car = {
-  name: "Corolla",
-  maker: "Toyota",
-};
+const dictionary = {
+  "hello": "a casual greeting",
+  "rainbow": "a colorful arc of light",
+  "cat": "the superior pet"
+}
 
-console.log("Add a property to the car!");
-const property = prompt("Name the property!");
-const value = prompt("Add a value!");
-car[property] = value;
+while (true) {
+  console.log("Here are your words: ", dictionary);
+  const newWord = prompt("Add a word to your dictionary, or press q to exit. ");
 
-console.log("your car now has these properties:");
-console.log(car);
+  if (newWord === 'q') { // a guard clause
+    break;
+  }
+
+  const definition = prompt(`Okay, what is the definition of ${newWord}? `);
+
+  // add the new word and its definition to the dictionary!
+}
 ```
 
-## Destructuring
+**<details><summary>Solution</summary>**
+> To complete this program, add the line `dictionary[newWord] = definition;` to the end
+</details>
 
-Destructuring is the process of creating variables from an existing Array/Object. When destructuring an Object, the variable names must match the property key names that you wish to extract.
+## Iterating Over Objects
+
+One of the key benefits of an Array is that we can easily iterate through its values with a `for` loop. This is possible because we can use the variable `i` to step through the indexes of the array. 
 
 ```js
-const userBen = {
-  name: "Ben",
-  age: 28,
-};
-const introduceSelf = (person) => {
-  const { name, age } = person; // destructuring
-  console.log(`Hello, ${name}! I am ${age} years old.`);
-};
+const friends = ['bert', 'ernie', 'elmo'];
+console.log("here are my friends:");
 
-introduceSelf(userBen);
+for (let i = 0; i < friends.length; i++) {
+  console.log(friends[i])
+}
 ```
 
-Often, when an Object is passed to a function, we will destructuring the argument directly in the parameter list:
+An object doesn't have countable indexes though. And their keys aren't in any particular order.
+
+To iterate through an object, we can turn the object into an array using `Object.keys(obj)` which returns an Array of the given object's keys. We can then loop through those keys and use them to access their associated values:
 
 ```js
-const userBen = {
-  name: "Ben",
-  age: 28,
-};
-const introduceSelf = (person) => {
-  console.log(`Hello! My name is ${person.name} and I am ${person.age} years old.`);
-};
+const dictionary = {
+  "hello": "a casual greeting",
+  "rainbow": "a colorful arc of light",
+  "cat": "the superior pet"
+}
 
-introduceSelf(userBen);
+// First get an array of the keys of the object
+const words = Object.keys(dictionary);
+console.log(words); // ["hello", "rainbow", "cat"]
+
+// Then, iterate through them to get their values
+for (let i = 0; i < words.length; i++) {
+  const word = words[i];
+  console.log(`The definition of ${word} is ${dictionary[word]}`);
+}
 ```
 
-## Object creation shorthand using Variables
+If we don't care about the keys, we can just get an array of the object's values with `Object.values(obj)`:
 
 ```js
-// Creating an object with raw data
-const user1 = {
-  name: "ben",
-  age: 28,
-  canDrive: true,
-};
+const dictionary = {
+  "hello": "a casual greeting",
+  "rainbow": "a colorful arc of light",
+  "cat": "the superior pet"
+}
 
-// Creating an Object using data from variables
-const name = "ben";
-const age = 28;
-const canDrive = true;
+const definitions = Object.values(dictionary);
 
-const user2 = {
-  name: name,
-  age: age,
-  canDrive: canDrive,
-};
-
-// Using the shorthand:
-const user3 = {
-  name,
-  age,
-  canDrive,
-};
+console.log("Can you tell what word each of these definitions are for?");
+for (let i = 0; i < definitions.length; i++) {
+  console.log(definitions[i]);
+}
 ```
 
-This can be helpful when using "factory functions" - functions that create objects with a specific set of properties.
+## Advanced Object Syntax
 
-This example makes a user object with the provided properties as well as some default values (`isAdmin` is `false` and an empty `friends` list)
+### Object Shorthand Using Variables
+
+When constructing an object from variables, it can be quite repetitive if the key name matches the variable name.
 
 ```js
-const makeUser = (name, age, canDrive) => {
-  return {
+const makeUser = (name, age) => {
+  const newUser = {
+    "name": name,
+    "age": age,
+    "isAdmin": false,
+    "friends": [],
+  }
+  return newUser;
+}
+
+const user1 = makeUser('ben', 30);
+```
+
+If we are storing the value held by a variable in a key with the same name as that variable, we can omit the `:` and just write the name of the variable:
+
+```js
+const makeUser = (name, age) => {
+  const newUser = {
     name,
     age,
-    canDrive,
     isAdmin: false,
     friends: [],
-  };
+  }
+  return newUser;
+}
+
+const user1 = makeUser('ben', 30);
+```
+
+This example makes a user object with the provided properties as well as some default values (`isAdmin` is `false` and an empty `friends` list).
+
+### Destructuring
+
+Destructuring is the process of creating variables from an existing Array/Object. When destructuring an Object, the variable names *must* match the property key names that you wish to extract.
+
+```js
+// 
+```
+
+When an object is passed to a function, we will often destructure the object directly in the parameter list, letting us choose only the properties of the object that are relevant to the function:
+
+```js
+const userBen = {
+  name: "Ben",
+  age: 28,
+  isAdmin: false
+};
+const introduceSelf = ({ name, age }) => {
+  console.log(`Hello! My name is ${name} and I am ${age} years old.`);
 };
 
-const ben = makeUser("ben", 28, true);
-const maya = makeUser("Maya", 25, false);
-const reuben = makeUser("ben", 22, false);
+introduceSelf(userBen);
 ```
+
