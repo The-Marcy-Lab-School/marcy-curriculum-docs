@@ -213,12 +213,56 @@ const user1 = makeUser('ben', 30);
 
 This example makes a user object with the provided properties as well as some default values (`isAdmin` is `false` and an empty `friends` list).
 
-### Destructuring
-
-Destructuring is the process of creating variables from an existing Array/Object. When destructuring an Object, the variable names *must* match the property key names that you wish to extract.
+This is the same syntax used when exporting "named exports":
 
 ```js
-// 
+const first = 'a';
+const second = 'b';
+const third = 'c';
+
+module.exports = {
+  first,
+  second,
+  third
+}
+
+/* 
+This is shorthand for:
+
+module.exports = {
+  "first": first,
+  "second": second,
+  "third": third,
+}
+*/
+```
+
+### Destructuring
+
+Destructuring is the process of creating variables from an existing array/object. When destructuring an object, the variable names *must* match the property key names that you wish to extract. The order in which you list the property names doesn't matter.
+
+```js
+const dictionary = {
+  "hello": "a casual greeting",
+  "rainbow": "a colorful arc of light",
+  "cat": "the superior pet"
+}
+
+// Destructuring creates a variable for the properties of an object.
+// Here, we are choosing to ignore rainbow. 
+const { hello, cat } = dictionary;
+console.log(hello); // Prints "a casual greeting"
+console.log(cat);   // Prints "the superior pet"
+```
+
+This is the exact same syntax used when importing a "named import".
+
+```js
+// importing the entire object
+const dictionary = require('./0-basics_index');
+
+// destructuring the imported object
+const { hello, rainbow, cat } = require('./0-basics_index');
 ```
 
 When an object is passed to a function, we will often destructure the object directly in the parameter list, letting us choose only the properties of the object that are relevant to the function:
@@ -229,6 +273,7 @@ const userBen = {
   age: 28,
   isAdmin: false
 };
+
 const introduceSelf = ({ name, age }) => {
   console.log(`Hello! My name is ${name} and I am ${age} years old.`);
 };
