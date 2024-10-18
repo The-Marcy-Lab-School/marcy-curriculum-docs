@@ -10,7 +10,7 @@
 - [How to Work On Assignments](#how-to-work-on-assignments)
   - [Assignment Setup](#assignment-setup)
   - [Submitting the Assignment](#submitting-the-assignment)
-  - [How to Undo a Merge (or really any Commit)](#how-to-undo-a-merge-or-really-any-commit)
+  - [How to Undo a Commit to Main and Move Commits to Draft](#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
 
 
 ## What is a SWE Assignment?
@@ -224,17 +224,30 @@ To submit an assignment, do the following:
 5. Tag your instructor as a **Reviewer**.
 6. Your instructor will provide feedback on GitHub and will either approve your branch to be merged or will request that you resubmit.
 
-### How to Undo a Merge (or really any Commit)
+### How to Undo a Commit to Main and Move Commits to Draft
 
-If you've accidentally merged your `draft` branch into your `main` branch, not to worry. You can undo this by reverting your `main` branch to the previous commit.
+If you've accidentally added code to your `main` branch and want to move it into a `draft` branch, no need to worry. You can undo this by moving your code into a `draft` branch and reverting your `main` branch to the previous commit.
 
-Do the following:
+First, do the following to create / update your `draft` branch with the latest changes in `main`:
 
 1. On your own computer, `cd` into the repo and `git checkout main` and `git pull` to make sure your local main branch is in sync with the remote repository.
-2. Then `git checkout draft` and double check that the files in that branch contain your most up-to-date work. If it doesn't, follow the steps above to create a new branch from your `main` branch.
-3. Next, `git checkout main` and `git log` to see the full commit history. Find the commit you want to undo and then look at the commit that came before it that you want to return to. Copy the commit SHA code (a 40-digit code identifying the commit).
-4. Run the command `git reset --hard <commit_sha>` replacing `<commit_sha>` with the copied SHA from the last step. This will return your `main` branch back to that commit.
-5. `git checkout draft` to double-check that the `draft` branch still contains your work. 
-6. Finally, `git checkout main` and `git push -f` to make the remote `main` branch return to the previous commit as well. **DANGER: Running these next commands will permantly delete the most recent commit from your `main` branch's commit history.**
+2. Then `git checkout draft` (`git checkout -b draft` if you don't have a `draft` branch). 
+3. Run `git merge main` to make sure that the `draft` branch is up to date with the `main` branch.
+4. `git push` to push your `draft` branch to GitHub. You may need to run `git push --set-upstream origin draft` if this is your first time pushing your `draft` branch.
+5. Go to GitHub and double check that your `draft` branch has been pushed and that it contains your work.
+
+Then, do the following to revert your `main` branch back to the initial commit:
+1. `git checkout main` and `git log` to see the full commit history. 
+2. Find the commit you want to return to. Copy the commit SHA code (a 40-digit code identifying the commit).
+
+    ![A git log showing the commit SHA codes](img/git-log-commit-sha.png)
+
+3. Run the command `git reset --hard <commit_sha>` replacing `<commit_sha>` with the copied SHA from the last step. This will return your `main` branch back to that commit.
+
+{% hint style="danger" %}
+**DANGER: Running this next command will permanently delete the most recent commit from your `main` branch's commit history. Make sure that your `draft` branch on GitHub contains all of your work before proceeding.**
+{% endhint %}
+
+4. Finally, in your `main` branch `git push -f` to force the remote `main` branch return to the previous commit as well.
 
 Once you've done this, return to GitHub and confirm that the `main` branch has returned to the previous commit and that your `draft` branch still contains your work. Then follow the steps above to create a Pull Request.
