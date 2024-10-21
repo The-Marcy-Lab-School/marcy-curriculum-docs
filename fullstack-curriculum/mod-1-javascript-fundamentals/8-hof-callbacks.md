@@ -5,7 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 # Higher-Order Functions and Callbacks
 
 **Table of Contents:**
-- [First, Something Kinda Neat!](#first-something-kinda-neat)
+- [First, Animation!](#first-animation)
 - [What is a Higher-Order Function?](#what-is-a-higher-order-function)
 - [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
   - [Examples using `setTimeout` and `setInterval`](#examples-using-settimeout-and-setinterval)
@@ -15,7 +15,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [filter](#filter)
   - [map](#map)
 
-## First, Something Kinda Neat!
+## First, Animation!
+
+Check out this script below which continuously prints out a character 👾 moving back and forth across the terminal. How can something "animated" like this be created?
+
+![A script where an alien emoji is moving back and forth across the terminal](img/8-alien-bouncing.gif)
+
+An animation is nothing more than a series of changing images shown in rapid succession. To simulate that experience, we can write a program that executes an `animateAlien` function every 0.05 seconds which changes the position of the 👾 character on each execution.
+
+The only way this is possible is with **higher-order functions** and **callbacks**.
 
 ## What is a Higher-Order Function?
 
@@ -27,7 +35,7 @@ Now, imagine that you have a personal chef. They can cook anything you want, all
 
 Another example of "higher-order" function is a 3D printer. When operating a 3D printer, you provide instructions to print your designed object (the callback function) and the 3D printer executes those instructions for you.
 
-![A gif of a 3d printer making a pumpkin](img/3d-printer.webp) 
+![A gif of a 3d printer making a pumpkin](img/8-3d-printer.webp) 
 
 ## A Basic higher-order Function and Callback Example
 
