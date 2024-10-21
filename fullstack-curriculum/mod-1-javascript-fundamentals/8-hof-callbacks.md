@@ -5,7 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 # Higher-Order Functions and Callbacks
 
 **Table of Contents:**
-- [Slides](#slides)
+- [First, Something Kinda Neat!](#first-something-kinda-neat)
 - [What is a Higher-Order Function?](#what-is-a-higher-order-function)
 - [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
   - [Examples using `setTimeout` and `setInterval`](#examples-using-settimeout-and-setinterval)
@@ -15,9 +15,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [filter](#filter)
   - [map](#map)
 
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1ZoC1XUm9GJns3XqAYZGOIXt_LpUn9-VbQmdEZt_pf7M/embed?start=false&loop=false&delayms=3000" %}
+## First, Something Kinda Neat!
 
 ## What is a Higher-Order Function?
 
