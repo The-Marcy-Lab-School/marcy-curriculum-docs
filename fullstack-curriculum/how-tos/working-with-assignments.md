@@ -281,7 +281,11 @@ To submit an assignment, do the following:
     ![Change the compare branch to be your draft branch](./img/assignment-select-draft-branch.png)
 
 5. Tag your instructor as a **Reviewer**.
-6. Your instructor will provide feedback on GitHub and will either approve your branch to be merged or will request that you resubmit.
+
+    ![alt text](img/assignment-tag-reviewer.png)
+
+6. Submit the URL of the pull request on canvas. The URL should start with `https://github.com` and end with `/pull/NUMBER`, like this: https://github.com/benspector-mls/hello-world/pull/3
+7. Your instructor will provide feedback on GitHub and will either approve your branch to be merged or will request that you resubmit.
 
 ### How to Undo a Commit to Main and Move Commits to Draft
 
