@@ -63,6 +63,8 @@ Let's take a look at each of them. We can see how they are used and how we can c
 
 `arr.forEach(callback)` iterates over the source array and invokes the given `callback` with each `value`, that value's `index`, and the source array `arr` as inputs.
 
+Use `forEach` to execute callbacks that produce side-effects (like printing to the console or mutating values).
+
 **Examples:**
 
 In this example, we want to print a message about each value and its location in the `fruits` array:
@@ -136,6 +138,8 @@ const forEach = (array, callback) => {
 ### filter
 
 `arr.filter(callback)` iterates over the source array, invoking the given `callback` with each `value`, `index`, and the source array `arr` as inputs. If the `callback` returns `true`, the `value` is added to an array which is returned.
+
+Use `filter` when you want a copy of the source array with unwanted values removed.
 
 **Examples:**
 
@@ -224,6 +228,8 @@ const filter = (array, test) => {
 ### map
 
 `arr.map(callback)` iterates over the source array, invoking the given `callback` with each `value`, `index`, and the source array `arr` as inputs. The value returned by the `callback` is added to an array which is returned.
+
+Use `map` when you want a copy of the source array with each value converted to a new value.
 
 **Examples:**
 
