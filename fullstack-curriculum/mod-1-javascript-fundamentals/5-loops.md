@@ -1,8 +1,18 @@
-# Loops - Key Terms
+# Loops
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-1-0-loops)!
 {% endhint %}
+
+**Table of Contents**:
+- [Slides](#slides)
+- [Intro to Iteration](#intro-to-iteration)
+- [The `for` loop](#the-for-loop)
+  - [For Loop Challenge:](#for-loop-challenge)
+- [While Loops and Infinite Loops](#while-loops-and-infinite-loops)
+  - [While Loop Challenge](#while-loop-challenge)
+- [Nested Loops](#nested-loops)
+
 
 ## Slides
 

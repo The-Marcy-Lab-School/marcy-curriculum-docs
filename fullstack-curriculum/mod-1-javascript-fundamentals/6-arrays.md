@@ -4,6 +4,22 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-1-1-arrays)!
 {% endhint %}
 
+**Table of Contents**
+- [Slides](#slides)
+- [Array Basics](#array-basics)
+  - [Arrays Are Mutable](#arrays-are-mutable)
+  - [Array Methods for Adding and/or Removing Values](#array-methods-for-adding-andor-removing-values)
+- [Reference vs. Primitive Values](#reference-vs-primitive-values)
+  - [How Reference Types (Arrays and Objects) are Stored in Memory](#how-reference-types-arrays-and-objects-are-stored-in-memory)
+  - [Pass by Reference](#pass-by-reference)
+  - [Impure and Pure Functions](#impure-and-pure-functions)
+  - [Making Copies of Arrays to Make Pure Functions with the Spread Syntax](#making-copies-of-arrays-to-make-pure-functions-with-the-spread-syntax)
+  - [Copying Array Challenge](#copying-array-challenge)
+- [Advanced Array Syntax](#advanced-array-syntax)
+  - [2D Arrays](#2d-arrays)
+  - [Destructuring Assignment \& Rest Operator](#destructuring-assignment--rest-operator)
+
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1jbe807oy9VTKov1ADxN1NteO7lxq1nscqkWApNSdkkc/embed?start=false&loop=false&delayms=3000" %}

@@ -2,6 +2,14 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-2-0-hof-callbacks)!
 {% endhint %}
 
+**Table of Contents**:
+
+- [First, Animation!](#first-animation)
+- [What is a Higher-Order Function?](#what-is-a-higher-order-function)
+- [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
+  - [Examples using `setTimeout` and `setInterval`](#examples-using-settimeout-and-setinterval)
+- [Sorting](#sorting)
+
 # Higher-Order Functions and Callbacks
 
 **Table of Contents:**

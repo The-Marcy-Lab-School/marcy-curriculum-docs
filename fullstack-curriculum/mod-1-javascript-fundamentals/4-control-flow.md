@@ -4,13 +4,28 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-2-control-flow)!
 {% endhint %}
 
+**Table of Contents**
+- [Slides](#slides)
+- [Overview](#overview)
+- [Control Flow Review](#control-flow-review)
+  - [`if/else` statements](#ifelse-statements)
+  - [Comparison Operators:](#comparison-operators)
+  - [Logical Operators:](#logical-operators)
+  - [Coercions and Truthiness](#coercions-and-truthiness)
+- [Simplify Your Logic](#simplify-your-logic)
+  - [Guard Clauses \& Ternary Operators](#guard-clauses--ternary-operators)
+  - [Scope and Variables](#scope-and-variables)
+- [typeof Operator](#typeof-operator)
+  - [Identifying `null`, Arrays, and `NaN`](#identifying-null-arrays-and-nan)
+- [Math Operations](#math-operations)
+  - [The `Math` Object](#the-math-object)
+
+
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/102SIHvxRHHJ-_979yJdyq-3dI5NEVSME0uyBrSmgvrk/embed?start=false&loop=false&delayms=3000" %}
 
 ## Overview
-
-**Objectives**
 
 **Key Terms**
 * **Comparison Operators** -  Operators that compare two values and return a boolean

@@ -1,8 +1,18 @@
-# Objects - Key Terms
+# Objects
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-1-2-objects)!
 {% endhint %}
+
+**Table of Contents**:
+- [Slides](#slides)
+- [The basics](#the-basics)
+  - [Accessing Objects with Dot Notation and Bracket Notation](#accessing-objects-with-dot-notation-and-bracket-notation)
+  - [Dynamic Properties Challenge](#dynamic-properties-challenge)
+- [Iterating Over Objects](#iterating-over-objects)
+- [Advanced Object Syntax](#advanced-object-syntax)
+  - [Object Shorthand Using Variables](#object-shorthand-using-variables)
+  - [Destructuring](#destructuring)
 
 ## Slides
 
