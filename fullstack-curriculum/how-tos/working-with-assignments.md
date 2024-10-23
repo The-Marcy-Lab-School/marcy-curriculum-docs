@@ -135,6 +135,7 @@ This response answers the first part of the question but does so with almost no 
 
 As a reader, I would have little to no understanding of how modules improve our projects.
 
+{% overflow="wrap" %}
 ```markdown
 ## Question
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
@@ -142,6 +143,7 @@ Modules let us split up our code into separate files. What are benefits of doing
 ### Response
 they makes it easier to orgnize code im not sure about downsides
 ```
+{% endcode %}
 </details>
 
 
@@ -153,6 +155,7 @@ All parts of the question are answered but the last sentence is lacking depth. O
 
 As a reader, I can come away from this response having some understanding of modules but I may need more examples or an analogy to really understand.
 
+{% overflow="wrap" %}
 ```markdown
 ## Question
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
@@ -160,6 +163,7 @@ Modules let us split up our code into separate files. What are benefits of doing
 ### Response
 Modules allow you to have code filtered more efficiency. You can look at certain features and edit them without editing and testing the whole project. The downside is more files to look through.
 ```
+{% endcode %}
 
 </details>
 
@@ -171,6 +175,7 @@ In addition, the personality of the writer is coming through. It doesn't sound l
 
 As a reader, I can come away from this response having a better understanding of modules with some analogies that support my understanding.
 
+{% overflow="wrap" %}
 ```markdown
 ## Question
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
@@ -180,6 +185,7 @@ Modules let us split up our code into separate files. What are benefits of doing
 
 A downside of modules could be having too many modules, which in my opinion, can be overwhelming. If you're not organized, you might forget where something is!
 ```
+{% endcode %}
 
 </details>
 
