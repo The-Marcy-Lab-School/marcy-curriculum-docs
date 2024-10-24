@@ -52,6 +52,12 @@ console.log(isOnlyAlphaNumeric('Hello_world'));   // true
 
 Now, consider the function with regular expressions.
 
+{% code title="0-intro.js" %}
+```js
+const isOnlyAlphaNumericRegex = (str) => /^\w+$/.test(str);
+```
+{% endcode %}
+
 ### What is a Regular Expression
 
 > A **regular expression** (or "Reg Ex") is a sequence of characters that specifies a "match pattern" to search for strings in text, extract information, or validate input.
@@ -77,17 +83,25 @@ Like the `isOnlyAlphaNumeric` function, regular expressions are often used to va
 
 One of the most common challenges in applications is validating proper date formats. This function uses a regular expression to ensure that a given string is in the "MM-DD-YYYY" format:
 
+{% code title="1-isValidDate.js" %}
 ```js
 const isValidDateStr = (dateStr) => {
-  const dateRegExp = /^([01]{2}|12)-([0-2][0-9]|30|31)-[0-9]{4}$/;
+  // requires 'MM-DD-YYYY' formatted date strings
+  const dateRegExp = /^(0[1-9]|1[0-2])-([0-2][0-9]|3[01])-[0-9]{4}$/;
   return dateRegExp.test(dateStr);
 }
+
+console.log(isValidDateStr('10-12-1995'));    // true
+console.log(isValidDateStr('a 10-12-1995'));  // false
+console.log(isValidDateStr('12-32-2024'));    // false
 ```
+{% endcode %}
 
 #### Extract Strings From Text
 
 One cool usage of regular expressions is to "find all instances of X in a string". For example, in a big block of text, grab all of the emails:
 
+{% code title="0-intro.js" %}
 ```js
 const extractEmails = (text) => {
   const emailRegExp = /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/g;
@@ -121,6 +135,7 @@ console.log(emails);
 ]
 */
 ```
+{% endcode %}
 
 ## Regular Expression Syntax
 
@@ -257,7 +272,7 @@ const phrase = "my cat is named Catherine";
 // Replace only the first "cat", regardless of case
 const newPhrase = phrase.replace(/cat/i, 'dog');
 
-console.log(newPhrase); // Prints 'my dog is named dogherine'
+console.log(newPhrase); // Prints 'my dog is named Catherine'
 ```
 
 By default, `replace` will only replace the first match. You can use the `g` flag to replace ALL matches.
