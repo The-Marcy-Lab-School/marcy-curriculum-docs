@@ -3,6 +3,13 @@
 **Table of Contents:**
 - [Debugging \& Rubber Ducking](#debugging--rubber-ducking)
   - [How to Rubber Duck](#how-to-rubber-duck)
+- [PEDAC Problem Solving](#pedac-problem-solving)
+  - [P — State the Problem](#p--state-the-problem)
+  - [E — Examples / Test Cases](#e--examples--test-cases)
+  - [D — Data Structures](#d--data-structures)
+  - [A — Algorithm](#a--algorithm)
+  - [C — Code!](#c--code)
+  - [Example](#example)
 
 
 ## Debugging & Rubber Ducking
@@ -38,3 +45,69 @@ Then, have the following conversation with your duck:
 * What other ideas do you have? 
   * Get creative, and test out other possible solutions, starting with the simplest and easiest approach.
 
+## PEDAC Problem Solving
+
+Imagine that you had the following problem to solve:
+
+> Consider this array.
+> ```js
+> const users = [
+>   { id: 1, name: 'ben', isAdmin: false},
+>   { id: 2, name: 'maya', isAdmin: true},
+>   { id: 3, name: 'reuben', isAdmin: true},
+>   { id: 4, name: 'gonzalo', isAdmin: false},
+>   { id: 5, name: 'ana', isAdmin: true},
+> ]
+> ```
+> Write a function `getAdmins` that has one parameter, an array of `users`. The function should return the an array of user objects within `users` where the `isAdmin` property is `true`. If none are found, return an empty array. Do not modify the original array.
+
+You might have an idea of how to solve the problem, but before you do, try planning out your approach first! Doing so has a number of benefits:
+* You will have a roadmap for writing a solution that you can return to if you get lost while coding.
+* If you don't finish solving the problem, you can leave and come back with most of the planning already done.
+* You can improve the skill of problem solving separate from the skill of coding.
+
+At Marcy, we use **PEDAC** which is an acronym that stands for the following problem solving strategy:
+
+### P — State the Problem
+
+Before you can solve a problem, you must fully understand the problem. When you have a problem in front of you, start by listing **inputs** and **outputs**
+
+{% hint style="info" %}
+Tip: Write this planning in a comment directly in your code!
+{% endhint %}
+
+Example: 
+
+### E — Examples / Test Cases
+### D — Data Structures
+### A — Algorithm
+### C — Code!
+
+### Example
+```js
+/* 
+PEDAC
+
+State the Problem
+- inputs: 
+  - an array of user objects that have properties id, name, and isAdmin
+- output:
+  - an array of user objects that are admins
+
+Examples / Test Cases:
+
+getUserById(users, 4) => { id: 4, name: 'ana'}
+getUserById(users, 2) => { id: 2, name: 'maya'}
+getUserById(users) => undefined
+getUserById(users, 100) => undefined
+
+Data Structures & Tools
+- we can loop through the array
+- we can use if statements to check each value's id
+
+Algorithm
+- use users.find() to find the user that matches the given id
+Code
+
+*/
+```
