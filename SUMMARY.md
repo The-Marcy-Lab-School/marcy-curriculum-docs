@@ -16,7 +16,7 @@
     * [How To Code at Marcy: Code Style Guide](fullstack-curriculum/cheatsheets/style-guide.md)
     * [How to Do Short Response and Coding Assignments](fullstack-curriculum/how-tos/working-with-assignments.md)
     * [How to Debug](fullstack-curriculum/how-tos/how-to-debug.md)
-    * [How to PEDAC](fullstack-curriculum/how-tos/how-to-pedac.md.md)
+    * [How to PEDAC](fullstack-curriculum/how-tos/how-to-pedac.md)
     * [How to Create Projects with Vite](fullstack-curriculum/how-tos/getting-started-with-vite.md)
     * [How to Deploy on GitHub Pages](fullstack-curriculum/how-tos/deploying-vite-with-github-pages.md)
     * [How to Deploy on Render](fullstack-curriculum/how-tos/deploying-using-render.md)
