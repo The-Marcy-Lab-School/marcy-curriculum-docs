@@ -96,12 +96,22 @@ const getAdminIds = (users) => {
   return ids;
 }
 
-console.log(getAdminIds(users)); // -> [2, 3, 5]
-console.log(getAdminIds([{ id: 1, name: 'ben', isAdmin: false}])); // -> []
-console.log(getAdminIds([{ id: 1, name: 'ben', isAdmin: true}])); // -> [1]
-console.log(getAdminIds([])); // -> []
-console.log(getUserById()); // -> null
-console.log(getUserById(5)); // -> null
+// Test Code
+
+const users = [
+  { id: 1, name: 'ben', isAdmin: false},
+  { id: 2, name: 'maya', isAdmin: true},
+  { id: 3, name: 'reuben', isAdmin: true},
+  { id: 4, name: 'gonzalo', isAdmin: false},
+  { id: 5, name: 'ana', isAdmin: true},
+]
+
+console.log(getAdminIds(users)); // -> [2, 3, 5] because three admins with these ids were found
+console.log(getAdminIds([{ id: 1, name: 'ben', isAdmin: false}])); // -> [] because no admins were found
+console.log(getAdminIds([{ id: 1, name: 'ben', isAdmin: true}])); // -> [1] because only 1 admin was found
+console.log(getAdminIds([])); // -> [] because no admins were found
+console.log(getUserById()); // -> null because the input was undefined
+console.log(getUserById(5)); // -> null because an array was not provided
 ```
 
 ## Tips for Making Your Own PEDAC
