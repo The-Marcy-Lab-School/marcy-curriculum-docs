@@ -1,4 +1,4 @@
-# How to Set Up Assignments
+# How to Do Short Response and Coding Assignments
 
 **Table of Contents:**
 - [What is a SWE Assignment?](#what-is-a-swe-assignment)

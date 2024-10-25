@@ -27,17 +27,17 @@ First, grab a rubber duck (or some other inanimate object that you feel comforta
 
 Then, have a conversation with your duck where your duck asks you the following questions (and you reply!):
 
-> **What is your code supposed to do? What should the output be?**
-* Start by telling your duck about the goal or purpose of your program.
+> **🦆 What is your code supposed to do? What should the output be?**
+* 💬 Start by telling your duck about the goal or purpose of your program.
 
-> **What is your code actually doing, and how is it different from what you want it to be doing?**
-* Describe the error or incorrect output you are encountering. If you have multiple problems, pick one and come back to the others later.
+> **🦆 What is your code actually doing, and how is it different from what you want it to be doing?**
+* 💬 Describe the error or incorrect output you are encountering. If you have multiple problems, pick one and come back to the others later.
 
-> **Where does the code first go wrong?**
-* Describe out loud to your rubber duck what each line of your code is doing, and try to trace the problem back to its source. You may find that a simple typo is causing all of your problems!
+> **🦆 Where does the code first go wrong?**
+* 💬 Describe out loud to your rubber duck what each line of your code is doing, and try to trace the problem back to its source. You may find that a simple typo is causing all of your problems!
   
-> **What have you done so far to try to fix your program?**
-* Describe any approaches you have tried and how they worked or did not work.
+> **🦆 What have you done so far to try to fix your program?**
+* 💬 Describe any approaches you have tried and how they worked or did not work.
 
-> **What other ideas do you have?**
-* Get creative, and test out other possible solutions, starting with the simplest and easiest approach.
+> **🦆 What other ideas do you have?**
+* 💬 Get creative, and test out other possible solutions, starting with the simplest and easiest approach.
