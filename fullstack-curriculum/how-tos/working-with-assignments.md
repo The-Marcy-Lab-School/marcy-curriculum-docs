@@ -77,42 +77,33 @@ To support you in your growth as a software engineer, your instructor may provid
 
 ## What is a SWE-SR Assignment?
 
-Software Engineering (SWE) Short Response (SR) assignments are opportunities to develop your technical communication skills. In these assignments, you may encounter the following types of questions:
+Software Engineering (SWE) Short Response (SR) assignments are opportunities to develop your technical communication skills. 
+
+In these assignments, you may encounter the following types of prompts:
 * Research a new topic and share your findings.
 * Explain a piece of syntax with examples and analogies.
 * Analyze a programming best practice and list its advantages and disadvantages.
 
-Short Response questions will always be found in the `README.md` file of your assignment. Each question will be listed under a `## Question X` heading and you should add your responses under the `### Response X` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
+Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help! 
 
-For example
-```markdown
-## Question 2
-
-Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
-
-### Response 2
-
-Response here...
-```
-
-For these assignments, your intended audience should be someone with some experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough. Examples and analogies can often help!
+Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
 
 ### Feedback on Short Response Assignments
 
-Every short response question will be given a score from 0-3 using the following scoring system:
+Every response will be given a score from 0-3 using the following scoring system:
 
-* 0 — Did not attempt the question 
-* 1 — Attempted the question and the response is more wrong than right, or parts of the question are not fully answered, or the answer is lacking in clarity. Examples and/or diagrams are missing (when required).
-* 2 — Attempted the question and all parts of the question are answered, but there are some mistakes and/or the clarity could be improved. Examples and/or diagrams may be missing or could be improved.
-* 3 — Answered the question correctly and completely. The response is clear and concise. Examples and/or diagrams are well-chosen and enhance the response.
+* 0 — Did not attempt to answer the prompt 
+* 1 — Attempted the prompt and the response is more wrong than right, or parts of the prompt are not fully answered, or the answer is lacking in clarity. Examples and/or diagrams are missing (when required).
+* 2 — Attempted the prompt and all parts of the prompt are answered, but there are some mistakes and/or the clarity could be improved. Examples and/or diagrams may be missing or could be improved.
+* 3 — Answered the prompt correctly and completely. The response is clear and concise. Examples and/or diagrams are well-chosen and enhance the response.
 
-We understand that typos and grammar mistakes can happen, however, you will also lose .5 points on any the question where typos or grammar errors are "distracting". Distracting meaning that if you saw this on the job, it would have to be retyped for clarification or for the sake of presentation.
+We understand that typos and grammar mistakes can happen, however, you will also lose .5 points on any the prompt where typos or grammar errors are "distracting". Distracting meaning that if you saw this on the job, it would have to be retyped for clarification or for the sake of presentation.
 
 {% hint style="info" %}
 
 In order for a short response assignment to be marked as "Complete", you must score at least a 75% on the assignment. 
 
-For example, an assignment with 5 short response questions has a total possible score of 15. You must score at least a 12 on that assignment.
+For example, an assignment with 5 short response prompts has a total possible score of 15. You must score at least a 12 on that assignment.
 
 {% endhint %}
 
@@ -127,17 +118,30 @@ To support you in your growth as a technical communicator, your instructor may a
 
 ### Examples of Short Responses
 
-We won't provide an example of a `0` since that is only earned if you completely skip a question. Below you will find examples of responses that earn a score of `1`, `2`, and `3`:
+Short Response prompts will always be found in the `README.md` file of your assignment. Each prompt will be listed under a `## Prompt X` heading and you should add your responses under the `### Response X` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
+
+For example
+```markdown
+## Prompt 2
+
+Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
+
+### Response 2
+
+Response here...
+```
+
+Below are some examples of responses that would score a 1, 2 or 3.
 
 **<details><summary>1 — a weak response that needs a lot of improvement</summary>**
 
-This response answers the first part of the question but does so with almost no details. It addresses _what_ the benefits of modules are, but doesn't add any details that explain _how_ modules provide those benefits. The second part of the question asking for downsides is acknowledged but the author doesn't attempt to answer this question. In addition, there are typos, grammar mistakes, and missing punctuation.
+This response answers the first part of the prompt but does so with almost no details. It addresses _what_ the benefits of modules are, but doesn't add any details that explain _how_ modules provide those benefits. The second part of the prompt asking for downsides is acknowledged but the author doesn't attempt to answer this prompt. In addition, there are typos, grammar mistakes, and missing punctuation.
 
 As a reader, I would have little to no understanding of how modules improve our projects.
 
 {% overflow="wrap" %}
 ```markdown
-## Question
+## Prompt
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
 
 ### Response
@@ -149,15 +153,15 @@ they makes it easier to orgnize code im not sure about downsides
 
 **<details><summary>2 - a solid response that could be improved</summary>**
 
-This response below is okay but could definitely be improved. It answers all parts of the question and is free of typos and grammar mistakes but it isn't written in a way that a beginner would be able to understand. The use of the word "filtered" is abstract and could be replaced with a more widely-accessible word like "organized". The example in the second sentence does bolster the first sentence, but it is still lacking in clarity and details that are relatable. Perhaps an analogy could be added to make it easier to understand.
+This response below is okay but could definitely be improved. It answers all parts of the prompt and is free of typos and grammar mistakes but it isn't written in a way that a beginner would be able to understand. The use of the word "filtered" is abstract and could be replaced with a more widely-accessible word like "organized". The example in the second sentence does bolster the first sentence, but it is still lacking in clarity and details that are relatable. Perhaps an analogy could be added to make it easier to understand.
 
-All parts of the question are answered but the last sentence is lacking depth. Overall, this response feels like it is just answering the question rather than explaining the concept of modules.
+All parts of the prompt are answered but the last sentence is lacking depth. Overall, this response feels like it is just answering the prompt rather than explaining the concept of modules.
 
 As a reader, I can come away from this response having some understanding of modules but I may need more examples or an analogy to really understand.
 
 {% overflow="wrap" %}
 ```markdown
-## Question
+## Prompt
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
 
 ### Response
@@ -169,7 +173,7 @@ Modules allow you to have code filtered more efficiency. You can look at certain
 
 **<details><summary>3 - an excellent response that is ready to be presented</summary>**
 
-This response below is a great example of a short response answer. It answers all parts of the question, provides a great analogy that adds to the depth of the response, and is free of typos and grammar mistakes. In a few cases, Markdown is used effectively to bold key terms.
+This response below is a great example of a short response answer. It answers all parts of the prompt, provides a great analogy that adds to the depth of the response, and is free of typos and grammar mistakes. In a few cases, Markdown is used effectively to bold key terms.
 
 In addition, the personality of the writer is coming through. It doesn't sound like an AI wrote this.
 
@@ -177,7 +181,7 @@ As a reader, I can come away from this response having a better understanding of
 
 {% overflow="wrap" %}
 ```markdown
-## Question
+## Prompt
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
 
 ### Response
