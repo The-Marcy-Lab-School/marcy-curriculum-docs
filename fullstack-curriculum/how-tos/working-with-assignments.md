@@ -95,14 +95,6 @@ The test output provides some really useful information.
 
 Armed with this information, we can more confidently build our functions knowing that we have a specific set of targets to aim for. Automated tests allow us to repeatedly run our code against the same set of tests until all expectations are met.
 
-{% hint style="info" %}
-
-In order for a coding assignment to be marked as "Complete", it must pass at least 75% of the automated tests (though you should always strive to pass 100% of the tests!)
-
-For example, an assignment with 10 automated tests requires 8 passing tests to be marked "Complete".
-
-{% endhint %}
-
 All assignments will also come with a `src/playground.js` file that you can use to manually test your code as you develop. We recommend the following workflow:
 1. Run the automated tests to see what you are aiming for.
 2. Copy the function you are currently working on into the `playground.js` file and use the test cases to manually test your code
@@ -111,6 +103,12 @@ All assignments will also come with a `src/playground.js` file that you can use 
 5. Repeat.
 
 ### Feedback on Coding Assignments
+
+In order for a coding assignment to be marked as "Complete", it must pass at least 75% of the automated tests (though you should always strive to pass 100% of the tests!).
+
+For example, an assignment with 10 automated tests requires 8 passing tests to be marked "Complete".
+
+**There is no limit to the number of times you can submit an assignment.** As such, you are encouraged to **always submit your assignments on time to ensure that your instructor can provide you feedback and support** to complete your assignments.
 
 To support you in your growth as a software engineer, your instructor may provide feedback on any of the following areas (roughly in order of importance):
 
