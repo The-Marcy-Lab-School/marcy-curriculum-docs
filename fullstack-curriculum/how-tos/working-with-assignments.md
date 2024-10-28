@@ -2,6 +2,8 @@
 
 **Table of Contents:**
 - [What is a SWE Assignment?](#what-is-a-swe-assignment)
+  - [Tips for Working on SWE Coding Assignments](#tips-for-working-on-swe-coding-assignments)
+  - [Jest \& Testing](#jest--testing)
   - [Feedback on Coding Assignments](#feedback-on-coding-assignments)
 - [What is a SWE-SR Assignment?](#what-is-a-swe-sr-assignment)
   - [Feedback on Short Response Assignments](#feedback-on-short-response-assignments)
@@ -23,11 +25,58 @@ Software Engineering (SWE) code assignments are opportunities for you to practic
 
 Code assignments will typically have an `src` directory where you will be writing your code. They will also have a `tests` directory with `.spec.js` test files that will automatically test your code each time you push to your repository.
 
-### Feedback on Coding Assignments
+### Tips for Working on SWE Coding Assignments
 
-You are encouraged to look at the `.spec.js` test files in the `tests` directory as they will show you exactly how we expect to be able to use your functions. **DO NOT MODIFY THE TESTS**.
+As you work on your coding assignment, you may be tempted to jump right in and start coding. However, it is often best to slow down and plan out your approach first. Look at the problem and make sure you understand fully what it is asking you to do. At Marcy, we recommend that you use the PEDAC approach ([read more about PEDAC here](./how-to-pedac.md)).
 
-To run tests manually, you can use the command:
+You may get stuck along the way, which can always be frustrating. Debugging is an essential skill but its hard to know where to start sometimes. That's why we love the "rubber duck" approach ([read more about debugging with the rubber duck approach here](./how-to-debug.md))
+
+### Jest & Testing
+
+Tests are an essential part of professional software development. Without testing our code, we run the risk of deploying code with unexpected bugs. With testing, we are forced to think critically about how we expect our program to behave and then write our code to satisfy those tests. This process of first writing tests and then writing code to satisfy those tests is called **Test-Driven Development (TDD)**.
+
+At Marcy, we use [Jest](https://jestjs.io/) to write automated tests for coding assignments. Automated tests are JavaScript files that:
+1. Import functions from source code
+2. Run those functions with various inputs
+3. Compare the returned values against the expected values. 
+
+A Jest test is written in a file ending in `.spec.js` or `.test.js` and looks like this:
+
+{% code title="circle-helpers.spec.js" lineNumbers="true" %}
+```javascript
+// Import the functions to be tested
+const {
+  getArea,
+  getDiameter,
+  getCircumference
+} = require('./circle-helpers')
+
+// Create a "Test Suite" for these functions
+describe('Circle Helper Tests', () => {
+  // Test the getArea function with a series of expectations
+  test('getArea returns the Area of a circle', () => {
+    // Translation: We expect getArea(2) to return Math.PI * 2 * 2
+    expect(getArea(2)).toBe(Math.PI * 2 * 2);
+    expect(getArea(3)).toBe(Math.PI * 3 * 3);
+
+    // It is useful to think about what should be returned for "bad" inputs. 
+    expect(getArea()).toBe(NaN);
+    expect(getArea('hello')).toBe(NaN);
+  });
+
+  // Test the getDiameter function with a series of expectations
+  test('getDiameter returns the Diameter of a circle', () => {
+    // ...tests for getDiameter
+  });
+
+  // ...more tests
+})
+```
+{% endcode %}
+
+Each assignment will have automated test files the `tests` directory. They will show you exactly how we expect your functions to behave. **DO NOT MODIFY THE TESTS**.
+
+To run these automated tests, use the command:
 
 ```sh
 npm test # run the tests once
@@ -35,13 +84,33 @@ npm test # run the tests once
 npm run test:w # run the tests each time the file changes ("watch mode")
 ```
 
+After running this command, you will see the following output. Initially, all tests will fail.
+
+![failing Jest tests](img/failing-tests.png)
+
+The test output provides some really useful information. 
+* We can see which tests failed
+* For each failing test, we can see which `expect()` statement failed
+* We can see what the expected value is (`12.566...`) and what our function actually returned (`undefined`).
+
+Armed with this information, we can more confidently build our functions knowing that we have a specific set of targets to aim for. Automated tests allow us to repeatedly run our code against the same set of tests until all expectations are met.
+
 {% hint style="info" %}
 
-In order for a coding assignment to be marked as "Complete", it must pass at least 75% of the automated tests.
+In order for a coding assignment to be marked as "Complete", it must pass at least 75% of the automated tests (though you should always strive to pass 100% of the tests!)
 
 For example, an assignment with 10 automated tests requires 8 passing tests to be marked "Complete".
 
 {% endhint %}
+
+All assignments will also come with a `src/playground.js` file that you can use to manually test your code as you develop. We recommend the following workflow:
+1. Run the automated tests to see what you are aiming for.
+2. Copy the function you are currently working on into the `playground.js` file and use the test cases to manually test your code
+3. Once you are satisfied, copy your function back into the original file and run the automated tests again. 
+4. If anything fails, return to the `playground.js` file to make adjustments.
+5. Repeat.
+
+### Feedback on Coding Assignments
 
 To support you in your growth as a software engineer, your instructor may provide feedback on any of the following areas (roughly in order of importance):
 
