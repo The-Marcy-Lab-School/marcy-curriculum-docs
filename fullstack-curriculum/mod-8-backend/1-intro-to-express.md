@@ -271,7 +271,7 @@ const serveData = (req, res, next) => {
 
 </details>
 
-### Listening: Host & Ports
+### Listening: Host and Ports
 
 The last lines of code "turn on" the server. That is, they make the server start listening for requests.
 

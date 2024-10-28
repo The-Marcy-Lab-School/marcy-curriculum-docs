@@ -998,7 +998,7 @@
 
 [**⬆ back to top**](style-guide.md#table-of-contents)
 
-## Classes & Constructors
+## Classes and Constructors
 
 *   [9.1](style-guide.md#constructors--use-class) Always use `class`. Avoid manipulating `prototype` directly.
 
@@ -1864,7 +1864,7 @@
 
 [**⬆ back to top**](style-guide.md#table-of-contents)
 
-## Comparison Operators & Equality
+## Comparison Operators and Equality
 
 * [15.1](style-guide.md#comparison--eqeqeq) Use `===` and `!==` over `==` and `!=`. eslint: [`eqeqeq`](https://eslint.org/docs/rules/eqeqeq)
 *   [15.2](style-guide.md#comparison--if) Conditional statements such as the `if` statement evaluate their expression using coercion with the `ToBoolean` abstract method and always follow these simple rules:
@@ -3005,7 +3005,7 @@
 
 [**⬆ back to top**](style-guide.md#table-of-contents)
 
-## Type Casting & Coercion
+## Type Casting and Coercion
 
 * [22.1](style-guide.md#coercion--explicit) Perform type coercion at the beginning of the statement.
 *   [22.2](style-guide.md#coercion--strings) Strings: eslint: [`no-new-wrappers`](https://eslint.org/docs/rules/no-new-wrappers)

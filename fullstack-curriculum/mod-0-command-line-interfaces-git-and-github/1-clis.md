@@ -12,7 +12,7 @@
   - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
   - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
   - [Unfinished Double Quotes and `echo`](#unfinished-double-quotes-and-echo)
-  - [Combining Commands with `&&` and the `cat` command](#combining-commands-with--and-the-cat-command)
+  - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
   - [Removing, Renaming, and Copying](#removing-renaming-and-copying)
 - [Challenges](#challenges)
 
@@ -240,7 +240,7 @@ For example, this command will take the text `"hello world"` and append it to th
 echo "hello world" >> output.txt
 ```
 
-### Combining Commands with `&&` and the `cat` command
+### The `cat` Command and Combining Commands with `&&`
 
 The `cat` command is used to read the contents of a given file.
 

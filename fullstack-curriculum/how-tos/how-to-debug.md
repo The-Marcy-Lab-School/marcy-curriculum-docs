@@ -1,11 +1,11 @@
 # Debugging & Problem Solving
 
 **Table of Contents:**
-- [Debugging \& Rubber Ducking](#debugging--rubber-ducking)
+- [Debugging and Rubber Ducking](#debugging-and-rubber-ducking)
   - [How to Rubber Duck](#how-to-rubber-duck)
 
 
-## Debugging & Rubber Ducking
+## Debugging and Rubber Ducking
 
 **Debugging** refers to the process of detecting, locating, and fixing problems, or “bugs,” in computer code. 
 

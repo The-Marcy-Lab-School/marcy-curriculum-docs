@@ -255,7 +255,7 @@ WHERE	people.name = 'Carmen Salas';
 </details>
 
 
-## Entity Relation Diagrams & Many To Many Relationships
+## Entity Relation Diagrams and Many To Many Relationships
 
 We can illustrate the relationships between tables with an **entity relation diagram (ERD)**:
 

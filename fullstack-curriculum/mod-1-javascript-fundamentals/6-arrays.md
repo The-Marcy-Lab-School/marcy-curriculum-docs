@@ -17,7 +17,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Copying Array Challenge](#copying-array-challenge)
 - [Advanced Array Syntax](#advanced-array-syntax)
   - [2D Arrays](#2d-arrays)
-  - [Destructuring Assignment \& Rest Operator](#destructuring-assignment--rest-operator)
+  - [Destructuring Assignment and Rest Operator](#destructuring-assignment-and-rest-operator)
 
 
 ## Slides
@@ -303,7 +303,7 @@ console.log(newOrleanLong);
 
 When accessing a 2D array, the first index references the "row" and the second index references the "column"
 
-### Destructuring Assignment & Rest Operator
+### Destructuring Assignment and Rest Operator
 
 The **destructuring assignment** syntax is a JavaScript expression that makes it possible to "unpack" values from arrays (or properties from objects) into distinct variables.
 

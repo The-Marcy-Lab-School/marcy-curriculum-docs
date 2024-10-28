@@ -34,7 +34,7 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
     - We learn by repeated exposure. What was once intimidating becomes familiar and approachable through repetition.
     - AI tools like ChatGPT are shortcuts for writing code, but they are not shortcuts for learning. Learn from your community (peers, Google, and StackOverflow, even)!
 
-## Tips & Tricks to Success at Marcy
+## Tips and Tricks to Success at Marcy
 
 - [Ben's Teacher User Manual](https://marcylabschool.notion.site/Ben-s-Teaching-User-Manual-afe86d2a9e314c6e91e8fa44ac3b2fa8)
 - [What is Computational Thinking?](https://youtu.be/qbnTZCj0ugI)

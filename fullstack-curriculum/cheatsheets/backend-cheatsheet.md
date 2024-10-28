@@ -20,8 +20,8 @@
   - [A Model Example Using Knex](#a-model-example-using-knex)
   - [Migrations](#migrations)
   - [Seeds](#seeds)
-- [Authentication \& Authorization](#authentication--authorization)
-  - [Authentication \& Authorization Basics](#authentication--authorization-basics)
+- [Authentication and Authorization](#authentication-and-authorization)
+  - [Authentication and Authorization Basics](#authentication-and-authorization-basics)
   - [Bcrypt](#bcrypt)
   - [Authorization with Cookies](#authorization-with-cookies)
 
@@ -510,9 +510,9 @@ exports.seed = async function (knex) {
 };
 ```
 
-## Authentication & Authorization
+## Authentication and Authorization
 
-### Authentication & Authorization Basics
+### Authentication and Authorization Basics
 
 * **Hashing** - a mathematical algorithm that transforms a string of characters into a fixed-length string of characters. 
 * **Password Salt** - A salt is a random string of data that is added to the input data before the hash function is applied. This changes the hash value that is produced, even for the same input data.

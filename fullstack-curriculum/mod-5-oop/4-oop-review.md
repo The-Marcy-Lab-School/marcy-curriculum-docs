@@ -46,7 +46,7 @@ friendsManager.friends.push(42); // oops!
 
 Encapsulation also values **information hiding**. In the example above, the `friends` property can be directly accessed in ways that we may not want.
 
-## Factory Functions & Closure
+## Factory Functions and Closure
 
 A simple way of implementing encapsulation and information hiding is through **factory functions** and **closure**.
 

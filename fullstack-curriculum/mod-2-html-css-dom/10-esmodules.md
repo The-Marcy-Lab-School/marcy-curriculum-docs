@@ -134,7 +134,7 @@ Suppose I wanted to load another JavaScript file. Okay, just add another `<scrip
 
 This works but it has some issues. Let's explore why.
 
-### Order Matters & Global Variables
+### Order Matters and Global Variables
 
 ```js
 /* other.js */

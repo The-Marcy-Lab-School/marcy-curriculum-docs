@@ -3,7 +3,7 @@
 **Table of Contents:**
 - [What is a SWE Assignment?](#what-is-a-swe-assignment)
   - [Tips for Working on SWE Coding Assignments](#tips-for-working-on-swe-coding-assignments)
-  - [Jest \& Testing](#jest--testing)
+  - [Jest and Testing](#jest-and-testing)
   - [Feedback on Coding Assignments](#feedback-on-coding-assignments)
 - [What is a SWE-SR Assignment?](#what-is-a-swe-sr-assignment)
   - [Feedback on Short Response Assignments](#feedback-on-short-response-assignments)
@@ -31,7 +31,7 @@ As you work on your coding assignment, you may be tempted to jump right in and s
 
 You may get stuck along the way, which can always be frustrating. Debugging is an essential skill but its hard to know where to start sometimes. That's why we love the "rubber duck" approach ([read more about debugging with the rubber duck approach here](./how-to-debug.md))
 
-### Jest & Testing
+### Jest and Testing
 
 Tests are an essential part of professional software development. Without testing our code, we run the risk of deploying code with unexpected bugs. With testing, we are forced to think critically about how we expect our program to behave and then write our code to satisfy those tests. This process of first writing tests and then writing code to satisfy those tests is called **Test-Driven Development (TDD)**.
 

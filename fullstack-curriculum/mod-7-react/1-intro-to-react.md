@@ -33,7 +33,7 @@ In this lesson, you will learn the basics of React.
 * **`react-dom/client`** — a React package that lets you render React components on the client (in the browser)
 * **Prop** — a piece of data passed from a parent component to a child component.
 
-## What is React & Why Use It?
+## What is React and Why Use It?
 
 **React** is a JavaScript library for building user-interfaces (UI).
 
@@ -178,7 +178,7 @@ A few notes:
 * We're using the `client` version of `ReactDOM` (there is also a `native` version for mobile).
 * `React.StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
 
-## Components & JSX
+## Components and JSX
 
 React components are functions that return a single JSX element.
 

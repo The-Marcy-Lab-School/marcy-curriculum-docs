@@ -16,7 +16,7 @@
   - [Day 5](#day-5)
 - [Technical Requirements Checklist](#technical-requirements-checklist)
   - [Fetching Requirements](#fetching-requirements)
-  - [User Interface: Structure \& Accessibility](#user-interface-structure--accessibility)
+  - [User Interface: Structure and Accessibility](#user-interface-structure-and-accessibility)
   - [Meta](#meta)
   - [Form Requirements](#form-requirements)
 - [Tips for Success](#tips-for-success)
@@ -158,7 +158,7 @@ In order to see how well you're doing with this project, here are all the things
 - [ ] `response.ok` is checked before parsing  
     - [ ] Throw a new error if the response is NOT ok
 
-### User Interface: Structure & Accessibility
+### User Interface: Structure and Accessibility
 
 - [ ] The `head` has a `title`  
 - [ ] There is a single `main` element on the page  

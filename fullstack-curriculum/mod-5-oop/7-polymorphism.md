@@ -5,20 +5,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 {% endhint %}
 
 **Table of Contents:**
-- [Inheritance \& "Is A" Relationships](#inheritance--is-a-relationships)
+- [Inheritance and "Is A" Relationships](#inheritance-and-is-a-relationships)
 - [Array is a Subclass of Object](#array-is-a-subclass-of-object)
 - [Establishing Inheritance Between Custom Classes](#establishing-inheritance-between-custom-classes)
 - [Extends and Super](#extends-and-super)
 - [Refactor Challenge](#refactor-challenge)
 - [Polymorphism](#polymorphism)
 - [Using Classes with Other Classes](#using-classes-with-other-classes)
-- [Challenge: User \& Admin](#challenge-user--admin)
+- [Challenge: User and Admin](#challenge-user-and-admin)
 - [Challenge](#challenge)
 - [Summary](#summary)
 
 
 
-## Inheritance & "Is A" Relationships
+## Inheritance and "Is A" Relationships
 
 **Inheritance** is a pillar of object-oriented programming. It describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. As a result, instances of the sub-class can use methods defined in a super-class. 
 
@@ -311,7 +311,7 @@ console.log(ben, reuben, carmen)
 
 </details>
 
-## Challenge: User & Admin
+## Challenge: User and Admin
 
 ## Challenge
 

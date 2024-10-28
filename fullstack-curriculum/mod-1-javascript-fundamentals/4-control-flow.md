@@ -13,7 +13,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Logical Operators:](#logical-operators)
   - [Coercions and Truthiness](#coercions-and-truthiness)
 - [Simplify Your Logic](#simplify-your-logic)
-  - [Guard Clauses \& Ternary Operators](#guard-clauses--ternary-operators)
+  - [Guard Clauses and Ternary Operators](#guard-clauses-and-ternary-operators)
   - [Scope and Variables](#scope-and-variables)
 - [typeof Operator](#typeof-operator)
   - [Identifying `null`, Arrays, and `NaN`](#identifying-null-arrays-and-nan)
@@ -143,7 +143,7 @@ console.log(isTruthy({})) // Prints true
 
 ## Simplify Your Logic
 
-### Guard Clauses & Ternary Operators
+### Guard Clauses and Ternary Operators
 
 - Code should be readable.
 - Avoid deeply nested `if/else` statements. Use guard clauses and ternary operators.

@@ -80,7 +80,7 @@ When `friendsManager.addFriend()` is invoked, the `addFriend` method uses `this`
 
 
 
-## Designing A Consistent & Predictable Interface — 5 minutes
+## Designing A Consistent and Predictable Interface — 5 minutes
 
 **Consistency** and **predictability** are major goals in software engineering. This is what motivates us to write pure functions in functional programming. It is just as important in OOP.
 
@@ -112,7 +112,7 @@ You can modify the `friendsManager.friends` array either through the `addFriend(
 
 
 
-## Factory Functions, Privacy, & Closures — 30 minutes
+## Factory Functions, Privacy, and Closures — 30 minutes
 
 A core tenet of **encapsulation** in OOP is to hide values like `friends` from being directly accessed.
 

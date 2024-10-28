@@ -6,7 +6,7 @@
 - [Tips for Making Your Own PEDAC](#tips-for-making-your-own-pedac)
   - [P — State the Problem](#p--state-the-problem)
   - [E — Examples / Test Cases](#e--examples--test-cases)
-  - [D — Data Structures \& Tools](#d--data-structures--tools)
+  - [D — Data Structures and Tools](#d--data-structures-and-tools)
   - [A — Algorithm](#a--algorithm)
   - [C — Code!](#c--code)
 
@@ -159,7 +159,7 @@ getUserById() -> null
 getUserById(5) -> null
 ```
 
-### D — Data Structures & Tools
+### D — Data Structures and Tools
 
 List all of the relevant tools that you might use to solve the problem, including:
 * Data you need to store in variables

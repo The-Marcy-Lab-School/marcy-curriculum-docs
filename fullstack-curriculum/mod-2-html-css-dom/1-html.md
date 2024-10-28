@@ -149,7 +149,7 @@ Hello World
 * In reality breaks on the page should be controlled by css.
 * `hr` tags can be styled to look like nice dividers
 
-## Opening Tag Attributes & Images
+## Opening Tag Attributes and Images
 
 * Sometimes, we need more information to render a tag. For example, images need a media source.
 
