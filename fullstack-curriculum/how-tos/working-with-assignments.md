@@ -74,7 +74,7 @@ describe('Circle Helper Tests', () => {
 ```
 {% endcode %}
 
-Each assignment will have automated test files the `tests` directory. They will show you exactly how we expect your functions to behave. **DO NOT MODIFY THE TESTS**.
+Each assignment will have automated test files in the `tests` directory. They will show you exactly how we expect your functions to behave. **DO NOT MODIFY THE TESTS**.
 
 To run these automated tests, use the command:
 
