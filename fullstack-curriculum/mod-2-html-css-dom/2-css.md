@@ -283,8 +283,6 @@ Among other things, `h1` and `h2` elements are both bold compared to `p`.
 
 </details>
 
-
-
 **Q: What is wrong with the CSS syntax below?**
 
 ```css
@@ -374,19 +372,27 @@ It will be blue! The selector `p.fun` is the most specific selector that applies
 
 
 
-**Q: what is the width of the `img` element based on the CSS above?**
+**Q: what is the width of the `img` element based on the CSS below?**
+
+```css
+img {
+  width: 200px;
+  padding: 5px;
+  margin: 5px;
+}
+```
 
 <details>
 
 <summary>Answer</summary>
 
-A 200px wide element with 10px padding and 10px margin will actually be 220px wide.
+A 200px wide element with 5px of padding on either side and 5px of margin on either side will actually be 220px wide.
 
 </details>
 
 
 
-**Q: What issues might be caused by the width affecting the "content-box" and not the overall width?**
+**Q: By default, the `width` property affects the size of the "content" box and padding and margin are added to the outside of this content box. What kinds of challenges does this present?**
 
 <details>
 
@@ -418,7 +424,7 @@ img {
 
 The width of the entire `img` will be `200px` but the width of the image's content box will be `170px`.
 
-The `margin` will still add `10px` of space on all sides.
+The `margin` will still add `10px` of space on all sides causing the element to take up `220px` worth of space.
 
 </details>
 
