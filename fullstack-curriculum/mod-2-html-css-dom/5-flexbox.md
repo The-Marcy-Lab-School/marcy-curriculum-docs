@@ -57,9 +57,9 @@ Flexbox does a few things:
 
 * Ordinarily, elements are `display: block` elements are stacked on top of each other.
 * `display: flex` arranges flex items horizontal
-* Making a navigation bar is one of the common applications of flexbox since **we typically want to align navigation elements horizontally**.
+* Making a navigation bar is one of the common applications of Flexbox since **we typically want to align navigation elements horizontally**.
 
-![Without flexbox, items are aligned vertically. With flex box, we can align items horizontally with nice spacing](./img/flexbox-comparison.png)
+![Without Flexbox, items are aligned vertically. With Flexbox, we can align items horizontally with nice spacing](./img/flexbox-comparison.png)
 
 ```css
 header {
@@ -84,12 +84,12 @@ ul {
 ## Part 3 - Flexbox Main and Cross Axes
 
 > **Pacing:** 10 minutes (35 minutes total)
-> **Learning Objective:** Understand that flexbox containers have two axes: main and cross
-> * Now that we've seen what flexbox can do, we can dive deeper into how flexbox works. Explore how direction changes the axes and how justify-content and align-items work.
+> **Learning Objective:** Understand that Flexbox containers have two axes: main and cross
+> * Now that we've seen what Flexbox can do, we can dive deeper into how Flexbox works. Explore how direction changes the axes and how justify-content and align-items work.
 
 * Flexbox has two axes, the **main axis** and the **cross axis**
 
-![flexbox has two axes, the main axis and the cross axis](./img/flex-box-axes.svg)
+![Flexbox has two axes, the main axis and the cross axis](./img/flex-box-axes.svg)
 
 
 ### Justify Content
@@ -168,5 +168,5 @@ ul {
 
 ## Part 5 - Examples!
 
-* Check out the `3-photo-gallery/` directory for a cool example of using flexbox to make a wall-to-wall flexible photo gallery based on this post: [Adaptive Photo Layout With Flexbox](https://css-tricks.com/adaptive-photo-layout-with-flexbox/)
+* Check out the `3-photo-gallery/` directory for a cool example of using Flexbox to make a wall-to-wall flexible photo gallery based on this post: [Adaptive Photo Layout With Flexbox](https://css-tricks.com/adaptive-photo-layout-with-flexbox/)
 * [19 CSS Flexbox Examples](https://freefrontend.com/css-flexbox-examples/)
