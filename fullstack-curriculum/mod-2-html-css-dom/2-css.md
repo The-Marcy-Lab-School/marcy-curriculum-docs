@@ -5,21 +5,21 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Table of Contents**
+- [What is CSS?](#what-is-css)
+- [Linking/Loading CSS Files](#linkingloading-css-files)
+- [Anatomy of CSS](#anatomy-of-css)
+- [Selectors](#selectors)
+- [Selector Specificity](#selector-specificity)
+- [Box Model](#box-model)
+  - [Solution: Border Box "Reset"](#solution-border-box-reset)
+- [Common CSS Tricks](#common-css-tricks)
+  - [Relative Units: `rems`](#relative-units-rems)
+  - [removing list styles](#removing-list-styles)
+  - [Centering things](#centering-things)
+  - [Image Fitting](#image-fitting)
+- [Homework](#homework)
+- [Quiz!](#quiz)
 
-* [What is CSS?](2-css.md#what-is-css)
-* [Linking/Loading CSS Files](2-css.md#linkingloading-css-files)
-* [Anatomy of CSS](2-css.md#anatomy-of-css)
-* [Selectors](2-css.md#selectors)
-* [Selector Specificity](2-css.md#selector-specificity)
-* [Box Model](2-css.md#box-model)
-  * [Solution: Border Box "Reset"](2-css.md#solution-border-box-reset)
-* [Common CSS Tricks](2-css.md#common-css-tricks)
-  * [Relative Units: `rems`](2-css.md#relative-units-rems)
-  * [removing list styles](2-css.md#removing-list-styles)
-  * [Centering things](2-css.md#centering-things)
-  * [Image Fitting](2-css.md#image-fitting)
-* [Homework](2-css.md#homework)
-* [Quiz!](2-css.md#quiz)
 
 ## What is CSS?
 
@@ -42,9 +42,8 @@ p.vivid {
 
 ## Linking/Loading CSS Files
 
-* CSS rules are written in `.css` files
-* A `.html` file must load the `.css` file in order for the CSS rules to be applied
-* A `<link rel="" href="" />` tag is used:
+* CSS rules are most commonly written in `.css` files
+* In order for CSS rules to be applied to an HTML page, the `.html` file must use a `<link rel="" href="" />` tag that references the `.css` file:
 
 ```html
 <!DOCTYPE html>
@@ -66,19 +65,18 @@ p.vivid {
 * The `rel` (relevance) attribute tells the browser what kind of file is being linked (other file types can also be loaded using this tag)
 * The `href` (hyperlink reference) attribute is an absolute/relative path to the `.css` file
 
-> 💡 Tip! Test your connection with a few super obvious rules in the CSS file to make sure it's actually changing the HTML appearance. For example, make the `body` have a purple background!
+> 💡 Tip! Test that the link worked by adding a few super obvious rules in the CSS file to make sure it's actually changing the HTML appearance. For example, make the `body` have a purple background!
 
 ## Anatomy of CSS
 
 * A CSS rule is made up of a **selector** and a **declarations**
-  * the **selector** is what chooses the element(s) that will be styled
-  * the **declarations** are the actual styles that will be applied
 
-![Anatomy of a rule](img/css-anatomy-of-a-rule.png)
+![Anatomy of a CSS rule with one selector and two declarations](img/css-anatomy-of-a-rule.png)
 
-* Declarations are made up of key/property and value pairs (just like an object)
-* each declaration MUST end with a semicolon (unlike an object)
-* Styles can be commented out by doing `/* */`
+* the **selector** is what chooses the element(s) that will be styled
+* the **declarations** are the actual styles that will be applied
+
+Declarations are made up of property/value pairs (like an object) and MUST end with a semicolon (unlike an object)
 
 ```css
 /* This is a CSS Comment */
@@ -133,7 +131,7 @@ ul.links-list > li {
 }
 ```
 
-* **Pseudo-classes** refer to a special state of the selected element(s)
+* **Pseudo-classes** let us select an element in a particular **state** such as when it is being hovered over or has been clicked:
 
 ```css
 a { color: black; }
@@ -144,8 +142,8 @@ a:active { color: blue; } /* a link the moment it is clicked */
 
 ## Selector Specificity
 
-* **Selector specificity** determines how conflicting style rules are resolved
-* By default, "cascading" means that the rule that comes later, wins!
+* When one HTML element is styled by two conflicting CSS rules, **selector specificity** determines how conflicting style rules are resolved
+* By default, CSS is applied top-to-bottom and the rule that comes last is applied (think of it like coats of paint being applied on top of each other):
 
 ```css
 p {
@@ -157,9 +155,14 @@ p {
 }
 ```
 
-* CSS is read top-to-bottom and the last CSS rule said to make all `p` tags blue.
-* The more selectors you add, the more specific the rule is, and the more it will override other rules.
-  * `id` > `class` > tag name
+* The more selectors you add, the more specific the rule is. Selectors with greater specificity will override rules defined by selectors with lesser specificity.
+
+There are four categories which define the specificity level of a selector:
+
+* Inline styles - Example: `<h1 style="color: pink;">`
+* IDs - Example: `#navbar`
+* Classes, pseudo-classes, attribute selectors - Example: `.test`, `:hover`, `[href]`
+* Elements and pseudo-elements - Example: `h1`, `::marker`
 
 ```css
 p#subtitle {
@@ -171,37 +174,64 @@ p {
 }
 ```
 
-* Now, the `p` with the `id="subtitle"` attribute will be red, because it's more specific than the selector `p`.
+* The `p` with the `id="subtitle"` attribute will be red, because it's more specific than the selector `p`.
+
+{% hint style="info" %}
+
+Specificity can be calculated! Start at 0, add 100 for each ID value, add 10 for each class value (or pseudo-class or attribute selector), add 1 for each element selector or pseudo-element.
+
+Note: Inline style gets a specificity value of `1000`, and is always given the highest priority!
+
+Note 2: There is one exception to this rule: if you use the `!important` rule, it will even override inline styles!
+
+[Read more about CSS Specificity here](https://www.w3schools.com/css/css_specificity.asp)
+
+{% endhint %}
 
 ## Box Model
 
-* The **box model** is how the browser calculates the size of an element.
+* The **box model** is controls the size of an element.
 * It's made up of the **content**, **padding**, **border**, and **margin**.
 
 ![Alt text](img/margin-padding-content.png)
 
-* By default, `width` and `height` refer to the size of the _content box_
+* By default, `width` and `height` control the size of the _content box_ — that is, the box that contains the content.
+* Often, we only set the `width` of elements and let the `height` be determined automatically based on the content size.
 
 ```css
 img {
+  /* the width sets the width of the image itself (a.k.a the "content box"). */
   width: 200px;
-  /* let the height be automatically determined by the image's dimensions */
+
+  /* setting the height will throw off the default image dimensions. */
+  /* height: 200px;  */  
+  
+  /* padding is added to the outside of the content box */
   padding: 10px;
-  margin: 10px;
+  
+  /* border is added to the outside of the padding */
   border: 5px solid black;
+  
+  /* margin is added to the outside of the border */
+  margin: 10px;
 }
 ```
 
 * **Total width** and **total height** is calculated as the sum of the content, padding, border, and margin.
 
-#### Solution: Border Box "Reset"
+### Solution: Border Box "Reset"
 
 * A **reset** is a CSS rule (or set of rules) that change one or more default styles for the entire document.
-* Here, we override the default box-model sizing by setting the `box-sizing` property to `border-box` using the universal selector (`*`)
+* We often override the default box-model sizing by setting the `box-sizing` property to `border-box` using the universal selector (`*`)
 
 ```css
 * {
+  /* Makes `width` apply to the border box (padding and content are included) */
   box-sizing: border-box;
+
+  /* Remove the default margin and padding applied to many elements, giving us full control */
+  margin: 0;
+  padding: 0;
 }
 ```
 
