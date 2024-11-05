@@ -13,12 +13,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Selector Specificity](#selector-specificity)
 - [Box Model](#box-model)
   - [Solution: Border Box "Reset"](#solution-border-box-reset)
-- [Common CSS Tricks](#common-css-tricks)
-  - [Relative Units: `rems`](#relative-units-rems)
-  - [removing list styles](#removing-list-styles)
-  - [Centering things](#centering-things)
-  - [Image Fitting](#image-fitting)
-- [Homework](#homework)
+- [Centering things](#centering-things)
+  - [Text Align Center](#text-align-center)
+  - [Margin Auto](#margin-auto)
+  - [Flexbox](#flexbox)
+- [Units: `px` vs `%` vs `rems`](#units-px-vs--vs-rems)
 - [Quiz!](#quiz)
 
 ## Before CSS There Was Only HTML
@@ -250,66 +249,92 @@ img {
 * This will make the `width` and `height` properties set the _total width_, not the content box width. The content box will squish down to the space remaining.
 * Learn more here: https://css-tricks.com/box-sizing/
 
-## Common CSS Tricks
 
-### Relative Units: `rems`
 
-* The browser has a **base font size**, typically 16 pixels by default.
-* This can be adjusted in accessibility settings for people who need larger font sizes.
-* The `px` size unit ignores the browser's settings on base font size
-* Use the `rem` unit to set font size relative to the base font size.
-  * `1rem` is the same as what the browser sets as the root font size.
-  * If the base font size is `16px`, then `1.5rem` will be 24 pixels and `2rem` will be `32 pixels`
-  * This is a good way to make sure your site is accessible to people who need larger font sizes.
+## Centering things
 
-### removing list styles
+### Text Align Center
 
-* Below is a common "reset" style for unordered lists.
-* The `ul` element is typically used to store links in a navigation bar. Understandably, we don't want bullet points in our nav bars.
+* For text, the most straightforward way to center is with the `text-align: center;` property:
 
 ```css
-ul {
-  list-style: none;
-  padding: 0;
+h1 {
+  text-align: center;
 }
 ```
 
-### Centering things
+* Keep in mind that **this will center the text within the parent container**! If the parent container is not the full width of the screen, then the text will not appear centered.
 
-* We'll learn more about positioning later, but a fun intro is auto centering "block level" elements like `div`s.
+### Margin Auto
+
+* Most `block` level elements will automatically take 
+* When an element's width, it can be centered by using the `margin-inline: auto;` property to equally "push away" from both the left and the right side of the screen:
 
 ```css
 div {
-  margin: 0 auto;
-  /* margin-top: 0 */
-  /* margin-bottom: 0 */
-  /* margin-left: auto */
-  /* margin-right: auto */
+  /* assuming that this div does not stretch across the full width of the screen */
+  width: 200px;
+
+  /* Push away from both sides equally */
+  margin-inline: auto;
 }
 ```
 
 * This will auto-increment the side margins to make sure they are even and the item is centered horizontally on the page.
 
+
+### Flexbox
+
+* We'll learn much more about Flexbox in the future, but it is an excellent tool to quickly place a child at the center of the parent:
+
+
 ```css
-p {
-  text-align: center;
+/* Use whichever selector necessary to select the parent */
+.parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Use this to also center vertically */
+  justify-content: center;
 }
 ```
 
-* For inline elements, like text, you can use `text-align: center;` to center the text inside the element.
+## Units: `px` vs `%` vs `rems`
 
-### Image Fitting
+* The `px` unit sets the exact size of an element. **Setting the size of an element using `px` values should be avoided if possible** as they don't comply with accessibility standards.
 
-* Specify _one_ height or width to get the image to maintain it's natural aspect ratio.
-* If you specify both, it will stretch the image to fit the box, which may not be what you want.
+```css
+p {
+  font-size: 30px;
+}
 
-## Homework
+div {
+  width: 100px;
+}
+```
 
-So css has so many selectors, and it's helpful to know what they are! That's why the HW tonight is a game that runs through an incredible amount of them. There are lots of CSS properties to learn as well, but looking them up is simple. If you figure out how to _select_ something, you'll be ok!
 
-And remember, simplest is better. Writing your HTML to just include an id or class on a crucial element is better than trying to make some crazy selector. It's easier to read, and easier to maintain.
+* The `rem` unit sets a size of an element relative to the browser's **base font size** which is typically `16px` by default. User's can change their base font size as an accessibility feature. If your website uses `rem` units instead of `px`, your font will scale according to your user's accessibility settings.
 
-**Link:** https://flukeout.github.io/ **Goal:** Complete up to level 20. Take a screenshot/picture and upload it to Canvas.
+```css
+p {
+  /* 32px if the base font size is 16px */
+  font-size: 2rem; 
+}
+```
+
+* The percentage `%` unit will set the size of an element to a percentage of its parent element's width. So, if you have a parent element with a width of `100px`, and the child has its width set to `75%`, the child will have a width of `75px`. Use this carefully!
+
+```css
+.parent {
+  width: 100px;
+}
+
+.child {
+  width: 75%;
+}
+```
 
 ## Quiz!
 
