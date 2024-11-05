@@ -5,6 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Table of Contents**
+- [Before CSS There Was Only HTML](#before-css-there-was-only-html)
 - [What is CSS?](#what-is-css)
 - [Linking/Loading CSS Files](#linkingloading-css-files)
 - [Anatomy of CSS](#anatomy-of-css)
@@ -20,6 +21,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Homework](#homework)
 - [Quiz!](#quiz)
 
+## Before CSS There Was Only HTML
+
+When the world wide web was born, it was just a means of communicating information. The world of design hadn't yet made its way to the internet and websites looked like this:
+
+![An HTML page with no styling.](img/html-page-no-css.png)
+
+With just the addition of CSS, that same paged can be dramatically transformed:
+
+![The same page with CSS.](img/css-zen-garden.png)
+
+You can see this page at https://csszengarden.com/, a website dedicated to showing the power of CSS. It showcases a variety of designs of the the exact same HTML. The only thing that changes is the CSS!
 
 ## What is CSS?
 
