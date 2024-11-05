@@ -31,7 +31,7 @@ With just the addition of CSS, that same paged can be dramatically transformed:
 
 ![The same page with CSS.](img/css-zen-garden.png)
 
-You can see this page at https://csszengarden.com/, a website dedicated to showing the power of CSS. It showcases a variety of designs of the the exact same HTML. The only thing that changes is the CSS!
+You can see this page at [https://csszengarden.com/](https://csszengarden.com/), a website dedicated to showing the power of CSS. It showcases a variety of designs of the the exact same HTML. The only thing that changes is the CSS!
 
 ## What is CSS?
 
