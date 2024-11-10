@@ -5,67 +5,69 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Table of Contents**
-- [Event Driven Architecture](#event-driven-architecture)
-- [First, an example:](#first-an-example)
+- [Event Driven Programming](#event-driven-programming)
 - [addEventListener](#addeventlistener)
   - [Event Type](#event-type)
-  - [Event Handlers](#event-handlers)
-  - [The `event` object](#the-event-object)
-  - [Good to know, not to use: inline handlers](#good-to-know-not-to-use-inline-handlers)
+  - [Event Handlers and the `event` Object](#event-handlers-and-the-event-object)
+  - [Challenge](#challenge)
+- [Good to Be Aware of, Not to Use: Inline Handlers](#good-to-be-aware-of-not-to-use-inline-handlers)
 - [Event Propagation](#event-propagation)
   - [Event Delegation](#event-delegation)
 - [Removing Event Listeners](#removing-event-listeners)
 
-## Event Driven Architecture
+## Event Driven Programming
 
-So far, the code that we have written will be executed, one line after the other.
-
-```js
-console.log('a')
-console.log('b')
-console.log('c')
-```
-
-In **event-driven architecture**, some of the code that we write will only be executed in response to a **user event** such as:
-* clicking a button
-* moving your mouse
-* using your keyboard
+Imagine a website with a button. Each time you click on the button, something happens (maybe the color changes!). How would you program something like this?
 
 ![](./img/events.png)
 
-## First, an example:
+So far, the code that we have written will be executed, one line at a time, when the program first is ran.
 
-The snippet below does the following:
+In **event-driven programming**, we can write code that will wait to be executed until an **event** occurs such as:
+* clicking a button
+* moving your mouse
+* pressing a key on your keyboard
+* the webpage finishes loading
+* the window is resized
+* the user scrolls down the page
 
-1. Select the element that will be the "target" of the event
-2. Define an **event handler** callback. This will be invoked with an `event` object.
-3. Add an **event listener** to the button that will
-   1. "listen" for `"click"` events
-   2. respond by invoking the event handler
-  
-```js
-const button = document.querySelector('button');
-const handleClick = (event) => {
-  console.log(`an event of type ${event.type} occurred!`);
-}
-button.addEventListener('click', handleClick);
-```
-
-* An **event handler** is the function that is invoked when an event "fires".
-* An element can be programmed to listen for multiple types of events.
+In event-driven programming, we **listen** for events and when the event is **triggered**, we react (often by invoking a function)
 
 ```js
-button.addEventListener('click', handleEvent);
-button.addEventListener('mouseover', handleEvent);
+// 1. Select the "target" element
+const button = document.querySelector('button#click-me')
+
+// 2. Add an event listener to invoke a callback when a 'click' event occurs
+button.addEventListener('click', () => {
+  console.log('a click event occurred!')
+});
 ```
+
+We refer to the callback as the **event handler**.
+
+{% hint style="info" %}
+The terms "event listener" and "event handler" are often used interchangeably but technically they work together.
+{% endhint %}
 
 ## addEventListener
 
+The `addEventListener` function is available on all elements in the DOM and is invoked with two values, an **event type** string and an **event handler** callback.
+
+A single element can have multiple event listeners / event handlers.
+
+```js
+button.addEventListener('click', () => {
+  console.log('a click event occurred!')
+});
+
+button.addEventListener('mousemove', () => {
+  console.log('a mousemove event occurred!')
+});
+```
+
 ### Event Type
 
-When you use the `Element.addEventListener(eventType, handler)` method, the first argument defines the event type to listen for. **It should always be a string.**
-
-There are many event types but the most commonly used are:
+The first argument of `.addEventListener()` is a string that defines the event type to listen for such as:
 - `"click"` - an element was clicked
 - `"mousemove"` - the mouse moved over an element
 - `"keydown"` - a key was pressed down
@@ -73,47 +75,62 @@ There are many event types but the most commonly used are:
 - `"submit"` - a form was submitted
 - `"input"` - the `value` of an `input`, `select`, or `textarea` has changed
 
-### Event Handlers
+You can find more information about [Events on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event).
 
-The second argument is an **Event Handler**, a callback function that is invoked when the event fires.
+### Event Handlers and the `event` Object
 
-```js
-// a generic event handler
-const eventHandler = () => console.log('an event occurred!');
+The second argument of `addEventListener` is an **event handler**, a callback function that is invoked when the specified event fires "on" the given element. 
 
-// register an event listener on a button
-document.querySelector('button').addEventListener('click', eventHandler);
-
-// register these event listeners on the entire document
-document.addEventListener('mousemove', eventHandler);
-document.addEventListener('keydown', eventHandler);
-```
-
-### The `event` object
-
-When any event handler is invoked, it is given an `event` object as an argument. The `event` object has about the event, with different properties for different event types.
+The handler will be invoked by `addEventListener` with an `event` object as an input. This `event` object has many useful properties / methods about the event, like the `event.type` and `event.target`:
 
 ```js
-// this event handler ignores the event argument
-const eventHandler = () => console.log('an event occurred!');
+const handleEvent = (event) => {
+  console.log(`An event of type "${event.type}" occurred!`);
+  console.log("It was triggered by:", event.target);
+  console.log(event);
+}
 
-// this event handler actually uses it!
-const printEvent = (event) => console.log(event);
-
-// we can assign multiple event handlers to an element
-document.querySelector('button').addEventListener('click', eventHandler);
-document.querySelector('button').addEventListener('click', printEvent);
+const button = document.querySelector('button#click-me');
+button.addEventListener(handleEvent);
 ```
 
-Here are some essential `event` properties:
+These two properties are perhaps the most important. They are on every `event` object regardless of the event type:
+- `event.target` — the Element that triggered the event.
+- `event.currentTarget` — The Element that is is handling the event (often the same as `event.target` but can also be different. See [event delegation](#event-delegation) below).
 
-- `event.target` — the Element that triggered the event. Available for all events
-- `event.key` — the key pressed. Available for keyboard events.
-- `event.x` / `event.y` — the location of the mouse in the window. Available for mouse events. (alias for `.clientX`/`.clientY`)
+{% hint style="info" %}
+Tip: Whenever you are trying a new type of event, log the `event` object to the console to see what properties are available! For example, the [MouseEvent object](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) has different properties than the [KeyboardEvent object](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent).
+{% endhint %}
 
-> See this in action in `turtle-walker/` website.
+### Challenge
 
-### Good to know, not to use: inline handlers
+Suppose you had this event handler:
+
+```js
+const changeToRandomColor = (event) => {
+  // Generate a random color string
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+  const color = `rgb(${red}, ${green}, ${blue})`
+
+  // event.target is the element that "triggered" the event
+  event.target.style.backgroundColor = color;
+}
+```
+
+How would you trigger it to be invoked whenever a key was pressed anywhere on the page? What about if you moved your mouse over an element with the id `mouse-area`?
+
+**<details><summary>Solution</summary>**
+
+```js
+document.querySelector("#mouse-area").addEventListener('mousemove', changeToRandomColor)
+document.body.addEventListener('keydown', changeToRandomColor)
+```
+
+</details>
+
+## Good to Be Aware of, Not to Use: Inline Handlers
 
 You can also define event handlers inline directly in HTML:
 
@@ -121,15 +138,13 @@ You can also define event handlers inline directly in HTML:
 <button onclick="console.log('hello world');">I have an inline handler!</button>
 ```
 
-This is good to be aware of for when we get to React but you should NOT use this.
+This is good to be aware of for when we get to React but you should NOT use this since we want to keep our JavaScript logic in our `.js` files and out of `.html` files.
 
 ## Event Propagation
 
 > **Propagation**: the act or process of spreading something
 
-When an event takes place on an element (e.g. a button is clicked), that element and all of its parent elements can "hear" that event and can listen/handle those events. We call this **event propagation** or **bubbling**.
-
-So, imagine we had the following structure:
+Imagine we had the following structure:
 
 ```html
 <div id="outer">
@@ -139,7 +154,9 @@ So, imagine we had the following structure:
 </div>
 ```
 
-If we click on the `button#inner` element, the `div#middle` and `div#outer` elements can also "hear" that element. That means that we can add an event listener to each of those elements, and they would all be triggered!
+When an event is triggered by an element (e.g. a button is clicked), that element and all of its parent elements can "hear" that event and can listen to/handle those events. We call this **event propagation** or **bubbling**.
+
+This means that an event listener added to `div#middle` and `div#outer` will be triggered when we click on the `button#inner` element.
 
 ```js
 const testPropagation = (event) => {
@@ -147,16 +164,16 @@ const testPropagation = (event) => {
   console.log(`Handled by: #${event.currentTarget.id} (event.currentTarget)`);
 }
 
-document.querySelector('#outer').addEventListener('click', testPropagation);
-document.querySelector('#middle').addEventListener('click', testPropagation);
 document.querySelector('#inner').addEventListener('click', testPropagation);
+document.querySelector('#middle').addEventListener('click', testPropagation);
+document.querySelector('#outer').addEventListener('click', testPropagation);
 ```
 
-When an event fires, the callback's `event` object will have two key properties that can tell us which element triggered the event and which element is handling the event:
-- `event.target` (the Element that fired the event)
-- `event.currentTarget` (the Element handling the event)
+When an event is handled by an element that is different from the element that triggered the event, the values of `event.target` and `event.currentTarget` will be different:
+- `event.target` is the Element that fired the event
+- `event.currentTarget` is the Element handling the event
 
-To prevent events from bubbling up, use `event.stopPropagation()`
+To prevent events from bubbling up, use the `event.stopPropagation()` method available on all events:
 
 ```js
 const testPropagation = (event) => {
@@ -239,7 +256,6 @@ const handleCountClick = (e) => {
 };
 const counterButton = document.querySelector("#counter");
 counterButton.addEventListener('click', handleCountClick);
-
 
 const removeListenerButton = document.querySelector("#remove-listener");
 removeListenerButton.addEventListener('click', (e) => {
