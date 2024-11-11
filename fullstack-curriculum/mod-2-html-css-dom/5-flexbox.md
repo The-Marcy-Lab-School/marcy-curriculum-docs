@@ -1,4 +1,4 @@
-# 2.1.0 Flexbox Lecture Plan
+# Flexbox
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-1-0-lecture-flexbox)!

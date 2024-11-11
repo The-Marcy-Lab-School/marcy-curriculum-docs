@@ -1,4 +1,4 @@
-# Intro to the Document Object Model
+# Document Object Model
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-0-dom)!

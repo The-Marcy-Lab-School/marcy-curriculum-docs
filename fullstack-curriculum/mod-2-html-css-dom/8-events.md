@@ -1,11 +1,11 @@
-# 2-2-1-dom-events
+# Event
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-1-lecture-dom-events)!
 {% endhint %}
 
 **Table of Contents**
-- [Event Driven Programming](#event-driven-programming)
+- [Event Driven Programming: Listen and React](#event-driven-programming-listen-and-react)
 - [addEventListener](#addeventlistener)
   - [Event Type](#event-type)
   - [Event Handlers and the `event` Object](#event-handlers-and-the-event-object)
@@ -15,15 +15,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [Event Delegation](#event-delegation)
 - [Removing Event Listeners](#removing-event-listeners)
 
-## Event Driven Programming
+## Event Driven Programming: Listen and React
 
 Imagine a website with a button. Each time you click on the button, something happens (maybe the color changes!). How would you program something like this?
 
 ![](./img/events.png)
 
-So far, the code that we have written will be executed, one line at a time, when the program first is ran.
+In **event-driven programming**, we instruct our program to **listen for events** and **react when the event is triggered**.
 
-In **event-driven programming**, we can write code that will wait to be executed until an **event** occurs such as:
+An event can be triggered by:
 * clicking a button
 * moving your mouse
 * pressing a key on your keyboard
@@ -31,9 +31,10 @@ In **event-driven programming**, we can write code that will wait to be executed
 * the window is resized
 * the user scrolls down the page
 
-In event-driven programming, we **listen** for events and when the event is **triggered**, we react (often by invoking a function)
+In JavaScript (and many other languages), we set up our program to react to events by "registering" a callback function called an **event handler** that is tied to an element and an event type.
 
-```js
+{% code title="0/basic-examples/index.js.js" lineNumbers="true" %}
+```javascript
 // 1. Select the "target" element
 const button = document.querySelector('button#click-me')
 
@@ -42,8 +43,7 @@ button.addEventListener('click', () => {
   console.log('a click event occurred!')
 });
 ```
-
-We refer to the callback as the **event handler**.
+{% endcode %}
 
 {% hint style="info" %}
 The terms "event listener" and "event handler" are often used interchangeably but technically they work together.
@@ -51,7 +51,7 @@ The terms "event listener" and "event handler" are often used interchangeably bu
 
 ## addEventListener
 
-The `addEventListener` function is available on all elements in the DOM and is invoked with two values, an **event type** string and an **event handler** callback.
+The `addEventListener` method is available on all elements in the DOM and is invoked with two values, an **event type** string and an **event handler** callback.
 
 A single element can have multiple event listeners / event handlers.
 

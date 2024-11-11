@@ -1,4 +1,4 @@
-# 2.2.2 Lecture - Forms
+# Forms
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-2-lecture-forms)!
@@ -6,7 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-- [What is a form?](#what-is-a-form)
+- [What is a Form?](#what-is-a-form)
   - [Form Basic Structure](#form-basic-structure)
   - [Inputs](#inputs)
   - [Accessibility: Labels and aria-label](#accessibility-labels-and-aria-label)
@@ -22,10 +22,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Q: What is a form and why is a form useful?**
 
-## What is a form?
+## What is a Form?
+
 A form is a collection of inputs that can be filled out by a user to submit a collection of data. 
 
-![a form with inputs. a user fills out the inputs and the values are combined to display a sentence](./img/form-demo.gif)
+![A user fills out the inputs and the values are combined to display a sentence](img/form-demo.gif)
 
 **Q: What kinds of data might we collect in a form?**
 
