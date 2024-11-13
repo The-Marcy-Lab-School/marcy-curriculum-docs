@@ -169,9 +169,10 @@ document.querySelector('#middle').addEventListener('click', testPropagation);
 document.querySelector('#outer').addEventListener('click', testPropagation);
 ```
 
-When an event is handled by an element that is different from the element that triggered the event, the values of `event.target` and `event.currentTarget` will be different:
-- `event.target` is the Element that fired the event
+- `event.target` is the Element that triggered the event
 - `event.currentTarget` is the Element handling the event
+
+With event propagation, the element handling the event (`event.currentTarget`) will be a parent of the event that triggered the event (`event.target`)
 
 To prevent events from bubbling up, use the `event.stopPropagation()` method available on all events:
 
