@@ -209,8 +209,6 @@ const toggleBorder = (event) => {
 
   // toggle the highlight class (which will make the border red) on the closest li to the image
   event.target.closest('li').classList.toggle('highlight');
-
-  event.stopPropagation()
 }
 ```
 
