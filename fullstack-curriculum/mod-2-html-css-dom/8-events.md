@@ -91,7 +91,7 @@ const handleEvent = (event) => {
 }
 
 const button = document.querySelector('button#click-me');
-button.addEventListener(handleEvent);
+button.addEventListener("click", handleEvent);
 ```
 
 These two properties are perhaps the most important. They are on every `event` object regardless of the event type:
