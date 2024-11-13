@@ -26,7 +26,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 A form is a collection of inputs that can be filled out by a user to submit a collection of data. 
 
-![A user fills out the inputs and the values are combined to display a sentence](img/form-demo.gif)
+<figure><img src="./img/form-demo.gif" alt="A user fills out the inputs and the values are combined to display a sentence"><figcaption><p>A user fills out the inputs and the values are combined to display a sentence</p></figcaption></figure>
 
 **Q: What kinds of data might we collect in a form?**
 
