@@ -4,62 +4,258 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-flexbox)!
 {% endhint %}
 
-**Resources**:
-* [A guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
-* [A great video to learn Flexbox](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)
-
 **Table of Contents**:
-- [Part 0 - Explore Flexbox on Youtube](#part-0---explore-flexbox-on-youtube)
-- [Part 1 - Flex Containers and Flex Items](#part-1---flex-containers-and-flex-items)
-- [Part 2 - Demo Styling a Navbar using Flexbox Container Properties](#part-2---demo-styling-a-navbar-using-flexbox-container-properties)
-- [Part 3 - Flexbox Main and Cross Axes](#part-3---flexbox-main-and-cross-axes)
-  - [Justify Content](#justify-content)
-  - [Align Items](#align-items)
-  - [Flex Direction](#flex-direction)
-- [Part 4 - Growing and Shrinking](#part-4---growing-and-shrinking)
-  - [Flex Wrap](#flex-wrap)
-  - [Flex Grow](#flex-grow)
-  - [Equal Columns](#equal-columns)
-- [Part 5 - Examples!](#part-5---examples)
+- [Terms](#terms)
+- [Explore Flexbox on Youtube](#explore-flexbox-on-youtube)
+- [Flexbox Puts Things In A Row](#flexbox-puts-things-in-a-row)
+- [Controlling Flex Items](#controlling-flex-items)
+  - [Flex Direction (Flex Container Property)](#flex-direction-flex-container-property)
+  - [Gap (Flex Container Property)](#gap-flex-container-property)
+  - [Flex (Flex Item Property)](#flex-flex-item-property)
+  - [Justify Content (Flex Container Property)](#justify-content-flex-container-property)
+  - [Align Items (Flex Container Property)](#align-items-flex-container-property)
+  - [Flex Wrap (Flex Container Property)](#flex-wrap-flex-container-property)
+- [Challenge: Styling a Navbar using Flexbox](#challenge-styling-a-navbar-using-flexbox)
+- [Some More Examples!](#some-more-examples)
 
-## Part 0 - Explore Flexbox on Youtube
+**Resources**:
+* [A guide to flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+* [Learn Flexbox in 15 minutes](https://www.youtube.com/watch?v=fYq5PXgSsbE&ab_channel=WebDevSimplified)
+* [A great video to learn flexbox](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)
 
-> **Pacing:** 5 minutes (5 minutes total)
-> **Learning Objectives:** See Flexbox in the real world
-> * Open https://www.youtube.com/ and see how elements shift in size as you resize the window. Point out the the videos that are aligned next to each other are NOT inline, they are flex items.
 
-Flexbox does a few things: 
-1. puts things in a row (or column if you need to)
-2. makes things stretchy
-3. control the relative size of elements in a row
+## Terms
 
-![](./img/flex-grow.gif)
+* **Flexbox** - a `display` type that arranges flexible elements in a container in a row or column.
+* **Flex Container** - the element with `display:flex`.
+* **Flex Item** - an element inside of a flex container.
+* **Main Axis** — the direction that flex items flow in, (set by `flex-direction` and in the `row` direction by default).
+* **Cross Axis** — the direction perpendicular to the main axis.
+* The essential **flex container properties** are:
+  * `flex-direction` - Determines the direction flex items will be arranged. Defaults to `row` but can be set to `column` to arrange flex items vertically.
+  * `justify-content` — defines the spacing along the **main axis**
+  * `align-items` — defines the alignment of elements along the **cross axis**
+  * `gap` — controls spacing _between_ flex items (not on outer edges)
+* The essential **flex item properties** are:
+  * `flex-grow` — defines the amount a flex item will grow relative to its siblings when there is excess space.
+  * `flex-shrink` — defines the amount a flex item will shrink relative to its siblings when there is not enough space.
+  * `flex-basis` — defines the starting size of a flex item.
+  * `flex` — used as shorthand for the above 3 properties.
 
-## Part 1 - Flex Containers and Flex Items
+## Explore Flexbox on Youtube
 
-> **Pacing**: 5 minutes (10 minutes total)
-> **Learning Objective:** identify flex containers / flex items
-> * Briefly define what Flexbox is and make sure they can identify the terms "flex container" and "flex items"
+Open https://www.youtube.com/ and see how elements shift in size as you resize the window. 
 
-* Flexbox is used for **organizing elements in a single direction**
-* `display: flex` defines a **flex container**. 
-* The children of the flex container are **flex items**
-* By default, flex items are placed in a row
+![Three youtube videos in a row](img/youtube.png)
 
-![Flex containers and flex items](./img/flex-container-items.png)
+**<details><summary>Q: Look at a row of video "cards". Are they `display:inline`, `display:block` or something else? Guess, then inspect the page!</summary>**
+> They should be `display: flex;` elements!
+</details>
 
-## Part 2 - Demo Styling a Navbar using Flexbox Container Properties
+![Flex containers and flex items](img/flex-container-items.png)
 
-> **Pacing:** 15 minutes (25 minutes total)
-> **Learning Objective:** see what Flexbox can do
-> * Have fellows follow along with you. This is just to show them what Flexbox can do. After, we'll see what makes Flexbox work. Open up the `1-navbar/` directory and the `index.html` and `index.css` files. 
-> * Serve using live preview. Start by uncommenting the styles of the `ul` to show how `display: flex` styles the the block elements to be aligned horizontally. Then insert a gap. Then do the same for the `header`, discussing briefly `justify-content` and `align-items`
+* **Flexbox** is a display type used for arranging elements inside of a container in a row or a column.
+* The parent element gets the `display: flex` property, making it a **flex container**. 
+* The children of the flex container automatically become **flex items**
 
-* Ordinarily, elements are `display: block` elements are stacked on top of each other.
-* `display: flex` arranges flex items horizontal
-* Making a navigation bar is one of the common applications of Flexbox since **we typically want to align navigation elements horizontally**.
+## Flexbox Puts Things In A Row
 
-![Without Flexbox, items are aligned vertically. With Flexbox, we can align items horizontally with nice spacing](./img/flexbox-comparison.png)
+With Flexbox, the most common use case is arranging identical elements in a row that will grow or shrink according to the available space. 
+
+Consider the following HTML:
+
+{% code title="0-flexbox-demo/index.html"%}
+```html
+<div class="flex-container" id="squares-container">
+  <div class="flex-item">A</div>
+  <div class="flex-item">AB</div>
+  <div class="flex-item">ABC</div>
+  <div class="flex-item">ABCD</div>
+  <div class="flex-item">ABCDE</div>
+</div>
+```
+{% endcode %}
+
+By default these elements elements will stack on top of each other.
+
+
+![block elements will stack on top of each other](img/before-flexbox.png)
+
+**<details><summary>Q: Why is this the default behavior of divs?</summary>**
+> By default, `div` elements will be block elements. Block elements always stack on top of each other and take up the full width available to them.
+</details>
+
+By setting the adding Flexbox to the parent container (the `div.flex-container` element), its children will be placed horizontally in a row! 
+
+
+![Adding display:flex will place the flex items in a row](img/display-flex.png)
+```css
+.flex-container {
+  display: flex;
+}
+```
+
+The flex items will all stretch vertically to have equal height but will only take up as much width as is needed.
+
+## Controlling Flex Items
+
+With Flexbox applied to the parent container, we gain access to a bunch of options for arranging the flex items inside.
+
+We can control:
+1. the direction that flex items flow with `flex-direction`
+2. how much space is between flex items with `gap`
+3. how the flex items grow or shrink along the main axis with `flex`
+4. how flex items are spaced along the main axis with `justify-content`
+5. how flex items are stretch and are positioned along the cross axis with `align-items`
+6. whether or not flex items wrap when they can't fit in one line with `flex-wrap``
+
+Let's jump into each!
+
+### Flex Direction (Flex Container Property)
+
+Flexbox has two axes, the **main axis** and the **cross axis**. Flex items flow along the main axis and, by default stretch along the cross axis.
+
+![flexbox has two axes, the main axis and the cross axis](img/flex-box-axes.svg)
+
+By default, the main axis runs in the "row" direction, arranged left to right. 
+
+We can arrange flex items in a column (top to bottom) by setting the `flex-direction` property to `column`:
+
+```css
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+```
+
+`flex-direction: column` changes the orientation of the main and cross axes. 
+* The main axis is now vertical (top to bottom)
+* The cross axis is now horizontal (left to right)
+
+Knowing the direction of these two axes plays an essential role in controlling how flex items behave inside of a flex container. Let's look at how!
+
+### Gap (Flex Container Property)
+
+Gap is perhaps the most useful feature of Flexbox. The `gap` property makes adding space between elements incredibly easy:
+
+```css
+.flex-container {
+  display: flex;
+  gap: 1rem;
+}
+```
+
+Note that the gap will only be applied to the space between the elements, not before the first element and after the last element.
+
+![](img/flex-gap.png)
+
+**<details><summary>Q: Why can't we just use margin to do this?</summary>**
+Thus far, if we've wanted to put space between elements, we've had to rely on adding a `margin`. However, margins have a few behaviors that can be annoying to deal with:
+* Margins are applied to all sides, making it difficult to only add space *between* elements (the first and last elements will have extra margin on top and bottom)
+* Margins can overlap causing unexpected spacing 
+
+Gap solves these problems entirely!
+</details>
+
+
+### Flex (Flex Item Property)
+
+The `flex` property controls how much a flex item will grow or shrink within a container when there is extra space. 
+
+By default, flex items will only take up as much space as they need. However, if there is extra space, flex items with the `flex` property will flex to take up that space.  
+
+![](img/flex-demo.gif)
+
+```css
+/* The flex property controls the relative "growth rate" of a flex item when there is excess space */
+.flex-item {
+  flex: 1;
+}
+
+/* Hovering over a flex item will cause it to grow 3x the size of other flex items */
+.flex-item:hover {
+  flex: 3;
+}
+```
+
+With `flex: 1;` applied to all flex items, they will all attempt to share the extra space evenly. 
+
+With `flex: 3;` applied to the one hovered element, it will take 3 times as much extra space as the other elements.
+
+{% hint style="info" %}
+`flex` is a shorthand for the three properties `flex-grow`, `flex-shrink`, and `flex-basis`. Read more about [the flex property on MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/flex)!
+{% endhint %}
+
+### Justify Content (Flex Container Property)
+
+By default, flex items will arrange themselves at the start of the *main axis* (left to right in the row direction) of the flex container. We can change this behavior using `justify-content`:
+
+```css
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+```
+
+![Justify content values showing flex-start, flex-end, center, space-between, space-around](img/justify-content.png)
+
+### Align Items (Flex Container Property)
+
+By default, flex items will stretch along the *cross axis*. We can change this behavior using `align-items`.
+
+
+```css
+.flex-container {
+  display: flex;
+  align-items: flex-start;
+}
+```
+
+![Align items values showing flex-start, flex-end, center, stretch, baseline](img/align-items.png)
+
+### Flex Wrap (Flex Container Property)
+
+By default, flex items will all try to fit onto one line. If there isn't enough space, they will overflow.
+
+Setting `flex-wrap: wrap`, flex items will be pushed to the next line when there isn't enough space.
+
+![Alt text](img/flex-wrap.png)
+
+```css
+.container {
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}
+```
+
+## Challenge: Styling a Navbar using Flexbox
+
+One of the most common uses of flexbox is to style a navigation bar. Open up [`1-navbar`](./lecture/1-navbar/) and look at the `<header>` element:
+
+```html
+<!-- Often, the header contains a logo and a nav component -->
+<header>
+  <p id="header-logo">Ben's Blog</p>
+  <nav>
+    <!-- It is common to put a ul inside with links as list items -->
+    <ul id="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+Below, you can see what the header currently looks like (left) and what we want it to look like (right). What is different?
+
+![Without flexbox, items are aligned vertically. With flex box, we can align items horizontally with nice spacing](img/flexbox-comparison.png)
+
+**Q: How do we fix this?**
+
+**<details><summary>Solution</summary>**
+
+* Most elements are `display: block` which means they are stacked on top of each other.
+* We can apply `display: flex` to a parent element to put its children in a row horizontally
 
 ```css
 header {
@@ -80,93 +276,9 @@ ul {
   * `gap` — controls spacing _between_ flex items (not on outer edges)
   * `flex-direction` - defaults to `row` but can be set to `column` to arrange flex items vertically.
 
+</details>
 
-## Part 3 - Flexbox Main and Cross Axes
+## Some More Examples!
 
-> **Pacing:** 10 minutes (35 minutes total)
-> **Learning Objective:** Understand that Flexbox containers have two axes: main and cross
-> * Now that we've seen what Flexbox can do, we can dive deeper into how Flexbox works. Explore how direction changes the axes and how justify-content and align-items work.
-
-* Flexbox has two axes, the **main axis** and the **cross axis**
-
-![Flexbox has two axes, the main axis and the cross axis](./img/flex-box-axes.svg)
-
-
-### Justify Content
-
-* `justify-content` affects the positioning of flex items along the **main axis**
-
-![Justify content values showing flex-start, flex-end, center, space-between, space-around](./img/justify-content.png)
-
-### Align Items
-
-* `align-items` affects the positioning of flex items along the **cross axis**
-
-![Align items values showing flex-start, flex-end, center, stretch, baseline](./img/align-items.png)
-
-### Flex Direction
-
-* `flex-direction: column` changes the orientation of the main and cross axes. 
-  * The main axis is now vertical
-  * The cross axis is now horizontal
-
-## Part 4 - Growing and Shrinking
-
-> **Pacing:** 15 minutes (50 minutes total)
-> **Learning Objective:** See how flex items behave when space is limited.
-> * Now open the `2-flexing/` directory and serve the `index.html` page.
-> * Here we want to demonstrate how the `flex-wrap`, `flex-basis` and `flex-grow` properties all control how flex items behave when space is limited. Show first what the default behavior of flex items is without any of these values set. Then add/remove them to show the difference. 
-> `flex-basis` often causes confusion since it is similar (but different) from setting the `width` of each flex item.
-
-### Flex Wrap
-
-* By default, flex items will all try to fit onto one line.
-
-![Alt text](./img/flex-wrap.png)
-
-```css
-.container {
-  flex-wrap: nowrap | wrap | wrap-reverse;
-}
-```
-
-### Flex Grow
-
-* `flex-grow` defines the ability for a flex item to grow if necessary. 
-
-![Alt text](https://css-tricks.com/wp-content/uploads/2018/10/flex-grow.svg)
-
-* It accepts a unitless value that serves as a proportion. 
-* It dictates what amount of the available space inside the flex container the item should take up.
-
-```css
-.flex-item { flex-grow: 1 }
-.flex-item:nth-child(2) { 
-  flex-grow: 2
-}
-```
-
-* If all items have flex-grow set to 1, the remaining space in the container will be distributed equally to all children. 
-* If one of the children has a value of 2, that child would take up twice as much of the space either one of the others (or it will try, at least).
-
-### Equal Columns
-
-* To achieve equal columns, we need to ensure that each flex item starts with the same size (`flex-basis: 0%`) and will grow/shrink at the same rate (`flex-grow: 1` and `flex-shrink: 1`).
-
-```css
-.flex-item {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
-  /* flex: 1 1 0; */
-  /* flex: 1; */
-}
-```
-
-* The `flex` property can serve as a short-hand for all three: `flex: 1 1 0%`
-* The default is `0 1 auto`, but if you set it with a single number value, like `flex: 5;`, that changes the `flex-basis` to `0%`, so it’s like setting `flex-grow: 5; flex-shrink: 1; flex-basis: 0%;`.
-
-## Part 5 - Examples!
-
-* Check out the `3-photo-gallery/` directory for a cool example of using Flexbox to make a wall-to-wall flexible photo gallery based on this post: [Adaptive Photo Layout With Flexbox](https://css-tricks.com/adaptive-photo-layout-with-flexbox/)
+* Check out the `3-photo-gallery/` directory for a cool example of using flexbox to make a wall-to-wall flexible photo gallery based on this post: [Adaptive Photo Layout With Flexbox](https://css-tricks.com/adaptive-photo-layout-with-flexbox/)
 * [19 CSS Flexbox Examples](https://freefrontend.com/css-flexbox-examples/)

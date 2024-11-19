@@ -5,6 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Table of Contents**
+- [Key Terms](#key-terms)
 - [Web Design: Everything is a Box](#web-design-everything-is-a-box)
 - [Box Model](#box-model)
   - [Sizing is Based on the Content Box](#sizing-is-based-on-the-content-box)
@@ -12,10 +13,38 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Display and Position](#display-and-position)
   - [Display](#display)
   - [Position](#position)
-- [Tricks for Centering things](#tricks-for-centering-things)
-  - [Text Align Center](#text-align-center)
-  - [Margin Auto](#margin-auto)
-  - [Flexbox](#flexbox)
+- [Test your Skills!](#test-your-skills)
+
+## Key Terms
+
+* **Box Model** — How elements in an HTML document are modeled in the browser and how their dimensions are calculated based on the provided CSS properties. It consists of content, padding, border, and margin.
+* The **content** — the space that the content of an element occupies (the text of a `<p>` tag, the image of an `img` tag, etc...)
+  * Content can be modified with the `width` and `height` properties.
+* The **padding**  — the space around the content but inside the border. This is the "background" of the content.
+  * Padding can be modified with the `padding` property.
+* The **border** — the space around the padding.
+  * Border can be modified with the `border` and `border-radius` properties.
+* The **margin** — the space around the border and "between" adjacent elements.
+  * Margin can be modified with the `margin` property.
+  * Note: Margin is always transparent and the margins of adjacent elements can overlap.
+* The `box-sizing` property determines how the total width and height of an element is calculated. 
+  * The default `box-sizing: content-box` setting has the `width` and `height` properties affect the content box, with padding and border dimensions added. 
+  * The `box-sizing:border-box` setting makes the `width` and `height` properties affect the border box, with the content box automatically shrinking to fit inside the padding box.
+* A **CSS Reset** is a set of rules intended to remove default CSS styles applied by the _user agent stylesheet_. 
+
+```css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+```
+
+* The `display` property changes how elements are arranged relative to each other:
+  * `display: block` elements will stack on top of each other, regardless of their width.
+  * `display: inline` elements will sit next to each other (if there is space available) and are not affected by the `width` or `height` properties
+  * `display: inline-block` elements will sit next to each other (if there is space available) and ARE affected by the `width` and `height` properties
+  * `display: none` elements are removed from the flow of the document.
 
 ## Web Design: Everything is a Box
 
@@ -211,51 +240,6 @@ Use this [interactive documentation on MDN](https://developer.mozilla.org/en-US/
   - this will behave like `relative` until you scroll past it, then it will stick on the top bottom or sides
   - Finicky, be careful about parents blocking it
 
-## Tricks for Centering things
+## Test your Skills!
 
-### Text Align Center
-
-* For text, the most straightforward way to center is with the `text-align: center;` property:
-
-```css
-h1 {
-  text-align: center;
-}
-```
-
-* Keep in mind that **this will center the text within the parent container**! If the parent container is not the full width of the screen, then the text will not appear centered.
-
-### Margin Auto
-
-* Most `block` level elements will automatically take 
-* When an element's width, it can be centered by using the `margin-inline: auto;` property to equally "push away" from both the left and the right side of the screen:
-
-```css
-div {
-  /* assuming that this div does not stretch across the full width of the screen */
-  width: 200px;
-
-  /* Push away from both sides equally */
-  margin-inline: auto;
-}
-```
-
-* This will auto-increment the side margins to make sure they are even and the item is centered horizontally on the page.
-
-
-### Flexbox
-
-* We'll learn much more about Flexbox in the future, but it is an excellent tool to quickly place a child at the center of the parent:
-
-
-```css
-/* Use whichever selector necessary to select the parent */
-.parent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  /* Use this to also center vertically */
-  justify-content: center;
-}
-```
+Head over to [MDN to test your box model skills](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Box_Model_Tasks)!

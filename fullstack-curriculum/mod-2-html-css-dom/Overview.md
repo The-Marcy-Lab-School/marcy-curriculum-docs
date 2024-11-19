@@ -9,3 +9,8 @@ In this module, we'll learn about:
 * **Accessibility**
 * **The Document Object Model (DOM)**
 * **LocalStorage**
+
+**External Resources for Learning**
+* [[CSS Tricks] Design Principles for Developers: Processes and CSS Tips for Better Web Design](https://css-tricks.com/design-principles-for-developers-processes-and-css-tips-for-better-web-design/)
+* [[CSS Tricks] A guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+* [[Youtube] Learn flexbox the easy way (Kevin Powell)](https://www.youtube.com/watch?v=u044iM9xsWU&ab_channel=KevinPowell)
