@@ -1,32 +1,50 @@
-# Getting Started Using Vite 
+# Vite
 
-This resource covers starting a Vanilla JS project using Vite.
-
-- [Vite Overview](#vite-overview)
-  - [What is Vite?](#what-is-vite)
+**Table of Contents**:
+- [What is Vite and Why Use It?](#what-is-vite-and-why-use-it)
+  - [Live Server is a Development Server](#live-server-is-a-development-server)
+  - [Module Bundler](#module-bundler)
   - [Why Use Vite?](#why-use-vite)
 - [Setup](#setup)
 - [Clean Up The Repo](#clean-up-the-repo)
 
 {% embed url="https://www.youtube.com/watch?v=UnsukVi6hJY&ab_channel=TheMarcyLabSchool" %}
 
-## Vite Overview
+## What is Vite and Why Use It?
 
-**Objective(s)**: Learn key terms used when discussing Vite. 
+Vite is a tool for developing web applications by acting as a **module bundler** and a **development server**. Let's break down each of these terms.
 
-### What is Vite?
+### Live Server is a Development Server
 
-Vite is a tool for developing web applications. It helps developers by creating a **development version** of your project and providing a server for previewing and testing that version. In this "development" mode you can quickly iterate on the project and see the application **"hot reload"** without having to restart the server. 
+So far, we've been using Live Server as our development server. But what does that mean?
 
-When it is time to **deploy** your project, it can **compile** the project into a **production version** of the project. The production version can easily be deployed on a third-party **hosting service**, like Github Pages or Render,
+A **server** is just a computer that shares its resources over the internet. A user's computer acts as the **"client"** and requests resources from the server using the `https://` protocol (the hypertext transfer protocol). 
 
-> For basic front-end only applications, we'll use **Github Pages**. Eventually we'll use a more robust hosting service like Render which can provide a full back-end server and a database server.
-> 
+When we visit a URL, like [https://www.google.com](https://www.google.com), our browser converts the **Domain Name** (`google.com`) into the **IP Address** of the server computer where the code for Google lives. Then, our computer sends a **request** to that server computer over the internet and the server sends a **response**.
+
+![The client server interaction](img/client-server-interaction.png)
+
+However, we only get to this point once we **deploy** our project on a **server hosting service**. Until that point, we need to simulate this HTTP request and response cycle using a **development server**. 
+
+With a development server, our computer acts as both the client and the server.
+
+Just like Live Server, Vite provides a development server for us to use! So then, why not just keep using Live Server?
+
+### Module Bundler
+
+Vite also acts as a **module bundler**. A module bundler combines all of the files that a server is providing to the client into a single file to reduce the total number of requests that the client needs to make. For example, if our project uses 10 files, the client would need to make 10 separate requests for those files. 
+
+Instead, Vite will bundle those 10 files together into one (or into only a few) and send those to the client, improving rendering time and performance once the client receives the code.
+
+This also means that we can install third-party Node modules using `npm` and use them in our browser-based applications (not just Node projects)! Vite will bundle those node_modules in a highly optimized manner.
+
 ### Why Use Vite?
 
 Sure, you could build a project from scratch and manage your own "development" version and the "production" version. But **Vite is "lightweight"** (it doesn't slow down your process by using it) and the production version of your application will be **optimized for speed**.
 
 **Vite is also quite versatile**. It can be used for both simple and complex projects, from front-end only applications that use nothing but Vanilla JS to robust full-stack applications using frameworks like React.
+
+
 
 ## Setup
 

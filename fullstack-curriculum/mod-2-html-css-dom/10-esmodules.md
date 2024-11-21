@@ -1,22 +1,20 @@
 # ESModules
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-0-esmodules-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-3-esmodules)!
 {% endhint %}
 
-* [Loading JavaScript into our HTML](10-esmodules.md#loading-javascript-into-our-html)
-  * [The OG Way](10-esmodules.md#the-og-way)
-  * [DOMContentLoaded](10-esmodules.md#domcontentloaded)
-  * [Defer](10-esmodules.md#defer)
-* [Dealing with Multiple JavaScript Files](10-esmodules.md#dealing-with-multiple-javascript-files)
-  * [Order Matters & Global Variables](10-esmodules.md#order-matters--global-variables)
-  * [Importing and Exporting with ESModules](10-esmodules.md#importing-and-exporting-with-esmodules)
-  * [We can't use ESModule with normal scripts](10-esmodules.md#we-cant-use-esmodule-with-normal-scripts)
-* [Summary](10-esmodules.md#summary)
+- [Loading JavaScript into our HTML](#loading-javascript-into-our-html)
+  - [DOMContentLoaded](#domcontentloaded)
+  - [Dealing with Multiple JavaScript Files](#dealing-with-multiple-javascript-files)
+- [Remember Node Exports and Imports?](#remember-node-exports-and-imports)
+  - [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
+  - [CORS](#cors)
+  - [Live Server To the Rescue!](#live-server-to-the-rescue)
 
 ## Loading JavaScript into our HTML
 
-### The OG Way
+So far, if we want our web applications to execute JavaScript code, we add a `script` tag to the end of the `body` of our HTML:
 
 ```html
 <body>
@@ -25,11 +23,19 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 </body>
 ```
 
-**Q: Why do we put the script at the end of the body?**
+Then, we can run code like this:
 
-<details>
+```js
+const main = () => {
+  const h1 = document.querySelector('h1')
+  h1.textContent = 'Coding is the best';
+}
 
-<summary>Answer</summary>
+// Execute the main function upon loading this script
+main();
+```
+
+**<details><summary>Q: Why do we put the script at the end of the body?</summary>**
 
 Because our JavaScript uses the Elements in the body. If those Elements haven't loaded yet, we can't referenced them! We'll get errors like this:
 
@@ -39,236 +45,250 @@ Uncaught TypeError: Cannot set properties of null (setting 'textContent')
 
 </details>
 
-
-
-**Note**: this still works if we just open the `index.html` file
-
 ### DOMContentLoaded
 
-So, **we need to wait for the document to load before executing our JavaScript**. One way to tackle this is through JavaScript:
-
-```js
-console.log("hello from index.js");
-
-const main = () => {
-  document.querySelector('h1').textContent = 'Coding is the best';
-}
-
-document.addEventListener('DOMContentLoaded', main);
-```
-
-Here, we attach an event listener to the `document` that **waits for all of the DOM content to load** before invoking our `main` function.
-
-This lets us put the `<script>` in the `<head>` which means **the browser will start loading that file** but won't run it until the DOM is complete.
+Organization is always important when programming and the organization of our application would be improved if we could put `script` tags within the `head`. The logic behind this is that our `script` isn't adding any visible content to our `body`. CSS files are linked in the `head` too, after all.
 
 ```html
 <head>
   <!-- other meta tags + scripts -->
   <script src="./index.js"></script>
 </head>
+<body>
+  <!-- Visible content -->
+</body>
 ```
 
-**Q: Is it still possible for us to have errors in our app?**
+However, with the `script` in the `head`, we will get errors since our JavaScript attempts to access elements that have not yet loaded. 
 
-<details>
+The original solution to this was to wait for the HTML content to finish loading by adding an event listener to our JavaScript:
 
-<summary>Answer</summary>
+```js
+// Executes immediately
+console.log("hello from index.js");
 
-Yes! If accidentally put some DOM code outside of the safety of our `main` function.
+const main = () => {
+  const h1 = document.querySelector('h1')
+  h1.textContent = 'Coding is the best';
+};
+
+// Only execute main once the DOM content has been loaded
+document.addEventListener('DOMContentLoaded', main);
+```
+
+Here, we attach an event listener to the `document` that waits for all of the DOM content to load before invoking our `main` function.
+
+This lets us put the `<script>` in the `<head>` which means **the browser will start loading that file** but won't run it until the DOM is complete.
+
+**<details><summary>Q: Is it still possible for us to have errors in our app?</summary>**
+
+Yes! If you accidentally put some DOM code outside of the safety of the `main` function.
 
 ```js
 console.log("hello from index.js");
 
-const existingText = document.querySelector('h1').textContent;
-// ^ this will throw an error
+const h1 = document.querySelector('h1')
 
 const main = () => {
-  document.querySelector('h1').textContent = 'Coding is the best';
-}
+  h1.textContent = 'Coding is the best';
+  // ^ this will throw an error because h1 was declared before the content was loaded
+};
 
 document.addEventListener('DOMContentLoaded', main);
 ```
 
 </details>
 
+### Dealing with Multiple JavaScript Files
 
-### Defer
+Suppose I wanted to load more JavaScript files. Like this one which declares a `posts` variable with data about posts that I want to render:
 
-Waiting for `'DOMContentLoaded` works but it still leaves room for errors! An easier solution is to use the `defer` attribute in the `<script>` tag.
-
-```html
-<head>
-  <!-- other meta tags + scripts -->
-  <script defer src="./index.js"></script>
-</head>
+{% code title="posts.js" %}
+```javascript
+// this is a global variable
+const posts = {
+  "dd1286de": {
+    id: "dd1286de",
+    caption: "the cutest cat in the world",
+    src: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  // ... more objects like this one
+};
 ```
+{% endcode %}
 
-And our JavaScript can skip adding the event listener:
+And this one which renders posts from the file above:
 
-```js
-console.log("hello from index.js");
+{% code title="dom-helpers.js" %}
+```javascript
+const renderPosts = () => {
+  const postsContainer = document.querySelector('#posts-container');
 
-const main = () => {
-  document.querySelector('h1').textContent = 'Coding is the best';
+  Object.values(posts).forEach((post) => {
+    const li = document.createElement('li');
+    const img = document.createElement('img');
+    const caption = document.createElement('p');
+
+    li.id = post.uuid;
+    img.src = post.src;
+    img.alt = post.caption;
+    caption.textContent = post.caption;
+
+    li.append(img, caption);
+    postsContainer.append(li);
+  });
 }
+```
+{% endcode %}
 
-main();
+To utilize this code, we just add `<script>`s for each file:
+
+```html
+<head>
+  <!-- The order matters! -->
+  <script src="./posts.js"></script>
+  <script src="./dom-helpers.js"></script>
+  <script src="./index.js"></script>
+</head>
 ```
 
-Now...
+What happens is that the variable `posts` and the function `renderPosts` are added to the "global namespace" and can be referenced anywhere in subsequent files.
 
-* the `index.html` page can start loading the `index.js` file...
-* but it won't execute that code until the DOM is done loading
-
-## Dealing with Multiple JavaScript Files
-
-Suppose I wanted to load another JavaScript file. Okay, just add another `<script>`:
+But this is an error prone process and will quickly become problematic if we add more and more files. If we just swap the order of the scripts in HTML, we will get an error.
 
 ```html
 <head>
   <!-- other meta tags -->
-  <script defer src="./other.js"></script>
-  <script defer src="./index.js"></script>
+  <script src="./index.js"></script>
+  <script src="./dom-helpers.js"></script>
+  <script src="./posts.js"></script>
 </head>
 ```
 
-This works but it has some issues. Let's explore why.
+We need a better solution.
 
-### Order Matters and Global Variables
+## Remember Node Exports and Imports?
 
-```js
-/* other.js */
-const test = 'I am a test'; // this is a global variable
+In Node, we can share code by exporting using `module.exports` syntax:
 
-/* index.js */
-console.log(test); // I can access this global variable over here
+{% code title="1-node-commonjs/posts.js" %}
+```javascript
+const posts = {
+  "dd1286de": {
+    id: "dd1286de",
+    caption: "the cutest cat in the world",
+    src: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  // more objects
+};
+
+// use a default export
+module.exports = posts;
 ```
+{% endcode %}
 
-But if we swap the order of the scripts in HTML, we will get an error.
+And then we can import it using `require()`:
 
-```html
-<head>
-  <!-- other meta tags -->
-  <script defer src="./index.js"></script>
-  <script defer src="./other.js"></script>
-</head>
+{% code title="1-node-commonjs/index.js" %}
+```javascript
+const posts = require('./posts.js')
+
+console.log(posts);
 ```
-
-**Q: Why will this cause an error?**
-
-<details>
-
-<summary>Answer</summary>
-
-It will cause an error because `test` is defined in `other.js` which hasn't been executed yet!
-
-```error
-Uncaught ReferenceError: test is not defined
-```
-
-</details>
-
-
-So, the order matters. With 2 files this is manageable, just swap them. But when our application has hundreds or even thousands of files, good luck. We need a better solution.
+{% endcode %}
 
 ### Importing and Exporting with ESModules
 
-In Node, we could share code by importing and exporting using the **CommonJS** syntax:
+In the browser, we need to use a different syntax called **ESModules**. To enable this functionality, we have to make a few changes.
 
-<details>
-
-<summary>See CommonJS Example</summary>
-
-```js
-/* other.js */
-const test = 'I am a test';
-
-module.exports = test // default export in CommonJS
-module.exports = { test } // named export in CommonJS
-
-/* index.js */
-
-const test = require('./other.js'); // default import in CommonJS
-const { test } = require('./other.js'); // named import in CommonJS
-```
-
-</details>
-
-
-In the browser, we need to use a different syntax called **ESModule** syntax:
-
-```js
-/* other.js */
-export const test = 'I am a test'; // named export
-
-export default test; // default export
-
-/* index.js */
-
-import test from './other.js'; // default import in ESModule
-import { test } from './other.js'; // named import in ESModule
-```
-
-### We can't use ESModule with normal scripts
-
-There are two issues with this.
-
-First, we can't use ESModule syntax in normal .js files. We will get this error:
-
-```error
-Uncaught SyntaxError: Cannot use import statement outside a module
-```
-
-We can easily fix this in our HTML by adding a `type="module"` to our `<script>` (and we can now remove `defer` since modules automatically defer)
+Start by adding a `type="module"` to our `<script>`. We can also remove the other scripts since we'll be importing their code via JavaScript:
 
 ```html
 <head>
-  <!-- other meta tags -->
+  <!-- We only need to load the "entry point". Each file will manage its own imports. -->
   <script type="module" src="./index.js"></script>
 </head>
 ```
 
-But we will still get an error called a **Cross Origin Resource Sharing (CORS)** error.
+Then, we can export values as "default exports" using the `export default value` syntax:
 
-<details>
+{% code title="2-esmodules/posts.js" %}
+```javascript
+const posts = {
+  "dd1286de": {
+    id: "dd1286de",
+    caption: "the cutest cat in the world",
+    src: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  // more objects
+};
 
-<summary>Details about CORS</summary>
+// use a default export with ESModules syntax
+export default posts;
+```
+{% endcode %}
 
-The Cross-Origin Resource Sharing (CORS) policy is a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original web page. When you open a file using the `file://` protocol (local file system), it is treated as a different origin compared to the typical `http://` or `https://` origins.
+We can import that export default into `dom-helpers` and export a named function `renderPosts`:
 
-If your web app relies on making requests between different modules or resources and you are testing it by directly opening HTML files using the `file://` protocol in a browser, you may encounter CORS errors. This is because the browser enforces the same-origin policy and prevents cross-origin requests, including those made between different files using the `file://` protocol.
+{% code title="2-esmodules/dom-helpers.js" %}
+```javascript
+// Import the default export of posts.js and call it `posts`
+import posts from './posts.js'
 
-To avoid CORS issues during development, it's recommended to set up a local development server (e.g., using tools like `http-server`, `live-server`, or frameworks like Webpack with devServer). Running your web app through a local server will allow you to simulate a more typical web environment with `http://` or `https://` protocols, which should prevent CORS issues during testing.
+// Put the `export` keyword to export a "named export"
+export const renderPosts = () => {
+  // ...
+}
+```
+{% endcode %}
+
+And finally we can import the named `renderPosts` function into `index.js`
+
+{% code title="2-esmodules/index.js" %}
+```javascript
+// Use curly braces to import a "named export"
+import { renderPosts } from './dom-helpers.js'
+
+const main = () => {
+  document.querySelector('h1').textContent = 'Coding is the best';
+  renderPosts();
+}
+
+// We don't need the event listener anymore. Modules automatically wait for the content to load!
+main();
+```
+{% endcode %}
+
+Try to open this and... you'll run into an error :(
+
+### CORS
+
+The **Cross-Origin Resource Sharing (CORS)** policy is a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original web page. 
+
+For some reason, when you open a file using the `file://` protocol (local file system) and attempt to access a resource from any other location (including your own file system), it will consider it to be a different origin. 
+
+![face palm](img/face-palm.png)
+
+To get around this, **we need to serve our `html` file using the `http://` protocol from a Server, not from our file system**. This helps the browser see that all of the files are coming from the same origin.
 
 ([Learn more about CORS here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)).
 
-</details>
+### Live Server To the Rescue! 
 
+A **server** is just a computer that shares its resources over the internet. A user's computer acts as the **"client"** and requests resources from the server using the `https://` protocol (the hypertext transfer protocol). 
 
+When we visit a URL, like [https://www.google.com](https://www.google.com), our browser converts the **Domain Name** (`google.com`) into the **IP Address** of the server computer where the code for Google lives. Then, our computer sends a **request** to that server computer over the internet and the server sends a **response**.
 
-To get around this, **we need to serve our `html` file from a Server, not from our file system**. This helps the browser see that all of the files are coming from the same origin.
+![The client server interaction](img/client-server-interaction.png)
 
-**Just use Live Server!**
+However, we only get to this point once we **deploy** our project on a **server hosting service**. Until that point, we need to simulate this HTTP request and response cycle using a **development server** like **Live Server**. 
 
-This also plays nice when we deploy using Github Pages (more on that later this week).
+With a development server, our computer acts as both the client and the server.
 
-## Summary
+**Do the following to add live server to your environment**:
+* Go to the VS Code Extension library and find Live Server. Install it.
+* Open your `index.html` file and click on the **Go Live** button in the bottom right corner of your screen
 
-So, let's recap:
+![Install live server](img/live-server.png)
 
-* When loading JavaScript into HTML, we need to wait for the DOM to load.
-* Using `type="module"` defers automatically but we can also use `defer` for non-modular code.
-* We have to use **ESModule** syntax in the browser:
-
-```js
-/* other.js */
-export const test = 'I am a test'; // named export
-export default test; // default export
-
-/* index.js */
-
-import test from './other.js'; // default import in ESModule
-import { test } from './other.js'; // named import in ESModule
-```
-
-* When using modules in the browser, we need to serve the `index.html` file using a server
+Running your web app through a local development server will allow you to simulate a more typical web environment with `http://` or `https://` protocols, which should prevent CORS issues during testing.

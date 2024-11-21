@@ -4,51 +4,58 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-0-html)!
 {% endhint %}
 
-* [First, an Experiment](1-html.md#first-an-experiment)
-* [The Browser is an HTML Viewer](1-html.md#the-browser-is-an-html-viewer)
-* [Live Server](1-html.md#live-server)
-* [What is HTML?](1-html.md#what-is-html)
-* [HTML Elements](1-html.md#html-elements)
-* [Nesting Elements](1-html.md#nesting-elements)
-* [Self Closing Tags](1-html.md#self-closing-tags)
-* [Opening Tag Attributes & Images](1-html.md#opening-tag-attributes--images)
-* [Ids and Classes](1-html.md#ids-and-classes)
-* [Links](1-html.md#links)
-* [Properly formatted document](1-html.md#properly-formatted-document)
-* [Semantic vs Non Semantic Elements](1-html.md#semantic-vs-non-semantic-elements)
-* [Quiz](1-html.md#quiz)
+**Table of Contents**
+- [Markup Languages](#markup-languages)
+  - [The `file://` protocol vs the `http://` protocol](#the-file-protocol-vs-the-http-protocol)
+- [How to write HTML](#how-to-write-html)
+  - [Nesting Elements](#nesting-elements)
+  - [Links and Attributes](#links-and-attributes)
+  - [Images and Self-Closing Tags](#images-and-self-closing-tags)
+  - [Ids and Classes](#ids-and-classes)
+- [Properly formatted document](#properly-formatted-document)
+- [Semantic vs Non Semantic Elements](#semantic-vs-non-semantic-elements)
+- [Quiz](#quiz)
 
-## First, an Experiment
+## Markup Languages
 
-* In your `unit-2` folder, create a new folder called `intro-to-html`
-* Create two files called `index.txt` and `index.html`
-* Put this inside both of them:
+The most basic kind of a file is a `.txt` file which simply stores a string of characters. A `.txt` file is not considered "code" because its characters are interpreted literally.
+
+A **markup language** on the other hand contains symbols that will not be interpreted literally and instead influence how the text inside is viewed.
+
+Markdown (written in `.md` files) is considered a markup language. For example, when we view (**"render"**) the double-asterisk symbols `**` surrounding a word, the text inside will become **bold**:
+
+  ```md
+  Here is some **bold** text.
+  ```
+
+Similarly, **HTML (Hypertext Markup Language)** is a markup language and our browsers are the applications we use to view them.
 
 ```html
-Hello World
-
-<h1>Hello World</h1>
+<h1>Hello World!</h1>
+<p>This is some <strong>bold</strong> text</p>
 ```
 
+To illustrate the difference between markup languages and regular `.txt` files, do the following:
+* In your `unit-2` folder, create a new folder called `intro-to-html`
+* Create two files called `index.txt` and `index.html`
+* Put the code above inside both of them:
 * Right click on the `index.html` file and select Reveal in Finder/Explorer
 * Open Chrome. Then drag and drop the `index.html` into the tab bar (there should be a + icon)
 * Then do the same for your `index.txt` file.
 
-> On WSL, your files will be located under _Linux_ in the File Explorer
->
-> <img src="img/file-explorer-linux.png" alt="Alt text" data-size="original">
+What is the difference between how they are presented by Chrome?
 
-## The Browser is an HTML Viewer
+![A txt and an html file side by side.](img/txt-vs-html.png)
 
-* **Your browser is essentially built to render text and images.**
+At the end of the day, your browser is essentially built to render text and images.
 * The browser can interpret `.html` files and render content with style. It can also execute JavaScript!
 * The first HTML file you should create for a new website should always be `index.html`
   * `index.html` is a magic name that servers will automatically look for if a user enters a domain without a file extension: `test.com` is the same as `test.com/index.html`.
 * `index.html` is commonly known as the **entry point**
 
-## Live Server
+### The `file://` protocol vs the `http://` protocol
 
-* When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retrieve the `.html` file from your file system.
+When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retrieve the `.html` file from your file system.
 
 ![using the file protocol to get the html file](img/index-file-protocol.png)
 
@@ -58,49 +65,42 @@ Hello World
 
 ![using the https protocol to get the html file](img/github-https-protocol.png)
 
-* While we build our websites, we will use a VS Code extension called **Live Server** that _locally_ simulates this server experience (only we can access this server).
-* When we want to publish our website on the internet, we will use Github pages to **host** and **serve** our content (anyone can access this server).
+## How to write HTML
 
-**Take a moment and install the VS Code extension called Live Server**
+**HTML** (**H**yper**t**ext **M**arkup **L**anguage) is the language used to build webpages. It describes **content** and **structure** of a webpage. In other words, what to display and where/how to display it.
 
-## What is HTML?
-
-* **HTML** (**H**yper**t**ext **M**arkup **L**anguage) is the language used to build webpages.
-* It describes **content** of the page (what to display) and the **structure** of the page (where/how to display it)
+**HTML elements** are created using a pair of **opening and closing tags**:
 
 ```html
+<!-- This is a "heading" -->
 <h1>My awesome website</h1>
+
+<!-- This is a "paragraph" -->
 <p>My hobbies are...</p>
+
+<!-- This is an "unordered list", a.k.a. a bullet list -->
 <ul>
+  <!-- "list items" are nested inside the ul -->
   <li>coding</li>
   <li>soccer</li>
   <li>cooking</li>
 </ul>
 ```
 
-* `h1`, `p`, `ul` and `li` are called **HTML tags**
-* HTML tags determines _how_ the content inside them is displayed.
+* We create a comment with the syntax `<!-- comment -->`
+* Notice the opening tag (`<tagName>`) and the closing tag (`</tagName>`) for each HTML element
+  * The tag name determines _how_ the content inside them is displayed (e.g. as a heading, a paragraph, or a bulleted list)
+  * Only the content between the tags is displayed to the user. The angle brackets (`<>`) and the tag name are not displayed.
 
-## HTML Elements
+{% hint style="info" %}
+**More about headings**: headings are created using the tags `h1` through `h6`. The first heading should always be `h1` and there should only be one `h1` per page. Subsequent headings should flow in descending order to indicate the structure of the document.
+{% endhint %}
 
-* **HTML elements** are created using an **opening tag** and a **closing tag**.
+### Nesting Elements
 
-```html
-<!-- This is a comment -->
-<h1>content to be shown</h1>
-<p>
-  This works too
-</p>
-<!-- Notice the / in the closing tag -->
-```
+As you may have noticed with the `ul` element, tags can **nest** other tags inside them.
 
-* The content between the tags is displayed to the user.
-* **Headers** are created using `h1`, `h2`, `h3`, `h4`, `h5`, or `h6`. There should only be one `h1` per page and they should flow in descending order.
-* **Paragraphs** are created using `p` and are for most normal text.
-
-## Nesting Elements
-
-* Text is not the only thing that can go in a tag, in fact _most_ tags **nest** other tags.
+An element that is commonly used to contain other elements is the `<div>` element (short for "division").
 
 ```html
 <div>
@@ -112,17 +112,20 @@ Hello World
 </div>
 ```
 
-* Nested elements should always be indented one level for readability.
-* Good examples of this are the **ordered list** and **unordered list** tags and their **list items**:
+Nested elements should always be indented one level for readability.
+
+Other examples of this are the **ordered list** and **unordered list** tags and their **list items**:
 
 ```html
-<h2>Make dinner</h2>
+<!-- An ordered list is rendered with numbers -->
+<h2>Steps to make dinner</h2>
 <ol>
   <li>Get freezer meal</li>
   <li>Put in microwave</li>
   <li>Eat</li>
 </ol>
 
+<!-- An unordered list is rendered with bullets -->
 <h2>Pets</h2>
 <ul>
   <li>Dogs</li>
@@ -131,27 +134,47 @@ Hello World
 </ul>
 ```
 
-* **Child tags** are those that are nested in a **parent tag**.
-* Tags that are in the same nesting level next to each other are **sibling tags**.
+We refer to the element acting as the "container" as the **parent** and the elements nested inside as the **children**. Tags that are in the same nesting level next to each other are **sibling tags**.
 
-## Self Closing Tags
+**<details><summary>Q: What is the relationship between a `ul` and the `li` elements inside? What about the relationship between the `ul` and the `h2` element?</summary>**
+> The `ul` element is the parent and the `li` elements are its children. The `ul` and `h2` elements are siblings.
+</details>
 
-* Some HTML elements have **self-closing tags** like image elements (`<img />`), line-break elements (`<br />`), and horizontal-rule elements (`<hr />`).
-* These have no closing tag!
+### Links and Attributes
+
+One of the most basic elements in a website is a link to another page. We create a link element (a.k.a. an **"anchor"**) using the `<a>` tag:
+
 
 ```html
-<hr /> <!-- The `/>` isn ot strictly required, but  is recommended -->
-<hr> <!-- technically okay -->
-<br />
+<!-- The href attribute goes in the opening tag -->
+<a href="https://google.com">Go to Google</a>
 ```
 
-* Usually `br` is just a stop-gap for testing and rapid iteration
-* In reality breaks on the page should be controlled by css.
-* `hr` tags can be styled to look like nice dividers
+Notice that this tag contains extra code inside of the opening `<a>` tag! `href` stands for "hyperlink reference" and is an "attribute". **Attributes** provide additional piece of information used to render an element and are included in the opening tag.
 
-## Opening Tag Attributes and Images
+* In this case, the content between the tags is what the user will see while the `href` attribute tells the browser where to redirect the user after clicking on the link. 
 
-* Sometimes, we need more information to render a tag. For example, images need a media source.
+Links can take you to online sites, local or absolute pages of our own, or even reference elements within the page (they link to ids)
+
+```html
+<a href="https://google.com">Go to Google</a>
+<a href="./">Go Home</a>
+<a href="./about">Our About Page</a>
+<a href="#more-information">See more information</a>
+```
+
+* Be careful with relative links: `"/"` is the root of the _server_ which may not be where you mean.
+* Local links `./`, `../` will direct you from your current directory.
+* Links can also be nested, but will still flow seamlessly in the final document.
+
+```html
+<p> If you're looking for things <a href="https://google.com">Go to Google</a>, and you'll see ads</p>
+```
+* Link text should _always_ be descriptive of where you're going, never just put "click here."
+
+### Images and Self-Closing Tags
+
+Another common element type is an image. Images have one required attribute `src` and an optional attribute `alt`
 
 ```html
 <img 
@@ -160,16 +183,17 @@ Hello World
 />
 ```
 
-* **Attributes** add additional information about an element and are listed in the opening tag.
-* `src` is the actual media source
-* `alt` tells bots and screen readers what the picture is. It's also what can show up if the link is broken.
+* Notice that the image element doesn't require a closing bracket. It is considered a **self-closing tag**.
+* `src` is the source location of the image
+* `alt` describe the picture to screen readers.
   * If the content is central to your site, you _must_ include an `alt` attribute
   * If the picture is just a decoration (like a background image) you do not need an `alt` attribute.
-  * In your `alt` do not say "picture of" or anything, just describe the image.
-* `src` can be a hyperlink or a local link:
+  * Be specific with your `alt` text.
+
+`src` can be a hyperlink (a link to another web page) or a local link:
 
 ```html
-<img src="https://http.cat/images/415.jpg" alt="cat eating a record" />
+<img src="https://http.cat/images/415.jpg" alt="A cat eating a record" />
 
 <img src="./images/lecture-prep/images/cat-pizza.png" alt="cat eating a pizza" />
 ```
@@ -183,7 +207,9 @@ Hello World
 </figure>
 ```
 
-## Ids and Classes
+### Ids and Classes
+
+Two attributes that we can apply to ANY element are `id` and `class`. These allow us to label elements. 
 
 * `id`s mark a tag as a _single_, unique, important item on your page.
 * `class`es are for denoting a bunch of related tags, and can appear more than once per page.
@@ -211,35 +237,6 @@ Hello World
 
 * `id` = one name per page, one per tag
 * `class` = multiple per page, multiple space separated names per tag
-
-## Links
-
-* Pages often link to others with **hyperlink anchor** tags `<a>`.
-* They have an `href` attribute for where to go
-* The tag contents are displayed as the link
-
-```html
-<a href="https://google.com">Go to Google</a>
-```
-
-* Links can take you to online sites, local or absolute pages of our own, or even reference elements within the page (they link to ids)
-
-```html
-<a href="https://google.com">Go to Google</a>
-<a href="./">Go Home</a>
-<a href="./about">Our About Page</a>
-<a href="#more-information">See more information</a>
-```
-
-* Be careful with relative links: `"/"` is the root of the _server_ which may not be where you mean.
-* Local links `./`, `../` will direct you from your current directory.
-* Links can also be nested, but will still flow seamlessly in the final document.
-
-```html
-<p> If you're looking for things <a href="https://google.com">Go to Google</a>, and you'll see ads</p>
-```
-
-* Link text should _always_ be descriptive of where you're going, never just put "click here."
 
 ## Properly formatted document
 
