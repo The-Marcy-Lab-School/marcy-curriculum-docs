@@ -12,6 +12,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
   - [CORS](#cors)
   - [Live Server To the Rescue!](#live-server-to-the-rescue)
+- [Challenge](#challenge)
 
 ## Terms
 
@@ -302,3 +303,7 @@ With a development server, our computer acts as both the client and the server.
 ![Install live server](img/live-server.png)
 
 Running your web app through a local development server will allow you to simulate a more typical web environment with `http://` or `https://` protocols, which should prevent CORS issues during testing.
+
+## Challenge
+
+Take the example to the next level and insert a form to enable a user to add a new post to this page! Improve the appearance and layout of the page by modifying the styles.
