@@ -4,6 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-3-esmodules)!
 {% endhint %}
 
+- [Terms](#terms)
 - [Loading JavaScript into our HTML](#loading-javascript-into-our-html)
   - [DOMContentLoaded](#domcontentloaded)
   - [Dealing with Multiple JavaScript Files](#dealing-with-multiple-javascript-files)
@@ -11,6 +12,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
   - [CORS](#cors)
   - [Live Server To the Rescue!](#live-server-to-the-rescue)
+
+## Terms
+
+* **ESModules** — the syntax for organizing code into modules in the browser.
+* **Cross-Origin Resource Sharing (CORS)** — a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original web page. 
+* **Server** — a computer that shares its resources over the internet. A user's computer acts as the **"client"** and requests resources from the server using the `https://` protocol (the hypertext transfer protocol). 
+* **Development Server** — a server used in development to test and iterate on an application before publishing it.
+* **Live Server** — a tool for starting a development server.
+
 
 ## Loading JavaScript into our HTML
 
@@ -78,7 +88,7 @@ document.addEventListener('DOMContentLoaded', main);
 
 Here, we attach an event listener to the `document` that waits for all of the DOM content to load before invoking our `main` function.
 
-This lets us put the `<script>` in the `<head>` which means **the browser will start loading that file** but won't run it until the DOM is complete.
+This lets us put the `<script>` in the `<head>` which means the browser will start loading that file but won't run it until the DOM is complete.
 
 **<details><summary>Q: Is it still possible for us to have errors in our app?</summary>**
 
