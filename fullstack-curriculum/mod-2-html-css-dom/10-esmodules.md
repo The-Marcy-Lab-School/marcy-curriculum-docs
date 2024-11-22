@@ -4,19 +4,71 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-3-esmodules)!
 {% endhint %}
 
-- [Terms](#terms)
+- [Key Concepts](#key-concepts)
 - [Loading JavaScript into our HTML](#loading-javascript-into-our-html)
-  - [DOMContentLoaded](#domcontentloaded)
-  - [Dealing with Multiple JavaScript Files](#dealing-with-multiple-javascript-files)
-- [Remember Node Exports and Imports?](#remember-node-exports-and-imports)
-  - [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
-  - [CORS](#cors)
+- [Remember `module.exports` and `require()`?](#remember-moduleexports-and-require)
+- [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
+  - [Turning Scripts Into Modules](#turning-scripts-into-modules)
+    - [CORS](#cors)
   - [Live Server To the Rescue!](#live-server-to-the-rescue)
+  - [Summary](#summary)
 - [Challenge](#challenge)
 
-## Terms
+## Key Concepts
 
-* **ESModules** — the syntax for organizing code into modules in the browser.
+* **CommonJS** — the import/export syntax used by Node. It is not supported by browsers.
+* **ESModules** — the syntax supported by browsers for organizing code into modules.
+  * **Default Export** — used to export the single most important value from a file
+
+    ```js
+    const theMainFunction = () => {};
+
+    // this must be its own statement;
+    export default theMainFunction;
+
+    // in Node, we would have written:
+    // module.exports = theMainFunction;
+    ```
+
+
+  * **Named Export** — used to export one of many values from a file
+
+    ```js
+    // we can put export before the declaration of a variable
+    export const oneOfMany = () => { /* something worth exporting */ };
+
+    // or export it as a separate statement
+    const anotherOfMany = () => { /* something worth exporting */ };
+    export anotherOfMany;
+
+    // in Node, we would have written:
+    // module.exports = { oneOfMany, anotherOfMany }
+    ```
+
+  * **Importing**
+
+    Note: you *must* specify the file type `.js`
+  
+    ```js
+    // Default import
+    import theMainFunction from './the-main-function.js'
+
+    // Named imports
+    import { oneOfMany, anotherOfMany } from './named-exports.js'
+    ```
+
+* **Module Script** — The `type="module"` attribute added to a `script` tag enables a few pieces of desired functionality:
+  * We can put the `script` in the `head` since a module script will always wait for the dom content to load before executing.
+  * It enables us to use ESModule syntax (see above)
+  * Variables declared in module scripts are NOT added to the global namespace
+
+    ```html
+    <head>
+      <script type="module" src="filename.js"></script>
+    </head>
+    ```
+
+  * The one drawback is that we cannot use modules with the `file://` protocol without running into CORS issues. We must use a development server to enable the `http://` protocol.
 * **Cross-Origin Resource Sharing (CORS)** — a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original web page. 
 * **Server** — a computer that shares its resources over the internet. A user's computer acts as the **"client"** and requests resources from the server using the `https://` protocol (the hypertext transfer protocol). 
 * **Development Server** — a server used in development to test and iterate on an application before publishing it.
@@ -25,194 +77,177 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ## Loading JavaScript into our HTML
 
-So far, if we want our web applications to execute JavaScript code, we add a `script` tag to the end of the `body` of our HTML:
+Thus far, when we've wanted to execute JavaScript in our web applications, we've added  `script` tags to the end of the `body` of our HTML:
 
 ```html
 <body>
   <h1>Hello World!</h1>
+  
+  <script src="./posts.js"></script>
+  <script src="./dom-helpers.js"></script>
   <script src="./index.js"></script>
 </body>
 ```
 
-Then, we can run code like this:
+Doing so executes the scripts in the order they are loaded (so order matters) and all variables declared are added to the **global namespace**. That is, variables declared in one file can be used in *subsequent* files (again, the order of the scripts matters).
 
-```js
+Take a look at the `0-intro/index.js` file to see this in action:
+
+{% code title="0-intro/index.js" lineNumbers="true" %}
+```javascript
 const main = () => {
-  const h1 = document.querySelector('h1')
-  h1.textContent = 'Coding is the best';
+  const numPosts = Object.keys(posts).length;
+  updateHeading(`Check out my ${numPosts} posts!`);
+
+  renderPosts();
 }
 
-// Execute the main function upon loading this script
 main();
 ```
+{% endcode %}
 
-**<details><summary>Q: Why do we put the script at the end of the body?</summary>**
+This file uses three values that are declared in other files.
+* `posts` is declared in the `posts.js` file
+* The functions `updateHeading` and `renderPosts` are declared in the `dom-helpers.js` file.
 
-Because our JavaScript uses the Elements in the body. If those Elements haven't loaded yet, we can't referenced them! We'll get errors like this:
+Loading `script` tags at the end of the `body` and adding variables to the global namespace enable us to organize our JavaScript into separate files. However, there are some downsides to this implementation.
 
-```error
-Uncaught TypeError: Cannot set properties of null (setting 'textContent')
-```
+**<details><summary>Q: What are the possible downsides of adding `script` tags at the end of the `body` and adding variables to the global namespace?</summary>**
+
+**Downsides of adding `script` tags to the end of the `body`**
+* To start, it just doesn't make much sense. The `body` is reserved for visible content while the `head` is where we load in other files. That's where we load in CSS after all.
+
+    ```html
+    <head>
+      <!-- other meta tags + scripts -->
+      <script src="./index.js"></script>
+    </head>
+    <body>
+      <!-- Visible content -->
+    </body>
+    ```
+
+* Additionally, we have to load in every single JavaScript file that we want to use. If had 1000 `.js` files, our `index.html` file would become really clunky.
+* Lastly, we have to make sure that the order is correct. If we load a script *after* its variables are needed, the file that depends on those variables will throw an error.
+
+**Downsides of adding variables to the global namespace**
+* It is not explicitly clear where a variable comes from. If I were a new programmer looking at `index.js`, I would have no idea where any of those values came from.
+* Additionally, it makes it really difficult to keep track of changes to variables that are shared globally for an application if multiple files are using the same variables.
 
 </details>
 
-### DOMContentLoaded
+We need a better approach that enables us to avoid adding `script` tags to our `body`, avoids the issue of order mattering, and avoids adding variables to the global namespace. Thankfully, there is one!
 
-Organization is always important when programming and the organization of our application would be improved if we could put `script` tags within the `head`. The logic behind this is that our `script` isn't adding any visible content to our `body`. CSS files are linked in the `head` too, after all.
+## Remember `module.exports` and `require()`?
 
-```html
-<head>
-  <!-- other meta tags + scripts -->
-  <script src="./index.js"></script>
-</head>
-<body>
-  <!-- Visible content -->
-</body>
-```
-
-However, with the `script` in the `head`, we will get errors since our JavaScript attempts to access elements that have not yet loaded. 
-
-The original solution to this was to wait for the HTML content to finish loading by adding an event listener to our JavaScript:
-
-```js
-// Executes immediately
-console.log("hello from index.js");
-
-const main = () => {
-  const h1 = document.querySelector('h1')
-  h1.textContent = 'Coding is the best';
-};
-
-// Only execute main once the DOM content has been loaded
-document.addEventListener('DOMContentLoaded', main);
-```
-
-Here, we attach an event listener to the `document` that waits for all of the DOM content to load before invoking our `main` function.
-
-This lets us put the `<script>` in the `<head>` which means the browser will start loading that file but won't run it until the DOM is complete.
-
-**<details><summary>Q: Is it still possible for us to have errors in our app?</summary>**
-
-Yes! If you accidentally put some DOM code outside of the safety of the `main` function.
-
-```js
-console.log("hello from index.js");
-
-const h1 = document.querySelector('h1')
-
-const main = () => {
-  h1.textContent = 'Coding is the best';
-  // ^ this will throw an error because h1 was declared before the content was loaded
-};
-
-document.addEventListener('DOMContentLoaded', main);
-```
-
-</details>
-
-### Dealing with Multiple JavaScript Files
-
-Suppose I wanted to load more JavaScript files. Like this one which declares a `posts` variable with data about posts that I want to render:
-
-{% code title="posts.js" %}
-```javascript
-// this is a global variable
-const posts = {
-  "dd1286de": {
-    id: "dd1286de",
-    caption: "the cutest cat in the world",
-    src: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHx8MA%3D%3D"
-  },
-  // ... more objects like this one
-};
-```
-{% endcode %}
-
-And this one which renders posts from the file above:
-
-{% code title="dom-helpers.js" %}
-```javascript
-const renderPosts = () => {
-  const postsContainer = document.querySelector('#posts-container');
-
-  Object.values(posts).forEach((post) => {
-    const li = document.createElement('li');
-    const img = document.createElement('img');
-    const caption = document.createElement('p');
-
-    li.id = post.uuid;
-    img.src = post.src;
-    img.alt = post.caption;
-    caption.textContent = post.caption;
-
-    li.append(img, caption);
-    postsContainer.append(li);
-  });
-}
-```
-{% endcode %}
-
-To utilize this code, we just add `<script>`s for each file:
-
-```html
-<head>
-  <!-- The order matters! -->
-  <script src="./posts.js"></script>
-  <script src="./dom-helpers.js"></script>
-  <script src="./index.js"></script>
-</head>
-```
-
-What happens is that the variable `posts` and the function `renderPosts` are added to the "global namespace" and can be referenced anywhere in subsequent files.
-
-But this is an error prone process and will quickly become problematic if we add more and more files. If we just swap the order of the scripts in HTML, we will get an error.
-
-```html
-<head>
-  <!-- other meta tags -->
-  <script src="./index.js"></script>
-  <script src="./dom-helpers.js"></script>
-  <script src="./posts.js"></script>
-</head>
-```
-
-We need a better solution.
-
-## Remember Node Exports and Imports?
-
-In Node, we can share code by exporting using `module.exports` syntax:
+In Node, we can share code by exporting assigning a value to the `module.exports` variable:
 
 {% code title="1-node-commonjs/posts.js" %}
 ```javascript
 const posts = {
-  "dd1286de": {
-    id: "dd1286de",
-    caption: "the cutest cat in the world",
-    src: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHx8MA%3D%3D"
-  },
-  // more objects
+  // objects
 };
 
-// use a default export
+// Exporting a single value
 module.exports = posts;
 ```
 {% endcode %}
 
-And then we can import it using `require()`:
+We can also export an object with multiple "named exports"
 
-{% code title="1-node-commonjs/index.js" %}
+{% code title="1-node-commonjs/math-utils.js" %}
 ```javascript
-const posts = require('./posts.js')
+const add = (a, b) => a + b;
 
-console.log(posts);
+const isEven = (num) => {
+  const remainder = num % 2;
+  return remainder === 0;
+}
+
+// Exporting multiple values inside an object
+module.exports = { add, isEven };
 ```
 {% endcode %}
 
-### Importing and Exporting with ESModules
+And then we can import using `require()`:
 
-In the browser, we need to use a different syntax called **ESModules**. To enable this functionality, we have to make a few changes.
+{% code title="1-node-commonjs/index.js" %}
+```javascript
+// Importing a "default export" (a single value)
+const posts = require('./posts.js')
 
-Start by adding a `type="module"` to our `<script>`. We can also remove the other scripts since we'll be importing their code via JavaScript:
+// Importing "named exports" (multiple values)
+const { add, isEven } = require('./math-utils.js');
+
+console.log(posts);
+console.log(add(5, 6));
+console.log(isEven(5));
+```
+{% endcode %}
+
+## Importing and Exporting with ESModules
+
+The import/export syntax used by Node is called **CommonJS** but it is unfortunately not supported by browsers.
+
+In the browser, we need to use a different syntax called **ESModules**. Using this syntax will help us explicitly share values between files, rather than relying on adding variables to the global namespace to share values.
+
+* **Default Export** — used to export the single most important value from a file
+
+    ```js
+    const theMainFunction = () => {};
+
+    // this must be its own statement;
+    export default theMainFunction;
+
+    // in Node, we would have written:
+    // module.exports = theMainFunction;
+    ```
+
+* **Named Export** — used to export one of many values from a file
+
+  ```js
+  // we can put export before the declaration of a variable
+  export const oneOfMany = () => { /* something worth exporting */ };
+
+  // or export it as a separate statement
+  const anotherOfMany = () => { /* something worth exporting */ };
+  export anotherOfMany;
+
+  // in Node, we would have written:
+  // module.exports = { oneOfMany, anotherOfMany }
+  ```
+
+* **Importing**
+
+  Note: you *must* specify the file type `.js`
+
+  ```js
+  // Default import
+  import theMainFunction from './the-main-function.js'
+
+  // Named imports
+  import { oneOfMany, anotherOfMany } from './named-exports.js'
+  ```
+
+**TODO:** Do the following to export values from `posts` and `dom-helpers`
+* In `posts.js`, export the `posts` variable as a default export
+* In `dom-helpers.js`, first import `posts` as a default import. Then, export each function as a named export.
+* In `index.js` import `posts` from `posts.js` and import both of the functions from `dom-helpers.js`
+
+Try running your code and you will be met with an annoying error:
+
+```
+Uncaught SyntaxError: Unexpected token 'export' (at posts.js:20:1)Understand this errorAI
+Uncaught SyntaxError: Cannot use import statement outside a module (at index.js:3:1)
+```
+
+Unfortunately, we can't use this syntax either! But actually, we can. We just need to turn our script into a module.
+
+### Turning Scripts Into Modules
+
+To enable the use of ESModules, just add a `type="module"` attribute to the `<script src="./index.js">` opening tag.
+
+Doing so will also enable us to put that script in the `head`! Module scripts automatically wait for the DOM content to load before executing so we don't need to put them at the end of our `body` anymore!
 
 ```html
 <head>
@@ -221,58 +256,11 @@ Start by adding a `type="module"` to our `<script>`. We can also remove the othe
 </head>
 ```
 
-Then, we can export values as "default exports" using the `export default value` syntax:
+Furthermore, the use of ESModules makes it unnecessary to load all of the scripts in our `html` file. When our `index.js` file imports values from `posts.js` and `dom-helpers.js`, those files will be loaded automatically.
 
-{% code title="2-esmodules/posts.js" %}
-```javascript
-const posts = {
-  "dd1286de": {
-    id: "dd1286de",
-    caption: "the cutest cat in the world",
-    src: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHx8MA%3D%3D"
-  },
-  // more objects
-};
+Try to open this and... you'll run into another error :(
 
-// use a default export with ESModules syntax
-export default posts;
-```
-{% endcode %}
-
-We can import that export default into `dom-helpers` and export a named function `renderPosts`:
-
-{% code title="2-esmodules/dom-helpers.js" %}
-```javascript
-// Import the default export of posts.js and call it `posts`
-import posts from './posts.js'
-
-// Put the `export` keyword to export a "named export"
-export const renderPosts = () => {
-  // ...
-}
-```
-{% endcode %}
-
-And finally we can import the named `renderPosts` function into `index.js`
-
-{% code title="2-esmodules/index.js" %}
-```javascript
-// Use curly braces to import a "named export"
-import { renderPosts } from './dom-helpers.js'
-
-const main = () => {
-  document.querySelector('h1').textContent = 'Coding is the best';
-  renderPosts();
-}
-
-// We don't need the event listener anymore. Modules automatically wait for the content to load!
-main();
-```
-{% endcode %}
-
-Try to open this and... you'll run into an error :(
-
-### CORS
+#### CORS
 
 The **Cross-Origin Resource Sharing (CORS)** policy is a security feature implemented by web browsers to restrict webpages from making requests to a different domain than the one that served the original web page. 
 
@@ -304,6 +292,17 @@ With a development server, our computer acts as both the client and the server.
 
 Running your web app through a local development server will allow you to simulate a more typical web environment with `http://` or `https://` protocols, which should prevent CORS issues during testing.
 
+### Summary
+
+**And now it works!** 
+
+Wow that may have seemed like a lot of work to get the same functionality but we've learned a valuable new way of organizing our code. If we use this approach from the start, we won't have any issues and we'll only have the benefits. Here is what we did:
+
+* We added ESModule exports and imports to explicitly share values between our files.
+* We added the `type="module"` attribute to our `index.js` script.
+* We moved that script to the `head` and removed the other script tags.
+* We ditched the `file://` protocol and instead served our website using the `http://` protocol via the Live Server development server.
+
 ## Challenge
 
-Take the example to the next level and insert a form to enable a user to add a new post to this page! Improve the appearance and layout of the page by modifying the styles.
+Take the example to the next level and insert a form to enable a user to add a new post to this page!
