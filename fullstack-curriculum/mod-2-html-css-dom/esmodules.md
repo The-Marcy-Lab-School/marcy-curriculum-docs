@@ -10,7 +10,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
   - [Turning Scripts Into Modules](#turning-scripts-into-modules)
     - [CORS](#cors)
-  - [Live Server To the Rescue!](#live-server-to-the-rescue)
+  - [What is a Server?](#what-is-a-server)
+  - [Live Server](#live-server)
   - [Summary](#summary)
 - [Challenge](#challenge)
 
@@ -272,7 +273,7 @@ To get around this, **we need to serve our `html` file using the `http://` proto
 
 ([Learn more about CORS here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)).
 
-### Live Server To the Rescue! 
+### What is a Server? 
 
 A **server** is just a computer that shares its resources over the internet. A user's computer acts as the **"client"** and requests resources from the server using the `https://` protocol (the hypertext transfer protocol). 
 
@@ -280,9 +281,11 @@ When we visit a URL, like [https://www.google.com](https://www.google.com), our 
 
 ![The client server interaction](img/client-server-interaction.png)
 
-However, we only get to this point once we **deploy** our project on a **server hosting service**. Until that point, we need to simulate this HTTP request and response cycle using a **development server** like **Live Server**. 
+With a **development server**, we can simulate this **HTTP request-response cycle** by having our computer act as both the client and the server.
 
-With a development server, our computer acts as both the client and the server.
+### Live Server
+
+While it is easy enough to build a server of your own using [Express](../mod-8-backend/1-intro-to-express.md), we can also use a tool like Live Server.
 
 **Do the following to add live server to your environment**:
 * Go to the VS Code Extension library and find Live Server. Install it.

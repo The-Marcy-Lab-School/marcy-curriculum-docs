@@ -15,7 +15,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ## What is localStorage?
 
-The `localStorage` interface allows you to **store data across browser sessions**.
+The `localStorage` interface allows you to **store data in a user's browser across browser sessions (after they refresh)**.
 
 It is an Object that is available on the `window` (it is globally available) and it has 4 methods:
 
