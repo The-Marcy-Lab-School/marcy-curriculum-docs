@@ -32,7 +32,7 @@ Making video games is one of the greatest joys of programming. And for good reas
 
 Suppose we had a game where the user is challenged to click a button as many times as they can in 5 seconds.
 
-![](game)
+![ a game where the user is challenged to click a button as many times as they can in 5 seconds.](img/speed-clicker.gif)
 
 To encourage the competitive spirit of gaming, a key feature that we want to implement is a leaderboard to display the user's previous scores. Take a look at the `speed-clicker-game` where we've implemented this game!
 
