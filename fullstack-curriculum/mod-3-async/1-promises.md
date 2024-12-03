@@ -288,6 +288,7 @@ fs.readFile(booksHugeFilePath, 'utf-8')
     console.log(`Done reading the books.csv file. There were ${lines} lines.`);
   })
   .catch((err) => {
+    // We only need one error handler.
     console.error(err);
   });
 ```
@@ -325,19 +326,6 @@ fs.readFile(booksHugeFilePath, 'utf-8', (err, data) => {
 {% endtabs %} 
 
 As you can see in the callbacks version of the code, we very quickly get to four levels of indentation, causing the readability of our code suffer.
-
-
-
-
-
-<details>
-
-<summary><strong>Q: When are the callbacks given to <code>.then()</code> or <code>.catch()</code> executed?</strong></summary>
-
-When the promise is fulfilled or rejected (step 5a, or 5b). NOT when it is initially passed to `.then()` or `.catch()` (step 2).
-
-</details>
-
 
 ## Making Promises
 
