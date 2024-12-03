@@ -96,11 +96,13 @@ While this takes a bit more setup than Live Server, Vite provides many upgrades 
 
 As you may have noticed, rather than linking the `style.css` in the `index.html` file, we imported it into `main.js`! For now, compared to linking in HTML, this approach doesn't provide much benefit. However, when we get to React it will provide some benefits.
 
-What IS much better is the ability to import JSON files directly. We can't do this using Live Server:
+What IS much better is the ability to import JSON files directly. Suppose we had an `example.json` file that we wanted to import into our project. We can easily do this:
 
 ```js
 import data from './example.json';
 ```
+
+We can't do this using Live Server.
 
 Lastly, we can install NPM dependencies into our projects and import them by only their name. To test this, install the `uuid` package:
 
@@ -153,7 +155,7 @@ To deploy this distribution version of your application, check out the article o
 
 Now that we know what Vite can do, let's start making an application with it! Vite provides an application for you to get started with but we want to make it our own.
 
-First, remove these unecessary files
+First, remove these unnecessary files
 
 ```sh
 # delete these files
@@ -177,9 +179,11 @@ We leave only the `index.html` file at the root of the project because it serves
 All future JavaScript and CSS files you create should exist somewhere within `src`. Feel free to create more folders inside it if you'd like.
 
 Finally, we can edit the provided starter code:
-* Edit the `<script>` tag `index.html` (line 11) so that it references the new location of `main.js`
+* Edit the `<script>` tag in `index.html` (line 11) so that it references the new location of `main.js`: `"/src/main.js"`
 * Empty out the `style.css` file
-* Empty out the `main.js` file and replace it with the following code:
+* Empty out the `main.js` file.
+
+Now, we have an empty project that we can use as a starting point! To test it out, go ahead and replace the `main.js` file with the following code:
 
 ```js
 import './style.css'
