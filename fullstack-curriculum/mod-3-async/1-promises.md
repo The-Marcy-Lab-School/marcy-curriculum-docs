@@ -339,8 +339,8 @@ const myPromise = new Promise((resolve, reject) => {
 
 * The `new Promise()` constructor function takes in a callback that contains the asynchronous operations to be performed. 
 * The provided callback will be given two functions as parameters: `resolve` and `reject`.
-  * Invoke `resolve(...)` to indicate that the asynchronous operation succeeds.
-  * Invoke `reject(...)` to indicate failure.
+  * Invoke `resolve(successValue)` to indicate that the asynchronous operation succeeds.
+  * Invoke `reject(failureValue)` to indicate failure.
 
 ```js
 // The callback determines when and how the promise resolves (or rejects)
@@ -359,17 +359,24 @@ const rollPromise = new Promise((resolve, reject) => {
   }, 5000);
 });
 
-// schedule a callback to execute when the promise resolves or rejects
+// schedule callbacks to execute when the promise resolves or rejects
 rollPromise
   .then((successMessage) => {
     console.log(successMessage);
   })
   .catch((failureMessage) => {
-    console.log(failureMessage);
+    console.error(failureMessage);
   })
 ```
 
-* In this example, we use `setTimeout(...)` to simulate async code. A more realistic example might make an HTTP request or interact with a database, something that takes time.
+Let's break down this example:
+* We declare `rollPromise` to hold the new `Promise` object being created. We use this variable to define resolve/reject handlers with `.then` and `.catch`.
+* Within the callback provided to `new Promise()`, the asynchronous operation is a timer counting down from 5.
+* When the timer is done, we will "roll a die".
+  * If the die roll is greater than 2, we invoke `resolve` with a success message.
+  * Otherwise, we invoke `reject` with a failure message.
+* The value we invoke `resolve` with is passed to the `.then` handler which we've decided to print with `console.log`.
+* The value we invoke `reject` with is passed to the `.then` handler which we've decided to print with `console.error`.
 
 Here is an example of a Promise that resolves immediately and never rejects:
 
@@ -385,7 +392,9 @@ guarantee.then(data => {
 });
 ```
 
-* Most often, you don’t create Promises yourself. You’ll just "consume" them from functions like `fs.readFile` or `fetch`.
+{% hint style="info" %}
+Most often, you don’t create Promises yourself. You’ll just "consume" them from functions like `fs.readFile` or `fetch`.
+{% endhint %}
 
 <details>
 
