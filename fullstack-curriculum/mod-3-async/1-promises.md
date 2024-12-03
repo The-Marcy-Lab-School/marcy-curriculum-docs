@@ -343,13 +343,13 @@ const myPromise = new Promise((resolve, reject) => {
   * Invoke `reject(...)` to indicate failure.
 
 ```js
-// 1. Create the new promise object, determining when it resolves and when it rejects
+// The callback determines when and how the promise resolves (or rejects)
 const rollPromise = new Promise((resolve, reject) => {
   // wait 5 seconds before settling the promise
   setTimeout(() => {
     const roll = Math.ceil(Math.random() * 6);
 
-    // In this case, rolls 3,4,5, or 6 will resolve the promise
+    // In this case, rolls 3, 4, 5, or 6 will resolve the promise
     // Rolls 1 or 2 will reject the promise
     if (roll > 2) {
       resolve(`Success! ${roll} was rolled`);
@@ -370,7 +370,22 @@ rollPromise
 ```
 
 * In this example, we use `setTimeout(...)` to simulate async code. A more realistic example might make an HTTP request or interact with a database, something that takes time.
-* Most often, you don’t create Promises yourself. You’ll just "consume" them from functions like `fs.readFile` or `fetch`
+
+Here is an example of a Promise that resolves immediately and never rejects:
+
+```js
+// The simplest Promise looks like this. It will resolve 100% of the time:
+const guarantee = new Promise((resolve, reject) => {
+  resolve('100% of the time, it works every time');
+});
+
+guarantee.then(data => {
+  console.log("I dont even need a catch since it will always resolve");
+  console.log(data);
+});
+```
+
+* Most often, you don’t create Promises yourself. You’ll just "consume" them from functions like `fs.readFile` or `fetch`.
 
 <details>
 
