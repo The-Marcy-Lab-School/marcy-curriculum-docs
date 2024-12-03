@@ -204,9 +204,6 @@ Consider the example below which uses the Promises version of the `fs.readFile` 
 {% tab title="Promises" %} 
 
 ```js
-const path = require('node:path');
-const ravenFilePath = path.join(__dirname, '../data/the-raven.txt');
-
 // Now, we'll use the promises version of fs
 const fs = require('node:fs/promises');
 
@@ -232,13 +229,12 @@ promise
 
 {% tab title="Callbacks" %} 
 ```js
-const path = require('node:path');
-const ravenFilePath = path.join(__dirname, '../data/raven.txt');
-
+// Here, we use the default callback version of fs
 const fs = require('node:fs');
 
 console.log("Reading the-raven.txt");
 
+// We have to provide a callback as the third argument
 fs.readFile(ravenFilePath, 'utf-8', (err, data) => {
   if (err) {
     console.log('Something went wrong!');
