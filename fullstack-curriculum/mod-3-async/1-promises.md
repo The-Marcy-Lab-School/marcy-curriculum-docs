@@ -271,6 +271,8 @@ Compare and contrast these two approaches for reading the `booksHuge.csv` file f
 const fs = require('node:fs/promises');
 
 console.log("Reading the booksHuge.csv file");
+
+// Often, we will just call .then directly on the function call
 fs.readFile(booksHugeFilePath, 'utf-8')
   .then((data) => {
     const lines = data.split('\n').length;
