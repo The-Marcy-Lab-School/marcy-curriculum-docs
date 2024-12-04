@@ -12,7 +12,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [JSON.stringify() and JSON.parse()](#jsonstringify-and-jsonparse)
   - [Adding the leaderboard to LocalStorage](#adding-the-leaderboard-to-localstorage)
 - [`localStorage` Helpers](#localstorage-helpers)
-- [Data Layer](#data-layer)
+  - [Data Layer: Creating an API for `localStorage`](#data-layer-creating-an-api-for-localstorage)
 - [Removing Values](#removing-values)
 
 ## Key Terms
@@ -204,9 +204,19 @@ if (leaderboard === null) {
 
 ## `localStorage` Helpers
 
-That's quite a bit of code to write and re-write every time we can to set or get values to/from `localStorage`.
+Having to remember stringify our values before adding them to `localStorage` can be a pain. In addition, using `JSON.parse` can sometimes result in an error if the string we are parsing is not in valid JSON format.
 
-To reduce repetition, we often write these two helper functions:
+For example, JSON objects need to have double-quotations ("") around the keys (single quotations won't work!):
+
+```js
+JSON.parse(`{ "hello": "world" }`)
+// This works fine
+
+JSON.parse(`{ 'hello': 'world' }`);
+//Uncaught SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)
+```
+
+To ensure that we are always and consistently stringifying and parsing every time we interact with `localStorage`, we can write these two helper functions:
 
 ```js
 const setLocalStorageKey = (key, value) => {
@@ -223,40 +233,55 @@ const getLocalStorageKey = (key) => {
 }
 ```
 
-We wrap the `JSON.parse()` function invocation in a `try/catch` block in the event that `JSON.parse()` can't determine the value type of the given string.
+In `getLocalStorageKye`, we use a `try/catch` block which is new syntax to us. It works by attempting to execute the code in the `try {}` block knowing that it could potentially throw an error. Normally, a thrown error would crash the program. But with the `catch (err) {}` block, we can "catch" the error and handle it without crashing the program.
 
-* If it can, it will return the value.
-* If it can't, the error will be printed (and not break everything) and `null` will be returned.
+* If `JSON.parse` works, it will return the value.
+* If it throws an error, the error will be printed (and not break everything) and `null` will be returned.
 
 Now, we can safely use these functions instead of the `localStorage` ones and know that all values will be properly stored and retrieved.
 
 ```js
-setLocalStorageKey('nums', [1, 2, 3])
-const storedArr = getLocalStorageKey('nums');
+// so much cleaner!
+let leaderboard = getLocalStorageKey('leaderboard');
 
-setLocalStorageKey('user', { name: 'ben' });
-const storedUser = getLocalStorageKey('user');
+if (leaderboard === null) {
+  leaderboard = [];
+}
 
-console.log(storedArr);  // [1, 2, 3]
-console.log(storedUser); // { name: 'ben' }
+leaderboard.push(clickerBtn.dataset.clicks);
+
+// so much cleaner!
+setLocalStorageKey('leaderboard', leaderboard);
+
+updateLeaderboard(leaderboard);
 ```
 
-## Data Layer
+The two helper functions that we've ensure that our interactions with `localStorage` won't throw any errors.
 
-As you can see, working with `localStorage` can be quite tricky. We want to ensure that our application works in a **consistent and predictable** manner.
+One way to think about these helper functions is that they form an API (application programming interface) for `localStorage`. In other words, these functions allow the rest of the program to access `localStorage` in a controlled manner.
 
-To achieve this, we will typically:
+We can take this even further to ensure that our application works in a **consistent and predictable** manner.
 
-* **isolate the logic** for dealing with `localStorage` in its own file.
-* create functions for interacting with `localStorage`.
-* **only export the functions that indirectly interact with `localStorage`**.
+### Data Layer: Creating an API for `localStorage`
 
-This way, we create a **consistent** and **predictable** interface.
+Suppose we had an application with a form that lets users add names to a list. Names are displayed on the screen in a list and clicking on the name will remove it from the list. This application can be found in `3-data-layer`.
+
+Currently, it interacts with a `names` array stored in `localStorage` by directly using `localStorage` methods, manually stringifying and parsing. This opens the door to errors and inconsistency. 
+
+In order to restrict the program so that it can only interact with `localStorage` in the way we choose, we:
+* Isolate the logic for dealing with `localStorage` in its own file.
+* Create functions for interacting with the `names` key in `localStorage`.
+* Only export the functions that indirectly interact with `localStorage`. **The exported functions will form our API.**
 
 ```js
-// local-storage.js
+/* 
+These generic localStorage helpers will make the functions 
+below easier to write. They handle directly interacting with
+localStorage and dealing with stringifying / parsing values.
 
-// Generic localStorage helpers
+The remaining exported functions form our API for interacting 
+with localStorage...
+*/
 const setLocalStorageKey = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value))
 }
@@ -270,40 +295,99 @@ const getLocalStorageKey = (key) => {
   }  
 }
 
-// These two will be used by the rest of the functions a lot
+/* 
+This very basic helper only returns the 'names' from local storage. 
+By exporting this function and NOT the getLocalStorageKey function,
+we restrict how the rest of our program can access localStorage
+*/
 export const getNames = () => getLocalStorageKey('names');
-export const setNames = (names) => setLocalStorageKey('names', names);
 
-// More helper functions
-export const initializeNames = () => setNames(['ben', 'gonzalo', 'motun']);
+/* 
+It can be useful to initialize a key in localStorage if there isn't
+any existing value.
+*/ 
+export const initializeNamesIfEmpty = () => {
+  if (!getNames()) {
+    setLocalStorageKey('names', ['ben', 'gonzalo', 'motun']);
+  }
+}
 
+/* 
+When inserting a new entry into localStorage, you will want to follow
+this pattern: store what's currently in localStorage in an "in-memory"
+variable, modify the in-memory value, update localStorage.
+*/
 export const addName = (name) => {
   const names = getNames();
-  setNames([...names, name]);
+  names.push(name);
+  setLocalStorageKey('names', names);
 }
 
+/* 
+Removing a value follows roughly the same pattern. That is, pull
+from localStorage, modify, and update localStorage.
+*/
 export const removeName = (nameToRemove) => {
-  const names = getNames().filter((name) => name !== nameToRemove);
-  setNames([...names]);
+  const names = getNames();
+  const filteredNames = names.filter((name) => name !== nameToRemove);
+  setLocalStorageKey('names', filteredNames);
+}
+
+/* 
+Replacing the value with an empty value
+*/
+export const removeAllNames = () => {
+  setLocalStorageKey('names', []);
 }
 ```
 
-And always remember to test your code!
+Note that not every function is exported. 
+* `setLocalStorageKey` and `getLocalStorageKey` directly interact with `localStorage` and take care of stringifying, parsing, and error handling.
+* The remaining functions are all exported. They form our `localStorage` API ("application programming interface"), giving the rest of our application the ability to interact with `localStorage`, but only in the ways that we choose.
+
+With this `localStorage` API that we've created, we can greatly simplify our code!
+
+{% tabs %}
+
+{% tab title="Without our API" %} 
 
 ```js
-// mains.js
-import { initializeNames, addName, getNames } from './local-storage.js';
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const nameValue = form.name.value;
 
-initializeNames();
-console.log(getNames());  // ['ben', 'gonzalo', 'motun']
+  // adding to localStorage directly
+  const storedNames = JSON.parse(localStorage.getItem('names'));
+  storedNames.push(nameValue);
+  localStorage.setItem('names', JSON.stringify(storedNames));
 
-addName('carmen');
-addName('zo');
-console.log(getNames());  // ['ben', 'gonzalo', 'motun', 'carmen', 'zo]
-
-removeName('ben');
-console.log(getNames());  // ['gonzalo', 'motun', 'carmen', 'zo]
+  renderNames();
+  form.reset();
+}
 ```
+
+{% endtab %}
+
+{% tab title="With our API" %} 
+
+```js
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const newName = form.name.value
+
+  // using the API to add to localStorage
+  addName(newName);
+  
+  renderNames();
+  form.reset();
+}
+```
+
+{% endtab %}
+
+{% endtabs %} 
 
 **Q: What makes this predictable and consistent?**
 
