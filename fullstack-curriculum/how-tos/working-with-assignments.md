@@ -2,19 +2,23 @@
 
 **Table of Contents:**
 
-* [What is a SWE Assignment?](working-with-assignments.md#what-is-a-swe-assignment)
-  * [Tips for Working on SWE Coding Assignments](working-with-assignments.md#tips-for-working-on-swe-coding-assignments)
-  * [Jest and Testing](working-with-assignments.md#jest-and-testing)
-  * [Feedback on Coding Assignments](working-with-assignments.md#feedback-on-coding-assignments)
-* [What is a SWE-SR Assignment?](working-with-assignments.md#what-is-a-swe-sr-assignment)
-  * [Feedback on Short Response Assignments](working-with-assignments.md#feedback-on-short-response-assignments)
-  * [Examples of Short Responses](working-with-assignments.md#examples-of-short-responses)
-* [Using AI on Assignments](working-with-assignments.md#using-ai-on-assignments)
-* [Submitting On Time](working-with-assignments.md#submitting-on-time)
-* [How to Work On Assignments](working-with-assignments.md#how-to-work-on-assignments)
-  * [Assignment Setup](working-with-assignments.md#assignment-setup)
-  * [Submitting the Assignment](working-with-assignments.md#submitting-the-assignment)
-  * [How to Undo a Commit to Main and Move Commits to Draft](working-with-assignments.md#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
+- [What is a SWE Assignment?](#what-is-a-swe-assignment)
+  - [Tips for Working on SWE Coding Assignments](#tips-for-working-on-swe-coding-assignments)
+  - [Jest and Testing](#jest-and-testing)
+  - [Feedback on Coding Assignments](#feedback-on-coding-assignments)
+- [What is a SWE-SR Assignment?](#what-is-a-swe-sr-assignment)
+  - [Scoring on Short Response Assignments](#scoring-on-short-response-assignments)
+  - [Feedback on Short Response Assignments](#feedback-on-short-response-assignments)
+  - [Examples of Short Responses](#examples-of-short-responses)
+    - [A Response That Could Use Improvement](#a-response-that-could-use-improvement)
+    - [An Exemplar Response](#an-exemplar-response)
+- [Using AI on Assignments](#using-ai-on-assignments)
+- [Submitting On Time](#submitting-on-time)
+- [How to Work On Assignments](#how-to-work-on-assignments)
+  - [Assignment Setup](#assignment-setup)
+  - [Submitting the Assignment](#submitting-the-assignment)
+  - [How to Undo a Commit to Main and Move Commits to Draft](#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
+
 
 ## What is a SWE Assignment?
 
@@ -172,13 +176,14 @@ In these assignments, you may encounter the following types of prompts:
 * Explain a piece of syntax with examples and analogies.
 * Analyze a programming best practice and list its advantages and disadvantages.
 
+Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
+
+Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
+
 ### Scoring on Short Response Assignments
 
-Every response will be given a score from 0-3 using the following scoring system which grades assignments primarily based on accuracy and completion (rather than on writing quality). In order to earn full points on a prompt, your response must:
- * Answer all parts of the prompt, including examples when requested.
- * Provide accurate information and functional code examples.
+Every response will be given a score from 0-3 using the following scoring system which grades assignments primarily based on accuracy and completion (rather than on writing quality):
 
-**Scoring System:**
 * 0 — Did not attempt to answer the prompt
 * 1 — Did not answer all parts of the prompt AND information and examples provided are inaccurate and non-functional.
 * 2 — Did not answer all parts of the prompt OR information and examples provided are inaccurate and non-functional.
@@ -228,22 +233,18 @@ While the score will primarily reflect the accuracy and completion of your respo
 
 ### Examples of Short Responses
 
-Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
+Let's look at an example of two responses that are complete and accurate but in very different ways.
 
-Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
+The examples below each respond to the following prompt:
 
-### A Response That Could Use Improvement
+> Explain what `if` and `else` statements are used for. Provide a code example to enhance your response.
+
+#### A Response That Could Use Improvement
 
 First, let's look at an example of a response that is technically accurate and complete but would likely receive feedback for improvements. As you read, what feedback would you provide?
 
 {% code overflow="wrap" %}
-<pre><code>## Prompt
-
-Explain what `if` and `else` statements are used for. Provide a code example to enhance your response.
-
-### Response
-
-they are used iff you want to like do one one thing o r anoter in your code
+<pre><code>They are used if you want to like do one thing or another in your code. Here is an example.
 
 if (true) {
   console.log('this');
@@ -258,20 +259,16 @@ else {
 For this response, the following feedback would be provided:
 * **Clarity**: Without the prompt, it would be hard to know that "they" is referring to `if` and `else` statements at the beginning of the sentence. Additionally, no explanation of the example is provided, leaving open the possibility that the reader misunderstands the syntax.
 * **Engagement**: The example demonstrates the syntax but the example is hard to relate to a real-world scenario for programming.
-* **Mechanics**: Punctuation and capitalization are not used and there are multiple spelling mistakes. The provided code block should be placed inside of a code fence (see below for an example of this)
+* **Mechanics**: The provided code block should be placed inside of a code fence (see below for an example of this)
 
-### An Exemplar Response
+#### An Exemplar Response
 
 Below is a great example of a short response answer. As you read, what do you notice about it?
 
 {% code overflow="wrap" %}
-<pre><code>## Prompt
+<pre><code>In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). 
 
-Explain what `if` and `else` statements are used for. Provide a code example to enhance your response.
-
-### Response
-
-In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. 
+For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. 
 
 ```js
 const random = Math.random();
