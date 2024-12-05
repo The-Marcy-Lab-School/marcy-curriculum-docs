@@ -128,36 +128,42 @@ To support you in your growth as a software engineer, your instructor may provid
 </details>
 
 <details><summary>Functionality</summary>
+
   * Does the code meet the project requirements?
   * Does it pass all tests, both automated and edge cases?
   * Correctness of input/output handling
 </details>
 
 <details><summary>Modularity and Reusability</summary>
+
   * Proper use of functions or classes
   * Modular and reusable code (avoiding large, monolithic functions)
   * Clear separation of logic
 </details>
 
 <details><summary>Version Control Practices</summary>
+
   * Meaningful commit messages
   * Consistent use of branches
   * Proper use of pull requests and code reviews
 </details>
 
 <details><summary>Code Structure and Organization</summary>
+
   * File structure
   * Separation of concerns
   * Readability and logical flow
 </details>
 
 <details><summary>Error Handling</summary>
+
   * Proper use of try-catch blocks
   * Graceful handling of unexpected inputs or states
   * Meaningful error messages
 </details>
 
 <details><summary>Efficiency and Performance</summary>
+
   * Time and space complexity
   * Use of appropriate data structures and algorithms
   * Avoidance of unnecessary computations
@@ -217,31 +223,37 @@ Assignments below 75% must be revised and resubmitted.
 While the score will primarily reflect the accuracy and completion of your responses, to support you in your growth as a technical communicator, your instructor may also provide feedback on the following areas:
 
 <details><summary>Clarity</summary>
+
 - Is the main idea or goal of the writing clear?
 - Are technical terms defined or explained for the intended audience?
 - Is the writing free of unnecessary jargon or overly complex language?
 </details>
 
 <details><summary>Structure</summary>
+
 - Does the content follow a logical flow?
 - Are headings, subheadings, and paragraphs effectively used to guide the reader?
 - Are transitions between paragraphs / sections smooth and easy to follow?
 </details>
 
 <details><summary>Engagement</summary>
+
 - Is the tone appropriate for the audience (e.g., conversational vs. formal)?
 - Does the writing capture and maintain interest?
 - Are examples, analogies and visuals used effectively to enhance understanding?
 </details>
 
 <details><summary>Audience Fit</summary>
+
 - Does the writing match the knowledge level of the intended audience?
 - Are key questions or concerns the audience might have addressed?
 </details>
 
 <details><summary>Mechanics</summary>
+
 - Are there grammar, spelling, or punctuation errors?
 - Is the formatting consistent and professional (e.g., indentation in code snippets, use of backticks and code fences to highlight code, use of bolding and italics to emphasize key words)?
+
 </details>
 
 ### Examples of Short Responses
