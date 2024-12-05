@@ -150,47 +150,9 @@ To support you in your growth as a software engineer, your instructor may provid
 
 Software Engineering (SWE) Short Response (SR) assignments are opportunities to develop your technical communication skills.
 
-In these assignments, you may encounter the following types of prompts:
-
-* Research a new topic and share your findings.
-* Explain a piece of syntax with examples and analogies.
-* Analyze a programming best practice and list its advantages and disadvantages.
-
-Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
-
-Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
-
-### Feedback on Short Response Assignments
-
-Every response will be given a score from 0-3 using the following scoring system:
-
-* 0 — Did not attempt to answer the prompt
-* 1 — Attempted the prompt and the response is more wrong than right, or parts of the prompt are not fully answered, or the answer is lacking in clarity. Examples and/or diagrams are missing (when required).
-* 2 — Attempted the prompt and all parts of the prompt are answered, but there are some mistakes and/or the clarity could be improved. Examples and/or diagrams may be missing or could be improved.
-* 3 — Answered the prompt correctly and completely. The response is clear and concise. Examples and/or diagrams are well-chosen and enhance the response.
-
-We understand that typos and grammar mistakes can happen, however, you will also lose .5 points on any the prompt where typos or grammar errors are "distracting". Distracting meaning that if you saw this on the job, it would have to be retyped for clarification or for the sake of presentation.
-
-{% hint style="info" %}
-In order for a short response assignment to be marked as "Complete", you must score at least a 75% on the assignment.
-
-For example, an assignment with 5 short response prompts has a total possible score of 15. You must score at least a 12 on that assignment.
-{% endhint %}
-
-To support you in your growth as a technical communicator, your instructor may also provide feedback on the following areas:
-
-* **Clarity**: The communication is precise, concise, and unambiguous. Technical jargon is explained, and terms are used consistently.
-* **Completeness**: The communication covers all necessary technical details, scenarios, and edge cases, providing sufficient examples or references.
-* **Structure and Organization**: For longer answers, answers are logically organized with clear sections, headings, and transitions between ideas. The structure enhances understanding.
-* **Use of Examples and Diagrams**: Uses well-chosen examples, diagrams, or code snippets (when appropriate) that significantly aid understanding and clarify complex concepts.
-* **Accuracy**: The content is technically correct and adheres to current best practices and standards.
-* **Conciseness**: The communication is efficient, avoiding unnecessary detail or excessive language, while still being comprehensive.
-
-### Examples of Short Responses
-
 Short Response prompts will always be found in the `README.md` file of your assignment. Each prompt will be listed under a `## Prompt X` heading and you should add your responses under the `### Response X` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
 
-For example
+For example:
 
 {% code overflow="wrap" %}
 ```md
@@ -204,82 +166,147 @@ Response here...
 ```
 {% endcode %}
 
-Below are some examples of responses that would score a 1, 2 or 3.
+In these assignments, you may encounter the following types of prompts:
 
-<details>
+* Research a new topic and share your findings.
+* Explain a piece of syntax with examples and analogies.
+* Analyze a programming best practice and list its advantages and disadvantages.
 
-<summary><strong>1 — a weak response that needs a lot of improvement</strong></summary>
+### Scoring on Short Response Assignments
 
-This response answers the first part of the prompt but does so with almost no details. It addresses _what_ the benefits of modules are, but doesn't add any details that explain _how_ modules provide those benefits. The second part of the prompt asking for downsides is acknowledged but the author doesn't attempt to answer this prompt. In addition, there are typos, grammar mistakes, and missing punctuation.
+Every response will be given a score from 0-3 using the following scoring system which grades assignments primarily based on accuracy and completion (rather than on writing quality). In order to earn full points on a prompt, your response must:
+ * Answer all parts of the prompt, including examples when requested.
+ * Provide accurate information and functional code examples.
 
-As a reader, I would have little to no understanding of how modules improve our projects.
+**Scoring System:**
+* 0 — Did not attempt to answer the prompt
+* 1 — Did not answer all parts of the prompt AND information and examples provided are inaccurate and non-functional.
+* 2 — Did not answer all parts of the prompt OR information and examples provided are inaccurate and non-functional.
+* 3 — Answered all parts of the prompt AND information and examples provided are accurate and functional.
+
+We understand that typos and grammar mistakes can happen, however, you will also lose .5 points on any the prompt where typos or grammar errors are "distracting". Distracting meaning that if you saw this on the job, it would have to be retyped for clarification or for the sake of presentation.
+
+{% hint style="info" %}
+In order for a short response assignment to be marked as "Complete", you must score at least a 75% on the assignment.
+
+For example, an assignment with 5 short response prompts has a total possible score of 15. You must score at least a 12 on that assignment.
+
+Assignments below 75% must be revised and resubmitted.
+{% endhint %}
+
+### Feedback on Short Response Assignments
+
+While the score will primarily reflect the accuracy and completion of your responses, to support you in your growth as a technical communicator, your instructor may also provide feedback on the following areas:
+
+**Clarity**
+
+- Is the main idea or goal of the writing clear?
+- Are technical terms defined or explained for the intended audience?
+- Is the writing free of unnecessary jargon or overly complex language?
+
+**Structure**
+
+- Does the content follow a logical flow?
+- Are headings, subheadings, and paragraphs effectively used to guide the reader?
+- Are transitions between paragraphs / sections smooth and easy to follow?
+
+**Engagement**
+
+- Is the tone appropriate for the audience (e.g., conversational vs. formal)?
+- Does the writing capture and maintain interest?
+- Are examples, analogies and visuals used effectively to enhance understanding?
+
+**Audience Fit**
+
+- Does the writing match the knowledge level of the intended audience?
+- Are key questions or concerns the audience might have addressed?
+
+**Mechanics**
+
+- Are there grammar, spelling, or punctuation errors?
+- Is the formatting consistent and professional (e.g., indentation in code snippets, use of backticks and code fences to highlight code, use of bolding and italics to emphasize key words)?
+
+### Examples of Short Responses
+
+Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
+
+Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
+
+### A Response That Could Use Improvement
+
+First, let's look at an example of a response that is technically accurate and complete but would likely receive feedback for improvements. As you read, what feedback would you provide?
 
 {% code overflow="wrap" %}
-
 <pre><code>## Prompt
-Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
+
+Explain what `if` and `else` statements are used for. Provide a code example to enhance your response.
 
 ### Response
-they makes it easier to orgnize code im not sure about downsides
-</code></pre>
 
+they are used iff you want to like do one one thing o r anoter in your code
+
+if (true) {
+  console.log('this');
+} 
+else {
+  console.log('that');
+}
+
+</code></pre>
 {% endcode %}
 
-</details>
+For this response, the following feedback would be provided:
+* **Clarity**: Without the prompt, it would be hard to know that "they" is referring to `if` and `else` statements at the beginning of the sentence. Additionally, no explanation of the example is provided, leaving open the possibility that the reader misunderstands the syntax.
+* **Engagement**: The example demonstrates the syntax but the example is hard to relate to a real-world scenario for programming.
+* **Mechanics**: Punctuation and capitalization are not used and there are multiple spelling mistakes. The provided code block should be placed inside of a code fence (see below for an example of this)
 
-<details>
+### An Exemplar Response
 
-<summary><strong>2 — a solid response that could be improved</strong></summary>
-
-This response below is okay but could definitely be improved. It answers all parts of the prompt and is free of typos and grammar mistakes but it isn't written in a way that a beginner would be able to understand. The use of the word "filtered" is abstract and could be replaced with a more widely-accessible word like "organized". The example in the second sentence does bolster the first sentence, but it is still lacking in clarity and details that are relatable. Perhaps an analogy could be added to make it easier to understand.
-
-All parts of the prompt are answered but the last sentence is lacking depth. Overall, this response feels like it is just answering the prompt rather than explaining the concept of modules.
-
-As a reader, I can come away from this response having some understanding of modules but I may need more examples or an analogy to really understand.
+Below is a great example of a short response answer. As you read, what do you notice about it?
 
 {% code overflow="wrap" %}
 <pre><code>## Prompt
-Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
+
+Explain what `if` and `else` statements are used for. Provide a code example to enhance your response.
 
 ### Response
-Modules allow you to have code filtered more efficiency. You can look at certain features and edit them without editing and testing the whole project. The downside is more files to look through.
-</code></pre>
-{% endcode %}
 
-</details>
+In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. 
 
-<details>
+```js
+const random = Math.random();
 
-<summary><strong>3 — an excellent response that is ready to be presented</strong></summary>
+// only print out heads if the random number is between 0.5 and 1
+if (random > 0.5) {
+  console.log("heads");
+}
 
-This response below is a great example of a short response answer. It answers all parts of the prompt, provides a great analogy that adds to the depth of the response, and is free of typos and grammar mistakes. In a few cases, Markdown is used effectively to bold key terms.
-
-In addition, the personality of the writer is coming through. It doesn't sound like an AI wrote this.
-
-As a reader, I can come away from this response having a better understanding of modules with some analogies that support my understanding.
-
-{% code overflow="wrap" %}
-<pre><code>## Prompt 2
-
-What is **event delegation**, and how does **event bubbling** make it possible? How can event delegation improve performance when handling multiple similar events within a container? Provide an example to support your explanation.
-
-### Response 2
-
-**Event delegation** is a technique where a single event listener is attached to a parent element to handle events on its child elements, even if those elements are dynamically added. This is possible because of event bubbling, where events triggered on a child element propagate up through its ancestors in the DOM. By using delegation, you avoid attaching individual listeners to each child, improving performance and simplifying code for scenarios with many similar elements. For instance, to handle clicks on multiple buttons within a container, you can add one listener to the container and check the `event.target` to determine which button was clicked.
-
-```javascript
-document
-  .getElementById("buttonContainer")
-  .addEventListener("click", (event) => {
-    if (event.target.tagName === "BUTTON") {
-      console.log(`Button ${event.target.textContent} clicked`);
-    }
-  });
+// otherwise, do nothing
 ```
-</code></pre>
+
+In this example, only when the boolean expression `random > 0.5` is `true` will the string `"heads"` be printed. Otherwise nothing will happen.
+
+When combined with an `else` statement, the programmer can provide an alternative action to perform when the boolean expression is `false`.
+
+```js
+const random = Math.random();
+
+if (random > 0.5) {
+  console.log("heads");
+} else {
+  console.log("tails");
+}
+```
+
+With the addition of the `else` statement, the program will print out `"heads"` if `random > 0.5` is `true` or `"tails"` if it is `false`.</code></pre>
 {% endcode %}
 
-</details>
+Among other things, this response does the following things well:
+* It answers all parts of the prompt, the information provided is accurate, and the provided code is functional.
+* The writing is easy to understand and information is presented in a logical order.
+* It uses markdown formatting to bold key terms and highlight code with backticks (`event.target`).
+* The provided JavaScript example is engaging as it is highly relatable and demonstrates a practical use case of `if` and `else` statements.
+* The example is explained afterwards.
 
 ## Using AI on Assignments
 
