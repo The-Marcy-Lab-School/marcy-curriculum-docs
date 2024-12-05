@@ -6,68 +6,60 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 **Table of Contents**
 
-- [Synchronous vs. Asynchronous Operations and `setTimeout`](#synchronous-vs-asynchronous-operations-and-settimeout)
+- [Synchronous vs. Asynchronous Functions and `setTimeout`](#synchronous-vs-asynchronous-functions-and-settimeout)
   - [Executing Asynchronous Code With Callbacks](#executing-asynchronous-code-with-callbacks)
   - [Sequential Asynchronous Callbacks Leads to Callback Hell](#sequential-asynchronous-callbacks-leads-to-callback-hell)
 - [Promises!](#promises-1)
-  - [Sequential Asynchronous Operations With Promises](#sequential-asynchronous-operations-with-promises)
+  - [Sequential Asynchronous Functions With Promises](#sequential-asynchronous-functions-with-promises)
+  - [Promise.all()](#promiseall)
 - [Making Promises](#making-promises)
 - [The Pizza Shop Analogy](#the-pizza-shop-analogy)
 - [Coming up...](#coming-up)
 
-## Synchronous vs. Asynchronous Operations and `setTimeout`
+## Synchronous vs. Asynchronous Functions and `setTimeout`
 
-**Synchronous operations**
-- make up most of our code
-- typically take very little time to complete
-- JavaScript must complete the execution of a synchronous operation before moving on to the next one.
+Most of the functions we have used are **synchronous functions**. 
 
-As a result, the order in which synchronous operations execute is the same as the order in which they are written.
+The order in which synchronous functions execute is *sequential*, meaning we must complete the execution of one function before starting to execute the next.
 
 ```js
-console.log("A");
-console.log("B");
-console.log("C");
+const start = () => console.log('start');
+const longTask = () => {
+  // runs 10 billion times! 
+  for (let i = 0; i < 10000000000; i++) { }
+  console.log(`done looping 10 billion times!`);
+}
+const end = () => console.log('end');
+
+start();
+longTask();
+end();
 ```
 
-**Asynchronous operations**:
-- Often take time to execute.
-- Are "non-blocking" — they can be started and then completed at a later time without causing the rest of the program to wait.
-- Examples include:
-  - processing an image
-  - fetching data over the internet
-  - counting down a timer
-  - waiting for a user to click on a button. 
+Depending on how fast your computer is, this program could take a while to print out `'end'` for the very reason that the `end()` function can't start until `longTask` is complete.
 
-Unlike their synchronous counterparts, asynchronous operations do NOT need to be completed immediately. They can be started and then completed at a later time without causing the rest of the program to wait. 
+**Asynchronous functions** do not execute sequentially. Instead, they start a process (typically one that takes time) but do NOT prevent subsequent code from running. This is why it is referred to as **"non-blocking"**.
 
-We can see this clearly with `setTimeout`:
+Often, asynchronous functions accept a callback to execute when the long process is completed. We can see this clearly with `setTimeout` which starts a timer and executes a callback when the timer is up:
 
 ```jsx
 console.log("starting the first task");
-setTimeout(() => {
+setTimeout(() => { // this task takes 3 seconds
   console.log("first task completed")
 }, 3000)
 
 console.log("starting the second task");
-setTimeout(() => {
+setTimeout(() => { // this task takes 1 seconds
   console.log("second task completed")
 }, 1000)
 
 console.log("starting the third task");
-setTimeout(() => {
+setTimeout(() => { // this task takes 2 seconds
   console.log("third task completed")
 }, 2000)
 ```
 
-
-Asynchronous operations allow us to start longer operations without blocking the execution of our quicker operations. That is why we call asynchronous operations "non-blocking".
-
 <details><summary><strong>Q: In what order will the console log statements be executed? What happens if we set the timeouts to <code>0</code> milliseconds?</strong></summary>
-
-With `setTimeout`, the scheduling of each callback happens synchronously but the actual invocation of the callbacks happens asynchronously. As a result, the `"starting the X task"` statements are printed first and in order. While we don't see it happening, the timers are also started synchronously.
-
-Then, as each timer finishes, the console.log statements are executed asynchronously.
 
 ```
 starting the first task
@@ -78,54 +70,24 @@ third task completed
 first task completed
 ```
 
-Even if we set all of the timers to 0, synchronous operations will always complete first, then asynchronous operations. This is due to [how the event loop works](https://www.youtube.com/watch?v=8aGhZQkoFbQ&ab_channel=JSConf).
+
+As a result, the `"starting the X task"` statements are printed first and in the order in which they were written. Then, as each timer finishes, the console.log statements are executed asynchronously.
+
+The scheduling of each callback happens sequentially but the actual invocation of the callbacks happens asynchronously, that is, when each timer reaches 0. 
+
+Even if we set all of the timers to 0, synchronous functions will always complete first, then asynchronous functions. This is due to [how the event loop works](https://www.youtube.com/watch?v=8aGhZQkoFbQ&ab_channel=JSConf).
 
 </details>
 
-### Executing Asynchronous Code With Callbacks
+The main benefit of asynchronous functions is that they can be started and then completed at a later time without causing the rest of the program to wait. 
 
-There are many examples of functions that use callbacks to handle asynchronous operations.
+Other examples of asynchronous operations include:
+- processing an image
+- fetching data over the internet
+- counting down a timer
+- waiting for a user to click on a button. 
 
-Another great example is the `fs.readFile` function in Node. It allows the programmer to access files in their filesystem. Here, we are reading a file called `booksHuge.csv` to figure out how many books it represents
-
-```js
-// This code helps us assemble a filepath to the booksHuge.csv data file
-const path = require('node:path');
-const booksHugeFilePath = path.join(__dirname, '../data/booksHuge.csv');
-
-// fs.readFile also uses a callback to execute asynchronous code
-const fs = require('node:fs');
-fs.readFile(booksHugeFilePath, 'utf-8', (err, data) => {
-  // this code is scheduled to run when the file is done being processed
-  if (err) {
-    console.error(err);
-  } else {
-    const lines = data.split('\n').length;
-    console.log(`Done reading the booksHuge.csv file. There were ${lines - 1} books.`);
-  }
-});
-```
-
-The `fs.readFile` function takes in a filepath and begins reading the file. 
-* When it is done, the provided callback will be invoked asynchronously
-* The file's contents are provided to the `data` parameter as a single string.
-* To count the number of books, we split the string on every new line (`\n`) and then subtract `1` to account for the header row.
-
-{% hint style="info" %}
-A **comma-separated value (CSV) file** is a simple way to represent large datasets in rows and columns. Each row in a CSV file represents a single entry in the table (except the first line which defines the names of each column). Each entry contains data separated by some uniform character like a comma `,` or semicolon `;`.
-
-For example, this CSV file has three columns and 3 entries.
-
-```csv
-"name","age","email"
-"kobe","25","kobe@mail.com"
-"lebron","39","lebron@mail.com"
-"sue","42","sue@mail.com"
-```
-
-{% endhint %}
-
-**<details><summary>Q: What's another example we've already seen that uses callbacks to handle asynchronous operations?</summary>**
+**<details><summary>Q: `setTimeout` uses a callback to handle the completion of the timer. Which example from that list have we already used that also uses callbacks?</summary>**
 
 Event handlers!
 
@@ -149,15 +111,64 @@ end
 the button has been clicked
 ```
 
-In the code snippet above, the callback provided to `addEventListener` is an example of an **asynchronous operation**. 
+In the code snippet above, the callback provided to `addEventListener` is an example of an **asynchronous function**. 
 
 </details>
+
+### Executing Asynchronous Code With Callbacks
+
+Another great example of an asynchronous function using callbacks is the asynchronous `fs.readFile` function. The `fs` module is only available in Node (not in the browser) and it has functions that allow the programmer to access files in their filesystem.
+
+Take a look at the `data/booksHuge.csv` file, it contains data about books. Each line in that file represents a different book and we will try write a program to count how many lines (books) there are.
+
+{% hint style="info" %}
+A **comma-separated value (CSV) file** is a simple way to represent large datasets in rows and columns. Each row in a CSV file represents a single entry in the table (except the first line which defines the names of each column). Each entry contains data separated by some uniform character like a comma `,` or semicolon `;`.
+
+For example, this CSV file has three columns and 3 entries.
+
+```csv
+"name","age","email"
+"kobe","25","kobe@mail.com"
+"lebron","39","lebron@mail.com"
+"sue","42","sue@mail.com"
+```
+
+{% endhint %}
+
+The `fs.readFile` function lets us import the contents of a file by providing:
+1. A filepath
+2. A [character encoding](https://en.wikipedia.org/wiki/Character_encoding) (in the example we use `'utf-8'` which basically means "read the file as normal text" and is the encoding used 99% of the time).
+3. A callback to execute when `fs.readFile` is done reading the file.
+
+Since reading a file could potentially take a long time, we use the callback to "schedule" a handler function to run when the file has been completely read:
+
+```js
+// the fs module has functions for interacting with the file system
+const fs = require('node:fs');
+
+console.log('Reading the booksHuge.csv file');
+
+fs.readFile('../data/booksHuge.csv', 'utf-8', (err, data) => {
+  // this code is scheduled to run when the file is done being processed
+  if (err) {
+    console.error(err);
+  } else {
+    const lines = data.split('\n').length;
+    console.log(`Done reading the booksHuge.csv file. There were ${lines - 1} books.`);
+  }
+});
+```
+
+In this example, we are reading a file called `booksHuge.csv`. 
+* When the file has been read completely, the callback is executed. 
+* We first check to see if an error occurred, printing it out if it has. 
+* If no error exists, the `data` contains the contents of the file as a single string. We check to see how many lines are in the file and print it out!
 
 ### Sequential Asynchronous Callbacks Leads to Callback Hell
 
 Okay, so asynchronous callbacks are great for executing time-consuming tasks without blocking our synchronous code.
 
-But what if we DO want our asynchronous code to be blocking. That is, to wait for one operation to finish before starting the next, just like synchronous code?
+But what if we DO want our asynchronous code to be blocking. That is, to wait for one function to finish before starting the next, just like synchronous code?
 
 With callbacks, we are forced to do something like this, appropriately called **callback hell**:
 
@@ -165,9 +176,11 @@ With callbacks, we are forced to do something like this, appropriately called **
 console.log("starting the first task!");
 setTimeout(() => {
   console.log("first task completed");
+  // now start the next task
   console.log("starting the second task!");
   setTimeout(() => {
     console.log("second task completed");
+    // now start the final task
     console.log("starting the third task!");
     setTimeout(() => {
       console.log("third task completed");
@@ -183,21 +196,16 @@ Yikes, that is hard to read! Here is what is happening:
     * After 1 seconds, the second task will complete and we start the third task
       * After 2 seconds, the third task will complete
 
-
 ## Promises!
 
-Promises provide an alternate approach to callbacks for resolving asynchronous operations. The main benefit of Promises are that they can help us avoid callback hell.
+Promises provide an alternate approach to callbacks, helping us avoid callback hell.
 
-A **Promise** is a type of object (a "class" of object) that represents the eventual completion of an asynchronous operation.
-* A Promise object can exist in one of three states:
-  - **pending** - the operation is still in process.
-  - **resolved** - the operation was a success! We got the value we wanted. Also referred to as "fulfilled”
-  - **rejected** - the operation failed. We got an error back.
-* The `Promise.then()` method schedules a callback to be executed when the promise resolves.
-* The `Promise.catch()` method schedules a callback to be executed when the promise rejects.
-* `Promise.then()` returns a Promise allowing it to be chained.
+Consider the example below which uses the Promises version of the `fs.readFile` function. 
 
-Consider the example below which uses the Promises version of the `fs.readFile` function. Instead of accepting a callback as a third argument, it returns a Promise object (compare it to the callback version):
+The Promise version of `readFile` returns a Promise object instead of taking in a callback (toggle between the two versions to compare them)
+- We provide a callback to `.then` to be invoked when the promise "resolves" (suceeds and the `data` is provided).
+- We provide a callback to `.catch` to be invoked if the promise "rejects" (fails and the `err` is provided).
+- In both cases, the callbacks are executed asynchronously.
 
 {% tabs %}
 
@@ -210,9 +218,10 @@ const fs = require('node:fs/promises');
 console.log("Reading the-raven.txt");
 
 // A Promise object is returned
-const promise = fs.readFile(ravenFilePath, 'utf8');
+const promise = fs.readFile('../data/the-raven.txt', 'utf8');
 
-// The .then and .catch methods schedule resolve/reject handlers
+// The .then method takes a callback to execute when the promise resolves (succeeds)
+// The .catch method takes a callback to execute when the promise rejects (fails)
 promise
   .then((data) => {
     const ravenCount = data.match(/raven/gi).length;
@@ -223,6 +232,9 @@ promise
     console.log('Something went wrong!');
     console.error(err);
   });
+
+// The object on its own looks like this: Promise { <pending> }
+console.log(promise);
 ```
 
 {% endtab %}
@@ -235,7 +247,7 @@ const fs = require('node:fs');
 console.log("Reading the-raven.txt");
 
 // We have to provide a callback as the third argument
-fs.readFile(ravenFilePath, 'utf-8', (err, data) => {
+fs.readFile('../data/the-raven.txt', 'utf-8', (err, data) => {
   if (err) {
     console.log('Something went wrong!');
     console.error(err);
@@ -245,64 +257,38 @@ fs.readFile(ravenFilePath, 'utf-8', (err, data) => {
     console.log(`There were ${ravenCount} mentions of "Raven".`);
   }
 });
-
 ```
 {% endtab %}
 
 {% endtabs %}
 
+A **Promise** is a type of object (a "class" of object) that represents a pending asynchronous operation.
+* A Promise object can exist in one of three states:
+  - **pending** - the function is still in process.
+  - **resolved** - the function was a success! We got the value we wanted. Also referred to as "fulfilled”
+  - **rejected** - the function failed. We got an error back.
+* The `Promise.then()` method schedules a callback to be executed when the promise resolves.
+* The `Promise.catch()` method schedules a callback to be executed when the promise rejects.
+* `Promise.then()` returns a Promise allowing it to be chained.
 
-The Promise version of `readFile` returns a Promise object instead of taking in a callback
-- We provide a callback to `.then` to be invoked when the promise "resolves" 
-- We provide a  callback to `.catch` to be invoked if the promise "rejects"
-- In both cases, the callbacks are executed asynchronously
+### Sequential Asynchronous Functions With Promises
 
-### Sequential Asynchronous Operations With Promises
+At this point, the code isn't dramatically different. However, Promises start to shine when we want to perform multiple asynchronous functions sequentially.
 
-At this point, the code isn't dramatically different. However, Promises start to shine when we want to perform multiple asynchronous operations sequentially.
-
-Compare and contrast these two approaches for reading the `booksHuge.csv` file followed by the `books.csv` file:
+Compare and contrast these two approaches for reading the `booksHuge.csv` file first followed by the `books.csv` file second:
 
 {% tabs %}
 
-{% tab title="Promises" %} 
-
-```js
-const fs = require('node:fs/promises');
-
-console.log("Reading the booksHuge.csv file");
-
-// Often, we will just call .then directly on the function call
-fs.readFile(booksHugeFilePath, 'utf-8')
-  .then((data) => {
-    const lines = data.split('\n').length;
-    console.log(`Done reading the booksHuge.csv file. There were ${lines} lines.`);
-  })
-  .then(() => {
-    console.log("Reading the books.csv file");
-    // by returning the new readFile promise, we can continue to chain .then() calls
-    return fs.readFile(booksFilePath, 'utf-8')
-  })
-  .then((data) => {
-    const lines = data.split('\n').length;
-    console.log(`Done reading the books.csv file. There were ${lines} lines.`);
-  })
-  .catch((err) => {
-    // We only need one error handler.
-    console.error(err);
-  });
-```
-
-{% endtab %}
-
 {% tab title="Callbacks" %} 
+
+As you can see in the callbacks version of the code, we very quickly get to four levels of indentation, causing the readability of our code suffer.
 
 ```js
 const fs = require('node:fs');
 
 console.log("Reading the booksHuge.csv file");
 
-fs.readFile(booksHugeFilePath, 'utf-8', (err, data) => {
+fs.readFile('../data/booksHuge.csv', 'utf-8', (err, data) => {
   if (err) {
     console.error(err);
   } else {
@@ -310,7 +296,7 @@ fs.readFile(booksHugeFilePath, 'utf-8', (err, data) => {
     console.log(`Done reading the booksHuge.csv file. There were ${lines - 1} books.`);
 
     console.log("Reading the books.csv file");
-    fs.readFile(booksFilePath, 'utf-8', (err, data) => {
+    fs.readFile('../data/books.csv', 'utf-8', (err, data) => {
       if (err) {
         console.error(err);
       } else {
@@ -323,9 +309,78 @@ fs.readFile(booksHugeFilePath, 'utf-8', (err, data) => {
 ```
 {% endtab %}
 
+{% tab title="Promises" %} 
+
+With promises, since `.then` calls can be chained together, we limit the indentation to two levels. This is only possible because the first `.then` returns a promise that can be handled by the second `.then`. Additionally, we only need to write one error handler with `.catch` which can handle errors that occur at any point in the chain of promises.
+
+```js
+const fs = require('node:fs/promises');
+
+console.log("Reading the booksHuge.csv file");
+
+// Often, we will just call .then directly on the function call
+fs.readFile('../data/booksHuge.csv', 'utf-8')
+  .then((data) => {
+    const lines = data.split('\n').length;
+    console.log(`Done reading the booksHuge.csv file. There were ${lines} lines.`);
+    
+    // start the next async process
+    console.log("Reading the books.csv file next");
+
+    // the promise returned here is handled by the next .then()
+    return fs.readFile('../data/books.csv', 'utf-8');
+  })
+  .then((data) => {
+    // handle the data from books.csv
+    const lines = data.split('\n').length;
+    console.log(`Done reading the books.csv file. There were ${lines} lines.`);
+  })
+  .catch((err) => {
+    // We only need one error handler for both asynchronous function calls
+    console.error(err);
+  });
+```
+
+{% endtab %}
+
 {% endtabs %} 
 
-As you can see in the callbacks version of the code, we very quickly get to four levels of indentation, causing the readability of our code suffer.
+### Promise.all()
+
+In the previous example, we wait for the first `fs.readFile()` to finish before starting the second `fs.readFile()` call. In between, we were able to run some `console.log` statements. 
+
+However, if we want to wait until BOTH operations are completed before handling them, we can use the `Promise.all` function:
+
+```js
+const fs = require('node:fs/promises');
+
+// First, start both processes and save the promises
+console.log("Reading both files!");
+const booksHugePromise = fs.readFile('../data/booksHuge.csv', 'utf-8')
+const booksPromise = fs.readFile('../data/books.csv', 'utf-8')
+
+// Then, put the promises into an array
+const promises = [booksHugePromise, booksPromise]
+
+// Promise.all returns a promise that settles once all of the provided promises have settled
+Promise.all(promises)
+  .then((values) => {
+    // values will contain the resolved values of the provided promises
+    const booksHugeLines = values[0].split('\n').length;
+    const booksLines = values[1].split('\n').length;
+    console.log(`There were ${booksHugeLines} lines in booksHuge.csv!`);
+    console.log(`There were ${booksLines} lines in books.csv!`);
+  })
+  .catch((err) => {
+    // the err value will be from the first promise that fails
+    console.error(err);
+  });
+```
+
+`Promise.all` takes in an array of promise objects and returns a promise that settles once all of the provided promises have settled. 
+* The resulting values of each promise are added to an array.
+* When all promises provided to `Promise.all` resolve, the callback provided to `.then` will be invoked with the array of resolved values.
+* If any of the promises reject (fail), the `.catch()` callback will be invoked with the error of the first failing promise.
 
 ## Making Promises
 
@@ -333,13 +388,13 @@ To better understand promises, we can make them ourselves! To create a promise, 
 
 ```js
 const myPromise = new Promise((resolve, reject) => {
-  // asynchronous operations here
+  // asynchronous functions here
 });
 ```
 
-* The `new Promise()` constructor function takes in a callback that contains the asynchronous operations to be performed. 
+* The `new Promise()` constructor function takes in a callback that contains the asynchronous functions to be performed. 
 * The provided callback will be given two functions as parameters: `resolve` and `reject`.
-  * Invoke `resolve(successValue)` to indicate that the asynchronous operation succeeds.
+  * Invoke `resolve(successValue)` to indicate that the asynchronous function succeeds.
   * Invoke `reject(failureValue)` to indicate failure.
 
 ```js
@@ -371,22 +426,23 @@ rollPromise
 
 Let's break down this example:
 * We declare `rollPromise` to hold the new `Promise` object being created. We use this variable to define resolve/reject handlers with `.then` and `.catch`.
-* Within the callback provided to `new Promise()`, the asynchronous operation is a timer counting down from 5.
+* Within the callback provided to `new Promise()`, the asynchronous function is a timer counting down from 5.
 * When the timer is done, we will "roll a die".
   * If the die roll is greater than 2, we invoke `resolve` with a success message.
   * Otherwise, we invoke `reject` with a failure message.
 * The value we invoke `resolve` with is passed to the `.then` handler which we've decided to print with `console.log`.
 * The value we invoke `reject` with is passed to the `.then` handler which we've decided to print with `console.error`.
 
-Here is an example of a Promise that resolves immediately and never rejects:
+Here is an asynchronous function that returns a promise that ALWAYS resolves
 
 ```js
-// The simplest Promise looks like this. It will resolve 100% of the time:
-const guarantee = new Promise((resolve, reject) => {
-  resolve('100% of the time, it works every time');
-});
+const makeGuarantee = () => {
+  return new Promise((resolve, reject) => {
+    resolve('100% of the time, it works every time');
+  });
+}
 
-guarantee.then(data => {
+makeGuarantee().then(data => {
   console.log("I dont even need a catch since it will always resolve");
   console.log(data);
 });
@@ -398,7 +454,7 @@ Most often, you don’t create Promises yourself. You’ll just "consume" them f
 
 <details>
 
-<summary><strong>Q: Is it possible for an asynchronous operation to complete before a synchronous operation?</strong></summary>
+<summary><strong>Q: Is it possible for an asynchronous function to complete before a synchronous function?</strong></summary>
 
 Synchronous code will **always** be executed before asynchronous code.
 
@@ -418,12 +474,12 @@ The ticket is the promise. The resulting value is the pizza (or them telling us 
 
 Using a Promise involves two steps:
 
-1. Start the asynchronous operation and get a Promise back (order your pizza, get your ticket)
+1. Start the asynchronous function and get a Promise back (order your pizza, get your ticket)
 2. Define how to handle the resolved/rejected Promise using `.then()` and `.catch()` (when ready, I will hand in my ticket and get my pizza)
 
 ![Diagram showing the flow of Promises](img/Promises.svg)
 
-As the asynchronous operation is carried out, the Promise will exist in one of three states:
+As the asynchronous function is carried out, the Promise will exist in one of three states:
 
 ## Coming up...
 
