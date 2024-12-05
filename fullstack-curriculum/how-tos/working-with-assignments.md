@@ -121,10 +121,12 @@ For example, an assignment with 10 automated tests requires 8 passing tests to b
 To support you in your growth as a software engineer, your instructor may provide feedback on any of the following areas (expand each category to see more details):
 
 <details><summary>Code Quality</summary>
+
   * Adherence to coding standards and conventions (e.g., ESLint rules)
   * Use of proper naming conventions (variables, functions)
   * Avoidance of code duplication
   * Clear and concise comments
+
 </details>
 
 <details><summary>Functionality</summary>
@@ -132,6 +134,7 @@ To support you in your growth as a software engineer, your instructor may provid
   * Does the code meet the project requirements?
   * Does it pass all tests, both automated and edge cases?
   * Correctness of input/output handling
+
 </details>
 
 <details><summary>Modularity and Reusability</summary>
@@ -139,6 +142,7 @@ To support you in your growth as a software engineer, your instructor may provid
   * Proper use of functions or classes
   * Modular and reusable code (avoiding large, monolithic functions)
   * Clear separation of logic
+
 </details>
 
 <details><summary>Version Control Practices</summary>
@@ -146,6 +150,7 @@ To support you in your growth as a software engineer, your instructor may provid
   * Meaningful commit messages
   * Consistent use of branches
   * Proper use of pull requests and code reviews
+
 </details>
 
 <details><summary>Code Structure and Organization</summary>
@@ -153,6 +158,7 @@ To support you in your growth as a software engineer, your instructor may provid
   * File structure
   * Separation of concerns
   * Readability and logical flow
+
 </details>
 
 <details><summary>Error Handling</summary>
@@ -160,6 +166,7 @@ To support you in your growth as a software engineer, your instructor may provid
   * Proper use of try-catch blocks
   * Graceful handling of unexpected inputs or states
   * Meaningful error messages
+
 </details>
 
 <details><summary>Efficiency and Performance</summary>
@@ -167,6 +174,7 @@ To support you in your growth as a software engineer, your instructor may provid
   * Time and space complexity
   * Use of appropriate data structures and algorithms
   * Avoidance of unnecessary computations
+
 </details>
 
 ## What is a SWE-SR Assignment?
@@ -227,6 +235,7 @@ While the score will primarily reflect the accuracy and completion of your respo
 - Is the main idea or goal of the writing clear?
 - Are technical terms defined or explained for the intended audience?
 - Is the writing free of unnecessary jargon or overly complex language?
+
 </details>
 
 <details><summary>Structure</summary>
@@ -234,6 +243,7 @@ While the score will primarily reflect the accuracy and completion of your respo
 - Does the content follow a logical flow?
 - Are headings, subheadings, and paragraphs effectively used to guide the reader?
 - Are transitions between paragraphs / sections smooth and easy to follow?
+
 </details>
 
 <details><summary>Engagement</summary>
@@ -241,12 +251,14 @@ While the score will primarily reflect the accuracy and completion of your respo
 - Is the tone appropriate for the audience (e.g., conversational vs. formal)?
 - Does the writing capture and maintain interest?
 - Are examples, analogies and visuals used effectively to enhance understanding?
+
 </details>
 
 <details><summary>Audience Fit</summary>
 
 - Does the writing match the knowledge level of the intended audience?
 - Are key questions or concerns the audience might have addressed?
+
 </details>
 
 <details><summary>Mechanics</summary>
