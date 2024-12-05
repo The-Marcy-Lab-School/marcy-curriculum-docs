@@ -271,7 +271,7 @@ else {
 For this response, the following feedback would be provided:
 * **Clarity**: Without the prompt, it would be hard to know that "they" is referring to `if` and `else` statements at the beginning of the sentence. Additionally, no explanation of the example is provided, leaving open the possibility that the reader misunderstands the syntax.
 * **Engagement**: The example demonstrates the syntax but the example is hard to relate to a real-world scenario for programming.
-* **Mechanics**: By adding in markdown formatting, key terms could be highlighted and the provided code block can be placed inside of a code fence (see below for an example of this)
+* **Mechanics**: By adding in markdown formatting, key terms could be highlighted and the provided code block can be placed inside of a code fence (see below for an example of this). Look at the rendered markdown above to see how the structure of the code block is lost without a code fence.
 
 #### An Exemplar Response
 
@@ -314,34 +314,33 @@ With the addition of the `else` statement, the program will print out `"heads"` 
 
 In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). 
 
-For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. 
+For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. In this example, the program will print `"heads"` only _if_ the boolean expression `random > 0.5` is `true`. Otherwise nothing will happen:
 
 ```js
 const random = Math.random();
 
-// only print out heads if the random number is between 0.5 and 1
+// Print out "heads" if the random number is between 0.5 and 1, otherwise, do nothing
 if (random > 0.5) {
   console.log("heads");
 }
-
-// otherwise, do nothing
 ```
-
-In this example, only when the boolean expression `random > 0.5` is `true` will the string `"heads"` be printed. Otherwise nothing will happen.
 
 When combined with an `else` statement, the programmer can provide an alternative action to perform when the boolean expression is `false`.
 
 ```js
 const random = Math.random();
 
+// Print out "heads" if the random number is between 0.5 and 1
 if (random > 0.5) {
   console.log("heads");
-} else {
+} 
+// Otherwise, print tails
+else {
   console.log("tails");
 }
 ```
 
-With the addition of the `else` statement, the program will print out `"heads"` if `random > 0.5` is `true` or `"tails"` if it is `false`.
+With the addition of the `else` statement, the program will print out `"tails"` if `random > 0.5` is `false`.
 
 </details>
 
@@ -350,7 +349,7 @@ Among other things, this response does the following things well:
 * The writing is easy to understand and information is presented in a logical order.
 * The provided JavaScript example is engaging as it is highly relatable and demonstrates a practical use case of `if` and `else` statements.
 * The example is explained afterwards.
-* It uses markdown formatting to bold key terms and highlight code with backticks (e.g. `event.target`) and wraps the code blocks in code fences.
+* It uses markdown formatting to bold key terms and highlight code with backticks (e.g. `event.target`) and wraps the code blocks in code fences. Look at the rendered markdown above to see how the use of markdown dramatically improves the appearance of the writing.
 
 ## Using AI on Assignments
 
