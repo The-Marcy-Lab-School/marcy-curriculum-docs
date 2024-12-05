@@ -192,7 +192,8 @@ Short Response prompts will always be found in the `README.md` file of your assi
 
 For example
 
-```markdown
+{% code overflow="wrap" %}
+```md
 ## Prompt 2
 
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
@@ -201,6 +202,7 @@ Modules let us split up our code into separate files. What are benefits of doing
 
 Response here...
 ```
+{% endcode %}
 
 Below are some examples of responses that would score a 1, 2 or 3.
 
@@ -213,13 +215,14 @@ This response answers the first part of the prompt but does so with almost no de
 As a reader, I would have little to no understanding of how modules improve our projects.
 
 {% code overflow="wrap" %}
-```markdown
-## Prompt
+
+<pre><code>## Prompt
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
 
 ### Response
 they makes it easier to orgnize code im not sure about downsides
-```
+</code></pre>
+
 {% endcode %}
 
 </details>
@@ -235,13 +238,12 @@ All parts of the prompt are answered but the last sentence is lacking depth. Ove
 As a reader, I can come away from this response having some understanding of modules but I may need more examples or an analogy to really understand.
 
 {% code overflow="wrap" %}
-```markdown
-## Prompt
+<pre><code>## Prompt
 Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
 
 ### Response
 Modules allow you to have code filtered more efficiency. You can look at certain features and edit them without editing and testing the whole project. The downside is more files to look through.
-```
+</code></pre>
 {% endcode %}
 
 </details>
@@ -257,15 +259,24 @@ In addition, the personality of the writer is coming through. It doesn't sound l
 As a reader, I can come away from this response having a better understanding of modules with some analogies that support my understanding.
 
 {% code overflow="wrap" %}
-```markdown
-## Prompt
-Modules let us split up our code into separate files. What are benefits of doing this? Are there any downsides?
+<pre><code>## Prompt 2
 
-### Response
-**Modules** help to section our code in separate files so we can easily navigate to the right code. Similarly, websites have different links to their respective topics instead of having a long document that would cause a user to annoyingly scroll for hours, trying to find what they came for. Modules are able to share their code with other files by **exporting** values that can be **imported** and used in other files. This is similar to how countries export goods that are imported by other countries to use.
+What is **event delegation**, and how does **event bubbling** make it possible? How can event delegation improve performance when handling multiple similar events within a container? Provide an example to support your explanation.
 
-A downside of modules could be having too many modules, which in my opinion, can be overwhelming. If you're not organized, you might forget where something is!
+### Response 2
+
+**Event delegation** is a technique where a single event listener is attached to a parent element to handle events on its child elements, even if those elements are dynamically added. This is possible because of event bubbling, where events triggered on a child element propagate up through its ancestors in the DOM. By using delegation, you avoid attaching individual listeners to each child, improving performance and simplifying code for scenarios with many similar elements. For instance, to handle clicks on multiple buttons within a container, you can add one listener to the container and check the `event.target` to determine which button was clicked.
+
+```javascript
+document
+  .getElementById("buttonContainer")
+  .addEventListener("click", (event) => {
+    if (event.target.tagName === "BUTTON") {
+      console.log(`Button ${event.target.textContent} clicked`);
+    }
+  });
 ```
+</code></pre>
 {% endcode %}
 
 </details>
