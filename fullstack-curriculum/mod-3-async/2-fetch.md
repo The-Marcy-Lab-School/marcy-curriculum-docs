@@ -4,183 +4,250 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch)!
 {% endhint %}
 
-- [Cross-Application Communication](#cross-application-communication)
-- [HTTP Request / Response Cycle](#http-request--response-cycle)
+- [What is a Web API?](#what-is-a-web-api)
 - [The `fetch()` function](#the-fetch-function)
-  - [Parsing the response body](#parsing-the-response-body)
-  - [Avoid Nesting, Use Chaining Instead](#avoid-nesting-use-chaining-instead)
-  - [Handling Rejected Promises](#handling-rejected-promises)
-- [Digging Deeper into Fetching](#digging-deeper-into-fetching)
+  - [Steps 1 and 2: Getting A Response Object](#steps-1-and-2-getting-a-response-object)
+  - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
+  - [Steps 5 and 6: Do Something With the Data (and Errors)](#steps-5-and-6-do-something-with-the-data-and-errors)
+- [Challenge: Make Your Own API App](#challenge-make-your-own-api-app)
+- [More Information About Requests and Responses](#more-information-about-requests-and-responses)
   - [HTTP Status Codes](#http-status-codes)
   - [URL Structure](#url-structure)
   - [Kinds of Requests - HTTP Verbs](#kinds-of-requests---http-verbs)
 
+## What is a Web API?
 
-## Cross-Application Communication
+In the last lesson, we learned about how to handle asynchronous functions with Promises. Today we will learn perhaps the most important asynchronous function, `fetch`. The `fetch` function lets us request data from a **web API**
 
-Okay now we’re really getting somewhere. So far we’ve been writing programs that consist ENTIRELY of code that we write (or download via npm). Now, we will enter the world of 
+![](img/http-request-response-cycle.png)
 
-![Cross application communication in rainbow text](./img/cross-application-communication.png)
+Remember, API stands for "Application Programming Interface". An interface can be thought of as a set of tools or resources. So an API is a set of tools that an application can interact with to create a program. Very generic, right?
 
-A web application's most common asynchronous operation is requesting data from another computer (a server). For example:
+The DOM API is one type of API that provides an interface made up of objects and methods that our browser applications can use to dynamically manipulate a web page.
 
-- I want my web application to show the current weather. I can request that data from a Weather API server.
-- I want my web application to show a Google map. I can request that map from the Google Maps API server
-- I want my web application to find random pictures of dogs on the internet. I can request those images from the [dog API](https://dog.ceo/dog-api/)
+```js
+document.querySelector("h1").textContent = "Hello World!";
+```
 
-## HTTP Request / Response Cycle
+A **web API** is another type of API whose interface is made up of URLs that each provide access to a different piece of data. To use a web API, instead of calling a function, we send an HTTP(S) request to a URL called an **API endpoint**.
 
-HTTP stands for **H**yper**t**ext **T**ransfer **P**rotocol. It is the standard for communication over the internet. (Well HTTPS, the “secure” version, is now the standard).
+For example, try entering these two API endpoints into your browser's address bar:
 
-The HTTP Request/Response cycle is the pattern of communication used by two computers communicating using the HTTP protocol. It works like this:
+https://dog.ceo/api/breeds/list/all
 
-* The program/computer making the request is the **client**
-  * The client must initiate a request. A server can’t reach out and send Responses  to clients on its own. It just waits for incoming requests.
-* That program/computer responding to the request is called the **server**
-  * The server must already be up and running and ready to accept incoming requests.
+https://dog.ceo/api/breeds/image/random
 
-![The client sends a request with a URL and a verb. The server responds with the status code and the message body](./img/http-request-response-cycle.png)
+When we use the HTTPS protocol, we are sending a request over the internet to the dog.ceo servers. Those servers are set up to listen for incoming requests and send back the data according the requested endpoint (the specific URL that was used in the request)
 
-* The request and response sent between the client and server each contain important information including:
-  * The **request URL** of the specific requested resource
-  * The **request verb** — what it wants the server to do (post something new, send back some data, update or delete something)
-  * The **response status code** (did the request succeed?)
-  * The **response body** (the data sent back to the client)
+{% hint style="info" %}
+
+Web APIs make it possible for applications to utilize data from other sources and combine them in interesting ways. For example, we can build an application that uses the Google Maps API to get directions from point A to point B and then use a weather API to display the weather along the route.
+
+{% endhint %}
+
+But before we get ahead of ourselves, let's look at how to use the `fetch` function to send an HTTP request to a web API.
 
 ## The `fetch()` function
 
-> Try using this code in the `fetchNewDog` function found in the `0-fetching-demo-start/js/event-helpers.js` file
+The `fetch` function is used to send HTTP requests from within our programs. It returns a `Promise` object. 
 
-`fetch(url)` is a function that sends a request to a server. 
-* It is available in browsers and in Node!
-* Its only required argument is a URL of the API whose data we want to access.
-* It is assumed that the request verb is **GET**.
-* `fetch()` returns a `Promise` containing the **HTTP Response**.
+When, using the `fetch` function, we will follow these 6 steps:
 
-```jsx
-const fetchPromise = fetch('https://dog.ceo/api/breeds/image/random');
-console.log("look, its a promise!:", fetchPromise);
+```js
+// 1. Invoke fetch with an API endpoint. A promise is returned.
+const fetchPromise = fetch('API_ENDPOINT_GOES_HERE');
 
-fetchPromise.then((response) => {
-  console.log(response.url)	
-  console.log(response.ok)
-  console.log(response.status)
-  console.log(response.statusText)
-  console.log(response.body)
-});
-```
-
-`fetch()` returns a Promise whose resulting value is the `response` object. The `response` object's `url`, `ok` and `status` properties are all useful information. The `ok` and `status` properties immediately tell us if our request was successful and, if not, why.
-
-```jsx
-const fetchPromise = fetch('https://dog.ceo/api/breeds/image/random');
-
-fetchPromise.then((response) => {
-  if (!response.ok) {
-    return console.log(`Failed response. ${response.status} ${response.statusText}`)
-  }
-  console.log(`The request to ${response.url} was successful!`);
-  console.log("Here is your data:", response.body);
-});
-```
-
-However, the `response.body` is a `ReadableStream` object. We need to do something else to access the data in that stream.
-
-### Parsing the response body
-
-To access the data from the `response` body, we need to parse it, which is another asynchronous operation. Below, you'll see how we've nested these asynchronous operations:
-
-```jsx
-// 1. Perform the fetch
-fetch('https://dog.ceo/api/breeds/image/random')
+// 2. Define promise handlers with .then and .catch
+fetchPromise
   .then((response) => {
-    // 2. Check if the response is ok before proceeding
+    // 3. Check that the response is ok. If it isn't throw a useful error.
     if (!response.ok) {
-      return console.log(`Failed response. ${response.status} ${response.statusText}`)
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`)
     }
 
-    // This log isn't necessary but its nice for testing
-    console.log(`The request to ${response.url} was successful!`);
-
-    // 3. Parse the body of the response. `response.json()` also returns a Promise that we should handle using `.then`
-    response.json()
-      .then((responseData) => {
-          console.log("Here is your data:", responseData);
-          // 4. Render the data to the screen using DOM manipulation
-      });
+    // 4. Start reading the response body's ReadableStream
+    const readingPromise = response.json();
+    return readingPromise
+  })
+  .then((responseBody) => {
+    // 5. When the response body is read, do something with it!
+    // What you do will depend on the API you're using
+  })
+  .catch((err) => {
+    // 6. Handle Errors
+    console.error(err);
   })
 ```
 
-- The `response` object has a `.json()` method which parses the body of the response as JSON. 
-- **`response.json()` is also asynchronous** and returns a Promise that resolves to the response body.
-- Once the data is parsed, we can then use it (print it, render it, etc…)
+Let's break this down.
+
+### Steps 1 and 2: Getting A Response Object
+
+Let's start with the first two steps:
+1. Invoke `fetch` with an API endpoint (a specific URL provided by a web API). A promise is returned.
+2. Define promise handlers with `.then` and `.catch`
+
+To test this, we can use the API endpoint `https://dog.ceo/api/breeds/image/random` and, in the `.then()` handler, print out the `response` object that the returned promise resolves to.
+
+```js
+const fetchPromise = fetch('https://dog.ceo/api/breeds/image/random');
+
+fetchPromise
+  .then((response) => {
+    console.log(response)	
+
+    // the rest of the code ...
+  })
+```
+
+We should get something that looks like this:
+
+![A response object printed to the console](img/response-object.png)
+
+The returned object is a [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object. It contains useful information about both the request and the response including:
+  * `response.body` — a stream of data that we can read to get the response data
+  * `response.ok` — indicates if the response succeeded or failed
+  * `response.status` — a 3-digit code the type of success or failure that occurred (`200` means the requested data was returned)
+  * `response.statusText` — a string with more information about the response
+  * `response.url` — the endpoint requested
+
+The `response.body` is the main thing we want from this response, but as you can see it is a `ReadableStream` object, not a string or normal object with the data inside.
+
+Let's look at the next steps to see how we get the data from this `ReadableStream`.
+
+### Steps 3 and 4: Reading Data From the Response Object
+
+Our objective is to get the data from this response so that we can use it in our application. The code below accomplishes that task, but how?
+
+```js
+fetchPromise
+  .then((response) => {
+    // 3. Check that the response is ok. If it isn't throw a useful error.
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`)
+    }
+
+    // 4. Start reading the response body's ReadableStream
+    const readingPromise = response.json();
+    return readingPromise;
+  })
+```
+
+Step 3 is a guard clause for step 4, so let's start with step 4 and then return to step 3:
+
+![Data is downloaded and processed in chunks, rather than all at once](img/readable-stream.png)
+
+When an HTTP request is sent to a web API, the response data isn't sent back all at once. Instead, it is sent back in a continuous "stream" of data chunks. That's what the `ReadableStream` in the `response.body` is.
+
+**<details><summary>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</summary>**
+Getting data from another source requires two steps: first downloading the data and then reading it. If the data is really large, downloading the data can become a blocking task. 
+ 
+By chunking the data, we can download the data in smaller pieces and start the process of reading it as it comes in. If we had to wait for all of the data to be downloaded before we started reading it, the process would take longer.
+</details>
+
+Reading the incoming data stream is an asynchronous process that we can initiate by invoking the `response.json()` function, which will read the data stream as JSON.
+
+{% hint style="info" %}
+Using `response.json()` assumes that the data is in JSON format (99% of the time it will be). If it isn't, there are [other methods available](https://developer.mozilla.org/en-US/docs/Web/API/Response#instance_methods).
+{% endhint %}
+
+
+`response.json()` returns a promise.
+
+```js
+// 4. Start reading the response body's ReadableStream
+const readingPromise = response.json();
+```
+
+However, before we do this, we need to check to see if the `response` failed. If it did, then there won't be any data to read in. We don't want to start an asynchronous process unnecessarily if we don't have to. 
+
+So, we include a guard clause that checks the `response.ok` property and throws a useful error with the status of the response:
+
+```js
+fetchPromise
+  .then((response) => {
+    // 3. Check that the response is ok. If it is NOT, throw a useful error.
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`)
+    }
+
+    // Assuming that the response IS ok, go ahead and read the data stream.
+  })
+```
+
+So, what we have so far is this:
+
+```js
+const fetchPromise = fetch('https://dog.ceo/api/breeds/image/random');
+
+fetchPromise
+  .then((response) => {
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`)
+    }
+
+    const readingPromise = response.json();
+    return readingPromise;
+  })
+```
+
+Note that the ONLY thing that we've changed from the pattern is the API endpoint that we used to invoke `fetch()`. Most of this code is "boilerplate" (it will be the same every time).
+
+But why do we return the `readingPromise` from the callback given to `.then()`?
+
+### Steps 5 and 6: Do Something With the Data (and Errors)
+
+Remember, the `Promise.then()` method returns a Promise. That Promise will resolve to whatever is returned by the callback invoked by `.then()`!
+
+So, if we return the `readingPromise` from `.then()`, then we can handle that Promise by chaining another invocation of `.then()` to our first one! When the `readingPromise` finishes reading the `response.body` data stream, the second `.then()` will be invoked with the requested data:
+
+```js
+const fetchPromise = fetch('https://dog.ceo/api/breeds/image/random');
+
+fetchPromise
+  .then((response) => {
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`)
+    }
+    const readingPromise = response.json();
+
+    // readingPromise can be handled by the next .then, but only if we return it
+    return readingPromise;
+  })
+  .then((responseBody) => {
+    // When the response body is read, do something with it!
+    dogImage.src = responseBody.message;
+  })
+  .catch((err) => {
+    // 6. Handle Errors
+    console.error(err);
+  })
+```
+
+- What you do will depend on the API you're using
+- For example, the dog.ceo API puts the image source URL in the `responseBody.message` property. 
+- Every web API should include documentation that outlines the structure of the `responseBody` data.
+
+The final step of handling errors isn't that new or interesting. If an error is thrown (or if a Promise rejects), we catch it and print it out. However, we should be aware of what can cause an error (or a rejected Promise). 
+
+There are two likely causes of errors / rejected Promises:
+* A `fetch()` Promise rejects when the request itself fails. For example, the URL might be malformed (`hxxp://example.com`) or there is a network error (you don't have internet). 
+  * **Note**: a `fetch()` promise can still resolve but have `response.ok` be `false`. For example, if the URL is properly formatted but the API you are requesting from is down, the `fetch()` call itself will work but `response.ok` will be `false`. You can check the [HTTP status code](#http-status-codes) to see exactly what caused the request to fail. In this case, we manually throw our own `Error` in step 3.
+* A `response.json()` Promise rejects when the `response` body is NOT in JSON format and therefore cannot be read.
+
+
+## Challenge: Make Your Own API App
 
 Here we are using the API from https://dog.ceo/ and the specific “endpoint” URL https://dog.ceo/api/breeds/image/random. Try these other APIs:
-- https://dog.ceo/api/breed/hound/images
+
 - https://pokeapi.co/api/v2/pokemon/pikachu
 - https://v2.jokeapi.dev/joke/Programming
-- https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2023-3-15
+- https://api.sunrise-sunset.org/json?lat=40.7128&lng=-74.0060&tzid=America/New_York
 
-### Avoid Nesting, Use Chaining Instead
+How can you build an application that fetches this data and then displays it in some useful way?
 
-Rather than nesting the promise handling, we often will chain them together instead:
 
-```js
-fetch('https://dog.ceo/api/breeds/image/random')
-  .then((response) => {
-    if (!response.ok) {
-      return console.log(`Failed response. ${response.status} ${response.statusText}`)
-    }
-
-    // We can return a promise from `.then` to create a chain of `.then`s
-    // The next `.then` callback will receive the resolved value of this Promise
-    return response.json()
-  })
-  .then((responseData) => {
-      console.log("Here is your data:", responseData);
-      // do something with the response data
-  });
-```
-
-This works because `.then` will returns a Promise that resolves to the value its callback returns. 
-
-If the `.then` callback itself returns a Promise, the promise returned by `.then` will be the same Promise returned by its callback.
-
-In other words, `.then` will first check to see what the callback returns. If it is a non-Promise value, it will wrap that value in a Promise. If it is a Promise, it will just return that Promise.
-
-### Handling Rejected Promises
-
-Remember that all Promises will either resolve or reject. Resolved Promises trigger the `.then` callback to be invoked while rejected Promises trigger the `catch()` callback to be invoked.
-
-Since fetching involves two promises (fetching first, then parsing the response body), we should be aware of what can cause those rejections:
-* A `fetch()` Promise rejects when the request itself fails. For example, the URL might be malformed (`hxxp://example.com`) or there is a network error (you don't have internet). This is different from the response errors you might get depending on the [HTTP status code](#http-status-codes)
-* A `response.json()` Promise rejects when the `response` body is NOT in JSON format and therefore cannot be parsed.
-
-When chaining together multiple promises, if either of the Promises returned by `fetch()` or `response.json()` reject, both can be handled by a single `.catch()`:
-
-```js
-fetch('https://dog.ceo/api/breeds/image/random')
-  .then((response) => {
-    if (!response.ok) {
-      return console.log(`Fetch failed. ${response.status} ${response.statusText}`)
-    }
-    return response.json()
-  })
-  .then((responseData) => {
-      console.log("Here is your data:", responseData);
-      // do something with the response data
-  })
-  .catch((error) => {
-    console.log("Error caught!");
-    console.error(error.message);
-  })
-```
-
-* Note that A `fetch()` promise does not reject if the server responds with HTTP status codes that indicate errors (404, 504, etc...).
-  * You can see that the `!response.ok` guard clause will execute when you send a request to an API url that doesn't exist (try removing the `/random` part of the URL)
-  * However, if you mess up the URL (replace `http` with `hxxp`) then an error is thrown and the `.catch()` callback will be executed
-
-## Digging Deeper into Fetching
+## More Information About Requests and Responses
 
 ### HTTP Status Codes
 
@@ -212,7 +279,7 @@ Let's break it down:
 - `/json` - This is the **path**. It shows what resource is being requested
 - `?lat=36.7201600&lng=-4.4203400&date=2023-3-15` - These are **query parameters** and this particular URL has 3: `lat`, `lng`, and `date`. Query parameters begin with a `?` are are separated with `&`. Each parameter uses the format `name=value`. Try changing the `date` parameter!
 
-When using a new API, make sure to look at that APIs [documentation](https://api.sunrise-sunset.org/) (often found at the host address) to understand how to format the request URL.
+When using a new API, make sure to look at that API's [documentation](https://api.sunrise-sunset.org/) (often found at the host address) to understand how to format the request URL.
 
 ### Kinds of Requests - HTTP Verbs
 
