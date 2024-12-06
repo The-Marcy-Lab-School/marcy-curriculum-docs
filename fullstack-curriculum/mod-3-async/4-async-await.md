@@ -1,7 +1,7 @@
 # Async & Await
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-2-async-await)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-3-async-await)!
 {% endhint %}
 
 * [Fetching "Synchronously" with Async/Await](4-async-await.md#fetching-synchronously-with-asyncawait)

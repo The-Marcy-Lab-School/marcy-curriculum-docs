@@ -1,7 +1,7 @@
 # Fetch
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch)!
 {% endhint %}
 
 - [Cross-Application Communication](#cross-application-communication)
@@ -22,11 +22,11 @@ Okay now we’re really getting somewhere. So far we’ve been writing programs 
 
 ![Cross application communication in rainbow text](./img/cross-application-communication.png)
 
-A web application's most common asynchronous operation is requesting data from another computer. For example:
+A web application's most common asynchronous operation is requesting data from another computer (a server). For example:
 
-- I want my web application to show the current weather. I can request that data from a Weather API.
-- I want my web application to show a Google map. I can request that map from the Google Maps API
-- I want my web application to find random pictures of dogs on the internet. I can request those images from the [dog api](https://dog.ceo/dog-api/)
+- I want my web application to show the current weather. I can request that data from a Weather API server.
+- I want my web application to show a Google map. I can request that map from the Google Maps API server
+- I want my web application to find random pictures of dogs on the internet. I can request those images from the [dog API](https://dog.ceo/dog-api/)
 
 ## HTTP Request / Response Cycle
 
@@ -49,7 +49,7 @@ The HTTP Request/Response cycle is the pattern of communication used by two comp
 
 ## The `fetch()` function
 
-> Try using this code in `fetchNewDog` function found in the `0-fetching-demo-start/js/event-helpers.js` file
+> Try using this code in the `fetchNewDog` function found in the `0-fetching-demo-start/js/event-helpers.js` file
 
 `fetch(url)` is a function that sends a request to a server. 
 * It is available in browsers and in Node!

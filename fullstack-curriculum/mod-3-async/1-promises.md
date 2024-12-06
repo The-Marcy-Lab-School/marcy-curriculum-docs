@@ -1,7 +1,7 @@
 # Promises
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-0-intro-to-promises-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-0-intro-to-promises)!
 {% endhint %}
 
 **Table of Contents**

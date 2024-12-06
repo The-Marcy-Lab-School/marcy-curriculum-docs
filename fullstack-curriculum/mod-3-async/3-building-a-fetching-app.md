@@ -1,7 +1,7 @@
 # Building a Fetching App — Pokedex!
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-2-pokedex-search-api-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-2-pokedex-search-api)!
 {% endhint %}
 
 ## Setup
