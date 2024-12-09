@@ -72,6 +72,8 @@ fetchPromise
   .then((responseBody) => {
     // 5. When the response body is read, do something with it!
     // What you do will depend on the API you're using
+    // TIP: Print the structure of the body to see what you're working with.
+    console.log(responseBody);
   })
   .catch((err) => {
     // 6. Handle Errors
@@ -216,6 +218,8 @@ fetchPromise
   })
   .then((responseBody) => {
     // When the response body is read, do something with it!
+    // TIP: Print the structure of the body to see what you're working with.
+    console.log(responseBody);
     dogImage.src = responseBody.message;
   })
   .catch((err) => {
