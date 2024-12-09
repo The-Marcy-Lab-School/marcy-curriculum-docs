@@ -14,8 +14,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [Promise.all()](#promiseall)
 - [Making Promises](#making-promises)
   - [A Function that Makes and Returns a Promise](#a-function-that-makes-and-returns-a-promise)
-- [The Pizza Shop Analogy](#the-pizza-shop-analogy)
-- [Coming up...](#coming-up)
+- [Summary](#summary)
+  - [Coming up...](#coming-up)
 
 ## Synchronous vs. Asynchronous Functions and `setTimeout`
 
@@ -470,7 +470,14 @@ Synchronous code will **always** be executed before asynchronous code.
 
 </details>
 
-## The Pizza Shop Analogy
+## Summary
+
+Using a Promise involves two steps:
+
+1. Start the asynchronous function and get a Promise back (order your pizza, get your ticket)
+2. Define how to handle the resolved/rejected Promise using `.then()` and `.catch()` (when ready, I will hand in my ticket and get my pizza)
+
+![Diagram showing the flow of Promises](img/Promises.svg)
 
 > Imagine walking into a Pizza shop and you ask for a slice of cheese pizza. The pizza isn’t ready yet so you have to wait. The person at the register gives you a ticket to claim your slice when it is ready. Meanwhile, you are free to run other errands and can return later to pick up your pizza. You get notified that the pizza is done so you return to the shop, hand in your ticket, and take your pizza home.
 
@@ -482,20 +489,11 @@ The ticket is the promise. The resulting value is the pizza (or them telling us 
 
 </details>
 
-Using a Promise involves two steps:
-
-1. Start the asynchronous function and get a Promise back (order your pizza, get your ticket)
-2. Define how to handle the resolved/rejected Promise using `.then()` and `.catch()` (when ready, I will hand in my ticket and get my pizza)
-
-![Diagram showing the flow of Promises](img/Promises.svg)
-
-As the asynchronous function is carried out, the Promise will exist in one of three states:
-
-## Coming up...
+### Coming up...
 
 Next time, we’ll write code like this:
 
-```jsx
+```js
 // Execute async code that returns a Promise
 const fetchPromise = fetch('https://pokeapi.co/api/v2/pokemon/pikachu');
 
