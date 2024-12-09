@@ -13,6 +13,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [Sequential Asynchronous Functions With Promises](#sequential-asynchronous-functions-with-promises)
   - [Promise.all()](#promiseall)
 - [Making Promises](#making-promises)
+  - [A Function that Makes and Returns a Promise](#a-function-that-makes-and-returns-a-promise)
 - [The Pizza Shop Analogy](#the-pizza-shop-analogy)
 - [Coming up...](#coming-up)
 
@@ -384,7 +385,11 @@ Promise.all(promises)
 
 ## Making Promises
 
-To better understand promises, we can make them ourselves! To create a promise, use the `new Promise()` constructor function:
+To better understand functions that return promises, we can make a Promise ourselves! 
+
+Remember, a Promise represents an asynchronous operation that will take some time to complete. When it completes (when it "resolves") or when it fails (when it "rejects"), we can decide what to do next using callbacks provided to `.then` and `.catch`
+
+To create a Promise, use the `new Promise()` constructor function:
 
 ```js
 const myPromise = new Promise((resolve, reject) => {
@@ -396,6 +401,8 @@ const myPromise = new Promise((resolve, reject) => {
 * The provided callback will be given two functions as parameters: `resolve` and `reject`.
   * Invoke `resolve(successValue)` to indicate that the asynchronous function succeeds.
   * Invoke `reject(failureValue)` to indicate failure.
+
+In the example below, we create a new Promise that starts a 5 second timer (that's our asynchronous operation). When the timer is done, a random number from 1-6 is generated and the Promise either resolves or rejects depending on the result. Below the creation of the Promise, we schedule callbacks to handle the value produced in each scenario:
 
 ```js
 // The callback determines when and how the promise resolves (or rejects)
@@ -418,9 +425,11 @@ const rollPromise = new Promise((resolve, reject) => {
 rollPromise
   .then((successMessage) => {
     console.log(successMessage);
+    // Prints "Success! X was rolled" (where X is a number 3-6)
   })
   .catch((failureMessage) => {
     console.error(failureMessage);
+    // Prints "Failure. X was rolled" (where X is 1 or 2)
   })
 ```
 
@@ -433,6 +442,7 @@ Let's break down this example:
 * The value we invoke `resolve` with is passed to the `.then` handler which we've decided to print with `console.log`.
 * The value we invoke `reject` with is passed to the `.then` handler which we've decided to print with `console.error`.
 
+### A Function that Makes and Returns a Promise
 Here is an asynchronous function that returns a promise that ALWAYS resolves
 
 ```js
