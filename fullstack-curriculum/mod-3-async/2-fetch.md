@@ -15,11 +15,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [URL Structure](#url-structure)
   - [Kinds of Requests - HTTP Verbs](#kinds-of-requests---http-verbs)
 
-## What is a Web API?
-
 In the last lesson, we learned about how to handle asynchronous functions with Promises. Today we will learn perhaps the most important asynchronous function, `fetch`. The `fetch` function lets us request data from a **web API**
 
-![](img/http-request-response-cycle.png)
+## What is a Web API?
+
+
+
 
 Remember, API stands for "Application Programming Interface". An interface can be thought of as a set of tools or resources. So an API is a set of tools that an application can interact with to create a program. Very generic, right?
 
@@ -29,15 +30,30 @@ The DOM API is one type of API that provides an interface made up of objects and
 document.querySelector("h1").textContent = "Hello World!";
 ```
 
-A **web API** is another type of API whose interface is made up of URLs that each provide access to a different piece of data. To use a web API, instead of calling a function, we send an HTTP(S) request to a URL called an **API endpoint**.
+A **web API** is another type of API whose interface is made up of URLs that each provide access to a different piece of data. To use a web API, instead of calling a function, we send an HTTP(S) request to one of the API's **endpoints**.
 
-For example, try entering these two API endpoints into your browser's address bar:
+An API endpoint is a URL that provides access to one of the API's resources. Each of the following URLs provides a different set of data (paste them into your browser's URL bar):
 
-https://dog.ceo/api/breeds/list/all
+* https://dog.ceo/api/breeds/list/all
 
-https://dog.ceo/api/breeds/image/random
+* https://dog.ceo/api/breeds/image/random
 
-When we use the HTTPS protocol, we are sending a request over the internet to the dog.ceo servers. Those servers are set up to listen for incoming requests and send back the data according the requested endpoint (the specific URL that was used in the request)
+When we use the HTTPS protocol, we are sending a request over the internet to the dog.ceo servers. Those servers are set up to listen for incoming requests, perform the requested actions according to the endpoint that was targeted, and then send back a response.
+
+![](img/http-request-response-cycle.png)
+
+The request includes the URL and a CRUD-related verb indicating what you want to do with the requested data:
+* "POST" - Create 
+* "GET" - Read
+* "PATCH" - Update
+* "DELETE" - Delete
+
+Status codes are the three-digit codes that provide information about the response:
+* `200` OK: The request was successful 
+* `400` Bad Request: The server received the request but was unable to process it due to malformed syntax 
+* `403` Forbidden: The server understood the request but denied it 
+* `404` Not Found: The server could not find the requested resource 
+* `500` Internal Server Error: The server experienced something unexpected that prevented it from fulfilling the request
 
 {% hint style="info" %}
 
