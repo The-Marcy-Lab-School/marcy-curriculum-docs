@@ -10,10 +10,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
   - [Steps 5 and 6: Do Something With the Data (and Errors)](#steps-5-and-6-do-something-with-the-data-and-errors)
 - [Challenge: Make Your Own API App](#challenge-make-your-own-api-app)
+- [Sending POST, PATCH, and DELETE Requests](#sending-post-patch-and-delete-requests)
 - [More Information About Requests and Responses](#more-information-about-requests-and-responses)
   - [HTTP Status Codes](#http-status-codes)
   - [URL Structure](#url-structure)
-  - [Kinds of Requests - HTTP Verbs](#kinds-of-requests---http-verbs)
 
 In the last lesson, we learned about how to handle asynchronous functions with Promises. Today we will learn perhaps the most important asynchronous function, `fetch`. The `fetch` function lets us request data from a **web API**
 
@@ -258,14 +258,108 @@ There are two likely causes of errors / rejected Promises:
 
 ## Challenge: Make Your Own API App
 
-Here we are using the API from https://dog.ceo/ and the specific “endpoint” URL https://dog.ceo/api/breeds/image/random. Try these other APIs:
+Now that you know how to use APIs, use the 6-step structure above to send and handle `fetch` requests to other APIs! Here are a few other free API endpoints that you can try:
 
+- https://api.thecatapi.com/v1/images/search
 - https://pokeapi.co/api/v2/pokemon/pikachu
 - https://v2.jokeapi.dev/joke/Programming
 - https://api.sunrise-sunset.org/json?lat=40.7128&lng=-74.0060&tzid=America/New_York
 
-How can you build an application that fetches this data and then displays it in some useful way?
+Can you build an application that fetches this data and then displays it in some useful way? We've provided the `2-fetching-challenge` starting template for you to start working with.
 
+## Sending POST, PATCH, and DELETE Requests
+
+HTTP requests are not exactly requests for data; they are requests to perform a CRUD action. Consider these examples related to Instagram:
+
+- The client requests to post a new picture on their profile (Create)
+- The client requests to see all posts made by Beyonce (Read)
+- The client requests to update a post they made yesterday (Update)
+- The client requests to delete a post they made yesterday (Delete)
+
+Each of these requests to perform CRUD actions has an HTTP verb that is associated with it.
+
+- `POST` - Create
+- `GET` - Read
+- `PATCH` - Update
+- `DELETE` - Delete
+
+This HTTP verb or “method” is sent in the HTTP Request so that the server knows what kind of request it is receiving.
+
+The default behavior of using `fetch` is to make a `GET` request, but we can also make other kinds of requests by defining an `options` object. We then pass the `options` object as a second argument to `fetch`. Here are some examples of POST (create), PATCH (update), and DELETE (delete) requests:
+
+{% tabs %}
+
+{% tab title="POST" %} 
+
+When sending a POST request, we often will need to send a **request body**. Before sending, we `JSON.stringify` that data and tell the API that we're sending `"application/json"` data.
+
+```js
+const url = 'https://reqres.in/api/users';
+const newUser = { name: "morpheus", job: "junior developer" };
+
+const options = {
+  method: "POST",       
+  body: JSON.stringify(newUser), 
+  headers: {
+    "Content-Type": "application/json"
+  }  
+};
+
+fetch(url, options);
+// handle the fetch promise, etc...
+```
+
+{% endtab %}
+
+{% tab title="PATCH" %} 
+
+When sending a PATCH request, we are often updating a single resource. So, notice how the `url` now ends with `/users/2` to indicate that we want to update the user with id 2. The request body will include our desired changes. Again, we `JSON.stringify` that data and tell the API that we're sending `"application/json"` data.
+
+```js
+const url = 'https://reqres.in/api/users/2';
+const updatedUser = { name: "morpheus", job: "senior developer" };
+
+const options = {
+  method: "PATCH",       
+  body: JSON.stringify(updatedUser), 
+  headers: {
+    "Content-Type": "application/json"
+  }  
+};
+
+fetch(url, options);
+// handle the fetch promise, etc...
+```
+
+{% endtab %}
+
+{% tab title="DELETE" %} 
+
+When sending a DELETE request, we are often deleting a single resource. So, notice how the `url` now ends with `/users/2` to indicate that we want to delete the user with id 2. No data needs to be sent with the request so we leave out `body` and `headers`.
+
+```js
+const url = 'https://reqres.in/api/users/2';
+
+const options = {
+  method: "DELETE",       
+};
+
+fetch(url, options);
+// handle the fetch promise, etc...
+```
+
+{% endtab %}
+
+{% endtabs %} 
+
+Most of the `options` object is boilerplate (it's mostly the same each time): 
+* The `method` determines the kind of request
+* The `body` determines **what** we send to the server. Note that it must be `JSON.stringify()`-ed first.
+* The `headers` object provides meta-data about the request. It can provide many pieces of information but here all we need to share is the format of the data we are sending to the API.
+
+To see this in action, check out the example in `3-post-requests` which uses a form to create new users:
+
+![Filling out the form will send a POST request to create a new user. The newly created user is displayed in a list.](img/create-new-user-app.png)
 
 ## More Information About Requests and Responses
 
@@ -300,62 +394,3 @@ Let's break it down:
 - `?lat=36.7201600&lng=-4.4203400&date=2023-3-15` - These are **query parameters** and this particular URL has 3: `lat`, `lng`, and `date`. Query parameters begin with a `?` are are separated with `&`. Each parameter uses the format `name=value`. Try changing the `date` parameter!
 
 When using a new API, make sure to look at that API's [documentation](https://api.sunrise-sunset.org/) (often found at the host address) to understand how to format the request URL.
-
-### Kinds of Requests - HTTP Verbs
-
-HTTP requests can be made for a variety of purposes. Consider these examples related to Instagram:
-
-- The client requests to see all posts made by Beyonce (Read)
-- The client requests to post a new picture on their profile (Create)
-- The client requests to update a post they made yesterday (Update)
-- The client requests to delete a post they made yesterday (Delete)
-
-Each of these actions has an HTTP verb that is associated with it.
-
-- `GET` - Read
-- `POST` - Create
-- `PATCH` - Update
-- `DELETE` - Delete
-
-This HTTP verb or “method” is sent in the HTTP Request so that the server knows what kind of request it is receiving.
-
-The default behavior of using `fetch` is to make a `GET` request, but we can also make other kinds of requests by adding a second `options` argument to `fetch()`:
-
-```jsx
-const newUser = { name: "morpheus", job: "leader" };
-
-const options = {
-  method: "POST",                      // The type of HTTP request
-  body: JSON.stringify(newUser),       // The data to be sent to the API
-  headers: {
-    "Content-Type": "application/json" // The format of the body's data
-  }  
-}
-
-// This is a good API to practice GET/POST/PATCH/DELETE requests
-const url = 'https://reqres.in/api/users';
-
-// Notice that the options object is provided as the second arg
-fetch(url, options)
-  .then((response) => {
-    if (!response.ok) {
-      return console.log(`Fetch failed. ${response.status} ${response.statusText}`)
-    }
-    return response.json();
-  })
-  .then((responseData) => {
-      // A POST request will return the object created with an id and a createdAt timestamp
-      console.log("Here is your data:", responseData);
-  })
-  .catch((error) => {
-    console.log("Error caught!");
-    console.error(error.message);
-  })
-```
-
-Most of the `options` object is boilerplate (it's mostly the same each time): 
-* The `method` determines the kind of request
-* The `body` determines **what** we send to the server. Note that it must be `JSON.stringify()`-ed first.
-* The `headers` object provides meta-data about the request. It can provide many pieces of information but here all we need to share is the format of the data we are sending to the API.
-
-The url used here is from https://reqres.in which is a great "dummy" API that you can use to practice making various kinds of fetch requests.
