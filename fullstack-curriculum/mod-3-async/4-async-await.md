@@ -9,8 +9,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 - [Fetching "Synchronously" with Async/Await](#fetching-synchronously-with-asyncawait)
   - [Handling Errors with Try/Catch](#handling-errors-with-trycatch)
 - [Making a Generic Fetch Helper](#making-a-generic-fetch-helper)
-  - [Using the Helper](#using-the-helper)
+  - [Why Are We Checking the Content Type?](#why-are-we-checking-the-content-type)
   - [Why return a tuple?](#why-return-a-tuple)
+  - [Using the Helper](#using-the-helper)
 
 
 ## Intro: Promise Returning Is Tricky
@@ -212,7 +213,7 @@ const fetchData = async (url, options = {}) => {
       return [textData, null]
     }
 
-    // Otherwsie, read the stream as JSON
+    // Return a "tuple", making error handling on the "receiving" end easier
     const jsonData = await response.json();
     return [jsonData, null]
   }
@@ -224,51 +225,11 @@ const fetchData = async (url, options = {}) => {
 }
 ```
 
+### Why Are We Checking the Content Type?
+
 We've added in one detail that can occasionally trip us up: the data is NOT in JSON format. `DELETE` requests, for example, often do not return ANY data in response. In other cases, we may be fetching other data formats. In those cases, we can't use the `response.json` function and instead will use `response.text` to read the incoming response body `ReadableStream`. 
 
 So, to make our function more flexible, we check the `response.headers` to determine the `contentType` and then use `response.json()` if we're dealing with JSON, and `response.text()` if we're dealing with anything else.
-
-### Using the Helper
-
-With the helper built, we can make more specific helper functions like this
-
-```js
-// GET Requests are pretty straight forward. 
-// Because fetchData is marked with 'async', it returns a promise
-export const getUsers = () => {
-  return fetchData('https://reqres.in/api/users')
-}
-
-export const getUser = (userId) => {
-  return fetchData(`https://reqres.in/api/users/${userId}`);
-}
-
-// POST requests require some configuration before fetching
-export const createUser = async (name, job) => {
-  const newUser = { name, job };
-  const options = {
-    method: "POST",
-    body: JSON.stringify(newUser),
-    headers: {
-      "Content-Type": "application/json",
-    }
-  };
-  // Here, we use the `fetchData` helper.
-  // Since it is an `async` function, it returns a Promise
-  return fetchData(`https://reqres.in/api/users`, options);
-}
-
-// in main.js
-const main = async () => {
-  // these functions now return tuples, allowing for error rendering
-  const [user, error] = await createUser("ben", "instructor");
-  if (!error) {
-    renderUser(user);
-  } else {
-    renderError(error);
-  }
-};
-```
 
 ### Why return a tuple?
 
@@ -314,3 +275,47 @@ const getDogImage = async () => {
   }
 }
 ```
+
+### Using the Helper
+
+With the helper built, we can make more specific helper functions like this
+
+```js
+// GET Requests are pretty straight forward. 
+// Because fetchData is marked with 'async', it returns a promise
+export const getUsers = () => {
+  return fetchData('https://reqres.in/api/users')
+}
+
+export const getUser = (userId) => {
+  return fetchData(`https://reqres.in/api/users/${userId}`);
+}
+
+// POST requests require some configuration before fetching
+export const createUser = async (name, job) => {
+  const newUser = { name, job };
+  const options = {
+    method: "POST",
+    body: JSON.stringify(newUser),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  };
+  // Here, we use the `fetchData` helper.
+  // Since it is an `async` function, it returns a Promise
+  return fetchData(`https://reqres.in/api/users`, options);
+}
+
+// in main.js
+const main = async () => {
+  // these functions now return tuples, allowing for error rendering
+  const [user, error] = await createUser("ben", "instructor");
+  if (!error) {
+    renderUser(user);
+  } else {
+    renderError(error);
+  }
+};
+```
+
+
