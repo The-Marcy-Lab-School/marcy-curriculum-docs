@@ -1,27 +1,36 @@
-# Building a Fetching App — Pokedex!
+# Building a Pokedex!
 
-{% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-2-pokedex-search-api)!
-{% endhint %}
+## Video
+
+Watch the full build tutorial here!
+
+{% embed url="https://youtu.be/2wDeDaZ8C7c?si=_M6wCuncNeyNj1aY" %}
 
 ## Setup
-`npm create vite`
-- name: pokedex
-- Vanilla
-- JavaScript
 
-cd into pokedex and `npm i`
+Create a new repository and clone it down. CD and then:
+
+```sh
+`npm create vite`
+# name: app
+# Framework: Vanilla
+# Variant: JavaScript
+```
+
+cd into `app` and `npm i`
+
+Remove the starter code.
 
 ## Plan
 
-draw a wireframe
+Before you build anything, draw a wireframe:
 
 ![](./pokedex-wireframe.svg)
 
-plan out the logic:
+Then plan out the logic:
 * When the page loads:
-  * fetch Pikachu (make sure to catch any errors)
-  * render Pikachu data to the screen
+  * fetch pikachu (make sure to catch any errors)
+  * render pikachu data to the screen
   * add an event listener for the form
 
 * When the form is submitted:
@@ -31,80 +40,185 @@ plan out the logic:
 
 ## HTML
 
-Within the `body` of our `index.html` file, we'll provide the structure for our application's front end
+First, we'll create the structure. We want:
+1. An `h1` heading with some title
+2. A `form` to search for a pokemon. It should have:
+   1. An `h2` heading with a form title
+   2. A `label` and `input:text` combo for the pokemon name.
+   3. A `button` to submit the form
+3. A `section` to display pokemon information. It will have two sections and we'll make it `display: flex` to put them side by side:
+   1. A `div` to display the pokemon picture and name
+   2. A `div` with a `ul` to display the pokemon stats
+
+Here's the HTML we came up with, added to the `div#app` container:
 
 ```html
 <div id="app">
   <h1>Pokedex</h1>
-  <form aria-label="pokemon search form" id="pokemon-search-form">
-    <h2>Find a Pokemon</h2>
-    <label for="pokemon"></label>
-    <input type="text" name="pokemon" id="pokemon-input" />
-    <button type="submit">Submit</button>
+  <form id="pokemon-form">
+    <h2>Search for a Pokemon</h2>
+    <label for="pokemon-name">Name</label>
+    <input type="text" id="pokemon-name" name="pokemonName">
+    <button>Search</button>
   </form>
-  <section id="pokemon-display">
+  <section id="pokemon-info-container">
     <div id="pokemon-picture">
-      <img src="" alt="" />
-      <p></p>
+      <img src="" alt="">
+      <p id="pokemon-picture-name">Pokemon loading...</p>
     </div>
     <div id="pokemon-stats">
-      <ul></ul>
+      <h2>Pokemon Stats</h2>
+      <ul id="pokemon-stats-list">
+        <!-- dynamically added list items go here -->
+      </ul>
     </div>
   </section>
 </div>
 ```
 
-## JavaScript
+## JavaScript Separation of Concerns
 
-First, render Pikachu data when the page loads. Here we use a helper function that can fetch and render any pokemon. The flexibility of this generic helper function will be useful for the search functionality.
+Rather than writing all of your code in one place, separate your code into three files:
+- `src/fetching-helpers.js` - exports functions related to fetching data from specific Web APIs
+- `src/dom-helpers.js` - exports functions related to dom manipulation
+- `src/main.js` - pulls together functions from helper files and invokes them. Defines event handlers if needed.
+
+After creating these files, we can put the outline of some functions inside:
 
 ```js
-const getPokemonData = (pokemonName) => {
-  const promise = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-  promise
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      // render the data
-      const img = document.querySelector("#pokemon-picture>img")
-      const p = document.querySelector("#pokemon-picture>p")
-      img.src = data.sprites.front_default;
-      p.textContent = data.name
-    })
-    .catch((error) => console.error(error.message));
+// fetching-helpers.js
+export const fetchPokemon = (pokemonName) => {
+  console.log("fetching pokemon: " + pokemonName);
 }
+
+// dom-helpers.js
+export const showPokemon = (pokemonData) => {
+  console.log("rendering pokemon: " + pokemonData)
+}
+
+// main.js
+import { fetchPokemon } from ./fetching-helpers.js
+import { showPokemon } from ./dom-helpers.js
 
 const main = () => {
-  getPokemonData("pikachu");
-}
+  fetchPokemon("pikachu");
+};
 
-main(); // running when the page loads
+main();
 ```
 
-Next, we implement the form search such that it can also fetch pokemon data. Make sure to use the `getPokemonData` helper from the last step!
+Start with fetching data from the API since that the data we get back will tell us what information we can render. We'll use `pikachu` as the test input for now.
+
+### Fetching
+
+In `fetching-helpers.js`, we can create a `fetchPokemon` function that takes in a `pokemonName` and searches the PokeAPI for that pokemon:
 
 ```js
-const searchForPokemon = (e) => {
-  // stop the reload/redirect
+export const fetchPokemon = (pokemonName) => {
+  console.log('fetching pokemon ' + pokemonName)
+
+  // 2. Define promise handlers with .then and .catch
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+    .then((response) => {
+      // 3. Check that the response is ok. If it isn't throw a useful error.
+      if (!response.ok) {
+        throw Error(`Fetch failed. ${response.status} ${response.statusText}`)
+      }
+
+      // 4. Start reading the response body's ReadableStream and return the promise
+      return response.json();
+    })
+    .then((pokemonData) => {
+      console.log(pokemonData);
+      return pokemonData;
+    })
+    .catch((err) => {
+      // 6. Handle Errors
+      console.error(err);
+    })
+};
+```
+
+This file only cares about fetching the `pokemonData` from the response body's `ReadableStream`. Once we get that data, this function has done its job. It will return `pokemonData` wrapped in a Promise.
+
+### Putting it Together
+
+Remember how we set up `showPokemon` in `dom-helpers.js`?
+
+```js
+// dom-helpers.js
+export const showPokemon = (pokemonData) => {
+  console.log("rendering pokemon: " + pokemonData)
+}
+```
+
+Because of this forward thinking, in `main.js`, we can already link up `fetchPokemon` with `showPokemon` by invoking `showPokemon` when the promise returned by `fetchPokemon` resolves.
+
+```js
+// main.js
+import { fetchPokemon } from ./fetching-helpers.js
+import { showPokemon } from ./dom-helpers.js
+
+const main = () => {
+  fetchPokemon("pikachu")
+    .then((pokemonData) => {
+      showPokemon(pokemonData)
+    });
+  
+  /* or in one line if you want to be fancy:
+
+  fetchPokemon("pikachu").then(showPokemon);
+
+  */
+};
+
+main();
+```
+
+The `pokemonData` that the `fetchPokemon` promise resolves to will be passed to and printed out by showPokemon.
+
+### Rendering
+
+In `dom-helpers.js`, the final step is rendering the pokemon! This requires us to look at the API more closely to see the structure of the data we're dealing with.
+
+Printing out the `pokemonData` is a helpful way to see the data structure first. We can see that we care about the following data:
+* `pokemonData.sprites` — an object of pokemon images
+* `pokemonData.name` — the name of the pokemon
+
+```js
+export const showPokemon = (pokemonData) => {
+  console.log("rendering pokemon: " + pokemonData)
+  
+  const img = document.querySelector('#pokemon-picture>img')
+  const nameP = document.querySelector('#pokemon-picture-name');
+
+  img.src = pokemonData.sprites.front_default;
+  nameP.textContent = pokemonData.name
+}
+```
+
+## Adding Form Handling
+
+Because of the beautiful separation of concerns, adding in form functionality is easy. We just grab the `pokemonName` data from the form, pass it to `fetchPokemon`, and `showPokemon` when the promise resolves!
+
+```js
+const handleSubmit = (e) => {
   e.preventDefault();
-
   const form = e.target;
-  const formData = new FormData(form);
-  const formObj = Object.fromEntries(formData);
+  const pokemonName = form.pokemonName.value;
 
-  console.log('here is your data:', formObj);
-
-  // use the helper function, passing in the form's pokemon data
-  getPokemonData(formObj.pokemon)
-
+  fetchPokemon(pokemonName).then(showPokemon);
+  
   form.reset();
 }
 
 const main = () => {
-  getPokemonData("pikachu");
+  fetchPokemon('pikachu').then(showPokemon);
 
-  // add a submit event listener to the form
-  const form = document.querySelector("#pokemon-search-form")
-  form.addEventListener('submit', searchForPokemon)
+  document
+    .querySelector('form')
+    .addEventListener('submit', handleSubmit)
 }
+
+main();
 ```
