@@ -10,6 +10,44 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 * [Making a generic fetch helper](4-async-await.md#making-a-generic-fetch-helper)
   * [Why return a tuple?](4-async-await.md#why-return-a-tuple)
 
+
+## Intro: Promise Returning Is Tricky
+
+What's wrong with this code? Why does it print `undefined`?
+
+```js
+const promise = fetch('https://reqres.in/api/users')
+
+promise
+  .then((response) => {
+    if (!response.ok) throw Error(response.status);
+    response.json();
+  })
+  .then((data) => {
+    console.log(data); // print undefined
+  })
+  .catch((error) => {
+    console.log("Error caught!");
+    console.log(error.message);
+  })
+```
+
+<details><summary>Answer</summary>
+
+Forgot to return from the first `.then` when chaining to a second `.then`
+
+</details>
+
+## The benefits of `async`/`await`
+
+Using the `async`/`await` syntax with `try` and `catch` has a number of benefits. The main ones being **readability** and **debuggability**.
+
+* We can write async code in a synchronous-like manner
+* We avoid having to write a bunch of callbacks
+* We can avoid common mistakes made when using callbacks
+* `try/catch` is a more general-purpose way of handling errors that can be used for more than just fetching.
+
+
 ## Fetching "Synchronously" with Async/Await
 
 So far we have written `fetch` code like this:
@@ -119,42 +157,6 @@ const getPikachuData = async () => {
 getPikachuData();
 ```
 
-## The benefits of `async`/`await`
-
-Using the `async`/`await` syntax with `try` and `catch` has a number of benefits. The main ones being **readability** and **debuggability**.
-
-* We can write async code in a synchronous-like manner
-* We avoid having to write a bunch of callbacks
-* We can avoid common mistakes made when using callbacks
-* `try/catch` is a more general-purpose way of handling errors that can be used for more than just fetching.
-
-<details>
-
-<summary>For example, what's wrong with this code? Why does it print `undefined`?</summary>
-
-Forgot to return from the first `.then` when chaining to a second `.then`
-
-</details>
-
-
-
-```js
-const promise = fetch('https://reqres.in/api/users')
-
-promise
-  .then((response) => {
-    if (!response.ok) throw Error(response.status);
-    response.json();
-  })
-  .then((data) => {
-    console.log(data); // print undefined
-  })
-  .catch((error) => {
-    console.log("Error caught!");
-    console.log(error.message);
-  })
-```
-
 ## Making a generic fetch helper
 
 The code for fetching data is almost always the same:
@@ -172,18 +174,8 @@ const fetchData = async (url, options = {}) => {
     // Throw an error if the response was not 2xx - let the catch statement handle it
     if (!response.ok) throw new Error(`Fetch failed. ${response.status} ${response.statusText}`)
 
-    // Make sure that the content type of the response is JSON before parsing it
-    // and return a tuple with the data and a null error.
-    const contentType = response.headers.get('content-type');
-    if (contentType !== null && contentType.includes('application/json')) {
-      const jsonData = await response.json();
-      return [jsonData, null]
-    }
-
-    // If the contentType of the response is not JSON, parse it as plain
-    // text and return a tuple with a null error
-    const textData = await response.text();
-    return [textData, null]
+    const jsonData = await response.json();
+    return [jsonData, null]
   }
   catch (error) {
     // if there was an error, log it and return a tuple: [data, error]
@@ -231,9 +223,11 @@ const postUser = async (user) => {
 postUser({ name: "morpheus", job: "leader" })
 ```
 
-### Why return a tuple?
+## Making a better generic fetch helper
 
-You may be wondering, why couldn't we write this helper function such that it just returns the data if there are no errors, or returns the error if there is one?
+We're going to add in one detail that can occasionally trip us up: the data is NOT in JSON format. Sometimes, for example, we fetch raw HTML code. In that case, we can't use the `response.json` function and instead will use `response.text` to read the incoming response body `ReadableStream`. 
+
+So, to make our function more flexible, we check the `response.headers` to determine the `contentType` and then use `response.json()` if we're dealing with JSON, and `response.text()` if we're dealing with anything else.
 
 ```js
 const fetchData = async (url, options = {}) => {
@@ -243,25 +237,29 @@ const fetchData = async (url, options = {}) => {
     // Throw an error if the response was not 2xx - let the catch statement handle it
     if (!response.ok) throw new Error(`Fetch failed. ${response.status} ${response.statusText}`)
 
-    // Make sure that the content type of the response is JSON before parsing it
-    // and return a tuple with the data and a null error.
+    // Guard clause: make sure that the content type of the response is JSON before reading it
     const contentType = response.headers.get('content-type');
-    if (contentType !== null && contentType.includes('application/json')) {
-      const jsonData = await response.json();
-      return jsonData
+    if (contentType === null || !contentType.includes('application/json')) {
+      // If the contentType of the response is not JSON, read the stream as plain text
+      const textData = await response.text();
+      return [textData, null]
     }
 
-    // If the contentType of the response is not JSON, parse it as plain
-    // text and return a tuple with a null error
-    const textData = await response.text();
-    return textData;
+    // Otherwsie, read the stream as JSON
+    const jsonData = await response.json();
+    return [jsonData, null]
   }
   catch (error) {
+    // if there was an error, log it and return a tuple: [data, error]
     console.error(error.message);
-    return error;
+    return [null, error];
   }
 }
 ```
+
+### Why return a tuple?
+
+You may be wondering, why couldn't we write this helper function such that it just returns the data if there are no errors, or returns the error if there is one?
 
 The reason we don't do this is to make the code that uses this function cleaner. The code that uses `fetchData` will need to know if the data it receives is an error or JSON data. The problem is that `error` objects and the `jsonData` can often be difficult to differentiate. An `error` object will have a `message` property, and often times, so do JSON response objects! Take the [Dog Image API](https://dog.ceo/dog-api/) as an example. It will return its data like this:
 
