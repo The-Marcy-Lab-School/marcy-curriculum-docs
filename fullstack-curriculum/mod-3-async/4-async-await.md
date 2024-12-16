@@ -128,7 +128,7 @@ const main = async () => {
   const users = await getUsersAsyncAwait();
   renderUsers(users);
 
-  // Or, we can still use .then if we want
+  // Or, we can still use .then if we want to
   getUsersAsyncAwait().then(renderUsers);
 }
 ```
@@ -235,7 +235,9 @@ So, to make our function more flexible, we check the `response.headers` to deter
 
 You may be wondering, why couldn't we write this helper function such that it just returns the data if there are no errors, or returns the error if there is one?
 
-The reason we don't do this is to make the code that uses this function cleaner. The code that uses `fetchData` will need to know if the data it receives is an error or JSON data. The problem is that `error` objects and the `jsonData` can often be difficult to differentiate. An `error` object will have a `message` property, and often times, so do JSON response objects! Take the [Dog Image API](https://dog.ceo/dog-api/) as an example. It will return its data like this:
+The reason we don't do this is to make the code that uses this function cleaner. The code that uses `fetchData` will need to know if the data it receives is an error or JSON data. 
+
+The problem is that `error` objects and the `jsonData` can often be difficult to differentiate. An `error` object will have a `message` property, and often times, so do JSON response objects! Take the [Dog Image API](https://dog.ceo/dog-api/) as an example. It will return its data like this:
 
 ```json
 {
@@ -265,13 +267,14 @@ But if our `fetchData` function always returns a `[data, error]` tuple where one
 
 ```js
 const getDogImage = async () => {
+  // either dogImage or error will be null
   const [dogImage, error] = await fetchData('https://dog.ceo/api/breeds/image/random')
   
   if (error) {
-    // handle the error
+    // if the error exists at all, that means that dogImage is null and we should handle the error
   }
   else {
-    // use the dog image
+    // otherwise, the error must be null and we can handle the dogImage
   }
 }
 ```
@@ -292,7 +295,7 @@ export const getUser = (userId) => {
 }
 
 // POST requests require some configuration before fetching
-export const createUser = async (name, job) => {
+export const createUser = (name, job) => {
   const newUser = { name, job };
   const options = {
     method: "POST",
@@ -301,19 +304,19 @@ export const createUser = async (name, job) => {
       "Content-Type": "application/json",
     }
   };
-  // Here, we use the `fetchData` helper.
-  // Since it is an `async` function, it returns a Promise
   return fetchData(`https://reqres.in/api/users`, options);
 }
 
+//////////////////////////////////////////
+
 // in main.js
 const main = async () => {
-  // these functions now return tuples, allowing for error rendering
+  // these functions now return tuples, allowing for graceful error rendering
   const [user, error] = await createUser("ben", "instructor");
-  if (!error) {
-    renderUser(user);
-  } else {
+  if (error) {
     renderError(error);
+  } else {
+    renderUser(user);
   }
 };
 ```
