@@ -21,21 +21,21 @@
   - [Form Requirements](#form-requirements)
 - [Tips for Success](#tips-for-success)
   - [Focus on demonstrating your learning, not building something unique.](#focus-on-demonstrating-your-learning-not-building-something-unique)
-- [Make Decisions Quickly](#make-decisions-quickly)
+  - [Make Decisions Quickly](#make-decisions-quickly)
   - [Plan and Delegate!!](#plan-and-delegate)
   - [Meet on your own time](#meet-on-your-own-time)
   - [Test your API!](#test-your-api)
 
 ## Overview
 
-For this project week, you and a partner will build an application that interacts with a third-party API. You will fetch data, render the fetched data to the DOM, and then fetch some more data\! 
+For this project week, you and a partner will build an application that interacts with a third-party API. You will fetch data, render the fetched data to the DOM, and then fetch some more data! 
 
 The main technical goal of your app is to **send two fetches** and render the fetched data: 
 
 1. First, fetch a collection of resources (GET a set of users, a set of pictures, a set of authors) and render all of those resources   
 2. Fetch more details about a single one of those resources (GET details about a single user, a single picture, a single author, etc…) and then render those details
 
-Check out [this deployed example](https://art-viewer-mike-example.github.io/art-viewer-day-3/) called "Art Viewer". Notice that the application fetches a bunch of pieces of art but you can also click on a single piece of art to see more details. The search feature and the ability to choose how many pieces are shown per page are bonuses. Of course, you can do more than this, but this is the minimum idea\!
+Check out [this deployed example](https://art-viewer-mike-example.github.io/art-viewer-day-3/) called "Art Viewer". Notice that the application fetches a bunch of pieces of art but you can also click on a single piece of art to see more details. The search feature and the ability to choose how many pieces are shown per page are bonuses. Of course, you can do more than this, but this is the minimum idea!
 
 ### Learning Objectives
 
@@ -43,7 +43,7 @@ Check out [this deployed example](https://art-viewer-mike-example.github.io/art-
 * Develop teamwork skills including communication, problem-solving, compromise, and task management  
 * Strengthen your Git workflow fundamentals, managing branches, navigating merge conflicts, and maintaining a repository  
 * Practice Agile methodologies by managing a scrum board and by performing daily stand-up and stand-down.  
-* Deploy a project\!  
+* Deploy a project!  
 * Practice your technical communication through a presentation.
 
 ### Deliverables
@@ -52,7 +52,7 @@ Check out [this deployed example](https://art-viewer-mike-example.github.io/art-
 * Github organization ([Example](https://github.com/Art-viewer-mike-example)) — you only need one repository  
 * Scrum Board with Backlog, In Progress, and Done ([Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board))  
 * A Deployed project link ([Example](https://art-viewer-mike-example.github.io/art-viewer-day-3/))  
-* A walkthrough demo video \+ Presentation ([Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing), [Example 1](https://docs.google.com/presentation/d/1SRZRr3ioL3TYyPTPFwVcayp4q47ia9I6NV9kFSUofxQ/edit#slide=id.g2b32ee03b40_0_717), [Example 2](https://docs.google.com/presentation/d/1zyfnu7PDpf5E3Ff7FIUdqAyvMGiAzdh_06RHAau4nF4/edit#slide=id.g2b32ee03b40_0_717))
+* A walkthrough demo video + Presentation ([Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing), [Example 1](https://docs.google.com/presentation/d/1SRZRr3ioL3TYyPTPFwVcayp4q47ia9I6NV9kFSUofxQ/edit#slide=id.g2b32ee03b40_0_717), [Example 2](https://docs.google.com/presentation/d/1zyfnu7PDpf5E3Ff7FIUdqAyvMGiAzdh_06RHAau4nF4/edit#slide=id.g2b32ee03b40_0_717))
 
 ### Roles
 
@@ -68,7 +68,7 @@ You *must* choose an API from this [list of free APIs](https://gist.github.com/M
 
 As you build this project, you will need to be incredibly organized and communicate well with your partner. Throughout your career, as you work on more projects and on more teams, you will realize that the people you enjoy working with most are excellent communicators and are highly organized. And finally, to hiring managers, being able to demonstrate your communication skills and approach to organization can really set you apart in the hiring process.
 
-In the world of software engineering, one methodology for successful communication and organization is called "The Agile Methodology" (look it up\!). While there are many aspects to this methodology, we will focus on two of its most important practices: maintaining a scrum board and holding stand-up and stand-down meetings.
+In the world of software engineering, one methodology for successful communication and organization is called "The Agile Methodology" (look it up!). While there are many aspects to this methodology, we will focus on two of its most important practices: maintaining a scrum board and holding stand-up and stand-down meetings.
 
 ### Scrum Board
 
@@ -94,7 +94,7 @@ The key to success on this project is to break down your goals into attainable c
 * [https://art-viewer-mike-example.github.io/art-viewer-day-2](https://art-viewer-mike-example.github.io/art-viewer-day-2/) (we can fetch and then render a list of pictures)  
 * [https://art-viewer-mike-example.github.io/art-viewer-day-3](https://art-viewer-mike-example.github.io/art-viewer-day-3) (we can click on a picture to fetch more details about that one picture)
 
-*Note: no need to create a new repo for each day \- this is just done this way for demonstration purposes.*
+*Note: no need to create a new repo for each day - this is just done this way for demonstration purposes.*
 
 As you work on this project, don't set your sights on the fully completed project from the jump. Give yourself smaller goals that you can reach each day and focus on one goal at a time. As long as your goals build on each other, you will eventually reach your final destination.
 
@@ -144,7 +144,7 @@ Below, we've laid out some daily milestones that you can strive for.
 
 ## Technical Requirements Checklist
 
-In order to see how well you're doing with this project, here are all the things we need to see from you. If you get all of these, then you know that you're where you need to be\!
+In order to see how well you're doing with this project, here are all the things we need to see from you. If you get all of these, then you know that you're where you need to be!
 
 ### Fetching Requirements
 
@@ -205,11 +205,11 @@ One of the easiest ways to get off track is by worrying about creating a unique 
 * You aren't deploying this app for the purpose of having real users.   
 * **Student projects are meant for learning and demonstrating your learning**
 
-## Make Decisions Quickly
+### Make Decisions Quickly
 
 You may have a great idea that you really want to implement, but remember, **you are working as a team and you only have a week**. Time is not on your side and the more time you waste disagreeing with your partner about what features to implement or what API to use, the less time you'll have to actually build the thing.
 
-### Plan and Delegate\!\!
+### Plan and Delegate!!
 
 * Use branches and make PRs  
 * Use your scrum board  
@@ -220,6 +220,6 @@ You may have a great idea that you really want to implement, but remember, **you
 
 Be in alignment with your teammate outside of the scheduled meetings with your engineering manager
 
-### Test your API\!
+### Test your API!
 
 Actually write a fetch to make sure that the API works before choosing it for your proposal  
