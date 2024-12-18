@@ -203,11 +203,11 @@ This is the “default” behavior of the forms, which is NOT what we want.
 
 ### The Modern Way
 
-Instead of having the browser take us away from the page, most modern web applications are "single-page-applications" meaning they operate on a single HTML page that dynamically handles all DOM interactions through JavaScript. 
+Instead of having the browser take us away from the page, most modern web applications use JavaScript to change the contents of the screen WITHOUT leaving the page.
 
-To handle a form submission while staying on the same page, we will need to:
-1. prevent the default behavior
-2. collect the form data
+To handle a form submission with JavaScript, we will need to:
+1. prevent the default behavior of navigating to a new page
+2. collect the form data using `form.elements`
 3. utilize the form data in some way (maybe render it to the screen, or send it to an API)
 4. reset the form
 
@@ -220,7 +220,14 @@ If these are our inputs:
 <input type="color" name="favoriteColor">
 ```
 
-Then, we can handle this form on the same page like so:
+Then, we can handle this form on the same page like this:
+
+- `event.preventDefault()` stops the form submission from redirecting/reloading the page
+- `event.target` is a reference the `form` element that caused the `"submit"` event to occur. We'll save it in a variable since we'll reference it a lot.
+- `form.elements` is an object containing all of the `input` elements of the form (the HTMLElement, not the value), accessible using the input `name` (e.g. `form.elements.username` or `form.elements.age`).
+- We can access the value of most `input` elements using the `.value` property (e.g. `form.elements.username.value`)
+- Checkboxes use the `.checked` property (e.g. `form.elements.isHungry.checked`).
+- `form.reset()` empties out the form!
 
 ```js
 const handleSubmit = (event) => {
@@ -230,11 +237,11 @@ const handleSubmit = (event) => {
   // the form will be the target of the "submit" event
   const form = event.target;
 
-  // We can access them one at a time like this:
-  const username = form.username.value;
-  const age = form.age.value;
-  const checkbox = form.isHungry.isChecked // <-- checkboxes are different!
-  const color = form.favoriteColor.value;
+  // We can access the inputs of a form by name using the form's elements:
+  const username = form.elements.username.value;
+  const age = form.elements.age.value;
+  const checkbox = form.elements.isHungry.isChecked // <-- checkboxes are different!
+  const color = form.elements.favoriteColor.value;
 
   // what should we do with those values?? here we are printing a sentence to the console
   // where only developers will see it. Can we put it on the screen somehow?
@@ -246,11 +253,7 @@ const handleSubmit = (event) => {
 document.querySelector('form').addEventListener('submit', handleSubmit);
 ```
 
-- `event.preventDefault()` stops the form submission from redirecting/reloading the page
-- The `event.target` value will point to the `form` element
-- Using the `form` element, we can access each `input` using the `name` attribute
-- We can access the value of most `input` elements using the `.value` property but checkboxes use the `.checked` property.
-- `form.reset()` empties out the form!
+Q: How can you improve this code so that you don't have to type out `form.elements` over and over again?
 
 ### FormData API
 
@@ -345,8 +348,10 @@ const capitalizeMood = (e) => {
   console.log('e.target:', e.target);
   const form = document.querySelector('form');
   
+  const currentMoodInput = form.elements.currentMood;
+  
   // we can also use query selector to get this input, but if we used checkboxes or radio elements, using the form is easier
-  form.currentMood.value = form.currentMood.value.toUpperCase();
+  currentMoodInput.value = currentMoodInput.value.toUpperCase();
 };
 
 const normalButton = document.querySelector('#normal-button');
