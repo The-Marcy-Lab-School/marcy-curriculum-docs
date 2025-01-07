@@ -200,8 +200,9 @@ Response here...
 In these assignments, you may encounter the following types of prompts:
 
 * Research a new topic and share your findings.
-* Explain a piece of syntax with examples and analogies.
 * Analyze a programming best practice and list its advantages and disadvantages.
+* Compare and contrast approaches for solving a problem and provide an argument in support of one.
+* Teach a piece of syntax or a concept with examples and analogies.
 
 Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
 
