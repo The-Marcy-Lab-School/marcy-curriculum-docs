@@ -2,11 +2,12 @@
 
 - [Overview](#overview)
   - [Learning Objectives](#learning-objectives)
-  - [Deliverables](#deliverables)
 - [Agile Methodologies](#agile-methodologies)
   - [Scrum Board](#scrum-board)
   - [Daily stand-up and stand-down](#daily-stand-up-and-stand-down)
-- [Milestones](#milestones)
+- [Deliverables \& Milestones](#deliverables--milestones)
+  - [Deliverables](#deliverables)
+  - [Milestones](#milestones)
 - [Technical Requirements Checklist](#technical-requirements-checklist)
   - [Fetching Requirements](#fetching-requirements)
   - [User Interface: Structure and Accessibility](#user-interface-structure-and-accessibility)
@@ -51,24 +52,6 @@ While building your first portfolio-level project is certainly the main focus, t
 * Deploy a project!  
 * Practice your technical communication through a presentation.
 
-### Deliverables
-
-Unlike your solo projects where the project itself was the main deliverable, for a portfolio-level project, you will be required to do a bit more. The deliverables below will help keep you and your partner organized and will help your Engineering Manager (your instructor) informed on your progress. In the end, all of these deliverables will serve as valuable artifacts that document your work.
-
-* **A Project Spec Sheet** — A project spec sheet is a document that provides key details about the project including the API being used, the intended features/user stories, and wireframes. 
-  * [Project Spec Sheet Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit) 
-  * [Example](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/edit#heading=h.dwz367p60bre)
-* **A Github Organization with your Repository** — A GitHub Organization is a shared account on GitHub where you and your teammates can collaborate on repositories.
-  * [Example](https://github.com/Art-viewer-mike-example) 
-  * Note: your organization only needs one repository. This example has a few to show progress after each day, but you shouldn't do that.
-* **A Scrum Board** — A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into three columns: *Backlog* (tasks waiting to be assigned), *In Progress* (assigned tasks that are being worked on), and *Done* (completed tasks).
-  * [Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
-* **A Deployed Project Link**
-  * Example: https://art-viewer-mike-example.github.io/art-viewer-day-3/
-* **A Presentation + Walkthrough Demo Video** 
-  * [Presentation Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing)
-  * [Example 1](https://docs.google.com/presentation/d/1SRZRr3ioL3TYyPTPFwVcayp4q47ia9I6NV9kFSUofxQ/edit#slide=id.g2b32ee03b40_0_717) & [Example 2](https://docs.google.com/presentation/d/1zyfnu7PDpf5E3Ff7FIUdqAyvMGiAzdh_06RHAau4nF4/edit#slide=id.g2b32ee03b40_0_717)
-
 ## Agile Methodologies
 
 As you build this project, you will need to be incredibly organized and communicate well with your partner.
@@ -103,7 +86,27 @@ Stand-up and stand-down meetings are held daily and are meant to take only a few
 
 By sharing these details, the scrum board is meticulously maintained, every team member can be aware of the overall progress made on the project, and blockers can be handled quickly.
 
-## Milestones
+## Deliverables & Milestones
+
+### Deliverables
+
+Unlike your solo projects where the project itself was the main deliverable, for a portfolio-level project, you will be required to do a bit more. The deliverables below will help keep you and your partner organized and will help your Engineering Manager (your instructor) informed on your progress. In the end, all of these deliverables will serve as valuable artifacts that document your work.
+
+* **A Project Spec Sheet** — A project spec sheet is a document that provides key details about the project including the API being used, the intended features/user stories, and wireframes. 
+  * [Project Spec Sheet Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit) 
+  * [Example](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/edit#heading=h.dwz367p60bre)
+* **A Github Organization with your Repository** — A GitHub Organization is a shared account on GitHub where you and your teammates can collaborate on repositories.
+  * [Example](https://github.com/Art-viewer-mike-example) 
+  * Note: your organization only needs one repository. This example has a few to show progress after each day, but you shouldn't do that.
+* **A Scrum Board** — A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into three columns: *Backlog* (tasks waiting to be assigned), *In Progress* (assigned tasks that are being worked on), and *Done* (completed tasks).
+  * [Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
+* **A Deployed Project Link**
+  * Example: https://art-viewer-mike-example.github.io/art-viewer-day-3/
+* **A Presentation + Walkthrough Demo Video** 
+  * [Presentation Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing)
+  * [Example 1](https://docs.google.com/presentation/d/1SRZRr3ioL3TYyPTPFwVcayp4q47ia9I6NV9kFSUofxQ/edit#slide=id.g2b32ee03b40_0_717) & [Example 2](https://docs.google.com/presentation/d/1zyfnu7PDpf5E3Ff7FIUdqAyvMGiAzdh_06RHAau4nF4/edit#slide=id.g2b32ee03b40_0_717)
+
+### Milestones
 
 As you work on this project, don't set your sights on the fully completed project from the jump. Give yourself smaller goals that you can reach each day and focus on one goal at a time. As long as your goals build on each other, you will eventually reach your final destination.
 
