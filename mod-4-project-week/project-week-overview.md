@@ -84,6 +84,8 @@ Stand-up and stand-down meetings are held daily and are meant to take only a few
 * What tickets do they plan on assigning themselves next?  
 * What are they stuck on and may need help with?
 
+![A stand-up meeting looking over the scrum board](img/stand-up.png)
+
 By sharing these details, the scrum board is meticulously maintained, every team member can be aware of the overall progress made on the project, and blockers can be handled quickly.
 
 ## Deliverables & Milestones
