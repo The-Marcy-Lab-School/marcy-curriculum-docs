@@ -149,7 +149,7 @@ To see how this distribution version runs, run the command:
 npm run preview
 ```
 
-To deploy this distribution version of your application, check out the article on [How to Deploy on GitHub Pages](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum/how-tos/deploying-vite-with-github-pages).
+To deploy this distribution version of your application, check out the article on [How to Deploy on GitHub Pages](https://marcylabschool.gitbook.io/marcy-lab-school-docs/how-tos/deploying-vite-with-github-pages).
 
 ## Make the Project Your Own!
 
@@ -208,4 +208,4 @@ uuidButton.addEventListener('click', () => {
 
 To save these changes in your repository, add, commit, and push them!
 
-When you are ready to deploy your project, check out the article on [How to Deploy on GitHub Pages](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum/how-tos/deploying-vite-with-github-pages).
+When you are ready to deploy your project, check out the article on [How to Deploy on GitHub Pages](https://marcylabschool.gitbook.io/marcy-lab-school-docs/how-tos/deploying-vite-with-github-pages).

@@ -19,7 +19,7 @@
 * **Node** is a program that interprets and executes JavaScript code.
 * `console` is a built-in object with functions that print text to the Terminal output. A program can run without any console statements, you just won't see any output in the Terminal.
 * **Control Flow** is the order in which lines of code are executed.
-* **Code Style** refers to the formatting of the code in a way that makes it easier to read and understand. Refer to the [style guide](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum/cheatsheets/style-guide) for more details.
+* **Code Style** refers to the formatting of the code in a way that makes it easier to read and understand. Refer to the [style guide](https://marcylabschool.gitbook.io/marcy-lab-school-docs/cheatsheets/style-guide) for more details.
 
 ## Setup
 

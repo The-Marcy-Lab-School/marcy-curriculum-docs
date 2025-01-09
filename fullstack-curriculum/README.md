@@ -1,1 +1,0 @@
-# Marcy Lab School Fullstack Software Engineering Curriculum

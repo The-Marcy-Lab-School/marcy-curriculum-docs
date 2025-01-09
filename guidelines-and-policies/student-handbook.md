@@ -225,12 +225,6 @@ From Day One, we are transparent about what academic success at Marcy means. Bel
 
 Over the next year, you will learn how to be a full-stack software engineer! You'll learn the basics of the JavaScript syntax, how to use JavaScript to solve real problems, and then how to organize and optimize your code like a pro! We’ll also learn the various tools and frameworks web developers use to build web applications!
 
-[Find our curriculum online here!](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum)
-
-### Data Analytics Curriculum Overview:
-
-Coming Soon!
-
 ### Leadership and Development Curriculum Overview:
 
 The concept of leadership is central to everything we do at The Marcy Lab School. It is our promise to help our Fellows prepare for the professional world, and this means fully understanding the systems that they are entering and being able to successfully navigate these spaces beyond their time in the Fellowship. Who each of our Fellows are and where they come from is an asset - their empowered story is something to contribute to each of the spaces they enter. By spending time on leadership and identity development, we are cultivating conversations with our Fellows that allow them to question the systems that they are a part of and to critically think through what meaningful change can look like in any opportunity they pursue beyond their time at Marcy.

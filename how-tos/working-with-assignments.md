@@ -435,7 +435,7 @@ For short response and coding assignments, you will create a new branch called `
 Below, you will find detailed instructions for setting up your assignments and for submitting your assignments.
 
 {% hint style="info" %}
-Want to learn more about git branching and making Pull Requests? Check out the [Git Branching & PRs lesson](https://marcylabschool.gitbook.io/marcy-lab-school-docs/fullstack-curriculum/mod-0-command-line-interfaces-git-and-github/4-git-branching)!
+Want to learn more about git branching and making Pull Requests? Check out the [Git Branching & PRs lesson](https://marcylabschool.gitbook.io/marcy-lab-school-docs/mod-0-command-line-interfaces-git-and-github/4-git-branching)!
 {% endhint %}
 
 ### Assignment Setup
