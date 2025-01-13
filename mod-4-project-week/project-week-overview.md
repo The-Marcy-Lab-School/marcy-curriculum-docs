@@ -103,7 +103,9 @@ Unlike your solo projects where the project itself was the main deliverable, for
 * **A Scrum Board** — A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into three columns: *Backlog* (tasks waiting to be assigned), *In Progress* (assigned tasks that are being worked on), and *Done* (completed tasks).
   * [Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
 * **A Deployed Project Link**
-  * Example: https://art-viewer-mike-example.github.io/art-viewer-day-3/
+  * [Example: Art Viewer](https://art-viewer-mike-example.github.io/art-viewer-day-3/)
+  * [Example: PokiDash](https://poki-dash.github.io/pokemon/)
+  * [Example: TeamFoodies](https://teamfoodiesismaelepifania.github.io/TeamFoodies/)
 * **A Presentation + Walkthrough Demo Video** 
   * [Presentation Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing)
   * [Example 1](https://docs.google.com/presentation/d/1SRZRr3ioL3TYyPTPFwVcayp4q47ia9I6NV9kFSUofxQ/edit#slide=id.g2b32ee03b40_0_717) & [Example 2](https://docs.google.com/presentation/d/1zyfnu7PDpf5E3Ff7FIUdqAyvMGiAzdh_06RHAau4nF4/edit#slide=id.g2b32ee03b40_0_717)
