@@ -16,6 +16,7 @@
   * [How to Debug](how-tos/how-to-debug.md)
   * [How to PEDAC](how-tos/how-to-pedac.md)
   * [How to Create Projects with Vite](how-tos/vite.md)
+  * [How to Create A GitHub Organization and Scrumboard](how-tos/how-to-create-scrumboard.md)
   * [How to Deploy on GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
   * [How to Deploy on Render](how-tos/deploying-using-render.md)
 * [Mod 0 - Command Line Interfaces, Git, and GitHub](mod-0-command-line-interfaces-git-and-github/README.md)

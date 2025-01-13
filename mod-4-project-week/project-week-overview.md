@@ -102,6 +102,7 @@ Unlike your solo projects where the project itself was the main deliverable, for
   * Note: your organization only needs one repository. This example has a few to show progress after each day, but you shouldn't do that.
 * **A Scrum Board** — A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into three columns: *Backlog* (tasks waiting to be assigned), *In Progress* (assigned tasks that are being worked on), and *Done* (completed tasks).
   * [Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
+  * [Read here to learn about creating a scrumboard](../how-tos/how-to-create-scrumboard.md)!
 * **A Deployed Project Link**
   * [Example: Art Viewer](https://art-viewer-mike-example.github.io/art-viewer-day-3/)
   * [Example: PokiDash](https://poki-dash.github.io/pokemon/)
