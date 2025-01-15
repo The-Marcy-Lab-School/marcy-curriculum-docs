@@ -60,6 +60,7 @@
   * [Async & Await](mod-3-async/4-async-await.md)
 * [Mod 4 - Project Week!](mod-4-project-week/README.md)
   * [Project Week Overview](mod-4-project-week/project-week-overview.md)
+  * [Free API List](mod-4-project-week/free-apis.md)
   * [How to Create a GitHub Organization and Scrum Board](how-tos/how-to-create-scrumboard.md)
   * [How To Start a Project with Vite](how-tos/vite.md)
   * [How To Deploy a Project with GitHub Pages](how-tos/deploying-vite-with-github-pages.md)

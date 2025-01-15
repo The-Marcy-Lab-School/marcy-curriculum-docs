@@ -35,7 +35,7 @@ Check out [this deployed example](https://art-viewer-mike-example.github.io/art-
 
 **A Note on APIs:**
 
-You are *strongly encouraged* to choose an API from this [list of free APIs](https://gist.github.com/MostlyFocusedMike/2a0825c062b79d33e5003f0f767ad0fa) as they are all free and, importantly, do not require an API key. 
+You are *strongly encouraged* to choose an API from this [list of free APIs](./free-apis.md) as they are all free and, importantly, do not require an API key. 
 
 If you are able to find another API that is free and does not require an API key, you are free to use it, but do not waste time on this search.The purpose of this project is to demonstrate your ability to perform fetches and render the returned data on the screen. **The subject matter itself is not important and you do not need to create a unique project.** 
 {% endhint %}
