@@ -58,6 +58,7 @@
   * [Fetch](mod-3-async/2-fetch.md)
   * [Building a Fetching App](mod-3-async/3-building-a-fetching-app.md)
   * [Async & Await](mod-3-async/4-async-await.md)
+  * [A Generic Fetch Handler](mod-3-async/5-generic-fetch-handler.md)
 * [Mod 4 - Project Week!](mod-4-project-week/README.md)
   * [Project Week Overview](mod-4-project-week/project-week-overview.md)
   * [Free API List](mod-4-project-week/free-apis.md)
