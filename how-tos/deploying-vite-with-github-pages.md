@@ -9,16 +9,18 @@ This resource covers deploying a Vanilla JS Vite app using Github Pages.
 **Table of Contents**
 - [Prerequisites](#prerequisites)
 - [What is Github Pages?](#what-is-github-pages)
-- [Configure Vite for Deployment on Github Pages](#configure-vite-for-deployment-on-github-pages)
-- [Publish on Github Pages](#publish-on-github-pages)
+- [Steps to Deploy on GitHub Pages](#steps-to-deploy-on-github-pages)
+  - [1) Configure Vite for Deployment on Github Pages](#1-configure-vite-for-deployment-on-github-pages)
+  - [2 and 3) Configure GitHub Pages and Create an Action](#2-and-3-configure-github-pages-and-create-an-action)
 
 <!-- {% embed url="https://youtu.be/0Iw6SZpnHKY" %} -->
 
 ## Prerequisites
 
 In order to deploy to Github using this guide, you will need 
-* A project built using Vite
+* A project built using Vite.
 * A Github repo with that Vite project inside.
+* A `main` branch with code that is ready to be deployed.
 
 ## What is Github Pages?
 
@@ -26,47 +28,36 @@ Github Pages is ([according to their website](https://docs.github.com/en/pages/g
 
 > _... a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub, optionally runs the files through a build process, and publishes a website._
 
-There are a few ways to utilize Github Pages but the most straightforward is **to have an `index.html` in the root of our repo** that Github Pages can easily find and serve.
+Check out this example repository:
 
-With a few VERY easy settings, we can publish our repo as long as that `index.html` file is in the root.
+[https://github.com/benspector-mls/vite-deployment-test](https://github.com/benspector-mls/vite-deployment-test)
 
-**To test this out**:
-* add an `index.html` file to the root of your repo
-* commit and push it
-* follow the instructions below in the [Publish On Github Page section](#publish-on-github-pages). 
-* delete the `index.html` file once you've tested it.
+And you can see the deployed version here:
 
-## Configure Vite for Deployment on Github Pages
+[https://benspector-mls.github.io/vite-deployment-test/](https://benspector-mls.github.io/vite-deployment-test/)
 
-**Objective(s)**: Build the production version of the app in the root of the directory.
+Notice how the URL that is generated for this deployed site follows the pattern of `https://YOUR_ACCOUNT.github.io/YOUR_REPO/`
 
-> If you made an `index.html` file for testing above, delete it now.
+## Steps to Deploy on GitHub Pages
 
-Assuming you built that app using Vite, the first step is to make the **production version** of the application. To do this, run the command:
+The steps required to deploy your project are:
+1. Configure Vite to properly build your project to be compatible with GitHub pages
+2. Configure your GitHub repository to use GitHub actions.
+3. Create a new "Action" on GitHub to build your project.
 
-```
-npm run build
-```
+Let's get into it!
 
-This will create the **production version** of your app in a folder called `dist/` (short for "distribution"). Take a look inside! It will have an `index.html` file and an `assets/` folder with your JavaScript and CSS.
+### 1) Configure Vite for Deployment on Github Pages
 
-To see how it looks, run the command:
+Return to your own local repository. Make sure that you have switched to the `main` branch. Then, `cd` into your Vite project and do the following:
 
-```
-npm run preview
-```
-
-**However, we need that `index.html` to be in the root of the repo:**
-
-In order to do that, we'll need to configure Vite to create that version in the right location.
-
-Create a Vite configuration file
+First, create a Vite configuration file:
 
 ```sh
 touch vite.config.js
 ```
 
-And put this inside:
+And copy this code inside, inserting your repository's name between the forward slashes (keep the forward slashes around the name):
 
 ```js
 import { defineConfig } from 'vite'
@@ -77,43 +68,49 @@ export default defineConfig({
 });
 ```
 
-* `base` determines how the `index.html` file connects to the `.js` and `.css` files in your `assets/` folder
+What did this do?
 
-Again, run the command
+When we deploy our project, we will instruct GitHub pages to run the command `npm run build` command. Go ahead and run that command to see what it does locally:
 
-```sh
+```
 npm run build
 ```
 
-This will **compile** the code you've written in your `app/` folder into optimized static files that can quickly be served by Github pages. It will put those files in the root directory of your repo, where Github expects to find an `index.html` file and any associated `assets`.
+This will create the **production version** of your app in a folder called `dist/` (short for "distribution"). 
 
-You can see what this "deployed" version will look like by running the command...
+Take a look inside. It will have an `index.html` file and an `assets/` folder with your JavaScript and CSS compressed into just two files! 
 
-```sh
-npm run preview
+This minification is one of the benefits of Vite as a "build tool". It prepares your project to run lightning-quick because it removes a lot of the bloat that make our lives easier during development but isn't necessary for a deployed project.
+
+Your `index.html` file will mostly be the same as you wrote it, however it will load your `.js` and `.css` files like so:
+
+```html
+<script type="module" crossorigin src="/your-repo-name/assets/index-DgrCVH_D.js"></script>
+<link rel="stylesheet" crossorigin href="/your-repo-name/assets/index-CWlHu58b.css">
 ```
 
-...which will serve the application at http://localhost:4173/
+The `vite.config.js` file you created and the `base` property that you set determines what goes before `/assets` in these two tags. Doing so ensures that the `.js` and `.css` files in the `/assets` folder have the correct paths.
 
-Finally, **commit and push** your new compiled version to Github!
+If you comment out the code inside of `vite.config.js` and run `npm run build` again, you'll notice that the path to the `/assets` folder no longer includes the name of your repo. Remember to uncomment that code so that your configuration is set again.
+
+Finally, **add, commit and push** your changes to add the `vite.config.js` file to your repo.
 
 > Note: each time your `npm run build`, new versions of your `assets` will be created and will overwrite the old versions.
+> At any point after running `npm run build`, you can run `npm run preview` to see what the production version will look like.
 
-## Publish on Github Pages
+### 2 and 3) Configure GitHub Pages and Create an Action
 
-**Objective(s)**: Publish your web app!
-
-Deploying your application on Github Pages can be achieved by following these steps:
+Now that your Vite project inside of your repo is set up to properly execute the `npm run build` command, we can instruct GitHub Pages to run that command and to deploy the generated production build.
 
 1. Open the repo on Github.com
 2. Go to the <kbd>Settings</kbd> tab
 3. Find the <kbd>Pages</kbd> section
-4. Make sure that **Source** is **GitHub Actions**
-5. Then click on **Actions** and select **set up a workflow yourself**
+4. Change the **Source** to **GitHub Actions**
+1. Then click on **Actions** and select **set up a workflow yourself**
 
 ![GitHub Actions](img/github-actions.png)
 
-6. This will create a `main.yaml` file and will allow you to edit it. Here is an example you can follow:
+6. This will create a `main.yaml` file and will allow you to edit it. Here is an example you can follow (note that this assumes that you have called your Vite project folder `app` inside of your repo. If you have named it something else, replace every instance of `app` with the name of your Vite project folder):
 
 ```yaml
 # Simple workflow for deploying static content to GitHub Pages
@@ -172,4 +169,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-7. Commit the file. This will immediately cause the action to begin!
+7. Commit the file using the GitHub GUI. This will immediately cause the action to begin!
+8. On your GitHub repo homepage, look for the About section on the right side of the screen and click on the cog icon. Click on "Use your GitHub Pages website". This will add the deployed site to your repo's homescreen!
+
+That's it! Share your deployed link with friends and family to show off your work :)
