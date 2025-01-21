@@ -4,7 +4,7 @@ So, you've built an app - congrats! You can run it locally, but wouldn't it be s
 
 This resource covers deploying a Vanilla JS Vite app using Github Pages. 
 
-> Note: An alternate (and more complex, but potentially smoother) approach can be found on [Vite's own docs](https://vitejs.dev/guide/static-deploy).
+> Note: These details can also be found on [Vite's own docs](https://vitejs.dev/guide/static-deploy).
 
 **Table of Contents**
 - [Prerequisites](#prerequisites)
@@ -12,7 +12,7 @@ This resource covers deploying a Vanilla JS Vite app using Github Pages.
 - [Configure Vite for Deployment on Github Pages](#configure-vite-for-deployment-on-github-pages)
 - [Publish on Github Pages](#publish-on-github-pages)
 
-{% embed url="https://youtu.be/0Iw6SZpnHKY" %}
+<!-- {% embed url="https://youtu.be/0Iw6SZpnHKY" %} -->
 
 ## Prerequisites
 
@@ -50,6 +50,12 @@ npm run build
 
 This will create the **production version** of your app in a folder called `dist/` (short for "distribution"). Take a look inside! It will have an `index.html` file and an `assets/` folder with your JavaScript and CSS.
 
+To see how it looks, run the command:
+
+```
+npm run preview
+```
+
 **However, we need that `index.html` to be in the root of the repo:**
 
 In order to do that, we'll need to configure Vite to create that version in the right location.
@@ -66,19 +72,14 @@ And put this inside:
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // GitHub Pages expects an index.html in the root directory
-  // so just run npm build before pushing to GitHub and this will rebuild our assets to the root
-  build: { outDir: '..' },
-  // needed for github pages just put the repo name here
+  // Keep the forward slashes / / around your repo name
   base: '/your-repo-name-here/', 
 });
 ```
 
-This does two things:
-* `build` and `outDir` determine where to put your compiled application. Normally it would put it in a folder called `dist/` but in order for Github pages to work, we want to build in the root of the repo.
 * `base` determines how the `index.html` file connects to the `.js` and `.css` files in your `assets/` folder
 
-Now, run the command
+Again, run the command
 
 ```sh
 npm run build
@@ -96,18 +97,79 @@ npm run preview
 
 Finally, **commit and push** your new compiled version to Github!
 
-> Note: each time your `npm run build`, new versions of your `assets` will be created and you will need to manually delete them.
+> Note: each time your `npm run build`, new versions of your `assets` will be created and will overwrite the old versions.
 
 ## Publish on Github Pages
 
 **Objective(s)**: Publish your web app!
 
-Deploying your application on Github Pages is about as easy as it gets:
+Deploying your application on Github Pages can be achieved by following these steps:
 
 1. Open the repo on Github.com
 2. Go to the <kbd>Settings</kbd> tab
 3. Find the <kbd>Pages</kbd> section
-4. Make sure that **Source** is **Deploy from a branch**
-5. Below, set **Branch** to `main` (or whatever branch you're using)
-6. Click **Save** and wait a few minutes! You should see the URL of your application.
-7. Each time you push a new commit to `main`, your page will redeploy!
+4. Make sure that **Source** is **GitHub Actions**
+5. Then click on **Actions** and select **set up a workflow yourself**
+
+![GitHub Actions](img/github-actions.png)
+
+6. This will create a `main.yaml` file and will allow you to edit it. Here is an example you can follow:
+
+```yaml
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: app/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+        working-directory: './app'
+      - name: Build
+        run: npm run build
+        working-directory: './app'
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload dist folder
+          path: './app/dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+7. Commit the file. This will immediately cause the action to begin!
