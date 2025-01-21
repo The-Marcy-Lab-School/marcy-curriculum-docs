@@ -106,9 +106,12 @@ Now that your Vite project inside of your repo is set up to properly execute the
 2. Go to the <kbd>Settings</kbd> tab
 3. Find the <kbd>Pages</kbd> section
 4. Change the **Source** to **GitHub Actions**
-1. Then click on **Actions** and select **set up a workflow yourself**
 
-![GitHub Actions](img/github-actions.png)
+![Select your deployment source. Choose GitHub Actions](img/select-deploy-source.png)
+
+5. Then click on **Actions** and select **set up a workflow yourself**
+
+![Create your own action.](img/create-your-own-action.png)
 
 6. This will create a `main.yaml` file and will allow you to edit it. Here is an example you can follow (note that this assumes that you have called your Vite project folder `app` inside of your repo. If you have named it something else, replace every instance of `app` with the name of your Vite project folder):
 
