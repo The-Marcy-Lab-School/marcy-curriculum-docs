@@ -28,6 +28,12 @@ Github Pages is ([according to their website](https://docs.github.com/en/pages/g
 
 > _... a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub, optionally runs the files through a build process, and publishes a website._
 
+A static site hosting service is one in which the resources being served are static files that the recipient (the client) can receive and immediately use. When a user (a client) visits your deployed website, GitHub pages will simply send the HTML, CSS, and JavaScript files that make up your website to the user. 
+
+![When visiting a static website, the server will send HTML, CSS, and JS files to the client](img/client-server-interaction-2.png)
+
+In this article, you will configure GitHub pages to execute a "build process" to convert your Vite project into a production-ready version and deploy it. 
+
 Check out this example repository:
 
 [https://github.com/benspector-mls/vite-deployment-test](https://github.com/benspector-mls/vite-deployment-test)
@@ -113,9 +119,9 @@ Now that your Vite project inside of your repo is set up to properly execute the
 
 ![Create your own action.](img/create-your-own-action.png)
 
-6. This will create a `main.yaml` file and will allow you to edit it. Here is an example you can follow (note that this assumes that you have called your Vite project folder `app` inside of your repo. If you have named it something else, replace every instance of `app` with the name of your Vite project folder):
+6. This will create a `main.yml` file and will allow you to edit it. Here is an example you can follow (note that this assumes that you have called your Vite project folder `app` inside of your repo. If you have named it something else, replace every instance of `app` with the name of your Vite project folder):
 
-```yaml
+```yml
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
