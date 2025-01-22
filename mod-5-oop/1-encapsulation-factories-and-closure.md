@@ -8,7 +8,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 - [Intro to Mod 5: Object-Oriented Programming (OOP)](#intro-to-mod-5-object-oriented-programming-oop)
 - [Encapsulation](#encapsulation)
 - [Designing A Consistent and Predictable Interface](#designing-a-consistent-and-predictable-interface)
-- [Factory Functions, Privacy, and Closures](#factory-functions-privacy-and-closures)
+- [Privacy, and Closures](#privacy-and-closures)
 - [Quiz!](#quiz)
 - [Challenge](#challenge)
 - [Summary](#summary)
@@ -30,26 +30,29 @@ Throughout this module, we will be learning about these four pillars and how we 
 
 ## Encapsulation
 
-In functional programming, we separate data from the functions that act on them. We achieve **consistency** & **predictability** through pure functions.
+In functional programming, we separate *data* from the *functions* that act on them. We achieve **consistency** & **predictability** through pure functions.
 
 ```js
 // Functional Programming separates data from functionality
 const friends = ['ahmad', 'brandon', 'carmen'];
 
-const addFriend = (friends, newFriend) => {
-  if (typeof newFriend !== 'string') return friends;
-  return [...friends, newFriend]; // keep it pure, make a new list
+const getUpdatedFriendList = (friends, newFriend) => {
+  const newList = [...friends, newFriend]; // keep it pure, make a new list
+  return newList;
 }
 
-const newFriends = addFriend(friends, 'daniel');
+const newFriends = getUpdatedFriendList(friends, 'deema');
+console.log(friends); // ['ahmad', 'brandon', 'carmen'];
+console.log(newFriends); // ['ahmad', 'brandon', 'carmen', 'deema'];
 ```
 
-In OOP, we store data in objects and give those objects methods to manipulate their own data. This is called **encapsulation**.
+In Object-Oriented Programming, we store data in objects and use methods in those objects to manipulate their own data. This is called **encapsulation**.
 
 ```js
 // Object Oriented Programming encapsulates data with functionality
 const friendsManager = {
   friends: [],
+  // a "method" is a function stored inside of an object
   addFriend(newFriend) {
     this.friends.push(newFriend);
     // `this` refers to the "owner" of the method. 
@@ -59,7 +62,7 @@ const friendsManager = {
 friendsManager.addFriend('ahmad');
 friendsManager.addFriend('brandon');
 friendsManager.addFriend('carmen');
-// Here, friendsManager invokes addFriend so this === friendsManager
+// Here, friendsManager invokes addFriend so `this` === friendsManager
 
 console.log(friendsManager.friends)
 ```
@@ -109,18 +112,18 @@ You can modify the `friendsManager.friends` array either through the `addFriend(
 
 </details>
 
-## Factory Functions, Privacy, and Closures
+## Privacy, and Closures
 
-A core tenet of **encapsulation** in OOP is to hide values like `friends` from being directly accessed.
+A core tenet of **encapsulation** in OOP is to hide values from being directly accessed, like `friendsManager.friends`. One way to do this is with a **closure** 
 
-Let's see how we can do this using **closure**. A **closure** is when an "inner function" maintains references to variables in its surrounding scope (an "outer function").
-
-Here's how we use **closure** to protect the `friends` array:
+A **closure** is when an "inner function" maintains references to variables in its surrounding scope (an "outer function"). Here's how we use **closure** to hide the `friends` array:
 
 ```js
+// First, we make a function that returns our friendsManager. 
+// This is an "outer" function
 const makeFriendsManager = () => {
-  // this variable is in the "outer" function
-  // and referenced in addFriend and getFriends
+  // This variable is in the "outer" function's scope. 
+  // friends is referenced by addFriend and getFriends but is not in the friendsManager itself.
   const friends = [];
 
   const friendsManager = {
@@ -129,6 +132,7 @@ const makeFriendsManager = () => {
       friends.push(newFriend);
     }
     getFriends() {
+      // return a copy of the array, not the array itself
       return [...friends]; 
     },
   }
@@ -142,11 +146,11 @@ console.log(bensFriendsManager.friends) // undefined
 console.log(bensFriendsManager.getFriends()) // ['zo', 'motun']
 ```
 
-* We put the object in a function that returns the object.
-* We move the `friends` array outside of the object so that the returned object doesn't have direct access to it.
-* The returned object still has the `addFriend` method, but it can't reference `this.friends` anymore. Instead it references the `friends` variable from the surrounding scope. **this is closure**.
-* The returned object has a new `getFriends` method that returns a copy of the `friends` array to avoid sharing the reference.
-* The `friends` array is fully private but we can still interact with it using the object's **setter/getter methods**.
+* We declare the `friendsManager` object inside of an "outer" function that returns it.
+* We move the `friends` array outside of `friendsManager` so that the object doesn't have direct access to it.
+* The `addFriend` and `getFriends` methods inside of `friendsManager` reference the `friends` variable from the surrounding scope. **This is closure**.
+* The `getFriends` method returns a copy of the `friends` array to avoid sharing the reference.
+* The `friends` array can't be accessed directly but we can still interact with it using the methods in `friendsManager`
 
 ```js
 const bensFriendsManager = makeFriendsManager();
