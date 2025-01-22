@@ -1,8 +1,14 @@
 # Has Many/Belongs To
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to)!
 {% endhint %}
+
+**Table of Contents:**
+- [Intro: Class Diagrams](#intro-class-diagrams)
+- [Practice](#practice)
+- [Entity Relationships](#entity-relationships)
+- [Make some has many / belongs to class relationships](#make-some-has-many--belongs-to-class-relationships)
 
 ## Intro: Class Diagrams
 

@@ -1,8 +1,18 @@
 # 5-0-3-oop-review
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to)!
 {% endhint %}
+
+**Table of Contents:**
+- [Object Oriented Programming Pillars](#object-oriented-programming-pillars)
+- [Closure](#closure)
+- [Encapsulation](#encapsulation)
+- [Factory Functions and Closure](#factory-functions-and-closure)
+- [Classes](#classes)
+- [Challenge: Make a Library and Book Class](#challenge-make-a-library-and-book-class)
+
+## Object Oriented Programming Pillars
 
 OOP can be defined by its 4 pillars:
 * **Encapsulation** - every object should control its own state. information hiding.

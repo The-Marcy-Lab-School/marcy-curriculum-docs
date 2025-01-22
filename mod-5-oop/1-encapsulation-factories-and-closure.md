@@ -1,18 +1,19 @@
 # Intro to OOP, Encapsulation, Factory Functions, and Closure
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-0-encapsulation-factories-closure-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-0-encapsulation-factories-closure)!
 {% endhint %}
 
-* [Intro to Mod 5: Object-Oriented Programming (OOP) — 5 minutes](1-encapsulation-factories-and-closure.md#intro-to-mod-5-object-oriented-programming-oop--5-minutes)
-* [Encapsulation — 15 minutes](1-encapsulation-factories-and-closure.md#encapsulation--15-minutes)
-* [Designing A Consistent & Predictable Interface — 5 minutes](1-encapsulation-factories-and-closure.md#designing-a-consistent--predictable-interface--5-minutes)
-* [Factory Functions, Privacy, & Closures — 30 minutes](1-encapsulation-factories-and-closure.md#factory-functions-privacy--closures--30-minutes)
-* [Quiz!](1-encapsulation-factories-and-closure.md#quiz)
-* [Challenge](1-encapsulation-factories-and-closure.md#challenge)
-* [Summary](1-encapsulation-factories-and-closure.md#summary)
+**Table of Contents:**
+- [Intro to Mod 5: Object-Oriented Programming (OOP)](#intro-to-mod-5-object-oriented-programming-oop)
+- [Encapsulation](#encapsulation)
+- [Designing A Consistent and Predictable Interface](#designing-a-consistent-and-predictable-interface)
+- [Factory Functions, Privacy, and Closures](#factory-functions-privacy-and-closures)
+- [Quiz!](#quiz)
+- [Challenge](#challenge)
+- [Summary](#summary)
 
-## Intro to Mod 5: Object-Oriented Programming (OOP) — 5 minutes
+## Intro to Mod 5: Object-Oriented Programming (OOP)
 
 Object-Oriented Programming is a style of programming (a "paradigm") that uses **objects to manage state (data) and behavior** in an application. While OOP does let us do some new things, more than anything, it helps us write better, more organized code.
 
@@ -27,7 +28,7 @@ It can be defined by its 4 pillars:
 
 Throughout this module, we will be learning about these four pillars and how we implement them in JavaScript using the `class` syntax.
 
-## Encapsulation — 15 minutes
+## Encapsulation
 
 In functional programming, we separate data from the functions that act on them. We achieve **consistency** & **predictability** through pure functions.
 
@@ -78,9 +79,7 @@ When `friendsManager.addFriend()` is invoked, the `addFriend` method uses `this`
 
 </details>
 
-
-
-## Designing A Consistent and Predictable Interface — 5 minutes
+## Designing A Consistent and Predictable Interface
 
 **Consistency** and **predictability** are major goals in software engineering. This is what motivates us to write pure functions in functional programming. It is just as important in OOP.
 
@@ -110,9 +109,7 @@ You can modify the `friendsManager.friends` array either through the `addFriend(
 
 </details>
 
-
-
-## Factory Functions, Privacy, and Closures — 30 minutes
+## Factory Functions, Privacy, and Closures
 
 A core tenet of **encapsulation** in OOP is to hide values like `friends` from being directly accessed.
 
@@ -173,7 +170,6 @@ The cool thing about closures is that each time we invoke this function, we will
 
 </details>
 
-
 <details>
 
 <summary><strong>Q: How can we modify the example above to be able to create a new friend manager with a starting set of <code>friends</code> as an argument?</strong></summary>
@@ -197,7 +193,6 @@ const myFriendsManager = makeFriendsManager('ahmad', 'brandon', 'carmen');
 ```
 
 </details>
-
 
 ## Quiz!
 
@@ -231,8 +226,6 @@ const getId = ((id = 1) => () => id++)();
 * The fourth function DOES create a closure because we have an outer arrow function returning an inner arrow function. The inner arrow function `() => id++` references the `id` parameter in the outer arrow function.
 
 </details>
-
-
 
 ## Challenge
 
@@ -298,8 +291,6 @@ console.log(counterFrom5.getValue()); // 5
 ```
 
 </details>
-
-
 
 ## Summary
 

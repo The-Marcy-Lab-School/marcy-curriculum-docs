@@ -4,6 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-2-private-properties-static-methods)!
 {% endhint %}
 
+**Table of Contents:**
 - [Private Properties](#private-properties)
 - [Naming Convention](#naming-convention)
 - [Using `#` Notation](#using--notation)

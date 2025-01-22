@@ -1,19 +1,20 @@
 # Classes
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-1-classes-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-1-classes)!
 {% endhint %}
 
-* [Intro](2-classes.md#intro)
-* [Factory Functions Waste Memory](2-classes.md#factory-functions-waste-memory)
-* [Classes](2-classes.md#classes)
-  * [Class Definition and `new`](2-classes.md#class-definition-and-new)
-  * [Instanceof](2-classes.md#instanceof)
-  * [Setting Properties With A Constructor](2-classes.md#setting-properties-with-a-constructor)
-  * [Defining Instance Methods](2-classes.md#defining-instance-methods)
-* [Quiz!](2-classes.md#quiz)
-* [Challenge](2-classes.md#challenge)
-* [Summary](2-classes.md#summary)
+**Table of Contents:**
+- [Intro](#intro)
+- [Factory Functions Waste Memory](#factory-functions-waste-memory)
+- [Classes](#classes-1)
+  - [Class Definition and `new`](#class-definition-and-new)
+  - [Instanceof](#instanceof)
+  - [Setting Properties With A Constructor](#setting-properties-with-a-constructor)
+  - [Defining Instance Methods](#defining-instance-methods)
+- [Quiz!](#quiz)
+- [Challenge](#challenge)
+- [Summary](#summary)
 
 ## Intro
 

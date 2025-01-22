@@ -1,7 +1,7 @@
 # Inheritance & Polymorphism
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-3-inheritance-polymorphism-f23)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-3-inheritance-polymorphism)!
 {% endhint %}
 
 **Table of Contents:**
@@ -15,8 +15,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 - [Challenge: User and Admin](#challenge-user-and-admin)
 - [Challenge](#challenge)
 - [Summary](#summary)
-
-
 
 ## Inheritance and "Is A" Relationships
 
