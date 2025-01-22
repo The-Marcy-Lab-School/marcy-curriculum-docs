@@ -174,5 +174,6 @@ jobs:
 
 7. Commit the file using the GitHub GUI. This will immediately cause the action to begin!
 8. On your GitHub repo homepage, look for the About section on the right side of the screen and click on the cog icon. Click on "Use your GitHub Pages website". This will add the deployed site to your repo's homescreen!
+9. Lastly, return to your repo and `git pull` to bring the new `main.yml` file into your local repository.
 
 That's it! Share your deployed link with friends and family to show off your work :)
