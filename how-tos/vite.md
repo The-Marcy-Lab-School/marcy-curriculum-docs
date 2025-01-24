@@ -1,84 +1,142 @@
 # Vite
 
 **Table of Contents**:
-- [Review: Development Servers](#review-development-servers)
+- [Background](#background)
+  - [What is a Server?](#what-is-a-server)
+  - [Development Servers and Deployment](#development-servers-and-deployment)
 - [What is Vite?](#what-is-vite)
   - [Vite Quick Starter](#vite-quick-starter)
-- [So, What Can We Do With Vite?](#so-what-can-we-do-with-vite)
-  - [Importing CSS, JSON, and Node Modules](#importing-css-json-and-node-modules)
-  - [Build Command](#build-command)
-- [Make the Project Your Own!](#make-the-project-your-own)
+  - [Make the Project Your Own!](#make-the-project-your-own)
+- [Play Around with Vite Features](#play-around-with-vite-features)
+  - [Importing CSS](#importing-css)
+  - [Importing JSON and other Files](#importing-json-and-other-files)
+  - [Importing Node Modules](#importing-node-modules)
+- [Vite's Build Tool and Deployment](#vites-build-tool-and-deployment)
 
 {% embed url="https://www.youtube.com/watch?v=UnsukVi6hJY&ab_channel=TheMarcyLabSchool" %}
 
-## Review: Development Servers
+## Background
 
-A **server** is just a computer that shares its resources over the internet. A user's computer acts as the **"client"** and requests resources from the server using the `https://` protocol (the hypertext transfer protocol). 
+Before diving into Vite, it's important to go over a few key concepts. We'll go over the terms below:
 
-When we visit a URL, like [https://www.google.com](https://www.google.com), our browser converts the **Domain Name** (`google.com`) into the **IP Address** of the server computer where the code for Google lives. Then, our computer sends a **request** to that server computer over the internet and the server sends a **response**.
+**Key Terms**
+* **Server** — Any computer that stores, manages, and shares resources over the internet.
+* **Client** — Any computer that requests resources from a server
+* **HTTP** — Hypertext Transfer Protocol. The protocol used to transfer data between two computers over the internet.
+* **Deploy** — To transfer web application files from ones own computer to a server for the purposes of distribution.
+* **Development Server** — A program that runs on a developer's computer to simulate a deployed project.
+
+Vite will help us to deploy our project to a server allowing for clients around the world to access our projects via the HTTP protocol. Vite will also help us during development by simulating a deployed environment via a development server.
+
+Let's get into it!
+
+### What is a Server?
+
+Until now, you've been using the `file://` protocol to open up projects on your own computer. All web applications, even project like Google, started out this way. So, how is it that you can access Google with your browser? When you visit [https://google.com](https://google.com), what exactly is happening?
+
+Well, Google is "hosted" on a server that lets you access it over the internet.
+
+A **server** is any computer that stores, manages, and shares resources over the internet.
 
 ![The client server interaction](img/client-server-interaction.png)
 
-With a **development server**, we can simulate this **HTTP request-response cycle** by having our computer act as both the client and the server.
+A user's computer acts as the **"client"** and sends an **HTTP request** (**h**yper**t**ext transfer protocol) to get resources from the server using the `https://` protocol (the hypertext transfer protocol). 
 
-One of the quickest development servers to set up is Live Server.
+The server then sends an **HTTP response** with the requested content.
 
-**<details><summary>Why do we need a development server? What benefit does it provide over just opening `html` files using the `file://` protocol?</summary>**
-> 1. **To avoid CORS errors:** As we discovered in the [ESModules lecture](./esmodules.md), we can't use ESModules with the normal `file://` protocol without running into CORS issues. We need to use the `http://` protocol to enable our files to import values from each other.
-> 
-> 2. **To simulate how our application will be accessed in "production":** We will eventually want to **deploy** our projects, making them accessible by anyone on the internet. When we do, our application will be accessed via the `http://` protocol, not the `file://` protocol. As we've seen, there are some differences between how our browser operates using each protocol so it can be beneficial to test our application using the same protocol that our future users will be using.
-</details>
+* For example, our browsers send an HTTP request to google when we visit [https://www.google.com](https://www.google.com). In response, Google's servers send us the HTML, CSS, and JavaScript that makes up the Google site.
+
+{% hint style="info" %}
+
+`google.com` is just the human-readable **domain name** of Google's servers. Every server also has a unique 4-digit IP address (**I**nternet **P**rotocol address) that precisely locates the server in the vast world wide web. 
+
+For example, Google's servers have the IP address [142.251.41.14](http://142.251.41.14/). Put that IP address into your search bar and it will also take you to Google!
+
+When we send an HTTP request, our browser takes the domain name (`google.com`) and looks up the IP address using a DNS (Domain Name Service) before sending a request to the server.
+
+{% endhint %}
+
+
+### Development Servers and Deployment
+
+All web applications, even Google, started out as a coding project on someone's computer. Then, then they **deploy** their project to a publicly accessible server allowing anyone to access their code via the internet and the `https://` protocol. 
+
+Until now, our browsers have been using the `file://` protocol to access files located on our own computers. But if we ever want to deploy our projects, sharing them with the world via the `https://` protocol, then we should begin using that protocol during development.
+
+> *Deployment: the action of bringing resources into effective use.*
+
+With a **local development server**, we can simulate the HTTP protocol to access the files on one's own computer, even though the internet is not required to do so. 
+
+{% hint style="info" %}
+The standard domain name and IP address of a local development server are:
+* Domain Name: `http://localhost`
+* IP Address: `127.0.0.1`
+{% endhint %}
+
+
+There are important differences between how the `file://` and `https://` protocols serve resources. One key difference between the `file://` and `https://` protocols are how they handle resource sharing. 
+
+As we discovered in the [ESModules lecture](mod-2-html-css-dom/esmodules.md), we can't use ESModules with the normal `file://` protocol without running into CORS (cross-origin resource sharing) issues. We need to use the `http://` protocol to enable our files to import values from each other.
+
+By using a development server, we can use the HTTP protocol throughout the entire development process.
 
 ## What is Vite?
-
-While Live Server is an incredibly easy development server to setup, it is a bit basic for our needs.
 
 According to the [Vite](https://vite.dev/guide/#getting-started) documentation: 
 
 > Vite (French word for "quick", pronounced /vit/, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
 > 
-> * A **dev server** that provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
+> * A **development server** that provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
 > * A **build command that bundles your code** with [Rollup](https://rollupjs.org/), pre-configured to output highly optimized static assets for production.
 
-In simpler terms, Vite provides a developer server with more features than Live Server as well as a command line tool that will create a highly optimized version of our application when we are ready to deploy.
+In simpler terms, Vite provides a feature-rich developer server as well as a command line tool that will optimize our application when we are ready to deploy.
 
-> **Deploy:** to transfer the completed code changes from one environment to another (e.g. from development to production).
+Once we learn how Vite works, it can dramatically improve our development and deployment experience. It will be slow at first to use a new development tool, however the long-term benefits often outweigh the short-term frustrations so be patient!
+
+The best way to learn is by doing so, without further ado, let's make a project using Vite!
 
 ### Vite Quick Starter
 
 To start a new project using Vite, do the following:
 
-1. Start by creating a new repository on GitHub and clone it down into your `unit-2` directory. 
-2. Inside the repo, create a [Vite](https://vitejs.dev/guide/) project using the `npm create vite` command:
+1. Start by creating a new repository on GitHub. Make sure it has a `README.md` file
+2. Clone down the repo
+3. Inside the repo, create a [Vite](https://vitejs.dev/guide/) project using the `npm create vite` command:
 
     ```sh
     npm create vite
-    # > Project Name: app (or any name of your choosing)
+    # > Project Name: app
     # > Select a framework: Vanilla
     # > Select a variant: JavaScript
     ```
 
-    This will create a folder in your repo called `app` that will server as your "development" version of the application (when you are ready to deploy, you will also create a "production" version).
+    This will create a folder in your repo called `app` that will serve as the "development" version of the application (later, when you are ready to deploy, you will also create a "production" version).
 
-3. Open up the `app` directory and look around. Vite will have created the following files for you to get started (in order of importance):
-    * `package.json`: defines the scripts and dependencies of your project.
-    * `index.html`: contains only a `div#app` element and loads the `main.js` file.
-    * `main.js`: is the "entry point" of your JavaScript code.
-    * `style.css`: contains the CSS for your application and is imported into `main.js` (yes, you can import CSS in JavaScript with Vite!)
-    * `counter.js`: defines the logic for a simple counter application.
+4. Open up the `app` directory and look around. Vite will have created the following files for you to get started (in order of importance):
+    * `package.json`: defines the scripts and dependencies of your project. Notably, when you run `npm i` in your `app` directory, it will install the `vite` command-line tool.
+    * `index.html`: the "entry point" of your application. It contains only a `div#app` element and loads the `main.js` file. This must remain in the root of your `app` directory.
+    * `main.js`: is the "entry point" of your JavaScript code. You can move this file and any other JS files into sub-directories for better organization if you so desire.
+    * `style.css`: contains the CSS for your application and is imported into `main.js` (yes, you can import CSS in JavaScript with Vite!). You can move this file and any other CSS files into sub-directories for better organization if you so desire.
+    * `counter.js`: defines the logic for a simple counter application. We'll delete this "starter application" when we begin working on our own project.
     * `.gitignore`: lists filepaths to be ignored when making a commit.
-    * `public/`: contains files that will not be transformed or bundled by Vite (images, logos, fonts, etc...) when running the build command.
-    * `javascript.svg`: a logo for JavaScript
+    * `public/`: contains files that will not be transformed or bundled by Vite (images, logos, fonts, etc...) when running the build command. Any image files you want to add to your project should go in this folder.
+    * `javascript.svg`: a logo for JavaScript.
 
-4. `cd` into the `app` directory, install Vite dependencies and other dependencies for the project, and start the Vite development server:
-
+5. `cd` into the `app` directory and install the `vite` command line tool and other dependencies for the project
+    
     ```sh
     cd app
     npm i
-    npm run dev
     ```
 
-5. Open up [http://localhost:5173](http://localhost:5173) to view the starter application. As you can see, Vite provides you with a simple counter application to get started. 
+6. Start the Vite development server:
+
+    ```sh
+    # according to package.json, this runs the vite command
+    npm run dev 
+    ```
+
+7. Open up [http://localhost:5173](http://localhost:5173) to view the starter application. As you can see, Vite provides you with a simple counter application to get started. 
 
 ![The Vite starter project is a simple counter application.](img/vite-starter-project.png)
 
@@ -88,21 +146,128 @@ To start a new project using Vite, do the following:
 >
 > To restart the development server, use the command `npm run dev`. 
 
-## So, What Can We Do With Vite?
+### Make the Project Your Own!
 
-While this takes a bit more setup than Live Server, Vite provides many upgrades that are well worth the upfront setup. Plus, as you get more used to using Vite, you will get much faster at setting up your projects.
+Vite provides an application for you to get started with but we want to make it our own.
 
-### Importing CSS, JSON, and Node Modules
+First, remove these unnecessary files
+
+```sh
+# delete these files
+rm counter.js javascript.svg
+```
+
+Next, make a `src` directory for all of our non-configuration code
+
+```sh
+
+# make a src directory
+mkdir src
+
+# move these files into src
+mv main.js src/
+mv style.css src/
+```
+
+We leave only the `index.html` file at the root of the project because it serves as the **entry point** for the rest of the application.
+
+All future JavaScript and CSS files you create should exist somewhere within `src`. Feel free to create more folders inside it if you'd like.
+
+{% hint style="info" %}
+If you want to make a multi-page app with multiple `.html` files, refer to Vite's documentation on this matter:
+
+https://vite.dev/guide/build.html#multi-page-app
+{% endhint %}
+
+Finally, we can edit the provided starter code:
+* Edit the `<script>` tag in `index.html` (line 11) so that it references the new location of `main.js`: `"/src/main.js"`
+* Empty out the `style.css` file
+* Empty out the `main.js` file.
+
+Now, we have an empty project that we can use as a starting point! 
+
+In the `index.html`, go ahead and modify the body such that it looks like this:
+
+```html
+<body>
+  <header>
+    <h1>My Website</h1>
+  </header>
+  <main>
+    <p>Hello World!</p>
+  </main>
+  <footer>
+    <p>Created by me</p>
+  </footer>
+  <script type="module" src="/src/main.js"></script>
+</body>
+```
+
+In `main.js`, replace the contents with the following:
+
+```js
+import './style.css';
+
+const main = () => {
+  const p = document.createElement('p');
+  p.textContent = 'Vite is amazing!';
+
+  document.querySelector('main').append(p);
+}
+
+main();
+```
+
+...and then reopen [http://localhost:5173](http://localhost:5173) to see your website!
+
+To save these changes in your repository, add, commit, and push them!
+
+## Play Around with Vite Features
+
+While this takes a bit more setup than simply making a folder with your project files, Vite provides many upgrades that are well worth the upfront setup. Plus, as you get more used to using Vite, you will get much faster at setting up your projects.
+
+### Importing CSS
 
 As you may have noticed, rather than linking the `style.css` in the `index.html` file, we imported it into `main.js`! For now, compared to linking in HTML, this approach doesn't provide much benefit. However, when we get to React it will provide some benefits.
 
-What IS much better is the ability to import JSON files directly. Suppose we had an `example.json` file that we wanted to import into our project. We can easily do this:
-
 ```js
-import data from './example.json';
+import 'style.css';
 ```
 
-We can't do this using Live Server.
+### Importing JSON and other Files
+
+With Vite we can import JSON files directly and other file types directly. 
+
+To test this, stop the server if it was running (<kbd>Ctrl+C</kbd>) and then run the commands below to create a file called `example.json` and add some data to it:
+
+```sh
+# Create the JSON file
+touch example.json
+# Pipe the array string into the JSON file
+echo "[1,2,3,4,5]" >> example.json
+```
+
+Then in `main.js`, add the following code:
+
+```js
+import data from '../example.json'
+console.log(data);
+```
+
+Start the server again and check your console to see the data from `example.json`.
+
+We can't do this using the `file://` protocol or simple development servers like Live Server.
+
+{% hint style="info" %}
+
+**A Note on Storing Static Files**:
+
+* Files stored in the `public` directory are treated as if they were stored in the root of the project. `/` represents the `public` folder so the `vite.svg` file in the root of `public` is accessed like so: `/vite.svg` (see `index.html`).
+* Files stored anywhere else within the `app` directory are accessed using a relative file path. For example, `../example.json` is referenced as one level above `main.js`.
+{% endhint %}
+
+
+### Importing Node Modules
 
 Lastly, we can install NPM dependencies into our projects and import them by only their name. To test this, install the `uuid` package:
 
@@ -129,9 +294,9 @@ In order to use this `uuid` package with Live Server, we'd have to specify the f
 
 Yuck! 🤮
 
-### Build Command
+## Vite's Build Tool and Deployment
 
-The other main feature of Vite is that when it is time to deploy our project, it will bundle all of our files into one HTML file, one JS file, and one CSS file to be efficiently delivered to our users over the internet.
+The other main feature of Vite is its "build tool". When it is time to deploy our project, Vite will bundle all of our files into one HTML file, one JS file, and one CSS file to be efficiently delivered to our users over the internet.
 
 This will improve load times and our user's overall impression and experience using our application!
 
@@ -151,61 +316,3 @@ npm run preview
 
 To deploy this distribution version of your application, check out the article on [How to Deploy on GitHub Pages](https://marcylabschool.gitbook.io/marcy-lab-school-docs/how-tos/deploying-vite-with-github-pages).
 
-## Make the Project Your Own!
-
-Now that we know what Vite can do, let's start making an application with it! Vite provides an application for you to get started with but we want to make it our own.
-
-First, remove these unnecessary files
-
-```sh
-# delete these files
-rm counter.js javascript.svg
-```
-
-Next, make a `src` directory for all of our non-configuration code
-
-```sh
-
-# make a src directory
-mkdir src
-
-# move these files into src
-mv main.js src/
-mv style.css src/
-```
-
-We leave only the `index.html` file at the root of the project because it serves as the **entry point** for the rest of the application.
-
-All future JavaScript and CSS files you create should exist somewhere within `src`. Feel free to create more folders inside it if you'd like.
-
-Finally, we can edit the provided starter code:
-* Edit the `<script>` tag in `index.html` (line 11) so that it references the new location of `main.js`: `"/src/main.js"`
-* Empty out the `style.css` file
-* Empty out the `main.js` file.
-
-Now, we have an empty project that we can use as a starting point! To test it out, go ahead and replace the `main.js` file with the following code:
-
-```js
-import './style.css'
-import { v4 as generateUUID } from 'uuid';
-
-// Ordinarily, you'd add these elements to index.html
-const uuidButton = document.createElement('button');
-const uuidText = document.createElement('p');
-document.body.append(uuidButton, uuidText);
-
-uuidButton.textContent = 'Generate UUID';
-
-uuidButton.addEventListener('click', () => {
-  const newUUID = generateUUID();
-  uuidText.textContent = `your new uuid is: ${newUUID}`
-});
-```
-
-...and then reopen [http://localhost:5173](http://localhost:5173). You should see this!
-
-![A button that generates a new uuid each time you press it.](img/vite-generate-uuid-project.png)
-
-To save these changes in your repository, add, commit, and push them!
-
-When you are ready to deploy your project, check out the article on [How to Deploy on GitHub Pages](https://marcylabschool.gitbook.io/marcy-lab-school-docs/how-tos/deploying-vite-with-github-pages).

@@ -12,6 +12,9 @@ This resource covers deploying a Vanilla JS Vite app using Github Pages.
 - [Steps to Deploy on GitHub Pages](#steps-to-deploy-on-github-pages)
   - [1) Configure Vite for Deployment on Github Pages](#1-configure-vite-for-deployment-on-github-pages)
   - [2 and 3) Configure GitHub Pages and Create an Action](#2-and-3-configure-github-pages-and-create-an-action)
+- [Troubleshooting](#troubleshooting)
+  - [Files are not being loaded properly](#files-are-not-being-loaded-properly)
+  - [Multi-Page Applications](#multi-page-applications)
 
 {% embed url="https://youtu.be/KHDeInjoyYg" %}
 
@@ -28,7 +31,11 @@ Github Pages is ([according to their website](https://docs.github.com/en/pages/g
 
 > _... a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub, optionally runs the files through a build process, and publishes a website._
 
-A static site hosting service is one in which the resources being served are static files that the recipient (the client) can receive and immediately use. When a user (a client) visits your deployed website, GitHub pages will simply send the HTML, CSS, and JavaScript files that make up your website to the user. 
+A static site hosting service is one that lets you create a **static web server**. As the name suggests, static web servers serve static files (`.html` files, `.css` files, `.js` files, images, videos, etc.) These are all files that do not change or require processing before being sent.
+
+By contrast, a **dynamic web server** serves content that is generated in real-time based on the user request. This content can include personalized web pages, database-driven content, data from 3rd party APIs, and more. Dynamic web servers can also serve static content.
+
+When someone visits your GitHub Pages website, the GitHub servers will simply send your project's HTML, CSS, and JS files to the client.
 
 ![When visiting a static website, the server will send HTML, CSS, and JS files to the client](img/client-server-interaction-2.png)
 
@@ -183,3 +190,34 @@ jobs:
 9. Lastly, return to your repo and `git pull` to bring the new `main.yml` file into your local repository.
 
 That's it! Share your deployed link with friends and family to show off your work :)
+
+## Troubleshooting
+
+When building your project for production, you may notice that the application is not working in the same way that it was during development. Here are a few common issues that can arise when building for production:
+
+### Files are not being loaded properly
+
+Double check that all of your imports are correct! In the `index.html` file, double check that you are referencing files located in your `src` directory like `src/main.js` and `src/style.css` (if you are linking your CSS in this way).
+
+If you are using image files or other static assets, they should be in the `public` directory. Filepaths to these files are all treated as if you are in the root of `public`
+* Within `.html` and `.css` files, public files should be referenced like so `/filepath/within/public` (note the `/` in front)
+* Within `.js` files, public files should be referenced like so `filepath/within/public` (note the lack of `/` in front).
+
+For example, if your file structure looks like this:
+
+```
+public/
+├── images/
+    ├── picture1.jpg
+    └── picture2.jpg
+└── data.json   
+```
+
+* In HTML and CSS files, you would reference them like so: `"/images/picture1.jpg"`
+* In JS files, you would reference them like so: `"images/picture2.jpg"` or `"data.json"`
+
+### Multi-Page Applications
+
+If your project has multiple `.html` files, you will need to modify your `vite.config.js` file to enable these multiple "entry points".
+
+For best results, refer to the [Vite documentation](https://vite.dev/guide/build.html#multi-page-app). 
