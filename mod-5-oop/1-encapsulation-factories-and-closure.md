@@ -157,14 +157,14 @@ One amazing feature of JavaScript is the ability to create a **closure**. Closur
 We can leverage closures to control access to the `friends` array by doing the following:
 * We declare a function `makeFriendsManager`. This is our "outer" function
 * Inside, we declare the `friendsManager` object and return it.
-* We declare the `friends` array as its own variable, outside of `friendsManager`. It can no longer be accessed directly via the object but can be referenced by the methods `addFriend`, `getFriends,` and `printFriends`
+* We declare the `friends` array as its own variable, outside of `friendsManager`. It can no longer be accessed directly via the object but can be referenced by the methods `addFriend` and `printFriends`
 
 ```js
 // First, we make a function that returns our friendsManager. 
 // This is an "outer" function
 const makeFriendsManager = () => {
   // This variable is in the "outer" function's scope. 
-  // friends is referenced by addFriend and getFriends but is not in the friendsManager itself.
+  // friends is referenced by addFriend and printFriends but is not in the friendsManager itself.
   const friends = [];
 
   const friendsManager = {
@@ -182,11 +182,15 @@ const makeFriendsManager = () => {
 const bensFriendsManager = makeFriendsManager();
 bensFriendsManager.addFriend('zo')
 bensFriendsManager.addFriend('motun')
+bensFriendsManager.printFriends() // ['zo', 'motun']
+
 console.log(bensFriendsManager.friends) // undefined
-console.log(bensFriendsManager.getFriends()) // ['zo', 'motun']
+console.log(friends); // reference error!
 ```
 
-The closure is created when the `addFriend` and `getFriends` methods reference the `friends` variable from the surrounding scope.
+The full effect of the closure is seen when we invoke `makeFriendsManager`. After we return from `makeFriendsManager`, we can't reference `friends` anymore. However, the methods `addFriend` and `printFriends` keep their references to `friends`, even after they've been returned.
+
+Because `addFriend` and `printFriends` were declared within the same scope as `friends`, they can continue using their reference to `friends` even after leaving that scope. 
 
 ### Always Return Copies of Pass-By-Reference Values
 
