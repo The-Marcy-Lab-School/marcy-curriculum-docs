@@ -113,15 +113,16 @@ class Pet {
 
 // creating class instances
 const ben = new User();
-const clifford = new Pet();
+const fido = new Pet();
 
 // Instances are objects derived from a particular class
 console.log(ben); // User {}
-console.log(clifford); // Pet {}
+console.log(fido); // Pet {}
 ```
 
 With a `class` definition, we can create new **instances** of that class using the `new` keyword. An **instance** is an object that is derived from a class.
 
+{% hint style="info" %}
 **Note:** Even though `User` is treated like a function (we invoke it), you must use the `new` keyword when making an instance (you'll get an error if you don't)
 
 ```js
@@ -130,6 +131,8 @@ console.log(typeof User); // function
 
 const ben = User(); // error: you must use the new keyword to invoke a constructor function
 ```
+{% endhint %}
+
 
 ### Instanceof
 
@@ -139,8 +142,8 @@ We can use the `instanceof` operator (kind of like the `typeof` operator) to see
 console.log(ben instanceof User); // true
 console.log(ben instanceof Pet); // false
 
-console.log(clifford instanceof User); // false
-console.log(clifford instanceof Pet); // true
+console.log(fido instanceof User); // false
+console.log(fido instanceof Pet); // true
 ```
 
 ### Setting Properties With A Constructor
