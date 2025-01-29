@@ -238,6 +238,10 @@ console.log(User.allUsers); // undefined
 console.log(User.getAllUsers()); // [ User {}, User {}, User {} ]
 ```
 
+In this case, we define `getAllUsers` as a static method of the class `User`. This is because the action of getting all users should not belong to any one user instance. Instead, the entire `User` class should keep track of the instances created from it.
+
+When deciding to create a method or property as a static method or an instance method, ask yourself "should this property/method belong to an individual user, or the entire class?"
+
 ## Quiz!
 
 Consider the following code snippet:
