@@ -25,9 +25,9 @@ UML stands for **U**nified **M**odeling **L**anguage and it defines a way of des
 
 ## Practice
 
-Class Diagrams can be created using a tool like https://draw.io or they can simply be drawn using pen and paper.
+UML Diagrams can be created using a tool like [https://draw.io](https://draw.io) or they can simply be drawn using pen and paper.
 
-**TODO:** Take a moment and create a diagram for the `Book` class below:
+**TODO:** Take a moment and create a UML diagram for the `Book` class below:
 
 ```js
 class Book {
@@ -92,7 +92,7 @@ class Library {
 
 <details>
 
-<summary><strong>Book and Library Diagrams</strong></summary>
+<summary><strong>Book and Library UML Diagrams</strong></summary>
 
 In this diagram, we take it a step further and define the type of each property, method parameter, and returned value of each method. This is called the **signature** of a property/method.
 
