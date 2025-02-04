@@ -30,7 +30,7 @@ Before you begin, read through the code and understand the structure.
 * The `main.js` file is the entry point. It already is making use of the `Author` and `Book` classes, even though they are incomplete. Read through the code in this file and make sense of what the file expects of the `Author` and `Book` class.
 * The `models` folder has two files, `Author` and `Book.js`, each defining a class. `Book` is exclusively used by `Author` while `Author` is used exlusively within `main.js`.
 * The `utils` folder has a `getId.js` file with an id-generating function for the classes above.
-* The `utils` folder also has a `render-functions.js` file with functions for rendering the front end components. It doesn't interact with the classes at all. It just receives data from `main.js` to render.  You do not need to touch this file.
+* The `render-functions.js` file has functions for rendering the front end components. It doesn't interact with the classes at all. It just receives data from `main.js` to render.  You do not need to touch this file.
 
 ### Challenge: Build Your Own!
 
