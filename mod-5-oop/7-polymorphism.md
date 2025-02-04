@@ -24,7 +24,11 @@ We call this an "Is A" relationship
 
 ![A Person class sits at the top of the "tree". A Doctor, a Professor, and a Student class sit below and all inherit from the Person class. A GraduateStudent class inherits from the Student class.](./img/inheritance.png)
 
-**Question: What is the inheritance relationship between the `Professor` class and the `Person` class? What about the `GraduateStudent` class and the `Person` class?**
+**<details><summary>Question: Using the terms "subclass" and "superclass", what is the inheritance relationship between the `Professor` class and the `Person` class? What about the `GraduateStudent` class and the `Person` class?</summary>**
+
+Both `Professor` and `GraduateStudent` are subclasses of the `Person` class.
+
+</details>
 
 ## Array is a Subclass of Object
 
@@ -86,7 +90,11 @@ class Programmer {
 }
 ```
 
-Q: What bad practice exists this code?
+**<details><summary>Question: What bad practice exists this code?</summary>**
+
+This code breaks the DRY rule (Don't Repeat Yourself). Much of the code in `Programmer` is the same as the code in `Person`. Wouldn't it be great for `Programmer` to automatically inherit the `makeFriend` and `doActivity` methods? 
+
+</details>
 
 ## Extends and Super
 To remove the repetitive code AND to establish a relationship between `Programmer` and `Person`, we use the `extends` and `super` keywords to define our `Programmer` class:
@@ -134,24 +142,31 @@ Using these classes, do the following:
 
 Then, with a partner, discuss these questions:
 
-**Question 1: What does `extends` do?**
+**<details><summary>Question 1: What does `extends` do?</summary>**
 
-**Question 2: What does `super` do?**
+`extends` makes the `Programmer` inherit methods from `Person`. It sets `Person.prototype` as the prototype for `Programmer.prototype`
 
-**Question 3: What do we know about the relationship between a `Programmer` and a `Person`?**
+</details>
 
-**Question 4: How does the `code` method work?**
+**<details><summary>Question 2: What does `super` do?</summary>**
 
-<details><summary>Ben's Answer</summary>
+`super()` invokes the `Person` constructor function using its own value of `this`. Any properties that the `Person` constructor sets on `this` will  be set on `Programmer`.
 
-* `extends` makes the `Programmer` inherit methods from `Person`. It sets `Person.prototype` as the prototype for `Programmer.prototype`
-* `super()` invokes the `Person` constructor function using its own value of `this`. Any properties that the `Person` constructor sets on `this` will  be set on `Programmer`.
+</details>
+
+**<details><summary>Question 3: What do we know about the relationship between a `Programmer` and a `Person`?</summary>**
+
 * `Programmer` is said to be a **subclass** of `Person`. 
 * `Person` is said to be a **superclass** of `Programmer`.
 * `Programmer` will inherit properties and methods 
-from `Person`
-* Instances of `Programmer` are also instances of `Person`
-* `code` invokes the `doActivity` method inherited from `Person.prototype`
+from `Person`.
+* Instances of `Programmer` are also instances of `Person` but not all instances of `Person` are instances of `Programmer`.
+
+</details>
+
+**<details><summary>Question 4: How does the `code` method work?</summary>**
+
+`code` invokes the `doActivity` method inherited from `Person.prototype`
 
 </details>
 
@@ -217,9 +232,7 @@ This demonstrates polymorphism because `ben`, `reuben`, and `carmen` are all des
 
 A `Person` can come in "many forms".
 
-**Q: What does `super.makeFriend(friend)` do?**
-
-<details><summary>Ben's Answer</summary>
+**<details><summary>Question: What does `super.makeFriend(friend)` do?</summary>**
 
   `super.makeFriend(friend)` will call the superclass's `makeFriend` method, adding the `friend` argument to the `this.friends` array and printing out the greeting message. It is common when method overriding to invoke the superclass's version of the method and then adding on additional statements to execute.
   
@@ -269,7 +282,7 @@ The subclass `RaceCar` uses the `Car` `drive` method sandwiched between two of i
 
 **Challenge: Refactor the `makeFriend` method so that instead of adding a friend's name, it takes in a Person object. When a person is added as a friend, both person objects should have each other as friends.**
 
-<details><summary>Ben's Solution</summary>
+<details><summary>Solution</summary>
 
 We only have to modify the `Person` class and all subclasses will inherit the new behavior. Instead of passing in a friend's name, pass in the entire Person object and have both friends add each other to the friend list.
 
