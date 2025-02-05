@@ -5,9 +5,11 @@
 - [Variables](#variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
 - [Functions](#functions)
-  - [Arrow Functions](#arrow-functions)
-  - [Implicit Returns](#implicit-returns)
-  - [Function Calls, Parameters, Arguments, and Return Statements](#function-calls-parameters-arguments-and-return-statements)
+  - [Creating Arrow Functions](#creating-arrow-functions)
+  - [Function Calls](#function-calls)
+  - [Parameters and Arguments](#parameters-and-arguments)
+  - [Return Statements](#return-statements)
+  - [Arrow Function Implicit Returns](#arrow-function-implicit-returns)
 - [Scope](#scope)
 - [Zooming in on Strings](#zooming-in-on-strings)
   - [String Indexes and Bracket Notation](#string-indexes-and-bracket-notation)
@@ -157,31 +159,133 @@ Hoisting (like most weird JS things) stems from the fact that when JS was invent
 
 ## Functions
 
-* A **Function** is a named container for statements that can be **invoked** to execute its statements.
+A **Function** is a named container for statements that can be **invoked** to execute its statements.
 
-### Arrow Functions 
-* There are many ways to create a function, we will use **Arrow Function** syntax:
+### Creating Arrow Functions 
+There are many ways to create a function, but we will use **Arrow Function** syntax:
 
 ```js
-// Bad — Function Declaration. It is hoisted. Don't do this.
-function add(x, y) {
-  return x + y;
-}
-
-// Good — Arrow Functions are stored in constant variables and aren't hoisted.
+// Best — Arrow Functions are stored in constant variables and aren't hoisted.
 const multiply = (x, y) => {
   return x * y;
 }
+
+// Not Great — Function Declaration. It is hoisted. Don't do this.
+function add(x, y) {
+  return x + y;
+}
 ```
 
-### Implicit Returns
+### Function Calls
 
-There are a couple of ways we can simplify our Arrow functions:
-* If the function's body is just one line, you can omit the {}
-* If the function's body is just a `return` statement, you can omit the `return` keyword too. This is called an **implicit return**
+After a function is declared, the function must be **invoked** to use the function's code using the syntax:
 
 ```js
-// Okay - An explicit return
+// adding parentheses after the function name invokes the function
+functionName();
+```
+
+Invoking (or "calling") a function causes the program to jump to the first line of code in the function, setting it as the next line of code to be executed.
+
+```js
+console.log('This happens first');
+
+const sayHello = () => {
+  // not executed until sayHello() is invoked
+  console.log('hello');
+}
+
+console.log('this happens second');
+
+// hello is printed when sayHello() is invoked
+sayHello(); 
+
+// we can invoke a function multiple times!
+sayHello();
+```
+
+Note that the order in which statements are executed in our code is not always top to bottom. Declaring the function doesn't cause the code inside to run. We only execute the code inside of `sayHello` when it is invoked a few lines later.
+
+### Parameters and Arguments
+
+The function `sayHello` above has no flexibility in its functionality. It always prints `"hello"`. 
+
+**Parameters** are variables created inside of a function that enable a function to change its behavior based on **arguments** provided in the function call.
+
+* Parameters go in the parentheses of a function declaration (separated by commas).
+* Arguments go in the parentheses of the function call (also separated by commas).
+* The order of the arguments must match the order of the parentheses.
+
+```js
+// printSum can add and print any two given values
+// x and y are parameters that reference the values provided when the function is called.
+const printSum = (x, y) => {
+  console.log(x + y);
+}
+
+// 5 and 3 are the arguments. 8 is printed
+printSum(5, 3);
+
+// This time, 10 and 2 are the arguments. 12 is printed
+printSum(10, 2);
+
+// There is no type-checking, the function will just concatenate these values
+// 'hello5' is printed
+printSum('hello', 5);
+
+// If an argument is not provided, the parameter will be undefined
+// undefined + undefined => NaN is printed
+printSum();
+```
+
+### Return Statements
+
+The functions above use `console.log` to print out a result to the console, but that result can't be used later in the program. If we want a function to produce a value that we can be used outside of the function, we add a `return` statement.
+
+A `return` statement does two things:
+1. It terminates the execution of the function
+2. It returns a value to the location of the function call.
+
+```js
+const add = (x, y) => {
+  return x + y;
+}
+
+// The function call is replaced by its return value, so:
+// const sum = 8
+const sum = add(5, 3); 
+
+console.log(sum); // Prints 8
+```
+
+{% hint style="info" %}
+We say that "`add(5, 3)` resolves to 8"
+{% endhint %}
+
+A function can have multiple `return` statements, but only one is ever executed. This is helpful if the value returned depends on the provided argument.
+
+```js
+const isPositiveOrNegative = (num) => {
+  if (num === 0) {
+    return "Neither"
+  } else if (num > 0) {
+    return "Positive"
+  } else {
+    return "Negative"
+  }
+}
+
+isPositiveOrNegative(-5); // returns "Negative"
+isPositiveOrNegative(5); // returns "Positive"
+isPositiveOrNegative(0); // returns "Neither"
+```
+
+### Arrow Function Implicit Returns
+
+If the function's body is just a `return` statement, you can omit the `{}` and the `return` keyword. This is called an **implicit return**
+
+```js
+// Totally Fine - An explicit return
 const add = (a, b) => {
   return a + b;
 }
@@ -190,27 +294,6 @@ const add = (a, b) => {
 const add = (a, b) => a + b;
 ```
 
-### Function Calls, Parameters, Arguments, and Return Statements
-
-* A **function call** statement changes the control flow by "activating" the function. Calling a function sets the first line of code in the function as the next line of code to be executed.
-* **Parameters** are variables created when a function is invoked that reference the inputs (a.k.a. **arguments**) provided in the function call.
-* A **return statement** terminates a function and returns a value to the location of the function call.
-
-```js
-// x and y reference the values provided when the function is called.
-const add = (x, y) => {
-  return x + y;
-}
-
-// 5 and 3 are the inputs (a.k.a arguments)
-const sum1 = add(5, 3);
-
-// For this call, 10 and 2 are the arguments
-const sum2 = add(10, 2);
-
-console.log(sum1); // Prints 8
-console.log(sum2); // Prints 12
-```
 
 ## Scope
 
