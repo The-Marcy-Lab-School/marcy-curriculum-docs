@@ -5,8 +5,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 {% endhint %}
 
 **Table of Contents:**
-- [Intro](#intro)
-- [Factory Functions Waste Memory](#factory-functions-waste-memory)
+- [Intro: Reviewing Factory Functions](#intro-reviewing-factory-functions)
+  - [Factory Functions Waste Memory](#factory-functions-waste-memory)
 - [Classes](#classes-1)
   - [Class Definition and `new`](#class-definition-and-new)
   - [Instanceof](#instanceof)
@@ -16,27 +16,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 - [Challenge](#challenge)
 - [Summary](#summary)
 
-## Intro
+## Intro: Reviewing Factory Functions
 
-In the last lecture, we learned about **encapsulation** - bundling data and methods that act on that data into an object. We learned about using **closures** to create **private variables**.
-
-```js
-const makeFriendsManager = (...initialFriends) => {
-  const friends = [...initialFriends];
-
-  return {
-    getFriends() {
-      return [...friends]; 
-    },
-    addFriend(newFriend) {
-      if (typeof newFriend !== 'string') return;
-      friends.push(newFriend);
-    }
-  }
-}
-```
-
-## Factory Functions Waste Memory
+In the last lecture, we learned about **encapsulation** - bundling data and methods that act on that data into an object. We learned about using **closures** to hide internal data and restrict access to them.
 
 The nice thing about encapsulation is that we can re-use `makeFriendsManager` to create multiple objects that look alike: each friends manager has `getFriends` and `addFriends` methods.
 
@@ -44,39 +26,68 @@ This kind of function is called a **factory function** and each object created f
 
 ```js
 // factory functions return objects
-const makeFriendsManager = (...initialFriends) => {
-  const friends = [...initialFriends];
+const makeFriendsManager = () => {
+  const friends = [];
 
   return {
-    getFriends() {...},
-    addFriend(newFriend) { ... },
+    getFriends() {
+      return [...friends]; 
+    },
+    addFriend(newFriend) {
+      if (typeof newFriend !== 'string') {
+        throw Error('new friends must be strings');
+      };
+      friends.push(newFriend);
+    }
   }
 }
 
-// instances of the factory function
-const myFM = makeFriendsManager();
-const yourFM = makeFriendsManager();
+// instances of the factory function have their own friends
+const reuben = makeFriendsManager();
+reuben.addFriend('carmen')
+reuben.addFriend('ann')
+reuben.addFriend('motun')
+console.log(reuben.getFriends()); // ['carmen', 'ann', 'motun']
+
+
+const maya = makeFriendsManager();
+maya.addFriend('ben')
+maya.addFriend('gonzalo')
+console.log(maya.getFriends()); // ['ben', 'gonzalo']
 ```
 
-The objects `myFM` and `yourFM` definitely have the same behavior. But do they _share_ that behavior? That is, **are the methods they each have referencing the same exact function?**
+### Factory Functions Waste Memory
+
+The instances `reuben` and `maya` definitely have the same behavior. But do they _share_ that behavior? That is, **are the methods they each have referencing the same exact function?**
 
 ```js
-// are these the same object?
-console.log(myFM === yourFM)
+console.log(reuben);
+// {
+//   getFriends: [Function: getFriends],
+//   addFriend: [Function: addFriend]
+// }
 
+console.log(maya);
+// {
+//   getFriends: [Function: getFriends],
+//   addFriend: [Function: addFriend]
+// }
+
+// so, are they the same object?
+console.log(reuben === maya);
 // are the methods of these objects the same?
-console.log(myFM.addFriend === yourFM.addFriend)
+console.log(reuben.addFriend === maya.addFriend);
 ```
 
 <details>
 
-<summary><strong>Q: Are the methods <code>myFM.addFriend()</code> and <code>yourFM.addFriend()</code> referencing the same exact function?</strong></summary>
+<summary><strong>Answer</strong></summary>
 
-No! They are not the same. Each time the factory function is invoked, a brand new object is made and the methods are recreated as well. This is a waste of memory.
+No! They are not the same. Each time the factory function is invoked, a brand new object is made and the methods are recreated as well. This is a waste of memory!
+
+We'll end up with two objects, each with two methods for a total of 4 methods. It would be great if we could share them.
 
 </details>
-
-
 
 ## Classes
 
@@ -93,8 +104,6 @@ A **class** defines a type of object and the properties/methods that those objec
 
 </details>
 
-
-
 ### Class Definition and `new`
 
 Many programming languages implement classes in some manner.
@@ -103,33 +112,29 @@ In JavaScript, it starts with the `class` keyword, an uppercase name, and curly 
 
 ```js
 // class definitions
-class User {
+class Person {
 
 }
 
-class Pet {
-
-}
-
-// creating class instances
-const ben = new User();
-const fido = new Pet();
+// creating class instances with the `new` keyword
+const ben = new Person();
+const carmen = new Person();
 
 // Instances are objects derived from a particular class
-console.log(ben); // User {}
-console.log(fido); // Pet {}
+console.log(ben);     // User {}
+console.log(carmen);  // User {}
 ```
 
 With a `class` definition, we can create new **instances** of that class using the `new` keyword. An **instance** is an object that is derived from a class.
 
 {% hint style="info" %}
-**Note:** Even though `User` is treated like a function (we invoke it), you must use the `new` keyword when making an instance (you'll get an error if you don't)
+**Note:** Even though `Person` is treated like a function (we invoke it), you must use the `new` keyword when making an instance (you'll get an error if you don't)
 
 ```js
 // User is a function, but you can't just call it
-console.log(typeof User); // function
+console.log(typeof Person); // function
 
-const ben = User(); // error: you must use the new keyword to invoke a constructor function
+const ben = Person(); // error: you must use the new keyword to invoke a constructor function
 ```
 {% endhint %}
 
@@ -139,11 +144,11 @@ const ben = User(); // error: you must use the new keyword to invoke a construct
 We can use the `instanceof` operator (kind of like the `typeof` operator) to see if an object is derived from the given class.
 
 ```js
-console.log(ben instanceof User); // true
-console.log(ben instanceof Pet); // false
+console.log(ben instanceof Person); // true
+console.log(ben instanceof Array); // false
 
-console.log(fido instanceof User); // false
-console.log(fido instanceof Pet); // true
+console.log([] instanceof Person); // false
+console.log([] instanceof Array); // true
 ```
 
 ### Setting Properties With A Constructor
@@ -152,29 +157,30 @@ Right now, the class definitions only allow us to create blank objects. But obje
 
 There are two kinds of properties that instances of a class can have:
 
-1. Properties with default values that all instances start with
-2. Properties whose values are provided when the instance is made
+1. Properties with default values
+2. Properties whose values are provided when the instance is "constructed"
 
 ```js
-class User {
-  // Default instance properties are defined here. We can change these later.
+class Person {
+  // Default properties are defined here. We can change these later.
   // Notice that the `this` keyword isn't used
-  isAdmin = false;
-  password = null; 
+  friends = []
 
-  // Instance properties that require inputs go in the constructor
-  constructor(name, email) {
-    this.name = name;  // <-- The `this` keyword references the new instance object being created
-    this.email = email;
+  // The constructor allows the creator of the instance to specify property values
+  constructor(name, age) {
+    // The `this` keyword references the new instance object being created
+    // We're setting properties on that new object
+    this.name = name;  
+    this.age = age;
   }
 }
 
-const ben = new User('ben', 'ben@mail.com');
-const zo = new User('zo', 'zo@mail.com');
+const ben = new Person('ben', 30);
+const gonzalo = new Person('gonzalo', 36);
 
-console.log(ben, zo);
-// User {isAdmin: false, password: null, name: 'ben', email: 'ben@mail.com'}
-// User {isAdmin: false, password: null, name: 'zo', email: 'zo@mail.com'}
+console.log(ben, gonzalo);
+// Person { name: 'ben', age: 29, friends: [] }
+// Person { name: 'gonzalo', age: 36, friends: [] }
 ```
 
 Class `constructor` functions have some quirks to get used to:
@@ -190,58 +196,57 @@ Remember, **encapsulation** wants us to bundle data with methods that operate on
 Adding methods to a `class` definition looks like this:
 
 ```js
-class User {
-  isAdmin = false;
-  password = null;
+class Person {
+  friends = [];
 
-  constructor(name, email) {
+  constructor(name, age) {
     this.name = name;
-    this.email = email;
+    this.age = age;
   }
   
   // notice that we don't have commas between methods
   // These methods are shared by ALL instances of the class
 
-  setPassword(newPassword) {
+  addFriend(newFriend) {
     // When used in a method, this references the object invoking the method
-    this.password = newPassword;
+    if (typeof newFriend !== 'string') {
+      throw Error('new friends must be strings');
+    };
+    this.friends.push(newFriend);
   }
 
-  validatePassword(passwordToCheck) {
-    if (!this.password) {
-      console.log('No password set.');
-      return false;
-    }
-    if (passwordToCheck === this.password) {
-      console.log('It matches!');
-      return true;
-    }
-    console.log('Wrong password!');
-    return false;
+  greet() {
+    console.log(`Hi, I'm ${this.name}, I am ${this.age} years old and I have ${this.friends.length} friends.`);
   }
 }
-const ben = new User('ben', 'ben@mail.com');
+const ben = new Person('ben', 30);
 
-ben.validatePassword('1234'); // No password set.
-ben.setPassword('1234');
-ben.validatePassword('1234'); // It Matches!
+ben.addFriend('carmen');
+ben.addFriend('gonzalo');
+ben.addFriend('maya');
+
+ben.greet(); // Hi, I'm ben, I am 30 years and I have 3 friends.
 ```
 
 When used in a method, the `this` keyword refers to the object invoking the method.
 
 ```js
-const ben = new User('ben', 'ben@mail.com');
-const zo = new User('zo', 'zo@mail.com');
+const ben = new Person('ben', 30);
+const gonzalo = new Person('gonzalo', 36);
 
 // they are the same method
-console.log(ben.setPassword === zo.setPassword); // true
+console.log(ben.addFriend === gonzalo.addFriend); // true
 
 // when we invoke the method, the value of `this` changes
-ben.setPassword('1234');
-zo.validatePassword('1234'); // No password set.
+ben.addFriend('motun'); // adding to ben's friends list
+gonzalo.addFriend('reuben'); // adding to gonzalo's friends list
 ```
 
-Next time, we'll look at making the password private.
+We currently have an issue, we can once again directly access the `friends` array leading to issues, but we'll resolve that in the next lesson!
+
+```js
+ben.friends.length = 0; // currently, this works!
+```
 
 ## Quiz!
 

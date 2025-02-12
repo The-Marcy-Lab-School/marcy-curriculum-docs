@@ -124,7 +124,9 @@ Consider the `friendsManager` example again. Notice that we've added a guard cla
 const friendsManager = {
   friends: [],
   addFriend(newFriend) {
-    if (typeof newFriend !== 'string') return;
+    if (typeof newFriend !== 'string') {
+      throw Error('new friends must be strings');
+    };
     this.friends.push(newFriend);
   },
   printFriends() {
@@ -145,10 +147,13 @@ friendsManager.friends.push(42);
 <summary><strong>Q: What about the last two lines in the example are NOT consistent or predictable?</strong></summary>
 
 You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
+- The `friends` array can be directly modified from the outside, which leads to uncontrolled additions like `friendsManager.friends.push(42)`. This results in an array that might have invalid data types, such as numbers and booleans mixed with strings, violating the intended structure of the friends list.
+- This unpredictability leads to bugs and confusion, as the integrity of the data inside `friendsManager` cannot be guaranteed.
+How to Make the Code More Consistent Using Closures:
 
 </details>
 
-A core tenet of encapsulation in OOP is to **hide data from being directly accessed**, like `friendsManager.friends`. If we are able to prevent `friendsManager.friends` from being accessed in any way outside of through the pre-defined methods `addFriend` and `printFriends`, we can be more confident in achieving predictable outcomes.
+A core tenet of encapsulation in OOP is to **restrict access to an object's internal data**, like `friendsManager.friends`. If we are able to ensure `friendsManager.friends` is only interacted with through the methods `addFriend` and `printFriends`, we can guarantee that our rules for adding new friends are enforced.
 
 ### Closures Let Us Hide Data
 
@@ -169,7 +174,9 @@ const makeFriendsManager = () => {
 
   const friendsManager = {
     addFriend(newFriend) {
-      if (typeof newFriend !== 'string') return;
+      if (typeof newFriend !== 'string') {
+        throw Error('new friends must be strings');
+      };
       friends.push(newFriend);
     },
     printFriends() {
@@ -194,9 +201,7 @@ Because `addFriend` and `printFriends` were declared within the same scope as `f
 
 ### Always Return Copies of Pass-By-Reference Values
 
-Suppose we wanted to provide a way to access the list of `friends`. For example, if we wanted to let the user of this interface use a filter to find all friends whose names begin with the letter `"t"`. 
-
-We would add a "getter" method like `getFriends`:
+Suppose we wanted to provide a way to access the list of `friends`, we would add a "getter" method like `getFriends`:
 
 ```js
 const makeFriendsManager = () => {
@@ -204,7 +209,9 @@ const makeFriendsManager = () => {
 
   const friendsManager = {
     addFriend(newFriend) {
-      if (typeof newFriend !== 'string') return;
+      if (typeof newFriend !== 'string') {
+        throw Error('new friends must be strings');
+      };
       friends.push(newFriend);
     },
     printFriends() {
@@ -217,6 +224,20 @@ const makeFriendsManager = () => {
   }
   return friendsManager;
 }
+
+const myFriendsManager = makeFriendsManager();
+myFriendsManager.addFriend('reuben')
+myFriendsManager.addFriend('maya')
+myFriendsManager.addFriend('carmen')
+
+const allFriends = myFriendsManager.getFriends()
+
+// A copy is returned. We can modify the copy all we want...
+allFriends[0] = 'ben';
+console.log(allFriends); // ['ben', 'maya', 'carmen']
+
+// ... but the original is not disturbed. It remains the "source of truth"
+console.log(myFriendsManager.getFriends()); // ['reuben', 'maya', 'carmen']
 ```
 
 To ensure `friends` remains hidden, the `getFriends` method returns a copy of the `friends` array to avoid sharing the array reference.
@@ -261,7 +282,9 @@ const makeFriendsManager = (...initialFriends) => {
       return [...friends]; 
     },
     addFriend(newFriend) {
-      if (typeof newFriend !== 'string') return;
+      if (typeof newFriend !== 'string') {
+        throw Error('new friends must be strings');
+      };
       friends.push(newFriend);
     }
   }
@@ -391,7 +414,9 @@ const makeFriendsManager = (...initialFriends) => {
       return [...friends]; 
     },
     addFriend(newFriend) {
-      if (typeof newFriend !== 'string') return;
+      if (typeof newFriend !== 'string') {
+        throw Error('new friends must be strings');
+      };
       friends.push(newFriend);
     }
   }
