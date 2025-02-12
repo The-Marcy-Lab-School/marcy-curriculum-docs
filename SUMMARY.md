@@ -78,6 +78,7 @@
   * [Challenge: Implementing Has Many/Belongs To](mod-5-oop/6-has-many-belongs-to-frontend.md)
   * [Inheritance](mod-5-oop/7-inheritance.md)
   * [Polymorphism](mod-5-oop/8-polymorphism.md)
+  * [Review and Practice](mod-5-oop/9-review.md)
   * [MDN: Object Prototypes](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects/Object_prototypes)
 * [Mod 6 - Data Structures & Algorithms](mod-6-ds-a/README.md)
   * [Mod 6 Overview](mod-6-ds-a/Overview.md)
