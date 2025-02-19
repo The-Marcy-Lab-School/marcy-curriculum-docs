@@ -8,20 +8,20 @@ In this lesson, you will learn the basics of React.
 
 **Table of Contents:**
 
-* [Terms:](1-intro-to-react.md#terms)
-* [What is React & Why Use It?](1-intro-to-react.md#what-is-react--why-use-it)
-  * [A. Say goodbye to the clunky DOM API](1-intro-to-react.md#a-say-goodbye-to-the-clunky-dom-api)
-  * [B. Component Composition is fast and easy to read](1-intro-to-react.md#b-component-composition-is-fast-and-easy-to-read)
-  * [C. The Virtual DOM offers some performance benefits when re-rendering components](1-intro-to-react.md#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
-* [Starting a React Project with Vite](1-intro-to-react.md#starting-a-react-project-with-vite)
-* [Rendering the Root Component With ReactDOM](1-intro-to-react.md#rendering-the-root-component-with-reactdom)
-* [Components & JSX](1-intro-to-react.md#components--jsx)
-* [Nested Components](1-intro-to-react.md#nested-components)
-* [Adding Style](1-intro-to-react.md#adding-style)
-* [Inserting Data Into Components](1-intro-to-react.md#inserting-data-into-components)
-* [Sharing Data Between Components With Props](1-intro-to-react.md#sharing-data-between-components-with-props)
-* [Rendering A List of Elements](1-intro-to-react.md#rendering-a-list-of-elements)
-  * [Under the hood: JSX Code must be compiled](1-intro-to-react.md#under-the-hood-jsx-code-must-be-compiled)
+- [Terms:](#terms)
+- [What is React and Why Use It?](#what-is-react-and-why-use-it)
+  - [A. Say goodbye to the clunky DOM API](#a-say-goodbye-to-the-clunky-dom-api)
+  - [B. Component Composition is fast and easy to read](#b-component-composition-is-fast-and-easy-to-read)
+  - [C. The Virtual DOM offers some performance benefits when re-rendering components](#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
+- [Starting a React Project (with Vite)](#starting-a-react-project-with-vite)
+  - [Rendering the Root Component With ReactDOM](#rendering-the-root-component-with-reactdom)
+  - [Components and JSX](#components-and-jsx)
+  - [Nested Components](#nested-components)
+  - [Adding Classes and Style](#adding-classes-and-style)
+- [Rendering Data with React](#rendering-data-with-react)
+  - [Sharing Data Between Components With Props](#sharing-data-between-components-with-props)
+  - [Rendering A List of Elements](#rendering-a-list-of-elements)
+- [Under the hood: JSX Code must be compiled](#under-the-hood-jsx-code-must-be-compiled)
 
 ## Terms:
 
@@ -121,11 +121,11 @@ React component names must always start with a capital letter, while HTML tags m
 
 [Read more about it here](https://blog.logrocket.com/virtual-dom-react/#comparison-chart-real-virtual-shadow-dom)
 
-## Starting a React Project with Vite
+## Starting a React Project (with Vite)
 
-Now that you know at least some of the basic terms of React, let's look at actually building a React app.
+React projects are essentially the same as the Vanilla JS projects you've been building so far. At the end of the day, they start with an `index.html` file that runs some JavaScript files.
 
-All of our projects up until this point have used Vanilla JS. Today is the day where you get to create a vite project using React!!!
+Vite provides a really great starting template for us to build React projects with:
 
 ```bash
 npm create vite@latest
@@ -138,17 +138,16 @@ cd <name of your project> && npm i
 npm run dev
 ```
 
-By default you will be given a counter app. Take a look around!
-
-Every React project will have this rough structure:
+By default you will be given the familiar counter app. Take a look around! Every React project made by Vite will have this rough structure:
 
 * `index.html` — the HTML file served to the client. It loads `src/main.jsx`.
 * `src/main.jsx` — the entry point of the app. It uses the `react-dom/client` package to render the **root component** `App` into the DOM.
 * `src/App.jsx` — the root component.
+* `package.json` — note that a React vite project has a few React-related dependencies that the Vanilla project does not have.
 
 > Notice the `.jsx` extension? Without it, we wouldn't be able to write JSX in this file.
 
-## Rendering the Root Component With ReactDOM
+### Rendering the Root Component With ReactDOM
 
 How does all of this actually get to the screen? Head over to the `main.jsx` file.
 
@@ -178,7 +177,7 @@ A few notes:
 * We're using the `client` version of `ReactDOM` (there is also a `native` version for mobile).
 * `React.StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
 
-## Components and JSX
+### Components and JSX
 
 React components are functions that return a single JSX element.
 
@@ -203,7 +202,7 @@ export default App
 * Components must return a single surrounding element. Here, we return a `header`.
 * When returning multiple elements, wrap the elements parentheses `()`.
 
-## Nested Components
+### Nested Components
 
 React is at its best when we separate the UI into individual components and then combine them to create the entire UI.
 
@@ -246,7 +245,7 @@ export default App
 
 </details>
 
-## Adding Style
+### Adding Classes and Style
 
 Imagine we had this style rule defined in a CSS file:
 
@@ -289,8 +288,6 @@ const App = () => {
 
 <summary><strong>Q: What will this render?</strong></summary>
 
-
-
 <img src="img/message-example.png" alt="" data-size="original">
 
 Note how the `className` attribute in JSX is converted into the HTML attribute `class`.
@@ -319,11 +316,11 @@ const InstagramPost = () => {
 
 </details>
 
-## Inserting Data Into Components
+## Rendering Data with React
 
-JSX let's you put markup into our JavaScript.
+One of the most essential and useful features of React and JSX is how easy it is to utilize data to render components.
 
-We can also insert JavaScript into our JSX using curly braces `{}`.
+We can insert any JavaScript expression into our JSX using curly braces `{}`.
 
 ```jsx
 const catPicture = {
@@ -350,7 +347,7 @@ Notice how the `alt` attribute uses string concatenation!
 
 In the above example, `style={{}}` is not a special syntax, but a regular `{}` object inside the `style={ }` JSX curly braces. You can use the `style` attribute when your styles depend on JavaScript variables.
 
-## Sharing Data Between Components With Props
+### Sharing Data Between Components With Props
 
 What makes React so powerful is the ability to share data between components using **props**.
 
@@ -404,7 +401,7 @@ function App() {
 
 **Q: What will this render?**
 
-## Rendering A List of Elements
+### Rendering A List of Elements
 
 * Use array to store data
 * Render `{array.map}`
@@ -462,7 +459,7 @@ const App = () => {
 };
 ```
 
-### Under the hood: JSX Code must be compiled
+## Under the hood: JSX Code must be compiled
 
 JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It must first be **compiled** (converted) to vanilla JS.
 
