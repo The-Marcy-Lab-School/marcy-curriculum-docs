@@ -74,7 +74,7 @@
   * [Intro to OOP, Encapsulation, Factory Functions, and Closure](mod-5-oop/1-encapsulation-factories-and-closure.md)
   * [Classes](mod-5-oop/2-classes.md)
   * [Private & Static](mod-5-oop/3-private-properties-static-methods.md)
-  * [Has Many/Belongs To](mod-5-oop/5-has-many-belongs-to.md)
+  * [UML Diagrams & Has Many/Belongs To Relationships](mod-5-oop/5-has-many-belongs-to.md)
   * [Challenge: Implementing Has Many/Belongs To](mod-5-oop/6-has-many-belongs-to-frontend.md)
   * [Inheritance](mod-5-oop/7-inheritance.md)
   * [Polymorphism](mod-5-oop/8-polymorphism.md)

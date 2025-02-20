@@ -1,4 +1,4 @@
-# Has Many/Belongs To
+# UML Diagrams and Has Many/Belongs To Relationships
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-0-has-many-belongs-to)!
@@ -6,9 +6,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 
 **Table of Contents:**
 - [Intro: Class Diagrams](#intro-class-diagrams)
-- [Practice](#practice)
-- [Entity Relationships](#entity-relationships)
-- [Make some has many / belongs to class relationships](#make-some-has-many--belongs-to-class-relationships)
+  - [Practice: The Book Class](#practice-the-book-class)
+- [Has Many / Belongs To Relationships Between Classes](#has-many--belongs-to-relationships-between-classes)
+  - [Practice: The Library Class](#practice-the-library-class)
+- [Challenge](#challenge)
 
 ## Intro: Class Diagrams
 
@@ -23,7 +24,7 @@ UML stands for **U**nified **M**odeling **L**anguage and it defines a way of des
 
 ![](img/uml-diagrams.svg)
 
-## Practice
+### Practice: The Book Class
 
 UML Diagrams can be created using a tool like [https://draw.io](https://draw.io) or they can simply be drawn using pen and paper.
 
@@ -52,7 +53,19 @@ class Book {
 }
 ```
 
-Now, to the right of your `Book` diagram, create a diagram for the `Library` class below:
+## Has Many / Belongs To Relationships Between Classes
+
+Often, classes will interact with each other. The way in which they interact defines what kind of relationship exists between the two classes. 
+
+One of the most common relationships is a **has-many / belongs to** relationship in which one class manages instances of another. For example, a `PetOwner` class might manage many instances of a `Cat` class.
+
+![](img/relationships.png)
+
+We can turn our diagrams from simple class diagrams to **Entity Relationship Diagrams** (ERDs) by connecting them.
+
+### Practice: The Library Class
+
+Now, imagine that in addition to our `Book` class, we had a `Library` class. Every instance of the `Library` class might manage its own collection of `Book` instances.
 
 ```js
 class Library {
@@ -69,7 +82,9 @@ class Library {
 
   // Library Instance Methods
   addBook(title, author, genre) {
+    // When adding a book to the Library, a new Book instance is created. 
     const addedBook = new Book(title, author, genre);
+    // The Book is added to this library's collection, forming the "has many/belongs to" relationship
     this.#books.push(addedBook);
     return addedBook;
   }
@@ -77,7 +92,8 @@ class Library {
     return [...this.#books];
   }
   removeBook(id) {
-    this.#books.splice(this.#books.findIndex((book) => book.id === id), 1);
+    const matchingBookIndex = this.#books.findIndex((book) => book.id === id);
+    this.#books.splice(matchingBookIndex, 1);
   }
 
   // Library Class Methods
@@ -92,40 +108,16 @@ class Library {
 
 <details>
 
-<summary><strong>Book and Library UML Diagrams</strong></summary>
-
-In this diagram, we take it a step further and define the type of each property, method parameter, and returned value of each method. This is called the **signature** of a property/method.
-
-<img src="img/book-libarary-class-diagram.png" alt="Alt text" data-size="original">
-
-</details>
-
-
-
-## Entity Relationships
-
-Class diagrams can show the data and functionality of a class, but the relationships between classes is just as important. We can turn our diagrams from simple class diagrams to **Entity Relationship Diagrams** (ERDs) by connecting them.
-
-There are many types of relationships, and many ways to represent them. Below is a common way to represent relationships between classes:
-
-* "Has many / belongs to" (a.k.a. "one to many")
-* "Is A" (a.k.a. "Inheritance")
-
-![](img/relationships.png)
-
-<details>
-
-<summary><strong>Q: What is the relationship between the <code>Library</code> and <code>Book</code> classes?</strong></summary>
+<summary><strong>Q: What is the relationship between a <code>Library</code> and a <code>Book</code> class?</strong></summary>
 
 A library has many books. A book belongs to a Library
 
+Later this week, we'll learn how to implement an "Is A" relationship with the `extends` keyword.
+
 </details>
 
 
-
-Later this week, we'll learn how to implement an "Is A" relationship with the `extends` keyword.
-
-**TODO:** Draw the correct association line between your two classes. If you are using draw.io, go to the "ERD" section and find the "one-to-many" connector
+**TODO:** Now, create a UML diagram for the `Library` class and draw the correct association line between your two classes. If you are using draw.io, go to the "ERD" section and find the "one-to-many" connector
 
 <details>
 
@@ -137,7 +129,7 @@ Later this week, we'll learn how to implement an "Is A" relationship with the `e
 
 
 
-## Make some has many / belongs to class relationships
+## Challenge
 
 Below are some examples of pairs of classes that you can create that will have a "has many / belongs to" relationship.
 
