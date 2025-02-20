@@ -104,7 +104,7 @@ To start a new project using Vite, do the following:
 3. Inside the repo, create a [Vite](https://vitejs.dev/guide/) project using the `npm create vite` command:
 
     ```sh
-    npm create vite
+    npm create vite@latest
     # > Project Name: app
     # > Select a framework: Vanilla
     # > Select a variant: JavaScript
@@ -112,15 +112,17 @@ To start a new project using Vite, do the following:
 
     This will create a folder in your repo called `app` that will serve as the "development" version of the application (later, when you are ready to deploy, you will also create a "production" version).
 
-4. Open up the `app` directory and look around. Vite will have created the following files for you to get started (in order of importance):
-    * `package.json`: defines the scripts and dependencies of your project. Notably, when you run `npm i` in your `app` directory, it will install the `vite` command-line tool.
-    * `index.html`: the "entry point" of your application. It contains only a `div#app` element and loads the `main.js` file. This must remain in the root of your `app` directory.
-    * `main.js`: is the "entry point" of your JavaScript code. You can move this file and any other JS files into sub-directories for better organization if you so desire.
-    * `style.css`: contains the CSS for your application and is imported into `main.js` (yes, you can import CSS in JavaScript with Vite!). You can move this file and any other CSS files into sub-directories for better organization if you so desire.
-    * `counter.js`: defines the logic for a simple counter application. We'll delete this "starter application" when we begin working on our own project.
-    * `.gitignore`: lists filepaths to be ignored when making a commit.
-    * `public/`: contains files that will not be transformed or bundled by Vite (images, logos, fonts, etc...) when running the build command. Any image files you want to add to your project should go in this folder.
-    * `javascript.svg`: a logo for JavaScript.
+4. Open up the `app` directory and look around. Vite will have created the following files and directories for you to get started:
+    * `package.json`: defines the scripts and dependencies of your project. Notably, when you run `npm i` in your `app` directory, it will install the `vite` command-line tool. It's the first place to look when working on a new project.
+      * `package-lock.json`: Read more about package lock files [here](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
+    * `index.html`: the "entry point" of your application. It contains only a `div#app` element and loads the `src/main.js` file. This must remain in the root of your `app` directory.
+    * `.gitignore`: lists filepaths to be ignored when making a commit. Importantly, you'll see that `node_modules/` are ignored.
+    * `public/`: contains files that you want to be publicly accessible. Often, these are images that you reference in your HTML or CSS.
+    * `src/`: contains the JavaScript and CSS that makes up your application!
+      * `main.js`: is the "entry point" of your JavaScript code. You can move this file and any other JS files into sub-directories for better organization if you so desire.
+      * `style.css`: contains the CSS for your application and is imported into `main.js` (yes, you can import CSS in JavaScript with Vite!). You can move this file and any other CSS files into sub-directories for better organization if you so desire.
+      * `counter.js`: defines the logic for a simple counter application. We'll delete this "starter application" when we begin working on our own project.
+      * `javascript.svg`: a logo for JavaScript. We'll also delete this file.
 
 5. `cd` into the `app` directory and install the `vite` command line tool and other dependencies for the project
     
@@ -140,11 +142,15 @@ To start a new project using Vite, do the following:
 
 ![The Vite starter project is a simple counter application.](img/vite-starter-project.png)
 
-> 💡 **Tips**: You don't need to stop and start you Vite development server when you make changes because it has "hot reloading". Make a few changes to the application and notice it auto-update!
->
-> To stop the development server enter <kbd>Ctrl + C</kbd>.
->
-> To restart the development server, use the command `npm run dev`. 
+{% hint style="info" %}
+
+💡 **Tips**: You don't need to stop and start you Vite development server when you make changes because it has "hot reloading". Make a few changes to the application and notice it auto-update!
+
+To stop the development server enter <kbd>Ctrl + C</kbd>.
+
+To restart the development server, use the command `npm run dev`. 
+
+{% endhint %}
 
 ### Make the Project Your Own!
 
@@ -154,35 +160,12 @@ First, remove these unnecessary files
 
 ```sh
 # delete these files
-rm counter.js javascript.svg
+rm src/counter.js src/javascript.svg
 ```
 
-Next, make a `src` directory for all of our non-configuration code
-
-```sh
-
-# make a src directory
-mkdir src
-
-# move these files into src
-mv main.js src/
-mv style.css src/
-```
-
-We leave only the `index.html` file at the root of the project because it serves as the **entry point** for the rest of the application.
-
-All future JavaScript and CSS files you create should exist somewhere within `src`. Feel free to create more folders inside it if you'd like.
-
-{% hint style="info" %}
-If you want to make a multi-page app with multiple `.html` files, refer to Vite's documentation on this matter:
-
-https://vite.dev/guide/build.html#multi-page-app
-{% endhint %}
-
-Finally, we can edit the provided starter code:
-* Edit the `<script>` tag in `index.html` (line 11) so that it references the new location of `main.js`: `"/src/main.js"`
-* Empty out the `style.css` file
-* Empty out the `main.js` file.
+Then, we can edit the provided starter code:
+* Empty out the `style.css` file (unless you want to keep some of the styles)
+* Empty out the `main.js` file, keeping the `import './style.css'` line
 
 Now, we have an empty project that we can use as a starting point! 
 
@@ -222,6 +205,12 @@ main();
 
 To save these changes in your repository, add, commit, and push them!
 
+{% hint style="info" %}
+If you want to make a multi-page app with multiple `.html` files, refer to Vite's documentation on this matter:
+
+https://vite.dev/guide/build.html#multi-page-app
+{% endhint %}
+
 ## Play Around with Vite Features
 
 While this takes a bit more setup than simply making a folder with your project files, Vite provides many upgrades that are well worth the upfront setup. Plus, as you get more used to using Vite, you will get much faster at setting up your projects.
@@ -231,7 +220,7 @@ While this takes a bit more setup than simply making a folder with your project 
 As you may have noticed, rather than linking the `style.css` in the `index.html` file, we imported it into `main.js`! For now, compared to linking in HTML, this approach doesn't provide much benefit. However, when we get to React it will provide some benefits.
 
 ```js
-import 'style.css';
+import './style.css';
 ```
 
 ### Importing JSON and other Files
