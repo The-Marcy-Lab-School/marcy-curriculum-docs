@@ -1,21 +1,20 @@
 # Command Line Interfaces
 
-- [Slides](#slides)
-- [Overview](#overview)
-- [Terminal vs. Finder/Explorer](#terminal-vs-finderexplorer)
-- [Using the Terminal in VS Code](#using-the-terminal-in-vs-code)
-- [Commands](#commands)
-  - [Printing Directory Information with `pwd` and `ls`](#printing-directory-information-with-pwd-and-ls)
-  - [Navigating Between Directories with `cd`](#navigating-between-directories-with-cd)
-  - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
-  - [Making Files and Directories with `mkdir` and `touch`](#making-files-and-directories-with-mkdir-and-touch)
-  - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
-  - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
-  - [Unfinished Double Quotes and `echo`](#unfinished-double-quotes-and-echo)
-  - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
-  - [Removing, Renaming, and Copying](#removing-renaming-and-copying)
-- [Challenges](#challenges)
-
+* [Slides](1-clis.md#slides)
+* [Overview](1-clis.md#overview)
+* [Terminal vs. Finder/Explorer](1-clis.md#terminal-vs-finderexplorer)
+* [Using the Terminal in VS Code](1-clis.md#using-the-terminal-in-vs-code)
+* [Commands](1-clis.md#commands)
+  * [Printing Directory Information with `pwd` and `ls`](1-clis.md#printing-directory-information-with-pwd-and-ls)
+  * [Navigating Between Directories with `cd`](1-clis.md#navigating-between-directories-with-cd)
+  * [Be Careful when using the `cd` command!](1-clis.md#be-careful-when-using-the-cd-command)
+  * [Making Files and Directories with `mkdir` and `touch`](1-clis.md#making-files-and-directories-with-mkdir-and-touch)
+  * [Executing JavaScript files with `node`](1-clis.md#executing-javascript-files-with-node)
+  * [Terminating a Program with `Control+C`](1-clis.md#terminating-a-program-with-controlc)
+  * [Unfinished Double Quotes and `echo`](1-clis.md#unfinished-double-quotes-and-echo)
+  * [The `cat` Command and Combining Commands with `&&`](1-clis.md#the-cat-command-and-combining-commands-with-)
+  * [Removing, Renaming, and Copying](1-clis.md#removing-renaming-and-copying)
+* [Challenges](1-clis.md#challenges)
 
 ## Slides
 
@@ -101,19 +100,13 @@ Note that some commands like `pwd` can be entered on their own. Other commands l
 
 <details>
 
-{% hint style="info" %}
-
-Use the <kbd>Tab</kbd> key to autocomplete commands and filenames! Just start typing and hit <kbd>Tab</kbd> to autocomplete.
-
-{% endhint %}
-
-
 <summary><strong>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</strong></summary>
+
+Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
 
 For this particular task it might be faster to use a GUI file manager like Finder, however there are many tasks where a CLI like the Terminal can outpace a GUI like Finder. In addition, there are some things that Finder simply can't do, like execute files with code.
 
 </details>
-
 
 ## Using the Terminal in VS Code
 
@@ -121,7 +114,7 @@ While you can use the Terminal application that comes with your laptop, it is of
 
 To open up the Terminal panel, go to **File** > **Terminal** and it should show up at the bottom:
 
-![Use the keyboard shortcut Control+` to open/close the Terminal](img/vscode-terminal.png)
+![Use the keyboard shortcut Control+\` to open/close the Terminal](img/vscode-terminal.png)
 
 ## Commands
 
@@ -230,7 +223,7 @@ To terminate the program, use the keyboard shortcut `Control+C` (you may need to
 
 Another common occurrence is an unfinished string. You can test this with the `echo` command which will print a given string straight to the terminal.
 
-![An unfinished double quote will be produce `dquote>` in the Terminal, waiting for you to finish the string.](img/1-cli-echo-unfinished-dquote.png)
+![An unfinished double quote will be produce dquote> in the Terminal, waiting for you to finish the string.](img/1-cli-echo-unfinished-dquote.png)
 
 You can also use the output from an `echo` command and send the output into another file using the `>>` append operator.
 
@@ -273,7 +266,3 @@ Challenges 1-19 are the basics of what you'll want to know for this course.
 Challenges 20 you should skip. It involves executing a file that we can't see the contents of.
 
 Challenges 21-50 are more advanced.
-
-</details>
-
-

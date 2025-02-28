@@ -41,7 +41,7 @@ A **database** is a structured collection of data. The data could be stored in a
 
 Nowadays, the data is often stored on a dedicated "database server" managed by a piece of software called a **database management system (DBMS)** such as Postgres, MongoDB, SQLite, MySQL, Firebird, Apache Cassandra, and many more.
 
-![client server database diagram](img/client-server-database-diagram.svg)
+![client server database diagram](<img/client-server-database-diagram copy (1).svg>)
 
 A server application can send queries to the DBMS using the **Structured Query Language (SQL)** and the DBMS responds with the requested data.
 
@@ -90,7 +90,6 @@ The title and release year of the movies that are 90 minutes or less in length f
 
 </details>
 
-
 ```sql
 SELECT * FROM films;
 ```
@@ -105,7 +104,6 @@ This query will get all of the data from the films table.
 
 </details>
 
-
 ### Tips to avoid SQL errors
 
 * SQL is NOT case sensitive. However, it is a standard practice to write keywords in all-caps to distinguish them from values.
@@ -117,7 +115,7 @@ This query will get all of the data from the films table.
 * **Database** - a structured collection of data that is organized in a manner for easy retrieval.
 * **Database Management System (DBMS)** - a piece of software used to create and maintain a database.
 
-![client server database diagram](img/client-server-database-diagram.svg)
+![client server database diagram](<img/client-server-database-diagram copy (1).svg>)
 
 * **Postgres** - a popular "relational" database management system that stores data in a table-like manner
 * **Table** - a collection of related data organized in rows and columns.

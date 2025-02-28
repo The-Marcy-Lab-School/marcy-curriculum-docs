@@ -1,15 +1,15 @@
 # Stacks & Queues
 
-* [Essential Questions](1-stacks-queues.md#essential-questions)
-* [Key Terms](1-stacks-queues.md#key-terms)
-* [Introduction: Why Learn Data Structures?](1-stacks-queues.md#introduction-why-learn-data-structures)
-* [Abstract Data Types](1-stacks-queues.md#abstract-data-types)
-* [What is a Stack?](1-stacks-queues.md#what-is-a-stack)
-  * [A Stack of Pancakes](1-stacks-queues.md#a-stack-of-pancakes)
-  * [Stack Implementation](1-stacks-queues.md#stack-implementation)
-  * [Use Cases in Programming: Stack Overflow](1-stacks-queues.md#use-cases-in-programming-stack-overflow)
-* [What is a Queue?](1-stacks-queues.md#what-is-a-queue)
-  * [Get in line!](1-stacks-queues.md#get-in-line)
+* [Essential Questions](3-stacks-queues.md#essential-questions)
+* [Key Terms](3-stacks-queues.md#key-terms)
+* [Introduction: Why Learn Data Structures?](3-stacks-queues.md#introduction-why-learn-data-structures)
+* [Abstract Data Types](3-stacks-queues.md#abstract-data-types)
+* [What is a Stack?](3-stacks-queues.md#what-is-a-stack)
+  * [A Stack of Pancakes](3-stacks-queues.md#a-stack-of-pancakes)
+  * [Stack Implementation](3-stacks-queues.md#stack-implementation)
+  * [Use Cases in Programming: Stack Overflow](3-stacks-queues.md#use-cases-in-programming-stack-overflow)
+* [What is a Queue?](3-stacks-queues.md#what-is-a-queue)
+  * [Get in line!](3-stacks-queues.md#get-in-line)
 
 ## Essential Questions
 
@@ -38,8 +38,6 @@ Let's start with a question.
 Every data structure has advantages and disadvantages. While Arrays and Objects can both store collections of data, but the operations you can perform with them are different. Knowing their differences allows you to choose the right data structure for every situation.
 
 </details>
-
-
 
 ## Abstract Data Types
 

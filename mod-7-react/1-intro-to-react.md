@@ -8,20 +8,20 @@ In this lesson, you will learn the basics of React.
 
 **Table of Contents:**
 
-- [Terms:](#terms)
-- [What is React and Why Use It?](#what-is-react-and-why-use-it)
-  - [A. Say goodbye to the clunky DOM API](#a-say-goodbye-to-the-clunky-dom-api)
-  - [B. Component Composition is fast and easy to read](#b-component-composition-is-fast-and-easy-to-read)
-  - [C. The Virtual DOM offers some performance benefits when re-rendering components](#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
-- [Starting a React Project (with Vite)](#starting-a-react-project-with-vite)
-  - [Rendering the Root Component With ReactDOM](#rendering-the-root-component-with-reactdom)
-  - [Components and JSX](#components-and-jsx)
-  - [Nested Components](#nested-components)
-  - [Adding Classes and Style](#adding-classes-and-style)
-- [Rendering Data with React](#rendering-data-with-react)
-  - [Sharing Data Between Components With Props](#sharing-data-between-components-with-props)
-  - [Rendering A List of Elements](#rendering-a-list-of-elements)
-- [Under the hood: JSX Code must be compiled](#under-the-hood-jsx-code-must-be-compiled)
+* [Terms:](1-intro-to-react.md#terms)
+* [What is React and Why Use It?](1-intro-to-react.md#what-is-react-and-why-use-it)
+  * [A. Say goodbye to the clunky DOM API](1-intro-to-react.md#a-say-goodbye-to-the-clunky-dom-api)
+  * [B. Component Composition is fast and easy to read](1-intro-to-react.md#b-component-composition-is-fast-and-easy-to-read)
+  * [C. The Virtual DOM offers some performance benefits when re-rendering components](1-intro-to-react.md#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
+* [Starting a React Project (with Vite)](1-intro-to-react.md#starting-a-react-project-with-vite)
+  * [Rendering the Root Component With ReactDOM](1-intro-to-react.md#rendering-the-root-component-with-reactdom)
+  * [Components and JSX](1-intro-to-react.md#components-and-jsx)
+  * [Nested Components](1-intro-to-react.md#nested-components)
+  * [Adding Classes and Style](1-intro-to-react.md#adding-classes-and-style)
+* [Rendering Data with React](1-intro-to-react.md#rendering-data-with-react)
+  * [Sharing Data Between Components With Props](1-intro-to-react.md#sharing-data-between-components-with-props)
+  * [Rendering A List of Elements](1-intro-to-react.md#rendering-a-list-of-elements)
+* [Under the hood: JSX Code must be compiled](1-intro-to-react.md#under-the-hood-jsx-code-must-be-compiled)
 
 ## Terms:
 
@@ -302,7 +302,6 @@ The `for` attribute for `<label>` elements is another example of this. Instead, 
 
 <summary><strong>Q: How can I add a <code>class="insta-pic"</code> attribute to the <code>img</code> in my <code>InstagramPost</code> component?</strong></summary>
 
-
 ```jsx
 const InstagramPost = () => {
   return (
@@ -463,17 +462,19 @@ const App = () => {
 
 JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It must first be **compiled** (converted) to vanilla JS.
 
-<details><summary>See what this code would look like if it were written without JSX</summary>
+<details>
 
-> Note how we have to use `React.createElement` here
->
-> ```js
-> const rootEl = document.getElementById("root");
-> const root = ReactDOM.createRoot(rootEl);
->
-> root.render(React.createElement("h1", {}, "Hello World"));
-> ```
->
+<summary>See what this code would look like if it were written without JSX</summary>
+
+Note how we have to use `React.createElement` here
+
+```js
+const rootEl = document.getElementById("root");
+const root = ReactDOM.createRoot(rootEl);
+
+root.render(React.createElement("h1", {}, "Hello World"));
+```
+
 </details>
 
 Vite is doing the heavy lifting when it comes to the rendering.

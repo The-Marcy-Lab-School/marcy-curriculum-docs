@@ -5,14 +5,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents**:
-- [Slides](#slides)
-- [The basics](#the-basics)
-  - [Accessing Objects with Dot Notation and Bracket Notation](#accessing-objects-with-dot-notation-and-bracket-notation)
-  - [Dynamic Properties Challenge](#dynamic-properties-challenge)
-- [Iterating Over Objects](#iterating-over-objects)
-- [Advanced Object Syntax](#advanced-object-syntax)
-  - [Object Shorthand Using Variables](#object-shorthand-using-variables)
-  - [Destructuring](#destructuring)
+
+* [Slides](7-objects.md#slides)
+* [The basics](7-objects.md#the-basics)
+  * [Accessing Objects with Dot Notation and Bracket Notation](7-objects.md#accessing-objects-with-dot-notation-and-bracket-notation)
+  * [Dynamic Properties Challenge](7-objects.md#dynamic-properties-challenge)
+* [Iterating Over Objects](7-objects.md#iterating-over-objects)
+* [Advanced Object Syntax](7-objects.md#advanced-object-syntax)
+  * [Object Shorthand Using Variables](7-objects.md#object-shorthand-using-variables)
+  * [Destructuring](7-objects.md#destructuring)
 
 ## Slides
 
@@ -20,8 +21,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 ## The basics
 
-- Objects are a data type that can store multiple pieces of data as **key:value** pairs called **properties**
-- In other languages, they are referred to as **dictionaries**:
+* Objects are a data type that can store multiple pieces of data as **key:value** pairs called **properties**
+* In other languages, they are referred to as **dictionaries**:
 
 ```js
 // Arrays store values in an order
@@ -39,8 +40,8 @@ const dictionary = {
 }
 ```
 
-- Objects are useful for storing collections of data related to a single "thing", like data about a user.
-- Objects can have arrays and other objects nested inside.
+* Objects are useful for storing collections of data related to a single "thing", like data about a user.
+* Objects can have arrays and other objects nested inside.
 
 ```js
 const user = {
@@ -55,7 +56,7 @@ const user = {
 }
 ```
 
-- When creating an object, the quotes around the key name are optional, except when the key includes spaces or begins with a number:
+* When creating an object, the quotes around the key name are optional, except when the key includes spaces or begins with a number:
 
 ```js
 const dictionary = {
@@ -67,7 +68,8 @@ const dictionary = {
 ```
 
 ### Accessing Objects with Dot Notation and Bracket Notation
-- Object values can be accessed and/or modified using dot notation or bracket notation
+
+* Object values can be accessed and/or modified using dot notation or bracket notation
 
 ```js
 // Dot notation is the faster to type and easier to read than bracket notation
@@ -93,7 +95,7 @@ delete user["friends"];
 
 ### Dynamic Properties Challenge
 
-When the key name of a property is stored in a variable, we _must_ use bracket notation (we can't use dot notation). 
+When the key name of a property is stored in a variable, we _must_ use bracket notation (we can't use dot notation).
 
 ```js
 const key = 'some key value';
@@ -129,13 +131,17 @@ while (true) {
 }
 ```
 
-**<details><summary>Solution</summary>**
-> To complete this program, add the line `dictionary[newWord] = definition;` to the end
+<details>
+
+<summary><strong>Solution</strong></summary>
+
+To complete this program, add the line `dictionary[newWord] = definition;` to the end
+
 </details>
 
 ## Iterating Over Objects
 
-One of the key benefits of an Array is that we can easily iterate through its values with a `for` loop. This is possible because we can use the variable `i` to step through the indexes of the array. 
+One of the key benefits of an Array is that we can easily iterate through its values with a `for` loop. This is possible because we can use the variable `i` to step through the indexes of the array.
 
 ```js
 const friends = ['bert', 'ernie', 'elmo'];
@@ -249,7 +255,7 @@ module.exports = {
 
 ### Destructuring
 
-Destructuring is the process of creating variables from an existing array/object. When destructuring an object, the variable names *must* match the property key names that you wish to extract. The order in which you list the property names doesn't matter.
+Destructuring is the process of creating variables from an existing array/object. When destructuring an object, the variable names _must_ match the property key names that you wish to extract. The order in which you list the property names doesn't matter.
 
 ```js
 const dictionary = {
@@ -290,4 +296,3 @@ const introduceSelf = ({ name, age }) => {
 
 introduceSelf(userBen);
 ```
-

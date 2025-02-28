@@ -63,14 +63,13 @@ The API key is a way to verify your identity as a developer. Some APIs will char
 
 </details>
 
-
 ### Why We Make API Requests from the Server
 
 If we want to avoid making our API keys public, we need to be careful with how we use them in our code. **Our frontend can't safely make requests using the API key** — anyone using our deployed application can just look at the Network tab to see the API keys in the request URL.
 
 **So, we have to make the requests using the API keys in our backend.**
 
-![](img/express-api-middleman.svg)
+![](<img/express-api-middleman (1).svg>)
 
 But even to deploy our server code, we'll need to store the API key on GitHub. Or do we?
 
@@ -132,7 +131,7 @@ Now our server can perform a 3rd-party API request using a protected API key. Ho
 
 Instead of sending the fetch request to the Giphy API, the frontend should send the request to the server.
 
-![](img/express-api-middleman.svg)
+![](<img/express-api-middleman (1).svg>)
 
 Normally when sending requests to 3rd-party APIs, we include the full URL: `http://someapi.com/endpoint`. These kinds of requests are **cross-origin** requests because the origin (`http://someapi.com`) is different from the origin of our server (`http://localhost` or wherever the app is deployed). Our server can safely do this but as we've seen, our front-ends should not.
 
@@ -185,7 +184,6 @@ The built "production/distribution" version in the `frontend/dist` folder!
 Remember, the server can only serve static assets. The development version is not "static" because it contains dynamic JSX React code. It must be compiled into plain JS first.
 
 </details>
-
 
 ### Proxy Requests
 

@@ -1,23 +1,18 @@
-# Git Branching
+# Git Branching & PRs
 
-- [Slides](#slides)
-- [Overview](#overview)
-- [Intro to Branches](#intro-to-branches)
-  - [Keep the Main Branch Stable](#keep-the-main-branch-stable)
-  - [Commands for Working with Branches](#commands-for-working-with-branches)
-  - [Pull Requests and Code Review](#pull-requests-and-code-review)
-  - [Don't Forget to Pull!](#dont-forget-to-pull)
-- [How Teams Collaborate Using Branches](#how-teams-collaborate-using-branches)
-- [Summary](#summary)
-
-
-<!-- ## Watch -->
-<!-- {% embed url="" %} -->
+* [Slides](4-git-branching.md#slides)
+* [Overview](4-git-branching.md#overview)
+* [Intro to Branches](4-git-branching.md#intro-to-branches)
+  * [Keep the Main Branch Stable](4-git-branching.md#keep-the-main-branch-stable)
+  * [Commands for Working with Branches](4-git-branching.md#commands-for-working-with-branches)
+  * [Pull Requests and Code Review](4-git-branching.md#pull-requests-and-code-review)
+  * [Don't Forget to Pull!](4-git-branching.md#dont-forget-to-pull)
+* [How Teams Collaborate Using Branches](4-git-branching.md#how-teams-collaborate-using-branches)
+* [Summary](4-git-branching.md#summary)
 
 ## Slides
 
 {% embed url="https://docs.google.com/presentation/d/1bnEyNrbYlYfB6-ZzcCmZJyFbPkYMbsISWX6XzDvLtyQ/embed?start=false&loop=false&delayms=3000" %}
-
 
 ## Overview
 
@@ -26,6 +21,7 @@ GitHub enables developers across the world to collaborate on projects. In this l
 **Objectives**
 
 You will be able to…
+
 * Define the terms "branch" as it relates to git
 * Create a branch through the Github GUI and the CLI.
 * Create a pull request.
@@ -46,7 +42,6 @@ You will be able to…
 **Note:** In the commands below, argument placeholders will be written like this: `<argument>`. When using these commands, replace the `<argument>` with your desired inputs, making sure to leave out the `<>` as well.
 {% endhint %}
 
-
 ```sh
 git branch # see all branches in the local repository
 git branch <branch_name> # create a new branch
@@ -60,16 +55,20 @@ git branch -D <branch_name> # delete a branch
 
 Every repository's commit history has what is called a **"main branch"** or **"trunk"**. Whenever anyone visits a repository on GitHub or clones it down, this is what they will see.
 
-![When you clone a repository, you will clone the main branch](./img/on-branch-main.png)
+![When you clone a repository, you will clone the main branch](img/on-branch-main.png)
 
 Up until now, we've been pushing our commits directly to the main branch. But as they say...
 
-![One does not simply push to main](./img/do-not-push-to-main.png)
+![One does not simply push to main](img/do-not-push-to-main.png)
 
-**<details><summary>Q: Why might pushing to main be a bad idea?</summary>**
-> As mentioned above, whenever someone views the repository or clones it down, they will see the main branch. If we were to push changes to the main branch and those changes included mistakes (bugs), other developers would see those mistakes! And, well, that just wouldn't look very good.
-> 
-> If instead we could save our changes somewhere else until were sure that everything worked, that would be much better!
+<details>
+
+<summary><strong>Q: Why might pushing to main be a bad idea?</strong></summary>
+
+As mentioned above, whenever someone views the repository or clones it down, they will see the main branch. If we were to push changes to the main branch and those changes included mistakes (bugs), other developers would see those mistakes! And, well, that just wouldn't look very good.
+
+If instead we could save our changes somewhere else until were sure that everything worked, that would be much better!
+
 </details>
 
 ### Keep the Main Branch Stable
@@ -78,14 +77,18 @@ Rather than pushing our code to the main branch, we can create a separate **feat
 
 A **feature branch** is a copy of the main branch at a point in time and allows developers to work on a feature without impacting the main branch. Branches can be saved on GitHub and are only merged into the main branch when a feature is completed.
 
-![A view of your local repository with a main branch and a feature branch. In this example, the feature branch is for creating a lock screen gallery.](./img/branching.png)
+![A view of your local repository with a main branch and a feature branch. In this example, the feature branch is for creating a lock screen gallery.](img/branching.png)
 
 Branching ensures that the main branch is always a "stable" version. That is, if someone were to look at the repo, they can look at the main branch and know that it is fully functional. Every merge represents a successful addition of a new feature.
 
-**<details><summary>Q: How is branching similar to cloning?</summary>**
-> When the repository is cloned, the local clone can be edited without affecting the remote repository, just like a feature branch  can be edited without affecting the main branch.
-> 
-> Pushing commits in the local repository to the remote repository is similar to merging a feature branch with the main branch.
+<details>
+
+<summary><strong>Q: How is branching similar to cloning?</strong></summary>
+
+When the repository is cloned, the local clone can be edited without affecting the remote repository, just like a feature branch can be edited without affecting the main branch.
+
+Pushing commits in the local repository to the remote repository is similar to merging a feature branch with the main branch.
+
 </details>
 
 ### Commands for Working with Branches
@@ -104,14 +107,15 @@ git checkout <branch_name> # switch to a branch
 
 {% hint style="info" %}
 Use the `-b` flag with `git checkout` to create a new branch and switch to it in one line!
+
 ```sh
 git checkout -b <branch_name>
-``` 
+```
 {% endhint %}
 
 Try these commands out for yourself! After you push your branch to GitHub, you should be able to see the new commit on the main branch as well as the new branch in the list of branches on GitHub.
 
-![You can see your branches listed on GitHub](./img/view-branches-github.png)
+![You can see your branches listed on GitHub](img/view-branches-github.png)
 
 ### Pull Requests and Code Review
 
@@ -121,21 +125,21 @@ In the professional world, before we merge ANYTHING into the `main` branch, ther
 
 After pushing an updated branch to GitHub, a notification will appear on the repository page with a call to action: "Compare and pull request".
 
-![When a branch is pushed to GitHub, a notification will appear asking you to create a pull request](./img/pull-request.png)
+![When a branch is pushed to GitHub, a notification will appear asking you to create a pull request](img/pull-request.png)
 
 A **pull request** (PR) is a request for another developer to review their branch and either merge the branch or request modifications.
 
 When creating a PR, include a description of the changes so that reviewers can quickly provide feedback.
 
-![Descriptions of the key changes help reviewers quickly provide feedback](./img/creating-the-pull-request.png)
+![Descriptions of the key changes help reviewers quickly provide feedback](img/creating-the-pull-request.png)
 
 The Files Changed tab lets you see the lines of each file that were added, removed, or modified. You can also leave comments and provide a detailed review.
 
-![The Files Changed tab lets you see the exact lines of each file that were added, removed, or modified.](./img/reviewing-files-changed-pull-request.png)
+![The Files Changed tab lets you see the exact lines of each file that were added, removed, or modified.](img/reviewing-files-changed-pull-request.png)
 
 If everything looks good, you can merge the pull request directly on GitHub!
 
-![If everything looks good, you can merge the pull request directly on GitHub!](./img/merge-pull-request.png)
+![If everything looks good, you can merge the pull request directly on GitHub!](img/merge-pull-request.png)
 
 After merging, it is up to you if you want to delete the branch or keep working on it.
 
@@ -168,19 +172,22 @@ Check out the process here:
   4. Return to your local repository and `git pull`.
 * The second developer needs to do a bit more. They will perform the same first two steps. Then, they will need to:
   1. `git checkout main` and `git pull` to download the latest commits from GitHub.
-  2. `git checkout feature-y` and `git merge main` to update their feature branch's commit history. 
+  2. `git checkout feature-y` and `git merge main` to update their feature branch's commit history.
   3. It is possible that merge conflicts occurred so resolve them and add, commit, and push!
   4. Make a PR and merge it!
   5. Return to your local repository and `git pull`.
 * The first developer can now `git checkout main` and `git pull` to download the latest commits from GitHub.
-  
 
-**<details><summary>Q: Why does Developer 2 first merge the `main` branch into the `feature-y`? </summary>**
-> This is all for the sake of ensuring our managers approve our PR! A PR with merge conflicts is unlikely to be approved.
-> 
-> When we merge the `main` branch into the `feature-y` branch, we deal with any merge conflicts in the feature branch before pushing our code to GitHub and making a PR
->
-> This way, our PR will not have any merge conflicts and can be seamlessly merged!
+<details>
+
+<summary><strong>Q: Why does Developer 2 first merge the <code>main</code> branch into the <code>feature-y</code>?</strong></summary>
+
+This is all for the sake of ensuring our managers approve our PR! A PR with merge conflicts is unlikely to be approved.
+
+When we merge the `main` branch into the `feature-y` branch, we deal with any merge conflicts in the feature branch before pushing our code to GitHub and making a PR
+
+This way, our PR will not have any merge conflicts and can be seamlessly merged!
+
 </details>
 
 ## Summary
@@ -189,9 +196,10 @@ In this lesson, we learned how to create and manage branches in a project, and h
 
 The diagram below illustrates the entire process:
 
-![A diagram showing the 6 steps to working collaboratively on git: Clone/Pull; Create Branch; Stage/Add; Commit; Push and Make a Pull Request; Resolve and Merge](./img/git-workflow-diagram.svg)
+![A diagram showing the 6 steps to working collaboratively on git: Clone/Pull; Create Branch; Stage/Add; Commit; Push and Make a Pull Request; Resolve and Merge](img/git-workflow-diagram.svg)
 
 There are 10 steps in this process:
+
 1. Clone or Pull from GitHub
 2. Create a new local branch
 3. Make changes
