@@ -27,7 +27,7 @@ In this lesson, you will learn the basics of React.
 
 * **React** — a library for building reusable, composable, and scalable user-interfaces made up of components.
 * **Component** — a piece of the UI (user interface) that has its own logic and appearance. Components are functions that return JSX.
-* **JSX** — an extension of JavaScript that lets you write HTML in React components.
+* **JSX** — an extension of JavaScript that lets you write HTML-like syntax in React components.
 * **Component Composition** — the process of combining smaller, reusable components together to create larger, more complex components
 * **Root Component** — the top-level component that all other components are children of. Typically called `App`.
 * **`react-dom/client`** — a React package that lets you render React components on the client (in the browser)
@@ -65,11 +65,11 @@ const Text = ({ message }) => {
 // This HTML-like syntax ^ is JSX
 ```
 
-In React, we are able to return markup language (like HTML) from functions. This is called **JSX** (JavaScript XML).
+In React, we are able to return HTML-like syntax from functions. This is called **JSX** (JavaScript XML), which allows us to execute JavaScript expressions (inside `{}`) and/or pass in data. &#x20;
 
 ### B. Component Composition is fast and easy to read
 
-**Components** let you split the UI into independent, reusable pieces, and think about each piece in isolation.
+**Components** let you split the UI into independent, reusable pieces and think about each piece in isolation.
 
 **Component Composition** is the process of combining smaller, reusable components together to create larger, more complex components
 
@@ -138,7 +138,7 @@ cd <name of your project> && npm i
 npm run dev
 ```
 
-By default you will be given the familiar counter app. Take a look around! Every React project made by Vite will have this rough structure:
+By default, you will be given the familiar counter app. Take a look around! Every React project made by Vite will have this rough structure:
 
 * `index.html` — the HTML file served to the client. It loads `src/main.jsx`.
 * `src/main.jsx` — the entry point of the app. It uses the `react-dom/client` package to render the **root component** `App` into the DOM.
@@ -151,31 +151,32 @@ By default you will be given the familiar counter app. Take a look around! Every
 
 How does all of this actually get to the screen? Head over to the `main.jsx` file.
 
-The primary purpose of this file is render the root component `App`. To do so we:
+The primary purpose of this file is to render the root component `App`. To do so we:
 
 * Import a package called `ReactDOM`
-* Use the `ReactDOM.createRoot` method to create a `root` object.
-* Then we call `root.render` and pass in the `App` component.
+* Use the `createRoot` method to create a `root` object.
+* Then we call `createRoot(root).render()` and pass in the `App` component as the argument.
 
 This is mostly handled when Vite creates the project for you so no need to memorize it:
 
 ```jsx
 // main.jsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
 import App from './App.jsx'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
 )
 ```
 
 A few notes:
 
 * We're using the `client` version of `ReactDOM` (there is also a `native` version for mobile).
-* `React.StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
+* `StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
 
 ### Components and JSX
 
@@ -197,7 +198,7 @@ const App = () => {
 export default App
 ```
 
-* Component are functions that return JSX.
+* Components are functions that return JSX.
 * Note the capitalized name. All components must use PascalCasing.
 * Components must return a single surrounding element. Here, we return a `header`.
 * When returning multiple elements, wrap the elements parentheses `()`.
