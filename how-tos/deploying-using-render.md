@@ -58,7 +58,11 @@ Any time that you want to make an update to your deployed server, just commit an
 
 ![alt text](img/web-service-dashboard.png)
 
-## Deploy A Static Server
+## Deploy A Static Server with Vite
+
+Since projects built using Vite need to be built to generate static assets, we need to modify the deployment process so that each time a new version of the repository is created via a new commit, the static assets are re-built. 
+
+Rather than building those assets locally and then pushing the `dist/` folder to the repo, we'll just configure the server to build the static assets each time a commit is detected.
 
 Follow the same steps as above. However, when configuring the server, make the following changes:
 

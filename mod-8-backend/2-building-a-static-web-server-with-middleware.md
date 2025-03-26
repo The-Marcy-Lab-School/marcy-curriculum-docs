@@ -14,6 +14,7 @@ Let's make a static web server!
 - [Controllers Review](#controllers-review)
 - [Middleware](#middleware)
 - [Serving Static Assets](#serving-static-assets)
+  - [Try it Yourself!](#try-it-yourself)
 - [Summary](#summary)
 
 ## Terms
@@ -28,47 +29,47 @@ Let's make a static web server!
 
 Remember how the Express app works?
 
+![](img/express-diagram-simple.svg)
+
 1. A client sends a **request** to the server.
 2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
 3. The controller processes the request, interacts with any necessary data or services, and generates a **response**.
 4. The server sends the response back to the client.
-5. The client receives the response and renders the data or take further actions based on it.
+5. The client is now free to do what it likes with the response.
 
-![](<img/express-diagram-simple copy.svg>)
+And here is how we can create a server with a single endpoint: `/api/hello`
 
 ```js
 const express = require('express');
 const app = express();
 
-// controller
+// When triggered, this controller will send a response
 const serveHello = (req, res, next) => {
   const name = req.query.name || "stranger"
   res.send(`hello ${name}`);
 }
 
-// endpoint
+// A GET request to /api/hello?name=ben will trigger serveHello
 app.get('/api/hello', serveHello);
 
-// A GET request to /api/hello?name=ben will send the response "hello ben"
 
-// listen
+// Listen for requests on port 8080
 const port = 8080;
 app.listen(port, () => console.log(`listening at http://localhost:${port}`)); 
 ```
 
-* A **controller** is a callback function that parses a request and sends a response. It will be invoked by the Express `app` when the associated endpoint is sent a request.
-  * The controller receives a `req` object from the Express `app` which holds data about the request, including **query parameters**.
-  * It also receives a `res` object which has methods to send a response.
+Remember, a **controller** is a callback function that parses a request and sends a response. It will be invoked by the Express `app` when the associated endpoint is sent a request.
 
-What about `next`?
+Every controller is invoked with three values:
+  * A `req` object which holds data related to the request, including **query parameters**.
+  * A `res` object which has methods to send a response.
+  * A `next` function, typically only used by "Middleware".
 
 ## Middleware
 
-A "middleware" is a type of controller that can also parse requests and perform server-side actions.
+Middleware in Express is a function that intercepts and processes incoming HTTP requests before they reach the final controller or response handler.
 
-Unlike normal controllers, middleware functions **pass the request to the next function in the chain without sending a response to the client.** They sit in the "middle" of the chain of middleware/controllers.
-
-For example, this middleware prints out information about the incoming request in a nice format:
+For example, this `logRoutes` middleware prints out information about all incoming requests before passing the request to the final controller `serveHello`:
 
 ```js
 // Middleware function for logging route requests
@@ -91,9 +92,9 @@ app.use(logRoutes);
 app.get('/api/hello', serveHello);
 ```
 
-* `app.use` is like `app.get` but for middleware
-* When `app.use` is invoked with just the middleware function, it executes that middleware for ALL routes
-* Notice that the `logRoutes` middleware controller doesn't use the `res` object at all and then invokes `next()` to pass control to the next controller in the chain.
+* `app.use` is like `app.get` but is used for middleware
+* The `logRoutes` middleware will be invoked for ALL incoming requests, regardless of the endpoint (this behavior can be changed if desired)
+* Notice that the `logRoutes` middleware controller doesn't use the `res` object at all. Instead, it invokes `next()`, passing control to  `serveHello` to complete the request-response cycle and send a response.
 
 Our diagram now looks like this:
 
@@ -101,7 +102,7 @@ Our diagram now looks like this:
 
 <details>
 
-<summary><strong>Q: So, if a user sends a request to <code>http://localhost:8080/api/hello</code>, which controllers are invoked and in what order?</strong></summary>
+<summary><strong>Q: So, if a user sends a request to <code>http://localhost:8080/api/hello</code>, which functions are invoked and in what order?</strong></summary>
 
 First the `logRoutes` middleware is invoked. The `next()` function is called which passes the request to the next controller, `serveHello`.
 
@@ -121,11 +122,9 @@ Middleware can be custom-made like this `logRoutes`. However, we can also utiliz
 
 One of the most important roles of a full stack web server is to provide a client with a frontend. Whenever you visit a website, that's what happens — go to https://google.com and the Google server sends back HTML, CSS, and JavaScript to render the user interface.
 
-That's what static web servers like GitHub Pages do — they store **static assets** (HTML, CSS, and JS files) and then provide a URL where users can access them.
+That's what **static web servers** like GitHub Pages do — they store **static assets** (HTML, CSS, and JS files) and then provide a server application that serves those assets when requested.
 
 With Express, it is really quick to build your own static web server using the `express.static(filepath)` middleware function. You only need 4 lines!
-
-To experiment with this, use Vite to create a React project called `frontend`. Set up the dependencies and then create static assets in the `dist` folder. Then, we can add the following to our server application:
 
 ```js
 // Import the path module to construct the absolute path to the static assets folder
@@ -149,7 +148,15 @@ Explanation:
 * The `express.static()` middleware function makes static assets (such as HTML, CSS, and JS files) from the specified directory publicly available.
 * The middleware function `serveStatic` is used with app.use() to enable serving static assets to clients.
 
+### Try it Yourself!
+
+To experiment with this, use Vite to create a React project called `frontend`. Install dependencies dependencies and then build the project with `npm run build`. Note that static assets are in the `dist` folder. 
+
+Then, we can add the code above to your `server/index.js` file. Make sure to modify the `pathToDistFolder` variable and run the server!
+
 Now, if you run the server and visit the `http://host:port/index.html`, the server will send you the `index.html` file! (You can also just visit `http://host:port/` and it will automatically send you the index file).
+
+{% hint style="info" %}
 
 Any other files in the provided folder can also be accessed on your server. Assuming the `/dist` directory contains 2 images, `foo.jpg` and `bar.jpg` then you can simply access them at:
 
@@ -157,6 +164,8 @@ Any other files in the provided folder can also be accessed on your server. Assu
 http://host:port/foo.jpg
 http://host:port/bar.jpg
 ```
+
+{% endhint %}
 
 ## Summary
 
