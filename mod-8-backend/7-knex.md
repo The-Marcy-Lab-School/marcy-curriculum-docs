@@ -10,20 +10,20 @@ In this lesson, we will learn [Knex](https://knexjs.org/), a library that allows
 
 **Table of Contents**
 
-* [Terms](7-knex.md#terms)
-* [Getting Started: Setting up a Database](7-knex.md#getting-started-setting-up-a-database)
-* [What is Knex?](7-knex.md#what-is-knex)
-* [Configuring Knex](7-knex.md#configuring-knex)
-  * [0) Installing modules](7-knex.md#0-installing-modules)
-  * [1) Provide connection details with a `knexfile.js`](7-knex.md#1-provide-connection-details-with-a-knexfilejs)
-  * [2) Create a `knex` object to connect to the database](7-knex.md#2-create-a-knex-object-to-connect-to-the-database)
-  * [3) Use the `knex` connection object to execute queries](7-knex.md#3-use-the-knex-connection-object-to-execute-queries)
-* [Writing queries using `knex.raw`](7-knex.md#writing-queries-using-knexraw)
-  * [Multi-Line Queries](7-knex.md#multi-line-queries)
-  * [Dynamic Queries](7-knex.md#dynamic-queries)
-  * [A more complex example](7-knex.md#a-more-complex-example)
-  * [Create, Update, and Delete](7-knex.md#create-update-and-delete)
-* [Challenges](7-knex.md#challenges)
+- [Terms](#terms)
+- [Getting Started: Setting up a Database](#getting-started-setting-up-a-database)
+- [What is Knex?](#what-is-knex)
+- [Configuring Knex](#configuring-knex)
+  - [0) Installing modules](#0-installing-modules)
+  - [1) Provide connection details with a `knexfile.js`](#1-provide-connection-details-with-a-knexfilejs)
+  - [2) Create a `knex` object to connect to the database](#2-create-a-knex-object-to-connect-to-the-database)
+  - [3) Use the `knex` connection object to execute queries](#3-use-the-knex-connection-object-to-execute-queries)
+- [Writing queries using `knex.raw`](#writing-queries-using-knexraw)
+  - [Multi-Line Queries](#multi-line-queries)
+  - [Dynamic Queries](#dynamic-queries)
+  - [A more complex example](#a-more-complex-example)
+  - [Create, Update, and Delete](#create-update-and-delete)
+- [Challenges](#challenges)
 
 ## Terms
 

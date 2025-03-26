@@ -16,15 +16,17 @@ The piece of code that sits between the endpoints and the array of todo objects 
 
 Let's jump in!
 
-* [Terms](4-building-a-rest-api-with-mvc.md#terms)
-* [Model — Adding a Data Management Layer](4-building-a-rest-api-with-mvc.md#model--adding-a-data-management-layer)
-* [Controllers Interact With The Model](4-building-a-rest-api-with-mvc.md#controllers-interact-with-the-model)
-* [Making API endpoints](4-building-a-rest-api-with-mvc.md#making-api-endpoints)
-  * [Route Parameters](4-building-a-rest-api-with-mvc.md#route-parameters)
-  * [REST](4-building-a-rest-api-with-mvc.md#rest)
-* [Server Organization](4-building-a-rest-api-with-mvc.md#server-organization)
-* [Testing With Postman](4-building-a-rest-api-with-mvc.md#testing-with-postman)
-* [Challenge](4-building-a-rest-api-with-mvc.md#challenge)
+**Table of Contents:**
+
+- [Terms](#terms)
+- [Model — Adding a Data Management Layer](#model--adding-a-data-management-layer)
+- [Controllers Interact With The Model](#controllers-interact-with-the-model)
+- [Making API endpoints](#making-api-endpoints)
+  - [Route Parameters](#route-parameters)
+  - [REST](#rest)
+- [Server Organization](#server-organization)
+- [Testing With Postman](#testing-with-postman)
+- [Challenge](#challenge)
 
 ## Terms
 

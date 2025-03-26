@@ -5,6 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 {% endhint %}
 
 **Table of Contents:**
+
 - [Terms](#terms)
 - [Pre-Learning](#pre-learning)
 - [Hashing](#hashing)

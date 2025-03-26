@@ -10,13 +10,13 @@ In this lesson, we'll learn how we can establish relationships between tables us
 
 **Table of Contents**
 
-* [Terms](6-join-sql-queries.md#terms)
-* [How should I create my database?](6-join-sql-queries.md#how-should-i-create-my-database)
-* [Two Tables and Foreign Keys](6-join-sql-queries.md#two-tables-and-foreign-keys)
-* [Association SQL Queries](6-join-sql-queries.md#association-sql-queries)
-  * [Setup](6-join-sql-queries.md#setup)
-  * [Some Questions To Answer](6-join-sql-queries.md#some-questions-to-answer)
-* [Entity Relation Diagrams & Many To Many Relationships](6-join-sql-queries.md#entity-relation-diagrams--many-to-many-relationships)
+- [Terms](#terms)
+- [How should I create my database?](#how-should-i-create-my-database)
+- [Two Tables and Foreign Keys](#two-tables-and-foreign-keys)
+- [Association SQL Queries](#association-sql-queries)
+	- [Setup](#setup)
+	- [Some Questions To Answer](#some-questions-to-answer)
+- [Entity Relation Diagrams and Many To Many Relationships](#entity-relation-diagrams-and-many-to-many-relationships)
 
 ## Terms
 

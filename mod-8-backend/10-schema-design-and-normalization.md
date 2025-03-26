@@ -12,17 +12,18 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
 
 **Table of Contents**:
 
-* [Terms](10-schema-design-and-normalization.md#terms)
-* [Why is schema design important?](10-schema-design-and-normalization.md#why-is-schema-design-important)
-* [Steps For Designing A Database](10-schema-design-and-normalization.md#steps-for-designing-a-database)
-* [Database Markup Language](10-schema-design-and-normalization.md#database-markup-language)
-  * [Step 1 - Identify Tables](10-schema-design-and-normalization.md#step-1---identify-tables)
-  * [Step 2 - Define Columns](10-schema-design-and-normalization.md#step-2---define-columns)
-  * [Step 3 - Determine Relationships](10-schema-design-and-normalization.md#step-3---determine-relationships)
-* [Practice](10-schema-design-and-normalization.md#practice)
-* [Step 4 - Normalizing Tables](10-schema-design-and-normalization.md#step-4---normalizing-tables)
-  * [First Normal Form (1NF)](10-schema-design-and-normalization.md#first-normal-form-1nf)
-  * [Second Normal Form (2NF)](10-schema-design-and-normalization.md#second-normal-form-2nf)
+- [Terms](#terms)
+- [Why is schema design important?](#why-is-schema-design-important)
+- [Steps For Designing A Database](#steps-for-designing-a-database)
+- [Database Markup Language](#database-markup-language)
+  - [Step 1 - Identify Tables](#step-1---identify-tables)
+  - [Step 2 - Define Columns](#step-2---define-columns)
+  - [Step 3 - Determine Relationships](#step-3---determine-relationships)
+- [Practice](#practice)
+- [Step 4 - Normalizing Tables](#step-4---normalizing-tables)
+  - [First Normal Form (1NF)](#first-normal-form-1nf)
+  - [Second Normal Form (2NF)](#second-normal-form-2nf)
+
 
 ## Terms
 

@@ -10,15 +10,14 @@ This week, we'll learn about the tools needed to build a truly "fullstack" web a
 
 Let's dive in!
 
-## Table of Contents
+**Table of Contents**
 
-* [Table of Contents](5-sql-and-databases.md#table-of-contents)
-* [Terms](5-sql-and-databases.md#terms)
-* [What is a database?](5-sql-and-databases.md#what-is-a-database)
-  * [What is Postgres?](5-sql-and-databases.md#what-is-postgres)
-* [What is SQL?](5-sql-and-databases.md#what-is-sql)
-  * [Tips to avoid SQL errors](5-sql-and-databases.md#tips-to-avoid-sql-errors)
-* [Summary](5-sql-and-databases.md#summary)
+- [Terms](#terms)
+- [What is a database?](#what-is-a-database)
+  - [What is Postgres?](#what-is-postgres)
+- [What is SQL?](#what-is-sql)
+  - [Tips to avoid SQL errors](#tips-to-avoid-sql-errors)
+- [Summary](#summary)
 
 ## Terms
 

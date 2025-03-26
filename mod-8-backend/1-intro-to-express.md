@@ -8,16 +8,16 @@ In this first lesson, we're going to learn the basics of Express and build and d
 
 **Table of Contents:**
 
-* [Terms](1-intro-to-express.md#terms)
-* [Client Server Interactions](1-intro-to-express.md#client-server-interactions)
-* [Express](1-intro-to-express.md#express)
-* [The `app` object is the hub of the server application](1-intro-to-express.md#the-app-object-is-the-hub-of-the-server-application)
-* [Endpoints](1-intro-to-express.md#endpoints)
-* [Controllers](1-intro-to-express.md#controllers)
-* [Query Parameters](1-intro-to-express.md#query-parameters)
-  * [Accessing Query Parameter Values in a Controller](1-intro-to-express.md#accessing-query-parameter-values-in-a-controller)
-  * [Challenge](1-intro-to-express.md#challenge)
-* [Listening: Host & Ports](1-intro-to-express.md#listening-host--ports)
+- [Terms](#terms)
+- [Client Server Interactions](#client-server-interactions)
+- [Express](#express)
+- [The `app` object is the hub of the server application](#the-app-object-is-the-hub-of-the-server-application)
+- [Endpoints](#endpoints)
+  - [Controllers](#controllers)
+  - [Query Parameters](#query-parameters)
+    - [Accessing Query Parameter Values in a Controller](#accessing-query-parameter-values-in-a-controller)
+    - [Challenge](#challenge)
+  - [Listening: Host and Ports](#listening-host-and-ports)
 
 ## Terms
 

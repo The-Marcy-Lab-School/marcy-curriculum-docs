@@ -10,15 +10,17 @@ The second use case for a server is to perform 3rd-party API requests that requi
 
 Let's do it!
 
-* [Terms](3-securing-api-keys-with-environment-variables.md#terms)
-* [Setup](3-securing-api-keys-with-environment-variables.md#setup)
-* [API Keys](3-securing-api-keys-with-environment-variables.md#api-keys)
-  * [Why We Make API Requests from the Server](3-securing-api-keys-with-environment-variables.md#why-we-make-api-requests-from-the-server)
-* [Environment Variables](3-securing-api-keys-with-environment-variables.md#environment-variables)
-* [Making an API request from the frontend](3-securing-api-keys-with-environment-variables.md#making-an-api-request-from-the-frontend)
-* [Development Frontend Request Proxy (if time)](3-securing-api-keys-with-environment-variables.md#development-frontend-request-proxy-if-time)
-  * [Two Version of the Frontend](3-securing-api-keys-with-environment-variables.md#two-version-of-the-frontend)
-  * [Proxy Requests](3-securing-api-keys-with-environment-variables.md#proxy-requests)
+**Table of Contents:**
+
+- [Terms](#terms)
+- [Setup](#setup)
+- [API Keys](#api-keys)
+  - [Why We Make API Requests from the Server](#why-we-make-api-requests-from-the-server)
+- [Environment Variables](#environment-variables)
+- [Making an API request from the frontend](#making-an-api-request-from-the-frontend)
+- [Development Frontend Request Proxy (if time)](#development-frontend-request-proxy-if-time)
+  - [Two Version of the Frontend](#two-version-of-the-frontend)
+  - [Proxy Requests](#proxy-requests)
 
 ## Terms
 

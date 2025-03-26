@@ -8,6 +8,19 @@ So far, we've been setting up our databases by hand, executing SQL queries using
 
 Migration files are a "formal" way to define a database schema and to update it over time. Let's learn!
 
+**Table of Contents**
+
+- [Terms](#terms)
+- [Setup](#setup)
+- [Migrations and Seeds: Why do we need them?](#migrations-and-seeds-why-do-we-need-them)
+- [Migrations](#migrations)
+  - [Creating New Migrations](#creating-new-migrations)
+  - [Updating Migrations](#updating-migrations)
+  - [Why do I need knex for migrations?](#why-do-i-need-knex-for-migrations)
+- [Seeds](#seeds)
+  - [Creating Seed Files](#creating-seed-files)
+- [Migration Example Scenarios](#migration-example-scenarios)
+
 ## Terms
 
 * **Migration File** - a file defining a change to the structure of your database (creating, updating, deleting tables)

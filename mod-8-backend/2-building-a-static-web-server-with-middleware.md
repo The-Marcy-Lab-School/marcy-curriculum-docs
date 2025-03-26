@@ -10,11 +10,11 @@ Let's make a static web server!
 
 **Table of Contents:**
 
-* [Terms](2-building-a-static-web-server-with-middleware.md#terms)
-* [Controllers Review](2-building-a-static-web-server-with-middleware.md#controllers-review)
-* [Middleware](2-building-a-static-web-server-with-middleware.md#middleware)
-* [Serving Static Assets](2-building-a-static-web-server-with-middleware.md#serving-static-assets)
-* [Summary](2-building-a-static-web-server-with-middleware.md#summary)
+- [Terms](#terms)
+- [Controllers Review](#controllers-review)
+- [Middleware](#middleware)
+- [Serving Static Assets](#serving-static-assets)
+- [Summary](#summary)
 
 ## Terms
 
@@ -37,6 +37,9 @@ Remember how the Express app works?
 ![](img/express-diagram-simple.svg)
 
 ```js
+const express = require('express');
+const app = express();
+
 // controller
 const serveHello = (req, res, next) => {
   const name = req.query.name || "stranger"
@@ -47,6 +50,10 @@ const serveHello = (req, res, next) => {
 app.get('/api/hello', serveHello);
 
 // A GET request to /api/hello?name=ben will send the response "hello ben"
+
+// listen
+const port = 8080;
+app.listen(port, () => console.log(`listening at http://localhost:${port}`)); 
 ```
 
 * A **controller** is a callback function that parses a request and sends a response. It will be invoked by the Express `app` when the associated endpoint is sent a request.
@@ -118,7 +125,7 @@ That's what static web servers like GitHub Pages do — they store **static asse
 
 With Express, it is really quick to build your own static web server using the `express.static(filepath)` middleware function. You only need 4 lines!
 
-Suppose we had a React project in a directory called `frontend` and it has its static assets built into a directory called `dist`:
+To experiment with this, use Vite to create a React project called `frontend`. Set up the dependencies and then create static assets in the `dist` folder. Then, we can add the following to our server application:
 
 ```js
 // Import the path module to construct the absolute path to the static assets folder
@@ -133,7 +140,6 @@ const serveStatic = express.static(pathToDistFolder);
 
 // Use the middleware function to serve static assets
 app.use(serveStatic);
-
 ```
 
 Explanation:
