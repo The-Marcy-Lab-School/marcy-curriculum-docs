@@ -73,6 +73,13 @@ For example, if your project had a `vite-project` folder for the frontend, and a
 
 ![On render, the build and start commands are set](img/render-deploying-static-build-start.png)
 
+As a result, the "continuous deployment" process would look like this:
+1. A commit is made with changes to the project
+2. Render detects the commit and begins a new deployment
+3. The "build" command is executed, generating updated static assets
+4. The "start" command is executed, starting the server
+5. The deployment completes and the server is live!
+
 ## Deploy A Fullstack Server With A Database
 
 1. Make sure you have an account on https://render.com/ and that you sign in using Github
