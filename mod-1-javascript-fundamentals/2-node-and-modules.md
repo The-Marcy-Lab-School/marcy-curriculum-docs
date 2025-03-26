@@ -5,22 +5,22 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents:**
-- [Slides](#slides)
-- [Overview](#overview)
-  - [Key Terms](#key-terms)
-- [What is Node?](#what-is-node)
-- [Exporting and Importing Node Modules](#exporting-and-importing-node-modules)
-  - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
-  - [Importing with `require()` (CommonJS)](#importing-with-require-commonjs)
-  - [Destructuring](#destructuring)
-- [Node Package Manager (NPM)](#node-package-manager-npm)
-  - [Installing and Using Dependencies from NPM](#installing-and-using-dependencies-from-npm)
-  - [`package.json` and `node_modules`](#packagejson-and-node_modules)
-  - [Developer Dependencies](#developer-dependencies)
-  - [`package.json` Scripts and `nodemon`](#packagejson-scripts-and-nodemon)
-  - [`npm init -y`](#npm-init--y)
-- [Madlib Challenge](#madlib-challenge)
 
+* [Slides](2-node-and-modules.md#slides)
+* [Overview](2-node-and-modules.md#overview)
+  * [Key Terms](2-node-and-modules.md#key-terms)
+* [What is Node?](2-node-and-modules.md#what-is-node)
+* [Exporting and Importing Node Modules](2-node-and-modules.md#exporting-and-importing-node-modules)
+  * [Exporting with `module.exports` (CommonJS)](2-node-and-modules.md#exporting-with-moduleexports-commonjs)
+  * [Importing with `require()` (CommonJS)](2-node-and-modules.md#importing-with-require-commonjs)
+  * [Destructuring](2-node-and-modules.md#destructuring)
+* [Node Package Manager (NPM)](2-node-and-modules.md#node-package-manager-npm)
+  * [Installing and Using Dependencies from NPM](2-node-and-modules.md#installing-and-using-dependencies-from-npm)
+  * [`package.json` and `node_modules`](2-node-and-modules.md#packagejson-and-node_modules)
+  * [Developer Dependencies](2-node-and-modules.md#developer-dependencies)
+  * [`package.json` Scripts and `nodemon`](2-node-and-modules.md#packagejson-scripts-and-nodemon)
+  * [`npm init -y`](2-node-and-modules.md#npm-init--y)
+* [Madlib Challenge](2-node-and-modules.md#madlib-challenge)
 
 ## Slides
 
@@ -31,6 +31,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 In this lesson we'll learn the history of Node and the fundamentals of using Node Modules to build JavaScript scripts.
 
 ### Key Terms
+
 * **Node** is a "JavaScript runtime environment" which is just a fancy way to say it is a program for running JavaScript.
 * A **module** is an exported chunk of code (typically a function or a set of functions) that can be used across our project.
 * In a Node project, a file exports a module by assigning a value to `module.exports`
@@ -46,12 +47,12 @@ In this lesson we'll learn the history of Node and the fundamentals of using Nod
 
 ## What is Node?
 
-* JavaScript started out as a language that could only be executed by a browser. 
-* In 2009, Node was invented to allow programmers to run JavaScript on their own computers without a browser, opening the door for fullstack JavaScript development. 
-* **Node** is a "JavaScript runtime environment" which is just a fancy way to say it is a program for running JavaScript. 
+* JavaScript started out as a language that could only be executed by a browser.
+* In 2009, Node was invented to allow programmers to run JavaScript on their own computers without a browser, opening the door for fullstack JavaScript development.
+* **Node** is a "JavaScript runtime environment" which is just a fancy way to say it is a program for running JavaScript.
 * To run a JavaScript program, we use the command `node <file_name>`
 
-![Node is a program for running JavaScript files](./img/1-node-script.png)
+![Node is a program for running JavaScript files](img/1-node-script.png)
 
 * If you use the `node` command on its own, you will open the Node Read Evaluate Print Loop (REPL) program.
 
@@ -62,7 +63,6 @@ In this lesson we'll learn the history of Node and the fundamentals of using Nod
 Consider the simple JavaScript program below. It declares a few functions for calculating data about a circle with a given radius and then prints them out.
 
 {% code title="index.js" overflow="wrap" lineNumbers="true" %}
-
 ```js
 // functions for circle stuff
 const LAZY_PI = 3.14;
@@ -104,9 +104,8 @@ main();
 * Notice that the `main` function just uses the other functions.
 * JavaScript projects are rarely built entirely in one file like this. Instead, code is separated into multiple files that share code with each other.
 * These shared pieces of code are called **modules**. A **module** is an exported chunk of code (typically a function or a set of functions) that can be used across our project.
-  * For example, a file can create a function and then **export** it. 
+  * For example, a file can create a function and then **export** it.
   * Meanwhile, another file can **import** that function and use it.
-
 * Modules help with organization and **separation of concerns** but require more files!
 
 {% hint style="info" %}
@@ -118,14 +117,12 @@ Separation of Concerns is a fundamental principle of software engineering. It em
 * In a Node project, a file exports a module by assigning a value/function to `module.exports`.
 
 {% code title="print.js" overflow="wrap" lineNumbers="true" %}
-
 ```javascript
 const print = (input) => {
   console.log(input)
 }
 module.exports = print;
 ```
-
 {% endcode %}
 
 * When `module.exports` is assigned a single value/function, we call that a **default export**.
@@ -159,7 +156,6 @@ module.exports = {
 * To import a value/function exported from another file, use the `require(filepath)` function and provide a `filepath` argument.
 
 {% code title="index.js" overflow="wrap" lineNumbers="true" %}
-
 ```javascript
 // The variable name here is up to you since only the value is exported, not the variable.
 const print = require('./print.js');
@@ -181,7 +177,6 @@ const main = () => {
 
 main();
 ```
-
 {% endcode %}
 
 ### Destructuring
@@ -189,7 +184,6 @@ main();
 * If the exported value is an object, we typically will **destructure** the object immediately upon importing it:
 
 {% code title="index.js" overflow="wrap" lineNumbers="true" %}
-
 ```javascript
 // With destructuring, we create a variable for each named export.
 const { getArea, getDiameter, getCircumference } = require('./circle-helpers.js');
@@ -206,17 +200,11 @@ const main = () => {
 
 main();
 ```
-
-* When destructuring:
-  * A variable is created for each listed property/method.
-  * The order that you list the properties/methods of the function does not matter
-  * You do NOT need to include every property/method of the destructured object.
-
 {% endcode %}
 
 ## Node Package Manager (NPM)
 
-* Modules can be downloaded from the **Node Package Manager (NPM)** online registry. 
+* Modules can be downloaded from the **Node Package Manager (NPM)** online registry.
 * When you download a package, it is called a **dependency**.
 * Visit https://www.npmjs.com/ to explore available packages. Start by searching up the "prompt-sync" package.
 
@@ -254,19 +242,18 @@ This is a common pattern for modules.
 * Every dependency of a project, and its version number, will be listed in the file `package.json` (if the file doesn't exist, the `npm i` command will create it). The existence of this file turns our project into a **package**.
 * **JavaScript Object Notation (JSON)** is a file format for representing data in an JavaScript-Object-like notation with key:value pairs.
 
-![Installing a module using `npm` adds the module name and version number to a list of **dependencies** in the `package.json` file](img/1-package-json-dependencies.png)
+![Installing a module using npm adds the module name and version number to a list of dependencies in the package.json file](img/1-package-json-dependencies.png)
 
-
-* The downloaded module will be placed in a folder called `node_modules/` along with any **sub-dependencies** that the module itself may require. 
+* The downloaded module will be placed in a folder called `node_modules/` along with any **sub-dependencies** that the module itself may require.
 * You can see the sub-dependencies of a module by opening its own `package.json` file. All modules listed under `"dependencies"` will also be installed in `node_modules/`.
   * In `prompt-sync/package.json`, we can see it has `strip-ansi` as a dependency.
   * In `strip-ansi/package.json`, we can see it has `ansi-regex` as a dependency.
 
-![For `prompt-sync`, we can see that it has two of its own dependencies that were also added to `node_modules`: `ansi-regex` and `strip-ansi`:](img/1-prompt-sync-dependencies.png)
+![For prompt-sync, we can see that it has two of its own dependencies that were also added to node\_modules: ansi-regex and strip-ansi:](img/1-prompt-sync-dependencies.png)
 
 ### Developer Dependencies
 
-* In the `prompt-sync/package.json` file, you will notice that `prompt-sync-history` is listed under `"devDependencies"`. 
+* In the `prompt-sync/package.json` file, you will notice that `prompt-sync-history` is listed under `"devDependencies"`.
 * **Developer dependencies** are dependencies used by the developer(s) who created the package but aren't needed by the users of the package. They are not added to the `node_modules` folder of the user.
 * Try installing the `nodemon` module as a developer dependency using the `npm i -D` command:
 
@@ -297,8 +284,12 @@ node index.js
 nodemon index.js
 ```
 
-**<details><summary>Q: Why is `nodemon` installed as a developer dependency and not a required dependency of the project?</summary>**
-> `nodemon` makes it easier to test your code but the users of the package do not strictly need its functionality. It is just a convenience.
+<details>
+
+<summary><strong>Q: Why is <code>nodemon</code> installed as a developer dependency and not a required dependency of the project?</strong></summary>
+
+`nodemon` makes it easier to test your code but the users of the package do not strictly need its functionality. It is just a convenience.
+
 </details>
 
 ### `package.json` Scripts and `nodemon`
@@ -394,14 +385,17 @@ const main = () => {
 {% endcode %}
 
 Your goal is to do the following in the `6-madlib-challenge` folder:
+
 1. Download the `prompt-sync` module using `npm i prompt-sync`
 2. Import and configure the `prompt` function in `index.js`
 3. Replace the hard-coded variables defined in the `main` function with values retrieved from the user via the `prompt` function.
-4. Re-organize the code such that the `madlib` function is in its own file called `madlib.js` that exports `madlib` as the default export. 
+4. Re-organize the code such that the `madlib` function is in its own file called `madlib.js` that exports `madlib` as the default export.
 
 If you get stuck, you can view the solution below:
 
-**<details><summary>Q: Solution</summary>**
+<details>
+
+<summary><strong>Q: Solution</strong></summary>
 
 {% code title="index.js" overflow="wrap" lineNumbers="true" %}
 ```javascript

@@ -5,20 +5,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents**
-- [Slides](#slides)
-- [Array Basics](#array-basics)
-  - [Arrays Are Mutable](#arrays-are-mutable)
-  - [Array Methods for Adding and/or Removing Values](#array-methods-for-adding-andor-removing-values)
-- [Reference vs. Primitive Values](#reference-vs-primitive-values)
-  - [How Reference Types (Arrays and Objects) are Stored in Memory](#how-reference-types-arrays-and-objects-are-stored-in-memory)
-  - [Pass by Reference](#pass-by-reference)
-  - [Impure and Pure Functions](#impure-and-pure-functions)
-  - [Making Copies of Arrays to Make Pure Functions with the Spread Syntax](#making-copies-of-arrays-to-make-pure-functions-with-the-spread-syntax)
-  - [Copying Array Challenge](#copying-array-challenge)
-- [Advanced Array Syntax](#advanced-array-syntax)
-  - [2D Arrays](#2d-arrays)
-  - [Destructuring Assignment and Rest Operator](#destructuring-assignment-and-rest-operator)
 
+* [Slides](6-arrays.md#slides)
+* [Array Basics](6-arrays.md#array-basics)
+  * [Arrays Are Mutable](6-arrays.md#arrays-are-mutable)
+  * [Array Methods for Adding and/or Removing Values](6-arrays.md#array-methods-for-adding-andor-removing-values)
+* [Reference vs. Primitive Values](6-arrays.md#reference-vs-primitive-values)
+  * [How Reference Types (Arrays and Objects) are Stored in Memory](6-arrays.md#how-reference-types-arrays-and-objects-are-stored-in-memory)
+  * [Pass by Reference](6-arrays.md#pass-by-reference)
+  * [Impure and Pure Functions](6-arrays.md#impure-and-pure-functions)
+  * [Making Copies of Arrays to Make Pure Functions with the Spread Syntax](6-arrays.md#making-copies-of-arrays-to-make-pure-functions-with-the-spread-syntax)
+  * [Copying Array Challenge](6-arrays.md#copying-array-challenge)
+* [Advanced Array Syntax](6-arrays.md#advanced-array-syntax)
+  * [2D Arrays](6-arrays.md#2d-arrays)
+  * [Destructuring Assignment and Rest Operator](6-arrays.md#destructuring-assignment-and-rest-operator)
 
 ## Slides
 
@@ -26,15 +26,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 ## Array Basics
 
-- Arrays are lists of data (order matters). Values in an array are called **elements of the array**.
-- Arrays use square brackets `[]` to encapsulate the data
-- Arrays are a type of object
-- Like strings arrays also...
-  - have indexes starting at `0`
-  - use bracket notation to access individual elements: `array[index]`
-  - have a `.length` property that returns the number of elements in the array
-  - have many of the same read-only methods like `slice`, `indexOf` and `includes`
-- Unlike strings, arrays are mutable.
+* Arrays are lists of data (order matters). Values in an array are called **elements of the array**.
+* Arrays use square brackets `[]` to encapsulate the data
+* Arrays are a type of object
+* Like strings arrays also...
+  * have indexes starting at `0`
+  * use bracket notation to access individual elements: `array[index]`
+  * have a `.length` property that returns the number of elements in the array
+  * have many of the same read-only methods like `slice`, `indexOf` and `includes`
+* Unlike strings, arrays are mutable.
 
 ```js
 const friends = ['bert', 'ernie', 'big bird', 'kermit', 'miss piggy', 'elmo'];
@@ -68,7 +68,10 @@ console.log(hasValue(letters, 'c')); // Prints true
 console.log(hasValue(letters, 'e')); // Prints false
 ```
 
-**<details><summary>Check out this example</summary>**
+<details>
+
+<summary><strong>Check out this example</strong></summary>
+
 ```js
 const hasValue = (arr, value) => {
   for (let i = 0; i < arr.length; i++) { // Loop through every index in the array
@@ -84,10 +87,10 @@ const letters = ['a', 'b', 'c', 'd'];
 console.log(hasValue(letters, 'c')); // Prints true
 console.log(hasValue(letters, 'e')); // Prints false
 ```
+
 </details>
 
 ### Arrays Are Mutable
-
 
 Strings have read-only methods like `toUpperCase()` and `slice()` that make a copy of the string but don't change the original string.
 
@@ -113,8 +116,12 @@ endLetters.length = 0; // endLetters now has no values
 console.log(endLetters); // []
 ```
 
-**<details><summary>Question: How are we allowed to modify the array if it is stored in a `const` variable?</summary>**
-> `const` prevents us from reassigning the variable. Notice that we never reassign `endLetters`! The variable still references the same array, we're just changing the contents of the array. 
+<details>
+
+<summary><strong>Question: How are we allowed to modify the array if it is stored in a <code>const</code> variable?</strong></summary>
+
+`const` prevents us from reassigning the variable. Notice that we never reassign `endLetters`! The variable still references the same array, we're just changing the contents of the array.
+
 </details>
 
 ### Array Methods for Adding and/or Removing Values
@@ -122,14 +129,17 @@ console.log(endLetters); // []
 Since arrays are mutable, they not only have read-only methods like `slice`, `indexOf`, and `includes`, they also have methods for adding to and removing from the array.
 
 These methods let you add values to an array
+
 * `arr.push(value)` — adds a given value to the end of an array, increasing the length by 1
 * `arr.unshift(value)` — adds a given value to the front of an array, increasing the length by 1
 
 These methods let you remove values from an array
+
 * `arr.pop()` — removes a given value from the end of an array, reducing the length by 1
 * `arr.shift()` — removes a given value from the front of an array, reducing the length by 1
 
 Splice lets you add and remove values to and from an array all at once!
+
 * `arr.splice(index, qtyToRemove, valuesToAdd)` — removes or replaces elements in an array and/or adds new elements to an array
 
 ```js
@@ -151,7 +161,7 @@ console.log(letters); // Prints ['a', 'b', 'Hey ;)', 'c', 'd', 'e']
 
 letters.splice(2, 2, 'Nope', 'Bye!'); // At index 2, replaces 2 elements with 'Nope' and 'Bye!'
 console.log(letters); // Prints ['a', 'b', 'Nope', 'Bye!', 'd', 'e']
-``` 
+```
 
 ## Reference vs. Primitive Values
 
@@ -159,7 +169,7 @@ Arrays and Objects are considered **reference types**. Let's see why.
 
 ### How Reference Types (Arrays and Objects) are Stored in Memory
 
-When a variable is created, a chunk of your computer's RAM is assigned to hold some data. Primitive values are small enough to be stored in memory. Arrays and objects (a.k.a "reference types") however can grow to be any size and therefore cannot be contained within a single **memory address**. 
+When a variable is created, a chunk of your computer's RAM is assigned to hold some data. Primitive values are small enough to be stored in memory. Arrays and objects (a.k.a "reference types") however can grow to be any size and therefore cannot be contained within a single **memory address**.
 
 So, instead, they are stored in an area called the **heap** and a **reference to their heap address** is stored in the variable instead.
 
@@ -168,6 +178,7 @@ So, instead, they are stored in an area called the **heap** and a **reference to
 As a result, we can mutate the contents of an array without reassigning the variable because the variable doesn't hold the array, it holds a reference to the array!
 
 ### Pass by Reference
+
 when you copy an array or object from one variable to another, or you pass an array or object into a function, the reference is being passed, not the array or object itself.
 
 ```js
@@ -329,7 +340,7 @@ console.log(newYorkLat);
 console.log(newYorkLong);
 ```
 
-In the example above, we only unpacked the first 3 values of `coordinates`. 
+In the example above, we only unpacked the first 3 values of `coordinates`.
 
 If we want to, we can use the "rest" operator (`...rest`) to store the remaining unpacked values in a variable:
 

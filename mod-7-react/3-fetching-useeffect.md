@@ -85,7 +85,7 @@ This example demonstrates a few important concepts:
 
 Let's create an app that fetches from the dog API and shows a random dog picture whenever the user clicks on a button.
 
-![](img/dog-fetcher.png)
+![](../fullstack-curriculum/mod-7-react/img/dog-fetcher.png)
 
 The dog API https://dog.ceo/api/breeds/image/random returns an object like this:
 

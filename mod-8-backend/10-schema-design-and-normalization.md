@@ -43,7 +43,7 @@ A well-designed database schema ensures:
 
 Database schema designs are most often communicated through an **Entity Relationship Diagram**
 
-![](img/labeled-erd.png)
+![](<img/labeled-erd copy (1).png>)
 
 <details>
 
@@ -97,7 +97,6 @@ Okay, let's recall that we're designing a database for a school that tracks:
 I think we could use the following tables: `students`, `classes`, `enrollments` and `teachers`
 
 </details>
-
 
 Using DBML, we can define a table and generate an ERD for that table by simply writing:
 
@@ -236,11 +235,11 @@ A table complies with the first normal form if it satisfies the following condit
 
 For example, this table does not comply with the 1NF because the `products` column contains multiple values:
 
-| order_id | customer_name | products                |
-| -------- | ------------- | ----------------------- |
-| 1        | Avery         | Laptop, Mouse, Keyboard |
-| 2        | Blake         | Laptop, Monitor         |
-| 3        | Charles       | Monitor, Trackpad       |
+| order\_id | customer\_name | products                |
+| --------- | -------------- | ----------------------- |
+| 1         | Avery          | Laptop, Mouse, Keyboard |
+| 2         | Blake          | Laptop, Monitor         |
+| 3         | Charles        | Monitor, Trackpad       |
 
 This leads to several problems:
 
@@ -250,23 +249,23 @@ This leads to several problems:
 
 To fix it, we can make
 
-| order_id | customer_name | product  |
-| -------- | ------------- | -------- |
-| 1        | Avery         | Laptop   |
-| 1        | Avery         | Mouse    |
-| 1        | Avery         | Keyboard |
-| 2        | Blake         | Laptop   |
-| 2        | Blake         | Monitor  |
-| 3        | Charles       | Monitor  |
-| 3        | Charles       | Trackpad |
+| order\_id | customer\_name | product  |
+| --------- | -------------- | -------- |
+| 1         | Avery          | Laptop   |
+| 1         | Avery          | Mouse    |
+| 1         | Avery          | Keyboard |
+| 2         | Blake          | Laptop   |
+| 2         | Blake          | Monitor  |
+| 3         | Charles        | Monitor  |
+| 3         | Charles        | Trackpad |
 
 **Q: How do you know that the table below is NOT in the first normal form? How would you fix it?**
 
-| student_id | student_name | courses                       |
-| ---------- | ------------ | ----------------------------- |
-| 1          | Alice        | Math, Science, History        |
-| 2          | Bob          | Science, English, Mathematics |
-| 3          | Carol        | History, Math, English        |
+| student\_id | student\_name | courses                       |
+| ----------- | ------------- | ----------------------------- |
+| 1           | Alice         | Math, Science, History        |
+| 2           | Bob           | Science, English, Mathematics |
+| 3           | Carol         | History, Math, English        |
 
 <details>
 
@@ -291,12 +290,12 @@ Take a look at this table `order_details` which shows the relationships between 
 
 This is NOT compliant with the second normal form:
 
-| id  | order_id | product_id | product_name | customer_id | customer_name |
-| --- | -------- | ---------- | ------------ | ----------- | ------------- |
-| 1   | 1        | 1          | Laptop       | 1           | Avery         |
-| 2   | 1        | 2          | Monitor      | 1           | Avery         |
-| 3   | 2        | 1          | Laptop       | 2           | Blake         |
-| 4   | 3        | 3          | Trackpad     | 3           | Charles       |
+| id | order\_id | product\_id | product\_name | customer\_id | customer\_name |
+| -- | --------- | ----------- | ------------- | ------------ | -------------- |
+| 1  | 1         | 1           | Laptop        | 1            | Avery          |
+| 2  | 1         | 2           | Monitor       | 1            | Avery          |
+| 3  | 2         | 1           | Laptop        | 2            | Blake          |
+| 4  | 3         | 3           | Trackpad      | 3            | Charles        |
 
 In this table, the following partial dependencies exist:
 
@@ -309,47 +308,47 @@ To reach 2NF, we must eliminate partial dependencies by removing these partial d
 
 1.  The `products` table ties each `product.id` to unique `product.name`
 
-    | id  | name     |
-    | --- | -------- |
-    | 1   | Laptop   |
-    | 2   | Monitor  |
-    | 3   | Trackpad |
+    | id | name     |
+    | -- | -------- |
+    | 1  | Laptop   |
+    | 2  | Monitor  |
+    | 3  | Trackpad |
 2.  The `customers` table ties each `customer.id` to a unique `customer.name`
 
-    | id  | name    |
-    | --- | ------- |
-    | 1   | Avery   |
-    | 2   | Blake   |
-    | 3   | Charles |
+    | id | name    |
+    | -- | ------- |
+    | 1  | Avery   |
+    | 2  | Blake   |
+    | 3  | Charles |
 3.  The `orders` table ties which `customer.id` placed which `order.id`
 
-    | id  | customer_id |
-    | --- | ----------- |
-    | 1   | 1           |
-    | 2   | 2           |
-    | 3   | 3           |
+    | id | customer\_id |
+    | -- | ------------ |
+    | 1  | 1            |
+    | 2  | 2            |
+    | 3  | 3            |
 4.  The `order_items` "junction/association" table tracks which products are associated with each order:
 
-    | id  | order_id | product_id |
-    | --- | -------- | ---------- |
-    | 1   | 1        | 1          |
-    | 2   | 1        | 2          |
-    | 3   | 2        | 1          |
-    | 4   | 3        | 3          |
+    | id | order\_id | product\_id |
+    | -- | --------- | ----------- |
+    | 1  | 1         | 1           |
+    | 2  | 1         | 2           |
+    | 3  | 2         | 1           |
+    | 4  | 3         | 3           |
 
 **Q: How do you know that the table below is NOT in 2NF? How would you fix it?**
 
-| enrollment_id | student_id | student_name | course      |
-| ------------- | ---------- | ------------ | ----------- |
-| 1             | 1          | Alice        | Math        |
-| 2             | 1          | Alice        | Science     |
-| 3             | 1          | Alice        | History     |
-| 4             | 2          | Bob          | Science     |
-| 5             | 2          | Bob          | English     |
-| 6             | 2          | Bob          | Mathematics |
-| 7             | 3          | Carol        | History     |
-| 8             | 3          | Carol        | Math        |
-| 9             | 3          | Carol        | English     |
+| enrollment\_id | student\_id | student\_name | course      |
+| -------------- | ----------- | ------------- | ----------- |
+| 1              | 1           | Alice         | Math        |
+| 2              | 1           | Alice         | Science     |
+| 3              | 1           | Alice         | History     |
+| 4              | 2           | Bob           | Science     |
+| 5              | 2           | Bob           | English     |
+| 6              | 2           | Bob           | Mathematics |
+| 7              | 3           | Carol         | History     |
+| 8              | 3           | Carol         | Math        |
+| 9              | 3           | Carol         | English     |
 
 <details>
 
@@ -361,23 +360,23 @@ To remove this partial dependency, we can make separate tables:
 
 1.  The `students` table:
 
-    | student_id | student_name |
-    | ---------- | ------------ |
-    | 1          | Alice        |
-    | 2          | Bob          |
-    | 3          | Carol        |
+    | student\_id | student\_name |
+    | ----------- | ------------- |
+    | 1           | Alice         |
+    | 2           | Bob           |
+    | 3           | Carol         |
 2.  The `enrollments` table:
 
-    | id  | student_id | course      |
-    | --- | ---------- | ----------- |
-    | 1   | 1          | Math        |
-    | 2   | 1          | Science     |
-    | 3   | 1          | History     |
-    | 4   | 2          | Science     |
-    | 5   | 2          | English     |
-    | 6   | 2          | Mathematics |
-    | 7   | 3          | History     |
-    | 8   | 3          | Math        |
-    | 9   | 3          | English     |
+    | id | student\_id | course      |
+    | -- | ----------- | ----------- |
+    | 1  | 1           | Math        |
+    | 2  | 1           | Science     |
+    | 3  | 1           | History     |
+    | 4  | 2           | Science     |
+    | 5  | 2           | English     |
+    | 6  | 2           | Mathematics |
+    | 7  | 3           | History     |
+    | 8  | 3           | Math        |
+    | 9  | 3           | English     |
 
 </details>

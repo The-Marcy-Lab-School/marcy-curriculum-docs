@@ -34,7 +34,7 @@ Remember how the Express app works?
 4. The server sends the response back to the client.
 5. The client receives the response and renders the data or take further actions based on it.
 
-![](img/express-diagram-simple.svg)
+![](<img/express-diagram-simple copy.svg>)
 
 ```js
 const express = require('express');

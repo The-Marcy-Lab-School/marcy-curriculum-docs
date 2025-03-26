@@ -8,19 +8,19 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [A11y Commands you'll need](4-accessibility.md#a11y-commands-youll-need)
-  * [Voiceover on Mac](4-accessibility.md#voiceover-on-mac)
-  * [Chrome Accessibility Inspector](4-accessibility.md#chrome-accessibility-inspector)
-  * [Chrome Color Blindness and Font Size](4-accessibility.md#chrome-color-blindness-and-font-size)
-* [Part 0: Why A11y?](4-accessibility.md#part-0-why-a11y)
-* [Part 1: Semantic elements](4-accessibility.md#part-1-semantic-elements)
-* [Part 2: A11y tree](4-accessibility.md#part-2-a11y-tree)
-* [Part 3: Voice over](4-accessibility.md#part-3-voice-over)
-* [Part 4: Visual Impairments](4-accessibility.md#part-4-visual-impairments)
-* [Part 5: images](4-accessibility.md#part-5-images)
-* [Part 6: How to fix it](4-accessibility.md#part-6-how-to-fix-it)
-* [Part 7: ARIA and Landmarks](4-accessibility.md#part-7-aria-and-landmarks)
-* [Part 8: Rem vs px](4-accessibility.md#part-8-rem-vs-px)
+* [A11y Commands you'll need](accessibility.md#a11y-commands-youll-need)
+  * [Voiceover on Mac](accessibility.md#voiceover-on-mac)
+  * [Chrome Accessibility Inspector](accessibility.md#chrome-accessibility-inspector)
+  * [Chrome Color Blindness and Font Size](accessibility.md#chrome-color-blindness-and-font-size)
+* [Part 0: Why A11y?](accessibility.md#part-0-why-a11y)
+* [Part 1: Semantic elements](accessibility.md#part-1-semantic-elements)
+* [Part 2: A11y tree](accessibility.md#part-2-a11y-tree)
+* [Part 3: Voice over](accessibility.md#part-3-voice-over)
+* [Part 4: Visual Impairments](accessibility.md#part-4-visual-impairments)
+* [Part 5: images](accessibility.md#part-5-images)
+* [Part 6: How to fix it](accessibility.md#part-6-how-to-fix-it)
+* [Part 7: ARIA and Landmarks](accessibility.md#part-7-aria-and-landmarks)
+* [Part 8: Rem vs px](accessibility.md#part-8-rem-vs-px)
 
 ## A11y Commands you'll need
 
@@ -69,7 +69,7 @@ These are obviously not super intuitive, and I encourage you to practice around 
 
 ## Part 0: Why A11y?
 
-You know how Marcy is so great because it's all about opening doors that were shut to you? Well that's why accessibility is so important. **The internet should be for **_**everyone**_, and it's pretty easy to hit that goal with just a _little_ bit of work on our end.
+You know how Marcy is so great because it's all about opening doors that were shut to you? Well that's why accessibility is so important. **The internet should be for&#x20;**_**everyone**_, and it's pretty easy to hit that goal with just a _little_ bit of work on our end.
 
 Also, and I cannot stress enough that we should care about _humans_ more than anything, but you may wind up at a cynical company that simply doesn't care about anything but the bottom line. Fine. They should know that inaccessible sites keep getting sued, so if they don't want to face a lawsuit over a few lines of code, they need to get their act together. Also, Google and bots are getting better, but not fast enough. If you really want SEO to work well with your site, give the bots as much information as possible.
 

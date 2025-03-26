@@ -8,26 +8,26 @@ In this lesson, you will learn the basics of React.
 
 **Table of Contents:**
 
-- [Terms:](#terms)
-- [What is React and Why Use It?](#what-is-react-and-why-use-it)
-  - [A. Say goodbye to the clunky DOM API](#a-say-goodbye-to-the-clunky-dom-api)
-  - [B. Component Composition is fast and easy to read](#b-component-composition-is-fast-and-easy-to-read)
-  - [C. The Virtual DOM offers some performance benefits when re-rendering components](#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
-- [Starting a React Project (with Vite)](#starting-a-react-project-with-vite)
-  - [Rendering the Root Component With ReactDOM](#rendering-the-root-component-with-reactdom)
-  - [Components and JSX](#components-and-jsx)
-  - [Nested Components](#nested-components)
-  - [Adding Classes and Style](#adding-classes-and-style)
-- [Rendering Data with React](#rendering-data-with-react)
-  - [Sharing Data Between Components With Props](#sharing-data-between-components-with-props)
-  - [Rendering A List of Elements](#rendering-a-list-of-elements)
-- [Under the hood: JSX Code must be compiled](#under-the-hood-jsx-code-must-be-compiled)
+* [Terms:](1-intro-to-react.md#terms)
+* [What is React and Why Use It?](1-intro-to-react.md#what-is-react-and-why-use-it)
+  * [A. Say goodbye to the clunky DOM API](1-intro-to-react.md#a-say-goodbye-to-the-clunky-dom-api)
+  * [B. Component Composition is fast and easy to read](1-intro-to-react.md#b-component-composition-is-fast-and-easy-to-read)
+  * [C. The Virtual DOM offers some performance benefits when re-rendering components](1-intro-to-react.md#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
+* [Starting a React Project (with Vite)](1-intro-to-react.md#starting-a-react-project-with-vite)
+  * [Rendering the Root Component With ReactDOM](1-intro-to-react.md#rendering-the-root-component-with-reactdom)
+  * [Components and JSX](1-intro-to-react.md#components-and-jsx)
+  * [Nested Components](1-intro-to-react.md#nested-components)
+  * [Adding Classes and Style](1-intro-to-react.md#adding-classes-and-style)
+* [Rendering Data with React](1-intro-to-react.md#rendering-data-with-react)
+  * [Sharing Data Between Components With Props](1-intro-to-react.md#sharing-data-between-components-with-props)
+  * [Rendering A List of Elements](1-intro-to-react.md#rendering-a-list-of-elements)
+* [Under the hood: JSX Code must be compiled](1-intro-to-react.md#under-the-hood-jsx-code-must-be-compiled)
 
 ## Terms:
 
 * **React** — a library for building reusable, composable, and scalable user-interfaces made up of components.
 * **Component** — a piece of the UI (user interface) that has its own logic and appearance. Components are functions that return JSX.
-* **JSX** — an extension of JavaScript that lets you write HTML in React components.
+* **JSX** — an extension of JavaScript that lets you write HTML-like syntax in React components.
 * **Component Composition** — the process of combining smaller, reusable components together to create larger, more complex components
 * **Root Component** — the top-level component that all other components are children of. Typically called `App`.
 * **`react-dom/client`** — a React package that lets you render React components on the client (in the browser)
@@ -65,11 +65,11 @@ const Text = ({ message }) => {
 // This HTML-like syntax ^ is JSX
 ```
 
-In React, we are able to return markup language (like HTML) from functions. This is called **JSX** (JavaScript XML).
+In React, we are able to return HTML-like syntax from functions. This is called **JSX** (JavaScript XML), which allows us to execute JavaScript expressions (inside `{}`) and/or pass in data. &#x20;
 
 ### B. Component Composition is fast and easy to read
 
-**Components** let you split the UI into independent, reusable pieces, and think about each piece in isolation.
+**Components** let you split the UI into independent, reusable pieces and think about each piece in isolation.
 
 **Component Composition** is the process of combining smaller, reusable components together to create larger, more complex components
 
@@ -138,7 +138,7 @@ cd <name of your project> && npm i
 npm run dev
 ```
 
-By default you will be given the familiar counter app. Take a look around! Every React project made by Vite will have this rough structure:
+By default, you will be given the familiar counter app. Take a look around! Every React project made by Vite will have this rough structure:
 
 * `index.html` — the HTML file served to the client. It loads `src/main.jsx`.
 * `src/main.jsx` — the entry point of the app. It uses the `react-dom/client` package to render the **root component** `App` into the DOM.
@@ -151,31 +151,32 @@ By default you will be given the familiar counter app. Take a look around! Every
 
 How does all of this actually get to the screen? Head over to the `main.jsx` file.
 
-The primary purpose of this file is render the root component `App`. To do so we:
+The primary purpose of this file is to render the root component `App`. To do so we:
 
 * Import a package called `ReactDOM`
-* Use the `ReactDOM.createRoot` method to create a `root` object.
-* Then we call `root.render` and pass in the `App` component.
+* Use the `createRoot` method to create a `root` object.
+* Then we call `createRoot(root).render()` and pass in the `App` component as the argument.
 
 This is mostly handled when Vite creates the project for you so no need to memorize it:
 
 ```jsx
 // main.jsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
 import App from './App.jsx'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
 )
 ```
 
 A few notes:
 
 * We're using the `client` version of `ReactDOM` (there is also a `native` version for mobile).
-* `React.StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
+* `StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
 
 ### Components and JSX
 
@@ -197,7 +198,7 @@ const App = () => {
 export default App
 ```
 
-* Component are functions that return JSX.
+* Components are functions that return JSX.
 * Note the capitalized name. All components must use PascalCasing.
 * Components must return a single surrounding element. Here, we return a `header`.
 * When returning multiple elements, wrap the elements parentheses `()`.
@@ -301,7 +302,6 @@ The `for` attribute for `<label>` elements is another example of this. Instead, 
 <details>
 
 <summary><strong>Q: How can I add a <code>class="insta-pic"</code> attribute to the <code>img</code> in my <code>InstagramPost</code> component?</strong></summary>
-
 
 ```jsx
 const InstagramPost = () => {
@@ -463,17 +463,19 @@ const App = () => {
 
 JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It must first be **compiled** (converted) to vanilla JS.
 
-<details><summary>See what this code would look like if it were written without JSX</summary>
+<details>
 
-> Note how we have to use `React.createElement` here
->
-> ```js
-> const rootEl = document.getElementById("root");
-> const root = ReactDOM.createRoot(rootEl);
->
-> root.render(React.createElement("h1", {}, "Hello World"));
-> ```
->
+<summary>See what this code would look like if it were written without JSX</summary>
+
+Note how we have to use `React.createElement` here
+
+```js
+const rootEl = document.getElementById("root");
+const root = ReactDOM.createRoot(rootEl);
+
+root.render(React.createElement("h1", {}, "Hello World"));
+```
+
 </details>
 
 Vite is doing the heavy lifting when it comes to the rendering.

@@ -5,16 +5,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Table of Contents**
-- [Markup Languages](#markup-languages)
-  - [The `file://` protocol vs the `http://` protocol](#the-file-protocol-vs-the-http-protocol)
-- [How to write HTML](#how-to-write-html)
-  - [Nesting Elements](#nesting-elements)
-  - [Links and Attributes](#links-and-attributes)
-  - [Images and Self-Closing Tags](#images-and-self-closing-tags)
-  - [Ids and Classes](#ids-and-classes)
-- [Properly formatted document](#properly-formatted-document)
-- [Semantic vs Non Semantic Elements](#semantic-vs-non-semantic-elements)
-- [Quiz](#quiz)
+
+* [Markup Languages](html.md#markup-languages)
+  * [The `file://` protocol vs the `http://` protocol](html.md#the-file-protocol-vs-the-http-protocol)
+* [How to write HTML](html.md#how-to-write-html)
+  * [Nesting Elements](html.md#nesting-elements)
+  * [Links and Attributes](html.md#links-and-attributes)
+  * [Images and Self-Closing Tags](html.md#images-and-self-closing-tags)
+  * [Ids and Classes](html.md#ids-and-classes)
+* [Properly formatted document](html.md#properly-formatted-document)
+* [Semantic vs Non Semantic Elements](html.md#semantic-vs-non-semantic-elements)
+* [Quiz](html.md#quiz)
 
 ## Markup Languages
 
@@ -24,9 +25,9 @@ A **markup language** on the other hand contains symbols that will not be interp
 
 Markdown (written in `.md` files) is considered a markup language. For example, when we view (**"render"**) the double-asterisk symbols `**` surrounding a word, the text inside will become **bold**:
 
-  ```md
-  Here is some **bold** text.
-  ```
+```md
+Here is some **bold** text.
+```
 
 Similarly, **HTML (Hypertext Markup Language)** is a markup language and our browsers are the applications we use to view them.
 
@@ -36,6 +37,7 @@ Similarly, **HTML (Hypertext Markup Language)** is a markup language and our bro
 ```
 
 To illustrate the difference between markup languages and regular `.txt` files, do the following:
+
 * In your `unit-2` folder, create a new folder called `intro-to-html`
 * Create two files called `index.txt` and `index.html`
 * Put the code above inside both of them:
@@ -48,6 +50,7 @@ What is the difference between how they are presented by Chrome?
 ![A txt and an html file side by side.](img/txt-vs-html.png)
 
 At the end of the day, your browser is essentially built to render text and images.
+
 * The browser can interpret `.html` files and render content with style. It can also execute JavaScript!
 * The first HTML file you should create for a new website should always be `index.html`
   * `index.html` is a magic name that servers will automatically look for if a user enters a domain without a file extension: `test.com` is the same as `test.com/index.html`.
@@ -136,14 +139,17 @@ Other examples of this are the **ordered list** and **unordered list** tags and 
 
 We refer to the element acting as the "container" as the **parent** and the elements nested inside as the **children**. Tags that are in the same nesting level next to each other are **sibling tags**.
 
-**<details><summary>Q: What is the relationship between a `ul` and the `li` elements inside? What about the relationship between the `ul` and the `h2` element?</summary>**
-> The `ul` element is the parent and the `li` elements are its children. The `ul` and `h2` elements are siblings.
+<details>
+
+<summary><strong>Q: What is the relationship between a <code>ul</code> and the <code>li</code> elements inside? What about the relationship between the <code>ul</code> and the <code>h2</code> element?</strong></summary>
+
+The `ul` element is the parent and the `li` elements are its children. The `ul` and `h2` elements are siblings.
+
 </details>
 
 ### Links and Attributes
 
 One of the most basic elements in a website is a link to another page. We create a link element (a.k.a. an **"anchor"**) using the `<a>` tag:
-
 
 ```html
 <!-- The href attribute goes in the opening tag -->
@@ -152,7 +158,7 @@ One of the most basic elements in a website is a link to another page. We create
 
 Notice that this tag contains extra code inside of the opening `<a>` tag! `href` stands for "hyperlink reference" and is an "attribute". **Attributes** provide additional piece of information used to render an element and are included in the opening tag.
 
-* In this case, the content between the tags is what the user will see while the `href` attribute tells the browser where to redirect the user after clicking on the link. 
+* In this case, the content between the tags is what the user will see while the `href` attribute tells the browser where to redirect the user after clicking on the link.
 
 Links can take you to online sites, local or absolute pages of our own, or even reference elements within the page (they link to ids)
 
@@ -170,6 +176,7 @@ Links can take you to online sites, local or absolute pages of our own, or even 
 ```html
 <p> If you're looking for things <a href="https://google.com">Go to Google</a>, and you'll see ads</p>
 ```
+
 * Link text should _always_ be descriptive of where you're going, never just put "click here."
 
 ### Images and Self-Closing Tags
@@ -209,7 +216,7 @@ Another common element type is an image. Images have one required attribute `src
 
 ### Ids and Classes
 
-Two attributes that we can apply to ANY element are `id` and `class`. These allow us to label elements. 
+Two attributes that we can apply to ANY element are `id` and `class`. These allow us to label elements.
 
 * `id`s mark a tag as a _single_, unique, important item on your page.
 * `class`es are for denoting a bunch of related tags, and can appear more than once per page.
@@ -327,8 +334,6 @@ A browser can show the raw contents of any file, such as a `.txt` file but it ca
 
 </details>
 
-
-
 **Q: Browsers are specialized "viewer" applications for `.html` files. What are other examples of applications that are made to view specific kinds of files?**
 
 <details>
@@ -344,8 +349,6 @@ There are tons of examples! But here are a few
 
 </details>
 
-
-
 **Q: How do you think these different tags affect what is displayed?**
 
 <details>
@@ -357,8 +360,6 @@ There are tons of examples! But here are a few
 * The `ul` says to make an unordered list with three list items (`li`) in it.
 
 </details>
-
-
 
 **Q: What is wrong with the HTML below?**
 
@@ -378,8 +379,6 @@ Also, stylistically, we should indent the content of the element if we are putti
 
 </details>
 
-
-
 **Q: When should you use `<ol>` and when should you use `<ul>`?**
 
 <details>
@@ -389,8 +388,6 @@ Also, stylistically, we should indent the content of the element if we are putti
 Use `<ol>` when order matters, and `ul` when it doesn't.
 
 </details>
-
-
 
 **Q: In the example above, which elements are parents, which elements are children, and which elements are siblings?**
 
@@ -404,8 +401,6 @@ Use `<ol>` when order matters, and `ul` when it doesn't.
 * The `li` tags are sibling tags within their own lists.
 
 </details>
-
-
 
 **Q: What is wrong with this HTML element?**
 
@@ -423,8 +418,6 @@ There should also be an `alt` attribute describing the picture.
 
 </details>
 
-
-
 **Q: How would you create a `<p>` element with the id `"caption-1"` and the classes `"italic"` and `"centered"`?**
 
 <details>
@@ -434,8 +427,6 @@ There should also be an `alt` attribute describing the picture.
 some text
 
 </details>
-
-
 
 **Q: What page does this anchor tag take us to?**
 
@@ -450,8 +441,6 @@ some text
 The `index.html` page!
 
 </details>
-
-
 
 **Q: Which semantic tags should we use in the code snippet above?**
 

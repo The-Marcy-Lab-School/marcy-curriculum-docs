@@ -1,4 +1,4 @@
-# Document Object Model
+# The Document Object Model (DOM) API
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-0-dom)!
@@ -6,17 +6,16 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-- [What is the DOM?](#what-is-the-dom)
-- [The Chrome Developer Tools](#the-chrome-developer-tools)
-- [The `document` object](#the-document-object)
-  - [Selecting Elements in the DOM (Read)](#selecting-elements-in-the-dom-read)
-  - [Modifying Elements in the DOM (Update / Delete)](#modifying-elements-in-the-dom-update--delete)
-  - [Creating Elements (Create)](#creating-elements-create)
-- [Linking JS files to HTML](#linking-js-files-to-html)
-  - [Variables are Added to the Global Namespace](#variables-are-added-to-the-global-namespace)
-    - [Option 1 — Use an IIFE (the old way)](#option-1--use-an-iife-the-old-way)
-    - [Option 2 — Use Modules (the modern way)](#option-2--use-modules-the-modern-way)
-
+* [What is the DOM?](intro-to-dom.md#what-is-the-dom)
+* [The Chrome Developer Tools](intro-to-dom.md#the-chrome-developer-tools)
+* [The `document` object](intro-to-dom.md#the-document-object)
+  * [Selecting Elements in the DOM (Read)](intro-to-dom.md#selecting-elements-in-the-dom-read)
+  * [Modifying Elements in the DOM (Update / Delete)](intro-to-dom.md#modifying-elements-in-the-dom-update--delete)
+  * [Creating Elements (Create)](intro-to-dom.md#creating-elements-create)
+* [Linking JS files to HTML](intro-to-dom.md#linking-js-files-to-html)
+  * [Variables are Added to the Global Namespace](intro-to-dom.md#variables-are-added-to-the-global-namespace)
+    * [Option 1 — Use an IIFE (the old way)](intro-to-dom.md#option-1--use-an-iife-the-old-way)
+    * [Option 2 — Use Modules (the modern way)](intro-to-dom.md#option-2--use-modules-the-modern-way)
 
 ## What is the DOM?
 
@@ -33,7 +32,7 @@ For example, consider this HTML:
 </ul>
 ```
 
-The DOM would take the elements of this HTML structure and turn them into objects! (*This is not actually happening in your code. This is just to demonstrate the idea.*)
+The DOM would take the elements of this HTML structure and turn them into objects! (_This is not actually happening in your code. This is just to demonstrate the idea._)
 
 ```js
 // <h3 id="main-list-heading">Wow a list!</h3>
@@ -66,14 +65,14 @@ const ul = {
 }
 ```
 
-The browser automatically generates this document object model for us! As web developers, we can use this DOM to do so much! 
-
+The browser automatically generates this document object model for us! As web developers, we can use this DOM to do so much!
 
 ## The Chrome Developer Tools
 
-Open with <kbd>f12</kbd> or by right-clicking and selecting _inspect_.
+Open with f12 or by right-clicking and selecting _inspect_.
 
 The Chrome Developer Tools allow us to interact with the source code of the page.
+
 * Use the _Elements_ tab to view and manually manipulate the DOM
 * Use the _Console_ tab to view `console.log` messages printed from the JS and to dynamically manipulate the DOM
 
@@ -93,6 +92,7 @@ document.children[0].children[1]
 ```
 
 The `document` object also has methods that allow us to perform CRUD operations on the DOM:
+
 * **C**reate new elements (create new "nodes" in the tree)
 * **R**ead (find or "query for") existing elements
 * **U**pdate existing elements
@@ -169,6 +169,7 @@ More Reading: [w3Schools](https://www.w3schools.com/js/js_htmldom_html.asp)
 Using the DOM API to dynamically create elements is one of the most powerful ways we can use it!
 
 The pattern:
+
 1. **Create**: `const newEl = document.createElement('div')`
 2. **Modify**: add an id, class, and text, whatever
 3. **Add**: `parentEl.append(newEl)`
@@ -199,7 +200,7 @@ document.querySelector('body').innerHTML = `
 
 ## Linking JS files to HTML
 
-Playing around with the `document` object in the Console shows us the power of the DOM API. 
+Playing around with the `document` object in the Console shows us the power of the DOM API.
 
 If we want to utilize this functionality in our own websites, we need to link a `.js` file to our HTML.
 
@@ -275,10 +276,14 @@ When loading multiple `.js` files with `script` tags, variables declared are add
 
 Back in the day, this was a useful feature as it let us keep our files separate but still be able to interact with each other since exporting and importing values wasn't invented yet.
 
-**<details><summary>Q: What are the risks of adding variables to the global namespace?</summary>**
-> Adding variables to the global namespace is not ideal as it limits our ability to keep our files modular, leads to unexpected behavior, and makes debugging incredibly difficult. 
-> 
-> Imagine you have an array stored in a variable named `data` in one file. In another file you write `data.sort()`, thinking that you are modifying a local variable but instead you end up modifying the `data` variable in the global namespace. In the first file, all of a sudden, your data is sorted unexpectedly without any logic that would explicitly do so in that same file.
+<details>
+
+<summary><strong>Q: What are the risks of adding variables to the global namespace?</strong></summary>
+
+Adding variables to the global namespace is not ideal as it limits our ability to keep our files modular, leads to unexpected behavior, and makes debugging incredibly difficult.
+
+Imagine you have an array stored in a variable named `data` in one file. In another file you write `data.sort()`, thinking that you are modifying a local variable but instead you end up modifying the `data` variable in the global namespace. In the first file, all of a sudden, your data is sorted unexpectedly without any logic that would explicitly do so in that same file.
+
 </details>
 
 To avoid adding variables to the global namespace, there are a couple of things we can do.
@@ -335,7 +340,7 @@ by CORS policy: Cross origin requests are only supported for protocol schemes: h
 chrome-extension, chrome-untrusted, https.
 ```
 
-This is because of an unfortunate fact: **browsers simply do not allow modules to be used over the file:// protocol**. In order to use modules, we need to serve the modules via the `http://` protocol. 
+This is because of an unfortunate fact: **browsers simply do not allow modules to be used over the file:// protocol**. In order to use modules, we need to serve the modules via the `http://` protocol.
 
 **Doing so means we need to turn our computer into a server!**
 

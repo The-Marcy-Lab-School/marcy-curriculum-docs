@@ -6,14 +6,14 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-- [Key Terms](#key-terms)
-- [Lets Make a Leaderboard!](#lets-make-a-leaderboard)
-- [`localStorage` Lets Us Store Data That Persists](#localstorage-lets-us-store-data-that-persists)
-- [JSON.stringify() and JSON.parse()](#jsonstringify-and-jsonparse)
-  - [Adding the leaderboard to LocalStorage](#adding-the-leaderboard-to-localstorage)
-- [`localStorage` Helpers](#localstorage-helpers)
-  - [Data Layer: Creating an API for `localStorage`](#data-layer-creating-an-api-for-localstorage)
-- [Removing Values](#removing-values)
+* [Key Terms](localStorage.md#key-terms)
+* [Lets Make a Leaderboard!](localStorage.md#lets-make-a-leaderboard)
+* [`localStorage` Lets Us Store Data That Persists](localStorage.md#localstorage-lets-us-store-data-that-persists)
+* [JSON.stringify() and JSON.parse()](localStorage.md#jsonstringify-and-jsonparse)
+  * [Adding the leaderboard to LocalStorage](localStorage.md#adding-the-leaderboard-to-localstorage)
+* [`localStorage` Helpers](localStorage.md#localstorage-helpers)
+  * [Data Layer: Creating an API for `localStorage`](localStorage.md#data-layer-creating-an-api-for-localstorage)
+* [Removing Values](localStorage.md#removing-values)
 
 ## Key Terms
 
@@ -28,16 +28,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ## Lets Make a Leaderboard!
 
-Making video games is one of the greatest joys of programming. And for good reason! Not only are they fun to play, but they are rewarding to create. Video games also can teach us important lessons about programming. 
+Making video games is one of the greatest joys of programming. And for good reason! Not only are they fun to play, but they are rewarding to create. Video games also can teach us important lessons about programming.
 
 Suppose we had a game where the user is challenged to click a button as many times as they can in 5 seconds.
 
-![ a game where the user is challenged to click a button as many times as they can in 5 seconds.](img/speed-clicker.gif)
+![a game where the user is challenged to click a button as many times as they can in 5 seconds.](img/speed-clicker.gif)
 
 To encourage the competitive spirit of gaming, a key feature that we want to implement is a leaderboard to display the user's previous scores. Take a look at the `speed-clicker-game` where we've implemented this game!
 
-**<details><summary>Q: Look at `main.js` and see how the `leaderboard` is stored "in memory". What are the issues with storing a leaderboard in memory?</summary>**
-> When the user refreshes the page or closes their browser, the program will end and all "in memory" variables will be thrown away. When we return to the page, a new `leaderboard` will be created.
+<details>
+
+<summary><strong>Q: Look at <code>main.js</code> and see how the <code>leaderboard</code> is stored "in memory". What are the issues with storing a leaderboard in memory?</strong></summary>
+
+When the user refreshes the page or closes their browser, the program will end and all "in memory" variables will be thrown away. When we return to the page, a new `leaderboard` will be created.
+
 </details>
 
 ## `localStorage` Lets Us Store Data That Persists
@@ -77,8 +81,12 @@ leaderboard.push(40);
 // Uncaught TypeError: leaderboard.push is not a function
 ```
 
-**<details><summary>Q: Why did we get a TypeError?</summary>**
-> Because `localStorage.setItem` converted the given array into a string. When we try to retrieve that array, it is no longer an array!
+<details>
+
+<summary><strong>Q: Why did we get a TypeError?</strong></summary>
+
+Because `localStorage.setItem` converted the given array into a string. When we try to retrieve that array, it is no longer an array!
+
 </details>
 
 ## JSON.stringify() and JSON.parse()
@@ -148,11 +156,12 @@ localStorage.clear();
 
 ### Adding the leaderboard to LocalStorage
 
-Let's try to use `localStorage` to implement our leaderboard! 
+Let's try to use `localStorage` to implement our leaderboard!
 
-Previously, we had initialized `leaderboard` as an empty array "in memory" and then whenever the game ended, we would push the current score into that array. 
+Previously, we had initialized `leaderboard` as an empty array "in memory" and then whenever the game ended, we would push the current score into that array.
 
 To use `localStorage`, we'll follow a common pattern:
+
 1. Check to see if there is a `leaderboard` value in `localStorage` and store it in memory.
 2. If there isn't any previously-stored `leaderboard`, make a new array in memory.
 3. Modify the in-memory array with our new data.
@@ -180,7 +189,6 @@ updateLeaderboard(leaderboard);
 Return to the game and test it out! It should work:
 
 {% hint style="info" %}
-
 **Pro Tip** you will often see the following syntax when retrieving a value from `localStorage`
 
 ```js
@@ -199,7 +207,6 @@ if (leaderboard === null) {
   leaderboard = [];
 }
 ```
-
 {% endhint %}
 
 ## `localStorage` Helpers
@@ -266,9 +273,10 @@ We can take this even further to ensure that our application works in a **consis
 
 Suppose we had an application with a form that lets users add names to a list. Names are displayed on the screen in a list and clicking on the name will remove it from the list. This application can be found in `3-data-layer`.
 
-Currently, it interacts with a `names` array stored in `localStorage` by directly using `localStorage` methods, manually stringifying and parsing. This opens the door to errors and inconsistency. 
+Currently, it interacts with a `names` array stored in `localStorage` by directly using `localStorage` methods, manually stringifying and parsing. This opens the door to errors and inconsistency.
 
 In order to restrict the program so that it can only interact with `localStorage` in the way we choose, we:
+
 * Isolate the logic for dealing with `localStorage` in its own file.
 * Create functions for interacting with the `names` key in `localStorage`.
 * Only export the functions that indirectly interact with `localStorage`. **The exported functions will form our API.**
@@ -341,16 +349,15 @@ export const removeAllNames = () => {
 }
 ```
 
-Note that not every function is exported. 
+Note that not every function is exported.
+
 * `setLocalStorageKey` and `getLocalStorageKey` directly interact with `localStorage` and take care of stringifying, parsing, and error handling.
 * The remaining functions are all exported. They form our `localStorage` API ("application programming interface"), giving the rest of our application the ability to interact with `localStorage`, but only in the ways that we choose.
 
 With this `localStorage` API that we've created, we can greatly simplify our code!
 
 {% tabs %}
-
-{% tab title="Without our API" %} 
-
+{% tab title="Without our API" %}
 ```js
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -366,11 +373,9 @@ const handleSubmit = (e) => {
   form.reset();
 }
 ```
-
 {% endtab %}
 
-{% tab title="With our API" %} 
-
+{% tab title="With our API" %}
 ```js
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -384,10 +389,8 @@ const handleSubmit = (e) => {
   form.reset();
 }
 ```
-
 {% endtab %}
-
-{% endtabs %} 
+{% endtabs %}
 
 **Q: What makes this predictable and consistent?**
 

@@ -48,16 +48,16 @@ CREATE TABLE all_data (
 
 **`all_data` Table:**
 
-| id  | owner_name     | pet_name   | type |
-| --- | -------------- | ---------- | ---- |
-| 1   | Ann Duong      | Bora       | bird |
-| 2   | Ann Duong      | Tora       | dog  |
-| 3   | Ann Duong      | Kora       | dog  |
-| 4   | Ben Spector    |            |      |
-| 5   | Reuben Ogbonna | Juan Pablo | dog  |
-| 6   | Reuben Ogbonna | Pon Juablo | cat  |
-| 7   | Carmen Salas   | Khalo      | dog  |
-| 8   | Carmen Salas   | Frida      | cat  |
+| id | owner\_name    | pet\_name  | type |
+| -- | -------------- | ---------- | ---- |
+| 1  | Ann Duong      | Bora       | bird |
+| 2  | Ann Duong      | Tora       | dog  |
+| 3  | Ann Duong      | Kora       | dog  |
+| 4  | Ben Spector    |            |      |
+| 5  | Reuben Ogbonna | Juan Pablo | dog  |
+| 6  | Reuben Ogbonna | Pon Juablo | cat  |
+| 7  | Carmen Salas   | Khalo      | dog  |
+| 8  | Carmen Salas   | Frida      | cat  |
 
 <details>
 
@@ -91,24 +91,24 @@ CREATE TABLE pets (
 
 **`people` Table:**
 
-| id  | name           |
-| --- | -------------- |
-| 1   | Ann Duong      |
-| 2   | Reuben Ogbonna |
-| 3   | Carmen Salas   |
-| 4   | Ben Spector    |
+| id | name           |
+| -- | -------------- |
+| 1  | Ann Duong      |
+| 2  | Reuben Ogbonna |
+| 3  | Carmen Salas   |
+| 4  | Ben Spector    |
 
 **`pets` Table:**
 
-| id  | name       | type | owner_id |
-| --- | ---------- | ---- | -------- |
-| 1   | Khalo      | dog  | 3        |
-| 2   | Juan Pablo | dog  | 2        |
-| 3   | Bora       | bird | 1        |
-| 4   | Frida      | cat  | 3        |
-| 5   | Tora       | dog  | 1        |
-| 6   | Pon Juablo | cat  | 2        |
-| 7   | Kora       | dog  | 1        |
+| id | name       | type | owner\_id |
+| -- | ---------- | ---- | --------- |
+| 1  | Khalo      | dog  | 3         |
+| 2  | Juan Pablo | dog  | 2         |
+| 3  | Bora       | bird | 1         |
+| 4  | Frida      | cat  | 3         |
+| 5  | Tora       | dog  | 1         |
+| 6  | Pon Juablo | cat  | 2         |
+| 7  | Kora       | dog  | 1         |
 
 <details>
 
@@ -117,7 +117,6 @@ CREATE TABLE pets (
 We no longer have duplicate data It is not exactly clear anymore the name of the person who owns each pet
 
 </details>
-
 
 With these two tables, a **one-to-many relationship** has been formed: a person can have many pets. This is one of the most common relationships between tables in a database. Some other examples include:
 
@@ -195,7 +194,6 @@ WHERE type = 'dog' OR type = 'bird';
 
 </details>
 
-
 Now let's try a harder one: What are the names of all the pets owned by Ann?
 
 In order to answer this question, it will be helpful to use a `JOIN`
@@ -206,15 +204,15 @@ FROM people
 	JOIN pets ON people.id = pets.owner_id;
 ```
 
-| person.id | name           | pet.id | name       | type | owner_id |
-| --------- | -------------- | ------ | ---------- | ---- | -------- |
-| 1         | Ann Duong      | 3      | Bora       | bird | 1        |
-| 1         | Ann Duong      | 4      | Tora       | dog  | 1        |
-| 1         | Ann Duong      | 7      | Kora       | dog  | 1        |
-| 2         | Reuben Ogbonna | 2      | Juan Pablo | dog  | 2        |
-| 2         | Reuben Ogbonna | 6      | Pon Juablo | cat  | 2        |
-| 3         | Carmen Salas   | 1      | Khalo      | dog  | 3        |
-| 3         | Maya Salas     | 5      | Frida      | cat  | 3        |
+| person.id | name           | pet.id | name       | type | owner\_id |
+| --------- | -------------- | ------ | ---------- | ---- | --------- |
+| 1         | Ann Duong      | 3      | Bora       | bird | 1         |
+| 1         | Ann Duong      | 4      | Tora       | dog  | 1         |
+| 1         | Ann Duong      | 7      | Kora       | dog  | 1         |
+| 2         | Reuben Ogbonna | 2      | Juan Pablo | dog  | 2         |
+| 2         | Reuben Ogbonna | 6      | Pon Juablo | cat  | 2         |
+| 3         | Carmen Salas   | 1      | Khalo      | dog  | 3         |
+| 3         | Maya Salas     | 5      | Frida      | cat  | 3         |
 
 We can modify our `SELECT` and add a `WHERE` clause to answer our question!
 
@@ -254,12 +252,11 @@ WHERE	people.name = 'Carmen Salas';
 
 </details>
 
-
 ## Entity Relation Diagrams and Many To Many Relationships
 
 We can illustrate the relationships between tables with an **entity relation diagram (ERD)**:
 
-![ERD with one to many and many to many relationships](img/labeled-erd.png)
+![ERD with one to many and many to many relationships](<img/labeled-erd copy (1).png>)
 
 > _created using https://dbdiagram.io/_
 

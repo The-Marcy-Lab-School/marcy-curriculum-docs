@@ -1,4 +1,4 @@
-# Building a Pokedex!
+# Building a Fetching App
 
 ## Video
 
@@ -25,14 +25,14 @@ Remove the starter code.
 
 Before you build anything, draw a wireframe:
 
-![](./pokedex-wireframe.svg)
+![](../fullstack-curriculum/mod-3-async/pokedex-wireframe.svg)
 
 Then plan out the logic:
+
 * When the page loads:
   * fetch pikachu (make sure to catch any errors)
   * render pikachu data to the screen
   * add an event listener for the form
-
 * When the form is submitted:
   * grab data from the form
   * use that data to fetch a new pokemon (make sure to catch any errors)
@@ -41,6 +41,7 @@ Then plan out the logic:
 ## HTML
 
 First, we'll create the structure. We want:
+
 1. An `h1` heading with some title
 2. A `form` to search for a pokemon. It should have:
    1. An `h2` heading with a form title
@@ -79,9 +80,10 @@ Here's the HTML we came up with, added to the `div#app` container:
 ## JavaScript Separation of Concerns
 
 Rather than writing all of your code in one place, separate your code into three files:
-- `src/fetching-helpers.js` - exports functions related to fetching data from specific Web APIs
-- `src/dom-helpers.js` - exports functions related to dom manipulation
-- `src/main.js` - pulls together functions from helper files and invokes them. Defines event handlers if needed.
+
+* `src/fetching-helpers.js` - exports functions related to fetching data from specific Web APIs
+* `src/dom-helpers.js` - exports functions related to dom manipulation
+* `src/main.js` - pulls together functions from helper files and invokes them. Defines event handlers if needed.
 
 After creating these files, we can put the outline of some functions inside:
 
@@ -182,6 +184,7 @@ The `pokemonData` that the `fetchPokemon` promise resolves to will be passed to 
 In `dom-helpers.js`, the final step is rendering the pokemon! This requires us to look at the API more closely to see the structure of the data we're dealing with.
 
 Printing out the `pokemonData` is a helpful way to see the data structure first. We can see that we care about the following data:
+
 * `pokemonData.sprites` — an object of pokemon images
 * `pokemonData.name` — the name of the pokemon
 
