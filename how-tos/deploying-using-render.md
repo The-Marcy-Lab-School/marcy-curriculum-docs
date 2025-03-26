@@ -65,6 +65,10 @@ Follow the same steps as above. However, when configuring the server, make the f
 - Build Command — `cd [name_of_frontend_vite_folder] && npm i && npm run build`
 - Start Command — `cd [name_of_server_folder] && npm i && node index.js`
 
+For example, if your project had a `vite-project` folder for the frontend, and a `server` folder for the backend, your configuration would look like this:
+
+![On render, the build and start commands are set](img/render-deploying-static-build-start.png)
+
 ## Deploy A Fullstack Server With A Database
 
 1. Make sure you have an account on https://render.com/ and that you sign in using Github
