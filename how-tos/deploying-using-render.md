@@ -30,9 +30,9 @@ This will take you to your Dashboard where you can see existing deployments.
 
 ![alt text](img/dashboard.png)
 
-## Deploy A Simple No-Database App
+## Deploy A Simple No-Database REST API
 
-Follow these instructions to deploy an Express app that does NOT include a database. If your app includes a database, go to the next section.
+Follow these instructions to deploy an Express app that does NOT include a database and does NOT serve static assets. If your app serves static assets or includes a database, go to the next sections.
 
 1. Make sure you are signed in using your GitHub account
 2. https://dashboard.render.com/ and click on New +
@@ -42,21 +42,28 @@ Follow these instructions to deploy an Express app that does NOT include a datab
 6. Find your repository and select **Connect**
 7. Fill out the information for your Server
 
-* Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
-* Region - select US East (Ohio)
-* Branch - main
-* Root Directory - `server/` or wherever your `index.js` file lives. Use `./` if it is in the root of your repo.
-* Runtime - Node
-* Build Command - leave blank
-* Start Command - `node index.js`
-* Instance Type - select **Free**
-* Select **Create Web Service**
+   * Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
+   * Region - select US East (Ohio)
+   * Branch - main
+   * Root Directory - `server/` or wherever your `index.js` file lives. Use `./` if it is in the root of your repo.
+   * Runtime - Node
+   * Build Command - leave blank
+   * Start Command - `node index.js`
+   * Instance Type - select **Free**
+   * Select **Create Web Service**
 
 This should take you to your web service's dashboard where you can see the latest build information and the URL. In a few minutes your server will be up and running!
 
 Any time that you want to make an update to your deployed server, just commit and push the change to your repo!
 
 ![alt text](img/web-service-dashboard.png)
+
+## Deploy A Static Server
+
+Follow the same steps as above. However, when configuring the server, make the following changes:
+
+- Build Command — `cd [name_of_frontend_vite_folder] && npm i && npm run build`
+- Start Command — `cd [name_of_server_folder] && npm i && node index.js`
 
 ## Deploy A Fullstack Server With A Database
 
@@ -87,8 +94,8 @@ postgresql://user:password@host/dbname
   * Branch - main
   * Root Directory - if you used the React Express Auth Template, leave this blank
   * Runtime - Node
-  * Build Command - if you used the React Express Auth Template, use npm i && npm run migrate:rollback && npm run migrate && npm run seed
-  * Start Command - if you used the React Express Auth Template, use npm start
+  * Build Command - if you used the React Express Auth Template, use `npm i && npm run migrate:rollback && npm run migrate && npm run seed`
+  * Start Command - if you used the React Express Auth Template, use `npm start`
   * Instance Type - select Free
 * Select **Create Web Service** (Note: The first build will fail because you need to set up environment variables)
 
