@@ -38,7 +38,7 @@ Let's do it!
 * Start the server application with `nodemon index.js`
 * In a separate terminal, `cd` into the `frontend` and run `npm i`
 * Start the frontend application with `npm run dev`
-* Note that there is a `utils/fetchData` helper function provided for you in both the `server` and the `frontend`.
+* Note that there is a `handleFetch` helper function provided for you in both the `server` and the `frontend`.
 
 ## API Keys
 
@@ -109,7 +109,7 @@ console.log(process.env.API_KEY); // abc123
 
 const serveGifs = async (req, res, next) => {
   const API_URL = `https://api.giphy.com/v1/gifs/trending?api_key=${process.env.API_KEY}&limit=3&rating=g`;
-  const [data, error] = await fetchData(API_URL);
+  const [data, error] = await handleFetch(API_URL);
   if (error) {
     console.log(error.message);
     return res.status(404).send(error);
@@ -148,7 +148,7 @@ useEffect(() => {
   const doFetch = async () => {
     const API_URL = `/api/gifs`;
     try {
-      const [data, error] = await fetchData(API_URL);
+      const [data, error] = await handleFetch(API_URL);
       if (data) setGifs(data.data);
     } catch (error) {
       console.log(error.message)
@@ -193,11 +193,11 @@ This is where things may get confusing... Bear with me...
 
 In that last step, we tested the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at http://localhost:8080.
 
-If we instead tested the frontend changes by running `npm run dev` and viewing the app through the Vite development server, the app would break. In fact, if you do that now, it will still break. This is because `npm run dev` will serve our frontend at http://localhost:5173/ which is a different origin from our server: http://localhost:8080.
+If we instead tested the frontend changes by running `npm run dev` and viewing the app through the Vite development server, the app would break. In fact, if you do that now, it will still break. This is because `npm run dev` will serve our frontend at [http://localhost:5173/](http://localhost:5173/) which is a different origin from our server: [http://localhost:8080](http://localhost:8080).
 
-When the frontend makes a request to `/api/gifs` from http://localhost:5173/, the request is going to http://localhost:5173/api/gifs which doesn't provide the resources we are looking for.
+When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the request is going to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs) which doesn't provide the resources we are looking for.
 
-To enable the development version of our frontend to send same-origin requests, we need to "trick" the Vite development server into sending "same-origin" requests to http://localhost:8080 instead of http://localhost:5173.
+To enable the development version of our frontend to send same-origin requests, we need to "trick" the Vite development server into sending "same-origin" requests to [http://localhost:8080](http://localhost:8080) instead of [http://localhost:5173](http://localhost:5173).
 
 To do this, copy and paste the code below into your `frontend/vite.config.js` file. This is called a **proxy**.
 
@@ -205,7 +205,7 @@ To do this, copy and paste the code below into your `frontend/vite.config.js` fi
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const PORT = 8080;
+const SERVER_PORT = 8080;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -213,7 +213,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: `http://localhost:${PORT}`,
+        target: `http://localhost:${SERVER_PORT}`,
         changeOrigin: true,
       },
     },
