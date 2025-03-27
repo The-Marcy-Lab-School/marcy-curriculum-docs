@@ -19,10 +19,8 @@ Let's do it!
 - [API Requests From The Server](#api-requests-from-the-server)
   - [Environment Variables and Dotenv](#environment-variables-and-dotenv)
   - [Deploying with Environment Variables](#deploying-with-environment-variables)
-- [Making an API request from the frontend](#making-an-api-request-from-the-frontend)
-- [Development Frontend Request Proxy (if time)](#development-frontend-request-proxy-if-time)
-  - [Two Version of the Frontend](#two-version-of-the-frontend)
-  - [Proxy Requests](#proxy-requests)
+- [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
+- [Development Frontend Request Proxy](#development-frontend-request-proxy)
 
 ## Terms
 
@@ -198,7 +196,7 @@ For example, on Render, you can add environment variables when configuring your 
 
 ![Add environment variables when configuring render web servces](img/3-environment-variables-configuration-render.png)
 
-## Making an API request from the frontend
+## Same Origin Requests from the Frontend
 
 Now our server can perform an API request using a protected API key. 
 
@@ -222,54 +220,25 @@ To test this out we should:
 
 * Re-run `npm run build` to re-build our frontend application's static assets in the `dist/` folder.
 * Re-run the server which will serve our updated frontend static assets.
-* Visit the server http://localhost:8080 to see the updated frontend!
+* Visit the server [http://localhost:8080](http://localhost:8080) to see the updated frontend!
 
 {% hint style="info" %}
 
-Normally when sending requests to 3rd-party APIs, we include the full URL: `http://someapi.com/endpoint`. These kinds of requests are **cross-origin** requests because the origin (`http://someapi.com`) is different from the origin of our server (`http://localhost` or wherever the app is deployed). Our server can safely do this but as we've seen, our front-ends should not.
+Why is the API url just `/api/stories` and not `http://localhost:8080/api/stories`?
 
-However, we want to send a **same-origin** request — the origin of the request is the same as the origin of the response (we got the frontend application from the same server that we are now requesting data from).
+When we send requests to servers that we don't control, we include the full URL (e.g. [https://dog.ceo/api/breeds/image/random](https://dog.ceo/api/breeds/image/random)). These kinds of requests are **cross-origin** because the origin of the request and the destination are not the same.
 
-So, our request URL will be: `/api/gifs`. When we leave the host out of the URL, our browser will assume the request is a same-origin request.
-
-{% endhint %}
-
-## Development Frontend Request Proxy (if time)
-
-{% hint style="info" %}
-
-TLDR: copy and paste the code snippet below into your `vite.config.js` file to make your development frontend application play nicely with your server and avoid cross-origin resource sharing (CORS) issues.
+In this case, we visit `http://localhost:8080` to access both the client-side (frontend) code and the API endpoint `http://localhost:8080/api/stories`. In this case, the client-side code is coming from the same origin as the destination of its API request. When we leave out the host (`http://localhost:8080`), our browser assumes we are making a **same-origin request**.
 
 {% endhint %}
 
-### Two Version of the Frontend
+## Development Frontend Request Proxy
 
-We could totally stop here and everything would be great. We can now build server applications that provide frontends that utilize 3rd-party APIs without exposing API keys by utilizing environment variables!
+In that last step, we tested the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at [http://localhost:8080](http://localhost:8080). However, ideally we don't re-build the application on every change. Instead, we'd like to test frontend changes using the development server with `npm run dev`.
 
-However, we need to remember that we have two different versions of our frontend:
+Try running the development version with `npm run dev`. The app breaks! 
 
-1. The development version (which lives in the `frontend/src` folder)
-2. The built "production/distribution" version (which lives in the `frontend/dist` folder)
-
-<details>
-
-<summary><strong>Q: Which version does the server serve?</strong></summary>
-
-The built "production/distribution" version in the `frontend/dist` folder!
-
-Remember, the server can only serve static assets. The development version is not "static" because it contains dynamic JSX React code. It must be compiled into plain JS first.
-
-</details>
-
-### Proxy Requests
-
-This is where things may get confusing... Bear with me...
-
-In that last step, we tested the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at http://localhost:8080.
-
-If we instead tested the frontend changes by running `npm run dev` and viewing the app through the Vite development server, the app would break. In fact, if you do that now, it will still break. This is because `npm run dev` will serve our frontend at [http://localhost:5173/](http://localhost:5173/) which is a different origin from our server: [http://localhost:8080](http://localhost:8080).
-
-When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the request is going to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs) which doesn't provide the resources we are looking for.
+When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the browser assumes it is a same-origin request and sends the request to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs). But remember, the API lives at port `8080` — we've changed the origin of the request!
 
 To enable the development version of our frontend to send same-origin requests, we need to "trick" the Vite development server into sending "same-origin" requests to [http://localhost:8080](http://localhost:8080) instead of [http://localhost:5173](http://localhost:5173).
 
