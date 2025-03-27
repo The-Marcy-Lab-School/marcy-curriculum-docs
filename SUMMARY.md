@@ -100,7 +100,7 @@
   * [Mod 8 Overview](mod-8-backend/Overview.md)
   * [Intro to Express](mod-8-backend/1-intro-to-express.md)
   * [Building a Static Web Server with Middleware](mod-8-backend/2-building-a-static-web-server-with-middleware.md)
-  * [Securing API Keys with Environment Variables](mod-8-backend/3-securing-api-keys-with-environment-variables.md)
+  * [Securing API Keys and Environment Variables](mod-8-backend/3-securing-api-keys-and-environment-variables.md)
   * [Building a RESTful API with MVC](mod-8-backend/4-building-a-rest-api-with-mvc.md)
   * [SQL and Databases](mod-8-backend/5-sql-and-databases.md)
   * [JOIN (Association) SQL Queries](mod-8-backend/6-join-sql-queries.md)
