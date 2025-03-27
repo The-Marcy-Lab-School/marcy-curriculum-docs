@@ -78,12 +78,12 @@ To address the second mistake, _we must NEVER send requests with API keys from c
 
 {% hint style="danger" %}
 
-NEVER SEND REQUESTS WITH API KEYS FROM CLIENT-SIDE(FRONTEND) APPLICATIONS!!!
+NEVER send requests with API keys from client-side (frontend) applications!
 
 {% endhint %}
 
 
-To understand why, run the `frontend`` application from the provided repo, view the Networks tab and refresh the page. Then, look through the requests sent by the application and see if you can find the exposed API key!
+To understand why, run the `frontend` application from the provided repo, view the Networks tab and refresh the page. Then, look through the requests sent by the application and see if you can find the exposed API key!
 
 ![The Network tab can expose API Keys used by the client-side (frontend) application.](img/3-nyt-api-key-exposed-network-tab.png)
 
