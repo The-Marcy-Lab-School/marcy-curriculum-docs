@@ -276,7 +276,7 @@ A **server** is just a computer that shares its resources over the internet. A u
 
 When we visit a URL, like [https://www.google.com](https://www.google.com), our browser converts the **Domain Name** (`google.com`) into the **IP Address** of the server computer where the code for Google lives. Then, our computer sends a **request** to that server computer over the internet and the server sends a **response**.
 
-![The client server interaction](<../how-tos/img/client-server-interaction (1).png>)
+![The client server interaction](../how-tos/img/client-server-interaction.png)
 
 With a **development server**, we can simulate this **HTTP request-response cycle** by having our computer act as both the client and the server.
 

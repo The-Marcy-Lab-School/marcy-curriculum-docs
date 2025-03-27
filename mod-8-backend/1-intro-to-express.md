@@ -37,7 +37,7 @@ So how do the client and server interact?
 3. The controller parses the request and sends a **response**
 4. The client receives the response and renders the data!
 
-![express diagram](<img/express-diagram-simple copy.svg>)
+![express diagram](img/express-diagram-simple.svg)
 
 <details>
 

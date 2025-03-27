@@ -40,7 +40,7 @@ Well, Google is "hosted" on a server that lets you access it over the internet.
 
 A **server** is any computer that stores, manages, and shares resources over the internet.
 
-![The client server interaction](<img/client-server-interaction (1).png>)
+![The client server interaction](img/client-server-interaction.png)
 
 A user's computer acts as the **"client"** and sends an **HTTP request** (**h**yper**t**ext transfer protocol) to get resources from the server using the `https://` protocol (the hypertext transfer protocol).
 
