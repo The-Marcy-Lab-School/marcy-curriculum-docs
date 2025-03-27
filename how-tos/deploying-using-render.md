@@ -95,44 +95,32 @@ As a result, the "continuous deployment" process would look like this:
 postgresql://user:password@host/dbname
 ```
 
-3. Deploy Your Express Server
+3. Deploy Your Express Server. Follow the instructions above for deploying a server with the following changes:
+    * Region - select US East (Ohio) - the important thing is that it matches the PostgreSQL region
+    * Build Command - if you used the React Express Auth Template, use `npm i && npm run migrate:rollback && npm run migrate && npm run seed`
+    * Start Command - if you used the React Express Auth Template, use `npm start`
+    * Select **Create Web Service** (Note: The first build will fail because you need to set up environment variables)
 
-* https://dashboard.render.com/ and click on New +
-* Select **Web Service**
-* Connect your GitHub account (if not connected already)
-* Find your repository and select **Connect**
-* Fill out the information for your Server
-  * Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
-  * Region - select US East (Ohio) - the important thing is that it matches the PostgreSQL region
-  * Branch - main
-  * Root Directory - if you used the React Express Auth Template, leave this blank
-  * Runtime - Node
-  * Build Command - if you used the React Express Auth Template, use `npm i && npm run migrate:rollback && npm run migrate && npm run seed`
-  * Start Command - if you used the React Express Auth Template, use `npm start`
-  * Instance Type - select Free
-* Select **Create Web Service** (Note: The first build will fail because you need to set up environment variables)
+1. Set up environment variables
 
-4. Set up environment variables
+   * From the Web Service you just created, select Environment on the left side-menu
+   * Under Secret Files, select Add Secret File
+     * Filename - `.env`
+     * Look at your local .env file and copy over the `SESSION_SECRET` variable and value.
+     * Add a second variable called `PG_CONNECTION_STRING`. Its value should be the `Internal Database URL` value from step 2e above.
+     * Add a third variable called `NODE_ENV`. Its value should be `'production'`
+     * Your file should look like this:
 
-* From the Web Service you just created, select Environment on the left side-menu
-* Under Secret Files, select Add Secret File
-  * Filename - .env
-  * Contents
-    * Look at your local .env file and copy over the `SESSION_SECRET` variable and value.
-    * Add a second variable called `PG_CONNECTION_STRING`. Its value should be the `Internal Database URL` value from step 2e above.
-    * Add a third variable called `NODE_ENV`. Its value should be `'production'`
-    * Your file should look like this:
+    ```
+    SESSION_SECRET='AS12FD42FKJ42FIE3WOIWEUR1283'
+    PG_CONNECTION_STRING='postgresql://user:password@host/dbname'
+    NODE_ENV='production'
+    ```
 
-```
-SESSION_SECRET='AS12FD42FKJ42FIE3WOIWEUR1283'
-PG_CONNECTION_STRING='postgresql://user:password@host/dbname'
-NODE_ENV='production'
-```
-
-* Click Save Changes
+* Click **Save Changes**
 
 ### Future changes to your code
 
 If you followed these steps, your Render server will redeploy whenever the `main` branch is committed to. To update the deployed application, simply commit to `main`.
 
-For frontend changes, make sure to run `npm run build` to update the `public/` folder contents and push.
+For frontend changes, you may need to run `npm run build` to update the `public/` folder contents and push.
