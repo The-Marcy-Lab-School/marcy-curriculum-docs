@@ -28,7 +28,7 @@ Start by creating an account using your **GitHub** account. This will let you ea
 
 This will take you to your Dashboard where you can see existing deployments.
 
-![alt text](img/dashboard.png)
+![The Render Dashboard](img/dashboard.png)
 
 ## Deploy A Simple No-Database REST API
 
@@ -37,17 +37,15 @@ Follow these instructions to deploy an Express app that does NOT include a datab
 1. Make sure you are signed in using your GitHub account
 2. https://dashboard.render.com/ and click on New +
 3. Select **Web Service**
-4. Build and deploy from a Git repository
-5. Find and Connect your GitHub repository
-6. Find your repository and select **Connect**
-7. Fill out the information for your Server
+4. Choose **Git Provider** to find a repository on your account or paste a link to a **Public Git Repository**
+5. Fill out the information for your Server
 
    * Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
    * Region - select US East (Ohio)
-   * Branch - main
-   * Root Directory - `server/` or wherever your `index.js` file lives. Use `./` if it is in the root of your repo.
+   * Branch - `main` (or `draft` if for an assignment)
+   * Root Directory - `server` (or wherever the `package.json` file for your server is)
    * Runtime - Node
-   * Build Command - leave blank
+   * Build Command - `npm install`
    * Start Command - `node index.js`
    * Instance Type - select **Free**
    * Select **Create Web Service**
@@ -60,7 +58,7 @@ Any time that you want to make an update to your deployed server, just commit an
 
 ## Deploy A Static Server with Vite
 
-Since projects built using Vite need to be built to generate static assets, we need to modify the deployment process so that each time a new version of the repository is created via a new commit, the static assets are re-built. 
+Projects built using Vite need to run the command `npm run build` to generate static assets. So, we need to modify the deployment process so that each time a new version of the repository is created via a new commit, the static assets are re-built. 
 
 Rather than building those assets locally and then pushing the `dist/` folder to the repo, we'll just configure the server to build the static assets each time a commit is detected.
 
