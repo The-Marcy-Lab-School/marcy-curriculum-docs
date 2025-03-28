@@ -17,8 +17,8 @@ In this first lesson, we're going to learn the basics of Express and build and d
   - [Endpoints](#endpoints)
   - [Controllers](#controllers)
   - [Query Parameters](#query-parameters)
-  - [Challenge](#challenge)
-  - [Listening: Host and Ports](#listening-host-and-ports)
+  - [Query Parameter Challenge](#query-parameter-challenge)
+- [Listening: Host and Ports](#listening-host-and-ports)
 
 ## Terms
 
@@ -190,46 +190,31 @@ app.get('/api/data', serveData);
 app.get('/api/ping', serveStatus);
 ```
 
-These controllers are quite simple. They don't pay much attention to the request (the `req` parameter) and send back a pre-packaged response:
+The `res` parameter is an object with methods for configuring the response we want to send to the client. 
 * The `res.send` method allows us to send data to the client. 
 * The `res.sendStatus` method lets us send just a status code without data.
 
-But what about the `req` and `next` parameters?
+These controllers are quite simple as they just send back a pre-defined response.
+
+The `next` parameter will be discussed in the next lesson, but what about the `req` parameter?
 
 ### Query Parameters
 
-One way we can make use of the request object `req` is by accepting query parameters.
+The `req` parameter is an object containing information about the incoming request. One way we can make use of the request object `req` is by accepting query parameters.
 
-Right now, if I send a GET request to [http://localhost:8080/api/hello](http://localhost:8080/api/hello), the `serveHello` controller is triggered which sends back the pre-packaged data `'hello'`. And it will _always_ send the string `'hello'`
-
-```js
-const serveHello = (req, res, next) => {
-  res.send('hello');
-}
-```
-
-**Query parameters** are added to the end of request URL to tell the server to modify the requested data in some way. They are often used for search queries or to filter results.
+**Query parameters** are added to the end of request URL to tell the server to modify the requested data in some way. They are often used for search queries or to filter results. Google adds a `q` query parameter when you provide a search query:
 
 [https://www.google.com/search?q=express+node](https://www.google.com/search?q=express+node)
 
 Query parameters are appended to the end of a request URL starting with a `?` and followed by `key=value` pairs. In the example above `q` is the name of the query parameter.
 
+When multiple query parameters are needed, they are each separated by `&`s. For example, if we wanted to include a `first` and `last` name to the `/api/hello` endpoint, we could write: 
+
 [localhost:8080/api/hello?first=ben&last=spector](localhost:8080/api/hello?first=ben&last=spector)
 
-When multiple query parameters are needed, they are each separated by `&`s:
+In the controller code each `key=value` query parameter provided in the request URL will show up as a property on the `req.query` object with a string value. 
 
-<details>
-
-**<summary>Q: In the example above, what are the query parameters?</summary>**
-
-`first` and `last`
-
-</details>
-
-
-In the controller code, we can access the value of query parameters using `req.query` object.
-
-Each `key=value` query parameter provided in the request URL will show up as a property on the `req.query` object with a string value:
+So, we can modify our `serveHello` controller like so:
 
 ```js
 const serveHello = (req, res, next) => {
@@ -248,7 +233,8 @@ app.get('/api/hello', serveHello);
 * In this example, we get the `first` and `last` values by destructuring the `req.query` object.
 * Before sending a response, we make sure to check that both query parameters are provided, otherwise we just send `'hello stranger!'`.
 
-### Challenge
+
+### Query Parameter Challenge
 
 How can we modify the `serveData` function so that it filters the array of objects by the `.name` property using a `?filter=value` query parameter?
 
@@ -269,7 +255,7 @@ const serveData = (req, res, next) => {
 
 </details>
 
-### Listening: Host and Ports
+## Listening: Host and Ports
 
 The last lines of code "turn on" the server. That is, they make the server start listening for requests.
 
