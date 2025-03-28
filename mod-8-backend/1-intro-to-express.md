@@ -144,9 +144,8 @@ app.get('/api/hello', serveHello);
 app.get('/api/data', serveData);
 ```
 
-* The associated endpoints for each controller begin with `/` and are appended to the `host:port`
-  * * Since the application runs locally, it will be accessible at `http://localhost:8080`, where `8080` is the port. 
-  * All of the endpoints above are extensions of this host and port (e.g. `http://localhost:8080/api/hello`)
+All endpoints are appended to the host and port.
+* When the server is listening at `http://localhost:8080`, the `/api/hello` endpoint is accessible at `http://localhost:8080/api/hello`
 
 <details>
 
