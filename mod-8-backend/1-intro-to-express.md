@@ -245,11 +245,11 @@ How can we modify the `serveData` function so that it filters the array of objec
 
 ```js
 const serveData = (req, res, next) => {
-  // if no filter is provided, req.query.filter will be undefined. use "" as a backup value
-  const filterTerm = req.query.filter || "";
-  // filter the gifs.data array using the title (see the gifs.json file) 
-  const filteredData = gifs.data.filter((gif) => gif.title.toLowerCase().includes(filterTerm));
-  // send back the filteredData
+  const filter = req.query.filter
+  const data = [{ name: 'ben' }, { name: 'zo' }, { name: 'carmen' }];
+
+  if (!filter) res.send(data);
+  const filteredData = data.filter((item) => item.name === filter);
   res.send(filteredData);
 }
 ```
