@@ -54,22 +54,22 @@ So how do the client and server interact?
 
 <details>
 
-<summary><strong>Q: What are the responsibilities of a server application?</strong></summary>
-
-* Serving static files that live on the server (HTML, CSS, and JS files)
-* Fetching and serving data from a third-party API that requires an API key
-* Managing and serving data from the server's own database
-
-</details>
-
-<details>
-
 <summary><strong>Q: What are the responsibilities of a client application?</strong></summary>
 
 * Rendering HTML, CSS, and JS
 * Request information from a server (get requests)
 * Providing information to a server (post/patch/delete requests)
 * Reading data received from a server
+
+</details>
+
+<details>
+
+<summary><strong>Q: What are the responsibilities of a server application?</strong></summary>
+
+* Serving static files that live on the server (HTML, CSS, and JS files)
+* Fetching and serving data from a third-party API that requires an API key
+* Managing and serving data from the server's own database
 
 </details>
 
