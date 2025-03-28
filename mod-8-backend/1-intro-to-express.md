@@ -95,9 +95,8 @@ const app = express();
 
 This `app` object lets us configure our server's behavior. It:
 
-* Defines the **endpoints** for the HTTP server application
-* Connects each endpoint to a **controller** that will handle requests for the endpoint
-* Defines the port where the HTTP server application will "listen" for incoming requests
+* Defines the **endpoints** and **controllers** for the HTTP server application.
+* Defines where the server will "listen" for incoming requests.
 
 Here is a simple example. For now, just focus on the high-level structure of the application. Look for **controllers**, **endpoints**, and where the app "listens".
 
@@ -128,7 +127,7 @@ app.listen(port, () => console.log(`listening at http://localhost:${port}`));
 ```
 
 * **Endpoints** are unique URL paths that a server makes available for clients to send requests to. 
-* **Controllers** are callback functions invoked asynchronously when the associated endpoint is targeted. It parses the request and sends back a response.
+* **Controllers** are callback functions invoked asynchronously when the associated endpoint is targeted. They parse requests and send back a response.
 * `app.listen(port, callback)` defines the port of the current host (`localhost` when running locally) where incoming requests will be accessible.
   * In this example, the server is accessible at `http://localhost:8080` during development.
 
