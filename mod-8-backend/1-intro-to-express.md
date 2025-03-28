@@ -17,6 +17,7 @@ In this first lesson, we're going to learn the basics of Express and build and d
   - [Endpoints](#endpoints)
   - [Controllers](#controllers)
   - [Query Parameters](#query-parameters)
+  - [Using `req.query`](#using-reqquery)
   - [Query Parameter Challenge](#query-parameter-challenge)
 - [Listening: Host and Ports](#listening-host-and-ports)
 
@@ -192,7 +193,7 @@ The `res` parameter is an object with methods for configuring the response we wa
 * The `res.send` method allows us to send data to the client. 
 * The `res.sendStatus` method lets us send just a status code without data.
 
-These controllers are quite simple as they just send back a pre-defined response.
+These controllers are quite simple as they just send back a pre-defined response, but controllers can do quite complex tasks!
 
 The `next` parameter will be discussed in the next lesson, but what about the `req` parameter?
 
@@ -202,15 +203,17 @@ The `req` parameter is an object containing information about the incoming reque
 
 **Query parameters** are added to the end of request URL to tell the server to modify the requested data in some way. They are often used for search queries or to filter results. Google adds a `q` query parameter when you provide a search query:
 
-[https://www.google.com/search?q=express+node](https://www.google.com/search?q=express+node)
+[https://www.google.com/search?q=express+node](https://www.google.com/search?q=express%20node)
 
-Query parameters are appended to the end of a request URL starting with a `?` and followed by `key=value` pairs. In the example above `q` is the name of the query parameter.
+Query parameters are added in `key=value` pairs to the end of a URL following a `?`. In the example above `q` is the name of the query parameter with the value `express+node` (the `+` is just used to indicate a space).
 
-When multiple query parameters are needed, they are each separated by `&`s. For example, if we wanted to include a `first` and `last` name to the `/api/hello` endpoint, we could write: 
+When multiple query parameters are needed, they are each separated by an ampersand `&`. For example, if we wanted to include a `first` and `last` name to the `/api/hello` endpoint, we could write: 
 
 [localhost:8080/api/hello?first=ben&last=spector](localhost:8080/api/hello?first=ben&last=spector)
 
-In the controller code each `key=value` query parameter provided in the request URL will show up as a property on the `req.query` object with a string value. 
+### Using `req.query`
+
+In the controller code, each `key=value` query parameter will show up in the `req.query` object with a string value. 
 
 So, we can modify our `serveHello` controller like so:
 
