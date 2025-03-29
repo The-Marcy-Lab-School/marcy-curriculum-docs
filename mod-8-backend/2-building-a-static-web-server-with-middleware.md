@@ -169,7 +169,9 @@ dist/
       - index-kQJbKSsj.css
 ```
 
-When a user visits the server's homepage `/`, we want to send the `index.html` file. Back in the server, we can add the following endpoints and controllers:
+When a user visits the server's homepage `/`, we want to send the `index.html` file. 
+
+Back in the server, we can add the following endpoint and controller:
 
 ```js
 // The path module is useful for constructing relative filepaths
@@ -214,7 +216,7 @@ Seems repetitive, no? Now, imagine that your application has hundreds of static 
 
 Rather than defining endpoints for every single static asset that you wish to serve, we can use the `express.static()` middleware generator included with Express.
 
-`express.static()` is not middleware itself. Instead, invoking this function with a filepath to the entire folder containing our static statics will generate a middleware function that we can use:
+`express.static()` is not middleware itself. Instead, invoking this function will generate a middleware function that we can use. We just need to provide a filepath to the folder containing our static assets:
 
 ```js
 const path = require('path');
