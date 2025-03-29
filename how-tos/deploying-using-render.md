@@ -2,12 +2,13 @@
 
 **Table of Contents:**
 
-* [Overview](deploying-using-render.md#overview)
-  * [Render vs. Github Pages](deploying-using-render.md#render-vs-github-pages)
-  * [Create An Account](deploying-using-render.md#create-an-account)
-* [Deploy A Simple No-Database App](deploying-using-render.md#deploy-a-simple-no-database-app)
-* [Deploy A Fullstack Server With A Database](deploying-using-render.md#deploy-a-fullstack-server-with-a-database)
-  * [Future changes to your code](deploying-using-render.md#future-changes-to-your-code)
+- [Overview](#overview)
+  - [Render vs. Github Pages](#render-vs-github-pages)
+  - [Create An Account](#create-an-account)
+- [Deploy A Simple No-Database REST API](#deploy-a-simple-no-database-rest-api)
+- [Deploy A Static Server with Vite](#deploy-a-static-server-with-vite)
+- [Deploy A Fullstack Server With A Database](#deploy-a-fullstack-server-with-a-database)
+  - [Future changes to your code](#future-changes-to-your-code)
 
 ## Overview
 
@@ -43,10 +44,10 @@ Follow these instructions to deploy an Express app that does NOT include a datab
    * Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
    * Region - select US East (Ohio)
    * Branch - `main` (or `draft` if for an assignment)
-   * Root Directory - `server` (or wherever the `package.json` file for your server is)
+   * Root Directory - `./`
    * Runtime - Node
-   * Build Command - `npm install`
-   * Start Command - `node index.js`
+   * Build Command - `cd server && npm install`
+   * Start Command - `node server/index.js`
    * Instance Type - select **Free**
    * Select **Create Web Service**
 
@@ -58,9 +59,7 @@ Any time that you want to make an update to your deployed server, just commit an
 
 ## Deploy A Static Server with Vite
 
-Projects built using Vite need to run the command `npm run build` to generate static assets. So, we need to modify the deployment process so that each time a new version of the repository is created via a new commit, the static assets are re-built. 
-
-Rather than building those assets locally and then pushing the `dist/` folder to the repo, we'll just configure the server to build the static assets each time a commit is detected.
+Projects built using Vite need to run the command `npm run build` to generate static assets. So, we need to modify the deployment process so that each time a new version of the repository is created via a new commit, the static assets are automatically re-built. 
 
 Follow the same steps as above. However, when configuring the server, make the following changes:
 
