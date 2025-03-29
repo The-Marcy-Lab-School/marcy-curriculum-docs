@@ -11,7 +11,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 - [Terms](#terms)
 - [Express Review](#express-review)
 - [Middleware and `next()`](#middleware-and-next)
-- [Serving Static Web Files / Assets](#serving-static-web-files--assets)
+- [Static Web Servers](#static-web-servers)
   - [Serving React Static Assets](#serving-react-static-assets)
   - [`express.static()` Middleware](#expressstatic-middleware)
 - [Summary](#summary)
@@ -140,7 +140,7 @@ If we simply didn't invoke `next()`, our server would "hang" — the response wo
 
 Middleware can be custom-made like this `logRoutes`. However, we can also utilize some of the out-of-the-box middleware controllers provided by Express.
 
-## Serving Static Web Files / Assets
+## Static Web Servers
 
 When you visit a website, like [https://google.com](https://google.com), you are immediately presented with a rendered website. What's happening there?
 
