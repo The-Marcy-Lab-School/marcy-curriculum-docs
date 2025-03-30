@@ -4,11 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-2-express-api-middleman)!
 {% endhint %}
 
-Serving static assets is a core functionality of a server application.
-
-The second use case for a server is to perform 3rd-party API requests that require an API key in a manner that protects the developer's API key.
-
-Let's do it!
+Thus far, we have not been able to deploy a project that uses an API key without likely exposing that API key to the public. Now that we have the power to build a server, we can finally do just that!
 
 **Table of Contents:**
 
