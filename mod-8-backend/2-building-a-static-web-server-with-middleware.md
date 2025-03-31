@@ -79,6 +79,8 @@ Logging incoming HTTP requests can be incredibly helpful for debugging purposes.
 
 To add this functionality, we could modify every endpoint controller like so:
 
+{% hint style="danger" %}
+
 ```js
 const serveHello = (req, res, next) => {
   // print the current time and request information 
@@ -91,11 +93,15 @@ const serveHello = (req, res, next) => {
 }
 ```
 
+{% endhint %}
+
 However, adding this to every single controller would be way too repetitive.
 
 Instead, we can use a **middleware**. Middleware in Express is a function that intercepts and processes incoming HTTP requests before it reaches the final controller or response handler.
 
 To add a new middleware, create a controller that invokes `next()` and register it with `app.use()`
+
+{% hint style="success" %}
 
 ```js
 // Middleware function for logging route requests
@@ -109,6 +115,8 @@ app.use(logRoutes);
 
 // Other endpoints and controllers
 ```
+
+{% endhint %}
 
 * We first create the `logRoutes` function to print out information about the request
 * At the end, we invoke `next()`, passing along the request to one of our controllers to send a response.
@@ -171,7 +179,7 @@ dist/
 
 When a user visits the server's homepage `/`, we want to send the `index.html` file. 
 
-Back in the server, we can add the following endpoint and controller:
+Back in the server, we could add the following endpoint and controller:
 
 ```js
 // The path module is useful for constructing relative filepaths
@@ -187,7 +195,11 @@ const serveIndexHTML = (req, res, next) => {
 app.get('/', serveIndexHTML);
 ```
 
+If the frontend that we wanted to serve only consisted of a single `index.html` file, then this code above would suffice!
+
 But the `index.html` file needs access to `/assets/index-CZ4vidNt.js` and `/assets/index-kQJbKSsj.css`. So we need two more controllers:
+
+{% hint style="danger" %}
 
 ```js
 const serveIndexHTML = (req, res, next) => {
@@ -210,6 +222,8 @@ app.get('/assets/index-CZ4vidNt.js', serveJS);
 app.get('/assets/index-kQJbKSsj.css', serveCSS);
 ```
 
+{% endhint %}
+
 Seems repetitive, no? Now, imagine that your application has hundreds of static assets!
 
 ### `express.static()` Middleware
@@ -218,7 +232,10 @@ Rather than defining endpoints for every single static asset that you wish to se
 
 `express.static()` is not middleware itself. Instead, invoking this function will generate a middleware function that we can use. We just need to provide a filepath to the folder containing our static assets:
 
+{% hint style="success" %}
+
 ```js
+// The path module is useful for constructing relative filepaths
 const path = require('path');
 
 // the filepath is to the entire assets folder
@@ -227,10 +244,12 @@ const filepath = path.join(__dirname, '../vite-project/dist');
 // generate middleware using the filepath
 const serveStatic = express.static(filepath);
 
+// Register the serveStatic middleware before the remaining controllers
 app.use(serveStatic);
 
 // other controllers 
 ```
+{% endhint %}
 
 Explanation:
 
