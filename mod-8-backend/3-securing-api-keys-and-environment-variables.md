@@ -24,7 +24,7 @@ Thus far, we have not been able to deploy a project that uses an API key without
 * **Environment Variable** — a hidden variable stored on the host's machine (your laptop or Render.com) and accessible in Node through the `process.env` object
 * **`.env` file** - a file to store hidden variables like API keys. Ignored by GitHub and uploaded to Render for deployment.
 * **`dotenv` module** - an npm package for importing `.env` files
-* **Cross-origin requests** - HTTP requests made from one origin to another.
+* **Cross-origin requests** - HTTP requests made from one domain to another domain, protocol or port.
 * **Request Proxy In Development** — faking the origin of the request in a frontend development server to match the origin of the backend server
 
 ## Setup
