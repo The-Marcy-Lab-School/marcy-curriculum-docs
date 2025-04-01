@@ -29,9 +29,9 @@ Thus far, we have not been able to deploy a project that uses an API key without
 
 ## Setup
 
-For this lecture, you'll need an API that requires an **API key** - a secret code that verifies your identity as a developer using an API's limited resources. We'll use the New York Times API because the API is quite friendly to use.
+For this lecture, you'll need an API that requires an **API key** - a secret code that verifies your identity as a developer using an API's limited resources. 
 
-You can either use an API key provided by your instructor or acquire your own API key by making an account on the [NYT Developers Page](https://developer.nytimes.com/get-started) and following the instructions. Just make sure to enable the "Top Stories API" and copy the API key.
+We'll use the New York Times API because the API is quite friendly to use. Make an account on the [NYT Developers Page](https://developer.nytimes.com/get-started) and follow the instructions to enable the "Top Stories API".
 
 We'll use the endpoint below to access the top stories in the "Arts" section:
 
@@ -39,7 +39,7 @@ We'll use the endpoint below to access the top stories in the "Arts" section:
 https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=yourkey
 ```
 
-Once you have an API key, clone the repository linked above and do the following:
+Once you have an API key, clone the practice repository linked above and do the following:
 - `cd` into the `frontend` application and install dependencies.
 - Then, create a file inside of `frontend/` called `secrets.js` and paste the following code:
 
@@ -54,7 +54,7 @@ Once you have an API key, clone the repository linked above and do the following
 
 ## Never Use API Keys In The Frontend
 
-Working with API keys presents a tricky problem. We need the API key to exist in our program to access the API's resources, but we need to avoid putting it in a place that can be viewed by the public. So, where can we safely use an API key?
+Working with API keys presents a tricky problem. We need the API key to exist in our program to access the API's resources, but we need to avoid putting it in a place that can be viewed by the public.
 
 <details><summary><strong>Q: Why is it not a good idea to share your API key? What really could go wrong?</strong></summary>
 
@@ -66,9 +66,9 @@ There are two common places that we can mistakenly expose our API keys to the pu
 1. In a public remote repository (on GitHub)
 2. In the HTTP requests sent by the client (the browser) to the API
 
-To address the first mistake, we should always store API keys and other sensitive information in a git-ignored file (e.g. `secrets.js` or `.env`).
+To avoid the first mistake, we should always store API keys and other sensitive information in a git-ignored file (e.g. `secrets.js` or `.env`).
 
-To address the second mistake, _we must NEVER send requests with API keys from client-side (frontend) applications_.
+To avoid the second mistake, _we must NEVER send requests with API keys from client-side (frontend) applications_.
 
 {% hint style="danger" %}
 
@@ -81,16 +81,15 @@ To understand why, run the `frontend` application from the provided repo, view t
 
 ![The Network tab can expose API Keys used by the client-side (frontend) application.](img/3-nyt-api-key-exposed-network-tab.png)
 
-All requests sent by the client will appear in this Network tab. Even though the API key is hidden in a gitignored file, the client-side (frontend) application still needs to embed that value into the HTTP request URL and there is no way to hide it from this Networks tab.
-
+All requests sent by the client will appear in this Network tab. Even if the API key is hidden in a gitignored file or stored in an environment variable (more on that soon), the client-side (frontend) application still needs to embed that value into the HTTP request URL. There is simply no way to hide it from this Networks tab.
 
 ### Create a Server Application To Make API Key Requests For You
 
-Client-side (frontend) code is inherently insecure because, well, we just give it to the user to run on their browser!
+Generally, client-side (frontend) code is inherently insecure because, well, we just give the code to the user to run on their browser! If we're not careful, we may accidentally give away sensitive data.
 
 Server-side (backend) code on the other hand is much more secure. A client can send HTTP requests to a server's endpoints to request the server to execute code, but the client has no visibility into the inner-workings of the server. 
 
-So, to securely use an API key, we can create our own server to make requests on behalf of the client. As long as the server has the API key, the client doesn't need it!
+So, to securely use an API key, we must use it in our server-side code. This means building a server to make requests on behalf of the client, acting as a sort of middleman. As long as the server has the API key, the client doesn't need it!
 
 ![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](img/express-api-middleman.svg)
 
