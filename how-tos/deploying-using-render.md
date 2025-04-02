@@ -5,10 +5,10 @@
 - [Overview](#overview)
   - [Render vs. Github Pages](#render-vs-github-pages)
   - [Create An Account](#create-an-account)
-- [Deploy A Simple No-Database REST API](#deploy-a-simple-no-database-rest-api)
-- [Deploy A Static Server with Vite](#deploy-a-static-server-with-vite)
-- [Deploy A Fullstack Server With A Database](#deploy-a-fullstack-server-with-a-database)
-  - [Future changes to your code](#future-changes-to-your-code)
+- [Deploy A Server](#deploy-a-server)
+  - [What Do the Build and Start Commands Do?](#what-do-the-build-and-start-commands-do)
+- [Deploy A Database](#deploy-a-database)
+- [Future changes to your code](#future-changes-to-your-code)
 
 ## Overview
 
@@ -31,14 +31,14 @@ This will take you to your Dashboard where you can see existing deployments.
 
 ![The Render Dashboard](img/dashboard.png)
 
-## Deploy A Simple No-Database REST API
+## Deploy A Server
 
-Follow these instructions to deploy an Express app that does NOT include a database and does NOT serve static assets. If your app serves static assets or includes a database, go to the next sections.
+Follow these instructions to deploy an Express app that does NOT include a database. If your app serves static assets or includes a database, go to the next sections.
 
 1. Make sure you are signed in using your GitHub account
 2. https://dashboard.render.com/ and click on New +
 3. Select **Web Service**
-4. Choose **Git Provider** to find a repository on your account or paste a link to a **Public Git Repository**
+4. Choose **Git Provider** to find a repository on your account.
 5. Fill out the information for your Server
 
    * Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
@@ -46,8 +46,13 @@ Follow these instructions to deploy an Express app that does NOT include a datab
    * Branch - `main` (or `draft` if for an assignment)
    * Root Directory - `./`
    * Runtime - Node
-   * Build Command - `cd server && npm install`
-   * Start Command - `node server/index.js`
+   * Build Command:
+     * If your application has a Vite frontend: 
+        ```
+        cd [vite_folder_name] && npm i && npm run build
+        ```
+     * If not: leave blank
+   * Start Command - `cd server && npm i && node index.js`
    * Instance Type - select **Free**
    * Select **Create Web Service**
 
@@ -57,18 +62,17 @@ Any time that you want to make an update to your deployed server, just commit an
 
 ![alt text](img/web-service-dashboard.png)
 
-## Deploy A Static Server with Vite
+### What Do the Build and Start Commands Do?
 
-Projects built using Vite need to run the command `npm run build` to generate static assets. So, we need to modify the deployment process so that each time a new version of the repository is created via a new commit, the static assets are automatically re-built. 
+The "Build" and "Start" commands are executed before every new deploy. The server will re-deploy your application on every new commit.
 
-Follow the same steps as above. However, when configuring the server, make the following changes:
+Projects built using Vite cannot be served as they are stored in the repository. They need to have static assets created via the `npm run build` command. Those static assets are then stored in the `dist/` folder and served by our server. 
 
-- Build Command — `cd [name_of_frontend_vite_folder] && npm i && npm run build`
-- Start Command — `cd [name_of_server_folder] && npm i && node index.js`
+In the event that we change the frontend in a new commit, we want to rebuild those assets before restarting the server. Therefore, the "Build" command above is executed every time the server is deployed for a new commit (even when the frontend doesn't change).
 
-For example, if your project had a `vite-project` folder for the frontend, and a `server` folder for the backend, your configuration would look like this:
+After the "Build" command runs, the "Start" command runs to start the server. To ensure that our server works properly, we just need to make sure the server dependencies are installed and then run the `index.js` file with `node`:
 
-![On render, the build and start commands are set](img/render-deploying-static-build-start.png)
+![If your project had a `vite-project` folder for the frontend, and a `server` folder for the backend, your configuration would look like this](img/render-deploying-static-build-start.png)
 
 As a result, the "continuous deployment" process would look like this:
 1. A commit is made with changes to the project
@@ -77,7 +81,7 @@ As a result, the "continuous deployment" process would look like this:
 4. The "start" command is executed, starting the server
 5. The deployment completes and the server is live!
 
-## Deploy A Fullstack Server With A Database
+## Deploy A Database
 
 1. Make sure you have an account on https://render.com/ and that you sign in using Github
 2. Create a Postgres Server
@@ -97,10 +101,10 @@ postgresql://user:password@host/dbname
 3. Deploy Your Express Server. Follow the instructions above for deploying a server with the following changes:
     * Region - select US East (Ohio) - the important thing is that it matches the PostgreSQL region
     * Build Command - if you used the React Express Auth Template, use `npm i && npm run migrate:rollback && npm run migrate && npm run seed`
-    * Start Command - if you used the React Express Auth Template, use `npm start`
+    * Start Command - `cd server && npm i && node index.js`
     * Select **Create Web Service** (Note: The first build will fail because you need to set up environment variables)
 
-1. Set up environment variables
+4. Set up environment variables
 
    * From the Web Service you just created, select Environment on the left side-menu
    * Under Secret Files, select Add Secret File
@@ -118,8 +122,6 @@ postgresql://user:password@host/dbname
 
 * Click **Save Changes**
 
-### Future changes to your code
+## Future changes to your code
 
 If you followed these steps, your Render server will redeploy whenever the `main` branch is committed to. To update the deployed application, simply commit to `main`.
-
-For frontend changes, you may need to run `npm run build` to update the `public/` folder contents and push.
