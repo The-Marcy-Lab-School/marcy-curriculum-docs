@@ -33,12 +33,11 @@ This will take you to your Dashboard where you can see existing deployments.
 
 ## Deploy A Server
 
-Follow these instructions to deploy an Express app that does NOT include a database. If your app serves static assets or includes a database, go to the next sections.
-
 1. Make sure you are signed in using your GitHub account
-2. https://dashboard.render.com/ and click on New +
+2. https://dashboard.render.com/ and click on **New +**
 3. Select **Web Service**
-4. Choose **Git Provider** to find a repository on your account.
+4. Choose **Git Provider** to find a repository on your account. It may take some time for your repositories to load. 
+    * If your repository is public, you can provide a link to the repository but it will not be able to auto-deploy on future commits. As such, this is NOT the preferred method.
 5. Fill out the information for your Server
 
    * Name - the name of your app (it will appear in the URL that render gives you. For example: `app-name-here.onrender.com`)
@@ -47,12 +46,17 @@ Follow these instructions to deploy an Express app that does NOT include a datab
    * Region - select US East (Ohio)
    * Root Directory - Leave blank (will default to the root of your repo)
    * Build Command:
+     * If your application has a database, see the next section
      * If your application has a Vite frontend: 
-        ```
+        
+        ```sh
         cd [vite_folder_name] && npm i && npm run build && cd ../server && npm i
         ```
-     * If your application has a database, see the next section
-     * If neither: `cd server && npm i`
+
+     * If neither: 
+        ```sh
+        cd server && npm i
+        ```
    * Start Command - `node index.js` (or `npm start`)
    * Instance Type - select **Free**
 
@@ -64,17 +68,15 @@ Follow these instructions to deploy an Express app that does NOT include a datab
 
 This should take you to your web service's dashboard where you can see the latest build information and the URL. In a few minutes your server will be up and running!
 
-Any time that you want to make an update to your deployed server, just commit and push the change to your repo!
+Any time that you want to make an update to your deployed server, just commit and push the change to your repo! The deployment process will automatically run your "Build" and "Start" commands (unless you used a public git URL to setup your server in which cause auto-deployments are disabled).
 
 ![alt text](img/web-service-dashboard.png)
 
 ### What Do the Build and Start Commands Do?
 
-The "Build" and "Start" commands are executed before every new deploy. The server will re-deploy your application on every new commit.
+The "Build" and "Start" commands are executed before every new deploy as a part of the "Auto Deploy" process. The server will re-deploy your application on every new commit.
 
-Projects built using Vite cannot be served as they are stored in the repository. They need to have static assets created via the `npm run build` command. Those static assets are then stored in the `dist/` folder and served by our server. 
-
-In the event that we change the frontend in a new commit, we want to rebuild those assets before restarting the server. Therefore, the "Build" command above is executed every time the server is deployed for a new commit (even when the frontend doesn't change).
+Projects built using Vite cannot be served as they are stored in the repository. They need to have static assets created via the `npm run build` command. Those static assets are then stored in the `dist/` folder and served by our server. In the event that we change the frontend in a new commit, we want to rebuild those assets before restarting the server. Therefore, the "Build" command above is executed every time the server is deployed for a new commit (even when the frontend doesn't change).
 
 After the "Build" command runs, the "Start" command runs to start the server. To ensure that our server works properly, we just need to make sure the server dependencies are installed and then run the `index.js` file with `node`:
 
@@ -109,15 +111,15 @@ As a result, the "continuous deployment" process would look like this:
    * Build command: Okay this part is going to be a bit wonky because we are going to be using a Free instance type which means we don't have access to a "Pre-Deploy Command"
      * The very first time that you deploy your server, use the following as your build command to set up migrations, seeds, and build the frontend:
 
-        ```
+        ```sh
         cd frontend && npm i && npm run build && cd ../server && npm i && npm run migrate:rollback && npm run migrate && npm run seed
         ```
       
      * Immediately after the first deploy is successful, go back into your settings and change this build command to the following (we're removing the `migrate:rollback`, `migrate`, and `seed` portions as these will wipe your database!):
 
-      ```
-      cd frontend && npm i && npm run build && cd ../server && npm i
-      ```
+        ```sh
+        cd frontend && npm i && npm run build && cd ../server && npm i
+        ```
 
    * Add your environment variables:
      * Add a `SESSION_SECRET` variable and a long, random value. It can literally be just a random jumble of characters. You can also use [https://randomkeygen.com/](https://randomkeygen.com/) to generate a random key.
@@ -125,13 +127,13 @@ As a result, the "continuous deployment" process would look like this:
      * Add a `NODE_ENV` variable set to `'production'`
      * Your values should look like this:
 
-    ```
-    SESSION_SECRET='AS12FD42FKJ42FIE3WOIWEUR1283'
-    PG_CONNECTION_STRING='postgresql://user:password@host/dbname'
-    NODE_ENV='production'
-    ```
+        ```
+        SESSION_SECRET='AS12FD42FKJ42FIE3WOIWEUR1283'
+        PG_CONNECTION_STRING='postgresql://user:password@host/dbname'
+        NODE_ENV='production'
+        ```
 
-* Click **Save Changes**
+4. Click **Save Changes**
 
 ## Future changes to your code
 

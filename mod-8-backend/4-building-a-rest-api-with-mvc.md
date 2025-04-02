@@ -4,17 +4,9 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
 {% endhint %}
 
-In this lesson, we will introduce the Model layer to our server application design. At its core, a server manages data, defines API endpoints for accessing that data using CRUD operation, and provides frontend code to render a nice GUI for the user to more abstractly execute those CRUD operations.
+You now have the skills to build a simple server application. But as your projects grow in scale and scope, you will need to apply best practices to keep your code organized and manageable.
 
-The Model is the portion of the server application that manages the CRUD operations for a server's collection of data. For example, a web-based todo application might:
-
-* store an array of todo objects in memory
-* define the endponts `GET /API/todos` and `POST /api/todos` to get all todos and to create a new todo
-* provide a React application that fetches renders all the todos and a form that lets a user create a new todo.
-
-The piece of code that sits between the endpoints and the array of todo objects is the Model.
-
-Let's jump in!
+In this lesson, you will learn best practices for creating a "RESTful API" with a dedicated "Model layer" for managing the API's data.
 
 **Table of Contents:**
 
@@ -31,7 +23,7 @@ Let's jump in!
 ## Terms
 
 * **REST API** — an API that conforms to the design principles of the representational state transfer (REST) architectural style.
-* **Model** — an interface for managing a data structure. We will implement a model using a `class` with static methods for performing CRUD actions on a set of data.
+* **Model** — an interface (a collection of methods) for managing a data structure. We will implement a model using a `class` with static methods for performing CRUD actions on a set of data.
 * **Postman** — a tool for testing HTTP requests
 * **Route Parameters** — named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the `req.params` object
 
