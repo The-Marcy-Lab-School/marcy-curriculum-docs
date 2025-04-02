@@ -41,20 +41,26 @@ Follow these instructions to deploy an Express app that does NOT include a datab
 4. Choose **Git Provider** to find a repository on your account.
 5. Fill out the information for your Server
 
-   * Name - the name of your app (it will appear in the URL that render gives you. For example: app-name-here.onrender.com)
+   * Name - the name of your app (it will appear in the URL that render gives you. For example: `app-name-here.onrender.com`)
+   * Language - Node
+   * Branch - `draft` for assignments, `main` for portfolio projects
    * Region - select US East (Ohio)
-   * Branch - `main` (or `draft` if for an assignment)
-   * Root Directory - `./`
-   * Runtime - Node
+   * Root Directory - Leave blank (will default to the root of your repo)
    * Build Command:
      * If your application has a Vite frontend: 
         ```
-        cd [vite_folder_name] && npm i && npm run build
+        cd [vite_folder_name] && npm i && npm run build && cd ../server && npm i
         ```
-     * If not: leave blank
-   * Start Command - `cd server && npm i && node index.js`
+     * If your application has a database, see the next section
+     * If neither: `cd server && npm i`
+   * Start Command - `node index.js` (or `npm start`)
    * Instance Type - select **Free**
-   * Select **Create Web Service**
+
+6. Add Any environment variables your application may need:
+
+    ![Add environment variables individually or paste multiple values at a time from a .env file.](img/environment-variables-configuration-render.png)
+
+7. Select **Deploy Web Service**
 
 This should take you to your web service's dashboard where you can see the latest build information and the URL. In a few minutes your server will be up and running!
 
@@ -94,25 +100,30 @@ As a result, the "continuous deployment" process would look like this:
    * Select **Create Database**
    * Keep the created database page open. You will need the `Internal Database URL` value from this page for step 4. This URL will look follow this pattern:
 
-```
-postgresql://user:password@host/dbname
-```
+      ```
+      postgresql://user:password@host/dbname
+      ```
 
 3. Deploy Your Express Server. Follow the instructions above for deploying a server with the following changes:
-    * Region - select US East (Ohio) - the important thing is that it matches the PostgreSQL region
-    * Build Command - if you used the React Express Auth Template, use `npm i && npm run migrate:rollback && npm run migrate && npm run seed`
-    * Start Command - `cd server && npm i && node index.js`
-    * Select **Create Web Service** (Note: The first build will fail because you need to set up environment variables)
 
-4. Set up environment variables
+   * Build command: Okay this part is going to be a bit wonky because we are going to be using a Free instance type which means we don't have access to a "Pre-Deploy Command"
+     * The very first time that you deploy your server, use the following as your build command to set up migrations, seeds, and build the frontend:
 
-   * From the Web Service you just created, select Environment on the left side-menu
-   * Under Secret Files, select Add Secret File
-     * Filename - `.env`
-     * Look at your local .env file and copy over the `SESSION_SECRET` variable and value.
-     * Add a second variable called `PG_CONNECTION_STRING`. Its value should be the `Internal Database URL` value from step 2e above.
-     * Add a third variable called `NODE_ENV`. Its value should be `'production'`
-     * Your file should look like this:
+        ```
+        cd frontend && npm i && npm run build && cd ../server && npm i && npm run migrate:rollback && npm run migrate && npm run seed
+        ```
+      
+     * Immediately after the first deploy is successful, go back into your settings and change this build command to the following (we're removing the `migrate:rollback`, `migrate`, and `seed` portions as these will wipe your database!):
+
+      ```
+      cd frontend && npm i && npm run build && cd ../server && npm i
+      ```
+
+   * Add your environment variables:
+     * Add a `SESSION_SECRET` variable and a long, random value. It can literally be just a random jumble of characters. You can also use [https://randomkeygen.com/](https://randomkeygen.com/) to generate a random key.
+     * Add a `PG_CONNECTION_STRING` variable. Its value should be the `Internal Database URL` value from step 2e above.
+     * Add a `NODE_ENV` variable set to `'production'`
+     * Your values should look like this:
 
     ```
     SESSION_SECRET='AS12FD42FKJ42FIE3WOIWEUR1283'
