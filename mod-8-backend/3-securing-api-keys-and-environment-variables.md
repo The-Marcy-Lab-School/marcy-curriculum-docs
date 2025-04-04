@@ -178,6 +178,7 @@ const serveTopArtStories = async (req, res, next) => {
     const storiesWithTitle = data.results.filter(story => story.title);
     res.send(storiesWithTitle);
   } catch (error) {
+    console.error("Error while fetching:", error);
     res.status(503).send(error);
   }
 }
