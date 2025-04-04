@@ -17,6 +17,7 @@ Thus far, we have not been able to deploy a project that uses an API key without
   - [Deploying with Environment Variables](#deploying-with-environment-variables)
 - [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
 - [Development Frontend Request Proxy](#development-frontend-request-proxy)
+  - [Enable Proxy Requests In Development](#enable-proxy-requests-in-development)
 
 ## Terms
 
@@ -200,7 +201,7 @@ Let's update the frontend React application to use our server instead of directl
 
 ![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](img/express-api-middleman.svg)
 
-Let's update the `url` that our adapter function uses:
+Let's update the `url` that our adapter function uses and remove the filter code which is now handled server-side:
 
 ```js
 import { handleFetch } from './handleFetch';
@@ -230,15 +231,23 @@ In this case, we visit `http://localhost:8080` to access both the client-side (f
 
 ## Development Frontend Request Proxy
 
-In that last step, we tested the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at [http://localhost:8080](http://localhost:8080). However, ideally we don't re-build the application on every change. Instead, we'd like to test frontend changes using the development server with `npm run dev`.
+In that last step, we tested the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at [http://localhost:8080](http://localhost:8080). 
 
-Try running the development version with `npm run dev`. The app breaks! 
+Re-building the frontend application each time we make a change is tedious. And remember, we have a frontend development server that will automatically re-load the application each time we save a file! However, when we try running the frontend with `npm run dev`, the app breaks!
 
-When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the browser assumes it is a same-origin request and sends the request to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs). But remember, the API lives at port `8080` — we've changed the origin of the request!
+When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the browser assumes it is a same-origin request and sends the request to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs). 
 
-To enable the development version of our frontend to send same-origin requests, we need to "trick" the Vite development server into sending "same-origin" requests to [http://localhost:8080](http://localhost:8080) instead of [http://localhost:5173](http://localhost:5173).
+But remember, the API lives at port `8080`. Now that we're viewing the frontend from port `5173`, we've changed the origin of the request!
 
-To do this, copy and paste the code below into your `frontend/vite.config.js` file. This is called a **proxy**.
+### Enable Proxy Requests In Development
+
+To enable the development version of our frontend to send requests to `http://localhost:8080`, we need to redirect the "same-origin" requests from [http://localhost:5173](http://localhost:5173) to [http://localhost:8080](http://localhost:8080). This is called "proxying".
+
+{% hint style="info" %}
+The word "proxy" is synonymous with the word "substitute".
+{% endhint %}
+
+To set up proxying, replace your `frontend/vite.config.js` file's contents with the code below:
 
 ```js
 import { defineConfig } from 'vite';
@@ -259,3 +268,5 @@ export default defineConfig({
   },
 });
 ```
+
+Now, when we run our development server, all requests starting with `/api` will be sent to the defined `target` which we set to `http://localhost:8080`.
