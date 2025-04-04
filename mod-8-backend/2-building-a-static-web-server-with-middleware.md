@@ -35,28 +35,32 @@ Remember how the Express app works?
 4. The server sends the response back to the client.
 5. The client is now free to do what it likes with the response.
 
-And here is how we can create a server with a single endpoint: `/api/hello`
+And here is how we can create a server with two endpoints: `/api/hello` and `/api/data`
 
 ```js
 const express = require('express');
 const app = express();
 
-// When triggered, this controller will send a response
+// When the endpoint is requested, controllers will send a response
 const serveHello = (req, res, next) => {
   const name = req.query.name || "stranger"
   res.send(`hello ${name}`);
 }
+const serveData = (req, res, next) => {
+  const data = [{ name: 'Carmen' }, { name: 'Maya' }, { name: 'Reuben' }];
+  res.send(data)
+}
 
-// A GET request to /api/hello serveHello
+// Define the method, endpoint URL, and controller
 app.get('/api/hello', serveHello);
-
+app.get('/api/data', serveData);
 
 // Listen for requests on port 8080
 const port = 8080;
 app.listen(port, () => console.log(`listening at http://localhost:${port}`)); 
 ```
 
-Remember, a **controller** is a callback function that parses a request and sends a response. It will be invoked asynchronously when the associated endpoint is sent a request.
+A **controller** is a callback function that parses a request and sends a response. It will be invoked asynchronously when the associated endpoint is sent a request.
 
 Every controller is invoked with three values:
 * A `req` object which holds data related to the request, including **query parameters**.
@@ -67,17 +71,22 @@ Now its time to learn about that `next` method!
 
 ## Middleware and `next()`
 
-When a server receives an HTTP request, it can do more than just send back a response. Often, the server will perform a number of server-side actions before a response is sent.
+When a server receives an HTTP request, it can do more than just send back a response. Often, the server will perform a number of server-side actions *before* a response is sent.
 
-For example, suppose that you wanted the server to print out a message each time that the server is sent an HTTP request. The message could include the endpoint that was requested, the request method, and the time of the request.
+For example, suppose that you wanted the server to keep track of every request that is sent to it by printing out some information like:
+* the endpoint that was requested (`/api/hello` or `/api/data`, etc...)
+* the request method (`GET` or `POST`, etc...)
+* the time the request was received
 
-**<details><summary>Q: Why would it be helpful to see this information?</summary>**
+**<details><summary>Q: Why would it be helpful to log information about every incoming request?</summary>**
 
-Logging incoming HTTP requests can be incredibly helpful for debugging purposes. Suppose that your server crashes unexpectedly. If the crash was caused by an incoming request, we can simply look at the most recent request in the logs and know where to start debugging.
+Logging incoming HTTP requests can be incredibly helpful for debugging purposes. 
+
+Say you have 3 endpoints and one of them has a bug that causes the server to crash when an unexpected request is sent to it. If we print out every request that comes in to the server, we can simply look at the most recent request in the logs and know where to start debugging.
 
 </details>
 
-To add this functionality, we could modify every endpoint controller like so:
+We can add this functionality to our `serveHello` controller, before we send the response, we can just add a few lines of code:
 
 {% hint style="danger" %}
 
@@ -95,11 +104,16 @@ const serveHello = (req, res, next) => {
 
 {% endhint %}
 
-However, adding this to every single controller would be way too repetitive.
+However, now we also need to add this code to `serveData`. If we had more controllers, this would quickly become very repetitive.
 
-Instead, we can use a **middleware**. Middleware in Express is a function that intercepts and processes incoming HTTP requests before it reaches the final controller or response handler.
+Instead, we can use a **middleware**. Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.
 
-To add a new middleware, create a controller that invokes `next()` and register it with `app.use()`
+![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](img/express-middleware.svg)
+
+In many ways, middleware is like a controller. It receives the `req`, `res`, and `next` values. There are two key differences:
+* We use `app.use` to register the middleware which means the function is invoked for ALL endpoints
+* We use `next()` instead of `res.send()` (or other response methods). 
+  * `next()` invokes the next middleware / controller registered to handle the current request.
 
 {% hint style="success" %}
 
@@ -123,9 +137,18 @@ app.use(logRoutes);
 * We register `logRoutes` using `app.use()` which causes it to be invoked for ALL endpoints. 
 * Order matters! Middleware should be defined before controllers to ensure that it is invoked before the response is sent to the client.
 
-Our diagram now looks like this:
+With this middleware, we do not need to add this logging logic to every controller. Instead, this middleware will automatically be invoked for every incoming request before the final controller sends a response.
 
-![](img/express-middleware.svg)
+{% hint style="info" %}
+
+Sometimes, middleware can invoke `res.send()` if we want to interrupt the response cycle and send a response before it reaches the intended controller. **In this way, middleware behaves like a guard clause.** Most of the time, it won't send a response, but it can if needed.
+
+Examples of this include:
+* Static asset middleware like `express.static()` (which you'll learn about next!)
+* Rate limiter middleware like [`express-rate-limit`](https://www.npmjs.com/package/express-rate-limit)
+* Error handling middleware like [`errorhandler`](https://expressjs.com/en/resources/middleware/errorhandler.html)
+
+{% endhint %}
 
 <details>
 
@@ -157,6 +180,8 @@ Now, imagine that the website is just the "static assets" of a React project dep
 
 We call these **static web servers** because they store **static assets** (HTML, CSS, and JS files) and then provide a server application that serves those assets when requested. 
 
+Let's look at how we can serve the static assets of a React project from our server.
+
 {% hint style="info" %}
 
 HTML, CSS, and JavaScript files are considered "static" because their content remains unchanged when being transferred from server to client.
@@ -173,8 +198,8 @@ As we've learned, a React project's static assets are built into a folder called
 dist/
   - index.html
   - assets/
-      - index-CZ4vidNt.js
-      - index-kQJbKSsj.css
+      - index-ABC123.js
+      - index-ABC123.css
 ```
 
 When a user visits the server's homepage `/`, we want to send the `index.html` file. 
@@ -197,7 +222,7 @@ app.get('/', serveIndexHTML);
 
 If the frontend that we wanted to serve only consisted of a single `index.html` file, then this code above would suffice!
 
-But the `index.html` file needs access to `/assets/index-CZ4vidNt.js` and `/assets/index-kQJbKSsj.css`. So we need two more controllers:
+But the `index.html` file needs access to `/assets/index-ABC123.js` and `/assets/index-ABC123.css`. So we need two more controllers:
 
 {% hint style="danger" %}
 
@@ -208,18 +233,19 @@ const serveIndexHTML = (req, res, next) => {
 }
 
 const serveJS = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/dist/assets/index-CZ4vidNt.js');
+  const filepath = path.join(__dirname, '../vite-project/dist/assets/index-ABC123.js');
   res.sendFile(filepath)
 };
 
 const serveCSS = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/dist/assets/index-kQJbKSsj.css');
+  const filepath = path.join(__dirname, '../vite-project/dist/assets/index-ABC123.css');
   res.sendFile(filepath)
 };
 
+// Keep in mind, your js and css file names will change each time the dist folder is re-built
 app.get('/', serveIndexHTML);
-app.get('/assets/index-CZ4vidNt.js', serveJS);
-app.get('/assets/index-kQJbKSsj.css', serveCSS);
+app.get('/assets/index-ABC123.js', serveJS);
+app.get('/assets/index-ABC123.css', serveCSS);
 ```
 
 {% endhint %}
