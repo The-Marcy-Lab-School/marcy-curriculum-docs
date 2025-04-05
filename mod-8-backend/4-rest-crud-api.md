@@ -1,4 +1,4 @@
-# Building a RESTful API with MVC
+# Building a RESTful CRUD API
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
@@ -11,18 +11,13 @@ In this lesson, you will learn best practices for creating a "RESTful API" with 
 **Table of Contents:**
 
 - [Terms](#terms)
-- [Introduction: Client \> Server \> Client \> Server](#introduction-client--server--client--server)
+- [Introduction: Client → Server → Client → Server](#introduction-client--server--client--server)
 - [CRUD Applications](#crud-applications)
   - [Creating Data with POST Requests and Endpoints](#creating-data-with-post-requests-and-endpoints)
 - [Making A RESTful API](#making-a-restful-api)
   - [Core Principles of REST](#core-principles-of-rest)
 - [Route Parameters](#route-parameters)
   - [Find By, Update, and Delete](#find-by-update-and-delete)
-- [Testing With Postman](#testing-with-postman)
-- [Model — Adding a Data Management Layer](#model--adding-a-data-management-layer)
-- [Controllers Interact With The Model](#controllers-interact-with-the-model)
-- [Server Organization](#server-organization)
-- [Challenge](#challenge)
 
 ## Terms
 
@@ -31,7 +26,7 @@ In this lesson, you will learn best practices for creating a "RESTful API" with 
 * **Postman** — a tool for testing HTTP requests
 * **Route Parameters** — named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the `req.params` object
 
-## Introduction: Client > Server > Client > Server
+## Introduction: Client → Server → Client → Server
 
 Clone down the provided repository and `cd` into the starter folder. There, you will see a `frontend` and `server` provided for you. Run both applications and you'll see it is a simple application that shows a list of fellows and their unique IDs.
 
@@ -440,160 +435,3 @@ export const deleteFellow = async (id) => {
 {% endtab %}
 
 {% endtabs %} 
-
-## Testing With Postman
-
-* Download the Postman VS Code Extension
-* Create an Account on Postman
-* Create a collection called `810 lecture`
-
-![alt text](img/postman-collections.png)
-
-* Add a request for each of your endpoints:
-  * `GET /api/fellows`
-  * `GET /api/fellows/:id`
-  * `POST /api/fellows`
-  * `PATCH /api/fellows/:id`
-  * `DELETE /api/fellows/:id`
-* Requests that require a body, select the **body** tab, then **raw**, and choose **JSON** from the type dropdown.
-* Then, test out your server's endpoints using postman
-
-![alt text](img/postman-testing.png)
-
-## Model — Adding a Data Management Layer
-
-In this lesson, we will build an API that lets users manage a list of fellows. They can:
-
-* (Create) Add a new fellow to the list
-* (Read) Get all fellows
-* (Read) Get a single fellow
-* (Update) Change the name of a fellow
-* (Delete) Remove a fellow from the list
-
-To provide a dynamic set of data that allows for full CRUD operations, we need a data layer called a **model**.
-
-A **model** is an interface (a set of functions) for managing a data structure. We will implement a model using a `class` with static methods.
-
-Find the `models/Fellow.js` file and try the following:
-
-```js
-// Create four new fellows to add to our models dataset
-new Fellow('ben');
-new Fellow('zo');
-new Fellow('carmen');
-new Fellow('gonzalo');
-
-console.log(Fellow.list());
-console.log(Fellow.find(1));
-console.log(Fellow.editName(1, 'ZO!!'));
-console.log(Fellow.delete(2));
-console.log(Fellow.list());
-```
-
-## Controllers Interact With The Model
-
-How will this model work within our server?
-
-The flow of control is: **Client Request > Express `app` > Middleware > Controller > Model > Controller > Server Response**
-
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](img/express-middleware-model.svg)
-
-In the server applications we've built so far, the data and files we've sent as responses have directly interacted with the `fellows` array. That is, they both handle the logic of parsing requests AND handle the logic of managing the data.
-
-
-```js
-const serveFellows = (req, res) => {
-  res.send(fellows);
-}
-
-const serveFellow = (req, res) => {
-  // Make sure the property name matches the route parameter below
-  const { id } = req.params;
-
-  // Keep in mind, route parameters are stored as strings.
-  const fellow = fellows.find(fellow => fellow.id === Number(id));
-
-  if (!fellow) {
-    // 404 means "Resource Not Found"
-    return res.status(404).send({ 
-      message: `No fellow with the id ${id}`
-    });
-  }
-
-  res.send(fellow);
-};
-```
-
-With the `Fellow` model, we now leave managing the data to the model and let the control just focus on parsing the request and sending the response.
-
-```js
-// Get all the fellows from the `Fellow` class and send them back
-const serveFellows = (req, res) => {
-  res.send(Fellow.list());
-}
-
-// Use `Fellow.find` to get the desired fellow
-const serveFellow = (req, res) => {
-  const { id } = req.params;
-  const fellow = Fellow.find(Number(id));
-
-  if (!fellow) {
-    return res.status(404).send({ 
-      message: `No fellow with the id ${id}`
-    });
-  }
-  res.send(fellow);
-};
-```
-
-## Server Organization
-
-Let's zoom out and look at the organization of the server code now.
-
-```
-server/
-├── index.js
-├── controllers/
-│   └── fellowControllers.js
-├── models/
-│   └── Fellow.js
-└── utils/
-    ├── getId.js
-    └── fetchData.js
-```
-
-* `index.js` builds the `app`, configures middleware, and sets the endpoints. However, the controllers are now imported.
-* `controllers/fellowControllers.js` defines all of the controllers for endpoints relating to fellow data. Each set of data should have its own controllers file.
-* `models/Fellow.js` defines a model for managing fellow data. This model is used exclusively by the fellow controllers. Each set of data managed by the server should have its own model.
-
-By separating our code in this way, we show the separate "layers" of the application.
-
-## Challenge
-
-Build a `Song` model and a server application for maintaining a playlist. Each song should have an `id`, a `title`, and an `artist` (at minimum). The model should provide an interface for:
-
-* Creating a new song
-* Getting all songs
-* Getting a single song
-* Updating the title or artist of a song
-* Deleting a song
-
-Then, create an endpoint and a controller for each of these pieces of functionality. The endpoints should follow REST conventions and should all begin with `/api`
-
-Finally, build a frontend react application that can interact with the songs API that you've built. It should be able to:
-
-* Create: Add a new song to the list.
-* Read: Display a list of all songs.
-* Read: Display a single song.
-* Update: Update a single songs's title or artist.
-* Delete: Delete a single song.
-
-Here is a recommended React Router page structure for your React app:
-
-* `/`: The homepage which includes:
-  * Form for creating a new song
-  * List of all songs
-* `/songs/:id`: The details of a single song which includes
-  * The title, artist, and ID of the song
-  * A form to submit a new title or artist for the song
-  * A button to delete the song from the list
