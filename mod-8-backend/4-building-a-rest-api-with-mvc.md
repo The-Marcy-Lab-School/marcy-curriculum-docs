@@ -279,6 +279,8 @@ If you guessed these correctly, there is a good reason why! The endpoints are in
     - Nest resources to indicate ownership: `/api/users/123/posts/456`
     - Avoid deep nesting that becomes hard to manage.
 
+These principles help our API become "RESTful". But keep in mind that these are just guidelines that help make an API more intuitive and predictable for the client. Providing clear documentation will always be the best way to ensure your API is used properly. 
+
 ## Route Parameters
 
 In the request `GET /api/fellows/3`, the value `3` indicates that I want to get the fellow with the ID `3`. To generalize the `id` value in this request endpoint, we define the endpoint like so:
@@ -287,7 +289,7 @@ In the request `GET /api/fellows/3`, the value `3` indicates that I want to get 
 GET /api/fellows/:id
 ```
 
-In this more generalized endpoint URL, the `:id` portion is called a **route parameter**. 
+In this more generalized endpoint URL, the `:id` portion is called a **route parameter**—a placeholder in the endpoint for a value provided by the client.  
 
 ### Find By, Update, and Delete
 
@@ -296,7 +298,7 @@ With route parameters, we can now add these endpoints to our server
 * `PATCH /api/fellows/:id` using `app.patch()`
 * `DELETE /api/fellows/:id` using `app.delete()`
 
-In each of the corresponding controllers, we can access `id` route parameter via the `req.params` object.
+In each of the corresponding controllers, we can access the `id` route parameter's value via the `req.params` object.
 
 {% tabs %}
 
@@ -377,6 +379,8 @@ const deleteFellow = (req, res) => {
   // 204 means "no content" - the request was successful but there's no content to send back
   res.sendStatus(204);
 }
+
+app.delete('/api/fellows/:id', deleteFellow);
 ```
 
 {% endtab %}
