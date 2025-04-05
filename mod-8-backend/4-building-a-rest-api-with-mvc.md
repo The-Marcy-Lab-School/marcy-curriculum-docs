@@ -11,13 +11,17 @@ In this lesson, you will learn best practices for creating a "RESTful API" with 
 **Table of Contents:**
 
 - [Terms](#terms)
+- [Introduction: Client \> Server \> Client \> Server](#introduction-client--server--client--server)
+- [CRUD Applications](#crud-applications)
+  - [Creating Data with POST Requests and Endpoints](#creating-data-with-post-requests-and-endpoints)
+- [Making A RESTful API](#making-a-restful-api)
+  - [Core Principles of REST](#core-principles-of-rest)
+- [Route Parameters](#route-parameters)
+  - [Find By, Update, and Delete](#find-by-update-and-delete)
+- [Testing With Postman](#testing-with-postman)
 - [Model — Adding a Data Management Layer](#model--adding-a-data-management-layer)
 - [Controllers Interact With The Model](#controllers-interact-with-the-model)
-- [Making API endpoints](#making-api-endpoints)
-  - [Route Parameters](#route-parameters)
-  - [REST](#rest)
 - [Server Organization](#server-organization)
-- [Testing With Postman](#testing-with-postman)
 - [Challenge](#challenge)
 
 ## Terms
@@ -26,6 +30,431 @@ In this lesson, you will learn best practices for creating a "RESTful API" with 
 * **Model** — an interface (a collection of methods) for managing a data structure. We will implement a model using a `class` with static methods for performing CRUD actions on a set of data.
 * **Postman** — a tool for testing HTTP requests
 * **Route Parameters** — named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the `req.params` object
+
+## Introduction: Client > Server > Client > Server
+
+Clone down the provided repository and `cd` into the starter folder. There, you will see a `frontend` and `server` provided for you. Run both applications and you'll see it is a simple application that shows a list of fellows and their unique IDs.
+
+![An application that renders a list of fellows fetched from the server](img/4-fellow-app-start.png)
+
+This application represents an essential pattern that we've seen a few times now:
+* The server sends the client a frontend application
+* The frontend application provides the user with buttons or forms that send requests back to the server
+* The server responds with data
+* The frontend renders that data
+
+This back and forth pattern between a server application and the frontend application (both from the same origin) underlies virtually every web application that you've ever used!
+
+## CRUD Applications
+
+This example application is quite limited in its capabilities. It only interact with its server to read data using `GET` HTTP requests.
+
+Take a look at the frontend adapters and the server endpoints/controllers and you'll see familiar code:
+
+{% tabs %}
+
+{% tab title="Client" %} 
+
+{% code title="frontend/src/adapters/fellowAdapters.js" %}
+```javascript
+// The Home component uses this adapter to render allFellows
+export const getAllFellows = async () => {
+  const [allFellows, error] = await handleFetch('/api/fellows/')
+  return [allFellows, error];
+}
+```
+{% endcode %}
+
+{% endtab %}
+
+{% tab title="Server" %}
+
+{% code title="server/index.js" %}
+
+```javascript
+// A mock "database" of fellows
+const fellows = [
+  { name: 'Carmen', id: getId() },
+  { name: 'Reuben', id: getId() },
+  { name: 'Maya', id: getId() },
+];
+
+const serveFellows = (req, res) => {
+  res.send(fellows);
+}
+
+app.get('/api/fellows', serveFellows);
+```
+
+{% endcode %}
+
+{% endtab %}
+
+{% endtabs %}
+
+But think about an application like Google Calendar where you can create an account, create new events, edit events, and delete them too! Applications like these perform all of the CRUD operations.
+
+![In Google Calendar, the application provides a button for the user to press that sends a `PATCH` request to the server.](img/4-google-calendar-edit-event.png)
+
+That is, both their server and frontend are set up in such a way that enable users to create, read, update, and delete data via HTTP requests:
+
+- Create — `POST` HTTP requests
+- Read — `GET` HTTP requests
+- Update — `PATCH`/`UPDATE` HTTP requests
+- Delete — `DELETE` HTTP requests
+
+Let's look at how we can add create, update, and delete capabilities to our application!
+
+### Creating Data with POST Requests and Endpoints
+
+To enable our frontend application to *create* data, we will add `POST` endpoints on our server and send `POST` requests from the frontend, often triggered by a form.
+
+{% tabs %}
+
+{% tab title="Client" %} 
+
+Since `POST` requests are requests to create data, we need to send data in the `body` of the request. On the frontend, this means including an `options` object with our `fetch`.
+
+{% code title="frontend/src/adapters/fellowAdapters.js" %}
+```javascript
+export const createFellow = async (fellowName) => {
+  const options = {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({ fellowName }) // make sure this object matches req.body on the server
+  }
+
+  const [newFellow, error] = await handleFetch(`/api/fellows/`, options);
+  return [newFellow, error];
+}
+```
+{% endcode %}
+
+{% endtab %}
+
+{% tab title="Server" %}
+
+On our server, we expect JSON data to be included with the request body. The `express.json()` middleware parses JSON data from the request and adds it to `req.body` in the controller. With the data retrieved, we can create a new fellow object, add it to our "database" and send a response (or an error). 
+
+To register the controller to respond to `POST` requests, we use the `app.post` method instead of `app.get`
+
+{% code title="server/index.js" %}
+
+```javascript
+// Middleware parses JSON from the request and adds it to req.body
+app.use(express.json());
+
+const createFellow = (req, res) => {
+  // make sure this object matches the options.body on the frontend
+  const { fellowName } = req.body;
+
+  if (!fellowName) {
+    // 400 means "invalid request"
+    return res.status(400).send({ message: "Invalid Name"});
+  }
+
+  const newFellow = {
+    name: fellowName, 
+    id: getId()
+  }
+  fellows.push(newFellow)
+
+  // 201 means "resource created successfully"
+  res.status(201).send(newFellow);
+}
+
+// Use app.post instead of app.get
+app.post('/api/fellows', createFellow);
+```
+
+{% endcode %}
+
+{% endtab %}
+
+{% endtabs %}
+
+With the server controllers built on the backend and the adapter built on the frontend, we can easily test our code by hard-coding a call to the adapter:
+
+{% code title="frontend/src/adapters/fellowAdapters.js" %}
+```js
+export const createFellow = async (fellowName) => {
+  const options = {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({ fellowName });
+  }
+
+  const [newFellow, error] = await handleFetch(`/api/fellows/`, options);
+  return [newFellow, error];
+}
+
+// Just invoke the function to test it out! You should see the server receive the request
+createFellow('Winnie the Pooh');
+```
+{% endcode %}
+
+With this code fully tested from the frontend and backend, we can now incorporate it into our React components! See if you can figure out how to trigger the `createFellow` adapter within the `Home` component.
+
+**<details><summary>Solution</summary>**
+
+The `Home` component already includes a **contolled form** that updates the `newFellowName` state value. When handling the form submission, we can use that state value to send our `createFellow` request. Then, to update the list with the new data in our "database", we send another `getAllFellows()` request and update the `fellows` state.
+
+{% code title="frontend/src/pages/Home.jsx" %}
+```js
+const handleCreateFellow = async (e) => {
+  e.preventDefault();
+  console.log(`Creating fellow: ${newFellowName}`);
+
+  // use the createFellow adapter with the form input
+  createFellow(newFellowName);
+  
+  // re-fetch all the fellows and update the state to re-render the list
+  const [allFellows, error] = await getAllFellows();
+  setFellows(allFellows);
+
+  setNewFellowName('');
+}
+```
+{% endcode %}
+
+</details>
+
+## Making A RESTful API
+
+We now have an application that can create new fellows and read the full list of fellows that have been created! Try clicking on a fellow in the list and, thanks to React Router, we are redirected to the `FellowDetails` page.
+
+Now, we now want to add the following features to the `FellowDetails` page
+* View the details (name and id) of the chosen fellow
+* Update the name of the chosen fellow
+* Delete the chosen fellow from the database
+
+Before we go into the code for adding these features, we need to talk about designing our endpoints according to **REST** (**Re**presentational **S**tate **T**ransfer).
+
+**Pop Quiz: Guess the action that each of these requests will perform!** 
+
+**<details><summary>`GET /api/fellows/3`</summary>**
+
+Get the fellow with the id `3`
+
+</details>
+
+**<details><summary>`PATCH /api/fellows/1`</summary>**
+
+Update the fellow with the id `1`
+
+</details>
+
+**<details><summary>`DELETE /api/fellows/2`</summary>**
+
+Delete the fellow with the id `2`
+
+</details>
+
+**<details><summary>`POST /api/fellows/2/bio`</summary>**
+
+Create a bio for the fellow with the id `2`
+
+</details>
+
+If you guessed these correctly, there is a good reason why! The endpoints are intuitive to understand thanks to the best practices encouraged by REST.
+
+### Core Principles of REST
+
+1. **Statelessness**: Each request should contain all the information needed. The server doesn't store the current client state.
+
+2. **Resources, not actions**: Use nouns (e.g., `/users`, `/posts`) instead of verbs (e.g., `/getUser`, `/createPost`).
+
+3. **HTTP Methods Matter**:
+
+    - `GET` – Retrieve data
+    - `POST` – Create data
+    - `PUT / PATCH` – Update data
+    - `DELETE` – Remove data
+
+4. **Use Proper Status Codes** (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error)
+
+5. **Clear and Consistent URL Design**
+    - Use plural nouns: `/api/users/`
+    - Use IDs to get individual resources: `/api/users/123`
+    - Nest resources to indicate ownership: `/api/users/123/posts/456`
+    - Avoid deep nesting that becomes hard to manage.
+
+## Route Parameters
+
+In the request `GET /api/fellows/3`, the value `3` indicates that I want to get the fellow with the ID `3`. To generalize the `id` value in this request endpoint, we define the endpoint like so:
+
+```
+GET /api/fellows/:id
+```
+
+In this more generalized endpoint URL, the `:id` portion is called a **route parameter**. 
+
+### Find By, Update, and Delete
+
+With route parameters, we can now add these endpoints to our server
+* `GET /api/fellows/:id` using `app.get()`
+* `PATCH /api/fellows/:id` using `app.patch()`
+* `DELETE /api/fellows/:id` using `app.delete()`
+
+In each of the corresponding controllers, we can access `id` route parameter via the `req.params` object.
+
+{% tabs %}
+
+{% tab title="GET /api/fellows/:id" %} 
+
+When fetching a single fellow, we use the `id` route parameter to find the fellow with the matching `id` in our "database":
+
+```javascript
+const serveFellow = (req, res) => {
+  // Make sure the property name matches the route parameter below
+  const { id } = req.params;
+
+  // Keep in mind, route parameters are stored as strings.
+  const fellow = fellows.find(fellow => fellow.id === Number(id));
+
+  if (!fellow) {
+    // 404 means "Resource Not Found"
+    return res.status(404).send({ 
+      message: `No fellow with the id ${id}`
+    });
+  }
+
+  res.send(fellow);
+};
+
+// req.params.id will hold the value of the requested id
+app.get('/api/fellows/:id', serverFellow)
+```
+
+{% endtab %}
+
+{% tab title="PATCH /api/fellows/:id" %}
+
+A `PATCH` request is similar to a `POST` request in that we expect the request body to include JSON data. Here, we expect a new `fellowName` to be provided. We again use the `id` route parameter to find the fellow with the matching `id` in our "database" and then update the `name` property.
+
+```javascript
+const updateFellow = (req, res) => {
+  const { fellowName } = req.body;
+
+  if (!fellowName) {
+    return res.status(400).send({ message: "Invalid Name" });
+  }
+
+  const { id } = req.params;
+  const updatedFellow = fellows.find(fellow => fellow.id === Number(id));
+
+  if (!updatedFellow) {
+    return res.status(404).send({ 
+      message: `No fellow with the id ${id}` 
+    });
+  }
+
+  updatedFellow.name = fellowName;
+  res.send(updatedFellow);
+}
+
+app.patch('/api/fellows/:id', updateFellow);
+```
+
+{% endtab %}
+
+{% tab title="DELETE /api/fellows/:id" %} 
+
+Here, we use the `id` route parameter to find the index of the fellow with the matching `id` in our "database" so that we can splice that index out of the array.
+
+```javascript
+const deleteFellow = (req, res) => {
+  const { id } = req.params;
+
+  const fellowIndex = fellows.findIndex((fellow) => fellow.id === Number(id));
+  if (fellowIndex < 0) {
+    return res.status(404).send({ 
+      message: `No fellow with the id ${id}` 
+    });
+  }
+
+  fellows.splice(fellowIndex, 1);
+  // 204 means "no content" - the request was successful but there's no content to send back
+  res.sendStatus(204);
+}
+```
+
+{% endtab %}
+
+{% endtabs %} 
+
+In our frontend, we can create adapters for each endpoint:
+
+{% tabs %}
+
+{% tab title="GET /api/fellows/:id" %} 
+
+Sending a `GET /api/fellows:id` request is straightforward!
+
+```js
+export const getFellowById = async (id) => {
+  const [fellow, error] = await handleFetch(`/api/fellows/${id}`);
+  return [fellow, error];
+}
+```
+
+{% endtab %}
+
+{% tab title="PATCH /api/fellows/:id" %}
+
+Sending a `PATCH /api/fellows:id` request requires us to include the `id` in the endpoint URL and the new `fellowName` in the `options.body`, along with the appropriate `options.method` and `options.headers` values.
+
+```javascript
+export const updateFellowName = async (id, fellowName) => {
+  const options = {
+    method: "PATCH",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify({ fellowName })
+  };
+
+  const [updatedFellow, error] = await handleFetch(`/api/fellows/${id}`, options);
+  return [updatedFellow, error];
+}
+```
+
+{% endtab %}
+
+{% tab title="DELETE /api/fellows/:id" %} 
+
+Sending a `DELETE /api/fellows:id` request requires us to include the `id` in the endpoint URL and the appropriate `options.method` value.
+
+```javascript
+export const deleteFellow = async (id) => {
+  const options = {
+    method: "DELETE",
+  };
+  const [success, error] = await handleFetch(`/api/fellows/${id}`, options);
+  return [success, error];
+}
+```
+
+{% endtab %}
+
+{% endtabs %} 
+
+## Testing With Postman
+
+* Download the Postman VS Code Extension
+* Create an Account on Postman
+* Create a collection called `810 lecture`
+
+![alt text](img/postman-collections.png)
+
+* Add a request for each of your endpoints:
+  * `GET /api/fellows`
+  * `GET /api/fellows/:id`
+  * `POST /api/fellows`
+  * `PATCH /api/fellows/:id`
+  * `DELETE /api/fellows/:id`
+* Requests that require a body, select the **body** tab, then **raw**, and choose **JSON** from the type dropdown.
+* Then, test out your server's endpoints using postman
+
+![alt text](img/postman-testing.png)
 
 ## Model — Adding a Data Management Layer
 
@@ -44,16 +473,17 @@ A **model** is an interface (a set of functions) for managing a data structure. 
 Find the `models/Fellow.js` file and try the following:
 
 ```js
-const ben = new Fellow('ben');
-const zo = new Fellow('zo');
-const carmen = new Fellow('carmen');
-const gonzalo = new Fellow('gonzalo');
+// Create four new fellows to add to our models dataset
+new Fellow('ben');
+new Fellow('zo');
+new Fellow('carmen');
+new Fellow('gonzalo');
 
-console.log(Fellow.list())
-console.log(Fellow.find(1))
-console.log(Fellow.editName(1, 'ZO!!'))
-console.log(Fellow.delete(2))
-console.log(Fellow.list())
+console.log(Fellow.list());
+console.log(Fellow.find(1));
+console.log(Fellow.editName(1, 'ZO!!'));
+console.log(Fellow.delete(2));
+console.log(Fellow.list());
 ```
 
 ## Controllers Interact With The Model
@@ -62,136 +492,55 @@ How will this model work within our server?
 
 The flow of control is: **Client Request > Express `app` > Middleware > Controller > Model > Controller > Server Response**
 
-![](img/express-middleware-model.svg)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](img/express-middleware-model.svg)
 
-In the server applications we've built so far, the data and files we've sent as responses have all been hard-coded.
+In the server applications we've built so far, the data and files we've sent as responses have directly interacted with the `fellows` array. That is, they both handle the logic of parsing requests AND handle the logic of managing the data.
 
-```js
-const serveHello = (req, res, next) => {
-  res.send('hello');
-}
-```
-
-Now, we can use the `Fellow` model to get the data we want and send it back to the client:
 
 ```js
-// Get all the fellows from the `Fellow` class and send them back
 const serveFellows = (req, res) => {
-  const fellowsList = Fellow.list();
-  res.send(fellowsList);
+  res.send(fellows);
 }
 
-// Use a path parameter to find a specific fellow
 const serveFellow = (req, res) => {
+  // Make sure the property name matches the route parameter below
   const { id } = req.params;
-  const fellow = Fellow.find(Number(id));
 
-  if (!fellow) return res.status(404).send(`No fellow with the id ${id}`);
+  // Keep in mind, route parameters are stored as strings.
+  const fellow = fellows.find(fellow => fellow.id === Number(id));
+
+  if (!fellow) {
+    // 404 means "Resource Not Found"
+    return res.status(404).send({ 
+      message: `No fellow with the id ${id}`
+    });
+  }
+
   res.send(fellow);
 };
 ```
 
-## Making API endpoints
-
-We have a class that can manage the list of fellows and we have controllers that can use that model. To let users execute these operations, our server needs API endpoints where a client can send requests.
-
-For example, a `GET /api/fellows` request will send back all of the fellows managed by the application.
-
-**Quiz! (Answer these with a fellow classmate)**
-
-* Which action will a `GET /api/fellows/5` request perform?
-* Which action will a `PATCH /api/fellows/5` request perform?
-* Which action will a `POST /api/fellows` request perform?
-* Why does the last endpoint not include a number?
-
-### Route Parameters
-
-https://expressjs.com/en/guide/routing.html#route-parameters
-
-Named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the req.params object
+With the `Fellow` model, we now leave managing the data to the model and let the control just focus on parsing the request and sending the response.
 
 ```js
-// Route path: /users/:userId/books/:bookId
-// Request URL: http://localhost:3000/users/34/books/8989
-// req.params: { "userId": "34", "bookId": "8989" }
-
-const serveBook = (req, res) => {
-  const { userId, bookId } = req.params;
-  console.log(userId, bookId); // 34 8989
+// Get all the fellows from the `Fellow` class and send them back
+const serveFellows = (req, res) => {
+  res.send(Fellow.list());
 }
 
-app.get('/users/:userId/books/:bookId', serveBook)
+// Use `Fellow.find` to get the desired fellow
+const serveFellow = (req, res) => {
+  const { id } = req.params;
+  const fellow = Fellow.find(Number(id));
+
+  if (!fellow) {
+    return res.status(404).send({ 
+      message: `No fellow with the id ${id}`
+    });
+  }
+  res.send(fellow);
+};
 ```
-
-### REST
-
-These API endpoints follow the REST design pattern where endpoints look like: `/api/resources/:id`.
-
-Representational state transfer (REST) is a design pattern for creating APIs that adhere to 6 pillars:
-
-<details>
-
-<summary>Uniform interface</summary>
-
-* All API requests for the same resource should look the same, no matter where the request comes from.
-* The REST API should ensure that the same piece of data, such as the name or email address of a user, belongs to only one uniform resource identifier (URI).
-* Resources shouldn’t be too large but should contain every piece of information that the client might need.
-
-</details>
-
-
-<details>
-
-<summary>Client-server decoupling</summary>
-
-* The client and server applications must be completely independent of each other.
-* The only information that the client application should know is the URI of the requested resource; it can't interact with the server application in any other ways.
-* Similarly, a server application shouldn't modify the client application other than passing it to the requested data via HTTP.
-
-</details>
-
-
-<details>
-
-<summary>Statelessness</summary>
-
-* Each request needs to include all the information necessary for processing it.
-* Server applications aren’t allowed to store any data related to a client request.
-
-</details>
-
-
-<details>
-
-<summary>Layered System</summary>
-
-* As a rule of thumb, don’t assume that the client, and server applications connect directly to each other. There may be a number of different intermediaries in the communication loop. 
-* REST APIs need to be designed so that neither the client nor the server can tell whether it communicates with the end application or an intermediary.
-
-</details>
-
-
-
-<details>
-
-<summary>Cacheable</summary>
-
-* When possible, resources should be cacheable on the client or server side.
-* Server responses also need to contain information about whether caching is allowed for the delivered resource.
-* The goal is to improve performance on the client side, while increasing scalability on the server side.
-
-</details>
-
-
-
-<details>
-
-<summary>Code on Demand (optional)</summary>
-
-* REST APIs usually send static resources, but in certain cases, responses can also contain executable code (such as Java applets). In these cases, the code should only run on-demand.
-
-</details>
-
 
 ## Server Organization
 
@@ -214,25 +563,6 @@ server/
 * `models/Fellow.js` defines a model for managing fellow data. This model is used exclusively by the fellow controllers. Each set of data managed by the server should have its own model.
 
 By separating our code in this way, we show the separate "layers" of the application.
-
-## Testing With Postman
-
-* Download the Postman VS Code Extension
-* Create an Account on Postman
-* Create a collection called `810 lecture`
-
-![alt text](img/postman-collections.png)
-
-* Add a request for each of your endpoints:
-  * `GET /api/fellows`
-  * `GET /api/fellows/:id`
-  * `POST /api/fellows`
-  * `PATCH /api/fellows/:id`
-  * `DELETE /api/fellows/:id`
-* Requests that require a body, select the **body** tab, then **raw**, and choose **JSON** from the type dropdown.
-* Then, test out your server's endpoints using postman
-
-![alt text](img/postman-testing.png)
 
 ## Challenge
 
