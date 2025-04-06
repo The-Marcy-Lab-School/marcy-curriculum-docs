@@ -21,10 +21,15 @@ In this lesson, you will learn best practices for creating a "RESTful API" with 
 
 ## Terms
 
-* **REST API** — an API that conforms to the design principles of the representational state transfer (REST) architectural style.
-* **Model** — an interface (a collection of methods) for managing a data structure. We will implement a model using a `class` with static methods for performing CRUD actions on a set of data.
-* **Postman** — a tool for testing HTTP requests
-* **Route Parameters** — named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the `req.params` object
+* **RESTful API** — an API that conforms to the design principles of representational state transfer (REST).
+* **`express.json()` Middleware** — parses JSON data from the request and adds it to `req.body` in the controller.
+* **Route Parameters** — named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the `req.params` object.
+* **`201` Status Code** — response code that means "Success: Created"
+* **`204` Status Code** — response code that means "Success: No Content"
+* **`400` Status Code** — response code that means "Client Error: Invalid Request"
+* **`404` Status Code** — response code that means "Client Error: Not Found"
+* **`500` Status Code** — response code that means "Server Error: Internal Server Error"
+* **`503` Status Code** — response code that means "Server Error: Unavailable"
 
 ## Introduction: Client → Server → Client → Server
 
@@ -54,7 +59,7 @@ Take a look at the frontend adapters and the server endpoints/controllers and yo
 ```javascript
 // The Home component uses this adapter to render allFellows
 export const getAllFellows = async () => {
-  const [allFellows, error] = await handleFetch('/api/fellows/')
+  const [allFellows, error] = await handleFetch('/api/fellows')
   return [allFellows, error];
 }
 ```
