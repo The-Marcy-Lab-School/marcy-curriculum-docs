@@ -4,9 +4,9 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
 {% endhint %}
 
-You now have the skills to build a simple server application. But as your projects grow in scale and scope, you will need to apply best practices to keep your code organized and manageable.
+You now have the skills to build a simple server application. But it can only perform one of the four CRUD capabilities.
 
-In this lesson, you will learn best practices for creating a "RESTful API" with a dedicated "Model layer" for managing the API's data.
+In this lesson, you will learn how to add crate, update, and delete endpoints and best practices for creating a "RESTful API".
 
 **Table of Contents:**
 
@@ -24,12 +24,13 @@ In this lesson, you will learn best practices for creating a "RESTful API" with 
 * **RESTful API** — an API that conforms to the design principles of representational state transfer (REST).
 * **`express.json()` Middleware** — parses JSON data from the request and adds it to `req.body` in the controller.
 * **Route Parameters** — named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the `req.params` object.
-* **`201` Status Code** — response code that means "Success: Created"
-* **`204` Status Code** — response code that means "Success: No Content"
-* **`400` Status Code** — response code that means "Client Error: Invalid Request"
-* **`404` Status Code** — response code that means "Client Error: Not Found"
-* **`500` Status Code** — response code that means "Server Error: Internal Server Error"
-* **`503` Status Code** — response code that means "Server Error: Unavailable"
+* **HTTP Response Codes**:
+  * `201` — Success: Created
+  * `204` — Success: No Content
+  * `400` — Client Error: Invalid Request
+  * `404` — Client Error: Not Found
+  * `500` — Server Error: Internal Server Error
+  * `503` — Server Error: Unavailable
 
 ## Introduction: Client → Server → Client → Server
 
@@ -260,9 +261,22 @@ If you guessed these correctly, there is a good reason why! The endpoints are in
 
 ### Core Principles of REST
 
-1. **Statelessness**: Each request should contain all the information needed. The server doesn't store the current client state.
+[restfulapi.net](https://restfulapi.net/) puts it best:
 
-2. **Resources, not actions**: Use nouns (e.g., `/users`, `/posts`) instead of verbs (e.g., `/getUser`, `/createPost`).
+> REST is an acronym for REpresentational State Transfer and an architectural style for distributed hypermedia systems. Roy Fielding first presented it in 2000 in his famous dissertation. Since then, it has become one of the most widely used approaches for building web-based APIs (Application Programming Interfaces).
+> 
+> REST is not a protocol or a standard, it is an architectural style. During the development phase, API developers can implement REST in a variety of ways.
+> 
+> Like the other architectural styles, REST also has its guiding principles and constraints. These principles must be satisfied if a service interface is to be referred to as RESTful.
+
+The guiding principles of REST can be found in detail in the website above. Here, we've provided a few easy ways to ensure you are building a RESTful API:
+
+1. **Requests Should be Statelessness**: Each request should contain all the information needed by the client for the current. The server doesn't store the current client state.
+    * For example, if a user selects a filter that is applied to a `GET` request, that filter must be provided with every request. The server should not be expected to remember the client's state.
+
+2. **Endpoints Describe Resources, Not Actions**: Use plural nouns (e.g., `/api/users`, `/api/posts`) instead of verbs (e.g., `/api/getUser`, `/api/createPost`) for endpoint URLs.
+  
+    * A common exception to this rule is `/api/login` and `/api/logout`
 
 3. **HTTP Methods Matter**:
 
@@ -271,10 +285,9 @@ If you guessed these correctly, there is a good reason why! The endpoints are in
     - `PUT / PATCH` – Update data
     - `DELETE` – Remove data
 
-4. **Use Proper Status Codes** (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error)
+4. **Endpoints Should Use Proper Status Codes** (e.g., 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error)
 
-5. **Clear and Consistent URL Design**
-    - Use plural nouns: `/api/users/`
+5. **URLs Should Indicate a Clear Hierarchy of Resources:**
     - Use IDs to get individual resources: `/api/users/123`
     - Nest resources to indicate ownership: `/api/users/123/posts/456`
     - Avoid deep nesting that becomes hard to manage.
