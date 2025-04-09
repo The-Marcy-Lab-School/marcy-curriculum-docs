@@ -101,7 +101,7 @@ That is, both their server and frontend are set up in such a way that enable use
 
 - Create — `POST` HTTP requests
 - Read — `GET` HTTP requests
-- Update — `PATCH`/`UPDATE` HTTP requests
+- Update — `PATCH`/`PUT` HTTP requests (`PUT` means replace the whole resource, `PATCH` means change just a part of the resource)
 - Delete — `DELETE` HTTP requests
 
 Let's look at how we can add create, update, and delete capabilities to our application!
