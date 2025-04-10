@@ -57,7 +57,12 @@ This will take you to your Dashboard where you can see existing deployments.
         ```sh
         cd server && npm i
         ```
-   * Start Command - `node index.js` (or `npm start`)
+   * Start Command (assuming your `index.js` file is in `server/`):
+     
+     ```sh
+     cd server && node index.js
+     ```
+ 
    * Instance Type - select **Free**
 
 6. Add Any environment variables your application may need:
