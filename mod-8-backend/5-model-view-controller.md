@@ -35,14 +35,6 @@ In software development, a "code monolith" refers to a single, large, and typica
 
 {% endhint %}
 
-**<details><summary>What separate components of this architecture does our application already have? </summary>**
-
-We have a React application acting as the view component.
-
-We have the Express server application acting as the controllers AND as the model. We need to separate the controller from the model.
-
-</details>
-
 ### The Model-View-Controller (MVC) Architecture
 
 While there are many approaches for organization and separation of concerns, one highly popular approach is called the **Model-View-Controller (MVC) Architecture**. 
@@ -57,6 +49,14 @@ This architecture pattern organizes our code into three distinct pieces:
 {% hint style="info" %}
 Often times, it can be hard to implement your application such that it strictly adheres to any one framework or architecture. Keep in mind that architectures like MVC present an ideal to strive for, not a strict pattern that must be followed at all times. 
 {% endhint %}
+
+**<details><summary>What separate components of this architecture does our application already have? </summary>**
+
+We have a React application acting as the view component.
+
+We have the Express server application acting as the controllers AND as the model. We need to separate the controller from the model.
+
+</details>
 
 ## Implementing a Model for MVC
 
