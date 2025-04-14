@@ -76,7 +76,7 @@ SQL is written in **query statements** that are composed of **keywords** and **c
 For example:
 
 ```sql
-SELECT title, release_year FROM films WHERE length <= 90;
+SELECT title, release_year FROM film WHERE length <= 90;
 ```
 
 **Q: What does the query above look for?**
@@ -90,7 +90,7 @@ The title and release year of the movies that are 90 minutes or less in length f
 </details>
 
 ```sql
-SELECT * FROM films;
+SELECT * FROM film;
 ```
 
 **Q: What about this one?**
@@ -127,5 +127,5 @@ This query will get all of the data from the films table.
 * **SQL (Structured Query Language)** - a language used by relational database management systems to create, read, update, or delete data from a database.
 
 ```sql
-SELECT title, release_year FROM films WHERE length <= 90;
+SELECT title, release_year FROM film WHERE length <= 90;
 ```
