@@ -8,6 +8,8 @@ We've learned how to build a server application using Express. It can serve the 
 
 This week, we'll learn about the tools needed to build a truly "fullstack" web application with a proper database.
 
+Prior to this lecture, please follow these [PostgreSQL Setup Steps](../environment-setup/postgres-setup.md).
+
 Let's dive in!
 
 **Table of Contents**
