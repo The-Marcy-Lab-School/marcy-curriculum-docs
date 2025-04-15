@@ -24,7 +24,7 @@ Let's dive in!
 
 ## Terms
 
-* **Fullstack** - refers to the combination of frontend (client-side) and backend (server-side) technologies.
+* **Fullstack** - refers to the combination of frontend (client-side) and backend (server-side) technologies, including a database.
 * **PERN** - an acronym for a specific set of technologies used to build a fullstack web application: Postgres, Express, React, and Node. This acronym is useful when asked "what stack do you use?"
 * **Database** - a structured collection of data that is organized in a manner for easy retrieval.
 * **Database Management System (DBMS)** - a piece of software used to create and maintain a database.
@@ -37,17 +37,24 @@ Let's dive in!
 
 ## What even is a database?
 
-A **database** is just a structured collection of data.
+A **database** is just a structured collection of data. 
 
-Postgres is a type of **database management system** (DBMS), a program that makes it easier for users to find, update, and manage the data.
+So, we can technically call an array of objects a database, though not a persistent one.
+
+```js
+// Program variables do not persist once the program terminates.
+const users = [
+  { id: 1, username: 'Reuben' },
+  { id: 2, username: 'Maya' },
+  { id: 3, username: 'Carmen' }
+];
+```
+
+Postgres is a type of **database management system** (DBMS), a program that makes it easier for users to find, update, and manage the data. Unlike an in-memory array, databases managed by Postgres are persistent!
 
 ![If a database is like a library, then a database management system is the librarian, keeping it all organized](img/library.png)
 
-{% hint style="info" %}
-
-💡 If a database is like a library, then a database management system is like a librarian with a catalog system. The librarian organizes the books and manages how visitors take and return books.
-
-{% endhint %}
+If a database is like a library, then a database management system is like a librarian with a catalog system. The librarian organizes the books and manages how visitors take and return books.
 
 ### Relational Database Management Systems
 
