@@ -155,5 +155,4 @@ Hurrayy!!! You've solved the merge conflict! Piece of cake.
 
 ## Tips for success
 
-* First, check out our [cheat sheet on Git](broken-reference)
 * Pay attention to the details and take notes! Do not shy away from the messages in your terminal. Seek to understand them and you'll gain so much more confidence.
