@@ -1,21 +1,14 @@
 # Postgres Setup
 
-Welcome! This guide will help you set up **PostgreSQL** (often shorted to just Postgres) on your Windows or Mac computer. 
-
-Postgres is a database management system. Uses for database systems include:
-
-- Storing data.
-- Searching for specific information within the data.
-- Allowing multiple people to look at and change the data at the same time.
-- Managing who is allowed to see the data and who can change it.
-- Managing rules about the data. A rule might say November has 30 days. This means if someone enters November 31 as a date, this date will be rejected.
+Welcome! This guide will help you set up **PostgreSQL** (often shorted to just Postgres) on your Windows or Mac computer. Postgres is a program for managing databases. We will build applications that communicate with Postgres to manage databases.
 
 **Table of Contents**
-- [Windows Postgres Installation](#windows-postgres-installation)
-- [Mac Postgres Installation](#mac-postgres-installation)
+- [What even is a database?](#what-even-is-a-database)
+- [Installation Instructions](#installation-instructions)
 - [Interacting with Databases](#interacting-with-databases)
   - [Play Around With `psql`](#play-around-with-psql)
-  - [Tableplus](#tableplus)
+  - [TablePlus](#tableplus)
+- [Conclusion](#conclusion)
 - [Important Commands / Configuration](#important-commands--configuration)
   - [Checking your Postgres server status](#checking-your-postgres-server-status)
   - [Connecting to the PSQL terminal](#connecting-to-the-psql-terminal)
@@ -23,7 +16,39 @@ Postgres is a database management system. Uses for database systems include:
   - [Tableplus Postgres Server Connection Configuration](#tableplus-postgres-server-connection-configuration)
 - [Troubleshooting](#troubleshooting)
 
-## Windows Postgres Installation 
+## What even is a database?
+
+A **database** is a structured collection of data that is organized and stored in a way that computers can efficiently retrieve, manage, and update the data.
+
+Postgres is a **relational database management system** (RDBMS), a program that makes it easier for users to find, update, and manage the data through the use of **SQL** queries. 
+
+{% hint style="success" %}
+
+If a database is like a library, then a relational database management system is like a librarian with a particular catalog system. 
+
+{% endhint %}
+
+Here's some quick info about Postgres and relational database management systems:
+* Data is separated into collections called **tables**, spreadsheet-like structures that represent a single type of value or "entity" (*e.g. users, posts, comments, likes, etc...*)
+  * Each **row** represents a single resource in the table. (*e.g. a single user in the users table*)
+  * Each **column** defines a property that all resources of a table share (*e.g. a users table has `id`, `username`, and `password` columns*).
+* Tables can be related to each other, typically by referencing the `id` of another table (*e.g. a posts table has a `user_id` column so that each post is related to the user in the users table that created it*)
+
+{% hint style="info" %}
+
+While there are many types of database management systems, each with their own approach to managing a database, [Postgres is the most popular](https://survey.stackoverflow.co/2024/technology/#1-databases). The next 3 most popular are also RDBMSs too!
+
+Popular non-relational database management systems include [MongoDB](https://www.mongodb.com/), [Redis](https://redis.io/), and [Firebase](https://firebase.google.com/).
+
+## Installation Instructions
+
+Follow the instructions below according to your operating system:
+
+{% endhint %}
+
+{% tabs %}
+
+{% tab title="Windows + WSL Instructions" %} 
 
 1. Open up your Ubuntu Terminal
 2. Make sure your Ubuntu packages are up to date by running the command: `sudo apt update`
@@ -41,10 +66,11 @@ Postgres is a database management system. Uses for database systems include:
 
     > Replace the password with something short and memorable (e.g. `'123'` is fine). NOTE: Keep the quotation marks around your password and the semicolon!
 
-Now, let's play around with Postgres! Jump down to the [⬇️ Interacting with Databases ⬇️](#interacting-with-databases) section.
+{% endtab %}
+
+{% tab title="Mac Instructions" %} 
 
 
-## Mac Postgres Installation
 
 1. Go to [https://postgresapp.com/](https://postgresapp.com/)
 2. Click on the downloads tab
@@ -53,16 +79,21 @@ Now, let's play around with Postgres! Jump down to the [⬇️ Interacting with 
 5. Now, you'll have to initialize your database. Click the Initialize button on the right-hand side. The Postgres app should now say **Running**
 6. To let us use Postgres CLI commands, open up a terminal window and run this command `sudo mkdir -p /etc/paths.d &&
 echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
+     * If you're not able to run this command, skip down to the TablePlus setup steps.
 1. Restart your terminal
 2. In your terminal, type in `createdb example`. You should not get an error after the command runs. Now let's see it in action!
-1. In order to access your Postgres databases, you'll need a user account (called a "role"). By default, the installation process creates a user called `postgres` which you can use. 
-9.  Now, connect to the Postgres service as the `postgres` user and open the `psql` shell by running the command: `psql -U postgres`
-10. Once you have successfully entered the `psql` shell, you will see your command line change to look like this: `postgres=#`
-11. Now we'll add a password for the `postgres` user. Run the command: `ALTER USER postgres WITH ENCRYPTED PASSWORD 'your password';`.
+3. In order to access your Postgres databases, you'll need a user account (called a "role"). By default, the installation process creates a user called `postgres` which you can use. 
+4.  Now, connect to the Postgres service as the `postgres` user and open the `psql` shell by running the command: `psql -U postgres`
+5.  Once you have successfully entered the `psql` shell, you will see your command line change to look like this: `postgres=#`
+6.  Now we'll add a password for the `postgres` user. Run the command: `ALTER USER postgres WITH ENCRYPTED PASSWORD 'your password';`.
 
     > Replace the password with something short and memorable (e.g. `'123'` is fine). NOTE: Keep the quotation marks around your password and the semicolon!
 
-Next, let's play around with Postgres!
+{% endtab %}
+
+{% endtabs %} 
+
+Now, let's play around with Postgres!
 
 ## Interacting with Databases
 
@@ -77,45 +108,78 @@ The `psql` terminal is a way to manage your Postgres databases using a command-l
 
 * `\l` 
   * This lists all of the databases. By default, you are given one called `postgres` and two protected ones called `template0` and `template1`.
-* `CREATE DATABASE test;` 
-  * Remember the semicolon!
-  * This will create a new database managed by Postgres. Use the `\l` command again to see the updated list.
+* `CREATE DATABASE test;` (remember the semicolon!)
+  * This will create a new database called `test` stored and managed by Postgres. 
+  * Use the `\l` command again to see the updated list.
 * `\c test` 
   * to connect to your new `test` database. You should see the command line prompt change to `test=#`
-* `CREATE TABLE table_1 ();`
+* `CREATE TABLE friends ( id INT, name TEXT );`
   * Remember the semicolon!
-  * This will create a table with no columns
-* `CREATE TABLE table_2 ( id INT, name TEXT );`
-  * Remember the semicolon!
-  * This will create a table with 2 columns called `id` and `name`. `id` values must be integers and `name` values can be any text.
-* `SELECT * FROM table_2;` to see all rows from the `table_2` table.
-  * Remember the semicolon!
+  * This will create a table called `friends` with 2 columns called `id` and `name`. 
+  * `id` values must be integers and `name` values can be any text.
+* `INSERT INTO friends (id, name) VALUES (1, 'reuben');`
+  * This will create a row in the `friends` table. 
+  * Try running this SQL query with different values to add more values to your table
+* `SELECT id FROM friends;` 
+  * This will select all rows from the `friends` table, but only show the `id` column
+* `SELECT id, name FROM friends;`
+  * This will select the same row, but include the `name` column
+* `SELECT * FROM friends;`
+  * This will select all rows and all columns (a different approach to get the same result as above)
+* `SELECT name FROM friends WHERE id=1;`
+  * What do you think this one does?
 
 You can now exit your psql shell by typing in `\q` and hitting enter
 
-### Tableplus
+### TablePlus
 
-Interacting with Postgres through the command-line interface may make you feel like a pro, but let's face it, it isn't the best. Tableplus is a GUI (graphical user interface) that makes viewing your databases much nicer.
+Before setting up TablePlus, double check that your Postgres Server is up and running:
+
+  > **Windows**: in the terminal start your Postgres server with `sudo service postgresql start`.
+  >
+  > **Mac**: Click the Start button so that the Red X turns into a Green checkmark.
+
+  ![Access Postgres via the toolbar on Mac OS](img/mac-open-postgres-toolbar.png)
+
+Interacting with Postgres through the command-line interface may make you feel like a pro, but let's face it, it isn't the best. TablePlus is a GUI (graphical user interface) that makes viewing your databases much nicer.
 
 1. Download [tableplus](https://tableplus.com/) from their website. Make sure to download the corresponding version for your OS.
 2. After installing and opening the application, click the "Create A New Connection..." towards the bottom of the window. You will see a prompt to select the type of database you want to connect to. Select **Postgresql**.
 3. Now, you'll enter the configurations for this connection:
-    - The name of the connection is up to you. You can call it `marcy` or `postgres` if you'd like. In the future, if you ever want to connect to a different database server, you would set up a new connection and give it a descriptive name.
+    - For Name, enter `postgres` since we are connecting to our Postgres server.
     - For Host, enter `localhost` or `127.0.0.1` (these are equivalent)
     - For Port, enter `5432`.
     - For the user field, enter `postgres`.
     - In the password field, enter the password you created for user `postgres` in step 10.
     - Leave the remaining fields blank
 
-4.  Click the **test** button, and if everything is successful, all of the fields should be highlighted green! At that point, click **connect**, and you should be able to view the GUI client for your database. If you want, you can click the `SQL` button and write your own SQL queries.
+4.  Click the **test** button, and if everything is successful, all of the fields should be highlighted green! At that point, click **connect**, and you should be able to view the GUI client for your database. 
+  
+Now, let's play around with TablePlus. Start by clicking on the Database Icon. Then create a database called `tabeplus-test` and open it!
 
-    > **Note:** If you get a `Could not connect to server: Connection refused` error, this means you have to first start your postgres server.
-    > 
-    > **Windows**: in the terminal using the command `sudo service postgresql start`.
-    >
-    > **Mac**: Click the Start button so that the Red X turns into a Green checkmark.
+![](img/TablePlus-select-database.png)
 
-    ![Access Postgres via the toolbar on Mac OS](img/mac-open-postgres-toolbar.png)
+Next, click on the `SQL` button and write your own SQL queries.
+
+* `CREATE TABLE friends ( id INT, name TEXT );`
+  * Remember the semicolon!
+  * This will create a table called `friends` with 2 columns called `id` and `name`. 
+  * `id` values must be integers and `name` values can be any text.
+* `INSERT INTO friends (id, name) VALUES (1, 'reuben');`
+  * This will create a row in the `friends` table. 
+  * Try running this SQL query with different values to add more values to your table
+* `SELECT id FROM friends;` 
+  * This will select all rows from the `friends` table, but only show the `id` column
+* `SELECT id, name FROM friends;`
+  * This will select the same row, but include the `name` column
+* `SELECT * FROM friends;`
+  * This will select all rows and all columns (a different approach to get the same result as above)
+* `SELECT name FROM friends WHERE id=1;`
+  * What do you think this one does?
+
+## Conclusion
+
+That's it! Now that you can connect to your Postgres database using either the `psql` CLI or using a GUI like TablePlus, you're ready to learn more about how to access and manage your database using SQL.
 
 ## Important Commands / Configuration
 
