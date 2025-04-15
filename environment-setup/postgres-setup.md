@@ -40,11 +40,11 @@ While there are many types of database management systems, each with their own a
 
 Popular non-relational database management systems include [MongoDB](https://www.mongodb.com/), [Redis](https://redis.io/), and [Firebase](https://firebase.google.com/).
 
+{% endhint %}
+
 ## Installation Instructions
 
 Follow the instructions below according to your operating system:
-
-{% endhint %}
 
 {% tabs %}
 
@@ -60,9 +60,9 @@ Follow the instructions below according to your operating system:
     > Check out the [Important Commands / Configuration](#important-commands--configuration) section of this page for more commands like this.
 
 7. In order to access your Postgres databases, you'll need a user account (called a "role"). By default, the installation process creates a user called `postgres` which you can use. 
-9.  Now, connect to the Postgres service as the `postgres` user and open the `psql` shell by running the command: `sudo -u postgres psql`
-10. Once you have successfully entered the `psql` shell, you will see your command line change to look like this: `postgres=#`
-11. Now we'll add a password for the `postgres` user. Run the command: `ALTER USER postgres WITH ENCRYPTED PASSWORD 'your password';`.
+8.  Now, connect to the Postgres service as the `postgres` user and open the `psql` shell by running the command: `sudo -u postgres psql`
+9.  Once you have successfully entered the `psql` shell, you will see your command line change to look like this: `postgres=#`
+10. Now we'll add a password for the `postgres` user. Run the command: `ALTER USER postgres WITH ENCRYPTED PASSWORD 'your password';`.
 
     > Replace the password with something short and memorable (e.g. `'123'` is fine). NOTE: Keep the quotation marks around your password and the semicolon!
 
