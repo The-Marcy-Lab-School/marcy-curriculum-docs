@@ -67,7 +67,7 @@
   * [Technical Requirements Checklist](mod-4-project-week/technical-requirements.md)
   * [Free API List](mod-4-project-week/free-apis.md)
   * [Collaborative GitHub](mod-0-command-line-interfaces-git-and-github/4-git-branching.md)
-  * [Mod 4 — Important How Tos and Guides]()
+  * Mod 4 — Important How Tos and Guides
     * [How to Create a GitHub Organization and Scrum Board](how-tos/how-to-create-scrumboard.md)
     * [How To Start a Project with Vite](how-tos/vite.md)
     * [How To Deploy a Project with GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
@@ -84,7 +84,7 @@
   * [MDN: Object Prototypes](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects/Object_prototypes)
 * [Mod 6 - Data Structures & Algorithms](mod-6-ds-a/README.md)
   * [Mod 6 Overview](mod-6-ds-a/Overview.md)
-  * [Mod 6 — Important How Tos and Guides]()
+  * Mod 6 — Important How Tos and Guides
     * [How to Debug](how-tos/how-to-debug.md)
     * [How to PEDAC](how-tos/how-to-pedac.md)
   * [1. Nodes & Linked Lists](mod-6-ds-a/1-nodes-linked-lists.md)
@@ -94,7 +94,7 @@
   * [5. Trees](mod-6-ds-a/5-trees.md)
 * [Mod 7 - React](mod-7-react/README.md)
   * [Mod 7 Overview](mod-7-react/Overview.md)
-  * [Mod 7 — Important How Tos and Guides]()
+  * Mod 7 — Important How Tos and Guides
     * [How to Create Projects with Vite](how-tos/vite.md)
     * [How to Deploy on GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
   * [1. Intro to React](mod-7-react/1-intro-to-react.md)
@@ -106,7 +106,7 @@
   * [7. Global Context Pattern](mod-7-react/6-global-context-pattern.md)
 * [Mod 8 - Backend](mod-8-backend/README.md)
   * [Mod 8 Overview](mod-8-backend/Overview.md)
-  * [Mod 8 — Important How Tos and Guides]()
+  * Mod 8 — Important How Tos and Guides
     * [How to Deploy on Render](./how-tos/deploying-using-render.md)
     * [How to Test your API with Postman](./how-tos/test-api-postman.md)
     * [Postgres Setup](./environment-setup/postgres-setup.md)
