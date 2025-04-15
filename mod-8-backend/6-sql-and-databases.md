@@ -155,6 +155,8 @@ This query will get all of the data from the films table.
 
 </details>
 
+In the next lesson we'll learn more about writing SQL queries but for now, here are some key things to look out for.
+
 ### Tips to avoid SQL errors
 
 * SQL is NOT case sensitive. However, it is a standard practice to write keywords in all-caps to distinguish them from values.
