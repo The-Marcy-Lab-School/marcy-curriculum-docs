@@ -69,7 +69,7 @@ Specifically, Postgres is a **Relational DBMS (RDBMS)**, which just refers to th
 ![A film table showing data about films](img/film-table.png)
 
 In a relational DBMS:
-* Data is separated into collections called **tables**, spreadsheet-like structures that represent a single type of value or "entity" (*e.g. users, posts, comments, likes, etc...*)
+* Data is separated into collections called **tables** — spreadsheet-like structures that represent a single type of value or "entity" (*e.g. users, posts, comments, likes, etc...*)
   * Each **row** represents a single resource in the table. (*e.g. a single user in the users table*)
   * Each **column** defines a property that all resources of a table share (*e.g. a users table has `id`, `username`, and `password` columns*).
 * Every table needs a **primary key** — a column that uniquely identifies each row in the table. Typically this is just called `id` 
@@ -80,6 +80,8 @@ In a relational DBMS:
 While there are many types of database management systems, each with their own approach to managing a database, [Postgres is the most popular](https://survey.stackoverflow.co/2024/technology/#1-databases). The next 3 most popular are also RDBMSs too!
 
 Popular non-relational database management systems include [MongoDB](https://www.mongodb.com/), [Redis](https://redis.io/), and [Firebase](https://firebase.google.com/).
+
+{% endhint %}
 
 ### How does a database fit into an application?
 
