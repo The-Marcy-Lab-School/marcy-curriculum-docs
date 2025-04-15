@@ -15,8 +15,9 @@ Let's dive in!
 **Table of Contents**
 
 - [Terms](#terms)
-- [What is a database?](#what-is-a-database)
-  - [What is Postgres?](#what-is-postgres)
+- [What even is a database?](#what-even-is-a-database)
+  - [Relational Database Management Systems](#relational-database-management-systems)
+  - [How does a database fit into an application?](#how-does-a-database-fit-into-an-application)
 - [What is SQL?](#what-is-sql)
   - [Tips to avoid SQL errors](#tips-to-avoid-sql-errors)
 - [Summary](#summary)
@@ -34,37 +35,71 @@ Let's dive in!
   * A **primary key** serves as the unique identifier for a row in a table
 * **SQL (Structured Query Language)** - a language used by relational database management systems to create, read, update, or delete data from a database.
 
-## What is a database?
+## What even is a database?
 
-A **database** is a structured collection of data. The data could be stored in a file or in RAM. In the old days, it was stored on a physical "punch card".
+A **database** is just a structured collection of data.
 
-![a punch card](img/punch-card.png)
+Postgres is a type of **database management system** (DBMS), a program that makes it easier for users to find, update, and manage the data.
 
-Nowadays, the data is often stored on a dedicated "database server" managed by a piece of software called a **database management system (DBMS)** such as Postgres, MongoDB, SQLite, MySQL, Firebird, Apache Cassandra, and many more.
+![If a database is like a library, then a database management system is the librarian, keeping it all organized](img/library.png)
 
-![client server database diagram](img/client-server-database-diagram.svg)
+{% hint style="info" %}
 
-A server application can send queries to the DBMS using the **Structured Query Language (SQL)** and the DBMS responds with the requested data.
+💡 If a database is like a library, then a database management system is like a librarian with a catalog system. The librarian organizes the books and manages how visitors take and return books.
 
-By separating the database from the server application, we achieve greater separation of concerns:
+{% endhint %}
+
+### Relational Database Management Systems
+
+Specifically, Postgres is a **Relational DBMS (RDBMS)**, which just refers to the particular way that Postgres organizes its databases. 
+
+![A film table showing data about films](img/film-table.png)
+
+In a relational DBMS:
+* Data is separated into collections called **tables**, spreadsheet-like structures that represent a single type of value or "entity" (*e.g. users, posts, comments, likes, etc...*)
+  * Each **row** represents a single resource in the table. (*e.g. a single user in the users table*)
+  * Each **column** defines a property that all resources of a table share (*e.g. a users table has `id`, `username`, and `password` columns*).
+* Every table needs a **primary key** — a column that uniquely identifies each row in the table. Typically this is just called `id` 
+* Tables can be related to each other, typically by referencing the `id` of another table (*e.g. a posts table has a `user_id` column so that each post is related to the user in the users table that created it*)
+
+{% hint style="info" %}
+
+While there are many types of database management systems, each with their own approach to managing a database, [Postgres is the most popular](https://survey.stackoverflow.co/2024/technology/#1-databases). The next 3 most popular are also RDBMSs too!
+
+Popular non-relational database management systems include [MongoDB](https://www.mongodb.com/), [Redis](https://redis.io/), and [Firebase](https://firebase.google.com/).
+
+### How does a database fit into an application?
+
+Relational database management systems like Postgres are quite similar to our Express servers! When we run the Postgres software, it provides access to the database via a server port (`localhost:5432`). 
+
+![The Postgres database receives SQL queries from the Express server and sends back data.](img/client-server-database-diagram.svg)
+
+However, while our Express servers take in HTTP requests, Postgres accepts **Structured Query Language (SQL)** queries. For example, to insert data into a table of users we might send the following SQL query to Postgres:
+
+```SQL
+INSERT INTO user (id, username, password) VALUES (1, 'reuben', 'coder123')
+```
+
+We'll use a tool called [Knex](./8-knex.md) to execute those queries from our server's model. Code that uses `knex` looks like this:
+
+
+```js
+class User {
+
+  //...other methods
+
+  static async getAll() {
+    const allUsers = await knex.raw(`SELECT * FROM user`);
+    res.send(allUsers);
+  }
+}
+```
+
+With Postgres, we now have achieved a 3-layer system of responsibility:
 
 * The database layer is focused solely on managing and securing the data.
 * The application layer is focused solely on receiving client requests, retrieving the appropriate data from the database, and sending it back to the client.
 * If we need to update or restart the application server, the database server can continue running without losing the data.
-
-### What is Postgres?
-
-PostgreSQL is a popular "relational" DBMS that organizes its data in **tables**. Below is an example of a table called `films` with data about various films:
-
-![A film table showing data about films](img/film-table.png)
-
-Each table is made up of **rows** and **columns**.
-
-* Each row represents a single object/instance/record in the table
-* Each column represents a property/attribute/field of that object. Columns have data types such as integer, string, date, or boolean.
-* Every table has a column called `id` (or `film_id` in this case) that serves as the **primary key** - a unique identifier for each row in the table.
-
-**Q: In JavaScript, how would this data be organized?**
 
 ## What is SQL?
 
@@ -113,8 +148,8 @@ This query will get all of the data from the films table.
 
 ## Summary
 
-* **Database** - a structured collection of data that is organized in a manner for easy retrieval.
-* **Database Management System (DBMS)** - a piece of software used to create and maintain a database.
+* **Database** - a structured collection of data that is organized in a manner for easy retrieval (like a library)
+* **Database Management System (DBMS)** - a piece of software used to organize and manage access to a database (like a librarian)
 
 ![client server database diagram](img/client-server-database-diagram.svg)
 
