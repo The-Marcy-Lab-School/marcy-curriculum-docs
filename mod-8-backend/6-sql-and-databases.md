@@ -52,9 +52,15 @@ const users = [
 
 Postgres is a type of **database management system** (DBMS), a program that makes it easier for users to find, update, and manage the data. Unlike an in-memory array, databases managed by Postgres are persistent!
 
-![If a database is like a library, then a database management system is the librarian, keeping it all organized](img/library.png)
+{% hint style="info" %}
+
+**So, what's the difference between a database and a database management system?**
 
 If a database is like a library, then a database management system is like a librarian with a catalog system. The librarian organizes the books and manages how visitors take and return books.
+
+![If a database is like a library, then a database management system is the librarian, keeping it all organized](img/library.png)
+
+{% endhint %}
 
 ### Relational Database Management Systems
 
