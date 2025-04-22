@@ -66,15 +66,16 @@ Migration files are a "formal" way to define a database schema and to update it 
 The main reason you want to use migrations and seeds is for **maintainability**.
 
 Imagine this:
-- you're working on a team of developers that share a code-base. 
+- You're working on a team of developers that share a code-base.
 - You all push and pull from the same remote Github repo.
-- Let's say you add a new feature that requires a database, so you create one on your local computer. 
+- While working, you add a new feature that requires a database, so you create one on your local computer.
 - You finish building out your feature and push your new code up! 
 - However, if your team members were to pull your code down, they would not get your database.
 
 When working with other devs, they need to be able to reproduce your database structure and starting information. We could have everyone run the same SQL query to create the entire database manually on their computers. However, this does not scale, so in the real world it's much more common for companies to use **migration files** to keep track of their DB structure and **seed files** to populate their databases.
 
 ## Migrations
+
 Migrations are special files that run queries on your DB to perform structural updates, or in some cases, data updates. In node land, one of the more common ways to do this is by using the query builder KNEX. This is a simple library that allows you to create and run migrations files with ease.
 
 ### Creating New Migrations

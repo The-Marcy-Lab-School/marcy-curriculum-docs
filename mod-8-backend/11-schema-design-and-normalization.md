@@ -13,8 +13,9 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
 **Table of Contents**:
 
 - [Terms](#terms)
-- [Why is schema design important?](#why-is-schema-design-important)
-- [Steps For Designing A Database](#steps-for-designing-a-database)
+- [What is a "Schema"?](#what-is-a-schema)
+  - [Why is schema design important?](#why-is-schema-design-important)
+  - [Steps For Designing A Database](#steps-for-designing-a-database)
 - [Database Markup Language](#database-markup-language)
   - [Step 1 - Identify Tables](#step-1---identify-tables)
   - [Step 2 - Define Columns](#step-2---define-columns)
@@ -33,17 +34,42 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
 * **Normal Forms** - a series of guidelines to help achieve a well-structured and efficient database schema.
 * **Normalization** - the process of organizing data in a database to eliminate redundancy and inconsistent dependencies.
 
-## Why is schema design important?
+## What is a "Schema"?
 
-A well-designed database schema ensures:
+When learning about Migrations and Seeds, you saw this code:
 
-* data consistency
-* minimized redundancy
-* improved performance
+```js
+exports.up = function (knex) {
+  return knex.schema
+    .createTable('fellows', function (table) {
+      table.increments('id').primary();
+      table.string('name', 255).notNullable();
+    })
+    .createTable('posts', function (table) {
+      table.increments('id').primary();
+      table.string('content').notNullable();
+      table.integer('fellow_id').notNullable();
+      table.foreign('fellow_id').references('id').inTable('fellows');
+    });
+};
+```
+
+> sche·ma /ˈskēmə/ (noun) — a representation of a plan in the form of an outline or model.
+
+The `knex.schema` object has methods like `.createTable` and `alterTable` for planning the structure of our database tables.
+
+### Why is schema design important?
+
+Before jumping into building out your database schema, it is essential to take time to *plan*. Planning ahead has a number of benefits:
+
+* data consistency — every piece of data added to the database is in the proper format
+* minimized redundancy — duplicate data is minimized and every piece of data has a proper place to be stored
+* improved performance — data retrieval is optimized when tables are well designed
+* alignment amongst teammates — a schema design provides a source-of-truth for teammates to reference when working together
 
 Database schema designs are most often communicated through an **Entity Relationship Diagram**
 
-![](img/labeled-erd.png)
+![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](img/labeled-erd.png)
 
 <details>
 
@@ -55,7 +81,7 @@ A diagram allows all engineers working on a project to have a clear picture of t
 
 So, how do we get from an idea to an ERD like this?
 
-## Steps For Designing A Database
+### Steps For Designing A Database
 
 Let's say we're designing a database for a school that tracks:
 
