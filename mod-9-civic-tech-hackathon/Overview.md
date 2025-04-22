@@ -9,7 +9,7 @@
 - [🏃 Sprints](#-sprints)
 - [📆 Calendar, Rituals, and Support Meetings](#-calendar-rituals-and-support-meetings)
   - [🕰️ Sample Schedule](#️-sample-schedule)
-  - [👥 Whole-Group Meeting](#-whole-group-meeting)
+  - [👥 Whole-Group Meetings](#-whole-group-meetings)
   - [🤝 Support Meetings](#-support-meetings)
   - [🥲 Fridays and Weekends](#-fridays-and-weekends)
 - [✅ Key Deliverables and Examples](#-key-deliverables-and-examples)
@@ -85,7 +85,7 @@ Below you can see a sample schedule for a typical week during Civic Tech Hackath
 
 Below, you can learn more about each event on your calendar!
 
-### 👥 Whole-Group Meeting
+### 👥 Whole-Group Meetings
 
 These whole-group meetings will ensure you remain grounded and connected to your classmates! Share your wins, challenges, and the things you learn as you embark on this journey!
 
