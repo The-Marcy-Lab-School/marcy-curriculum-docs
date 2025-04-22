@@ -152,7 +152,7 @@ You *could* rollback, edit the original migration file, and then run the migrati
 The best practice is to create a new migration file: `npx knex migrate:make change_post_content_column`:
 
 ```js
-exports.up = async function (knex) {
+exports.up = function (knex) {
   return knex.schema.alterTable('posts', function (table) {
     table.dropColumn('content');
     table.string('post_content');
@@ -160,7 +160,7 @@ exports.up = async function (knex) {
 };
 
 // notice how the `down` function undoes the `up` function's changes
-exports.down = async function (knex) {
+exports.down = function (knex) {
   knex.schema.alterTable('posts', function (table) {
     table.dropColumn('post_content');
     table.string('content');
