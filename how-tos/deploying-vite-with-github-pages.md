@@ -1,26 +1,28 @@
-# Deploying a Vite Project with Github Pages
+# How to Deploy on GitHub Pages
 
 So, you've built an app - congrats! You can run it locally, but wouldn't it be sweet if everyone on the internet could use it??
 
-This resource covers deploying a Vanilla JS Vite app using Github Pages. 
+This resource covers deploying a Vanilla JS Vite app using Github Pages.
 
 > Note: These details can also be found on [Vite's own docs](https://vitejs.dev/guide/static-deploy).
 
 **Table of Contents**
-- [Prerequisites](#prerequisites)
-- [What is Github Pages?](#what-is-github-pages)
-- [Steps to Deploy on GitHub Pages](#steps-to-deploy-on-github-pages)
-  - [1) Configure Vite for Deployment on Github Pages](#1-configure-vite-for-deployment-on-github-pages)
-  - [2 and 3) Configure GitHub Pages and Create an Action](#2-and-3-configure-github-pages-and-create-an-action)
-- [Troubleshooting](#troubleshooting)
-  - [Files are not being loaded properly](#files-are-not-being-loaded-properly)
-  - [Multi-Page Applications](#multi-page-applications)
+
+* [Prerequisites](deploying-vite-with-github-pages.md#prerequisites)
+* [What is Github Pages?](deploying-vite-with-github-pages.md#what-is-github-pages)
+* [Steps to Deploy on GitHub Pages](deploying-vite-with-github-pages.md#steps-to-deploy-on-github-pages)
+  * [1) Configure Vite for Deployment on Github Pages](deploying-vite-with-github-pages.md#1-configure-vite-for-deployment-on-github-pages)
+  * [2 and 3) Configure GitHub Pages and Create an Action](deploying-vite-with-github-pages.md#2-and-3-configure-github-pages-and-create-an-action)
+* [Troubleshooting](deploying-vite-with-github-pages.md#troubleshooting)
+  * [Files are not being loaded properly](deploying-vite-with-github-pages.md#files-are-not-being-loaded-properly)
+  * [Multi-Page Applications](deploying-vite-with-github-pages.md#multi-page-applications)
 
 {% embed url="https://youtu.be/KHDeInjoyYg" %}
 
 ## Prerequisites
 
-In order to deploy to Github using this guide, you will need 
+In order to deploy to Github using this guide, you will need
+
 * A project built using Vite.
 * A Github repo with that Vite project inside.
 * A `main` branch with code that is ready to be deployed.
@@ -39,7 +41,7 @@ When someone visits your GitHub Pages website, the GitHub servers will simply se
 
 ![When visiting a static website, the server will send HTML, CSS, and JS files to the client](img/client-server-interaction-2.png)
 
-In this article, you will configure GitHub pages to execute a "build process" to convert your Vite project into a production-ready version and deploy it. 
+In this article, you will configure GitHub pages to execute a "build process" to convert your Vite project into a production-ready version and deploy it.
 
 Check out this example repository:
 
@@ -54,6 +56,7 @@ Notice how the URL that is generated for this deployed site follows the pattern 
 ## Steps to Deploy on GitHub Pages
 
 The steps required to deploy your project are:
+
 1. Configure Vite to properly build your project to be compatible with GitHub pages
 2. Configure your GitHub repository to use GitHub actions.
 3. Create a new "Action" on GitHub to build your project.
@@ -89,9 +92,9 @@ When we deploy our project, we will instruct GitHub pages to run the command `np
 npm run build
 ```
 
-This will create the **production version** of your app in a folder called `dist/` (short for "distribution"). 
+This will create the **production version** of your app in a folder called `dist/` (short for "distribution").
 
-Take a look inside. It will have an `index.html` file and an `assets/` folder with your JavaScript and CSS compressed into just two files! 
+Take a look inside. It will have an `index.html` file and an `assets/` folder with your JavaScript and CSS compressed into just two files!
 
 This minification is one of the benefits of Vite as a "build tool". It prepares your project to run lightning-quick because it removes a lot of the bloat that make our lives easier during development but isn't necessary for a deployed project.
 
@@ -108,8 +111,7 @@ If you comment out the code inside of `vite.config.js` and run `npm run build` a
 
 Finally, **add, commit and push** your changes to add the `vite.config.js` file to your repo.
 
-> Note: each time your `npm run build`, new versions of your `assets` will be created and will overwrite the old versions.
-> At any point after running `npm run build`, you can run `npm run preview` to see what the production version will look like.
+> Note: each time your `npm run build`, new versions of your `assets` will be created and will overwrite the old versions. At any point after running `npm run build`, you can run `npm run preview` to see what the production version will look like.
 
 ### 2 and 3) Configure GitHub Pages and Create an Action
 
@@ -200,6 +202,7 @@ When building your project for production, you may notice that the application i
 Double check that all of your imports are correct! In the `index.html` file, double check that you are referencing files located in your `src` directory like `src/main.js` and `src/style.css` (if you are linking your CSS in this way).
 
 If you are using image files or other static assets, they should be in the `public` directory. Filepaths to these files are all treated as if you are in the root of `public`
+
 * Within `.html` and `.css` files, public files should be referenced like so `/filepath/within/public` (note the `/` in front)
 * Within `.js` files, public files should be referenced like so `filepath/within/public` (note the lack of `/` in front).
 
@@ -220,4 +223,4 @@ public/
 
 If your project has multiple `.html` files, you will need to modify your `vite.config.js` file to enable these multiple "entry points".
 
-For best results, refer to the [Vite documentation](https://vite.dev/guide/build.html#multi-page-app). 
+For best results, refer to the [Vite documentation](https://vite.dev/guide/build.html#multi-page-app).

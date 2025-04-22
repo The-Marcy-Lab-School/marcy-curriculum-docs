@@ -1,22 +1,24 @@
-# Private Properties and Static Methods
+# 3. Private & Static
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-2-private-properties-static-methods)!
 {% endhint %}
 
 **Table of Contents:**
-- [Private Properties](#private-properties)
-- [Naming Convention](#naming-convention)
-- [Using `#` Notation](#using--notation)
-- [Static Properties and Methods](#static-properties-and-methods)
-- [Quiz!](#quiz)
-  - [What do you think will log to the console?](#what-do-you-think-will-log-to-the-console)
-  - [What is the purpose of using the # notation for a property in a class?](#what-is-the-purpose-of-using-the--notation-for-a-property-in-a-class)
-  - [How do you call a static method on a class?](#how-do-you-call-a-static-method-on-a-class)
-- [Challenge: Car Class](#challenge-car-class)
-- [Summary](#summary)
+
+* [Private Properties](3-private-properties-static-methods.md#private-properties)
+* [Naming Convention](3-private-properties-static-methods.md#naming-convention)
+* [Using `#` Notation](3-private-properties-static-methods.md#using--notation)
+* [Static Properties and Methods](3-private-properties-static-methods.md#static-properties-and-methods)
+* [Quiz!](3-private-properties-static-methods.md#quiz)
+  * [What do you think will log to the console?](3-private-properties-static-methods.md#what-do-you-think-will-log-to-the-console)
+  * [What is the purpose of using the # notation for a property in a class?](3-private-properties-static-methods.md#what-is-the-purpose-of-using-the--notation-for-a-property-in-a-class)
+  * [How do you call a static method on a class?](3-private-properties-static-methods.md#how-do-you-call-a-static-method-on-a-class)
+* [Challenge: Car Class](3-private-properties-static-methods.md#challenge-car-class)
+* [Summary](3-private-properties-static-methods.md#summary)
 
 ## Private Properties
+
 In the previous lectures, we've been creating classes and instances, but we've left some of our properties open to direct manipulation. For example, in the `User` class, we have a `password` property:
 
 ```js
@@ -53,11 +55,14 @@ ben.password = '1212';// what will this do?
 ben.validatePassword('1234'); // is this true?
 ben.validatePassword('1212');// what about this one?
 ```
-Ideally, we wouldn't want the `password` property to be directly accessible and modifiable. This is where the concept of __private properties__ comes in.
 
-**<details><summary style="color: purple">Q. What happens when were try to access the password property?</summary>**
+Ideally, we wouldn't want the `password` property to be directly accessible and modifiable. This is where the concept of **private properties** comes in.
 
-The password property is a public property, meaning it can be accessed from outside the class instances. 
+<details>
+
+<summary><strong>Q. What happens when were try to access the password property?</strong></summary>
+
+The password property is a public property, meaning it can be accessed from outside the class instances.
 
 You can still directly modify it from outside the class instance. This is generally not recommended for sensitive information like passwords.
 
@@ -278,8 +283,12 @@ console.log(counter1.getValue()); // ?
 console.log(counter2.getValue()); // ?
 
 ```
+
 ### What do you think will log to the console?
-<details><summary>Answer</summary>
+
+<details>
+
+<summary>Answer</summary>
 
 ```js
 console.log(counter1.getValue()); // 2
@@ -292,12 +301,15 @@ console.log(counter2.getValue()); // TypeError: Cannot read private member #valu
 
 Explanation:
 
-`counter1` has its own private #value property, which is different from the one in `counter2`.
-When `Counter.reset()` is called, it tries to access the private `#value` property on the class itself, resulting in a TypeError.
+`counter1` has its own private #value property, which is different from the one in `counter2`. When `Counter.reset()` is called, it tries to access the private `#value` property on the class itself, resulting in a TypeError.
+
 </details>
 
 ### What is the purpose of using the # notation for a property in a class?
-<details><summary>Answer</summary>
+
+<details>
+
+<summary>Answer</summary>
 
 It indicates a private property.
 
@@ -307,7 +319,9 @@ The `#` notation in JavaScript is used to indicate private fields within a class
 
 ### How do you call a static method on a class?
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 `ClassName.staticMethod()`
 
@@ -324,7 +338,6 @@ Lets create a class called `Car` that has the following:
 * Implement an instance method `displayInfo()` that logs information about the car.
 * Implement another instance method `honkHorn()` to simulate honking the car's horn in the console.
 * Use a static method called `generateLicensePlate()` that a license plate `'ABC123'`.
-
 
 ## Summary
 

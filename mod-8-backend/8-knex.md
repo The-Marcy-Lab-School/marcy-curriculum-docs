@@ -1,4 +1,4 @@
-# Knex
+# 9. Knex
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-2-2-knex)!
@@ -10,20 +10,20 @@ In this lesson, we will learn [Knex](https://knexjs.org/), a library that allows
 
 **Table of Contents**
 
-- [Terms](#terms)
-- [Getting Started: Setting up a Database](#getting-started-setting-up-a-database)
-- [What is Knex?](#what-is-knex)
-- [Configuring Knex](#configuring-knex)
-  - [0) Installing modules](#0-installing-modules)
-  - [1) Provide connection details with a `knexfile.js`](#1-provide-connection-details-with-a-knexfilejs)
-  - [2) Create a `knex` object to connect to the database](#2-create-a-knex-object-to-connect-to-the-database)
-  - [3) Use the `knex` connection object to execute queries](#3-use-the-knex-connection-object-to-execute-queries)
-- [Writing queries using `knex.raw`](#writing-queries-using-knexraw)
-  - [Multi-Line Queries](#multi-line-queries)
-  - [Dynamic Queries](#dynamic-queries)
-  - [A more complex example](#a-more-complex-example)
-  - [Create, Update, and Delete](#create-update-and-delete)
-- [Challenges](#challenges)
+* [Terms](8-knex.md#terms)
+* [Getting Started: Setting up a Database](8-knex.md#getting-started-setting-up-a-database)
+* [What is Knex?](8-knex.md#what-is-knex)
+* [Configuring Knex](8-knex.md#configuring-knex)
+  * [0) Installing modules](8-knex.md#0-installing-modules)
+  * [1) Provide connection details with a `knexfile.js`](8-knex.md#1-provide-connection-details-with-a-knexfilejs)
+  * [2) Create a `knex` object to connect to the database](8-knex.md#2-create-a-knex-object-to-connect-to-the-database)
+  * [3) Use the `knex` connection object to execute queries](8-knex.md#3-use-the-knex-connection-object-to-execute-queries)
+* [Writing queries using `knex.raw`](8-knex.md#writing-queries-using-knexraw)
+  * [Multi-Line Queries](8-knex.md#multi-line-queries)
+  * [Dynamic Queries](8-knex.md#dynamic-queries)
+  * [A more complex example](8-knex.md#a-more-complex-example)
+  * [Create, Update, and Delete](8-knex.md#create-update-and-delete)
+* [Challenges](8-knex.md#challenges)
 
 ## Terms
 
@@ -65,7 +65,7 @@ When we move the data of our server application out of the server's memory and i
 
 **Knex** is a library that allows a Node project to connect to a database and execute SQL queries using that database.
 
-![client server database diagram](img/client-server-database-diagram.svg)
+![client server database diagram](<img/client-server-database-diagram (1).svg>)
 
 Assuming we already have a database, in order to use Knex in a server application, we must:
 
@@ -230,15 +230,15 @@ const createPet = async (name, type, owner_id) => {
 
 Consider the `pets` table below.
 
-| id  | name       | type | owner\_id |
-| --- | ---------- | ---- | --------- |
-| 1   | Khalo      | dog  | 3         |
-| 2   | Juan Pablo | dog  | 2         |
-| 3   | Bora       | bird | 1         |
-| 4   | Tora       | dog  | 1         |
-| 5   | Frida      | cat  | 3         |
-| 6   | Pon Juablo | cat  | 2         |
-| 7   | Kora       | dog  | 1         |
+| id | name       | type | owner\_id |
+| -- | ---------- | ---- | --------- |
+| 1  | Khalo      | dog  | 3         |
+| 2  | Juan Pablo | dog  | 2         |
+| 3  | Bora       | bird | 1         |
+| 4  | Tora       | dog  | 1         |
+| 5  | Frida      | cat  | 3         |
+| 6  | Pon Juablo | cat  | 2         |
+| 7  | Kora       | dog  | 1         |
 
 **Q: What is the SQL query to find the name and id of the dogs owned by Ann Duong?**
 
@@ -334,7 +334,7 @@ const deletePetByName = async(name) => {
 
 These challenges illustrate many-to-many relationships:
 
-![erd with one to many and many to many relationships](img/labeled-erd.png)
+![erd with one to many and many to many relationships](<img/labeled-erd (1).png>)
 
 **`authors`, `books`, and `author_book`**
 

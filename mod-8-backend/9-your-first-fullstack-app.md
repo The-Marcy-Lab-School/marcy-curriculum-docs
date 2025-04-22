@@ -1,4 +1,4 @@
-# Your First Fullstack App!
+# 10. Your First Fullstack App!
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
@@ -6,7 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 
 Remember, the **model** is the layer of the application that directly manipulates the data. It provides methods that the controllers can use to execute those changes whenever the frontend makes the appropriate request.
 
-![Thus far, our server application used an in-memory array as a "database".](img/express-middleware-model.svg)
+![Thus far, our server application used an in-memory array as a "database".](<img/express-middleware-model (2).svg>)
 
 Thus far, our server application used an in-memory array as a "database". But this data is not persistent — each time we restart the server, all data created during that running session is lost.
 
@@ -19,7 +19,7 @@ Open the repository and start with the `2-fellow-tracker-final-mvc/` version of 
 We need to create a database and then replace all logic associated with the in-memory `fellows` array used in the `server/model/Fellow` file with `knex` code to connect with our new database.
 
 1. Start your Postgres server and create a database called `fellows_tracker` using TablePlus or the `psql` CLI.
-2. Execute the SQL statement below to create the table structure
+2.  Execute the SQL statement below to create the table structure
 
     ```sql
     CREATE TABLE fellows (
@@ -27,15 +27,14 @@ We need to create a database and then replace all logic associated with the in-m
       name TEXT NOT NULL
     )
     ```
-3. Return to the repository and install `pg` and `knex` into the server directory. Then initialize `knexfile.js`:
+3.  Return to the repository and install `pg` and `knex` into the server directory. Then initialize `knexfile.js`:
 
     ```sh
     cd server
     npm i pg knex # install pg and knex
     npx knex init # create knexfile.js
     ```
-
-4. Modify `knexfile.js` to use `pg` and the `fellow-tracker` database with a valid username and password:
+4.  Modify `knexfile.js` to use `pg` and the `fellow-tracker` database with a valid username and password:
 
     ```js
     development: {
@@ -47,8 +46,7 @@ We need to create a database and then replace all logic associated with the in-m
       }
     },
     ```
-
-5. Create a `knex.js` file in the `model/` directory that exports a `knex` object. Remember, this object will be shared by every model in our application to execute SQL statements to the database.
+5.  Create a `knex.js` file in the `model/` directory that exports a `knex` object. Remember, this object will be shared by every model in our application to execute SQL statements to the database.
 
     * make sure the import statement for `knexfile.js` is accurate
 
@@ -65,6 +63,7 @@ We need to create a database and then replace all logic associated with the in-m
 
     module.exports = knex;
     ```
+
 ## Part 2 — Refactor!
 
 Knex is configured to connect to our database! Now we can execute SQL commands to the database using the `knex.raw()` method.
@@ -84,6 +83,7 @@ const getPets = async () => {
 ```
 
 Here's what you need to do:
+
 1. Import `knex` into the `Fellow` model
 2. Remove the import of the `getId` function, the database will handle automatically setting the `id` property
 3. Remove the `fellows` array
@@ -94,7 +94,7 @@ Here's what you need to do:
    3. `Fellow.find` should return a single fellow object (the first object in the `rows` array)
    4. `Fellow.editName` should return the updated fellow object
    5. `Fellow.delete` should return the deleted fellow object
-6.  Refactor `fellowControllers.js` to `await` everything and double check that all values returned from the model are being handled properly.
+6. Refactor `fellowControllers.js` to `await` everything and double check that all values returned from the model are being handled properly.
 
 ## Part 3 - Adding posts
 

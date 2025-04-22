@@ -1,4 +1,4 @@
-# React Router
+# 4. React Router
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-2-react-router)!
@@ -6,42 +6,34 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
 
 **Table of Contents**:
 
-- [Terms](#terms)
-- [React Router Basics](#react-router-basics)
-- [Using React Router](#using-react-router)
-  - [0) Install the package `react-router-dom`](#0-install-the-package-react-router-dom)
-  - [1) Render a `<BrowserRouter>`](#1-render-a-browserrouter)
-  - [2) Create your `<Routes>` and `<Route>`s](#2-create-your-routes-and-routes)
-  - [3) Create `<Link>`s](#3-create-links)
-- [Fallback Component](#fallback-component)
-- [Creating a Product Page](#creating-a-product-page)
-  - [I want to render a page to display a single product...](#i-want-to-render-a-page-to-display-a-single-product)
-  - [Path Parameters](#path-parameters)
-  - [`useParams`](#useparams)
-  - [Rendering a dynamic list of links](#rendering-a-dynamic-list-of-links)
-- [Route Specificity](#route-specificity)
-- [Nesting Routes](#nesting-routes)
+* [Terms](7-react-router.md#terms)
+* [React Router Basics](7-react-router.md#react-router-basics)
+* [Using React Router](7-react-router.md#using-react-router)
+  * [0) Install the package `react-router-dom`](7-react-router.md#0-install-the-package-react-router-dom)
+  * [1) Render a `<BrowserRouter>`](7-react-router.md#1-render-a-browserrouter)
+  * [2) Create your `<Routes>` and `<Route>`s](7-react-router.md#2-create-your-routes-and-routes)
+  * [3) Create `<Link>`s](7-react-router.md#3-create-links)
+* [Fallback Component](7-react-router.md#fallback-component)
+* [Creating a Product Page](7-react-router.md#creating-a-product-page)
+  * [I want to render a page to display a single product...](7-react-router.md#i-want-to-render-a-page-to-display-a-single-product)
+  * [Path Parameters](7-react-router.md#path-parameters)
+  * [`useParams`](7-react-router.md#useparams)
+  * [Rendering a dynamic list of links](7-react-router.md#rendering-a-dynamic-list-of-links)
+* [Route Specificity](7-react-router.md#route-specificity)
+* [Nesting Routes](7-react-router.md#nesting-routes)
 
-[React docs](https://reactrouter.com/en/main/router-components/browser-router)
-[Full Example](https://github.com/benspector-mls/react-router-with-fetch-and-context)
+[React docs](https://reactrouter.com/en/main/router-components/browser-router) [Full Example](https://github.com/benspector-mls/react-router-with-fetch-and-context)
 
 ## Terms
 
-- **React Router** - Enables navigation and routing in single-page applications (SPAs). It allows you to define routes and their corresponding components.
-
-- **React Router DOM** — Provides components like `BrowserRouter`, `Route`, and `Link` to manage routing and navigation.
-
-- **`<BrowserRouter>`** — It ensures that when users visit different URLs in your app, the right components are rendered based on those URLs.
-
-- **`<Route>`** — Like a signpost that tells your app which page to show when you visit a certain web address.
-
-- **`<Link>`** - Special navigation buttons that you can use to move between different pages or views in your web application.
-
-- **Fallback Component** — A component used to render content when no other routes match the current path.
-
-- **Path Parameters** - a dynamic component of a `Route` path, identified using `:pathParam`. For example, in the path `/products/:productName`, the path parameter is `:productName` and will match any URL with that pattern including `/products/iPhone`, `/products/foo` or even `/products/5` but NOT `/products/iPhone/details` 
-  
-- **`useParams`** - a React hook that returns an object with key:value pairs for each path parameter in the URL.
+* **React Router** - Enables navigation and routing in single-page applications (SPAs). It allows you to define routes and their corresponding components.
+* **React Router DOM** — Provides components like `BrowserRouter`, `Route`, and `Link` to manage routing and navigation.
+* **`<BrowserRouter>`** — It ensures that when users visit different URLs in your app, the right components are rendered based on those URLs.
+* **`<Route>`** — Like a signpost that tells your app which page to show when you visit a certain web address.
+* **`<Link>`** - Special navigation buttons that you can use to move between different pages or views in your web application.
+* **Fallback Component** — A component used to render content when no other routes match the current path.
+* **Path Parameters** - a dynamic component of a `Route` path, identified using `:pathParam`. For example, in the path `/products/:productName`, the path parameter is `:productName` and will match any URL with that pattern including `/products/iPhone`, `/products/foo` or even `/products/5` but NOT `/products/iPhone/details`
+* **`useParams`** - a React hook that returns an object with key:value pairs for each path parameter in the URL.
 
 ## React Router Basics
 
@@ -59,7 +51,7 @@ Normally, when we click on a link like...
 
 With React Router, we can do the same kind of navigation, _but we actually never leave the page_. **Instead of opening a separate HTML file, the same HTML file is used, but we just render different components to the screen.**
 
-![gif of react router](./img/react-router-demo.gif)
+![gif of react router](img/react-router-demo.gif)
 
 😮 _oooooh so smooth_...
 
@@ -79,7 +71,6 @@ _There is also a `react-router-native` version for building mobile React apps wi
 
 We're going to be importing a lot of things from the `react-router-dom` package. The first is the `BrowserRouter` component.
 
-<!-- prettier-ignore -->
 ```jsx
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
@@ -96,9 +87,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 The `BrowserRouter` component hijacks the URL bar, letting us:
 
-- render what we want to render based on the current URL (the "browser location")
-- use back-and-forward navigation
-- directly update the current browser location
+* render what we want to render based on the current URL (the "browser location")
+* use back-and-forward navigation
+* directly update the current browser location
 
 ### 2) Create your `<Routes>` and `<Route>`s
 
@@ -128,10 +119,9 @@ function App() {
 
 The `<Link>` component will replace the `<a>` tags in our HTML.
 
-- Like the `<a>` tag, the `<Link>` will provide a clickable button to redirect to another page.
-- Unlike the `<a>` tag, the `<Link>` will NOT actually navigate to a different file, causing a fetch. Instead, only the URL is changed, causing the `<Routes>` to render a new `<Route>`, but we stay on the same "page".
+* Like the `<a>` tag, the `<Link>` will provide a clickable button to redirect to another page.
+* Unlike the `<a>` tag, the `<Link>` will NOT actually navigate to a different file, causing a fetch. Instead, only the URL is changed, causing the `<Routes>` to render a new `<Route>`, but we stay on the same "page".
 
-<!-- prettier-ignore -->
 ```jsx
 function App() {
   return (
@@ -200,7 +190,7 @@ One solution would be to create a separate `Route` and page component for each o
 
 In React Router, the strategy for achieving this is using **path parameters**.
 
-A **path parameter** is a dynamic portion of a route path, indicated by a colon `:`. 
+A **path parameter** is a dynamic portion of a route path, indicated by a colon `:`.
 
 ```jsx
 <Route path="/products/:productName" element={<Product />} />
@@ -209,6 +199,7 @@ A **path parameter** is a dynamic portion of a route path, indicated by a colon 
 In the example above, we use the path parameter `:productName`. The `:productName` value can be replaced by anything and as a result, the `Product` page component will render.
 
 For example, what is the value of the `:productName` path parameter for the following URLs?
+
 * `/products/5`
 * `/products/hello`
 * `/products/banana`
@@ -261,7 +252,6 @@ Finally, the `Products` page component should show a list of links that let me s
 
 This is often done by generating a `Link` for each value in the dataset:
 
-<!-- prettier-ignore -->
 ```jsx
 // ideally, this data would come from props or context so it could be shared by the `Products` and the `Product` page components.
 const products = [
@@ -294,10 +284,10 @@ const Products = () => {
 
 **Q: Which of the following paths will match the `/products/:id` path?**
 
-- /products
-- /products/apple
-- /products/5
-- /products/5/about
+* /products
+* /products/apple
+* /products/5
+* /products/5/about
 
 Suppose I wanted to create a page where a user could create a new product. Let's say the path is `/products/create`:
 
@@ -342,6 +332,6 @@ We can nest `<Route>`s to create sections of our application that share the same
 </Routes>
 ```
 
-- We wrap our three `<Route>`s in an outer `<Route>` whose `path` is the base path that the child `<Route>`s use.
-- For the first `<Route>` which renders the `<Products />` component, we remove the `path` entirely and instead use `index` which will match with the base path (`/products`) provided in the parent `<Route>`
-- For each child, we can remove the `/products/` part of the `path`
+* We wrap our three `<Route>`s in an outer `<Route>` whose `path` is the base path that the child `<Route>`s use.
+* For the first `<Route>` which renders the `<Products />` component, we remove the `path` entirely and instead use `index` which will match with the base path (`/products`) provided in the parent `<Route>`
+* For each child, we can remove the `/products/` part of the `path`

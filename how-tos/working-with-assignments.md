@@ -2,23 +2,22 @@
 
 **Table of Contents:**
 
-- [What is a SWE Assignment?](#what-is-a-swe-assignment)
-  - [Tips for Working on SWE Coding Assignments](#tips-for-working-on-swe-coding-assignments)
-  - [Jest and Testing](#jest-and-testing)
-  - [Feedback on Coding Assignments](#feedback-on-coding-assignments)
-- [What is a SWE-SR Assignment?](#what-is-a-swe-sr-assignment)
-  - [Scoring on Short Response Assignments](#scoring-on-short-response-assignments)
-  - [Feedback on Short Response Assignments](#feedback-on-short-response-assignments)
-  - [Examples of Short Responses](#examples-of-short-responses)
-    - [A Response That Could Use Improvement](#a-response-that-could-use-improvement)
-    - [An Exemplar Response](#an-exemplar-response)
-- [Using AI on Assignments](#using-ai-on-assignments)
-- [Submitting On Time](#submitting-on-time)
-- [How to Work On Assignments](#how-to-work-on-assignments)
-  - [Assignment Setup](#assignment-setup)
-  - [Submitting the Assignment](#submitting-the-assignment)
-  - [How to Undo a Commit to Main and Move Commits to Draft](#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
-
+* [What is a SWE Assignment?](working-with-assignments.md#what-is-a-swe-assignment)
+  * [Tips for Working on SWE Coding Assignments](working-with-assignments.md#tips-for-working-on-swe-coding-assignments)
+  * [Jest and Testing](working-with-assignments.md#jest-and-testing)
+  * [Feedback on Coding Assignments](working-with-assignments.md#feedback-on-coding-assignments)
+* [What is a SWE-SR Assignment?](working-with-assignments.md#what-is-a-swe-sr-assignment)
+  * [Scoring on Short Response Assignments](working-with-assignments.md#scoring-on-short-response-assignments)
+  * [Feedback on Short Response Assignments](working-with-assignments.md#feedback-on-short-response-assignments)
+  * [Examples of Short Responses](working-with-assignments.md#examples-of-short-responses)
+    * [A Response That Could Use Improvement](working-with-assignments.md#a-response-that-could-use-improvement)
+    * [An Exemplar Response](working-with-assignments.md#an-exemplar-response)
+* [Using AI on Assignments](working-with-assignments.md#using-ai-on-assignments)
+* [Submitting On Time](working-with-assignments.md#submitting-on-time)
+* [How to Work On Assignments](working-with-assignments.md#how-to-work-on-assignments)
+  * [Assignment Setup](working-with-assignments.md#assignment-setup)
+  * [Submitting the Assignment](working-with-assignments.md#submitting-the-assignment)
+  * [How to Undo a Commit to Main and Move Commits to Draft](working-with-assignments.md#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
 
 ## What is a SWE Assignment?
 
@@ -120,60 +119,74 @@ For example, an assignment with 10 automated tests requires 8 passing tests to b
 
 To support you in your growth as a software engineer, your instructor may provide feedback on any of the following areas (expand each category to see more details):
 
-<details><summary>Code Quality</summary>
+<details>
 
-  * Adherence to coding standards and conventions (e.g., ESLint rules)
-  * Use of proper naming conventions (variables, functions)
-  * Avoidance of code duplication
-  * Clear and concise comments
+<summary>Code Quality</summary>
 
-</details>
-
-<details><summary>Functionality</summary>
-
-  * Does the code meet the project requirements?
-  * Does it pass all tests, both automated and edge cases?
-  * Correctness of input/output handling
+* Adherence to coding standards and conventions (e.g., ESLint rules)
+* Use of proper naming conventions (variables, functions)
+* Avoidance of code duplication
+* Clear and concise comments
 
 </details>
 
-<details><summary>Modularity and Reusability</summary>
+<details>
 
-  * Proper use of functions or classes
-  * Modular and reusable code (avoiding large, monolithic functions)
-  * Clear separation of logic
+<summary>Functionality</summary>
 
-</details>
-
-<details><summary>Version Control Practices</summary>
-
-  * Meaningful commit messages
-  * Consistent use of branches
-  * Proper use of pull requests and code reviews
+* Does the code meet the project requirements?
+* Does it pass all tests, both automated and edge cases?
+* Correctness of input/output handling
 
 </details>
 
-<details><summary>Code Structure and Organization</summary>
+<details>
 
-  * File structure
-  * Separation of concerns
-  * Readability and logical flow
+<summary>Modularity and Reusability</summary>
 
-</details>
-
-<details><summary>Error Handling</summary>
-
-  * Proper use of try-catch blocks
-  * Graceful handling of unexpected inputs or states
-  * Meaningful error messages
+* Proper use of functions or classes
+* Modular and reusable code (avoiding large, monolithic functions)
+* Clear separation of logic
 
 </details>
 
-<details><summary>Efficiency and Performance</summary>
+<details>
 
-  * Time and space complexity
-  * Use of appropriate data structures and algorithms
-  * Avoidance of unnecessary computations
+<summary>Version Control Practices</summary>
+
+* Meaningful commit messages
+* Consistent use of branches
+* Proper use of pull requests and code reviews
+
+</details>
+
+<details>
+
+<summary>Code Structure and Organization</summary>
+
+* File structure
+* Separation of concerns
+* Readability and logical flow
+
+</details>
+
+<details>
+
+<summary>Error Handling</summary>
+
+* Proper use of try-catch blocks
+* Graceful handling of unexpected inputs or states
+* Meaningful error messages
+
+</details>
+
+<details>
+
+<summary>Efficiency and Performance</summary>
+
+* Time and space complexity
+* Use of appropriate data structures and algorithms
+* Avoidance of unnecessary computations
 
 </details>
 
@@ -231,41 +244,51 @@ Assignments below 75% must be revised and resubmitted.
 
 While the score will primarily reflect the accuracy and completion of your responses, to support you in your growth as a technical communicator, your instructor may also provide feedback on the following areas:
 
-<details><summary>Clarity</summary>
+<details>
 
-- Is the main idea or goal of the writing clear?
-- Are technical terms defined or explained for the intended audience?
-- Is the writing free of unnecessary jargon or overly complex language?
+<summary>Clarity</summary>
 
-</details>
-
-<details><summary>Structure</summary>
-
-- Does the content follow a logical flow?
-- Are headings, subheadings, and paragraphs effectively used to guide the reader?
-- Are transitions between paragraphs / sections smooth and easy to follow?
+* Is the main idea or goal of the writing clear?
+* Are technical terms defined or explained for the intended audience?
+* Is the writing free of unnecessary jargon or overly complex language?
 
 </details>
 
-<details><summary>Engagement</summary>
+<details>
 
-- Is the tone appropriate for the audience (e.g., conversational vs. formal)?
-- Does the writing capture and maintain interest?
-- Are examples, analogies and visuals used effectively to enhance understanding?
+<summary>Structure</summary>
 
-</details>
-
-<details><summary>Audience Fit</summary>
-
-- Does the writing match the knowledge level of the intended audience?
-- Are key questions or concerns the audience might have addressed?
+* Does the content follow a logical flow?
+* Are headings, subheadings, and paragraphs effectively used to guide the reader?
+* Are transitions between paragraphs / sections smooth and easy to follow?
 
 </details>
 
-<details><summary>Mechanics</summary>
+<details>
 
-- Are there grammar, spelling, or punctuation errors?
-- Is the formatting consistent and professional (e.g., indentation in code snippets, use of backticks and code fences to highlight code, use of bolding and italics to emphasize key words)?
+<summary>Engagement</summary>
+
+* Is the tone appropriate for the audience (e.g., conversational vs. formal)?
+* Does the writing capture and maintain interest?
+* Are examples, analogies and visuals used effectively to enhance understanding?
+
+</details>
+
+<details>
+
+<summary>Audience Fit</summary>
+
+* Does the writing match the knowledge level of the intended audience?
+* Are key questions or concerns the audience might have addressed?
+
+</details>
+
+<details>
+
+<summary>Mechanics</summary>
+
+* Are there grammar, spelling, or punctuation errors?
+* Is the formatting consistent and professional (e.g., indentation in code snippets, use of backticks and code fences to highlight code, use of bolding and italics to emphasize key words)?
 
 </details>
 
@@ -282,19 +305,7 @@ The examples below each respond to the following prompt:
 First, let's look at an example of a response that is technically accurate and complete but would likely receive feedback for improvements. As you read, what feedback would you provide?
 
 {% code overflow="wrap" %}
-<pre><code>They are used if you want to like do one thing or another in your code. Here is an example.
-
-if (true) {
-  console.log('this');
-} 
-else {
-  console.log('that');
-}
-</code></pre>
-{% endcode %}
-
-**<details><summary>See how this response is rendered in Markdown!</summary>**
-
+```
 They are used if you want to like do one thing or another in your code. Here is an example.
 
 if (true) {
@@ -303,10 +314,21 @@ if (true) {
 else {
   console.log('that');
 }
+```
+{% endcode %}
+
+<details>
+
+<summary><strong>See how this response is rendered in Markdown!</strong></summary>
+
+They are used if you want to like do one thing or another in your code. Here is an example.
+
+if (true) { console.log('this'); } else { console.log('that'); }
 
 </details>
 
 For this response, the following feedback would be provided:
+
 * **Clarity**: Without the prompt, it would be hard to know that "they" is referring to `if` and `else` statements at the beginning of the sentence. Additionally, no explanation of the example is provided, leaving open the possibility that the reader misunderstands the syntax.
 * **Engagement**: The example demonstrates the syntax but the example is hard to relate to a real-world scenario for programming.
 * **Mechanics**: By adding in markdown formatting, key terms could be highlighted and the provided code block can be placed inside of a code fence (see below for an example of this). Look at the rendered markdown above to see how the structure of the code block is lost without a code fence.
@@ -316,7 +338,8 @@ For this response, the following feedback would be provided:
 Below is a great example of a short response answer. As you read, what do you notice about it?
 
 {% code overflow="wrap" %}
-<pre><code>In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). 
+````
+In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). 
 
 For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. 
 
@@ -345,12 +368,15 @@ if (random > 0.5) {
 }
 ```
 
-With the addition of the `else` statement, the program will print out `"heads"` if `random > 0.5` is `true` or `"tails"` if it is `false`.</code></pre>
+With the addition of the `else` statement, the program will print out `"heads"` if `random > 0.5` is `true` or `"tails"` if it is `false`.
+````
 {% endcode %}
 
-**<details><summary>See how this response is rendered in Markdown!</summary>**
+<details>
 
-In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). 
+<summary><strong>See how this response is rendered in Markdown!</strong></summary>
+
+In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`).
 
 For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. In this example, the program will print `"heads"` only _if_ the boolean expression `random > 0.5` is `true`. Otherwise nothing will happen:
 
@@ -383,6 +409,7 @@ With the addition of the `else` statement, the program will print out `"tails"` 
 </details>
 
 Among other things, this response does the following things well:
+
 * It answers all parts of the prompt, the information provided is accurate, and the provided code is functional.
 * The writing is easy to understand and information is presented in a logical order.
 * The provided JavaScript example is engaging as it is highly relatable and demonstrates a practical use case of `if` and `else` statements.

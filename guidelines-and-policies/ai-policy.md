@@ -2,22 +2,21 @@
 
 ## Our Views on AI and Learning
 
-Over the last few years, generative AI tools like ChatGPT have become increasingly popular, particularly for tasks like programming. And there are many good reasons for it! AI tools can make us more efficient and can be useful for reviewing, writing, and generating ideas. 
+Over the last few years, generative AI tools like ChatGPT have become increasingly popular, particularly for tasks like programming. And there are many good reasons for it! AI tools can make us more efficient and can be useful for reviewing, writing, and generating ideas.
 
-However, Marcy is first and foremost a learning institution, and as such, generative AI tools must be used responsibly and for the purposes of learning, not as a substitute for learning or as a shortcut for completing work. 
+However, Marcy is first and foremost a learning institution, and as such, generative AI tools must be used responsibly and for the purposes of learning, not as a substitute for learning or as a shortcut for completing work.
 
 So, yes! You can use generative AI tools like ChatGPT at Marcy, but you must know how they will help you and how they can hurt you. Whenever you find yourself using ChatGPT, ask yourself, “Is this helping me learn?”
 
 ### AI makes writing code faster, but there is no shortcut for learning.
 
-Let us be clear, generative AI is very good at quickly writing simple pieces of code. With basic prompting, you could likely use it to complete 50% of Marcy’s homework assignments. **However, your responsibility at Marcy is to learn, not to complete assignments.** 
+Let us be clear, generative AI is very good at quickly writing simple pieces of code. With basic prompting, you could likely use it to complete 50% of Marcy’s homework assignments. **However, your responsibility at Marcy is to learn, not to complete assignments.**
 
-If you use ChatGPT to complete your assignments, then you are robbing yourself of the chance to learn on your own. Remember, y**our completed assignments will not get you a job. What you know, what you can do, and your ability to learn will.** 
+If you use ChatGPT to complete your assignments, then you are robbing yourself of the chance to learn on your own. Remember, y**our completed assignments will not get you a job. What you know, what you can do, and your ability to learn will.**
 
-We certainly understand that generative AI coding tools are used by experts in the professional world. However, you must first prove that you can program without those tools before earning the privilege of using them. 
+We certainly understand that generative AI coding tools are used by experts in the professional world. However, you must first prove that you can program without those tools before earning the privilege of using them.
 
-> *"You can give a carpenter a nail gun and they will drive 100 nails in a minute, but if they don’t know how to design and build a chair, what’s the point?"* — Ben Spector
-> 
+> _"You can give a carpenter a nail gun and they will drive 100 nails in a minute, but if they don’t know how to design and build a chair, what’s the point?"_ — Ben Spector
 
 Using AI is a privilege earned by those experts who took the time to first master their craft, and then utilized AI to enhance their work. **AI coding tools make experts faster, they can’t make you smarter.**
 
@@ -55,11 +54,9 @@ Below, you will find the use cases under which you can and cannot use AI at Marc
 
 The use of generative AI tools like ChatGPT is permitted at Marcy for the following activities (expand each use case to see an example):
 
-
-
 <details>
 
-<summary> Brainstorming and refining your ideas</summary>
+<summary>Brainstorming and refining your ideas</summary>
 
 _ChatGPT is excellent at providing you with ideas for your projects. Make sure to specify the requirements of the projects and explain the desired features._
 
@@ -73,7 +70,7 @@ _ChatGPT is excellent at providing you with ideas for your projects. Make sure t
 
 _ChatGPT is excellent at generating well-formatted data sets for your projects! Make sure to specify the data types of the dataset you wish to generate and the language or format of the dataset (JavaScript, Python, JSON, comma-separated values/CSV, etc…)_
 
-![](../.gitbook/assets/chatgpt-2-example-data.png)
+<img src="../.gitbook/assets/chatgpt-2-example-data.png" alt="" data-size="original">
 
 </details>
 
@@ -83,7 +80,7 @@ _ChatGPT is excellent at generating well-formatted data sets for your projects! 
 
 _When you encounter a definition in a piece of technical documentation that confuses you, see if ChatGPT can summarize it for you. The documentation should ALWAYS be your “source of truth”, but ChatGPT can help explain complex concepts in language that may be easier to digest. First, state that you want to simplify a definition and then copy-paste the definition below._
 
-![](../.gitbook/assets/chatgpt-3-simplifying-docs.png)
+<img src="../.gitbook/assets/chatgpt-3-simplifying-docs.png" alt="" data-size="original">
 
 </details>
 
@@ -93,7 +90,7 @@ _When you encounter a definition in a piece of technical documentation that conf
 
 _Use ChatGPT as a final review before submitting your writing submissions. Specify the question you are answering to provide the necessary context for ChatGPT to potentially correct any incorrect answers you may be providing. Specify that you want it to check for grammar, spelling, and style to reduce the degree to which it will rewrite your work._
 
-![](../.gitbook/assets/chatgpt-4-checking-grammar.png)
+<img src="../.gitbook/assets/chatgpt-4-checking-grammar.png" alt="" data-size="original">
 
 </details>
 
@@ -103,7 +100,7 @@ _Use ChatGPT as a final review before submitting your writing submissions. Speci
 
 _ChatGPT can be used to identify common code style issues such as variable names, spacing, indentation, and best practices. Specify the language that you are programming in to reduce the likelihood of hallucinations._
 
-![](../.gitbook/assets/chatgpt-5-code-style.png)
+<img src="../.gitbook/assets/chatgpt-5-code-style.png" alt="" data-size="original">
 
 </details>
 
@@ -113,7 +110,7 @@ _ChatGPT can be used to identify common code style issues such as variable names
 
 _Use ChatGPT to provide a structure for communication with mentors, instructors, and other professionals. We often get feedback from hiring partners that they can tell when applications and emails are written using AI so always review the provided structure and revise it before sending to ensure that the writing sounds like YOU. Review the key points to learn how to write messages like this on your own._
 
-![](../.gitbook/assets/chatgpt-6-drafting-messages.png)
+<img src="../.gitbook/assets/chatgpt-6-drafting-messages.png" alt="" data-size="original">
 
 </details>
 

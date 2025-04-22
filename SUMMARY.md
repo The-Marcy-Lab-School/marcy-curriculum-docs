@@ -61,7 +61,7 @@
   * [4. Async & Await](mod-3-async/4-async-await.md)
   * [5. A Generic Fetch Handler](mod-3-async/5-generic-fetch-handler.md)
 * [Mod 4 - Project Week!](mod-4-project-week/README.md)
-  * Important How Tos and Guides
+  * [Important How Tos and Guides](mod-4-project-week/important-how-tos-and-guides/README.md)
     * [How to Create a GitHub Organization and Scrum Board](how-tos/how-to-create-scrumboard.md)
     * [How To Start a Project with Vite](how-tos/vite.md)
     * [How To Deploy a Project with GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
@@ -84,7 +84,7 @@
   * [MDN: Object Prototypes](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects/Object_prototypes)
 * [Mod 6 - Data Structures & Algorithms](mod-6-ds-a/README.md)
   * [Overview](mod-6-ds-a/Overview.md)
-  * Important How Tos and Guides
+  * [Important How Tos and Guides](mod-6-ds-a/important-how-tos-and-guides/README.md)
     * [How to Debug](how-tos/how-to-debug.md)
     * [How to PEDAC](how-tos/how-to-pedac.md)
   * [1. Nodes & Linked Lists](mod-6-ds-a/1-nodes-linked-lists.md)
@@ -94,7 +94,7 @@
   * [5. Trees](mod-6-ds-a/5-trees.md)
 * [Mod 7 - React](mod-7-react/README.md)
   * [Overview](mod-7-react/Overview.md)
-  * Important How Tos and Guides
+  * [Important How Tos and Guides](mod-7-react/important-how-tos-and-guides/README.md)
     * [How to Create Projects with Vite](how-tos/vite.md)
     * [How to Deploy on GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
   * [1. Intro to React](mod-7-react/1-intro-to-react.md)
@@ -106,10 +106,10 @@
   * [7. Global Context Pattern](mod-7-react/6-global-context-pattern.md)
 * [Mod 8 - Backend](mod-8-backend/README.md)
   * [Overview](mod-8-backend/Overview.md)
-  * Important How Tos and Guides
-    * [How to Deploy on Render](./how-tos/deploying-using-render.md)
-    * [How to Test your API with Postman](./how-tos/test-api-postman.md)
-    * [Postgres Setup](./environment-setup/postgres-setup.md)
+  * [Important How Tos and Guides](mod-8-backend/important-how-tos-and-guides/README.md)
+    * [How to Deploy on Render](how-tos/deploying-using-render.md)
+    * [How to Test your API with Postman](how-tos/test-api-postman.md)
+    * [Postgres Setup](environment-setup/postgres-setup.md)
   * [1. Intro to Express](mod-8-backend/1-intro-to-express.md)
   * [2. Building a Static Web Server with Middleware](mod-8-backend/2-building-a-static-web-server-with-middleware.md)
   * [3. How to Deploy on Render](how-tos/deploying-using-render.md)

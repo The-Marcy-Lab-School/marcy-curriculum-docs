@@ -1,4 +1,4 @@
-# Model-View-Controller Architecture
+# 6. Model-View-Controller Architecture
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
@@ -10,12 +10,12 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
 
 **Table of Contents:**
 
-- [Organization and Separation of Concerns](#organization-and-separation-of-concerns)
-  - [The Model-View-Controller (MVC) Architecture](#the-model-view-controller-mvc-architecture)
-- [Implementing a Model for MVC](#implementing-a-model-for-mvc)
-  - [Server Organization](#server-organization)
-  - [Build a Model](#build-a-model)
-- [Challenge](#challenge)
+* [Organization and Separation of Concerns](5-model-view-controller.md#organization-and-separation-of-concerns)
+  * [The Model-View-Controller (MVC) Architecture](5-model-view-controller.md#the-model-view-controller-mvc-architecture)
+* [Implementing a Model for MVC](5-model-view-controller.md#implementing-a-model-for-mvc)
+  * [Server Organization](5-model-view-controller.md#server-organization)
+  * [Build a Model](5-model-view-controller.md#build-a-model)
+* [Challenge](5-model-view-controller.md#challenge)
 
 ## Organization and Separation of Concerns
 
@@ -30,27 +30,28 @@ In the last lesson, we built a RESTful API that lets users manage a list of fell
 In that application, all of the logic was built into the `serer/index.js` file. While we have some organization within the file, separating the concerns of one file into multiple files will enable our application to scale without becoming a "monolith"
 
 {% hint style="info" %}
-
 In software development, a "code monolith" refers to a single, large, and typically tightly coupled codebase that contains all the application's components, often making it difficult to scale, maintain, and deploy
-
 {% endhint %}
 
 ### The Model-View-Controller (MVC) Architecture
 
-While there are many approaches for organization and separation of concerns, one highly popular approach is called the **Model-View-Controller (MVC) Architecture**. 
+While there are many approaches for organization and separation of concerns, one highly popular approach is called the **Model-View-Controller (MVC) Architecture**.
 
 ![The view sends requests with user inputs to the controller with updates the model. New data is returned to the controller which sends that data in a response to the view.](img/model-view-controller-diagram.png)
 
 This architecture pattern organizes our code into three distinct pieces:
+
 * The **Models** are responsible for storing and managing the data of an application. They provide an interface (a set of methods) for interacting with that data in a predictable manner.
 * The **Views** are responsible for rendering the data of an application. They provide user-interfaces with buttons, forms, and other components that allow the user to see and request changes to the data.
 * The **Controllers** are responsible for managing interactions between the views and models. They process user inputs from the views, invoke the appropriate methods of the models, and send response back to the views to be updated.
 
 {% hint style="info" %}
-Often times, it can be hard to implement your application such that it strictly adheres to any one framework or architecture. Keep in mind that architectures like MVC present an ideal to strive for, not a strict pattern that must be followed at all times. 
+Often times, it can be hard to implement your application such that it strictly adheres to any one framework or architecture. Keep in mind that architectures like MVC present an ideal to strive for, not a strict pattern that must be followed at all times.
 {% endhint %}
 
-**<details><summary>What separate components of this architecture does our application already have? </summary>**
+<details>
+
+<summary><strong>What separate components of this architecture does our application already have?</strong></summary>
 
 We have a React application acting as the view component.
 
@@ -60,7 +61,7 @@ We have the Express server application acting as the controllers AND as the mode
 
 ## Implementing a Model for MVC
 
-With our current application structure, we already have clear separation between the views (our frontend React application) and the controllers (our Express endpoints/controllers). 
+With our current application structure, we already have clear separation between the views (our frontend React application) and the controllers (our Express endpoints/controllers).
 
 However, our controllers and model are intertwined since our controllers directly interact with the database (the `fellows` array). That is, they both handle the logic of parsing request inputs AND handle the logic of managing the data.
 
@@ -115,7 +116,7 @@ const serveFellow = (req, res) => {
 
 We need to create a separate model that focuses solely on managing the `friends` database and provides methods for our controllers to use.
 
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](img/express-middleware-model.svg)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<img/express-middleware-model (2).svg>)
 
 ### Server Organization
 
@@ -140,23 +141,24 @@ server/
 By separating our code in this way, we show the separate "layers" of the application.
 
 {% hint style="success" %}
-Before we build a model, do the following: 
+Before we build a model, do the following:
+
 * Move all of your controller functions into the `controllers/fellowControllers.js` file
 * Export them as an object using `module.exports = { /* list controller methods*/ }`
-* Import the collection of controllers into `server/index.js` using `require(./controllers/fellowControllers.js)` 
+* Import the collection of controllers into `server/index.js` using `require(./controllers/fellowControllers.js)`
 {% endhint %}
 
 ### Build a Model
 
 To build a separate model layer to handle only data management logic, we will:
-- Make a `models/Fellow.js` file. 
-- Inside, export a `Fellow` with `static` methods for each action needed by the controllers. 
-- Move the `fellows` "database" inside so the only way to access its data is through the model's interface.
+
+* Make a `models/Fellow.js` file.
+* Inside, export a `Fellow` with `static` methods for each action needed by the controllers.
+* Move the `fellows` "database" inside so the only way to access its data is through the model's interface.
 
 {% hint style="info" %}
 Note that there is no `constructor()` function here! This may seem odd at first, but consider interfaces like `Math`. These interfaces just provide static methods and properties like `Math.random()` and `Math.PI`. You never invoke `new Math()` to generate an instance of `Math`
 {% endhint %}
-
 
 {% code title="server/models/Fellow.js" %}
 ```js
@@ -212,7 +214,7 @@ module.exports = Fellow;
 
 With the `Fellow` model, we now leave managing the data to the model and let the control just focus on parsing the request and sending the response.
 
-{% code title="server/controllers/fellowControllers.js"%}
+{% code title="server/controllers/fellowControllers.js" %}
 ```js
 const Fellow = require('../models/Fellow.js');)
 

@@ -1,19 +1,20 @@
-# Intro to OOP, Encapsulation, Factory Functions, and Closure
+# 1. Intro to OOP, Encapsulation, Factory Functions, and Closure
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-0-encapsulation-factories-closure)!
 {% endhint %}
 
 **Table of Contents:**
-- [Intro to Mod 5: Object-Oriented Programming (OOP)](#intro-to-mod-5-object-oriented-programming-oop)
-- [Encapsulation Helps us Create Interfaces for Managing Data](#encapsulation-helps-us-create-interfaces-for-managing-data)
-- [Hiding Data From Direct Access](#hiding-data-from-direct-access)
-  - [Closures Let Us Hide Data](#closures-let-us-hide-data)
-  - [Always Return Copies of Pass-By-Reference Values](#always-return-copies-of-pass-by-reference-values)
-  - [Every Instance Creates a New Closure](#every-instance-creates-a-new-closure)
-- [Quiz!](#quiz)
-- [Challenge](#challenge)
-- [Summary](#summary)
+
+* [Intro to Mod 5: Object-Oriented Programming (OOP)](1-encapsulation-factories-and-closure.md#intro-to-mod-5-object-oriented-programming-oop)
+* [Encapsulation Helps us Create Interfaces for Managing Data](1-encapsulation-factories-and-closure.md#encapsulation-helps-us-create-interfaces-for-managing-data)
+* [Hiding Data From Direct Access](1-encapsulation-factories-and-closure.md#hiding-data-from-direct-access)
+  * [Closures Let Us Hide Data](1-encapsulation-factories-and-closure.md#closures-let-us-hide-data)
+  * [Always Return Copies of Pass-By-Reference Values](1-encapsulation-factories-and-closure.md#always-return-copies-of-pass-by-reference-values)
+  * [Every Instance Creates a New Closure](1-encapsulation-factories-and-closure.md#every-instance-creates-a-new-closure)
+* [Quiz!](1-encapsulation-factories-and-closure.md#quiz)
+* [Challenge](1-encapsulation-factories-and-closure.md#challenge)
+* [Summary](1-encapsulation-factories-and-closure.md#summary)
 
 ## Intro to Mod 5: Object-Oriented Programming (OOP)
 
@@ -32,7 +33,7 @@ Throughout this module, we will be learning about these four pillars and how we 
 
 ## Encapsulation Helps us Create Interfaces for Managing Data
 
-In functional programming, we separate our *functions* from the *data* they operate on. Pure functions promote **consistency** & **predictability**.
+In functional programming, we separate our _functions_ from the _data_ they operate on. Pure functions promote **consistency** & **predictability**.
 
 ```js
 // Functional Programming separates data from functionality
@@ -80,12 +81,12 @@ friendsManager.printFriends();
 ```
 
 {% hint style="info" %}
-`this` is one of the most complicated topics in JavaScript. Check out this video to learn more: [JavaScript this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab\_channel=ProgrammingwithMosh).
+`this` is one of the most complicated topics in JavaScript. Check out this video to learn more: [JavaScript this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh).
 {% endhint %}
 
 Encapsulation helps us create interfaces for managing a piece of data. In this case, `friendsManager` provides the methods `addFriend` and `printFriends` for interacting with the `friends` array.
 
-While we *could* add to and print `friends` directly, using the provided methods is more readable and produces more consistent and predictable outcomes:
+While we _could_ add to and print `friends` directly, using the provided methods is more readable and produces more consistent and predictable outcomes:
 
 ```js
 friendsManager.friends.push('motun');
@@ -95,7 +96,9 @@ friendsManager.addFriend('motun');
 friendsManager.printFriends();
 ```
 
-**<details><summary>Q: How would you add a `friendsManager.removeLast()` method that removes the last friend that was added?</summary>**
+<details>
+
+<summary><strong>Q: How would you add a <code>friendsManager.removeLast()</code> method that removes the last friend that was added?</strong></summary>
 
 ```js
 const friendsManager = {
@@ -147,9 +150,9 @@ friendsManager.friends.push(42);
 <summary><strong>Q: What about the last two lines in the example are NOT consistent or predictable?</strong></summary>
 
 You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
-- The `friends` array can be directly modified from the outside, which leads to uncontrolled additions like `friendsManager.friends.push(42)`. This results in an array that might have invalid data types, such as numbers and booleans mixed with strings, violating the intended structure of the friends list.
-- This unpredictability leads to bugs and confusion, as the integrity of the data inside `friendsManager` cannot be guaranteed.
-How to Make the Code More Consistent Using Closures:
+
+* The `friends` array can be directly modified from the outside, which leads to uncontrolled additions like `friendsManager.friends.push(42)`. This results in an array that might have invalid data types, such as numbers and booleans mixed with strings, violating the intended structure of the friends list.
+* This unpredictability leads to bugs and confusion, as the integrity of the data inside `friendsManager` cannot be guaranteed. How to Make the Code More Consistent Using Closures:
 
 </details>
 
@@ -160,6 +163,7 @@ A core tenet of encapsulation in OOP is to **restrict access to an object's inte
 One amazing feature of JavaScript is the ability to create a **closure**. Closures are created when an "inner function" maintains references to variables in its surrounding scope (an "outer function").
 
 We can leverage closures to control access to the `friends` array by doing the following:
+
 * We declare a function `makeFriendsManager`. This is our "outer" function
 * Inside, we declare the `friendsManager` object and return it.
 * We declare the `friends` array as its own variable, outside of `friendsManager`. It can no longer be accessed directly via the object but can be referenced by the methods `addFriend` and `printFriends`
@@ -197,7 +201,7 @@ console.log(friends); // reference error!
 
 The full effect of the closure is seen when we invoke `makeFriendsManager`. After we return from `makeFriendsManager`, we can't reference `friends` anymore. However, the methods `addFriend` and `printFriends` keep their references to `friends`, even after they've been returned.
 
-Because `addFriend` and `printFriends` were declared within the same scope as `friends`, they can continue using their reference to `friends` even after leaving that scope. 
+Because `addFriend` and `printFriends` were declared within the same scope as `friends`, they can continue using their reference to `friends` even after leaving that scope.
 
 ### Always Return Copies of Pass-By-Reference Values
 
@@ -259,7 +263,6 @@ gonzalosFriendsManager.addFriend('carmen');
 console.log(bensFriendsManager.getFriends()) // ['zo', 'motun']
 console.log(gonzalosFriendsManager.getFriends()) // ['carmen']
 ```
-
 
 <details>
 

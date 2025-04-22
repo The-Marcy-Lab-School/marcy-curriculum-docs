@@ -1,4 +1,4 @@
-# Building a Static Web Server with Middleware
+# 2. Building a Static Web Server with Middleware
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-1-express-middleware)!
@@ -8,13 +8,13 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 **Table of Contents:**
 
-- [Terms](#terms)
-- [Express Review](#express-review)
-- [Middleware and `next()`](#middleware-and-next)
-- [Static Web Servers](#static-web-servers)
-  - [Serving React Static Assets](#serving-react-static-assets)
-  - [`express.static()` Middleware](#expressstatic-middleware)
-- [Summary](#summary)
+* [Terms](2-building-a-static-web-server-with-middleware.md#terms)
+* [Express Review](2-building-a-static-web-server-with-middleware.md#express-review)
+* [Middleware and `next()`](2-building-a-static-web-server-with-middleware.md#middleware-and-next)
+* [Static Web Servers](2-building-a-static-web-server-with-middleware.md#static-web-servers)
+  * [Serving React Static Assets](2-building-a-static-web-server-with-middleware.md#serving-react-static-assets)
+  * [`express.static()` Middleware](2-building-a-static-web-server-with-middleware.md#expressstatic-middleware)
+* [Summary](2-building-a-static-web-server-with-middleware.md#summary)
 
 ## Terms
 
@@ -27,7 +27,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 Remember how the Express app works?
 
-![](img/express-diagram-simple.svg)
+![](<img/express-diagram-simple (1).svg>)
 
 1. A client sends a **request** to the server.
 2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
@@ -63,6 +63,7 @@ app.listen(port, () => console.log(`listening at http://localhost:${port}`));
 A **controller** is a callback function that parses a request and sends a response. It will be invoked asynchronously when the associated endpoint is sent a request.
 
 Every controller is invoked with three values:
+
 * A `req` object which holds data related to the request, including **query parameters**.
 * A `res` object which has methods to send a response.
 * A `next` function, typically only used by "Middleware".
@@ -71,16 +72,19 @@ Now its time to learn about that `next` method!
 
 ## Middleware and `next()`
 
-When a server receives an HTTP request, it can do more than just send back a response. Often, the server will perform a number of server-side actions *before* a response is sent.
+When a server receives an HTTP request, it can do more than just send back a response. Often, the server will perform a number of server-side actions _before_ a response is sent.
 
 For example, suppose that you wanted the server to keep track of every request that is sent to it by printing out some information like:
+
 * the endpoint that was requested (`/api/hello` or `/api/data`, etc...)
 * the request method (`GET` or `POST`, etc...)
 * the time the request was received
 
-**<details><summary>Q: Why would it be helpful to log information about every incoming request?</summary>**
+<details>
 
-Logging incoming HTTP requests can be incredibly helpful for debugging purposes. 
+<summary><strong>Q: Why would it be helpful to log information about every incoming request?</strong></summary>
+
+Logging incoming HTTP requests can be incredibly helpful for debugging purposes.
 
 Say you have 3 endpoints and one of them has a bug that causes the server to crash when an unexpected request is sent to it. If we print out every request that comes in to the server, we can simply look at the most recent request in the logs and know where to start debugging.
 
@@ -89,7 +93,6 @@ Say you have 3 endpoints and one of them has a bug that causes the server to cra
 We can add this functionality to our `serveHello` controller, before we send the response, we can just add a few lines of code:
 
 {% hint style="danger" %}
-
 ```js
 const serveHello = (req, res, next) => {
   // print the current time and request information 
@@ -101,7 +104,6 @@ const serveHello = (req, res, next) => {
   res.send(`hello ${name}`);
 }
 ```
-
 {% endhint %}
 
 However, now we also need to add this code to `serveData`. If we had more controllers, this would quickly become very repetitive.
@@ -111,12 +113,12 @@ Instead, we can use a **middleware**. Middleware in Express is a controller that
 ![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](img/express-middleware.svg)
 
 In many ways, middleware is like a controller. It receives the `req`, `res`, and `next` values. There are two key differences:
+
 * We use `app.use` to register the middleware which means the function is invoked for ALL endpoints
-* We use `next()` instead of `res.send()` (or other response methods). 
+* We use `next()` instead of `res.send()` (or other response methods).
   * `next()` invokes the next middleware / controller registered to handle the current request.
 
 {% hint style="success" %}
-
 ```js
 // Middleware function for logging route requests
 const logRoutes = (req, res, next) => {
@@ -129,25 +131,23 @@ app.use(logRoutes);
 
 // Other endpoints and controllers
 ```
-
 {% endhint %}
 
 * We first create the `logRoutes` function to print out information about the request
 * At the end, we invoke `next()`, passing along the request to one of our controllers to send a response.
-* We register `logRoutes` using `app.use()` which causes it to be invoked for ALL endpoints. 
+* We register `logRoutes` using `app.use()` which causes it to be invoked for ALL endpoints.
 * Order matters! Middleware should be defined before controllers to ensure that it is invoked before the response is sent to the client.
 
 With this middleware, we do not need to add this logging logic to every controller. Instead, this middleware will automatically be invoked for every incoming request before the final controller sends a response.
 
 {% hint style="info" %}
-
 Sometimes, middleware can invoke `res.send()` if we want to interrupt the response cycle and send a response before it reaches the intended controller. **In this way, middleware behaves like a guard clause.** Most of the time, it won't send a response, but it can if needed.
 
 Examples of this include:
+
 * Static asset middleware like `express.static()` (which you'll learn about next!)
 * Rate limiter middleware like [`express-rate-limit`](https://www.npmjs.com/package/express-rate-limit)
 * Error handling middleware like [`errorhandler`](https://expressjs.com/en/resources/middleware/errorhandler.html)
-
 {% endhint %}
 
 <details>
@@ -162,7 +162,7 @@ First the `logRoutes` middleware is invoked. The `next()` function is called whi
 
 <summary><strong>Q: What would happen if the <code>logRoutes</code> controller DID send a response to the client? What would happen if it didn't invoke <code>next()</code>?</strong></summary>
 
-If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent. 
+If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent.
 
 If we simply didn't invoke `next()`, our server would "hang" — the response would never be completed and the client would likely receive a timeout error because the request took too long.
 
@@ -178,16 +178,14 @@ When you visit a website, like [https://google.com](https://google.com), you are
 
 Now, imagine that the website is just the "static assets" of a React project deployed on GitHub pages! But instead of using GitHub pages, Google has its own servers to store those files and serve them to visiting users.
 
-We call these **static web servers** because they store **static assets** (HTML, CSS, and JS files) and then provide a server application that serves those assets when requested. 
+We call these **static web servers** because they store **static assets** (HTML, CSS, and JS files) and then provide a server application that serves those assets when requested.
 
 Let's look at how we can serve the static assets of a React project from our server.
 
 {% hint style="info" %}
-
 HTML, CSS, and JavaScript files are considered "static" because their content remains unchanged when being transferred from server to client.
 
 APIs on the other hand serve dynamic content that changes depending on parameters of the request.
-
 {% endhint %}
 
 ### Serving React Static Assets
@@ -202,7 +200,7 @@ dist/
       - index-ABC123.css
 ```
 
-When a user visits the server's homepage `/`, we want to send the `index.html` file. 
+When a user visits the server's homepage `/`, we want to send the `index.html` file.
 
 Back in the server, we could add the following endpoint and controller:
 
@@ -225,7 +223,6 @@ If the frontend that we wanted to serve only consisted of a single `index.html` 
 But the `index.html` file needs access to `/assets/index-ABC123.js` and `/assets/index-ABC123.css`. So we need two more controllers:
 
 {% hint style="danger" %}
-
 ```js
 const serveIndexHTML = (req, res, next) => {
   const filepath = path.join(__dirname, '../vite-project/dist/index.html');
@@ -247,7 +244,6 @@ app.get('/', serveIndexHTML);
 app.get('/assets/index-ABC123.js', serveJS);
 app.get('/assets/index-ABC123.css', serveCSS);
 ```
-
 {% endhint %}
 
 Seems repetitive, no? Now, imagine that your application has hundreds of static assets!
@@ -259,7 +255,6 @@ Rather than defining endpoints for every single static asset that you wish to se
 `express.static()` is not middleware itself. Instead, invoking this function will generate a middleware function that we can use. We just need to provide a filepath to the folder containing our static assets:
 
 {% hint style="success" %}
-
 ```js
 // The path module is useful for constructing relative filepaths
 const path = require('path');
@@ -281,7 +276,7 @@ Explanation:
 
 * Now, we just make a filepath to the entire dist folder and pass the filepath to `express.static()` which returns a middleware function which we call `serveStatic`
 * `app.use(serveStatic)` will checks all incoming requests to see if they match files in the provided folder. if they do, they will be sent to the client
-* Order matters! Remember to add this before the rest of your controllers. 
+* Order matters! Remember to add this before the rest of your controllers.
 
 Like `logRoutes`, this middleware intercepts incoming requests before they reach the controllers. Unlike `logRoutes`, the middleware generated by `express.static()` can send a response to the client if a matching file is found. If not, it will pass the request to the controllers.
 
