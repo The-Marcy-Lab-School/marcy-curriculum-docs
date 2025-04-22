@@ -187,7 +187,7 @@ Here are the requirements for a well designed ERD:
 * Diagram must be neatly structured with as few overlapping or intersecting lines as possible.
 * ERD reflects the same project and all features outlined in the project proposal.
 
-### Wireframe:
+### Wireframe
 
 The wireframe should clearly show the various frontend views of your application and how users can navigate between them.
 
@@ -202,7 +202,7 @@ Here are the requirements for a well designed wireframe:
 * Entire wireframe is neatly structured and visually accessible with no overlapping pages.
 * Mockup reflects the same project and all features outlined in the project proposal.
 
-### Polished GitHub Repository:
+### Polished GitHub Repository
 
 The repository is the most important artifact for your technical audience. Make sure that your README is clean and helps your technical audience get acquainted with your code.
 
@@ -210,7 +210,7 @@ The repository is the most important artifact for your technical audience. Make 
 
 ![A clean README is the introduction to your application for technical audiences.](img/collective-github.png)
 
-### Demo Day Presentation & Project Demo:
+### Demo Day Presentation & Project Demo
 
 And finally, the presentation and project demo will serve as your elevator pitch! You will only have a few minutes to show off your work during Demo Day so make the most out of it!
 
