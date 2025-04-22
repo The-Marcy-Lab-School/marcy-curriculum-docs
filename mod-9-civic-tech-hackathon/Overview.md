@@ -12,12 +12,12 @@
   - [👥 Whole-Group Meeting](#-whole-group-meeting)
   - [🤝 Support Meetings](#-support-meetings)
   - [🥲 Fridays and Weekends](#-fridays-and-weekends)
-- [Key Deliverables and Examples](#key-deliverables-and-examples)
+- [✅ Key Deliverables and Examples](#-key-deliverables-and-examples)
   - [Entity Relationship Diagram](#entity-relationship-diagram)
   - [Wireframe:](#wireframe)
   - [Polished GitHub Repository:](#polished-github-repository)
   - [Demo Day Presentation \& Project Demo:](#demo-day-presentation--project-demo)
-- [What's Next](#whats-next)
+- [👀 What's Next](#-whats-next)
 
 
 ##  🧭 Overview 
@@ -158,7 +158,7 @@ This is it! This is your final exam and your most important portfolio project to
 
 Collaborate with your team to find times over the weekends to communicate and get work done! By working on weekends **you can get up to 6 days of extra work done** over the course of these three weeks of CTH! That is almost an entire week of extra time, so take advantage of it!
 
-## Key Deliverables and Examples
+## ✅ Key Deliverables and Examples
 
 ### Entity Relationship Diagram
 
@@ -206,6 +206,6 @@ Observe the professionalism and polish of the slides here! Each member has their
 
 {% embed url="https://docs.google.com/presentation/d/1dB8Jbr35BNBivtm0vNg5cVulHVewuzh_N9ZWzi3PtnQ/embed?start=false&loop=false&delayms=3000" %}
 
-## What's Next
+## 👀 What's Next
 
 Head over to the [Civic Tech Hackathon Rubric](./rubric.md) to see more details about the requirements for your project and other minor deliverables.
