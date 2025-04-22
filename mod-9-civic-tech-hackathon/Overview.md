@@ -2,22 +2,23 @@
 
 **Table of Contents**
 
-* [🧭 Overview](Overview.md#-overview)
-  * [🌈 What does Civic Tech Hackathon Represent in the Program Arc?](Overview.md#what-does-civic-tech-hackathon-represent-in-the-program-arc)
-  * [🚀 How Will Civic Tech Hackathon _feel_?](Overview.md#-how-will-civic-tech-hackathon-feel)
-  * [😌 What skills and mindsets lead to success?](Overview.md#-what-skills-and-mindsets-lead-to-success)
-* [🏃 Sprints](Overview.md#-sprints)
-* [📆 Calendar, Rituals, and Support Meetings](Overview.md#-calendar-rituals-and-support-meetings)
-  * [🕰️ Sample Schedule](Overview.md#️-sample-schedule)
-  * [👥 Whole-Group Meetings](Overview.md#-whole-group-meetings)
-  * [🤝 Support Meetings](Overview.md#-support-meetings)
-  * [🥲 Fridays and Weekends](Overview.md#-fridays-and-weekends)
-* [✅ Key Deliverables and Examples](Overview.md#-key-deliverables-and-examples)
-  * [Entity Relationship Diagram](Overview.md#entity-relationship-diagram)
-  * [Wireframe:](Overview.md#wireframe)
-  * [Polished GitHub Repository:](Overview.md#polished-github-repository)
-  * [Demo Day Presentation & Project Demo:](Overview.md#demo-day-presentation--project-demo)
-* [👀 What's Next](Overview.md#-whats-next)
+<!-- no toc -->
+- [🧭 Overview](#overview)
+  - [🌈 What does Civic Tech Hackathon Represent in the Program Arc?](#what-does-civic-tech-hackathon-represent-in-the-program-arc)
+  - [🚀 How Will Civic Tech Hackathon _feel_?](#how-will-civic-tech-hackathon-feel)
+  - [😌 What skills and mindsets lead to success?](#what-skills-and-mindsets-lead-to-success)
+- [🏃 Sprints](#sprints)
+- [📆 Calendar, Rituals, and Support Meetings](#calendar-rituals-and-support-meetings)
+  - [🕰️ Sample Schedule](#️sample-schedule)
+  - [👥 Whole-Group Meetings](#whole-group-meetings)
+  - [🤝 Support Meetings](#support-meetings)
+  - [🥲 Fridays and Weekends](#fridays-and-weekends)
+- [✅ Key Deliverables and Examples](#key-deliverables-and-examples)
+  - [Entity Relationship Diagram](#entity-relationship-diagram)
+  - [Wireframe:](#wireframe)
+  - [Polished GitHub Repository:](#polished-github-repository)
+  - [Demo Day Presentation \& Project Demo:](#demo-day-presentation-and-project-demo)
+- [👀 What's Next](#whats-next)
 
 ## 🧭 Overview
 
