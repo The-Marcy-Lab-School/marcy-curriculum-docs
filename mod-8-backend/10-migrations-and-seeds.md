@@ -175,7 +175,9 @@ So, if migrations build up our DB, how do we populate it?
 
 ## Seeds
 
-A seed file is the easiest way to fill your DB up with starter data. All a seed file really does is clear the database of all existing data and repopulate it with starter data. 
+When building out your backend, it will be helpful if the database had some data to test with. Instead of manually inserting data using SQL `INSERT` statements, we can create a **seed file**.
+
+All a seed file really does is clear the database of all existing data and repopulate it with starter data. 
 
 ### Creating Seed Files
 
