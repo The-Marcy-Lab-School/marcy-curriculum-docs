@@ -82,13 +82,13 @@ So, how do we get from an idea to an ERD like this?
 
 ### Steps For Designing A Database
 
-Let's say we're designing a database for a school that tracks:
+Let's say we're designing an application for a school. The user stories for this application are:
 
-* students at the school
-* teachers at the school
-* the courses that are available
-* which students are taking which courses
-* which teachers teach which courses
+* We can see all students at the school
+* We can see all teachers at the school
+* We can see all the courses that are available
+* We can see which students are enrolled in a course
+* We can see which teacher is assigned to teach a course
 
 When designing a database schema, you'll typically follow these steps:
 
@@ -135,7 +135,7 @@ This creates a table called `students` with a single `id` column.
 
 Below, you can see that I've also created tables for `teachers`, `classes` and `enrollments`
 
-![](img/dbdiagram-step-1.png)
+![Using dbdiagram, we can create tables.](img/dbdiagram-step-1.png)
 
 ### Step 2 - Define Columns
 
@@ -155,7 +155,7 @@ Table students {
 }
 ```
 
-![](img/dbdiagram-step-2.png)
+![Every property of a table should include a name and type.](img/dbdiagram-step-2.png)
 
 ### Step 3 - Determine Relationships
 
@@ -186,7 +186,7 @@ Ref: "classes"."id" < "enrollments"."class_id"
 
 Or, using the dbdiagram.io tool, we can click and drag to draw connections between the tables:
 
-![](img/dbdiagram-step-3.gif)
+![Tables can reference other tables to create one-to-many relationships.](img/dbdiagram-step-3.gif)
 
 Notice the lines drawn between tables are also labeled:
 
@@ -315,12 +315,12 @@ Take a look at this table `order_details` which shows the relationships between 
 
 This is NOT compliant with the second normal form:
 
-| id | order\_id | product\_id | product\_name | customer\_id | customer\_name |
-| -- | --------- | ----------- | ------------- | ------------ | -------------- |
-| 1  | 1         | 1           | Laptop        | 1            | Avery          |
-| 2  | 1         | 2           | Monitor       | 1            | Avery          |
-| 3  | 2         | 1           | Laptop        | 2            | Blake          |
-| 4  | 3         | 3           | Trackpad      | 3            | Charles        |
+| id  | order\_id | product\_id | product\_name | customer\_id | customer\_name |
+| --- | --------- | ----------- | ------------- | ------------ | -------------- |
+| 1   | 1         | 1           | Laptop        | 1            | Avery          |
+| 2   | 1         | 2           | Monitor       | 1            | Avery          |
+| 3   | 2         | 1           | Laptop        | 2            | Blake          |
+| 4   | 3         | 3           | Trackpad      | 3            | Charles        |
 
 In this table, the following partial dependencies exist:
 
@@ -333,33 +333,36 @@ To reach 2NF, we must eliminate partial dependencies by removing these partial d
 
 1.  The `products` table ties each `product.id` to unique `product.name`
 
-    | id | name     |
-    | -- | -------- |
-    | 1  | Laptop   |
-    | 2  | Monitor  |
-    | 3  | Trackpad |
+    | id  | name     |
+    | --- | -------- |
+    | 1   | Laptop   |
+    | 2   | Monitor  |
+    | 3   | Trackpad |
+
 2.  The `customers` table ties each `customer.id` to a unique `customer.name`
 
-    | id | name    |
-    | -- | ------- |
-    | 1  | Avery   |
-    | 2  | Blake   |
-    | 3  | Charles |
+    | id  | name    |
+    | --- | ------- |
+    | 1   | Avery   |
+    | 2   | Blake   |
+    | 3   | Charles |
+
 3.  The `orders` table ties which `customer.id` placed which `order.id`
 
-    | id | customer\_id |
-    | -- | ------------ |
-    | 1  | 1            |
-    | 2  | 2            |
-    | 3  | 3            |
+    | id  | customer\_id |
+    | --- | ------------ |
+    | 1   | 1            |
+    | 2   | 2            |
+    | 3   | 3            |
+
 4.  The `order_items` "junction/association" table tracks which products are associated with each order:
 
-    | id | order\_id | product\_id |
-    | -- | --------- | ----------- |
-    | 1  | 1         | 1           |
-    | 2  | 1         | 2           |
-    | 3  | 2         | 1           |
-    | 4  | 3         | 3           |
+    | id  | order\_id | product\_id |
+    | --- | --------- | ----------- |
+    | 1   | 1         | 1           |
+    | 2   | 1         | 2           |
+    | 3   | 2         | 1           |
+    | 4   | 3         | 3           |
 
 **Q: How do you know that the table below is NOT in 2NF? How would you fix it?**
 
@@ -392,16 +395,16 @@ To remove this partial dependency, we can make separate tables:
     | 3           | Carol         |
 2.  The `enrollments` table:
 
-    | id | student\_id | course      |
-    | -- | ----------- | ----------- |
-    | 1  | 1           | Math        |
-    | 2  | 1           | Science     |
-    | 3  | 1           | History     |
-    | 4  | 2           | Science     |
-    | 5  | 2           | English     |
-    | 6  | 2           | Mathematics |
-    | 7  | 3           | History     |
-    | 8  | 3           | Math        |
-    | 9  | 3           | English     |
+    | id  | student\_id | course      |
+    | --- | ----------- | ----------- |
+    | 1   | 1           | Math        |
+    | 2   | 1           | Science     |
+    | 3   | 1           | History     |
+    | 4   | 2           | Science     |
+    | 5   | 2           | English     |
+    | 6   | 2           | Mathematics |
+    | 7   | 3           | History     |
+    | 8   | 3           | Math        |
+    | 9   | 3           | English     |
 
 </details>
