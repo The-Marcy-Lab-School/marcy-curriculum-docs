@@ -7,12 +7,12 @@
   - [🌈 What does Civic Tech Hackathon Represent in the Program Arc?](#what-does-civic-tech-hackathon-represent-in-the-program-arc)
   - [🚀 How Will Civic Tech Hackathon _feel_?](#how-will-civic-tech-hackathon-feel)
   - [😌 What skills and mindsets lead to success?](#what-skills-and-mindsets-lead-to-success)
-- [🏃 Sprints](#sprints)
 - [📆 Calendar, Rituals, and Support Meetings](#calendar-rituals-and-support-meetings)
   - [🕰️ Sample Schedule](#️sample-schedule)
   - [👥 Whole-Group Meetings](#whole-group-meetings)
   - [🤝 Support Meetings](#support-meetings)
   - [🥲 Fridays and Weekends](#fridays-and-weekends)
+- [🏃 Sprints](#sprints)
 - [✅ Key Deliverables and Examples](#key-deliverables-and-examples)
   - [Entity Relationship Diagram](#entity-relationship-diagram)
   - [Wireframe:](#wireframe)
@@ -61,21 +61,13 @@ Throughout the Software Engineering Fellowship, you have developed these skills 
 * **Professionalism**: demonstrate strong work habits to act in the interests of the school and the greater Marcy community.
 * **Communication:** convey information, ideas, facts, and perspectives clearly and effectively in your speaking and writing
 
-## 🏃 Sprints
-
-When building a fullstack project on a team over the course of multiple weeks, it is essential that everyone is aligned on what to prioritize.
-
-Rather than aiming to build the entire application in one go, we've broken down CTH into 4 distinct sprints, each with their own objectives and priorities:
-
-<table><thead><tr><th width="144.44921875">Sprint</th><th>Objectives / Priorities</th></tr></thead><tbody><tr><td>0 - Planning</td><td>• Get final approval on the proposal.<br>• Complete the Product Spec Sheet, ERD, and Mockups<br>• Set up your GitHub organization, repository, and Scrumboard</td></tr><tr><td>1 - First Feature</td><td>• Database, Model, and Controllers work together to Read and Create a primary resource (post, event, etc...)<br>• Adapters are built for key endpoints, frontend page routing is established, and key components are built (forms, buttons, content lists)<br>• Integration testing of frontend and backend is complete.</td></tr><tr><td>2 - MVP Complete</td><td>• Fullstack functionality on two user-created resources.<br>• Full CRUD on at least one user-created resource<br>• Styling and page layout is beginning to take shape</td></tr><tr><td>3 - Polish + Present!</td><td>• Ironing out bugs for a full demo<br>• Styling is polished and consistent<br>• Presentations are practiced and ready to present<br>• Project is Deployed</td></tr></tbody></table>
-
-These are the high-level priorities of each sprint but it will be up to each group to align on _how_ to achieve these objectives for your particular project.
-
 ## 📆 Calendar, Rituals, and Support Meetings
 
 ### 🕰️ Sample Schedule
 
 Below you can see a sample schedule for a typical week during Civic Tech Hackathon. As you can see, there is quite a lot of time for project work time!
+
+Sprints will kick off on Thursdays with Demos on Fridays.
 
 ![A sample of your week during Civic Tech Hackathon](img/cth-sample-schedule.png)
 
@@ -168,6 +160,16 @@ This is it! This is your final exam and your most important portfolio project to
 
 Collaborate with your team to find times over the weekends to communicate and get work done! By working on weekends **you can get up to 6 days of extra work done** over the course of these three weeks of CTH! That is almost an entire week of extra time, so take advantage of it!
 
+## 🏃 Sprints
+
+When building a fullstack project on a team over the course of multiple weeks, it is essential that everyone is aligned on what to prioritize.
+
+Rather than aiming to build the entire application in one go, we've broken down CTH into 4 distinct sprints, each with their own objectives and priorities:
+
+<table><thead><tr><th width="144.44921875">Sprint</th><th>Objectives / Priorities</th></tr></thead><tbody><tr><td>0 - Planning</td><td>• Get final approval on the proposal.<br>• Complete the Product Spec Sheet, ERD, and Mockups<br>• Set up your GitHub organization, repository, and Scrumboard</td></tr><tr><td>1 - First Feature</td><td>• Database, Model, and Controllers work together to Read and Create a primary resource (post, event, etc...)<br>• Adapters are built for key endpoints, frontend page routing is established, and key components are built (forms, buttons, content lists)<br>• Integration testing of frontend and backend is complete.</td></tr><tr><td>2 - MVP Complete</td><td>• Fullstack functionality on two user-created resources.<br>• Full CRUD on at least one user-created resource<br>• Styling and page layout is beginning to take shape</td></tr><tr><td>3 - Polish + Present!</td><td>• Ironing out bugs for a full demo<br>• Styling is polished and consistent<br>• Presentations are practiced and ready to present<br>• Project is Deployed</td></tr></tbody></table>
+
+These are the high-level priorities of each sprint but it will be up to each group to align on _how_ to achieve these objectives for your particular project.
+
 ## ✅ Key Deliverables and Examples
 
 ### Entity Relationship Diagram
@@ -176,7 +178,7 @@ A well designed Entity Relationship Diagram (ERD) can quickly communicate the da
 
 ![The ERD can quickly communicate the data that is most important to your application.](img/collective-erd.png)
 
-Here are the requirements for a well designed ERD:
+Here are the requirements for an ERD:
 
 * Every entity/table has a clear and descriptive table name.
 * Clearly shows the relationship between entities (One-to-Many, One-to-One, etc.) and relationships must be in the right direction.
@@ -193,7 +195,7 @@ The wireframe should clearly show the various frontend views of your application
 
 ![The wireframe should clearly show the various frontend views of your application and how users can navigate between them.](img/morocole-wireframe.png)
 
-Here are the requirements for a well designed wireframe:
+Here are the requirements for a wireframe:
 
 * Wireframes must show a landing page, one or two pages for log-in and sign-up, plus an additional page for every other front-end client route in the application.
 * Wirefremes must have a navigation feature: either a menu, header, or sidebar.
@@ -201,6 +203,28 @@ Here are the requirements for a well designed wireframe:
 * The only text that is visible is text which denotes action or hierarchy (headings and button labels, but body text is not needed)
 * Entire wireframe is neatly structured and visually accessible with no overlapping pages.
 * Mockup reflects the same project and all features outlined in the project proposal.
+
+### Product Specifications Sheet
+
+A Product Specifications Sheet communicates the technical details of a project. It describes user stories and the technical details required to implement them. As a result, it can serve as a great starting point for planning out tickets for a scrumboard.
+
+**Example**: [Collective Product Spec Sheet](https://docs.google.com/document/d/1XMYMneXbcWDDc7LnudcuHeOBe8rnB17HWvWbj33Q4p0/edit?tab=t.0#heading=h.g9ezow49xe4g)
+
+![The product spec sheet breaks down the technical details required to build a user story feature.](img/collective-product-spec-sheet.png)
+
+Here are the requirements for a product spec sheet:
+- The What, Why, and Who sections clearly and concisely describe the application and audience.
+- "Must-Haves" product requirements are essential to meeting the needs of the intended audience
+- "Nice-to-Haves" can reasonably be excluded from the application while still meeting the needs of the intended audience
+- Technical requirements are decomposed for every "Must-Haves" product requirement.
+- Technical requirements include:
+  - The name of the page that the feature is included on and the URL path for the page
+  - A description of any essential frontend components that the user will interact with (forms, buttons, links, containers for data, etc...)
+  - An explanation of what happens when a user interacts with a form / button / link
+  - An explanation of any interactions with the backend including endpoints to fetch from and if authentication or authorization is required."
+- The ERD and Mockup are linked at the bottom
+
+
 
 ### Polished GitHub Repository
 
