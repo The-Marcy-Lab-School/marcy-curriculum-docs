@@ -8,7 +8,7 @@
   - [🚀 How Will Civic Tech Hackathon _feel_?](#how-will-civic-tech-hackathon-feel)
   - [😌 What skills and mindsets lead to success?](#what-skills-and-mindsets-lead-to-success)
 - [📆 Calendar, Rituals, and Support Meetings](#calendar-rituals-and-support-meetings)
-  - [🕰️ Sample Schedule](#️sample-schedule)
+  - [🕰️ Sample Schedule](#sample-schedule)
   - [👥 Whole-Group Meetings](#whole-group-meetings)
   - [🤝 Support Meetings](#support-meetings)
   - [🥲 Fridays and Weekends](#fridays-and-weekends)
