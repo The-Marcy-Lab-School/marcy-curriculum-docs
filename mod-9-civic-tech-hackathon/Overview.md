@@ -15,8 +15,9 @@
 - [🏃 Sprints](#sprints)
 - [✅ Key Deliverables and Examples](#key-deliverables-and-examples)
   - [Entity Relationship Diagram](#entity-relationship-diagram)
-  - [Wireframe:](#wireframe)
-  - [Polished GitHub Repository:](#polished-github-repository)
+  - [Wireframe](#wireframe)
+  - [Product Specification Sheet](#product-specifications-sheet)
+  - [Polished GitHub Repository](#polished-github-repository)
   - [Demo Day Presentation \& Project Demo:](#demo-day-presentation-and-project-demo)
 - [👀 What's Next](#whats-next)
 
@@ -67,11 +68,18 @@ Throughout the Software Engineering Fellowship, you have developed these skills 
 
 Below you can see a sample schedule for a typical week during Civic Tech Hackathon. As you can see, there is quite a lot of time for project work time!
 
-Sprints will kick off on Thursdays with Demos on Fridays.
-
 ![A sample of your week during Civic Tech Hackathon](img/cth-sample-schedule.png)
 
-Below, you can learn more about each event on your calendar!
+Here are some key details to note:
+- Sprints will kick off on Thursdays 
+- End-of-sprint demos and retrospectives on Wednesdays
+- Two code challenges per week
+- Daily mindful morning and stand up
+- Daily stand down
+- Two manager meetings per week
+- Lots of work time!
+
+Below, you can learn more about each event.
 
 ### 👥 Whole-Group Meetings
 
@@ -152,11 +160,13 @@ This isn't shown on the calendar! With support and coaching from the instruction
 
 ### 🥲 Fridays and Weekends
 
-Should our team expect to work on Fridays, Saturdays, and Sundays?
+Should our team expect to work on Fridays, Saturdays, and Sundays? **YES!**
 
-**YES!**
+{% hint style="success" %}
 
 This is it! This is your final exam and your most important portfolio project to date. The time and effort you put into these three weeks may have a greater impact on your future career than any other three weeks in your entire life!
+
+{% endhint %}
 
 Collaborate with your team to find times over the weekends to communicate and get work done! By working on weekends **you can get up to 6 days of extra work done** over the course of these three weeks of CTH! That is almost an entire week of extra time, so take advantage of it!
 
@@ -172,9 +182,11 @@ These are the high-level priorities of each sprint but it will be up to each gro
 
 ## ✅ Key Deliverables and Examples
 
+In addition to the fullstack web application that you build, you will need to complete these deliverables. Each of these deliverables will help ensure that every group completes their project on time and meets our standards of excellence.
+
 ### Entity Relationship Diagram
 
-A well designed Entity Relationship Diagram (ERD) can quickly communicate the data that is most important to your
+A well designed Entity Relationship Diagram (ERD) can quickly communicate the data that is most important to your application. It will serve your team as a source-of-truth for any questions about the data needed to work with a particular type of resource.
 
 ![The ERD can quickly communicate the data that is most important to your application.](img/collective-erd.png)
 
@@ -191,7 +203,7 @@ Here are the requirements for an ERD:
 
 ### Wireframe
 
-The wireframe should clearly show the various frontend views of your application and how users can navigate between them.
+The wireframe should clearly show the various frontend views of your application and how users can navigate between them. Like the endpoint, it will serve your team as a source-of-truth for the design, layout, and expected functionality of your frontend application.
 
 ![The wireframe should clearly show the various frontend views of your application and how users can navigate between them.](img/morocole-wireframe.png)
 
@@ -206,7 +218,13 @@ Here are the requirements for a wireframe:
 
 ### Product Specifications Sheet
 
-A Product Specifications Sheet communicates the technical details of a project. It describes user stories and the technical details required to implement them. As a result, it can serve as a great starting point for planning out tickets for a scrumboard.
+A Product Specifications Sheet communicates the user stories for an application and the technical details required to implement them, such as:
+- The page and URL path for a feature
+- Essential frontend components (forms, buttons, links, etc...), 
+- What follows a user interaction (submitting a form, clicking a button, etc...)
+- Backend endpoints used to create, read, update, or delete data.
+
+If filled out thoroughly, a product spec sheet can quickly be translated into tickets for a scrum board.
 
 **Example**: [Collective Product Spec Sheet](https://docs.google.com/document/d/1XMYMneXbcWDDc7LnudcuHeOBe8rnB17HWvWbj33Q4p0/edit?tab=t.0#heading=h.g9ezow49xe4g)
 
@@ -224,15 +242,21 @@ Here are the requirements for a product spec sheet:
   - An explanation of any interactions with the backend including endpoints to fetch from and if authentication or authorization is required."
 - The ERD and Mockup are linked at the bottom
 
-
-
 ### Polished GitHub Repository
 
-The repository is the most important artifact for your technical audience. Make sure that your README is clean and helps your technical audience get acquainted with your code.
+The repository is the most important artifact for your technical audience. The code inside will demonstrate your technical prowess. 
 
-[https://github.com/ENiA-collective/collective](https://github.com/ENiA-collective/collective)
+The README is the first impression of your application that your technical audience will experience so make sure that your README is clean, professional, and provides clear instructions for working with your application.
+
+**Example**: [https://github.com/ENiA-collective/collective](https://github.com/ENiA-collective/collective)
 
 ![A clean README is the introduction to your application for technical audiences.](img/collective-github.png)
+
+Here are the requirements for your GitHub Repository:
+* The README is complete with mission statement, team members, usage, and technologies used
+* The README includes links to the proposal and scrum board.
+* The repository has a scrum board linked under Projects. The scrum board has descriptive tickets, assignees, and clear organization.
+* The deployment link is added to the About section.
 
 ### Demo Day Presentation & Project Demo
 
