@@ -33,7 +33,7 @@ Check out this video to learn about hashing, salting, and various attacks used b
 
 ## Hashing
 
-**Hashing** is a mathematical algorithm that transforms a string of characters into a fixed-length string of characters.
+**Hashing** is a process of transforming a string of characters into a fixed-length string of characters.
 
 ![alt text](./img/hashing.png)
 
@@ -49,7 +49,7 @@ With password hashing, the passwords are stored as hash values, and an attacker 
 
 ### Hashing Functions
 
-A **hashing function** is a pure function that performs the hashing algorithm.
+A **hashing function** is a pure function that performs the hashing algorithm (transforms a string into a hashed string).
 
 A hashing function can be as simple as something like this:
 
@@ -72,6 +72,10 @@ console.log(hashedPassword1, hashedPassword2);
 ```
 
 Once we hash a password, we can store it in our database without exposing the plain-text password to would-be attackers.
+
+{% hint style="warning" %}
+In addition to being an easily reversible hashing function (see security concerns below), this hashing algorithm does not meet the requirement of producing fixed-length strings.
+{% endhint %}
 
 ### Validating Passwords
 
