@@ -9,11 +9,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 - [Terms](#terms)
 - [Pre-Learning](#pre-learning)
 - [Hashing](#hashing)
-  - [Hashing Functions](#hashing-functions)
-  - [Validating Passwords](#validating-passwords)
+  - [Authenticating Users](#authenticating-users)
+  - [A Simple Example](#a-simple-example)
 - [The Importance of Secure Hash Functions](#the-importance-of-secure-hash-functions)
   - [Hashing with Bcrypt](#hashing-with-bcrypt)
-  - [Validating Hashes with Bcrypt](#validating-hashes-with-bcrypt)
+  - [Salting](#salting)
 - [Bcrypt Helpers](#bcrypt-helpers)
 - [Summary — The Password Validation Workflow](#summary--the-password-validation-workflow)
 
@@ -33,13 +33,21 @@ Check out this video to learn about hashing, salting, and various attacks used b
 
 ## Hashing
 
-**Hashing** is a process of transforming a string of characters into a fixed-length string of characters.
+**Hashing** is a process of transforming a string of characters into a fixed-length string of characters called a **hash**.
 
-![alt text](./img/hashing.png)
+![Hashing is a process of transforming a string of characters into a fixed-length string of characters called a hash.](./img/hashing.png)
 
-When a user signs up for an account, rather than storing their plain-text password in a database, we will "hash" their password and store the resulting hashed password.
+A **hashing function** is a function that performs a hashing algorithm. 
 
-**<details><summary>Q: Why is it important to store hashed passwords rather than plain-text passwords in a database? </summary>**
+Hashing functions have two key properties:
+1. They must be pure — they must produce the same output when given the same input!
+2. They should be "one way" — it is easy to generate a hash from a given string, but relatively impossible to determine the original string from a given hash.
+
+As a result, hashing is commonly used for password storage: when a user creates an account, the username will be stored in the database alongside the hashed password.
+
+![Usernames are stored in a database alongside the hashed password.](./img/hashed-password-stored-in-db.png)
+
+**<details><summary>Q: Why is it important that hashing functions are "one way" when it comes to password storage? </summary>**
 
 Without password hashing, a hacker who obtains a user database can simply read the passwords in plain text.
 
@@ -47,62 +55,53 @@ With password hashing, the passwords are stored as hash values, and an attacker 
 
 </details>
 
-### Hashing Functions
+### Authenticating Users
 
-A **hashing function** is a pure function that performs the hashing algorithm (transforms a string into a hashed string).
+By storing the hashed password, the database itself never "knows" your actual password. Despite this, when a user returns to sign in, the server can still validate a given username and password combination through some clever logic.
 
-A hashing function can be as simple as something like this:
+![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](./img/hashed-password-lookup-diagram.png)
+
+This process is called **authentication:**
+* When the user returns to log in to their account, they provide their username and password.
+* The server uses the provided username to find the associated hashed password in the database.
+* The server then hashes the provided password. Since hashing algorithms are pure, the provided password's hash should match the hash stored in the database. 
+* If the hashes match, the user is authenticated! 
+
+### A Simple Example
+
+Below is a very simple hashing function that can help demonstrate the authentication process. 
+
+This function converts each character in the given string into its ASCII character code (`"a"` → `97`, `"b"` → `98`, etc...)
 
 ```js
+// Convert a given string to its ASCII codes
 const simpleHash = (str) => {
   let hash = '';
-  // Loops through each character in the string.
   for (let i = 0; i < str.length; i++) {
-    // Converts each character to its ASCII code using charCodeAt(i).
-    // Adds them together
     hash += str.charCodeAt(i);
   }
   return hash;
 }
 
-const hashedPassword1 = simpleHash("abc");  // 979899
-const hashedPassword2 = simpleHash("def");  // 100101102
-
-console.log(hashedPassword1, hashedPassword2);
-```
-
-Once we hash a password, we can store it in our database without exposing the plain-text password to would-be attackers.
-
-{% hint style="warning" %}
-In addition to being an easily reversible hashing function (see security concerns below), this hashing algorithm does not meet the requirement of producing fixed-length strings.
-{% endhint %}
-
-### Validating Passwords
-
-When someone returns to login to their account, we need to be able to verify their login details. However, all we have is their hashed password. How can we know that the password they provide matches the stored hashed password?
-
-Since hashing functions are pure, if we hash the given password, it should produce the same value as the password stored in our database. 
-
-```js
-// the stored password
-const hashedPassword1 = simpleHash("abc");  // 979899
-
+// the passwordToTest should produce the same hash as the storedHash
 const validatePassword = (passwordToTest, storedHash) => {
   return simpleHash(passwordToTest) === storedHash;
 }
 
-// Compare the password "xyz" against the hashed string 979899
-console.log(validatePassword("xyz", hashedPassword1));  
+const hashedPassword = simpleHash("abc");  // 979899
+
+console.log(validatePassword("xyz", hashedPassword));
 // false, the given password produces a different hash!
 
-// Compare the password "abc" against the hashed string 979899
-console.log(validatePassword("abc", hashedPassword1));  
-// false, the given password produces the same hash!
+console.log(validatePassword("abc", hashedPassword));
+// true, the given password produces the same hash!
 ```
 
 ## The Importance of Secure Hash Functions
 
-Ideally, the algorithm for hashing a string is complicated enough that a hashed string cannot be easily converted back to the plain-text string.
+Remember, a hashing function should have the following properties:
+1. They must be pure — they must produce the same output when given the same input!
+2. They should be "one way" — it is easy to generate a hash from a given string, but relatively impossible to determine the original string from a given hash.
 
 **<details><summary>Q: For the algorithm above, given the hashed string `999897`, what is the plain-text string that would generate that hashed string? </summary>**
 
@@ -110,76 +109,86 @@ Ideally, the algorithm for hashing a string is complicated enough that a hashed 
 simpleHash("cba") //-> "999897"
 ```
 
-Clearly this hashing function is not secure since the algorithm can easily be reverse-engineered.
-
 </details>
 
-Even if an attacker has a database full of hashed passwords, it should still be nearly impossible to figure out what the plain-text passwords are. This is where secure hashing module like `bcrypt` come in!
+This algorithm is clearly not "one way"!
+
+If an attacker had a database full of passwords hashed using this algorithm, they would be able to crack the passwords in no time!
+
+This is where the secure hashing module `bcrypt` come in!
 
 ### Hashing with Bcrypt
 
-The `bcrypt` node module gives us the `bcrypt.hash(str, saltRounds)` function. It asynchronously returns a hashed string in a promise:
+The `bcrypt` node module gives us the `bcrypt.hash` and `bcrypt.compare` methods for hashing and authenticating strings.
+
+They are both asynchronous methods that return promises
+- `bcrypt.hash` resolves to the hash string
+- `bcrypt.compare` resolves to a boolean
 
 ```js
 const bcrypt = require('bcrypt');
 
 // Make an async wrapper function so we can use await
 const testHashing = async (password) => {
-  const hashedPassword1 = await bcrypt.hash('secret', 8)
-  console.log(hashedPassword1); // Some crazy string
+  const saltRounds = 8; 
+
+  const hashedPassword = await bcrypt.hash('secret', saltRounds);
+
+  console.log(hashedPassword); // a complex string!
   
-  const hashedPassword2 = await bcrypt.hash('secret', 8)
-  console.log(hashedPassword2); // A different crazy string!
+  const isValid = await bcrypt.compare('secret', hashedPassword);
+
+  console.log(isValid); // true!
 }
 
 testHashing();
 ```
+
+The strings produced by `bcrypt.hash` are much more complex and are nearly impossible to reverse-engineer!
+
+### Salting
+
+You may have noticed the `saltRounds` argument provided to `bcrypt.hash`:
+
+```js
+const saltRounds = 8; 
+
+const hashedPassword = await bcrypt.hash('secret', saltRounds);
+```
+
+To understand what this does, we should break down the structure of a bcrypt hash string:
+
+![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](img/hash-value-breakdown.png)
+
+A **salt** is a random string of data that is added to the input data before the hash function is applied. This ensures that even if two users have the same password, they will have unique password hashes.
+
+![A salt is added to a string before hashing to produce different results.](img/salting.png)
+
+You can see this by invoking `bcrypt.hash` twice with the same input:
+
+```js
+// The hashes will be different!
+console.log(await bcrypt.hash('secret', 8));
+console.log(await bcrypt.hash('secret', 8));
+```
+
+So, when you invoke `bcrypt.hash`, it will automatically generate a salt value and add it to your input string before hashing. The `saltRounds` argument determines the number of times that it re-salts and re-hashes your string before arriving at the final hash. 
+
+This repeated process of salting and hashing makes salted passwords incredibly secure.
 
 {% hint style="info" %}
-Notice that the output is different each time? This is due to `8` rounds of "salting".
+This number is also called the **cost factor** since there is a tradeoff to be considered. 
 
-A salt is a random string of data that is added to the input data before the hash function is applied. This changes the hash value that is produced, even for the same input data.
+A higher number of salt rounds means attackers need to spend equally more time and resources to crack passwords through brute force methods (see [Rainbow Table Attacks](https://nordvpn.com/blog/what-is-rainbow-table-attack/) and [Dictionary Attacks](https://nordvpn.com/blog/dictionary-attack/)).
 
-```
-No Salting:
-
-hello --(hash)--> asdlk2jf/ie!9231
-hello --(hash)--> asdlk2jf/ie!9231
-
-With Salting:
-
-hello --(add salt)--> 3@12hello --(hash)--> $2b$08jkdllleife
-hello --(add salt)--> a51!hello --(hash)--> $2b$08eidi93k1Aa
-```
-
-Since hashing functions are pure, this randomized salting increases the security of our hashing algorithm!
+However, it also means that your server needs to take more time to generate secure passwords. So, the recommended number of rounds is `12` as it strikes a nice balance between security and performance (though `8` is satisfactory for a learning project).
 {% endhint %}
 
-### Validating Hashes with Bcrypt
+![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](img/hash-value-breakdown.png)
 
-To validate a string that was hashed using `bcrypt.hash`, we use the `bcrypt.compare`. 
+When authenticating a password, the `bcrypt.compare` function will extract the cost and the salt value from the stored hash value and apply them to the given password.
 
-It returns a promise that resolves to a boolean indicating if the strings match:
-
-```js
-const bcrypt = require('bcrypt');
-
-// Make an async wrapper function so we can use await
-const testHashing = async (password) => {
-  const hashedPassword1 = await bcrypt.hash('secret', 8)
-  console.log(hashedPassword1); // Some crazy string
-  const hashedPassword2 = await bcrypt.hash('secret', 8)
-  console.log(hashedPassword2); // A different crazy string!
-
-  console.log(await bcrypt.compare('hello', hashedPassword1));
-  // false, the hashes do not match
-
-  console.log(await bcrypt.compare('secret', hashedPassword1));
-  // true, the hashes match!
-}
-
-testHashing();
-```
+Again, since this process is pure, the resulting hash function should match the stored hash function!
 
 ## Bcrypt Helpers
 
@@ -206,9 +215,18 @@ const isValidPassword = async (password, hash) => {
 
 ## Summary — The Password Validation Workflow
 
-1. A user creates an account and sends their username and password to the server
-2. The server hashes the password using `bcrypt.hash` and stores the username and hashed password in the database
-3. The user returns later to log in and again sends their username and password to the server
-4. The server uses the given username to find the hashed password in the database.
-5. The server then uses `bcrypt.compare` to validate the given password against the hashed password from the database.
-6. If the given password matches the stored hashed password, the user is logged in.
+So, to recap:
+
+**Hashing** is a process of transforming a string of characters into a fixed-length string of characters called a **hash**.
+
+**Hashing functions** have two key properties:
+1. They must be pure — they must produce the same output when given the same input!
+2. They should be "one way" — it is easy to generate a hash from a given string, but relatively impossible to determine the original string from a given hash.
+
+We should always hash passwords before storing them in a database
+
+![Usernames are stored in a database alongside the hashed password.](./img/hashed-password-stored-in-db.png)
+
+Authentication is possible by hashing a given password and comparing it against the stored hash:
+
+![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](./img/hashed-password-lookup-diagram.png)
