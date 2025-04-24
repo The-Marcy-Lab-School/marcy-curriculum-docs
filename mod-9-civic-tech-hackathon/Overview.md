@@ -77,6 +77,7 @@ Here are some key details to note:
 - Daily mindful morning and stand up
 - Daily stand down
 - Two manager meetings per week
+- (Scrum Masters only) Scrum Master workshops
 - Lots of work time!
 
 Below, you can learn more about each event.
@@ -178,7 +179,12 @@ Rather than aiming to build the entire application in one go, we've broken down 
 
 <table><thead><tr><th width="144.44921875">Sprint</th><th>Objectives / Priorities</th></tr></thead><tbody><tr><td>0 - Planning</td><td>• Get final approval on the proposal.<br>• Complete the Product Spec Sheet, ERD, and Mockups<br>• Set up your GitHub organization, repository, and Scrumboard</td></tr><tr><td>1 - First Feature</td><td>• Database, Model, and Controllers work together to Read and Create a primary resource (post, event, etc...)<br>• Adapters are built for key endpoints, frontend page routing is established, and key components are built (forms, buttons, content lists)<br>• Integration testing of frontend and backend is complete.</td></tr><tr><td>2 - MVP Complete</td><td>• Fullstack functionality on two user-created resources.<br>• Full CRUD on at least one user-created resource<br>• Styling and page layout is beginning to take shape</td></tr><tr><td>3 - Polish + Present!</td><td>• Ironing out bugs for a full demo<br>• Styling is polished and consistent<br>• Presentations are practiced and ready to present<br>• Project is Deployed</td></tr></tbody></table>
 
-These are the high-level priorities of each sprint but it will be up to each group to align on _how_ to achieve these objectives for your particular project.
+These are the high-level priorities of each sprint but it will be up to each group to determine how to divide the work to meet these objectives. 
+
+Here are some tips:
+* Divide your group into frontend and server/database. You can always switch after a sprint to gain exposure to the full stack.
+* Decide early what data will be transferred between the frontend and server. Then, work quickly to build adapters and endpoints to establish that connection.
+* In the first sprint, focus on substance, not style. This applies most to the frontend. Build your pages and routing first. Then the forms and data containers. Finally, hook them up to your adapters to just get them working.
 
 ## ✅ Key Deliverables and Examples
 
