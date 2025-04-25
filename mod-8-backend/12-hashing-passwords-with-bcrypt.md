@@ -125,6 +125,8 @@ They are both asynchronous methods that return promises
 - `bcrypt.hash` resolves to the hash string
 - `bcrypt.compare` resolves to a boolean
 
+The strings produced by `bcrypt.hash` are much more complex and are nearly impossible to reverse-engineer!
+
 ```js
 const bcrypt = require('bcrypt');
 
@@ -144,8 +146,6 @@ const testHashing = async (password) => {
 testHashing();
 ```
 
-The strings produced by `bcrypt.hash` are much more complex and are nearly impossible to reverse-engineer!
-
 ### Salting
 
 You may have noticed the `saltRounds` argument provided to `bcrypt.hash`:
@@ -164,7 +164,18 @@ A **salt** is a random string of data that is added to the input data before the
 
 ![A salt is added to a string before hashing to produce different results.](img/salting.png)
 
-You can see this by invoking `bcrypt.hash` twice with the same input:
+The `saltRounds` argument determines the number of times that it re-salts and re-hashes your string before arriving at the final hash.
+
+```
+hash(originalString + salt) => hashedString1
+hash(hashedString1 + salt) => hashedString2
+hash(hashedString2 + salt) => hashedString3
+...
+hash(hashedString6 + salt) => hashedString7
+hash(hashedString7 + salt) => hashedString8
+```
+
+When you invoke `bcrypt.hash`, it will automatically generate a salt value and add it to your input string before hashing. You can test this by invoking `bcrypt.hash` twice with the same input:
 
 ```js
 // The hashes will be different!
@@ -172,7 +183,16 @@ console.log(await bcrypt.hash('secret', 8));
 console.log(await bcrypt.hash('secret', 8));
 ```
 
-So, when you invoke `bcrypt.hash`, it will automatically generate a salt value and add it to your input string before hashing. The `saltRounds` argument determines the number of times that it re-salts and re-hashes your string before arriving at the final hash. 
+However, if we manually provide our own `salt` value to `bcrypt.hash`, we can see that the same hash is produced:
+
+```js
+// bcrypt.hash can also take in a salt value
+const salt = '$2b$10$abcdefghijlkmnopqrstuv';
+
+// These hashes will be the same
+console.log(await bcrypt.hash('secret', salt));
+console.log(await bcrypt.hash('secret', salt));
+```
 
 This repeated process of salting and hashing makes salted passwords incredibly secure.
 
