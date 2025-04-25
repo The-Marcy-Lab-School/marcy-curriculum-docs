@@ -290,7 +290,7 @@ To create a new user in the database, the `User.create()` static method can be i
 ```js
 static async create(username, password) {
   // hash the plain-text password using bcrypt before storing it in the database
-  const passwordHash = await authUtils.hashPassword(password);
+  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
   const query = `INSERT INTO users (username, password_hash)
     VALUES (?, ?) RETURNING *`;
