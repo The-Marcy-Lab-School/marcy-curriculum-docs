@@ -48,16 +48,16 @@ CREATE TABLE all_data (
 
 **`all_data` Table:**
 
-| id | owner\_name    | pet\_name  | type |
-| -- | -------------- | ---------- | ---- |
-| 1  | Ann Duong      | Bora       | bird |
-| 2  | Ann Duong      | Tora       | dog  |
-| 3  | Ann Duong      | Kora       | dog  |
-| 4  | Ben Spector    |            |      |
-| 5  | Reuben Ogbonna | Juan Pablo | dog  |
-| 6  | Reuben Ogbonna | Pon Juablo | cat  |
-| 7  | Carmen Salas   | Khalo      | dog  |
-| 8  | Carmen Salas   | Frida      | cat  |
+| id  | owner\_name    | pet\_name  | type |
+| --- | -------------- | ---------- | ---- |
+| 1   | Ann Duong      | Bora       | bird |
+| 2   | Ann Duong      | Tora       | dog  |
+| 3   | Ann Duong      | Kora       | dog  |
+| 4   | Ben Spector    |            |      |
+| 5   | Reuben Ogbonna | Juan Pablo | dog  |
+| 6   | Reuben Ogbonna | Pon Juablo | cat  |
+| 7   | Carmen Salas   | Khalo      | dog  |
+| 8   | Carmen Salas   | Frida      | cat  |
 
 <details>
 
@@ -91,24 +91,24 @@ CREATE TABLE pets (
 
 **`people` Table:**
 
-| id | name           |
-| -- | -------------- |
-| 1  | Ann Duong      |
-| 2  | Reuben Ogbonna |
-| 3  | Carmen Salas   |
-| 4  | Ben Spector    |
+| id  | name           |
+| --- | -------------- |
+| 1   | Ann Duong      |
+| 2   | Reuben Ogbonna |
+| 3   | Carmen Salas   |
+| 4   | Ben Spector    |
 
 **`pets` Table:**
 
-| id | name       | type | owner\_id |
-| -- | ---------- | ---- | --------- |
-| 1  | Khalo      | dog  | 3         |
-| 2  | Juan Pablo | dog  | 2         |
-| 3  | Bora       | bird | 1         |
-| 4  | Frida      | cat  | 3         |
-| 5  | Tora       | dog  | 1         |
-| 6  | Pon Juablo | cat  | 2         |
-| 7  | Kora       | dog  | 1         |
+| id  | name       | type | owner\_id |
+| --- | ---------- | ---- | --------- |
+| 1   | Khalo      | dog  | 3         |
+| 2   | Juan Pablo | dog  | 2         |
+| 3   | Bora       | bird | 1         |
+| 4   | Frida      | cat  | 3         |
+| 5   | Tora       | dog  | 1         |
+| 6   | Pon Juablo | cat  | 2         |
+| 7   | Kora       | dog  | 1         |
 
 <details>
 
@@ -256,7 +256,7 @@ WHERE	people.name = 'Carmen Salas';
 
 We can illustrate the relationships between tables with an **entity relation diagram (ERD)**:
 
-![ERD with one to many and many to many relationships](<img/labeled-erd (1).png>)
+![ERD with one to many and many to many relationships](img/labeled-erd.png)
 
 > _created using https://dbdiagram.io/_
 

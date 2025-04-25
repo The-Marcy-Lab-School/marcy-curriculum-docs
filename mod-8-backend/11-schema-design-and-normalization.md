@@ -68,7 +68,7 @@ Before jumping into building out your database schema, it is essential to take t
 
 Database schema designs are most often communicated through an **Entity Relationship Diagram**
 
-![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](<img/labeled-erd (1).png>)
+![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](img/labeled-erd.png)
 
 <details>
 

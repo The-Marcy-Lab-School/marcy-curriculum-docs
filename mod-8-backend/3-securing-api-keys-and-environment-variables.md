@@ -93,7 +93,7 @@ Server-side (backend) code on the other hand is much more secure. A client can s
 
 So, to securely use an API key, we must use it in our server-side code. This means building a server to make requests on behalf of the client, acting as a sort of middleman. As long as the server has the API key, the client doesn't need it!
 
-![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<img/express-api-middleman (1).svg>)
+![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](img/express-api-middleman.svg)
 
 In other words, the client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.
 
@@ -200,7 +200,7 @@ Now our server can perform an API request using a protected API key.
 
 Let's update the frontend React application to use our server instead of directly accessing the NYT API.
 
-![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<img/express-api-middleman (1).svg>)
+![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](img/express-api-middleman.svg)
 
 Let's update the `url` that our adapter function uses and remove the filter code which is now handled server-side:
 

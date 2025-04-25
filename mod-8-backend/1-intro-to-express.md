@@ -56,7 +56,7 @@ So how do the client and server interact?
 2. The server receives the request and determines what kind of **response** to send
 3. The client receives the response and does something using the data!
 
-![express diagram](<img/express-diagram-simple (1).svg>)
+![express diagram](img/express-diagram-simple.svg)
 
 <details>
 

@@ -84,7 +84,7 @@ Popular non-relational database management systems include [MongoDB](https://www
 
 Relational database management systems like Postgres are quite similar to our Express servers! When we run the Postgres software, it provides access to the database via a server port (`localhost:5432`).
 
-![The Postgres database receives SQL queries from the Express server and sends back data.](<img/client-server-database-diagram (1).svg>)
+![The Postgres database receives SQL queries from the Express server and sends back data.](img/client-server-database-diagram.svg)
 
 However, while our Express servers take in HTTP requests, Postgres accepts **Structured Query Language (SQL)** queries. For example, to insert data into a table of users we might send the following SQL query to Postgres:
 
@@ -164,7 +164,7 @@ In the next lesson we'll learn more about writing SQL queries but for now, here 
 * **Database** - a structured collection of data that is organized in a manner for easy retrieval (like a library)
 * **Database Management System (DBMS)** - a piece of software used to organize and manage access to a database (like a librarian)
 
-![client server database diagram](<img/client-server-database-diagram (1).svg>)
+![client server database diagram](img/client-server-database-diagram.svg)
 
 * **Postgres** - a popular "relational" database management system that stores data in a table-like manner
 * **Table** - a collection of related data organized in rows and columns.

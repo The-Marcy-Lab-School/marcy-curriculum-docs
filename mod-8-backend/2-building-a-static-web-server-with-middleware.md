@@ -27,7 +27,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 Remember how the Express app works?
 
-![](<img/express-diagram-simple (1).svg>)
+![](img/express-diagram-simple.svg)
 
 1. A client sends a **request** to the server.
 2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
