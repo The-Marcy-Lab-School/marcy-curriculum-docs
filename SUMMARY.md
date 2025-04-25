@@ -123,6 +123,7 @@
   * [11. Migrations & Seeds](mod-8-backend/10-migrations-and-seeds.md)
   * [12. Schema Design & Normalization](mod-8-backend/11-schema-design-and-normalization.md)
   * [13. Hashing Passwords with Bcrypt](mod-8-backend/12-hashing-passwords-with-bcrypt.md)
+  * [14. React Express Auth Template Overview](mod-8-backend/13-react-express-auth-overview.md)
 * [Mod 9 - Civic Tech Hackathon](mod-9-civic-tech-hackathon/README.md)
   * [Overview](mod-9-civic-tech-hackathon/Overview.md)
   * [Rubric](mod-9-civic-tech-hackathon/rubric.md)
