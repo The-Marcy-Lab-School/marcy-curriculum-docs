@@ -529,7 +529,7 @@ exports.updateUser = async (req, res) => {
   // The userToModify comes from the endpoint: /api/users/5
   // The userRequestingChange comes from the cookie
   const userToModify = Number(req.params.id);
-  const userRequestingChange = Number(req.session.id);
+  const userRequestingChange = Number(req.session.userId);
   
   // A user is authorized to modify only their own user data
   if (userRequestingChange !== userToModify) {
