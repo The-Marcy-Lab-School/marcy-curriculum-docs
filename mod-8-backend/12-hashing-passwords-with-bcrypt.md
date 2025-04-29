@@ -131,7 +131,7 @@ The strings produced by `bcrypt.hash` are much more complex and are nearly impos
 const bcrypt = require('bcrypt');
 
 // Make an async wrapper function so we can use await
-const testHashing = async (password) => {
+const testHashing = async () => {
   const saltRounds = 8; 
 
   const hashedPassword = await bcrypt.hash('secret', saltRounds);
@@ -151,7 +151,7 @@ testHashing();
 You may have noticed the `saltRounds` argument provided to `bcrypt.hash`:
 
 ```js
-const saltRounds = 8; 
+const saltRounds = 8; // a.k.a. cost = 8
 
 const hashedPassword = await bcrypt.hash('secret', saltRounds);
 ```
@@ -164,51 +164,46 @@ A **salt** is a random string of data that is added to the input data before the
 
 ![A salt is added to a string before hashing to produce different results.](img/salting.png)
 
-The `saltRounds` argument determines the number of times that it re-salts and re-hashes your string before arriving at the final hash.
-
-```
-hash(originalString + salt) => hashedString1
-hash(hashedString1 + salt) => hashedString2
-hash(hashedString2 + salt) => hashedString3
-...
-hash(hashedString6 + salt) => hashedString7
-hash(hashedString7 + salt) => hashedString8
-```
-
 When you invoke `bcrypt.hash`, it will automatically generate a salt value and add it to your input string before hashing. You can test this by invoking `bcrypt.hash` twice with the same input:
 
 ```js
-// The hashes will be different!
+// bcrypt.hash automatically adds a salt for you.
+// So, the hashes will be different!
 console.log(await bcrypt.hash('secret', 8));
 console.log(await bcrypt.hash('secret', 8));
 ```
 
-However, if we manually provide our own `salt` value to `bcrypt.hash`, we can see that the same hash is produced:
+However, instead of salting only once, the `saltRounds` argument determines the number of times that it re-salts and re-hashes your string before arriving at the final hash.
 
-```js
-// bcrypt.hash can also take in a salt value
-const salt = '$2b$10$abcdefghijlkmnopqrstuv';
+```
+hash(password + salt) => hashedPassword1
+hash(hashedPassword1 + salt) => hashedPassword2
+hash(hashedPassword2 + salt) => hashedPassword3
+...
+hash(hashedPassword6 + salt) => hashedPassword7
+hash(hashedPassword7 + salt) => hashedPassword8 
 
-// These hashes will be the same
-console.log(await bcrypt.hash('secret', salt));
-console.log(await bcrypt.hash('secret', salt));
+=> hashedPassword8 is stored in the database
 ```
 
-This repeated process of salting and hashing makes salted passwords incredibly secure.
+This repeated process of salting and hashing increases the computational cost of generating a hash, further protecting against brute force attempts to crack a password.
 
-{% hint style="info" %}
-This number is also called the **cost factor** since there is a tradeoff to be considered. 
+The hash string has all of the information needed to re-compute the stored hash value *as long as the matching password is given*.
 
-A higher number of salt rounds means attackers need to spend equally more time and resources to crack passwords through brute force methods (see [Rainbow Table Attacks](https://nordvpn.com/blog/what-is-rainbow-table-attack/) and [Dictionary Attacks](https://nordvpn.com/blog/dictionary-attack/)).
-
-However, it also means that your server needs to take more time to generate secure passwords. So, the recommended number of rounds is `12` as it strikes a nice balance between security and performance (though `8` is satisfactory for a learning project).
-{% endhint %}
 
 ![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](img/hash-value-breakdown.png)
 
 When authenticating a password, the `bcrypt.compare` function will extract the cost and the salt value from the stored hash value and apply them to the given password.
 
 Again, since this process is pure, the resulting hash function should match the stored hash function!
+
+{% hint style="info" %}
+The Salt Rounds is also called the **cost factor** since there is a tradeoff to be considered. 
+
+A higher number of salt rounds means attackers need to spend equally more time and resources to crack passwords through brute force methods (see [Rainbow Table Attacks](https://nordvpn.com/blog/what-is-rainbow-table-attack/) and [Dictionary Attacks](https://nordvpn.com/blog/dictionary-attack/)).
+
+However, it also means that your server needs to take more time to generate secure passwords. So, the recommended number of rounds is `12` as it strikes a nice balance between security and performance (though `8` is satisfactory for a learning project).
+{% endhint %}
 
 ## Bcrypt Helpers
 
