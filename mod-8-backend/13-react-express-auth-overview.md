@@ -6,6 +6,7 @@ Follow along with the React Express + Auth Template repository [here](https://gi
 
 **Table of Contents**
 
+- [Application Overview](#application-overview)
 - [Getting Started](#getting-started)
   - [Create your repo](#create-your-repo)
   - [Getting to know the folder structure](#getting-to-know-the-folder-structure)
@@ -19,11 +20,11 @@ Follow along with the React Express + Auth Template repository [here](https://gi
 - [The Server Application](#the-server-application)
   - [Server Overview](#server-overview)
   - [User Model](#user-model)
-    - [Bcrypt](#bcrypt)
-    - [`User.create()` vs. the `User` constructor](#usercreate-vs-the-user-constructor)
   - [Controllers and API endpoints](#controllers-and-api-endpoints)
-  - [Authentication \& Authorization](#authentication--authorization)
-    - [Cookies \& Session Authentication](#cookies--session-authentication)
+  - [Creating New Users: Securing Passwords with Bcrypt](#creating-new-users-securing-passwords-with-bcrypt)
+    - [`User.create()` vs. the `User` constructor](#usercreate-vs-the-user-constructor)
+  - [Logging In: Authentication and Authorization](#logging-in-authentication-and-authorization)
+    - [Cookies and Session Authentication](#cookies-and-session-authentication)
     - [Generating Cookies with Handle Cookie Sessions](#generating-cookies-with-handle-cookie-sessions)
     - [Adding the User ID to a Cookie on Login](#adding-the-user-id-to-a-cookie-on-login)
     - [Session Authentication and Authorization](#session-authentication-and-authorization)
@@ -34,25 +35,55 @@ Follow along with the React Express + Auth Template repository [here](https://gi
   - [Current User Context](#current-user-context)
 - [Deploying](#deploying)
 
+## Application Overview
+
+This template repository provides functional, but basic, user management. Users can:
+* Register a new account with a username and password
+* Log in to their account
+* View a list of all users
+* View a single user's page
+* Update their username
+* Log out
+
+Below, you can see the user journey:
+![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](./img/rea-template-mockup.png)
+
+* When a user visits the `"/"` page, they see the Home page and options to either login or signup.
+  * Returning users will be automatically signed in via the `GET /api/auth/me` endpoint.
+* Users can authenticate by visiting the `"/login"` or `"/sign-up"` pages.
+  * Login requests are sent to the `POST /api/auth/login` endpoint.
+  * Sign up requests are sent to the `POST /api/auth/register` endpoint.
+* After logging in or signing up users are taken to the `"/users/:id"` page for their own profile. Since they are authorized to modify their own profile, they have the option to update their username and log out.
+  * Individual user data is fetched via the `GET /api/users/:id` endpoint.
+  * Username updates are fetched via the `PATCH /api/users/:id` endpoint which requires authorization.
+  * User log out is fetched via the `DELETE /api/auth/logout` endpoint.
+* Users can visit the `"/users"` page to view all users in the application. Clicking on a user's name takes them to their profile page. Since they are not authorized, they can only view this user's profile.
+  * All users data is fetched via the `GET /api/users` endpoint.
+
+The ERD for this application is simple. Just a single `users` table:
+
+![A users table with a primary key id, username, password_hash, and timestamps](./img/rea-template-erd.png)
 
 ## Getting Started
 
+Now that you understand what this app can do, let's jump in and get it running locally!
+
 ### Create your repo
 
-* First, make sure that you have a new GitHub Organization for your project.
-* Select <kbd>Use this template</kbd> and select <kbd>Create a new repository</kbd>. Rename the repo and choose your GitHub organization as the owner.
-* Clone your repo.
+* If you are working on a team, first make sure that your team has a new GitHub Organization for your project.
+* Select <kbd>Use this template</kbd> and select <kbd>Create a new repository</kbd>. Rename the repo and choose your GitHub organization as the owner. If you are working alone, just select your own account as the owner.
+* Clone your repo. 
 
 ### Getting to know the folder structure
 
-In the root of this repository are the two directories you will be building the application in:
+In the root of this repository are the two parts of the application
 
 * `frontend/` - the front-end application code (React)
-* `server/` - the back-end server application code
+* `server/` - the back-end server application code (Node + Express)
 
 Each of these sub-directories has its own `package.json` file with its own dependencies and scripts.
 
-The root of the project also has a `package.json` file. It has no dependencies but does include some scripts for quickly getting the project started.
+The root of the project also has a `package.json` file. It has no dependencies but does include some scripts for quickly getting the project started from the project root.
 
 ### Configure your environment variables
 
@@ -116,9 +147,11 @@ module.exports = {
 };
 ```
 
-The `connection` configuration determines how Knex connects to your database. If the `PG_CONNECTION_STRING` is blank, then Knex will use the configuration object with `host`, `port`, `user`, `password` and `database`.
+The `connection` configuration determines how Knex connects to your database. In `development` mode, if the `PG_CONNECTION_STRING` is blank, then Knex will use the configuration object with `host`, `port`, `user`, `password` and `database`.
 
-However, when you eventually deploy your database on Render, you will be given a `PG_CONNECTION_STRING` value from Render that you can add to your environment variables to connect directly to your deployed database. If a `PG_CONNECTION_STRING` value exists, Knex will use it to connect to your deployed database.
+However, when you eventually deploy your database on Render, you will be given a `PG_CONNECTION_STRING` value from Render. You can add this to your environment variables to connect directly to your deployed database. If a `PG_CONNECTION_STRING` value exists, Knex will use it to connect to your deployed database.
+
+In `production` mode, the `PG_CONNECTION_STRING` is expected.
 
 The deployed database works exactly like your local database, so you are welcome to use a deployed database during testing as well. That said, the queries may take more time to execute since they are being transferred via the internet rather than between ports on your own machine.
 
@@ -218,27 +251,32 @@ The provided `init.js` seed file uses the `User.create` model method to generate
 
 ![In TablePlus, we can see the users created by the seed file. Notice how the password\_hash property stores hashed passwords.](img/users-tableplus.png)
 
-Notice how the passwords have been hashed! This is because the `User.create` method takes care of hashing passwords for us using `bcrypt` (see `server/models/User.js`).
+Notice how the passwords have been hashed! This is because the `User.create` method takes care of hashing passwords for us using `bcrypt`.
 
 ## The Server Application
 
 > **Chapters in this Section:**
 > - [Server Overview](#server-overview)
 > - [User Model](#user-model)
->   - [Bcrypt](#bcrypt)
->   - [`User.create()` vs. the `User` constructor](#usercreate-vs-the-user-constructor)
 > - [Controllers and API endpoints](#controllers-and-api-endpoints)
-> - [Authentication \& Authorization](#authentication--authorization)
->   - [Cookies \& Session Authentication](#cookies--session-authentication)
+> - [Creating New Users: Securing Passwords with Bcrypt](#creating-new-users-securing-passwords-with-bcrypt)
+>   - [`User.create()` vs. the `User` constructor](#usercreate-vs-the-user-constructor)
+> - [Logging In: Authentication and Authorization](#logging-in-authentication-and-authorization)
+>   - [Cookies and Session Authentication](#cookies-and-session-authentication)
 >   - [Generating Cookies with Handle Cookie Sessions](#generating-cookies-with-handle-cookie-sessions)
 >   - [Adding the User ID to a Cookie on Login](#adding-the-user-id-to-a-cookie-on-login)
 >   - [Session Authentication and Authorization](#session-authentication-and-authorization)
 
-***
-
 ### Server Overview
 
-The server is responsible for serving static assets as well as receiving and parsing client requests, getting data from the database, and sending responses back to the client.
+The server acts as the key middleman between the client / frontend application and the database. It is responsible for serving the React project's static assets as well as receiving and parsing client requests, getting data from the database, and sending responses back to the client.
+
+To design a server that performs these interactions consistently and predictably, ask yourself:
+
+* What does the server expect from the frontend?
+* What does the frontend expect back from the server?
+* What does the database expect from the server?
+* What does the server expect back from the database?
 
 ![The server sits in between the frontend and the database, interpreting client requests and sending responses.](img/full-stack-diagram.svg)
 
@@ -246,7 +284,7 @@ The server is organized into a few key components (from right to left in the dia
 
 * The "Models" found in `server/models/`
   * Responsible for interacting directly with and returning data from the database.
-  * In this application, the models will use `knex` to do this.
+  * In this application, the models will use `knex` to execute SQL queries.
 * The "Controllers" found in `server/controllers/`
   * Responsible for parsing incoming requests, performing necessary server-side logic (like logging requests and interacting using models), and sending responses.
 * The "App" found in `server/index.js`
@@ -256,7 +294,9 @@ The server is organized into a few key components (from right to left in the dia
 
 ### User Model
 
-As mentioned above, a model is the right-most component of a server application. An application can have many models and each model is responsible for managing interactions with a particular table in a database.
+As mentioned above, a model is the right-most component of a server application. 
+* A model interacts directly with the database and can be used by controllers as an interface to the database. 
+* An application can have many models and each model is responsible for managing interactions with a particular table in a database.
 
 In our tech stack, our models use Knex to execute SQL statements.
 
@@ -264,29 +304,133 @@ In our tech stack, our models use Knex to execute SQL statements.
 
 The `User` model (defined in `server/db/models/User.js`) provides static methods for performing CRUD operations with the `users` table in the database:
 
-* `User.list()` (get all)
-* `User.find(id)` (get one)
-* `User.findByUsername(username)` (get one)
 * `User.create(username, password)`
+* `User.list()`
+* `User.find(id)`
+* `User.findByUsername(username)`
 * `User.update(id, username)`
 * `User.deleteAll()`
 
-Each method is used by one or more controllers.
+Each method invokes `knex.raw()` and executes a SQL query to create, read, update, or delete data from the database. For example, `User.find` queries for a single user in the database:
 
-#### Bcrypt
+```js
+static async find(id) {
+  const query = `SELECT * FROM users WHERE id = ?`;
+  const result = await knex.raw(query, [id]);
+  const rawUserData = result.rows[0];
+  return rawUserData ? new User(rawUserData) : null;
+}
+```
+
+Each method follows the same pattern:
+* Construct a query
+* Execute the query with `knex.raw`, making sure to insert variables
+* Return the data (for users, we wrap the data in a `new User`. We'll look at why in the chapters below)
+
+Each `User` method is used by one or more controllers when an API endpoint is requested by a client.
+
+### Controllers and API endpoints
+
+A controller is a function that is invoked when a particular endpoint of the server API is requested. Controllers parse the request for data, invoke the appropriate methods of the models to interact with the database, and send responses back to the client.
+
+The template provides API endpoints and controllers that are divided into two categories:
+* **Authentication Endpoints:** These endpoints enable the client to perform actions related to authenticating (registering a new account and logging in / out). 
+* **User Endpoints:** These endpoints enable the client to perform various CRUD actions relating to User data.
+
+**Authentication Endpoints**
+
+<table>
+  <thead>
+    <tr>
+      <th width="87.921875">Method</th>
+      <th width="200.9296875">Endpoint</th>
+      <th width="227.21875">Description</th>
+      <th width="148.27734375">Auth Controller</th>
+      <th width="179.328125">User Model Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td><code>/api/auth/register</code></td>
+      <td>Create a new user and set the cookie userId</td>
+      <td><code>registerUser</code></td>
+      <td><code>create()</code></td>
+    </tr><tr>
+      <td>POST</td>
+      <td><code>/api/auth/login</code></td>
+      <td>Log in to an existing user and set cookie userId value</td>
+      <td><code>loginUser</code></td>
+      <td><code>findByUsername()</code></td>
+    </tr><tr>
+      <td>GET</td>
+      <td><code>/api/auth/me</code></td>
+      <td>Get the current logged in user based on the cookie</td>
+      <td><code>showMe</code></td>
+      <td><code>find()</code></td>
+    </tr><tr>
+      <td>DELETE</td>
+      <td><code>/api/auth/logout</code></td>
+      <td>Log the current user out (delete the cookie)</td>
+      <td><code>logoutUser</code></td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+
+**User Endpoints**
+
+<table>
+  <thead>
+    <tr>
+      <th width="87.734375">Method</th>
+      <th width="170.96484375">Endpoint</th>
+      <th width="208.171875">Description</th>
+      <th width="134.78125">User Controller</th>
+      <th width="151.37109375">User Model Method</th>
+      </tr>
+    </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code>api/users</code></td>
+      <td>Get the list of all users</td>
+      <td><code>listUsers</code></td>
+      <td><code>list()</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code>/api/users/:id</code></td>
+      <td>Get a specific user by id</td>
+      <td><code>showUser</code></td>
+      <td><code>find()</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code>/api/users/:id</code></td>
+      <td>Update the username of a specific user by id</td>
+      <td><code>updateUser</code></td>
+      <td><code>update()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+### Creating New Users: Securing Passwords with Bcrypt
 
 > For more details on how `bcrypt` works, read the chapter on [Hashing Passwords with Bcrypt](12-hashing-passwords-with-bcrypt.md).
 
-Open up the `server/models/User` file and at the top you will see `bcrypt` is imported.
+Remember how the users that we seeded into our database had their passwords hashed? This happens thanks to Bcrypt!
 
-This module provides two functions: `hash` and `compare`
+Open up the `server/models/User` file and at the top you will see `bcrypt` is imported. This module provides two functions: `hash` and `compare`. Here is how they are used:
 
-*   When a user first creates an account, the `User` model will hash the password with `bcrypt.hash`. Then, the hashed password will be stored in the database alongside the username.
+*   When a user first creates an account, the controller  invokes the `User.create()` method which hashes the user's given password with `bcrypt.hash()`. Then, the hashed password will be stored in the database alongside the username.
 
     ![Hashed passwords are stored in the database alongside usernames.](img/hashed-password-stored-in-db.png)
-*   When a user logs in, the `User` model will use the given username to find the hashed password, and then we can use `bcrypt.compare` to see if the given password generates the same hash as the one stored in the database.
 
-    ![](img/hashed-password-lookup-diagram.png)
+*   When a user logs in, a controller uses the `User.findByUsername()` method to find the hashed password, and then we can use `bcrypt.compare` to see if the given password generates the same hash as the one stored in the database.
+
+    ![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](img/hashed-password-lookup-diagram.png)
 
 #### `User.create()` vs. the `User` constructor
 
@@ -310,19 +454,23 @@ static async create(username, password) {
 }
 ```
 
-`knex.raw` returns the `result` which contains the new user in the first index of the `result.rows` array. As a result, we get something like this:
+`knex.raw` returns an object with a `.rows` property containing the requested data from the database. The `.rows` value is *always* an array, so we grab just the first value which will be the new user. 
+
+We will get something like this from the database:
 
 ```json
-rawUserData = { 
+rawUserData = {
   "id": 1, 
   "username": "Reuben", 
   "password_hash": "xyzabc123" 
 }
 ```
 
-**But note that we do not just return that newly created user! Before returning the user's data, we construct a `new User` with that data!**
+**<details><summary>Q: Is there any data that we get from the database that we might NOT want to send back to the client?</summary>**
 
-Why? That `rawUserData` object includes the user's hashed password which we want to keep a secret!
+The password hash! Even if it is difficult to get a plain-text password from a hash, we do not just want to send that data in HTTP requests more than we have to (which is never).
+
+</details>
 
 Before returning, we make a `User` instance using the constructor function. The constructor takes in an object with the exact properties of the `user` table in the database and stores the `password_hash` as a private property:
 
@@ -337,8 +485,29 @@ class User {
     this.username = username;
     this.#passwordHash = password_hash;
   }
+
+  // instance method
+  isValidPassword = async (password) => {
+    return await bcrypt.compare(password, this.#passwordHash);
+  }
+
+  //... static methods
 }
 ```
+
+Instances also have access to the `isValidPassword` instance method which can be used for re-authentication (see below).
+
+As a result, the data that we end up sending to the client looks like this:
+
+```js
+{
+  "id": 1, 
+  "username": "Reuben", 
+  "isValidPassword": f (password) => {}
+}
+```
+
+As a result, the password is hidden before we send it to the client.
 
 Take a look at each `static` method of the `User` class and you'll find that this pattern is repeated:
 
@@ -346,28 +515,7 @@ Take a look at each `static` method of the `User` class and you'll find that thi
 2. Every user object is converted into a `User` instance to keep the `password_hash` values safely contained within the model.
 3. The user objects can then be safely returned and used by the controllers.
 
-### Controllers and API endpoints
-
-The controllers that interact with the `User` model are divided into two files: `userControllers` and `authControllers`. These controller files each export a controller function that are assigned to a particular API endpoint the `app`.
-
-In all, the following API endpoints are provided:
-
-**Authentication Routes**:
-
-<table><thead><tr><th width="87.921875">Method</th><th width="200.9296875">Endpoint</th><th width="148.27734375">Auth Controller</th><th width="179.328125">User Model Method</th><th width="227.21875">Description</th></tr></thead><tbody><tr><td>POST</td><td><code>/api/auth/register</code></td><td><code>registerUser</code></td><td><code>create()</code></td><td>Create a new user and set the cookie userId</td></tr><tr><td>POST</td><td><code>/api/auth/login</code></td><td><code>loginUser</code></td><td><code>findByUsername()</code></td><td>Log in to an existing user and set cookie userId value</td></tr><tr><td>GET</td><td><code>/api/auth/me</code></td><td><code>showMe</code></td><td><code>User.find()</code></td><td>Get the current logged in user based on the cookie</td></tr><tr><td>DELETE</td><td><code>/api/auth/logout</code></td><td><code>logoutUser</code></td><td>None</td><td>Log the current user out (delete the cookie)</td></tr></tbody></table>
-
-**User Routes**:
-
-<table><thead><tr><th width="87.734375">Method</th><th width="170.96484375">Endpoint</th><th width="134.78125">User Controller</th><th width="151.37109375">User Model Method</th><th width="208.171875">Description</th></tr></thead><tbody><tr><td>GET</td><td><code>api/users</code></td><td><code>listUsers</code></td><td><code>list()</code></td><td>Get the list of all users</td></tr><tr><td>GET</td><td><code>/api/users/:id</code></td><td><code>showUser</code></td><td><code>find()</code></td><td>Get a specific user by id</td></tr><tr><td>PATCH</td><td><code>/api/users/:id</code></td><td><code>updateUser</code></td><td><code>update()</code></td><td>Update the username of a specific user by id</td></tr></tbody></table>
-
-The server acts as the key middleman between the client / frontend application and the database. To design a server that performs these interactions consistently and predictably, ask yourself:
-
-* What should the server application expect from the frontend?
-* What should the server application send back to the frontend?
-* What should the database expect from the server?
-* What should the database send back to the server?
-
-### Authentication & Authorization
+### Logging In: Authentication and Authorization
 
 * **Authenticated** means "We have confirmed this person is a real user and is allowed to be here"
   * For example, only logged-in users can see the other users in this app
@@ -377,7 +525,7 @@ The server acts as the key middleman between the client / frontend application a
 
 To implement this functionality, we'll use cookies.
 
-#### Cookies & Session Authentication
+#### Cookies and Session Authentication
 
 In the context of computing and the internet, a **cookie** is a small text file sent by a server to a client and stored on the client along with where the cookie came from. Cookies are saved across browser sessions by default, meaning they will persist after the browser is closed. If a client has a cookie, it will automatically send it with future requests to the server the cookie came from.
 
