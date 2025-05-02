@@ -46,6 +46,7 @@ This template repository provides functional, but basic, user management. Users 
 * Log out
 
 Below, you can see the user journey:
+
 ![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](./img/rea-template-mockup.png)
 
 * When a user visits the `"/"` page, they see the Home page and options to either login or signup.
@@ -62,7 +63,7 @@ Below, you can see the user journey:
 
 The ERD for this application is simple. Just a single `users` table:
 
-![A users table with a primary key id, username, password_hash, and timestamps](./img/rea-template-erd.png)
+<img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="./img/rea-template-erd.png">
 
 ## Getting Started
 
