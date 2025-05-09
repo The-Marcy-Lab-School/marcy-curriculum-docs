@@ -8,39 +8,161 @@
 
 ## Table of Contents
 
-* [Table of Contents](style-guide.md#table-of-contents)
-* [Types](style-guide.md#types)
-* [References](style-guide.md#references)
-* [Objects](style-guide.md#objects)
-* [Arrays](style-guide.md#arrays)
-* [Destructuring](style-guide.md#destructuring)
-* [Strings](style-guide.md#strings)
-* [Functions](style-guide.md#functions)
-* [Arrow Functions](style-guide.md#arrow-functions)
-* [Classes & Constructors](style-guide.md#classes--constructors)
-* [Modules](style-guide.md#modules)
-* [Iterators and Generators](style-guide.md#iterators-and-generators)
-* [Properties](style-guide.md#properties)
-* [Variables](style-guide.md#variables)
-* [Hoisting](style-guide.md#hoisting)
-* [Comparison Operators & Equality](style-guide.md#comparison-operators--equality)
-* [Blocks](style-guide.md#blocks)
-* [Control Statements](style-guide.md#control-statements)
-* [Comments](style-guide.md#comments)
-* [Whitespace](style-guide.md#whitespace)
-* [Commas](style-guide.md#commas)
-* [Semicolons](style-guide.md#semicolons)
-* [Type Casting & Coercion](style-guide.md#type-casting--coercion)
-* [Naming Conventions](style-guide.md#naming-conventions)
-* [Accessors](style-guide.md#accessors)
-* [Events](style-guide.md#events)
-* [jQuery](style-guide.md#jquery)
-* [ECMAScript 5 Compatibility](style-guide.md#ecmascript-5-compatibility)
-* [ECMAScript 6+ (ES 2015+) Styles](style-guide.md#ecmascript-6-es-2015-styles)
-* [Standard Library](style-guide.md#standard-library)
-* [Testing](style-guide.md#testing)
-* [Performance](style-guide.md#performance)
-* [Resources](style-guide.md#resources)
+- [Table of Contents](#table-of-contents)
+- [Quick Tips](#quick-tips)
+- [Types](#types)
+- [References](#references)
+- [Objects](#objects)
+- [Arrays](#arrays)
+- [Destructuring](#destructuring)
+- [Strings](#strings)
+- [Functions](#functions)
+- [Arrow Functions](#arrow-functions)
+- [Classes and Constructors](#classes-and-constructors)
+- [Modules](#modules)
+- [Iterators and Generators](#iterators-and-generators)
+- [Properties](#properties)
+- [Variables](#variables)
+- [Hoisting](#hoisting)
+- [Comparison Operators and Equality](#comparison-operators-and-equality)
+- [Blocks](#blocks)
+- [Control Statements](#control-statements)
+- [Comments](#comments)
+- [Whitespace](#whitespace)
+- [Commas](#commas)
+- [Semicolons](#semicolons)
+- [Type Casting and Coercion](#type-casting-and-coercion)
+- [Naming Conventions](#naming-conventions)
+- [Accessors](#accessors)
+- [Events](#events)
+- [jQuery](#jquery)
+- [ECMAScript 5 Compatibility](#ecmascript-5-compatibility)
+- [ECMAScript 6+ (ES 2015+) Styles](#ecmascript-6-es-2015-styles)
+- [Standard Library](#standard-library)
+- [Testing](#testing)
+- [Performance](#performance)
+- [Resources](#resources)
+
+## Quick Tips
+
+1. Prefer meaningful variable and function names
+   - ❌ Bad:
+     ```javascript
+     const d = (x) => {
+       return x * 2;
+     }
+     ```
+   - ✅ Good:
+     ```javascript
+     const doubleValue = (number) => {
+       return number * 2;
+     }
+     ```
+
+2. Write small, pure functions
+   - ❌ Bad:
+     ```javascript
+     const updateUIAndSendData = (user) => {
+       // logic for rendering
+
+       // logic for sending data to server
+
+       // logic for logging activity
+     }
+     ```
+   - ✅ Good:
+     ```javascript
+     const renderUser = (user) => { /* logic for rendering */ }
+     const sendToServer = (user) => { /* logic for sending data */ }
+     const logActivity = (user) => { /* logic for logging activity */ }
+
+     const handleUserUpdate = (user) => {
+       renderUser(user);
+       sendToServer(user);
+       logActivity(user);
+     }
+     ```
+
+3. Use consistent indentation and formatting
+   - ❌ Bad:
+     ```javascript
+     const test = () => {
+     let x=1;
+        if(x>0){
+     console.log(x);}
+     }
+     ```
+   - ✅ Good:
+     ```javascript
+     const test = () => {
+       let x = 1;
+       if (x > 0) {
+         console.log(x);
+       }
+     }
+     ```
+
+4. DRY (Don't Repeat Yourself)
+   - ❌ Bad:
+     ```javascript
+     console.log('User joined: ' + user.name);
+     console.log('User joined: ' + user.name);
+     ```
+   - ✅ Good:
+     ```javascript
+     const logUserJoin = (user) => {
+       console.log('User joined: ' + user.name);
+     }
+     logUserJoin(user);
+     logUserJoin(user);
+     ```
+
+5. Use strict equality (`===` and `!==`)
+   - ❌ Bad:
+     ```javascript
+     if (value == '5') { /* type coercion risk */ }
+     ```
+   - ✅ Good:
+     ```javascript
+     if (value === '5') { /* strict type match */ }
+     ```
+
+6.  Use early returns in functions
+    - ❌ Bad:
+      ```javascript
+      const process = (user) => {
+        if (user) {
+          if (user.isActive) {
+            sendEmail(user);
+          }
+        }
+      }
+      ```
+    - ✅ Good:
+      ```javascript
+      const process = (user) => {
+        if (!user || !user.isActive) return;
+        sendEmail(user);
+      }
+      ```
+
+7.  Avoid deeply nested code
+    - ❌ Bad:
+      ```javascript
+      if (a) {
+        if (b) {
+          if (c) {
+            doSomething();
+          }
+        }
+      }
+      ```
+    - ✅ Good:
+      ```javascript
+      if (!a || !b || !c) return;
+      doSomething();
+      ```
+
 
 ## Types
 
