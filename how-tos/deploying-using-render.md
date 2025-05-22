@@ -129,13 +129,13 @@ As a result, the "continuous deployment" process would look like this:
    * Add your environment variables:
      * Add a `SESSION_SECRET` variable and a long, random value. It can literally be just a random jumble of characters. You can also use [https://randomkeygen.com/](https://randomkeygen.com/) to generate a random key.
      * Add a `PG_CONNECTION_STRING` variable. Its value should be the `Internal Database URL` value from step 2e above.
-     * Add a `NODE_ENV` variable set to `'production'`
-     * Your values should look like this:
+     * Add a `NODE_ENV` variable set to `production`
+     * Your values should look like this: (No quotations needed!)
 
         ```
-        SESSION_SECRET='AS12FD42FKJ42FIE3WOIWEUR1283'
-        PG_CONNECTION_STRING='postgresql://user:password@host/dbname'
-        NODE_ENV='production'
+        SESSION_SECRET=AS12FD42FKJ42FIE3WOIWEUR1283
+        PG_CONNECTION_STRING=postgresql://user:password@host/dbname
+        NODE_ENV=production
         ```
 
 4. Click **Save Changes**
