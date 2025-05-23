@@ -126,3 +126,5 @@
 * [Mod 9 - Civic Tech Hackathon](mod-9-civic-tech-hackathon/README.md)
   * [Overview](mod-9-civic-tech-hackathon/Overview.md)
   * [Rubric](mod-9-civic-tech-hackathon/rubric.md)
+* [Mod 10 - Capstone](mod-10-capstone/README.md)
+  * [Overview](mod-10-capstone/overview.md)
