@@ -12,7 +12,7 @@
 
 ## What is Capstone?
 
-Over the course of nine weeks (spanning from June 9, 2025through August 8, 2024), our Fellows will grow as autodidacts while expanding their technical portfolio through extensive **self-study**, **blog writing**, **interview prep**, ****and an **independent** **project.** 
+Over the course of nine weeks (spanning from June 9, 2025through August 8, 2024), our Fellows will grow as autodidacts while expanding their technical portfolio through extensive **self-study**, **blog writing**, **interview prep**, and an **independent project**.
 
 Much like an internship, Capstone will begin with a **4-week “Onboarding”** phase, the main objective of which is learning and building quickly. Our fellows will have the chance to choose a new language and framework to learn on their own and will build skills of **independence**, **autodidactism**, and **task management**. 
 
@@ -93,7 +93,7 @@ Throughout Capstone, fellows will be required to complete the following delivera
 
 **Onboarding Deliverables:**
 
-- ** Onboarding Learning Plan:** Submit a learning plan outlining a new technology or topic you wish to explore during the Onboarding phase of Capstone that will set you up for success for the Project Build phase of Capstone.
+- **Onboarding Learning Plan:** Submit a learning plan outlining a new technology or topic you wish to explore during the Onboarding phase of Capstone that will set you up for success for the Project Build phase of Capstone.
 
     The learning plan should include:
     
@@ -104,15 +104,15 @@ Throughout Capstone, fellows will be required to complete the following delivera
     - ***Success Criteria:*** What would make this learning plan a success? How will you know it’s complete? How will you demonstrate you have properly learned your chosen tech stack
 - **Easy LeetCode Problem In New Language:** Submit a screenshot of the completion of an Easy- or Medium-level LeetCode problem in your chosen Capstone language
 - **Onboarding Blog:** Fellows will write a blog post reflecting on their learnings during the first phase of Capstone. They will then publish that blog post on Medium!
-    - **Technical Details**: **Fellows should explain the 3-5 most fundamental aspects of a programming language or framework. Explanations should include definitions, analogies, and examples. Core Mastery fellows should write their blog on React.
-    - **Comparison**: **Fellows should compare and contrast the chosen language/framework with alternatives and how a developer may choose which language/framework is right for them to learn.
-    - **Tone and Personality:** Fellows should show their writing personality by writing these blogs. Write as if your audience is a student who is just beginning their learning journey, and you want to share your experience and wisdom.
-    - **Professionalism:** Fellows will publish their blogs on Medium and publish them to their LinkedIn
+    - ***Technical Details:*** Fellows should explain the 3-5 most fundamental aspects of a programming language or framework. Explanations should include definitions, analogies, and examples. Core Mastery fellows should write their blog on React.
+    - ***Comparison:*** Fellows should compare and contrast the chosen language/framework with alternatives and how a developer may choose which language/framework is right for them to learn.
+    - ***Tone and Personality:*** Fellows should show their writing personality by writing these blogs. Write as if your audience is a student who is just beginning their learning journey, and you want to share your experience and wisdom.
+    - ***Professionalism:*** Fellows will publish their blogs on Medium and publish them to their LinkedIn
 - **Onboarding Teaching Demo Application:** Fellows will create a simple application to teach others the basics of the tech stack they are learning. Share projects in a science fair-like demo during the final weekly “Geek Out” of Onboarding. This project will serve as the foundation for their final Capstone project.
-    - **Key Features:** Consider the most essential features of the chosen language/framework and ensure that your application highlights these features. Make sure to use documentation to follow best practices.
-    - **Proof-of-Concept:** The application does NOT need to be fully featured. The purpose of this application is to demonstrate that you understand and can implement the key features of the language/framework. It can serve as a proof-of-concept for the most basic features of your intended final Capstone project but it only needs to lay the foundation.
-    - **Simplicity:** The application should be simple enough that you can explain it clearly to a new programmer and have an interesting conversation about how to extend the application with more advanced programmers. You should know every nook and cranny of the application’s architecture.
-    - **Demo:** During the final week of the Onboarding phase, you will get to share with your classmates what you’ve learnings over the last four weeks in an in-house engineering fair. This will be a great opportunity to get a taste of what the final engineering fair will look and feel like!
+    - ***Key Features:*** Consider the most essential features of the chosen language/framework and ensure that your application highlights these features. Make sure to use documentation to follow best practices.
+    - ***Proof-of-Concept:*** The application does NOT need to be fully featured. The purpose of this application is to demonstrate that you understand and can implement the key features of the language/framework. It can serve as a proof-of-concept for the most basic features of your intended final Capstone project but it only needs to lay the foundation.
+    - ***Simplicity:*** The application should be simple enough that you can explain it clearly to a new programmer and have an interesting conversation about how to extend the application with more advanced programmers. You should know every nook and cranny of the application’s architecture.
+    - ***Demo:*** During the final week of the Onboarding phase, you will get to share with your classmates what you’ve learnings over the last four weeks in an in-house engineering fair. This will be a great opportunity to get a taste of what the final engineering fair will look and feel like!
 
 **Project Build Deliverables:**
 
