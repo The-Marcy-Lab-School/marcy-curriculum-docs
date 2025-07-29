@@ -10,9 +10,8 @@ Follow along with the React Express + Auth Template repository [here](https://gi
 - [Getting Started](#getting-started)
   - [Create your repo](#create-your-repo)
   - [Getting to know the folder structure](#getting-to-know-the-folder-structure)
-  - [Configure your environment variables](#configure-your-environment-variables)
+  - [Configure your database and environment variables](#configure-your-database-and-environment-variables)
   - [Kickstart the project](#kickstart-the-project)
-  - [You're all set up now. Have Fun!](#youre-all-set-up-now-have-fun)
 - [Database](#database)
   - [Migrations](#migrations)
     - [Modifying / Adding New Migrations](#modifying--adding-new-migrations)
@@ -37,33 +36,36 @@ Follow along with the React Express + Auth Template repository [here](https://gi
 
 ## Application Overview
 
-This template repository provides functional, but basic, user management. Users can:
-* Register a new account with a username and password
-* Log in to their account
+This template repository provides functional (but basic) CRUD functionality for user profiles, and that's it!
+
+Accordingly, the ERD for this application is simple — just a single `users` table:
+
+<img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="./img/rea-template-erd.png">
+
+For functionality, users can perform the following CRUD operations:
+* Register (create) a new user account with a username and password
+* Log in using their credentials.
 * View a list of all users
 * View a single user's page
-* Update their username
+* Update their username (and only their own)
 * Log out
 
-Below, you can see the user journey:
+The frontend is built using React. Below, you can see the user journey as they navigate through the frontend:
 
 ![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](./img/rea-template-mockup.png)
 
-* When a user visits the `"/"` page, they see the Home page and options to either login or signup.
-  * Returning users will be automatically signed in via the `GET /api/auth/me` endpoint.
+Here is a detailed breakdown of the user journey above and how the frontend interacts with various backend endpoints:
+* When a user visits the `"/"` page, they see the Home page and navigation buttons to either a login page or a sign up page.
 * Users can authenticate by visiting the `"/login"` or `"/sign-up"` pages.
   * Login requests are sent to the `POST /api/auth/login` endpoint.
   * Sign up requests are sent to the `POST /api/auth/register` endpoint.
-* After logging in or signing up users are taken to the `"/users/:id"` page for their own profile. Since they are authorized to modify their own profile, they have the option to update their username and log out.
-  * Individual user data is fetched via the `GET /api/users/:id` endpoint.
-  * Username updates are fetched via the `PATCH /api/users/:id` endpoint which requires authorization.
-  * User log out is fetched via the `DELETE /api/auth/logout` endpoint.
+  * Previously authenticated users will be automatically signed in via the `GET /api/auth/me` endpoint and redirected to `"/"`.
+* After logging in or signing up users are taken to the `"/users/:id"` page to view their own profile. Since they are authorized to modify their own profile, they have the option to update their username and log out.
+  * Individual user data is provided via the `GET /api/users/:id` endpoint.
+  * Username updates are provided via the `PATCH /api/users/:id` endpoint which requires authorization.
+  * User log out functionality is provided via the `DELETE /api/auth/logout` endpoint.
 * Users can visit the `"/users"` page to view all users in the application. Clicking on a user's name takes them to their profile page. Since they are not authorized, they can only view this user's profile.
-  * All users data is fetched via the `GET /api/users` endpoint.
-
-The ERD for this application is simple. Just a single `users` table:
-
-<img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="./img/rea-template-erd.png">
+  * The list of all users is provided via the `GET /api/users` endpoint.
 
 ## Getting Started
 
@@ -73,26 +75,26 @@ Now that you understand what this app can do, let's jump in and get it running l
 
 * If you are working on a team, first make sure that your team has a new GitHub Organization for your project.
 * Select <kbd>Use this template</kbd> and select <kbd>Create a new repository</kbd>. Rename the repo and choose your GitHub organization as the owner. If you are working alone, just select your own account as the owner.
-* Clone your repo. 
+* Clone your repo and open it in your editor of choice!
 
 ### Getting to know the folder structure
 
-In the root of this repository are the two parts of the application
+In the root of this repository are the two sides of the application
 
-* `frontend/` - the front-end application code (React)
-* `server/` - the back-end server application code (Node + Express)
+* `frontend/` — the front-end application code (React)
+* `server/` — the back-end server application code (Node + Express)
 
 Each of these sub-directories has its own `package.json` file with its own dependencies and scripts.
 
-The root of the project also has a `package.json` file. It has no dependencies but does include some scripts for quickly getting the project started from the project root.
+The root of the entire repo also has a `package.json` file. It has no dependencies but does include some scripts for quickly getting the project started from the project root.
 
-### Configure your environment variables
+### Configure your database and environment variables
 
-Before you can actually start building, you need to create a database and configure your server to connect with it.
+Before you can actually start building, you need to create a Postgres database and configure your server to connect with it using environment variables:
 
-* Create a database with a name of your choice. This will just be the name of your local database so it doesn't need to match with the other members of your team.
-* In the `server/` folder, copy the `.env.template` and name it `.env`.
-* Update the `.env` variables to match your Postgres database information (username, password, database name)
+* Create a Postgres database with a name of your choice. This will just be the name of *your* local database so it doesn't need to match with the other members of your team.
+* In the `server/` folder, make a new file called `.env` and copy the contents of `.env.template` into your `.env` file.
+* Update the values in `.env` to match your Postgres database information (username, password, database name)
 * Replace the `SESSION_SECRET` value with your own random string. This is used to encrypt the cookie's `userId` value.
   * Use a tool like [https://randomkeygen.com/](https://randomkeygen.com/) to help generate the secret.
 * Your `.env` file should look something like this:
@@ -115,7 +117,7 @@ SESSION_SECRET='db8c3cffebb2159b46ee38ded600f437ee080f8605510ee360758f6976866e00
 PG_CONNECTION_STRING=''
 ```
 
-Remember, these values are used in the Knex configuration file `server/knexfile.js`. Pay attention to how the `connection` configuration is set:
+Remember, these values are used in the Knex configuration file `server/knexfile.js`. Pay attention to how the `connection` configuration is set, :
 
 ```js
 module.exports = {
@@ -148,11 +150,10 @@ module.exports = {
 };
 ```
 
-The `connection` configuration determines how Knex connects to your database. In `development` mode, if the `PG_CONNECTION_STRING` is blank, then Knex will use the configuration object with `host`, `port`, `user`, `password` and `database`.
-
-However, when you eventually deploy your database on Render, you will be given a `PG_CONNECTION_STRING` value from Render. You can add this to your environment variables to connect directly to your deployed database. If a `PG_CONNECTION_STRING` value exists, Knex will use it to connect to your deployed database.
-
-In `production` mode, the `PG_CONNECTION_STRING` is expected.
+The `connection` configuration determines how Knex connects to your database. 
+* In `development` mode, assuming that the `PG_CONNECTION_STRING` value is blank, then Knex will use the configuration object with `host`, `port`, `user`, `password` and `database` set by your environment variables. If those values are also blank, there are default values provided.
+* When you eventually deploy your database on Render, you will be given a `PG_CONNECTION_STRING` value from Render. You can add this to your environment variables to connect directly to your deployed database. If a `PG_CONNECTION_STRING` value exists, Knex will use it to connect to your deployed database, not your local one.
+* In `production` mode (which is used when you deploy your server application), a deployed database and the `PG_CONNECTION_STRING` is expected.
 
 The deployed database works exactly like your local database, so you are welcome to use a deployed database during testing as well. That said, the queries may take more time to execute since they are being transferred via the internet rather than between ports on your own machine.
 
@@ -171,15 +172,19 @@ cd ..
 cd server && npm i && npm run migrate && npm run seed
 ```
 
-> In the future, you can also run the `npm run kickstart` command which will do all of this for you!
+{% hint style="info" %}
+💡 In the future, you can also run `npm run kickstart` from the project root which will do all of this for you!
+{% endhint %}
 
-As a result of running the migrations and seeds, you should see that a `users` table has been created and seeded with three users. Check out the `server/db/` folder to see how migrations and seeds were configured.
+After installing dependencies and running the migrations and seeds, you should see that a `users` table has been created and seeded with three users. Check out the `server/db/` folder to see how migrations and seeds were configured.
 
-Finally, split the terminal and `cd` into the `frontend/` application and `server/` application. Then start each application using `npm run dev` in each directory.
+Finally, split the terminal (or open two terminals) and run `npm run dev` in both the `frontend/` directory and in the `server/` directory. 
 
-### You're all set up now. Have Fun!
+**You're all set up now. Have Fun!**
 
-Below, you will find more information about this repository and how to work with it. Enjoy!
+With the application running, try exploring the user flow on the various pages as shown above.
+
+Then, read the remaining sections to learn about the implementation details of the repository and how to work with it.
 
 ## Database
 
@@ -191,7 +196,7 @@ Below, you will find more information about this repository and how to work with
 
 ***
 
-For this project, you should use a Postgres database. Make sure to set the environment variables for connecting to this database in the `.env` file. These values are loaded into the `knexfile.js` file using the `dotenv` package and the line of code:
+For this project, you should start with a Postgres database. Make sure to set the environment variables for connecting to this database in the `.env` file. These values are loaded into the `knexfile.js` file using the `dotenv` package and the line of code:
 
 ```js
 require('dotenv').config(); // load the .env file
@@ -284,22 +289,21 @@ To design a server that performs these interactions consistently and predictably
 The server is organized into a few key components (from right to left in the diagram):
 
 * The "Models" found in `server/models/`
-  * Responsible for interacting directly with and returning data from the database.
-  * In this application, the models will use `knex` to execute SQL queries.
+  * They are responsible for interacting directly with and returning data from the database.
+  * In this application, the models will use [Knex](https://knexjs.org/) to execute SQL queries.
 * The "Controllers" found in `server/controllers/`
-  * Responsible for parsing incoming requests, performing necessary server-side logic (like logging requests and interacting using models), and sending responses.
+  * They are responsible for parsing incoming requests, performing necessary server-side logic (like logging requests and interacting using models), and sending responses.
 * The "App" found in `server/index.js`
-  * The hub of the server application, created by Express.
-  * Responsible for defining the endpoint URLs that will be available in the application and assigning controllers to handle each endpoint.
-  * It also configures middleware.
+  * The hub of the server application, created by [Express](https://expressjs.com/).
+  * It is responsible for defining the endpoint URLs that will be available in the application and assigning controllers to handle each endpoint.
+  * It also configures any middleware that will intercept requests.
 
 ### User Model
 
 As mentioned above, a model is the right-most component of a server application. 
 * A model interacts directly with the database and can be used by controllers as an interface to the database. 
-* An application can have many models and each model is responsible for managing interactions with a particular table in a database.
+* An application can have many models and each model is responsible for managing interactions with a particular table in a database. In this template, a single model exists to manage interactions with the `users` table.
 
-In our tech stack, our models use Knex to execute SQL statements.
 
 ![The model is the layer of a server application that directly communicates with the database.](img/full-stack-diagram.svg)
 
@@ -312,7 +316,7 @@ The `User` model (defined in `server/db/models/User.js`) provides static methods
 * `User.update(id, username)`
 * `User.deleteAll()`
 
-Each method invokes `knex.raw()` and executes a SQL query to create, read, update, or delete data from the database. For example, `User.find` queries for a single user in the database:
+In our tech stack, our model uses Knex to execute SQL queries that create, read, update, or delete data from the database. For example, `User.find` queries for a single user in the database with `knex.raw()`
 
 ```js
 static async find(id) {
@@ -323,7 +327,7 @@ static async find(id) {
 }
 ```
 
-Each method follows the same pattern:
+Each `User.X` model method follows the same pattern:
 * Construct a query
 * Execute the query with `knex.raw`, making sure to insert variables
 * Return the data (for users, we wrap the data in a `new User`. We'll look at why in the chapters below)
@@ -421,21 +425,21 @@ The template provides API endpoints and controllers that are divided into two ca
 
 > For more details on how `bcrypt` works, read the chapter on [Hashing Passwords with Bcrypt](12-hashing-passwords-with-bcrypt.md).
 
-Remember how the users that we seeded into our database had their passwords hashed? This happens thanks to Bcrypt!
+When starting this project, we seeded our database with users that had hashed passwords. This password hashing happens thanks to Bcrypt!
 
 Open up the `server/models/User` file and at the top you will see `bcrypt` is imported. This module provides two functions: `hash` and `compare`. Here is how they are used:
 
-*   When a user first creates an account, the controller  invokes the `User.create()` method which hashes the user's given password with `bcrypt.hash()`. Then, the hashed password will be stored in the database alongside the username.
+*   When a user first creates an account, a controller  invokes `User.create()`. This method hashes the user's given password with `bcrypt.hash()`. Then, the hashed password will be stored in the database alongside the username.
 
     ![Hashed passwords are stored in the database alongside usernames.](img/hashed-password-stored-in-db.png)
 
-*   When a user logs in, a controller uses the `User.findByUsername()` method to find the hashed password, and then we can use `bcrypt.compare` to see if the given password generates the same hash as the one stored in the database.
+*   When a user logs in, a controller invokes `User.findByUsername()` to find the hashed password of the given user. `bcrypt.compare` is then used to compare this found password with the given password to see if they match.
 
     ![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](img/hashed-password-lookup-diagram.png)
 
 #### `User.create()` vs. the `User` constructor
 
-Did you notice that there is both a `User.create()` method AND a `constructor()`? Let's see why.
+When someone registers a new user, the `User.create()` method is used, not the `constructor` method. Let's see why.
 
 To create a new user in the database, the `User.create()` static method can be invoked with a `username` and `password`. The method hashes the password before inserting it into the database.
 
@@ -508,7 +512,7 @@ As a result, the data that we end up sending to the client looks like this:
 }
 ```
 
-As a result, the password is hidden before we send it to the client.
+By using the `constructor` this way, the password is hidden before we send it to the client.
 
 Take a look at each `static` method of the `User` class and you'll find that this pattern is repeated:
 
