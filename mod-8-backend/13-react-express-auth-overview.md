@@ -36,13 +36,17 @@ Follow along with the React Express + Auth Template repository [here](https://gi
 
 ## Application Overview
 
-This template repository provides functional (but basic) CRUD functionality for user profiles, and that's it!
+This repository provides a foundation for any application you want to build that requires users. Using this template repository, you can add any additional features and designs that you desire! For example, you might create:
+* A social media application where users can create/manage groups, forums, posts, comments, likes, etc…
+* An event management application where users can create/manage events, RSVPs, etc...
+* A personal productivity application where users can create/manage journal entries, trackers, todo lists, etc…
+* A business application with multiple types of users (e.g. doctors and patients, buyers and sellers, etc...) and users can create/manage products, carts, appointments, etc…
 
-Accordingly, the ERD for this application is simple — just a single `users` table:
+The backend of this repository already includes migrations and seeds, a model, and endpoints to manage a `users` table with the following properties:
 
 <img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="./img/rea-template-erd.png">
 
-For functionality, users can perform the following CRUD operations:
+With this functionality, users can:
 * Register (create) a new user account with a username and password
 * Log in using their credentials.
 * View a list of all users
@@ -50,7 +54,7 @@ For functionality, users can perform the following CRUD operations:
 * Update their username (and only their own)
 * Log out
 
-The frontend is built using React. Below, you can see the user journey as they navigate through the frontend:
+The frontend is built using React with very minimal styling. Below, you can see the user journey as they navigate through the frontend:
 
 ![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](./img/rea-template-mockup.png)
 
@@ -66,6 +70,8 @@ Here is a detailed breakdown of the user journey above and how the frontend inte
   * User log out functionality is provided via the `DELETE /api/auth/logout` endpoint.
 * Users can visit the `"/users"` page to view all users in the application. Clicking on a user's name takes them to their profile page. Since they are not authorized, they can only view this user's profile.
   * The list of all users is provided via the `GET /api/users` endpoint.
+
+What you choose to build and how you choose to design this application is entirely up to you! Have fun and make something that changes the world!
 
 ## Getting Started
 
@@ -180,7 +186,7 @@ After installing dependencies and running the migrations and seeds, you should s
 
 Finally, split the terminal (or open two terminals) and run `npm run dev` in both the `frontend/` directory and in the `server/` directory. 
 
-**You're all set up now. Have Fun!**
+**You're all set up now. Have fun!**
 
 With the application running, try exploring the user flow on the various pages as shown above.
 
