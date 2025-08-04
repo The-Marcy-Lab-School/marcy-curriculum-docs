@@ -4,19 +4,25 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-3-2-migrations-seeds)!
 {% endhint %}
 
-So far, we've been setting up our databases by hand, executing SQL queries using `psql` or TablePlus. While this works when working on a project by yourself, it doesn't scale well. You would need to send them the exact SQL statements you ran and the order that you ran them in. If you ever make any changes, you would need to share those changes too!
+Thus far, we've been executing individual SQL queries to set up the structure of our tables and to modify the data inside. This is fine when you're learning and experimenting, however, when working with a team on a shared database, we'll need a more robust approach.
 
-Migration files are a "formal" way to define a database schema and to update it over time. Let's learn!
+This is where migration and seed files come into play. 
+
+Migration and seed files are used to automate the process of structuring a database and populating it with data. They provide a few key benefits:
+* Unlike SQL statements that are executed manually and one at a time, migration and seed files define all of the operations to be executed at once with a single node command.
+* Since they are files, they can be included in a Git repository and are easily shared and maintained by a team.
+* A new developer on the team just needs to execute the contents of migration and seed files to get started.
+
 
 **Table of Contents**
 
 - [Terms](#terms)
+- [Commands](#commands)
 - [Setup](#setup)
 - [Migrations and Seeds: Why do we need them?](#migrations-and-seeds-why-do-we-need-them)
 - [Migrations](#migrations)
   - [Creating New Migrations](#creating-new-migrations)
   - [Updating Migrations](#updating-migrations)
-  - [Why do I need knex for migrations?](#why-do-i-need-knex-for-migrations)
 - [Seeds](#seeds)
   - [Creating Seed Files](#creating-seed-files)
 - [Migration Example Scenarios](#migration-example-scenarios)
@@ -26,6 +32,8 @@ Migration files are a "formal" way to define a database schema and to update it 
 * **Migration File** - a file defining a change to the structure of your database (creating, updating, deleting tables)
 * **Seed File** - a file for inserting an initial dataset into a database
 * **Rollback** - the act of reverting a system to a previous state 
+
+## Commands
 
 **Migrations Commands**:
 * `npx knex migrate:make migration_name` - create an update to your schema
@@ -40,6 +48,8 @@ Migration files are a "formal" way to define a database schema and to update it 
 [Knex Docs](http://knexjs.org)
 
 ## Setup
+
+In order to experiment with migration and seed files, you will need a database. Do the following to set up a database to practice with:
 
 * Create a database called `migrations_seeds_practice`
 * Create a new folder called `migrations-practice` and `cd` into it
@@ -63,44 +73,22 @@ Migration files are a "formal" way to define a database schema and to update it 
 
 ## Migrations and Seeds: Why do we need them?
 
-The main reason you want to use migrations and seeds is for **maintainability**.
+When working on a team, everyone must be on the same page about the structure of the database. However, this can be challenging when developers (typically) test their code on databases running on their local machines.
 
 Imagine this:
 - You're working on a team of developers that share a code-base.
 - You all push and pull from the same remote Github repo.
-- While working, you add a new feature that requires a database, so you create one on your local computer.
-- You finish building out your feature and push your new code up! 
-- However, if your team members were to pull your code down, they would not get your database.
+- While working, you modify the `users` table in your local Postgres database and add a `bio` property.
+- You finish building out your bio feature and push your new code up! 
+- Your teammates pull down the code but their local databases don't have the `bio` property, so the app crashes!
 
-When working with other devs, they need to be able to reproduce your database structure and starting information. We could have everyone run the same SQL query to create the entire database manually on their computers. However, this does not scale, so in the real world it's much more common for companies to use **migration files** to keep track of their DB structure and **seed files** to populate their databases.
+Each developer needs to keep their local database up to date with the latest database design (A.K.A. "database schema"). Migrations will make this so much easier!
 
 ## Migrations
 
-Migrations are special files that run queries on your DB to perform structural updates, or in some cases, data updates. In node land, one of the more common ways to do this is by using the query builder KNEX. This is a simple library that allows you to create and run migrations files with ease.
+Migration files standardize the way a given database should be configured. Since they can be stored in Git repositories, they ensure that an entire team can reliably have the same database schema and make it easy for new developers on the team to get started.
 
-### Creating New Migrations
-
-Running the command `npx knex migrate:make init` will generate a file like: `20240417181815_init` located **in your new `/migrations` folder**. 
-* That bit at the front is a timecode that the migration uses to track what migrations exist. 
-* Every time you want to create another migration: `npx knex migrate:make example_file`. 
-
-Every migration file will look like this:
-
-```js
-exports.up = function(knex) {
-  // make changes to your database such as adding new tables,
-  // updating existing tables, deleting tables, etc...
-};
-
-exports.down = function(knex) {
-  // undo the changes made above. this lets you execute a "rollback"
-  // if you ever want to undo something
-};
-```
-
-The file exports two functions: `up` and `down`. 
-- The `up` function defines the changes you want to make to your database schema including adding, updating, or deleting tables
-- The `down` function defines how to undo those changes in `up`
+There are many ways to implement migration files but we will be using [Knex](https://knexjs.org/) which makes the process much easier. Here is what a migration file made using Knex looks like:
 
 ```js
 exports.up = function (knex) {
@@ -122,34 +110,75 @@ exports.down = function (knex) {
 };
 ```
 
+Can you already tell what it does? Let's dive into it.
 
-To run your migrations (and execute the `up` function): `npx knex migrate:latest` 
-To undo your migrations (and execute the `down` function): `npx knex migrate:rollback`
+### Creating New Migrations
 
-We can add some scripts to our `package.json` to make things a little easier:
+A new migration file should be created any time that you want to make a lasting change to your database structure. Run the following command to create a new migration file:
 
-```json
-"scripts": {
-  "migrate:run" : "npx knex migrate:latest",
-  "migrate:rollback" : "npx knex migrate:rollback",
-}
+```sh
+npx knex migrate:make "short_description"
 ```
 
-At this point, if you view your database, you'll see it has one table: `fellows`.
+The generated file will look like this: `20250804202350_short_description.js`
 
-Notice the line of code `table.foreign('fellow_id').references('id').inTable('fellows');`
+* The `short_description` part is the chosen name of the migration file. 
+* The long number before it is a timestamp in the format `yyyymmddhhmmss`.
 
-This is creating a foreign key reference. We will not be allowed to have a post unless it has a reference to a record in the `fellows` table.
+Every migration file will export two functions: `up` and `down`:
+
+```js
+exports.up = function(knex) {
+  // make changes to your database such as adding new tables,
+  // updating existing tables, deleting tables, etc...
+};
+
+exports.down = function(knex) {
+  // undo the changes made above. this lets you execute a "rollback"
+  // if you ever want to undo something
+};
+```
+
+- The `up` function defines the changes you want to make to your database schema including adding, updating, or deleting tables
+- The `down` function defines how to undo those changes should you ever want to perform a "rollback".
+
+```js
+exports.up = function (knex) {
+  return knex.schema
+    .createTable('fellows', function (table) {
+      table.increments('id').primary();
+      table.string('name', 255).notNullable();
+    })
+    .createTable('posts', function (table) {
+      table.increments('id').primary();
+      table.string('content').notNullable();
+      table.integer('fellow_id').notNullable();
+      table.foreign('fellow_id').references('id').inTable('fellows');
+    });
+};
+
+exports.down = function (knex) {
+  return knex.schema.dropTable('posts').dropTable('fellows');
+};
+```
+
+To run your migrations (and execute the `up` function): `npx knex migrate:latest` 
+* At this point, if you view your database, you'll see it has one table: `fellows`.
+* Notice the line of code `table.foreign('fellow_id').references('id').inTable('fellows');`
+* This is creating a foreign key reference. We will not be allowed to have a post unless it has a reference to a record in the `fellows` table.
+
+To undo your migrations (and execute the `down` function): `npx knex migrate:rollback`
+* This will delete the tables `posts` and `fellows`.
+
+Run the `npx knex migrate:latest` command again to recreate the tables.
 
 ### Updating Migrations
 
-Often, you will need to make changes to your database schema in the middle of a project. Suppose I want to change the column name of `posts.content` to `posts.post_content`.
+Often, you will need to make changes to your database schema in the middle of a project. Suppose I need to change the column name of `posts.content` to `posts.post_content` or I need to add a new column to a table.
 
-You *could* rollback, edit the original migration file, and then run the migration again.
+You *could* rollback, edit the original migration file, and then run the migration again, but rolling back a migration drops the table meaning all data in the table is lost.
 
-**Q: What issues could arise if you were to do this ^? Consider how you would communicate this change with other developers**
-
-The best practice is to create a new migration file: `npx knex migrate:make change_post_content_column`:
+The best practice to preserve the data is to create a new migration file: `npx knex migrate:make change_post_content_column`:
 
 ```js
 exports.up = function (knex) {
@@ -168,20 +197,21 @@ exports.down = function (knex) {
 };
 ```
 
-### Why do I need knex for migrations?
-Technically you don't. But There's a reason companies use React instead of Vanilla js: there's no point in constantly reinventing the wheel. You *would* need to create a migration system, and it'd be a hell of a lot less battle-tested than Knex. So companies will likely use Knex or some other library with migration capabilities like an ORM like Sequelize.
-
-So, if migrations build up our DB, how do we populate it?
-
 ## Seeds
 
 When building out your backend, it will be helpful if the database had some data to test with. Instead of manually inserting data using SQL `INSERT` statements, we can create a **seed file**.
 
-All a seed file really does is clear the database of all existing data and repopulate it with starter data. 
+All a seed file really does is populate a database with some starter data.
 
 ### Creating Seed Files
 
-`npx knex seed:make 01_seeds`, which would make `01_seeds.js` in the designated seed file. To start, here's what that file would look like:
+To create a seed file, run the command:
+
+```sh
+npx knex seed:make "seed_filename"
+```
+
+This would make `seed_filename.js` in the designated seed file. To start, here's what that file would look like:
 
 ```js
 exports.seed = async function(knex) {
