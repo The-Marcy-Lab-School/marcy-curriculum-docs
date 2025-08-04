@@ -212,7 +212,13 @@ require('dotenv').config(); // load the .env file
 
 > For an overview of migrations and seeds, check out the chapter on [Migrations and Seeds](https://marcylabschool.gitbook.io/marcy-lab-school-docs/mod-8-backend/10-migrations-and-seeds).
 
-Migration files are stored in the `server/db/migrations` folder. Here, you can see the migration files that generate the `users` table. The first one sets up some initial columns:
+Migration files are stored in the `server/db/migrations` folder. To run them, run the following command:
+
+```sh
+npx knex migrate:latest
+```
+
+Below, you can see the migration files that generate the `users` table. The first one sets up some initial columns:
 
 ```js
 exports.up = (knex) => {
@@ -231,7 +237,11 @@ This migration file will create a `users` table with an auto-generated and auto-
 
 As you build your project, you will likely want to modify your tables. If this is the case, AVOID using the `migration:rollback` unless you are willing to lose all data in your database and re-seed.
 
-If you wish to keep existing data, you can _create a new migration that modifies the table_.
+If you wish to keep existing data, you can _create a new migration that modifies the table_:
+
+```sh
+npx knex migrate:make "new_migration_file"
+```
 
 For example, the second migration file adds some timestamp columns to the existing `users` table.
 
@@ -257,7 +267,13 @@ Note that instead of using `knex.schema.createTable`, we are using `.alterTable`
 
 ### Seeds
 
-Seed files are stored in the `server/db/seeds` folder.
+There is a single seed file stored in the `server/db/seeds` folder. Instead of creating new seed files for your other tables, simply add additional seed data into this `init.js` file. 
+
+Run the seed file with:
+
+```sh
+npx knex seed:run
+```
 
 The provided `init.js` seed file uses the `User.create` model method to generate the following data:
 
