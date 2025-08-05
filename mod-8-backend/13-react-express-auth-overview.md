@@ -4,6 +4,10 @@
 Follow along with the React Express + Auth Template repository [here](https://github.com/The-Marcy-Lab-School/react-express-auth)!
 {% endhint %}
 
+The purpose of this repository is to provide a template for full-stack applications that may be studied and built on top of. In this document, you will find information explaining how the components of this full-stack application interact with each other as well as specific implementation details for user authentication.
+
+![The frontend, server, and database work together to form a full-stack application.](img/full-stack-diagram.svg)
+
 **Table of Contents**
 
 - [Application Overview](#application-overview)
