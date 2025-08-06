@@ -194,6 +194,17 @@ To support you in your growth as a software engineer, your instructor may provid
 
 Software Engineering (SWE) Short Response (SR) assignments are opportunities to develop your technical communication skills.
 
+In these assignments, you may encounter the following types of prompts:
+
+* Research a new topic and share your findings.
+* Analyze a programming best practice and list its advantages and disadvantages.
+* Compare and contrast approaches for solving a problem and provide an argument in support of one.
+* Teach a piece of syntax or a concept with examples and analogies.
+
+Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
+
+Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
+
 Short Response prompts will always be found in the `README.md` file of your assignment. Each prompt will be listed under a `## Prompt X` heading and you should add your responses under the `### Response X` heading using Markdown ([read about Markdown syntax here](https://www.markdownguide.org/basic-syntax/)).
 
 For example:
@@ -209,17 +220,6 @@ Modules let us split up our code into separate files. What are benefits of doing
 Response here...
 ```
 {% endcode %}
-
-In these assignments, you may encounter the following types of prompts:
-
-* Research a new topic and share your findings.
-* Analyze a programming best practice and list its advantages and disadvantages.
-* Compare and contrast approaches for solving a problem and provide an argument in support of one.
-* Teach a piece of syntax or a concept with examples and analogies.
-
-Your intended audience should be someone with _some_ experience programming but who is still learning. As such, strive to be as clear and concise as possible. There is a fine balance between too much information and just enough but when in doubt, provide more details. Examples and analogies can often help!
-
-Strive to do more than just answer the prompts. Use the prompts as opportunities to practice your technical communication. While anyone can write functional code, not everyone can communicate clearly so take pride in this work!
 
 ### Scoring on Short Response Assignments
 
