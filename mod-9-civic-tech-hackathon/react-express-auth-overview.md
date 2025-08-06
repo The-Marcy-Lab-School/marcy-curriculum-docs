@@ -48,7 +48,7 @@ This repository provides a foundation for any application you want to build that
 
 The backend of this repository already includes migrations and seeds, a model, and endpoints to manage a `users` table with the following properties:
 
-<img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="./img/rea-template-erd.png">
+<img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="img/rea-template-erd.png">
 
 With this functionality, users can:
 * Register (create) a new user account with a username and password
@@ -60,7 +60,7 @@ With this functionality, users can:
 
 The frontend is built using React with very minimal styling. Below, you can see the user journey as they navigate through the frontend:
 
-![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](./img/rea-template-mockup.png)
+![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](img/rea-template-mockup.png)
 
 Here is a detailed breakdown of the user journey above and how the frontend interacts with various backend endpoints:
 * When a user visits the `"/"` page, they see the Home page and navigation buttons to either a login page or a sign up page.
@@ -329,7 +329,6 @@ The server is organized into a few key components (from right to left in the dia
 As mentioned above, a model is the right-most component of a server application. 
 * A model interacts directly with the database and can be used by controllers as an interface to the database. 
 * An application can have many models and each model is responsible for managing interactions with a particular table in a database. In this template, a single model exists to manage interactions with the `users` table.
-
 
 ![The model is the layer of a server application that directly communicates with the database.](img/full-stack-diagram.svg)
 
