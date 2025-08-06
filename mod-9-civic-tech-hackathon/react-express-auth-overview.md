@@ -566,7 +566,7 @@ To enable session authentication, when a user logs in, the server sends back a c
 
 1. The user had previously signed in (otherwise, they wouldn't have a cookie)
 2. Who sent the request based on the ID stored inside the cookie
-3. If there is no cookie in the request (perhaps the user has cleared their cookies or is a new user), then the user must provide their credentials again to get a new cookie.&#x20;
+3. If there is no cookie in the request (perhaps the user has cleared their cookies or is a new user), then the user must provide their credentials again to get a new cookie.
 
 Cookies can also be used to control access to protected resources. Some resources require authentication only (the request must have a cookie):
 
