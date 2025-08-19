@@ -6,30 +6,32 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents**
 
-- [Imperative vs. Declarative](#imperative-vs-declarative)
-- [Array Iterators: forEach, filter, and map](#array-iterators-foreach-filter-and-map)
-  - [forEach](#foreach)
-  - [filter](#filter)
-  - [map](#map)
-- [Array Higher Order Methods](#array-higher-order-methods-1)
-  - [.forEach(callback)](#foreachcallback)
-  - [.filter(testCallback)](#filtertestcallback)
-  - [.map(modifyCallback)](#mapmodifycallback)
-  - [.find(testCallback)](#findtestcallback)
-  - [.findIndex(testCallback)](#findindextestcallback)
-  - [.reduce(accumulatorCallback, startingValue)](#reduceaccumulatorcallback-startingvalue)
-- [Advanced Stuff](#advanced-stuff)
+- [Imperative vs. Declarative Code: Why we use Higher Order Functions](#imperative-vs-declarative-code-why-we-use-higher-order-functions)
+- [Array Iterators](#array-iterators)
+  - [.map(mutate)](#mapmutate)
+  - [.filter(test)](#filtertest)
+  - [.find(test) and .findIndex(test)](#findtest-and-findindextest)
+  - [.reduce(accumulate, startingValue)](#reduceaccumulate-startingvalue)
+  - [.sort(compare)](#sortcompare)
+- [Tips and Tricks](#tips-and-tricks)
+  - [Using All Callback Parameters](#using-all-callback-parameters)
+  - [Chaining Array Methods](#chaining-array-methods)
+  - [Generating a Frequency Counter with Reduce](#generating-a-frequency-counter-with-reduce)
+  - [Nested Arrays](#nested-arrays)
 
+## Imperative vs. Declarative Code: Why we use Higher Order Functions
 
-## Imperative vs. Declarative
+What is the value of Higher Order Functions? They allow us to write our code in a more _declarative_ manner rather than in an _imperative_ manner.
 
-**Imperative code** provides explicit instructions for exactly HOW to complete a task.
+**Imperative code** provides explicit instructions for every step to complete a task. This gives us a lot of control over every step, but it takes more effort.
 
-* High control (you write every single line)
-* High effort (you write every single line)
+**Declarative code** just describes the desired solution and uses existing tools to handle the steps. While we give up control to the existing tool, we save time and effort.
 
+For example, suppose we want to double every value in an array. We can either write out every single step imperatively, or we can declaratively describe the desired outcome using `array.map`
 ```js
-// Double every number in the given array
+// Imperative: High Control & High Effort:
+const nums = [1, 5, 10, 20];
+
 const doubleAllNums = (arr) => {
   const newArr = [];
   for (let i = 0; i < arr.length; i++) {
@@ -38,114 +40,82 @@ const doubleAllNums = (arr) => {
   }
   return newArr;
 }
-const doubledNumsOld = doubleAllNums([1, 5, 10, 20]);
-console.log(doubledNumsOld);
+const doubledImperatively = doubleAllNums(nums);
+console.log(doubledImperatively);
+
+// Declarative: Low Control & Low Effort:
+const doubledDeclaratively = nums.map((num) => num * 2);
+console.log(doubledDeclaratively);
 ```
 
-**Declarative code** provides the desired solution without specifying HOW to get there.
-* Low control
-* Low effort
+Let's look at how we can use some more array higher-order methods to write more declarative code.
 
+## Array Iterators
+
+The most commonly used higher-order functions are these "iterator" array methods:
+
+| Method            | Description  (For every value in the source array...)                       | Example(s)                                                             |
+| ----------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `array.forEach`   | Perform a task that produces a side effect using the value                  | Mutate each value in the array or print each value to the console      |
+| `array.map`       | Transform the value and add it to a new array                               | Double every number in the source array                                |
+| `array.filter`    | Test the value and add it to a new array if it passes the test              | Keep only the even numbers in the source array                         |
+| `array.find`      | Test the value and return the first value that passes the test              | Find the first number in an array that is greater than 10              |
+| `array.findIndex` | Test the value and return the index of the first value that passes the test | Find the index of the first number in an array that is greater than 10 |
+| `array.reduce`    | Determine how it can be combined with the other values in the array         | Calculate the sum of all numbers in an array                           |
+| `array.sort`      | Compare it with another value to determine which should go first            | Sort an array of numbers in descending order                           |
+
+### .map(mutate)
+
+`arr.map` iterates over the source array, invoking the given `callback` with each `value`, `index`, and the source array `arr` as inputs. The value returned by the `callback` is added to an array which is returned.
+
+Use `map` when you want a copy of the source array with each value converted to a new value.
+
+**Example:** In this example, we have an array `inchesArr` containing values each representing a number of inches. Using `arr.map`, we transform each `inches` value into a string in the format `x inches => y feet z inches`. Each of these new strings is added to the array returned by `map` and stored in `feetAndInches`:
+
+{% code title="4-map.js" %}
 ```js
-const doubledNums = [1, 5, 10, 20].map((num) => num * 2);
-```
+const inchesArr = [70, 55, 62, 12, 36];
 
-## Array Iterators: forEach, filter, and map
-
-The most commonly used and perhaps most powerful higher-order functions are these "iterator" array methods:
-* `arr.forEach` — useful for performing some repetitive task for each value in the source array
-* `arr.filter` — useful for testing every value in the source array and keeping only the values that pass the test (e.g. only the even numbers in a numbers array)
-* `arr.map` — useful for transforming every value in the source array into another value (e.g. capitalize every string in an array of sentences);
-
-Let's take a look at each of them. We can see how they are used and how we can create our own versions of them.
-
-### forEach
-
-`arr.forEach(callback)` iterates over the source array and invokes the given `callback` with each `value`, that value's `index`, and the source array `arr` as inputs.
-
-Use `forEach` to execute callbacks that produce side-effects (like printing to the console or mutating values).
-
-**Examples:**
-
-In this example, we want to print a message about each value and its location in the `fruits` array:
-
-{% code title="0-forEach.js" %}
-```javascript
-// print every fruit loudly!
-const fruits = ['apples', 'bananas', 'cherries'];
-const printLoudly = (input, index, arr) => {
-  console.log(`${input}!!! at index ${index} in array [${arr}]`);
+// This example converts inches to feet and inches strings
+const getFeetAndInchesStr = inches => {
+  const feet = Math.floor(inches / 12);
+  const remainingInches = inches % 12;
+  return `${inches} inches => ${feet} feet ${remainingInches} inches`;
 }
-fruits.forEach(printLoudly);
-
-// print each fruit value capitalized
-fruits.forEach(value => {
-  console.log(value.toUpperCase())
-});
+const feetAndInches = inchesArr.map(getFeetAndInchesStr);
+console.log(feetAndInches);
 ```
 {% endcode %}
 
-In this example, we provide an anonymous inline function. We have chosen to ignore the index and source array inputs and just focus on each `user` value in the `users` array:
+**Challenge:** In this example, we have a `users` array full of user objects. Write a callback for `array.map` that extract all of the usernames into a new array:
 
-{% code title="0-forEach.js" %}
+{% code title="4-map.js" %}
 ```js
-// revoke isAdmin status from all users
 const users = [
   { id: 1, username: 'ben', isAdmin: false },
   { id: 2, username: 'maya', isAdmin: true },
   { id: 3, username: 'reuben', isAdmin: true },
   { id: 4, username: 'gonzalo', isAdmin: false },
 ];
-users.forEach(user => user.isAdmin = false)
+const usernames = users.map(/* ??? */);
 ```
 {% endcode %}
 
-**Challenge:** 
-
-Implement your own `forEach` function that takes an `array` and a `callback` and invokes the `callback` on every value in the `array`. The callback should be invoked with 3 inputs for every value:
-1. The current `value`
-2. The current value's `index` in the source `array`
-3. The source `array` itself
-
-Nothing is returned.
-
-```js
-const forEach = (array, callback) => {
-  // ??? 
-};
-
-forEach(['a','b','c'], console.log);
-/* 
-a 0 [ 'a', 'b', 'c' ]
-b 1 [ 'a', 'b', 'c' ]
-c 2 [ 'a', 'b', 'c' ]
-*/
-```
-
 **<details><summary>Solution</summary>**
-
 ```js
-const forEach = (array, callback) => {
-  for (let i = 0; i < array.length; i++) {
-    callback(array[i], i, array);
-  }
-}
+const usernames = users.map(user => user.username);
 ```
-
 </details>
 
+### .filter(test)
 
-### filter
-
-`arr.filter(callback)` iterates over the source array, invoking the given `callback` with each `value`, `index`, and the source array `arr` as inputs. If the `callback` returns `true`, the `value` is added to an array which is returned.
+`arr.filter` iterates over the source array, invoking the given `callback` with each `value`, `index`, and the source array `arr` as inputs. If the `callback` returns `true`, the `value` is added to an array which is returned.
 
 Use `filter` when you want a copy of the source array with unwanted values removed.
 
-**Examples:**
+**Example:** In this example, we want to know how many scores in an array of numbers are greater than or equal to 75. Using `arr.filter`, we can get a copy of the array containing only those passing scores and then read its length.
 
-In this example, we want to know how many scores in an array of numbers are greater than or equal to 75. Using `arr.filter`, we can get a copy of the array containing only those passing scores and then read its length.
-
-{% code title="1-filter.js" %}
+{% code title="3-filter.js" %}
 ```javascript
 const scores = [100, 85, 90, 70, 74];
 
@@ -162,9 +132,11 @@ console.log(`There were ${passingScores.length} passing scores`);
 ```
 {% endcode %}
 
-In this example, we will have an array of user objects. We want to get a copy of the array that only contains admins. Filter lets us check each object and only those with `isAdmin: true` will pass the test and be returned in the new array.
+**Challenge:** In this example, we have an array of user objects. We want to get a copy of the array that only contains admins. 
 
-{% code title="1-filter.js" %}
+Use filter to check each object and keep only those with the property `isAdmin: true`.
+
+{% code title="3-filter.js" %}
 ```js
 const users = [
   { id: 1, username: 'ben', isAdmin: false },
@@ -173,7 +145,7 @@ const users = [
   { id: 4, username: 'gonzalo', isAdmin: false },
 ];
 
-const admins = users.filter(user => user.isAdmin);
+const admins = users.filter(/* ??? */);
 
 console.log(admins);
 /* 
@@ -185,289 +157,206 @@ console.log(admins);
 ```
 {% endcode %}
 
-**Challenge:** 
-
-Implement your own `filter` function that takes an `array` and a `test` callback and returns an array. The `test` callback should be invoked with 3 inputs for every value:
-1. The current `value`
-2. The current value's `index` in the source `array`
-3. The source `array` itself
-
-The `test` callback should be expected to return `true` or `false`. If `test` returns `true`, the value it was called on should be added to the returned array.
-
-```js
-const filter = (array, test) => {
-  // ??? 
-};
-
-const nums = [1, 2, 3, 4, 5];
-const evens = filter(nums, value => value % 2 === 0);
-console.log(evens);
-// [2, 4]
-```
-
 **<details><summary>Solution</summary>**
-
 ```js
-const filter = (array, test) => {
-  // Create a new array to be returned
-  const filtered = [];
-  for (let i = 0; i < array.length; i++) {
-    // If array[i] passes the test, add it to filtered
-    if (test(array[i], i, array)) {
-      filtered.push(array[i]);
-    }
-    // Otherwise, continue
-  }
-  // Return the filtered values only.
-  return filtered;
-}
+const admins = users.filter((user) => user.admin === true);
 ```
-
 </details>
 
-### map
 
-`arr.map(callback)` iterates over the source array, invoking the given `callback` with each `value`, `index`, and the source array `arr` as inputs. The value returned by the `callback` is added to an array which is returned.
+### .find(test) and .findIndex(test)
 
-Use `map` when you want a copy of the source array with each value converted to a new value.
-
-**Examples:**
-
-In this example, we have an array `inchesArr` containing values each representing a number of inches. Using `arr.map`, we transform each `inches` value into a string in the format `x inches => y feet z inches`. Each of these new strings is added to the array returned by `map` and stored in `feetAndInches`:
-
-{% code title="2-map.js" %}
-```js
-const inchesArr = [70, 55, 62, 12, 36];
-
-// This example converts inches to feet and inches strings
-const getFeetAndInchesStr = inches => {
-  const feet = Math.floor(inches / 12);
-  const remainingInches = inches % 12;
-  return `${inches} inches => ${feet} feet ${remainingInches} inches`;
-}
-const feetAndInches = inchesArr.map(getFeetAndInchesStr);
-console.log(feetAndInches);
-```
-{% endcode %}
-
-In this example, we take a `users` array full of user objects and extract all of the usernames into an array:
-
-{% code title="2-map.js" %}
-```js
-const users = [
-  { id: 1, username: 'ben', isAdmin: false },
-  { id: 2, username: 'maya', isAdmin: true },
-  { id: 3, username: 'reuben', isAdmin: true },
-  { id: 4, username: 'gonzalo', isAdmin: false },
-];
-const usernames = users.map(user => user.username);
-```
-{% endcode %}
-
-**Challenge:** 
-
-Implement your own `map` function that takes an `array` and a `modify` callback and returns an array. The `modify` callback should be invoked with 3 inputs for every value:
-1. The current `value`
-2. The current value's `index` in the source `array`
-3. The source `array` itself
-
-The `modify` callback should be expected to return a value that should be added to the returned array.
+While `.filter` is used to get ALL values that pass a `test` callback, the `.find` and `.findIndex` methods are used to get only the first value that passes the test.
 
 ```js
-const map = (array, modify) => {
-  // ??? 
-};
+const firstOddValue = nums.find((num) => num % 2);
 
-const nums = [1,2,3,4,5]
-const doubled = map(nums, value => value * 2);
-console.log(doubled);
-// [2,4,6,8,10]
-```
-
-**<details><summary>Solution</summary>**
-
-```js
-const map = (array, modify) => {
-  const mapped = [];
-  for (let i = 0; i < array.length; i++) {
-    const result = modify(array[i], i, array);
-    mapped.push(result);
-  }
-  return mapped;
-}
-```
-
-</details>
-
-## Array Higher Order Methods
-
-* The important ones to know are:
-    * `.forEach(callback)`
-    * `.map(modify)`
-    * `.filter(test)`
-    * `.find(test)`
-    * `.findIndex(test)`
-    * `.reduce(accumulator, startingValue)`
-* Invoke these directly ON the Array:
-
-```js
-const nums = [1,2,3];
-const doubleNums = nums.map((num) => num * 2);
-```
-
-* These are Higher Order **Methods** because they are functions stored within an Array "Object", not as a stand-alone function.
-
-### .forEach(callback)
-
-Iterate through an array, but don't make a copy
-
-| Callback Should Accept                                        	| Callback Should Return 	| .forEach returns 	|
-|----------------------------------------------------------------	|------------------------	|------------------	|
-| The current value. Its index and the entire array are optional 	| nothing                	| undefined        	|
-
-
-```js
-const letters = ['a', 'b', 'c'];
-const callback = (val, idx, arr) => {
-  console.log('Value at index:', val);
-  console.log('Current index:', idx);
-  console.log('Original array:', arr);
-};
-letters.forEach(callback);
-// Value at index: a
-// Current index: 0
-// Original array: [ 'a', 'b', 'c' ]
-// Value at index: b
-// Current index: 1
-// Original array: [ 'a', 'b', 'c' ]
-// Value at index: c
-// Current index: 2
-// Original array: [ 'a', 'b', 'c' ]
-```
-
-### .filter(testCallback)
-
-Get ALL elements in an Array that pass a given test
-
-| Callback Should Accept                                         | Callback Should Return                                     | .filter returns                          |
-| -------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------- |
-| The current value. Its index and the entire array are optional | a boolean used to determine if the current element is kept | a new array of matches (or an empty one) |
-
-```js
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8];
-
-const evenNumbers = numbers.filter((num) => !(num % 2));
-console.log('evenNumbers', evenNumbers);
-// evenNumbers [ 2, 4, 6, 8 ]
-
-const greaterThan100 = numbers.filter((num) => num > 100);
-console.log('greaterThan100', greaterThan100);
-// greaterThan100 []
-```
-
-### .map(modifyCallback)
-
-Make a copy of an array with changes to each value
-
-| Callback Should Accept                                         | Callback Should Return                | .map returns                       |
-| -------------------------------------------------------------- | ------------------------------------- | ---------------------------------- |
-| The current value. Its index and the entire array are optional | modified version of the current value | the new array with all the changes |
-
-```js
-const numbers = [10, 20, 30];
-const bigNumbers = numbers.map((val, idx, arr) => {
-  console.log('cb: val, idx, arr', val, idx, arr);
-  return val * 100;
-});
-// cb: val, idx, arr 10 0 [ 10, 20, 30 ]
-// cb: val, idx, arr 20 1 [ 10, 20, 30 ]
-// cb: val, idx, arr 30 2 [ 10, 20, 30 ]
-
-console.log('bigNumbers: ', bigNumbers); // [1000, 2000, 3000]
-```
-
-### .find(testCallback)
-
-Get the first matching element in an Array, or `null`
-
-| Callback Should Accept                                         | Callback Should Return                                   | .find returns              |
-| -------------------------------------------------------------- | -------------------------------------------------------- | -------------------------- |
-| The current value. Its index and the entire array are optional | a boolean used to determine if the match is found or not | the found value or  `null` |
-
-```js
-const myNums = [2, 4, 7, 5];
-const firstOddValue = myNums.find((num) => num % 2 === 0);
-console.log('firstOddValue', firstOddValue);
-// firstOddValue 7
+const firstOddValueIdx = nums.findIndex((num) => num % 2);
 ```
 
 Remember, the return value of the callback must return a boolean!
 
-### .findIndex(testCallback)
+### .reduce(accumulate, startingValue)
 
-Get the index of the first matching element in an Array, or `null`
+Unlike the other higher-order array methods, `array.reduce()` takes in a callback `accumulate` AND a second argument `startingValue`.
 
-| Callback Should Accept                                         | Callback Should Return                                   | .findIndex returns       |
-| -------------------------------------------------------------- | -------------------------------------------------------- | ------------------------ |
-| The current value. Its index and the entire array are optional | a boolean used to determine if the match is found or not | the found index or  `-1` |
-
-```js
-const firstOddValueIdx = myNums.findIndex((num) => num % 2);
-console.log('firstOddValueIdx', firstOddValueIdx);
-// firstOddValueIdx 2
-```
-
-### .reduce(accumulatorCallback, startingValue)
-
-"reduce" array values into a single value.
-
-| Callback Should Accept               | Callback Should Return                                        | .reduce returns             |
-| ------------------------------------ | ------------------------------------------------------------- | --------------------------- |
-| An accumulator and the current value | the next value of the accumulator (the eventual return value) | the final accumulated value |
+It is used to "reduce" array values into a single value, built up starting with the `startingValue`.
+ * The callback should accept the accumulated value so far and the current value
+ * The callback should return the updated accumulated value
+ * `.reduce()` returns the final accumulated value
 
 ```js
 const lunchCosts = [5, 10, 7, 9, 15, 8, 12];
-const startingVal = 0;
-const addUpCosts = (accumulator, currentVal) => accumulator + currentVal;
 
-const totalCost = lunchCosts.reduce(addUpCosts, startingVal);
-console.log('totalCost', totalCost);
-// totalCost 66
+const totalCost = lunchCosts.reduce((accumulator, currentVal) => {
+  return accumulator + currentVal
+}, 0); // <-- Don't forget the starting value
 
-// reduce is tricky, always use good names!
-const addUpCostsBetter = (total, dailyExpense) => total + dailyExpense;
+console.log(totalCost);
+
+// Use descriptive parameter names!
+const totalWithBetterNames = lunchCosts.reduce((total, currentExpense) => {
+  return total + currentExpense
+}, 0);
+
+console.log(totalWithBetterNames);
 ```
 
-## Advanced Stuff
+### .sort(compare)
+
+Another interesting higher-order function is the array method `array.sort()`.
+
+Given an array of numbers, `array.sort()` will sort them in ascending order, from smallest to largest. It does this **in place** which means that the source array is modified.
+
+```js
+const nums = [4, 2, 3, 5, 1];
+nums.sort(); // sorts nums "in place"
+console.log(nums); // [ 1, 2, 3, 4, 5 ]
+```
+
+We can change this default behavior though by providing a callback function as an argument:
+
+```js
+const nums = [4, 2, 3, 5, 1];
+
+// a and b will be values in the source array to compare
+const compareDescending = (a, b) => {
+  if (a > b) {
+    // put a to the left of b
+    return -1;
+  }
+  if (a < b) {
+    // put a to the right of b
+    return 1;
+  }
+  // they are the same, order doesn't matter
+  return 0;
+}
+nums.sort(compareDescending);
+console.log(nums); // [ 5, 4, 3, 2, 1 ]
+```
+
+`arr.sort` has some particular expectations around the callback function that we provide. It should:
+* Have two parameters, together representing a pair of values in the source array `arr` to compare. Let's call them `a` and `b`.
+* Return `-1` (or any negative number) if value `a` is meant to go before value `b`.
+* Return `1` (or any positive number) if value `a` is meant to go after after value `b`.
+* Return `0` if the order of values `a` and `b` does not matter.
+
+**Challenge**
+
+Implement your own callback function `sortAscendingByLength` that sorts an array of strings according to their length with shorter strings coming first.
+
+```js
+const animals = ['aardvark', 'bear', 'cheetah', 'deer'];
+const sortAscendingByLength = (a, b) => {
+  if (???) {
+    // put a to the left of b
+    return -1;
+  }
+  if (???) {
+    // put a to the right of b
+    return 1;
+  }
+  // they are the same, order doesn't matter
+  return 0;
+}
+animals.sort(sortAscendingByLength);
+console.log(animals);
+// ['bear', 'deer', 'cheetah', 'aardvark'];
+```
+
+**<details><summary>Solution</summary>**
+
+```js
+const sortAscendingByLength = (a, b) => {
+  if (a.length < b.length) {
+    // put a to the left of b
+    return -1;
+  }
+  if (a.length > b.length) {
+    // put a to the right of b
+    return 1;
+  }
+  // they are the same, order doesn't matter
+  return 0;
+}
+```
+
+</details>
+
+## Tips and Tricks
+
+### Using All Callback Parameters
+
+Most of these array higher order methods will iterate through the source array and invoke the given callback with three values:
+1. The current value
+2. The index of the current value
+3. The source array itself
 
 ```js
 // Don't forget about more arguments!
 const multipliedByIndexAndLength = [1, 2, 3, 4, 5]
   .map((num, idx, arr) => num * idx * arr.length);
 
+// 1 * 0 * 5 -> [0]
+// 2 * 1 * 5 -> [0, 10]
+// 3 * 2 * 5 -> [0, 10, 30]
+// 4 * 3 * 5 -> [0, 10, 30, 60]
+// 5 * 4 * 5 -> [0, 10, 30, 60, 100]
+```
+
+### Chaining Array Methods
+```js
 // chaining
 const myNums = [1, 2, 3, 4, 5];
-const numValuesBiggerThan12WhenTripled = myNums
-  .map((num) => num * 3)
-  .filter((num) => num > 12)
-  .length
+const numberOfValuesBiggerThan12WhenTripled = myNums
+  .map((num) => num * 3) // multiply by 3
+  .filter((num) => num > 12) // keep the numbers bigger than 12
+  .length // count how many there are
 
-console.log(numValuesBiggerThan12WhenTripled);
+console.log(numberOfValuesBiggerThan12WhenTripled);
 // 1
+```
 
-// advanced Reduce example
+### Generating a Frequency Counter with Reduce
+
+```js
 const repeaters = [1, 2, 4, 2, 3, 1, 4, 6, 2];
-const frequencyCounter = (acc, num) => {
-  acc[num] = (acc[num] || 0) + 1;
-  return acc;
-};
 
-const frequencies = repeaters.reduce(frequencyCounter, {});
+// The starting value here is an empty {}
+// 
+const frequencies = repeaters.reduce((frequencies, currentNum) => {
+  if (!frequencies[currentNum]) {
+    frequencies[currentNum] = 1;
+  } else {
+    frequencies[currentNum]++;
+  }
+  return frequencies;
+}, {});
+
 console.log('frequencies', frequencies);
 // frequencies { '1': 2, '2': 3, '3': 1, '4': 2, '6': 1 }
+```
 
-// more HOMs
-const hasAtLeastOneEven = myNums.some((num) => !(num % 2));
-console.log('hasAtLeastOneEven', hasAtLeastOneEven);
-// hasAtLeastOneEven true
+### Nested Arrays
+
+```js
+// Nested Array
+const smileyFace = [
+  ['-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '*', '-', '*', '-', '-'],
+  ['-', '-', '-', '*', '-', '-', '-'],
+  ['-', '*', '-', '-', '-', '*', '-'],
+  ['-', '-', '*', '*', '*', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-'],
+]
+
+// We can nest the forEach calls
+smileyFace.forEach((row, r) => {
+  let str = `${r}: `;
+  row.forEach(cell => {
+    str += cell;
+  })
+  console.log(str)
+});
 ```
