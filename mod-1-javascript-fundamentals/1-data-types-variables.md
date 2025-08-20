@@ -160,7 +160,7 @@ The ternary operator `boolExpression ? valA : valB` produces one of two values b
 * `valB` is produced if the `boolExpression` evaluates to `false`
 
 ```js
-console.log(num % 2 === 0 ? "it is even!" : "it is odd!");
+console.log(5 % 2 === 0 ? "it is even!" : "it is odd!");
 ```
 
 ### typeof Operator
