@@ -8,7 +8,6 @@ Use https://regexr.com/ to learn about and test regular expressions!
 
 
 **Table of Contents:**
-- [Slides](#slides)
 - [Intro](#intro)
   - [What is a Regular Expression](#what-is-a-regular-expression)
   - [What can you do with regular expressions?](#what-can-you-do-with-regular-expressions)
@@ -22,11 +21,6 @@ Use https://regexr.com/ to learn about and test regular expressions!
   - [`str.search(RegExp)`](#strsearchregexp)
   - [`str.match(RegExp)` and the `g` flag](#strmatchregexp-and-the-g-flag)
   - [`str.replace(RegExp, replacement)`](#strreplaceregexp-replacement)
-
-
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1KNxfevZGXU2srFOejf6qBgOwXznH8ddQ3ePeqTXbGiQ/embed?start=false&loop=false&delayms=3000" %}
 
 ## Intro
 

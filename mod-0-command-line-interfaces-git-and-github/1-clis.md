@@ -64,17 +64,21 @@ You will be able to…
 * `touch <file_name>` — Make a new file with the given name
 * `cp <file> <dest>` — Move a file to the given directory
 
-## Terminal vs. Finder/Explorer
+## Terminal (CLI) vs. Finder/Explorer (GUI)
 
-As a programmer, you must become a master of the files on your computer. If you've ever dug into your computer's file system, you likely have done so using a program like Finder or Windows Explorer.
+To become a master programmer means first mastering your computer's files.
+
+If you've ever dug into your computer's file system, you likely have done so using a program like Finder or Windows Explorer.
 
 ![The finder program](img/finder.png)
 
 These applications allow you to manage files through a **graphical user interface (GUI)** — a user interface with buttons and icons that let you do things like click and drag-and-drop.
 
-While these features are very beginner-friendly, they are often too slow for "power users" who want to perform more complex tasks or rapidly perform many repeated tasks.
+These GUIs are examples of an "abstraction"—a layer that hides complexity—and GUIs present a tradeoff:
+* GUIs are easy to use and easy to learn for beginners
+* What you can do with GUIs is limited to how they were designed
 
-Instead, programmers typically use a tool called the **Terminal**. The Terminal is a program for interacting with a computer's files and executing programs through a **command line interface (CLI)**.
+When we want more fine-tuned control over how we interact with our computer's files, we can turn to a **command line interface (CLI)**, often called the **Terminal**. The Terminal is a program for interacting with a computer's files by executing typed-in commands:
 
 ![The Terminal program](img/1-cli-terminal.png)
 
@@ -104,7 +108,15 @@ Note that some commands like `pwd` can be entered on their own. Other commands l
 
 Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
 
-For this particular task it might be faster to use a GUI file manager like Finder, however there are many tasks where a CLI like the Terminal can outpace a GUI like Finder. In addition, there are some things that Finder simply can't do, like execute files with code.
+For this particular task it might be faster to use a GUI file manager like Finder, however there are many tasks where a CLI like the Terminal can outpace a GUI like Finder.
+
+For example, try this command below to create 8 folders at once!
+
+```sh
+mkdir unit_{0..7}
+```
+
+In addition, there are some things that Finder simply can't do, like execute files with code.
 
 </details>
 
