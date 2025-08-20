@@ -13,6 +13,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [typeof Operator](#typeof-operator)
 - [Type Coercion \& Truthy vs. Falsy](#type-coercion--truthy-vs-falsy)
 - [Variables](#variables)
+  - [Referencing and Reassigning Variables](#referencing-and-reassigning-variables)
   - [The Four Ways To Declare Variables](#the-four-ways-to-declare-variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
 
@@ -252,6 +253,39 @@ In most cases, the benefits of readability, comprehension, and minimizing repeti
 
 </details>
 
+### Referencing and Reassigning Variables
+
+We can either "reference" a variable by name to access its current value or "reassign" the variable to hold a new value:
+
+```js
+// Use let because we will reassign this variable
+let count = 0;
+
+// Reference the count variable to access its current value, 0
+console.log(`count starts at ${count}`);
+
+// Reassign the variable to hold a new value: 1
+count = 1;
+
+// Reference the count variable again to access its current value, 1
+console.log(`count is now ${count}`); 
+```
+
+We can even use the current value of a variable to calculate the value we reassign it to:
+
+```js
+// The right side of `=` resolves before reassignment. Count is 2
+count = count + 1;
+
+// The "increment" operator is the same as `count = count + 1`. Count is 3
+count++;
+
+// The "addition assignment" operator is the same as `count = count + 3`. Count is 6
+count += 3;
+
+console.log(`count is now ${count}`); // Output: count is now 6
+```
+
 ### The Four Ways To Declare Variables
 There are 4 ways to declare a new variable, *but only the first two of should be used*:
  1. `const` declares a block-scoped variable that cannot be reassigned. This should be your go-to variable declaration.
@@ -277,28 +311,6 @@ var status = 'happy';
 
 // Very bad
 globalStatus = 'sad';
-```
-
-* We can reference a variable by name to either reassign its value or to access its current value:
-
-```js
-// use let because we will reassign this variable
-let count = 0;
-
-// reference the count variable to access its current value, 0
-let message = `the count is ${count}`;
-
-// Prints "the count is 0"
-console.log(message); 
-
-// reference the count variable to reassign it
-count = 1;
-
-// reference the count variable again to access its new value, 1
-message = `the count is now ${count}`
-
-// Prints "the count is now 1
-console.log(message); 
 ```
 
 ### Hoisting: Why We Don't Use `var`
