@@ -1,30 +1,26 @@
 # Node & Node Modules
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-0-intro-to-node)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-4-node-modules-testing)!
 {% endhint %}
 
 **Table of Contents:**
 
-* [Slides](2-node-and-modules.md#slides)
-* [Overview](2-node-and-modules.md#overview)
-  * [Key Terms](2-node-and-modules.md#key-terms)
-* [What is Node?](2-node-and-modules.md#what-is-node)
-* [Exporting and Importing Node Modules](2-node-and-modules.md#exporting-and-importing-node-modules)
-  * [Exporting with `module.exports` (CommonJS)](2-node-and-modules.md#exporting-with-moduleexports-commonjs)
-  * [Importing with `require()` (CommonJS)](2-node-and-modules.md#importing-with-require-commonjs)
-  * [Destructuring](2-node-and-modules.md#destructuring)
-* [Node Package Manager (NPM)](2-node-and-modules.md#node-package-manager-npm)
-  * [Installing and Using Dependencies from NPM](2-node-and-modules.md#installing-and-using-dependencies-from-npm)
-  * [`package.json` and `node_modules`](2-node-and-modules.md#packagejson-and-node_modules)
-  * [Developer Dependencies](2-node-and-modules.md#developer-dependencies)
-  * [`package.json` Scripts and `nodemon`](2-node-and-modules.md#packagejson-scripts-and-nodemon)
-  * [`npm init -y`](2-node-and-modules.md#npm-init--y)
-* [Madlib Challenge](2-node-and-modules.md#madlib-challenge)
-
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/10Op4ZnmbUbm1Zv48vcIR5h2vkr9wpZULwAg6NYbzd9w/embed?start=false&loop=false&delayms=3000" %}
+- [Overview](#overview)
+  - [Key Terms](#key-terms)
+- [What is Node?](#what-is-node)
+- [Exporting and Importing Node Modules](#exporting-and-importing-node-modules)
+  - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
+  - [Importing with `require()` (CommonJS)](#importing-with-require-commonjs)
+  - [Destructuring](#destructuring)
+- [Node Package Manager (NPM)](#node-package-manager-npm)
+  - [Installing and Using Dependencies from NPM](#installing-and-using-dependencies-from-npm)
+  - [`package.json` and `node_modules`](#packagejson-and-node_modules)
+  - [Developer Dependencies](#developer-dependencies)
+  - [`package.json` Scripts and `nodemon`](#packagejson-scripts-and-nodemon)
+  - [`npm init -y`](#npm-init--y)
+- [Testing](#testing)
+- [Madlib Challenge](#madlib-challenge)
 
 ## Overview
 
@@ -338,6 +334,8 @@ nodemon index.js
 ```
 
 * You can also run `npm init -y` to skip the questions and build a `package.json` file using default values.
+
+## Testing
 
 ## Madlib Challenge
 

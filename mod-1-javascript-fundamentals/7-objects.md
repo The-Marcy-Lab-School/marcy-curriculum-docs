@@ -15,10 +15,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   * [Object Shorthand Using Variables](7-objects.md#object-shorthand-using-variables)
   * [Destructuring](7-objects.md#destructuring)
 
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1uB1uPTGdaKhwvPD11kYyaiuh9I0j3zow6ZsW2UXDvvI/embed?start=false&loop=false&delayms=3000" %}
-
 ## The basics
 
 * Objects are a data type that can store multiple pieces of data as **key:value** pairs called **properties**

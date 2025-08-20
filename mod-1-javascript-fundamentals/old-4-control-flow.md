@@ -1,16 +1,15 @@
-# Control Flow, Conditional Operators, and Math
+# Operators, Control Flow, and Math
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-2-control-flow)!
 {% endhint %}
 
 **Table of Contents**
-- [Slides](#slides)
 - [Overview](#overview)
 - [Control Flow Review](#control-flow-review)
   - [`if/else` statements](#ifelse-statements)
-  - [Comparison Operators:](#comparison-operators)
-  - [Logical Operators:](#logical-operators)
+  - [Comparison Operators](#comparison-operators)
+  - [Logical Operators](#logical-operators)
   - [Coercions and Truthiness](#coercions-and-truthiness)
 - [Simplify Your Logic](#simplify-your-logic)
   - [Guard Clauses and Ternary Operators](#guard-clauses-and-ternary-operators)
@@ -19,11 +18,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Identifying `null`, Arrays, and `NaN`](#identifying-null-arrays-and-nan)
 - [Math Operations](#math-operations)
   - [The `Math` Object](#the-math-object)
-
-
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/102SIHvxRHHJ-_979yJdyq-3dI5NEVSME0uyBrSmgvrk/embed?start=false&loop=false&delayms=3000" %}
 
 ## Overview
 
@@ -34,10 +28,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 * **Guard Clause** - A statement used to check if the remaining lines of code should be executed or not
 * **Scope** - Scope is the current context of execution in which values and expressions are "visible" or can be referenced
 
-
 ## Control Flow Review
 
-- Programs usually change their behavior based on inputs.
+- Programs are able to change their behavior based on the data used by the program (a.k.a. the "state" of the program).
 - Conditions and Booleans help decide if something is `true` or `false`.
 - Use `if/else`, `switch`, or ternary operators to decide what to do in a given situation.
 - They do this with Comparison Operators and Logical Operators which return a Boolean.
@@ -67,7 +60,7 @@ console.log(isItHot(60)); // Prints "it is NOT"
 
 - Conditions in an `if` statement must evaluate to `true` or `false`.
 
-### Comparison Operators:
+### Comparison Operators
   
 * Comparison Operators compare two values of the same type.
 
@@ -83,7 +76,7 @@ console.log(isItHot(60)); // Prints "it is NOT"
 | <=       | Less or Equal      | `2 <= 2`        | `true`  |
 
 
-### Logical Operators:
+### Logical Operators
 
 * Logical Operators compare the outcomes of two conditions and let you be more expressive
 
@@ -113,6 +106,12 @@ console.log(isItHot(60, false)); // Prints "it is NOT"
 ```
 
 ### Coercions and Truthiness
+
+JavaScript is not a "strictly typed" programming language. What this means is that the data types of variables can change, sometimes without us know it. For example, what is the result of the 
+
+```js
+const a = "1" + 1;
+```
 
 - **Type Coercion ("co-er-shun")** — JavaScript will automatically convert (coerce) types when necessary. For example, `'1' + 1` results in `'11'`.
 - **Truthy/Falsy Values** — any expression you use for an `if` statement's `(condition)` will be coerced into a Boolean.

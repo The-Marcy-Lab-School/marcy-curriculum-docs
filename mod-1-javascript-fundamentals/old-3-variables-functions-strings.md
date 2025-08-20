@@ -1,6 +1,11 @@
 # Variables, Functions, and Strings
 
-- [Slides](#slides)
+
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-1-data-types-variables-functions)!
+{% endhint %}
+
+**Table of Contents:**
 - [Data Types](#data-types)
 - [Variables](#variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
@@ -16,15 +21,6 @@
   - [String Length](#string-length)
   - [Strings are Immutable](#strings-are-immutable)
   - [String Methods](#string-methods)
-
-
-{% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-0-1-data-types-variables-functions)!
-{% endhint %}
-
-## Slides 
-
-{% embed url="https://docs.google.com/presentation/d/1_BzZepwXrkVL-LzpkPA5ITvM-bH9n0_BnnrzwJJZByo/embed?start=false&loop=false&delayms=3000" %}
 
 ## Data Types
 

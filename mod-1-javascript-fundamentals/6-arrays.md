@@ -20,10 +20,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   * [2D Arrays](6-arrays.md#2d-arrays)
   * [Destructuring Assignment and Rest Operator](6-arrays.md#destructuring-assignment-and-rest-operator)
 
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1jbe807oy9VTKov1ADxN1NteO7lxq1nscqkWApNSdkkc/embed?start=false&loop=false&delayms=3000" %}
-
 ## Array Basics
 
 * Arrays are lists of data (order matters). Values in an array are called **elements of the array**.
