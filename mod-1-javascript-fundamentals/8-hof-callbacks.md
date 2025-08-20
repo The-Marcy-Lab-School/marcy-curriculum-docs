@@ -1,3 +1,5 @@
+# Higher-Order Functions and Callbacks
+
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-2-0-hof-callbacks)!
 {% endhint %}
@@ -7,17 +9,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [First, Animation!](#first-animation)
 - [What is a Higher-Order Function?](#what-is-a-higher-order-function)
 - [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
-  - [Examples using `setTimeout` and `setInterval`](#examples-using-settimeout-and-setinterval)
-- [Sorting](#sorting)
-
-# Higher-Order Functions and Callbacks
-
-**Table of Contents:**
-- [First, Animation!](#first-animation)
-- [What is a Higher-Order Function?](#what-is-a-higher-order-function)
-- [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
-  - [Examples using `setTimeout` and `setInterval`](#examples-using-settimeout-and-setinterval)
-- [Sorting](#sorting)
+  - [Do Not Invoke The Callback](#do-not-invoke-the-callback)
+  - [Using Inline Callback Functions](#using-inline-callback-functions)
+- [Some Fun Examples: `setTimeout` and `setInterval`](#some-fun-examples-settimeout-and-setinterval)
+- [Array Iterators](#array-iterators)
+  - [forEach](#foreach)
 
 ## First, Animation!
 
@@ -31,60 +27,87 @@ The only way this is possible is with **higher-order functions** and **callbacks
 
 ## What is a Higher-Order Function?
 
-In the past, we have compared functions to recipes. In both, they are a series of instructions to execute. There may also be opportunities to customize the ingredients (parameters) to change the end result of the dish (the returned value).
+In the past, we have compared functions to recipes. In both, they are a series of instructions to execute. There may also be opportunities to customize the ingredients (parameters) that determine how the dish (the returned value) comes out.
 
 Now, imagine that you have a personal chef. They can cook anything you want, all you had to do is give them a recipe and they will add their "special sauce". If a recipe is a function, then the chef that can make any recipe is a "higher-order" function.
 
-> A **higher-order function (HOF)** is a function that takes in and/or returns a function
-
-Another example of "higher-order" function is a 3D printer. When operating a 3D printer, you provide instructions to print your designed object (the callback function) and the 3D printer executes those instructions for you.
-
-![A gif of a 3d printer making a pumpkin](img/8-3d-printer.webp) 
+> A **higher-order function (HOF)** is a function that accepts another function as input and/or returns a function
+>
+> A **callback function** is the function that is provided to a higher-order function as an argument. It is invoked by the higher-order function.
 
 ## A Basic higher-order Function and Callback Example
 
-> A **callback function** is the function that is provided to a higher-order function as an argument. It is invoked by the higher-order function
-
-This higher-order function called `logAndRun` has one parameter: `func`, a callback function.
-* It first turns the provided callback function `func` into a string and prints it out so we can see how the function is written.
-* It then executes the callback and prints the returned value.
-
-In this case, `func` must be a function with no parameters (this is not a requirement of all higher-order functions, just this one).
+The simplest possible higher-order function that can exist looks like this:
 
 {% code title="0-intro-to-callbacks.js" lineNumbers="true" %}
-```javascript
-const logAndRun = (func) => {
-  const funcStr = func.toString();
-  console.log("Executing func: ", funcStr);
-
-  // This is where we invoke the callback
-  const returned = func();
-  console.log("Returned value: ", returned);
+```js
+// This higher-order function takes in callback and executes it.
+const executeCallback = (callback) => {
+  callback();
 }
-
-// These will be the callback functions
-const rollDie = () => Math.ceil(Math.random() * 6);
-
-/* 
-Here, we invoke the higher-order function with each of our callbacks.
-Notice how we DO NOT include () when providing the callback
-*/
-logAndRun(rollDie);
-logAndRun(() => {
-  console.log('hi')
-});
 ```
 {% endcode %}
 
-When using a higher-order function like `logAndRun`, we can either:
-1. Create a function and store it in a variable, and then pass the variable to the higher-order function (as we've done with `rollDie`)
-2. Invoke the higher-order function with an "anonymous" arrow function declared as an argument.
+While this function doesn't really provide any usefulness to us, it helps demonstrate how callbacks work.
 
-In both cases, we provide the function itself and **we do NOT invoke the function**. That is, we omit the `()` from the callback function. 
+Any function can be a callback function if it is passed to a higher-order function:
 
-The higher-order function will invoke our callback!
+```js
+// Any simple function can be a callback.
+const sayHello = () => console.log("hello world");
 
-### Examples using `setTimeout` and `setInterval`
+// We pass in the callback to the higher-order function
+executeCallback(sayHello);
+// hello world
+```
+
+The callback must be compatible with how the higher-order function will invoke the callback. In the definition of `executeCallback`, the `callback` input will be invoked without arguments. Therefore, our provided callback `sayHello` shouldn't have parameters.
+
+**Challenge**: Create your own callback function that prints something to the console. Consider whether or not your callback can include parameters. Then, use `executeCallback` to execute your callback. 
+
+### Do Not Invoke The Callback
+
+When passing in a callback to a higher-order function, avoid invoking the callback. 
+
+In this example, since `executeCallback` is the higher-order function, it will invoke the callback on our behalf. Invoking the callback will produce an error:
+
+```js
+executeCallback(sayHello);
+// hello world
+
+executeCallback(sayHello());
+// TypeError: callback is not a function
+```
+
+<details>
+<summary>Q: Why does an error get thrown? Why is it saying callback is not a function</summary>
+
+When you invoke `executeCallback(sayHello())`, the `sayHello()` function call gets resolved first. Since `sayHello()` returns `undefined`, that is what `executeCallback` gets as its callback:
+
+```js
+sayHello() // this gets resolved first and returns undefined
+executeCallback(undefined) // undefined is not a function
+```
+
+</details>
+
+### Using Inline Callback Functions
+
+When using higher-order functions, we will often provide the callback as an anonymous arrow function for a more streamlined appearance:
+
+```js
+// Assuming we don't need to reuse this callback, we can provide it inline.
+executeCallback(() => { 
+  const roll = Math.ceil(Math.random() * 6);
+  console.log(`Dice Roll: ${roll}`)
+});
+```
+
+**Challenge**: Refactor your code so that it uses an inline callback.
+
+## Some Fun Examples: `setTimeout` and `setInterval`
+
+Let's look at some higher-order functions that you would actually use!
 
 Two classic examples of higher-order functions that are built into Node are `setTimeout(callback, delay)` and `setInterval(callback, delay)`. 
 
@@ -98,9 +121,8 @@ const sayHi = () => {
   console.log('hi');
 };
 
-// we provide our function to setTimeout
-// setTimeout will invoke this function after 2000ms (2 seconds)
 setTimeout(sayHi, 2000);
+// after 2 seconds... "hi"
 ```
 {% endcode %}
 
@@ -109,98 +131,121 @@ setTimeout(sayHi, 2000);
 {% code title="1-setTimeout-setInterval.js" lineNumbers="true" %}
 ```javascript
 const chars = ["\\", "|", "/", "-"];
-let x = 0;
+let i = 0;
 
 // empty the console each time and print the next character in the sequence
 const loopThroughChars = () => {
   console.clear()
-  console.log(chars[x]);
-  x++;
-  if (x >= 4) x = 0
+  console.log(chars[i]);
+  i++;
+  if (i >= 4) i = 0;
 };
 
 setInterval(loopThroughChars, 250);
 ```
 {% endcode %}
 
-## Sorting
 
-Another interesting higher-order function is the array method `array.sort()`.
+## Array Iterators
 
-Given an array of numbers, `array.sort()` will sort them in ascending order, from smallest to largest. It does this **in place** which means that the source array is modified.
+The most commonly used higher-order functions are these "iterator" array methods:
 
-```js
-const nums = [4, 2, 3, 5, 1];
-nums.sort(); // sorts nums "in place"
-console.log(nums); // [ 1, 2, 3, 4, 5 ]
+| Method            | Description  (For every value in the source array...)                       | Example(s)                                                             |
+| ----------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `array.forEach`   | Perform a task that produces a side effect using the value                  | Mutate each value in the array or print each value to the console      |
+| `array.filter`    | Test the value and add it to a new array if it passes the test              | Keep only the even numbers in the source array                         |
+| `array.map`       | Transform the value and add it to a new array                               | Double every number in the source array                                |
+| `array.find`      | Test the value and return the first value that passes the test              | Find the first number in an array that is greater than 10              |
+| `array.findIndex` | Test the value and return the index of the first value that passes the test | Find the index of the first number in an array that is greater than 10 |
+| `array.reduce`    | Determine how it can be combined with the other values in the array         | Calculate the sum of all numbers in an array                           |
+| `array.sort`      | Compare it with another value to determine which should go first            | Sort an array of numbers in descending order                           |
+
+In the next lesson, we'll learn more about these but for now, let's focus on `forEach`
+
+### forEach
+
+`arr.forEach(callback)` iterates over the source array and invokes the given `callback` with each `value`, that value's `index`, and the source array `arr` as inputs.
+
+Use `forEach` to execute callbacks that produce side-effects (like printing to the console or mutating values).
+
+In this example, we want to print a message about each value and its location in the `fruits` array:
+
+{% code title="2-forEach.js" %}
+```javascript
+const fruits = ['apples', 'bananas', 'cherries'];
+
+// print every fruit and its position in the array!
+fruits.forEach((input, i, arr) => {
+  console.log(`${input}!!! at index ${i} in array [${arr}]`);
+});
+
+// Here we only use the value parameter
+fruits.forEach((value) => {
+  console.log(`${input}!!!`);
+});
 ```
+{% endcode %}
 
-We can change this default behavior though by providing a callback function as an argument:
+Remember, `array.forEach` is used for callbacks that result in a side effect. For example, mutating the contents of an array is considered a side effect. In this example, we use `user.forEach` to change the `isAdmin` property of every object in the `users` array:
 
+{% code title="2-forEach.js" %}
 ```js
-const nums = [4, 2, 3, 5, 1];
-
-// a and b will be values in the source array to compare
-const compareDescending = (a, b) => {
-  if (a > b) {
-    // put a to the left of b
-    return -1;
-  }
-  if (a < b) {
-    // put a to the right of b
-    return 1;
-  }
-  // they are the same, order doesn't matter
-  return 0;
-}
-nums.sort(compareDescending);
-console.log(nums); // [ 5, 4, 3, 2, 1 ]
+// revoke isAdmin status from all users
+const users = [
+  { id: 1, username: 'ben', isAdmin: false },
+  { id: 2, username: 'maya', isAdmin: true },
+  { id: 3, username: 'reuben', isAdmin: true },
+  { id: 4, username: 'gonzalo', isAdmin: false },
+];
+users.forEach((user) => user.isAdmin = false)
 ```
+{% endcode %}
 
-`arr.sort` has some particular expectations around the callback function that we provide. It should:
-* Have two parameters, together representing a pair of values in the source array `arr` to compare. Let's call them `a` and `b`.
-* Return `-1` (or any negative number) if value `a` is meant to go before value `b`.
-* Return `1` (or any positive number) if value `a` is meant to go after after value `b`.
-* Return `0` if the order of values `a` and `b` does not matter.
+**Challenge 1:**
 
-**Challenge**
+Use `users.forEach` to update the `username` property for each object in the `users` array such that the first letter is capitalized.
 
-Implement your own callback function `sortAscendingByLength` that sorts an array of strings according to their length with shorter strings coming first.
+**<details><summary>Solution</summary>**
 
 ```js
-const animals = ['aardvark', 'bear', 'cheetah', 'deer'];
-const sortAscendingByLength = (a, b) => {
-  if (???) {
-    // put a to the left of b
-    return -1;
-  }
-  if (???) {
-    // put a to the right of b
-    return 1;
-  }
-  // they are the same, order doesn't matter
-  return 0;
-}
-animals.sort(sortAscendingByLength);
-console.log(animals);
-// ['bear', 'deer', 'cheetah', 'aardvark'];
+users.forEach((user) => user[0].toUppercase() + user.slice(1));
+```
+</details>
+
+
+**Challenge 2:**
+
+Implement your own `forEach` function that takes an `array` and a `callback`:
+
+It should iterate through the input `array` and do the following:
+* Invoke the `callback` with the following arguments:
+  * The value at the current index
+  * The current index
+  * The source array itself
+* Return nothing (or manually return `undefined`)
+
+**Usage Example**
+```js
+const forEach = (array, callback) => {
+  // ??? 
+};
+
+forEach(['a','b','c'], console.log);
+/* 
+a 0 [ 'a', 'b', 'c' ]
+b 1 [ 'a', 'b', 'c' ]
+c 2 [ 'a', 'b', 'c' ]
+*/
 ```
 
 **<details><summary>Solution</summary>**
 
 ```js
-const sortAscendingByLength = (a, b) => {
-  if (a.length < b.length) {
-    // put a to the left of b
-    return -1;
+const forEach = (array, callback) => {
+  // Iterate through the input array
+  for (let i = 0; i < array.length; i++) {
+    callback(array[i], i, array);
   }
-  if (a.length > b.length) {
-    // put a to the right of b
-    return 1;
-  }
-  // they are the same, order doesn't matter
-  return 0;
 }
 ```
-
 </details>
