@@ -10,8 +10,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Function Calls](#function-calls)
   - [Parameters and Arguments](#parameters-and-arguments)
   - [Return Statements](#return-statements)
+    - [Function Call Resolution](#function-call-resolution)
+    - [Multiple Returns](#multiple-returns)
+  - [Function Scope](#function-scope)
   - [Arrow Functions vs. Function Declarations vs. Function Expressions](#arrow-functions-vs-function-declarations-vs-function-expressions)
-- [Scope](#scope)
 
 
 ## Variables Review
@@ -168,47 +170,118 @@ printSum('hello', 5);
 printSum();
 ```
 
+**Challenge:** Refactor this function so that it can print any name and hobby.
+
+```js
+const sayHello = () => {
+  console.log("Hi, my name is Ben. I like to code!");
+}
+
+sayHello();
+```
+
+Test your code by invoking the function with various inputs. What happens when no input is provided?
+
+**<details><summary>Solution</summary>**
+
+```js
+const sayHello = (name, hobby) => {
+  console.log(`Hi, my name is ${name}$. I like to ${hobby}!`);
+}
+
+sayHello("Ben", "rock climb");
+// Output: Hi, my name is Ben. I like to rock climb!
+
+sayHello("Gonzalo", "play the bass");
+// Output: Hi, my name is Gonzalo. I like to play the bass!
+
+sayHello();
+// Output: Hi, my name is undefined. I like to undefined!
+```
+
+</details>
+
 ### Return Statements
 
 The functions above use `console.log` to print out a result to the console, but that result can't be used later in the program. If we want a function to produce a value that we can be used outside of the function, we add a `return` statement.
 
 A `return` statement does two things:
-1. It terminates the execution of the function
-2. It returns a value to the location of the function call.
+1. It returns a value to the location of the function call.
+2. It terminates the execution of the function
 
 ```js
 const add = (x, y) => {
   return x + y;
 }
 
-// The function call is replaced by its return value, so:
-// const sum = 8
-const sum = add(5, 3); 
+// The function call is replaced by its return value, resolving to `console.log(8)`
+console.log(add(5, 3));
+```
 
-console.log(sum); // Prints 8
+#### Function Call Resolution
+
+When a function like `console.log()` has another function call inside, like `add(5,3)`, the inner function call is resolved first.
+
+**Challenge**: What is the result of this expression? Run this with the debugger to find out!
+
+```js
+// What is the result of this code? What is the order in which these calls are resolved?
+const result = add(add(1, 2), add(3,4));
+console.log(result);
 ```
 
 {% hint style="info" %}
-We say that "`add(5, 3)` resolves to 8"
+Use the "step in" and "step out" buttons to go in and out of specific function calls.
 {% endhint %}
 
+#### Multiple Returns 
 A function can have multiple `return` statements, but only one is ever executed. This is helpful if the value returned depends on the provided argument.
 
 ```js
 const isPositiveOrNegative = (num) => {
   if (num === 0) {
     return "Neither"
-  } else if (num > 0) {
+  } 
+  if (num > 0) {
     return "Positive"
-  } else {
-    return "Negative"
   }
+  return "Negative"
 }
 
-isPositiveOrNegative(-5); // returns "Negative"
-isPositiveOrNegative(5); // returns "Positive"
-isPositiveOrNegative(0); // returns "Neither"
+console.log(isPositiveOrNegative(-5)); // Output: "Negative"
+console.log(isPositiveOrNegative(5)); // Output: "Positive"
+console.log(isPositiveOrNegative(0)); // Output: "Neither"
 ```
+
+### Function Scope
+
+**Scope** refers to where in our code variables can be referenced. Files, functions, and code blocks `{}` each create a new scope.
+
+There can be any number of scopes in a single file but we will describe them as either:
+* **Global Scope** — Variables that are accessible across the entire file. Includes things like `console` and `Math` and variables/functions declared at the outermost scope of the file.
+* **Local Scope** — Variables that are accessible only in the current function or code block.
+ 
+```javascript
+// Global Scope - friend is accessible anywhere in this file.
+const friend = 'John';
+
+const greetFriend = (myName) => {
+  // The myName parameter has local/function scope. It can only be accessed inside of greetFriend
+  
+  // We can access the globally scoped `friend` here since we are in an "inner" scope.
+  console.log(`Hi, ${friend}, I'm ${myName}`);
+}
+
+greetFriend('Jane'); 
+// Output: "Hi, John, I'm Jane"
+
+// We can't access myName because we are in an "outer" scope compared to where it is declared.
+myName; // ReferenceError: myName is not defined
+```
+
+* Outer scopes cannot see variables in inner scopes.
+* Inner scopes can see variables in outer scopes.
+* Parameters are treated as locally scoped variables.
 
 ### Arrow Functions vs. Function Declarations vs. Function Expressions
 There are many ways to create a function, but we will use **Arrow Function** syntax:
@@ -243,54 +316,19 @@ const add = (a, b) => {
 const add = (a, b) => a + b;
 ```
 
-## Scope
+**Challenge:** Which of these functions can use implicit returns? Refactor them!
 
-**Scope** refers to where in our code variables can be referenced. Files, functions, and code blocks `{}` each create a new scope.
+```js
+const add = (a, b) => {
+  return a + b;
+};
 
-There can be any number of scopes in a single file but we will describe them as either:
-* **Global Scope** — Variables that are accessible across the entire file. Includes things like `console` and `Math` and variables/functions declared at the outermost scope of the file.
-* **Local Scope** — Variables that are accessible only in the current function or code block.
- 
-"Outer scopes" cannot see variables in "inner scopes".
+const greet = (name) => {
+  return `Hello, ${name}!`;
+};
 
-{% code title="index.js" overflow="wrap" lineNumbers="true" %}
-```javascript
-// Global Scope - secretValue is accessible anywhere in the file.
-const secretValue = () => {
-  // Local Scope - this variable is only accessible in this code block
-  const private = 'shhhhh!';
-
-  // Return statements let us send values out of an "inner" scope, but the function must be invoked to do this.
-  return private;
-}
-
-// We can't access private because we are in an "outer" scope compared to where it is declared.
-console.log(private); // ReferenceError: private is not defined
-
-// We can get the value from the function if we invoke it though
-console.log(secreteValue()); // Prints "shhhhh!"
+const logMessage = (message) => {
+  console.log(message);
+  return 'message logged';
+};
 ```
-{% endcode %}
-
-* "Inner scopes" can see variables in "outer scopes".
-* Parameters are treated as locally scoped variables.
-
-{% code title="index.js" overflow="wrap" lineNumbers="true" %}
-```javascript
-// Global Scope - friend is accessible anywhere in this file.
-const friend = 'John';
-
-// Global Scope - greetFriend is also accessible anywhere in the file.
-const greetFriend = (myName) => {
-  // The myName parameter has local/function scope. It can only be accessed inside of greetFriend
-  
-  // We can access `friend` from greetFriend since we are in an "inner" scope.
-  console.log(`Hi, ${friend}, I'm ${myName}`);
-}
-
-greetFriend('Jane'); // Prints "Hi, John, I'm Jane"
-
-// We can't access myName because we are in an "outer" scope compared to it is declared.
-myName; // ReferenceError: myName is not defined
-```
-{% endcode %}
