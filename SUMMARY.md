@@ -12,7 +12,7 @@
   * [Postgres Setup](environment-setup/postgres-setup.md)
 * [How-Tos](how-tos/README.md)
   * [How To Code at Marcy: Code Style Guide](how-tos/style-guide.md)
-  * [How to Do Short Response and Coding Assignments](how-tos/working-with-assignments.md)
+  * [How to Do Short Response and Coding Assignments](how-tos/assignments.md)
   * [How to Debug](how-tos/how-to-debug.md)
   * [How to PEDAC](how-tos/how-to-pedac.md)
   * [How to Create A GitHub Organization and Scrumboard](how-tos/how-to-create-scrumboard.md)

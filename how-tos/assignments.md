@@ -91,7 +91,7 @@ npm run test:w # run the tests each time the file changes ("watch mode")
 
 After running this command, you will see the following output. Initially, all tests will fail.
 
-![failing Jest tests](img/failing-tests.png)
+![Failing Jest tests](img/failing-tests.png)
 
 The test output provides some really useful information.
 
