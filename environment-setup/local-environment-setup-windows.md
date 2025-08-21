@@ -1,6 +1,6 @@
 # Local Environment Setup: Windows
 
-Today, we'll be setting up our local development environment for Windows 10. For the Mac instructions, see [here](https://github.com/The-Marcy-Lab-School/local-environment-setup-mac).
+Today, we'll be setting up our local development environment for Windows 10. For the Mac instructions, see [here](./local-environment-setup-mac.md).
 
 ## Table of Contents
 

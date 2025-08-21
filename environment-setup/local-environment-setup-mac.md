@@ -1,6 +1,6 @@
 # Local Environment Setup: MacOS
 
-Today, we'll be setting up our local development environment for Mac. For the Windows instructions, see [here](https://github.com/The-Marcy-Lab-School/local-environment-setup-wsl). 
+Today, we'll be setting up our local development environment for Mac. For the Windows instructions, see [here](./local-environment-setup-windows.md). 
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
