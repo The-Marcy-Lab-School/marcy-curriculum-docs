@@ -5,6 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents:**
+- [Summary](#summary)
 - [Strings](#strings)
   - [Escaping Characters](#escaping-characters)
   - [String Interpolation](#string-interpolation)
@@ -20,6 +21,14 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Use Ternary Operators To Simplify Conditionals](#use-ternary-operators-to-simplify-conditionals)
 
 ![A string of characters is like a bracelet with beads on it](img/bracelet.png)
+
+## Summary
+
+* **Strings** are sequences of characters enclosed in quotes. You can access individual characters using bracket notation and check their length with `.length`. Strings are immutable, meaning their characters cannot be changed directly.
+* **String methods** like `includes`, `startsWith`, `endsWith`, `indexOf`, `slice`, `toUpperCase`, and `replace` allow you to search, analyze, and manipulate string data.
+* **Conditional statements** (`if`, `else if`, `else`) let you control the flow of your program based on data values. The order of conditions matters, and only the first true condition in a chain will execute.
+* **Guard clauses** are single `if` statements that return early from a function, simplifying conditional logic.
+* **Ternary operators** provide a concise way to choose between two values based on a condition.
 
 ## Strings
 

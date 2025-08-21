@@ -8,7 +8,7 @@
   * [Inspecting the Control Flow With Node](0-intro-to-programming.md#inspecting-the-control-flow-with-node)
 * [Code Style and Readability](0-intro-to-programming.md#code-style-and-readability)
 
-**Key Concepts**:
+## Summary
 
 * A **program** is a text file with instructions to accomplish some task.
 * **Comments** are ignored and help to explain the code.

@@ -5,12 +5,22 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents**:
+- [Summary](#summary)
 - [Intro to Iteration](#intro-to-iteration)
 - [The `for` loop](#the-for-loop)
   - [For Loop Challenge:](#for-loop-challenge)
 - [While Loops and Infinite Loops](#while-loops-and-infinite-loops)
   - [While Loop Challenge](#while-loop-challenge)
 - [Nested Loops](#nested-loops)
+
+## Summary
+
+* **Loops** allow you to repeat code multiple times, making it easy to automate repetitive tasks and process collections of data.
+* The **`for` loop** is best for repeating a process a known number of times, such as iterating over arrays or counting.
+* The **`while` loop** is useful for repeating a process an unknown number of times, continuing until a condition is no longer true.
+* **Infinite loops** occur when the loop's condition never becomes false; use `break` to exit early and `continue` to skip to the next iteration.
+* **Nested loops** let you loop inside another loop, useful for working with multi-dimensional data or complex processes.
+* Loop challenges help you practice using loops to solve real problems, such as counting results or building interactive programs.
 
 ## Intro to Iteration
 

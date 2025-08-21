@@ -8,7 +8,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents:**
 
-- [Key Notes](#key-notes)
+- [Summary](#summary)
 - [What is Node?](#what-is-node)
 - [Modules](#modules)
   - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
@@ -25,7 +25,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [Madlib Challenge](#madlib-challenge)
 
 
-## Key Notes
+## Summary
 
 * **Node** is a "JavaScript runtime environment" which is just a fancy way to say it is a program for running JavaScript.
 * A **module** is a file containing code, which can then be imported and utilized in other parts of a larger program or system.

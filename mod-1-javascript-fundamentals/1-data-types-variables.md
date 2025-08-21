@@ -5,6 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents:**
+- [Summary](#summary)
 - [Computation is Data Generation](#computation-is-data-generation)
 - [Data Types](#data-types)
 - [Operators](#operators)
@@ -16,6 +17,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Referencing and Reassigning Variables](#referencing-and-reassigning-variables)
   - [The Four Ways To Declare Variables](#the-four-ways-to-declare-variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
+
+## Summary
+
+* **Data types** are categories of values in JavaScript, including primitive types (String, Number, Boolean, undefined, null) and reference types (Object, Array, Function). Knowing the type helps determine how you can use a value.
+* **Operators** are symbols that generate new data from existing values. Arithmetic, comparison, and logical operators allow you to perform calculations and make decisions.
+* **Type coercion** is the process of converting a value from one data type to another, sometimes automatically. Values can be "truthy" or "falsy" depending on their content.
+* **Variables** are named containers for data. You can reference and reassign variables to store and update information in your program.
+  * There are four ways to declare variables: `const` (preferred for values that don't change), `let` (for values that do change), `var` (legacy, avoid using), and global variables (avoid using).
+* **Hoisting** allows some variables and functions to be referenced before they are declared, which can lead to confusing bugs. Prefer `const` and `let` to avoid hoisting
 
 ## Computation is Data Generation
 
