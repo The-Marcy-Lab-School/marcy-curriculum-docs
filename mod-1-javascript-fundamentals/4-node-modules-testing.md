@@ -1,13 +1,13 @@
 # Node & Node Modules
 
+In this lesson we'll learn the history of Node and the fundamentals of using Node Modules to build JavaScript programs.
+
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-4-node-modules-testing)!
 {% endhint %}
 
 **Table of Contents:**
 
-- [Overview](#overview)
-  - [Key Terms](#key-terms)
 - [What is Node?](#what-is-node)
 - [Exporting and Importing Node Modules](#exporting-and-importing-node-modules)
   - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
@@ -19,14 +19,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Developer Dependencies](#developer-dependencies)
   - [`package.json` Scripts and `nodemon`](#packagejson-scripts-and-nodemon)
   - [`npm init -y`](#npm-init--y)
-- [Testing](#testing)
+- [Jest and Testing](#jest-and-testing)
 - [Madlib Challenge](#madlib-challenge)
 
-## Overview
-
-In this lesson we'll learn the history of Node and the fundamentals of using Node Modules to build JavaScript scripts.
-
-### Key Terms
+**Key Terms**:
 
 * **Node** is a "JavaScript runtime environment" which is just a fancy way to say it is a program for running JavaScript.
 * A **module** is an exported chunk of code (typically a function or a set of functions) that can be used across our project.
@@ -335,7 +331,73 @@ nodemon index.js
 
 * You can also run `npm init -y` to skip the questions and build a `package.json` file using default values.
 
-## Testing
+## Jest and Testing
+
+Tests are an essential part of professional software development. Without testing our code, we run the risk of deploying code with unexpected bugs. With testing, we are forced to think critically about how we expect our program to behave and then write our code to satisfy those tests. 
+
+The process of first writing tests and then writing code to satisfy those tests is called **Test-Driven Development (TDD)**.
+
+At Marcy, we use the Node module [Jest](https://jestjs.io/) to write automated tests for coding assignments. Automated tests are JavaScript files that:
+
+1. Import functions from source code
+2. Run those functions with various inputs
+3. Compare the returned values against the expected values.
+
+A Jest test is written in a file ending in `.spec.js` or `.test.js` and looks like this:
+
+{% code title="circle-helpers.spec.js" lineNumbers="true" %}
+```javascript
+// Import the functions to be tested
+const {
+  getArea,
+  getDiameter,
+  getCircumference
+} = require('./circle-helpers')
+
+// Create a "Test Suite" for these functions
+describe('Circle Helper Tests', () => {
+  // Test the getArea function with a series of expectations
+  test('getArea returns the Area of a circle', () => {
+    // Translation: We expect getArea(2) to return Math.PI * 2 * 2
+    expect(getArea(2)).toBe(Math.PI * 2 * 2);
+    expect(getArea(3)).toBe(Math.PI * 3 * 3);
+
+    // It is useful to think about what should be returned for "bad" inputs. 
+    expect(getArea()).toBe(NaN);
+    expect(getArea('hello')).toBe(NaN);
+  });
+
+  // Test the getDiameter function with a series of expectations
+  test('getDiameter returns the Diameter of a circle', () => {
+    // ...tests for getDiameter
+  });
+
+  // ...more tests
+})
+```
+{% endcode %}
+
+Each assignment will have automated test files in the `tests` directory. They will show you exactly how we expect your functions to behave. **DO NOT MODIFY THE TESTS**.
+
+To run these automated tests, use the command:
+
+```sh
+npm test # run the tests once
+# or
+npm run test:w # run the tests each time the file changes ("watch mode")
+```
+
+After running this command, you will see the following output. Initially, all tests will fail.
+
+![Failing Jest tests](../how-tos/img/failing-tests.png)
+
+The test output provides some really useful information.
+
+* We can see which tests failed
+* For each failing test, we can see which `expect()` statement failed
+* We can see what the expected value is (`12.566...`) and what our function actually returned (`undefined`).
+
+Armed with this information, we can more confidently build our functions knowing that we have a specific set of targets to aim for. Automated tests allow us to repeatedly run our code against the same set of tests until all expectations are met.
 
 ## Madlib Challenge
 
