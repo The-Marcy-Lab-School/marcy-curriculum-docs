@@ -2,6 +2,31 @@
 
 Writing code with errors is a natural part of programming. But rather than avoiding them at all costs, we should learn to understand them! Errors provide us valuable information about how we can improve our programs.
 
+**Table of Contents:**
+
+- [Summary](#summary)
+- [What is an error? Why are they “thrown”?](#what-is-an-error-why-are-they-thrown)
+- [What causes an error? Syntax and Runtime Errors](#what-causes-an-error-syntax-and-runtime-errors)
+- [Types of Errors](#types-of-errors)
+  - [Syntax Errors:](#syntax-errors)
+    - [`SyntaxError`:](#syntaxerror)
+  - [Runtime Errors:](#runtime-errors)
+    - [`ReferenceError`](#referenceerror)
+    - [`TypeError`](#typeerror)
+    - [`SystemError`](#systemerror)
+    - [`AssertionError`](#assertionerror)
+    - [`RangeError`](#rangeerror)
+- [How to Read errors](#how-to-read-errors)
+- [Handling Errors](#handling-errors)
+
+## Summary
+
+* **Errors** are code that prevents a program from running successfully and are "thrown" when something goes wrong, providing valuable debugging information.
+* **Syntax errors** occur when code is invalid and can't be executed (e.g., missing quotes, invalid keywords), while **runtime errors** occur when code executes but encounters faulty logic or improper data type usage.
+* Common error types include **`SyntaxError`** (invalid JavaScript), **`ReferenceError`** (undefined variables), **`TypeError`** (wrong data types), and **`SystemError`** (operating system constraints).
+* Understanding error messages helps identify the problem location and type, making debugging more efficient.
+* Errors can be manually thrown using the `throw` keyword, and uncaught errors will cause programs to crash.
+
 ## What is an error? Why are they “thrown”?
 
 - An error is any code that prevents a program from running successfully.

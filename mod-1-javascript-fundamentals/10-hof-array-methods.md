@@ -6,6 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents**
 
+- [Summary](#summary)
 - [Imperative vs. Declarative Code: Why we use Higher Order Functions](#imperative-vs-declarative-code-why-we-use-higher-order-functions)
 - [Array Iterators](#array-iterators)
   - [.map(mutate)](#mapmutate)
@@ -18,6 +19,16 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Chaining Array Methods](#chaining-array-methods)
   - [Generating a Frequency Counter with Reduce](#generating-a-frequency-counter-with-reduce)
   - [Nested Arrays](#nested-arrays)
+
+## Summary
+
+* **Array higher-order methods** provide declarative ways to work with arrays, making code more readable and reducing the need for explicit loops.
+* **`map()`** transforms each element in an array and returns a new array with the transformed values, useful for converting data formats or applying calculations.
+* **`filter()`** creates a new array containing only elements that pass a test condition, perfect for filtering data based on criteria.
+* **`find()`** and **`findIndex()`** return the first element or index that passes a test, useful for searching arrays.
+* **`reduce()`** combines all array elements into a single value, powerful for calculations like sums, averages, or building complex data structures.
+* **`sort()`** arranges array elements in order based on a comparison function, with the callback determining the sorting logic.
+* **Method chaining** allows you to combine multiple array methods for complex data transformations in a readable, functional style.
 
 ## Imperative vs. Declarative Code: Why we use Higher Order Functions
 

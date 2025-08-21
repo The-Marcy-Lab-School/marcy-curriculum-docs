@@ -6,14 +6,23 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents**:
 
-* [Slides](7-objects.md#slides)
-* [The basics](7-objects.md#the-basics)
-  * [Accessing Objects with Dot Notation and Bracket Notation](7-objects.md#accessing-objects-with-dot-notation-and-bracket-notation)
-  * [Dynamic Properties Challenge](7-objects.md#dynamic-properties-challenge)
-* [Iterating Over Objects](7-objects.md#iterating-over-objects)
-* [Advanced Object Syntax](7-objects.md#advanced-object-syntax)
-  * [Object Shorthand Using Variables](7-objects.md#object-shorthand-using-variables)
-  * [Destructuring](7-objects.md#destructuring)
+- [Summary](#summary)
+- [The basics](#the-basics)
+  - [Accessing Objects with Dot Notation and Bracket Notation](#accessing-objects-with-dot-notation-and-bracket-notation)
+  - [Dynamic Properties Challenge](#dynamic-properties-challenge)
+- [Iterating Over Objects](#iterating-over-objects)
+- [Advanced Object Syntax](#advanced-object-syntax)
+  - [Object Shorthand Using Variables](#object-shorthand-using-variables)
+  - [Destructuring](#destructuring)
+
+## Summary
+
+* **Objects** are data structures that store multiple pieces of data as key-value pairs called properties, useful for representing real-world entities like users or products.
+* Object properties can be accessed using **dot notation** (`object.property`) or **bracket notation** (`object["property"]`), with bracket notation required when using variables as keys.
+* Objects are **mutable**, meaning you can add, modify, or delete properties after creation using assignment, the `delete` keyword, or direct property access.
+* Objects can contain **nested data** including arrays and other objects, allowing for complex data structures.
+* **Object shorthand** allows you to create objects more concisely when variable names match property names.
+* **Destructuring** provides a convenient way to extract multiple properties from objects into separate variables.
 
 ## The basics
 

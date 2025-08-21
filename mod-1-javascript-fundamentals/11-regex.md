@@ -8,6 +8,7 @@ Use https://regexr.com/ to learn about and test regular expressions!
 
 
 **Table of Contents:**
+- [Summary](#summary)
 - [Intro](#intro)
   - [What is a Regular Expression](#what-is-a-regular-expression)
   - [What can you do with regular expressions?](#what-can-you-do-with-regular-expressions)
@@ -21,6 +22,15 @@ Use https://regexr.com/ to learn about and test regular expressions!
   - [`str.search(RegExp)`](#strsearchregexp)
   - [`str.match(RegExp)` and the `g` flag](#strmatchregexp-and-the-g-flag)
   - [`str.replace(RegExp, replacement)`](#strreplaceregexp-replacement)
+
+## Summary
+
+* **Regular expressions (RegEx)** are patterns used to search for, match, and manipulate text strings, providing powerful text processing capabilities.
+* RegEx patterns are created using forward slashes (`/pattern/`) and can include **special characters** like `^` (start), `$` (end), `\w` (word characters), and `+` (one or more).
+* **String validation** is a common use case, allowing you to check if strings match specific formats like email addresses, phone numbers, or date formats.
+* **Text extraction** enables finding and extracting specific patterns from larger text blocks, such as extracting all email addresses from a document.
+* JavaScript provides several RegEx methods: **`test()`** for validation, **`search()`** for finding positions, **`match()`** for extracting matches, and **`replace()`** for substitutions.
+* **Flags** like `i` (case-insensitive) and `g` (global) modify how RegEx patterns behave, making them more flexible and powerful.
 
 ## Intro
 

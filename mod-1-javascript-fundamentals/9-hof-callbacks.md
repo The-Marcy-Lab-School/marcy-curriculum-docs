@@ -6,6 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents**:
 
+- [Summary](#summary)
 - [First, Animation!](#first-animation)
 - [What is a Higher-Order Function?](#what-is-a-higher-order-function)
 - [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
@@ -14,6 +15,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [Some Fun Examples: `setTimeout` and `setInterval`](#some-fun-examples-settimeout-and-setinterval)
 - [Array Iterators](#array-iterators)
   - [forEach](#foreach)
+
+## Summary
+
+* **Higher-order functions (HOFs)** are functions that accept other functions as input and/or return functions, enabling powerful programming patterns and code reuse.
+* **Callback functions** are functions passed as arguments to higher-order functions, allowing you to customize behavior without modifying the HOF itself.
+* When passing callbacks to HOFs, avoid invoking them (don't use parentheses) - the HOF will handle the invocation with the correct parameters.
+* **Inline callback functions** (anonymous arrow functions) provide a concise way to define callbacks when they won't be reused elsewhere.
+* Common HOF examples include `setTimeout`, `setInterval`, and array methods like `forEach`, which demonstrate how callbacks enable asynchronous and iterative programming.
+* Understanding HOFs and callbacks is fundamental to modern JavaScript development and functional programming concepts.
 
 ## First, Animation!
 
