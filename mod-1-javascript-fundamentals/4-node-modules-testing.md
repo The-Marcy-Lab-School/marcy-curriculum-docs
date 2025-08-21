@@ -10,17 +10,18 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 - [Key Notes](#key-notes)
 - [What is Node?](#what-is-node)
-- [Exporting and Importing Node Modules](#exporting-and-importing-node-modules)
+- [Modules](#modules)
   - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
   - [Importing with `require()` (CommonJS)](#importing-with-require-commonjs)
-    - [Destructuring](#destructuring)
+    - [Destructuring Shorthand](#destructuring-shorthand)
 - [Node Package Manager (NPM)](#node-package-manager-npm)
   - [Installing and Using Dependencies from NPM](#installing-and-using-dependencies-from-npm)
   - [Dependencies, `package.json`, and `node_modules`](#dependencies-packagejson-and-node_modules)
-    - [Developer Dependencies](#developer-dependencies)
+  - [Developer Dependencies](#developer-dependencies)
+- [Jest Module and Testing](#jest-module-and-testing)
+- [NPM Tips and Tricks](#npm-tips-and-tricks)
   - [`package.json` Scripts](#packagejson-scripts)
   - [`npm init -y`](#npm-init--y)
-- [Jest and Testing](#jest-and-testing)
 - [Madlib Challenge](#madlib-challenge)
 
 
@@ -55,7 +56,7 @@ You can also use the `node` command on its own to open the Node read-evaluate-pr
 
 ![The Node REPL is useful for testing out expressions.](../mod-0-command-line-interfaces-git-and-github/img/1-node-repl-expressions.png)
 
-## Exporting and Importing Node Modules
+## Modules
 
 Consider the simple JavaScript program below. It declares a few functions for calculating data about a circle with a given radius and then prints them out. Notice that the `main` function is where the functions are all being executed in a logical order:
 
@@ -111,7 +112,7 @@ A **module** is a file containing code, which can then be **imported** and utili
 
 ### Exporting with `module.exports` (CommonJS)
 
-In a Node project, a module exports its code by assigning one or more values to the `exports` property of the `module` object, or `module.exports`.
+In a Node project, a module exports its code by assigning one or more values to the `.exports` property of the `module` object—`module.exports`.
 
 When `module.exports` is assigned a single value/function, we call that a **default export**:
 
@@ -211,7 +212,7 @@ Each file is concerned with only one aspect of the functionality of the entire p
 
 </details>
 
-#### Destructuring
+#### Destructuring Shorthand
 
 If the module exports an object...
 
@@ -253,21 +254,45 @@ npm i prompt-sync # installs the prompt-sync package
 
 Now, you should see a `node_modules/` folder with a `prompt-sync/` folder inside. Open up the `prompt-sync/index.js` file to see the module that is exported!
 
-To use the package in our own program, use `require()` again, this time with just the name of the module.
+To use the package in our own program, use `require()` again, this time with just the name of the module. Our program will know to look at the nearest `node_modules` folder for it.
 
-
-{% code title="5-prompt-sync/index.js" overflow="wrap" lineNumbers="true" %}
+{% code title="index.js" overflow="wrap" lineNumbers="true" %}
 ```javascript
-// with modules in node_modules, we only need to provide the name:
-const prompt = require('prompt-sync')();
+// with modules in node_modules, we only need to provide the name of the module:
+const createPrompt = require('prompt-sync');
 
-// we don't need to provide the full relative path (although we can)
-const prompt = require('./node_modules/prompt-sync')();
+const prompt = createPrompt();
+```
+{% endcode %}
+
+We can now use the `prompt` function in our code to add user input functionality!
+
+{% code title="index.js" overflow="wrap"%}
+```javascript
+// imports...
+
+const main = () => {
+  // replace the hard-coded radius and ask the user to provide one instead!
+  const radius = prompt("Choose a radius for your circle!");
+
+  const area = getArea(radius);
+  print(`the area of a circle with radius ${radius} is ${area}`);
+
+  const diameter = getDiameter(radius);
+  print(`the diameter of a circle with radius ${radius} is ${diameter}`);
+
+  const circumference = getCircumference(radius);
+  print(`the circumference of a circle with radius ${radius} is ${circumference}`);
+}
 ```
 {% endcode %}
 
 {% hint style="info" %}
-For `prompt-sync`, the exported module is not the `prompt` function itself, but instead a `create` function which lets the programmer configure how they want `prompt` to work (see `node_modules/prompt-sync/index.js`)
+For `prompt-sync`, the exported module is not the `prompt` function itself, but instead a `create` function which lets the programmer configure how they want `prompt` to work (see `node_modules/prompt-sync/index.js`). This is why the documentation suggests importing in one line like this:
+
+```js
+const prompt = require('prompt-sync')();
+```
 
 This is a common pattern for modules.
 {% endhint %}
@@ -292,7 +317,7 @@ You can see the sub-dependencies of a module by opening its own `package.json` f
 
 ![For prompt-sync, we can see that it has two of its own dependencies that were also added to node\_modules: ansi-regex and strip-ansi:](img/1-prompt-sync-dependencies.png)
 
-#### Developer Dependencies
+### Developer Dependencies
 
 In the `prompt-sync/package.json` file, you will notice that `prompt-sync-history` is listed under `"devDependencies"`.
 * **Developer dependencies** are dependencies used by the developer(s) who created the package but aren't needed by the users of the package. They are not added to the `node_modules` folder of the user.
@@ -334,54 +359,7 @@ nodemon index.js
 
 </details>
 
-### `package.json` Scripts
-
-You can add a `"scripts"` section to the `package.json` file to make it easier to run commonly used Terminal commands.
-* Two common script commands to add are `"start"` which runs `node index.js` and `"dev"` which runs `nodemon index.js`
-
-```json
-{
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
-  },
-  "dependencies": {
-    "prompt-sync": "^4.2.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.7"
-  }
-}
-```
-
-* To use these commands, we can type `npm run script_name`. For example, `npm run start` or `npm run dev`
-
-### `npm init -y`
-
-* When working on a new Node project, it is common to set up the `package.json` file prior to installing any dependencies.
-* This can be done using the command `npm init` which will ask you some questions to generate a `package.json` file.
-
-```json
-{
-  "name": "project-name",
-  "version": "0.0.1",
-  "description": "Project Description",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "the repositories url"
-  },
-  "author": "your name",
-  "license": "N/A"
-}
-```
-
-* You can also run `npm init -y` to skip the questions and build a `package.json` file using default values.
-
-## Jest and Testing
+## Jest Module and Testing
 
 Tests are an essential part of professional software development. Without testing our code, we run the risk of deploying code with unexpected bugs. With testing, we are forced to think critically about how we expect our program to behave and then write our code to satisfy those tests. 
 
@@ -436,9 +414,9 @@ describe('Circle Helper Tests', () => {
 To run these automated tests, use the command:
 
 ```sh
-npm test # run the tests once
+jest # run the tests once
 # or
-npm run test:w # run the tests each time the file changes ("watch mode")
+jest --watchAll # run the tests each time the file changes ("watch mode")
 
 # what command is watch mode similar to?
 ```
@@ -457,6 +435,72 @@ Armed with this information, we can more confidently build our functions knowing
 
 **Challenge:** Write tests for the `getDiameter` and `getCircumference` functions. Consider how you might test certain edge cases such as "bad" or missing inputs.
 
+## NPM Tips and Tricks
+
+Here are a few useful tips and tricks for using `npm` like a pro!
+
+### `package.json` Scripts
+
+You can add a `"scripts"` section to the `package.json` file to make it easier to run commonly used Terminal commands.
+
+```json
+{
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest",
+    "test:w": "jest --watchAll"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
+```
+
+To use these commands, we can type `npm run script_name`: 
+
+```sh
+npm run start
+npm run dev
+npm run test
+npm run test:w
+```
+
+{% hint style="info" %}
+A few special commands are recognized by `npm` without the need for the `run` command including `npm start` and `npm test`.
+
+You can shorten `npm test` even further and just type `npm t`!
+{% endhint %}
+
+### `npm init -y`
+
+When working on a new Node project, it is common to set up the `package.json` file prior to installing any dependencies.
+
+This can be done using the command `npm init` which will ask you some questions to generate a `package.json` file.
+
+```json
+{
+  "name": "project-name",
+  "version": "0.0.1",
+  "description": "Project Description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "the repositories url"
+  },
+  "author": "your name",
+  "license": "N/A"
+}
+```
+
+You can also run `npm init -y` to skip the questions and build a `package.json` file using default values.
+
 ## Madlib Challenge
 
 A program is considered **hard-coded** if the program code must be modified in order to produce a new result.
@@ -472,9 +516,9 @@ console.log(`hi ${name}. My name is HAL`);
 ```
 {% endcode %}
 
-In the `7-madlib-challenge/index.js` file you will find the following hard-coded program:
+In the `madlib-challenge/index.js` file you will find the following hard-coded program:
 
-{% code title="7-madlib-challenge/index.js" overflow="wrap" lineNumbers="true" %}
+{% code title="madlib-challenge/index.js" overflow="wrap" lineNumbers="true" %}
 ```javascript
 const madlib = (name, verb, quantity, item, newItem, isHappy) => {
   console.log(`There once was a man named ${name}.`);
@@ -502,7 +546,7 @@ const main = () => {
 ```
 {% endcode %}
 
-Your goal is to do the following in the `6-madlib-challenge` folder:
+Your goal is to do the following in the `madlib-challenge` folder:
 
 1. Download the `prompt-sync` module using `npm i prompt-sync`
 2. Import and configure the `prompt` function in `index.js`
