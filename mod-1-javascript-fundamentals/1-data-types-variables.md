@@ -9,9 +9,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [Computation is Data Generation](#computation-is-data-generation)
 - [Data Types](#data-types)
 - [Operators](#operators)
-  - [Resolution Order of Operations](#resolution-order-of-operations)
   - [Ternary Operator](#ternary-operator)
   - [typeof Operator](#typeof-operator)
+  - [Resolution Order of Operations](#resolution-order-of-operations)
 - [Type Coercion \& Truthy vs. Falsy](#type-coercion--truthy-vs-falsy)
 - [Variables](#variables)
   - [Referencing and Reassigning Variables](#referencing-and-reassigning-variables)
@@ -112,58 +112,6 @@ console.log(true || false); // Or
 console.log(!true);         // Not
 ```
 
-### Resolution Order of Operations
-
-Operators can be combined to form complex expressions. In these cases, understanding the order in which operators are evaluated — also called **operator precedence** — is crucial.
-
-Below is the order of precedence:
-1. Arithmetic operators are evaluated first. `*`, `/`, `%` are evaluated before `+` and `-`.
-2. Comparison operators are evaluated next.
-3. Logical operators are last. AND (`&&`) has higher precedence than logical OR (`||`).
-
-Parentheses `()` can always be used to override the default order and make the evaluation order explicit.
-
-**Challenge**: what values are produced by the code snippet below?
-
-```js
-// Arithmetic
-console.log(5 + 2 * 3);  
-console.log((5 + 2) * 3);
-
-// Comparison
-console.log(5 + 2 > 6);     
-console.log(5 + (2 > 6));   
-
-// Logical
-console.log(true || false && false);    
-console.log((true || false) && false);  
-
-// Combined
-console.log(5 > 3 && 2 + 2 === 4);     
-console.log((5 > 3 && 2 + 2) === 4);   
-```
-
-**<details><summary>Answers</summary>**
-
-```js
-// Arithmetic
-console.log(5 + 2 * 3);       // 11 -> Multiplication before addition
-console.log((5 + 2) * 3);     // 21 -> Parentheses override precedence
-
-// Comparison
-console.log(5 + 2 > 6);       // true -> Addition happens before comparison
-console.log(5 + (2 > 6));     // 5 -> Comparison happens first due to parentheses
-
-// Logical
-console.log(true || false && false);     // true -> && has higher precedence than ||
-console.log((true || false) && false);   // false -> Parentheses change the evaluation order
-
-// Combined
-console.log(5 > 3 && 2 + 2 === 4);       // true -> Arithmetic and comparison combined with logical
-console.log((5 > 3 && 2 + 2) === 4);     // true -> Parentheses change how the logical operation is grouped
-```
-</details>
-
 ### Ternary Operator
 
 The ternary operator `boolExpression ? valA : valB` produces one of two values based on the `boolExpression` value:
@@ -191,6 +139,79 @@ console.log(typeof {});     // Prints "object"
 console.log(typeof null);   // Prints "object"
 console.log(typeof []);     // Prints "object"
 ```
+
+### Resolution Order of Operations
+
+Operators can be combined to form complex expressions. In these cases, understanding the order in which operators are evaluated — also called **operator precedence** — is crucial.
+
+Below is the order of precedence:
+1. Function calls are evaluated first
+2. Then arithmetic operators. `*`, `/`, `%` are evaluated before `+` and `-`.
+3. Followed by comparison operators. Relational operators (`<`, `<=`, `>`, `>=`) are evaluated before equality operators (`===`, `!==`, `==`, `!=`)
+4. Then logical operators. AND (`&&`) has higher precedence than logical OR (`||`).
+5. Ternary operator (`x ? y :z`) and assignment happens last (`=`)
+
+Parentheses `()` can always be used to override the default order and make the evaluation order explicit.
+
+Let's look at this code snippet as an example:
+
+```js
+const result = Math.random() > 0.5 ? "Heads" : "Tails";
+```
+
+{% hint style="info" %}
+
+In JavaScript `Math` is a globally available object with methods and properties for doing more complex math. `Math.random()` returns a random number between `0` and `1` (exclusive, meaning it will be less than `1`).
+
+{% endhint %}
+
+The order of operations is as follows:
+1. `Math.random()` resolves to a random number between 0 and 1.
+2. `Math.random() > 0.5` resolves to `true` or `false` based on the value from step 1.
+3. `Math.random() > 0.5 ? "Heads" : "Tails"` resolves to `"Heads"` or `"Tails"` based on the result from step 2.
+4. `const result = Math.random() > 0.5 ? "Heads" : "Tails"` --> assigns the `"Heads"` or `"Tails"` to the variable `result` based on step 3.
+
+**Challenge**: what values are produced by the code snippet below?
+
+```js
+// Arithmetic
+console.log(5 + 2 * 3);  
+console.log((5 + 2) * 3);
+
+// Comparison
+console.log(5 + 2 > 6);     
+console.log(5 + (2 > 6));   
+
+// Logical
+console.log(true || false && false);    
+console.log((true || false) && false);  
+
+// Combined
+console.log(5 > 3 && 2 + 2 === 4);     
+console.log((5 > 3 && 2 + 2) === 4);
+console.log(Math.ceil(Math.random() * 6))
+```
+
+**<details><summary>Answers</summary>**
+
+```js
+// Arithmetic
+console.log(5 + 2 * 3);       // 11 -> Multiplication before addition
+console.log((5 + 2) * 3);     // 21 -> Parentheses override precedence
+
+// Comparison
+console.log(5 + 2 > 6);       // true -> Addition happens before comparison
+console.log(5 + (2 > 6));     // 5 -> Comparison happens first due to parentheses
+
+// Logical
+console.log(true || false && false);     // true -> && has higher precedence than ||
+console.log((true || false) && false);   // false -> Parentheses change the evaluation order
+
+// Combined
+console.log(5 > 3 && 2 + 2 === 4);       // true -> Arithmetic and comparison combined with logical
+console.log((5 > 3 && 2 + 2) === 4);     // true -> Parentheses change how the logical operation is grouped
+```
+</details>
 
 ## Type Coercion & Truthy vs. Falsy
 
