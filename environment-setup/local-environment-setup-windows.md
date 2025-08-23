@@ -8,7 +8,7 @@ Today, we'll be setting up our local development environment for Windows 10. For
 - [WSL](#wsl)
   - [Enable WSL](#enable-wsl)
   - [Download WSL](#download-wsl)
-  - [Ensure you are using WSL 2](#ensure-you-are-using-wsl-2)
+    - [Upgrade from WSL 1 to WSL 2](#upgrade-from-wsl-1-to-wsl-2)
 - [Visual Studio Code, Node, and Your Local Development Environment](#visual-studio-code-node-and-your-local-development-environment)
   - [Download VSCode for Windows](#download-vscode-for-windows)
   - [Download Node and NPM](#download-node-and-npm)
@@ -37,28 +37,37 @@ After your computer starts up again, open the Windows Search, find the **Windows
 
 Type the following commands in the **Windows PowerShell** application:
 
-```sh
+```powershell
 wsl --update
 wsl --install
 ```
 
 This will update and install WSL on your computer!
 
-### Ensure you are using WSL 2
+When WSL finishes installing, run this command to check your version (take note of the value under `NAME` and `VERSION`):
 
-> Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/wsl/install). The instructions published by Microsoft will always be more accurate than the instructions found below. As of 9/27/2023, the instructions below are accurate.
+```powershell
+wsl -l -v
+```
 
-1. Open Powershell as Administrator. You can do this by right-clicking on Powershell and selecting "Run as Administrator" or by searching for Powershell in the Windows search bar and selecting "Run as Administrator".
-2. Check the version of WSL by running `wsl -l -v` and take note of the value under `NAME` and `VERSION`
-3. If the version is 2, you are good to go! You may close Powershell.
-4. If the version is 1, you can change it to version 2 with a command like `wsl --set-version Ubuntu-22.04 2` where you would replace `Ubuntu-22.04` with the name listed under `NAME` from the command in step 2.
-   - You should see "Conversion in progress, this may take a few minutes (it can take as long as 30 minutes or more)
-   - If you see a warning telling you to install/update the WSL 2 kernel, you may be asked to visit https://aka.ms/wsl2kernel. Do so and install the WSL Linux kernel update package for x64 machines.
-   - If you see "Please enable the Virtual Machine Platform Windows feature and ensure virtualization is enabled in the BIOS." do the following:
-     - In the Windows search bar, look for "Turn Windows features on or off"
-     - Scroll down and select "Virtual Machine Platform" and then click "Ok"
-     - Reboot your computer.
-     - Re-open Powershell and return to step 2
+If it is version 2, you're good to go! You may close Powershell. 
+
+If it says version 1, follow these steps below.
+
+#### Upgrade from WSL 1 to WSL 2
+
+> Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/wsl/install#upgrade-version-from-wsl-1-to-wsl-2)
+
+If the version is 1, you can change it to version 2 with a command like `wsl --set-version [NAME] [VERSION]`. 
+* For example, to switch to `Ubuntu` version 2, you would use the command `wsl --set-version Ubuntu 2`
+
+You should see "Conversion in progress, this may take a few minutes (it can take as long as 30 minutes or more)
+  - If you see a warning telling you to install/update the WSL 2 kernel, you may be asked to visit https://aka.ms/wsl2kernel. Do so and install the WSL Linux kernel update package for x64 machines.
+  - If you see "Please enable the Virtual Machine Platform Windows feature and ensure virtualization is enabled in the BIOS." do the following:
+    - In the Windows search bar, look for "Turn Windows features on or off"
+    - Scroll down and select "Virtual Machine Platform" and then click "Ok"
+    - Reboot your computer.
+    - Re-open Powershell, check the version with `wsl -l -v` and restart these instructions.
 
 ## Visual Studio Code, Node, and Your Local Development Environment
 
@@ -68,13 +77,11 @@ Visual Studio Code is the standard IDE used by developers.
 
 Visit [this web site](https://code.visualstudio.com/) and download VS Code.
 
-Download the latest build and install it in your PC.
+* Download the latest build and install it in your PC.
 
-Now open VS Code and press **Ctrl + Shift + P** to open the **Command Palette** and search "WSL". 
+* Now open VS Code and press **Ctrl + Shift + P** to open the **Command Palette** and search "WSL". 
 
-Then, select **WSL: Connect to WSL in New Window**.
-
-This should open a new VS Code window running using WSL!
+* Then, select **WSL: Connect to WSL in New Window**. This should open a new VS Code window running using WSL!
 
 VS Code should automatically detect your WSL installation and suggest an extension.
 
@@ -98,13 +105,13 @@ You should pin Ubuntu Terminal and VS Code to the taskbar since you'll be using 
 
 ### Download Node and NPM
 
-> Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl). The instructions published by Microsoft will always be more accurate than the instructions found below. As of 9/27/2023, the instructions below are accurate.
+> Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-nvm-nodejs-and-npm). 
 
 1. Go back to the Ubuntu terminal. Inside the terminal, type the following command and press enter:
 
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-```
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+    ```
 
 2. Close the Ubuntu terminal and re-open it
 3. Install the "Long Term Support" version of Node by entering the command `nvm install --lts`.
@@ -121,25 +128,15 @@ Every time you open your Terminal, you'll be in the home directory. Run `pwd` to
 
 ![home](./img/home.png)
 
-Using your Terminal as a command line, create a folder structure where you can put all your Marcy Lab code. We recommend:
-
-![folder-structure](./img/folder-structure.png)
-
-You can do using the following commands:
+Using your Terminal as a command line, create a folder structure where you can put all your Marcy Lab code. You can do using the following commands:
 
 - `cd` to navigate to the home directory.
-- `mkdir development` to create a folder for _all_ your work.
-- `cd development` where you will create more subdirectories.
-- `mkdir unit-0 unit-1 unit-2` etc... to make multiple folders at once.
-- `ls` to list the contents of `development/` and ensure the folders were created.
+- `mkdir Development` to create a folder for _all_ your work.
+- `cd Development` where you will create more subdirectories.
+- `mkdir mod-{0..7}` etc... to make multiple folders at once.
+- `ls` to list the contents of `Development/` and ensure the folders were created.
 
-![commands](./img/commands.png)
-
-If you ever want to view these files on your computer in File Explorer, run the command `explorer.exe .` in your terminal. File Explorer will open your current working directory.
-
-![fileexplorer](./img/fileexplorer.png)
-
-Next, ensure that you are in your `development` directory with the `pwd` command. Then, type the command `code .` into your terminal and it will open VS Code for you. You'll use this command a lot so remember it!
+Next, type the command `code .` into your terminal and it will open VS Code for you. You'll use this command a lot so remember it!
 
 Familiarize yourself with VS Code. This will be your new coding environment.
 
