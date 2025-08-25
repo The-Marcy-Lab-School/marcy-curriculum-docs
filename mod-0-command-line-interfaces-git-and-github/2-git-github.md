@@ -140,7 +140,13 @@ These options work, but almost every developer uses **GitHub**.
 
 **GitHub** is like a social network for developers, making it easy to backup, share and collaborate on projects.
 
-So, how do we use GitHub?
+Check out the GitHub repository for [Node](https://github.com/nodejs/node). Here are few things to look for:
+* It has ~45000 commits, each with clear messages, and made by many different developers.
+* It has dozens of branches, each for a different version of the software.
+* The README on the front page gives a detailed overview of the project and instructions for downloading and contributing.
+* It has been forked (duplicated) over 30 thousand times
+
+So, how can we use GitHub?
 
 ### GitHub Workflow
 
