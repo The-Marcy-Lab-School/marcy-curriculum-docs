@@ -13,7 +13,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Return Statements](#return-statements)
     - [Function Call Resolution](#function-call-resolution)
     - [Multiple Returns](#multiple-returns)
-  - [Function Scope](#function-scope)
   - [Arrow Functions vs. Function Declarations vs. Function Expressions](#arrow-functions-vs-function-declarations-vs-function-expressions)
 
 ## Summary
@@ -73,7 +72,9 @@ It breaks the fundamental software engineering principle "DRY" which stands for 
 
 ## Functions
 
-A **Function** is a named container for statements that can be **invoked** to execute its statements. Functions improve the readability of our code and minimize repetition of commonly used statements.
+A **Function** is a reusable container of statements:
+* Functions improve the readability of our code and minimize repetition of commonly used statements.
+* A function can be **invoked** to execute its statements. A function can be invoked many times.
 
 The same result can be achieved with a `printSumAndAverage` function:
 
@@ -96,7 +97,7 @@ printSumAndAverage(-2, -1, 1, 2);
 
 We first create the function to contain the logic, give it a descriptive name, and then invoke the function to execute its statements with minimal repetition.
 
-**Challenge**: Refactor this highly repetitive code for converting a temperature from fahrenheit into celsius. Make sure to give your function a descriptive name!
+**Challenge**: Refactor this highly repetitive code for converting a temperature from fahrenheit into celsius. What should the function be called? What are the inputs that make each instance of code different (and what should those parameters be called)? 
 
 ```js
 const tempC1 = 0
@@ -117,39 +118,42 @@ console.log(`${tempC3}°C is ${tempF3}°F`);
 
 ### Function Calls
 
-After a function is declared, the function must be **invoked** to use the function's code using the syntax:
+After a function is declared, the function must be **invoked** in order to use the function's code.
 
 ```js
-// adding parentheses after the function name invokes the function
+// Adding parentheses after the function name invokes the function
 functionName();
 ```
 
 Invoking (or "calling") a function causes the program to jump to the first line of code in the function, setting it as the next line of code to be executed.
 
 ```js
+// 1. console.log is invoked
 console.log('This happens first');
 
+// 2. Function sayHello is defined
 const sayHello = () => {
-  // not executed until sayHello() is invoked
+  // 5 & 7. console.log is invoked (and again)
   console.log('hello');
 }
 
+// 3. console.log is invoked
 console.log('this happens second');
 
-// hello is printed when sayHello() is invoked
+// 4. sayHello is invoked
 sayHello(); 
 
-// we can invoke a function multiple times!
+// 6. sayHello is invoked again
 sayHello();
 ```
 
 Note that the order in which statements are executed in our code is not always top to bottom. Declaring the function doesn't cause the code inside to run. We only execute the code inside of `sayHello` when it is invoked a few lines later.
 
-**Experiment**: Run this program using the debugger to see how the control flow of the program is affected by invoking a function.
+**Experiment**: Run this program using the `debugger` to see how the control flow of the program is affected by invoking a function.
 
 ### Parameters and Arguments
 
-The function `sayHello` above has no flexibility in its functionality. It always prints `"hello"`. 
+The function `sayHello` does the same thing. Every. Single. Time. It always prints `"hello"`. 
 
 **Parameters** are variables created inside of a function that enable a function to change its behavior based on **arguments** provided in the function call.
 
@@ -261,36 +265,6 @@ console.log(isPositiveOrNegative(-5)); // Output: "Negative"
 console.log(isPositiveOrNegative(5)); // Output: "Positive"
 console.log(isPositiveOrNegative(0)); // Output: "Neither"
 ```
-
-### Function Scope
-
-**Scope** refers to where in our code variables can be referenced. Files, functions, and code blocks `{}` each create a new scope.
-
-There can be any number of scopes in a single file but we will describe them as either:
-* **Global Scope** — Variables that are accessible across the entire file. Includes things like `console` and `Math` and variables/functions declared at the outermost scope of the file.
-* **Local Scope** — Variables that are accessible only in the current function or code block.
- 
-```javascript
-// Global Scope - friend is accessible anywhere in this file.
-const friend = 'John';
-
-const greetFriend = (myName) => {
-  // The myName parameter has local/function scope. It can only be accessed inside of greetFriend
-  
-  // We can access the globally scoped `friend` here since we are in an "inner" scope.
-  console.log(`Hi, ${friend}, I'm ${myName}`);
-}
-
-greetFriend('Jane'); 
-// Output: "Hi, John, I'm Jane"
-
-// We can't access myName because we are in an "outer" scope compared to where it is declared.
-myName; // ReferenceError: myName is not defined
-```
-
-* Outer scopes cannot see variables in inner scopes.
-* Inner scopes can see variables in outer scopes.
-* Parameters are treated as locally scoped variables.
 
 ### Arrow Functions vs. Function Declarations vs. Function Expressions
 There are many ways to create a function, but we will use **Arrow Function** syntax:

@@ -6,7 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents:**
 - [Summary](#summary)
-- [Computation is Data Generation](#computation-is-data-generation)
+- [Computation is All About Data](#computation-is-all-about-data)
 - [Data Types](#data-types)
 - [Operators](#operators)
   - [Ternary Operator](#ternary-operator)
@@ -15,25 +15,26 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [Type Coercion \& Truthy vs. Falsy](#type-coercion--truthy-vs-falsy)
 - [Variables](#variables)
   - [Referencing and Reassigning Variables](#referencing-and-reassigning-variables)
+  - [Variable Scope](#variable-scope)
   - [The Four Ways To Declare Variables](#the-four-ways-to-declare-variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
 
 ## Summary
 
-* **Data types** are categories of values in JavaScript, including primitive types (String, Number, Boolean, undefined, null) and reference types (Object, Array, Function). Knowing the type helps determine how you can use a value.
-* **Operators** are symbols that generate new data from existing values. Arithmetic, comparison, and logical operators allow you to perform calculations and make decisions.
+* **Data types** are categories of values in JavaScript. There are 5 primitive types (String, Number, Boolean, undefined, null) and 3 reference types (Object, Array, Function). Knowing the type of a value helps determines how you can use that value. Choosing the right type to represent your data is essential.
+* **Operators** are symbols (e.g. `+`, `>=`, `&&`) that generate new data from existing values. Arithmetic, comparison, and logical operators allow you to perform calculations and make decisions.
 * **Type coercion** is the process of converting a value from one data type to another, sometimes automatically. Values can be "truthy" or "falsy" depending on their content.
 * **Variables** are named containers for data. You can reference and reassign variables to store and update information in your program.
   * There are four ways to declare variables: `const` (preferred for values that don't change), `let` (for values that do change), `var` (legacy, avoid using), and global variables (avoid using).
 * **Hoisting** allows some variables and functions to be referenced before they are declared, which can lead to confusing bugs. Prefer `const` and `let` to avoid hoisting
 
-## Computation is Data Generation
+## Computation is All About Data
 
-The first computational device, the abacus, was used for making it easier to perform mathematical calculations. In other words, it was a data-generating device.
+Every computational device, even the earliest device the abacus, is used to manipulate and generate data.
 
 ![The abacus is the earliest known computational device](img/abacus.png)
 
-Our modern computers, while much more powerful, are still oriented around this singular goal: generating data. 
+Our modern computers, while much more powerful, are still oriented around this singular goal: manipulating and generating data. 
 
 What has changed and evolved over time is what we do with those calculations and how quickly our devices can perform them. Here are some modern applications of how our computers make use of data:
 * **Rendering images & video**: Calculating pixel positions, color values, and frame rates turns raw math into Netflix streams and 3D games.
@@ -62,7 +63,7 @@ There are five main **primitive data types**: Number, String, Boolean, `undefine
 | **Undefined** | `undefined`              | A variable that has been declared but not yet given a value | “Not yet set” values                                                  |
 | **Null**      | `null`                   | Intentional absence of a value                              | Representing “no result”                                              |
 
-There are also three **reference data types**: Objects, Arrays, and Functions (we'll talk about these later on).
+There are also three **reference data types**: Objects, Arrays, and Functions.
 
 | Reference Type | Syntax Example                             | What It Represents              | Common Use Cases                                               |
 | -------------- | ------------------------------------------ | ------------------------------- | -------------------------------------------------------------- |
@@ -144,6 +145,18 @@ console.log(typeof []);     // Prints "object"
 
 Operators can be combined to form complex expressions. In these cases, understanding the order in which operators are evaluated — also called **operator precedence** — is crucial.
 
+Let's look at this code snippet as an example, what is the value of `result`?:
+
+```js
+const result = Math.random() > 0.5 ? "Heads" : "Tails";
+```
+
+{% hint style="info" %}
+
+In JavaScript `Math` is a globally available object with methods and properties for doing various mathematical calculations. `Math.random()` returns a random number that is `≥0` and `<1`
+
+{% endhint %}
+
 Below is the order of precedence:
 1. Function calls are evaluated first
 2. Then arithmetic operators. `*`, `/`, `%` are evaluated before `+` and `-`.
@@ -153,23 +166,19 @@ Below is the order of precedence:
 
 Parentheses `()` can always be used to override the default order and make the evaluation order explicit.
 
-Let's look at this code snippet as an example:
-
 ```js
 const result = Math.random() > 0.5 ? "Heads" : "Tails";
 ```
 
-{% hint style="info" %}
-
-In JavaScript `Math` is a globally available object with methods and properties for doing more complex math. `Math.random()` returns a random number between `0` and `1` (exclusive, meaning it will be less than `1`).
-
-{% endhint %}
+**<details><summary>Q: So, what is the order of operations? What is the value stored in result?</summary>**
 
 The order of operations is as follows:
 1. `Math.random()` resolves to a random number between 0 and 1.
 2. `Math.random() > 0.5` resolves to `true` or `false` based on the value from step 1.
 3. `Math.random() > 0.5 ? "Heads" : "Tails"` resolves to `"Heads"` or `"Tails"` based on the result from step 2.
 4. `const result = Math.random() > 0.5 ? "Heads" : "Tails"` --> assigns the `"Heads"` or `"Tails"` to the variable `result` based on step 3.
+
+</details>
 
 **Challenge**: what values are produced by the code snippet below?
 
@@ -263,10 +272,16 @@ A **Variable** in JavaScript is a named container for data. By labeling our data
 
 Consider the two approaches below to produce the same result. The first does not use variables while the second does. What are the tradeoffs of each approach?
 
+**Approach 1: No Variables**
+
 ```js
 console.log(`The sum of 4 + 3 + 2 + 1 is ${4 + 3 + 2 + 1} and the average is ${(4 + 3 + 2 + 1) / 4}`);
 // Output: The sum of 4 + 3 + 2 + 1 is 10 and the average is 2.5
+```
 
+**Approach 2: Variables**
+
+```js
 const sum = 4 + 3 + 2 + 1;  
 const average = sum / 4;   
 const message = `The sum of 4 + 3 + 2 + 1 is ${sum} and the average is ${average}`;
@@ -276,9 +291,9 @@ console.log(message);
 
 **<details><summary>Tradeoffs of each approach</summary>**
 
-The first approach can be written in one line, however, it is very long. This makes it more difficult to read and predict the output. Additionally the `4 + 3 + 2 + 1` expression must be calculated twice.
+The first approach can be written in one line, however, it is very long. This makes it more difficult to read and predict the output. Additionally the `4 + 3 + 2 + 1` expression must be calculated twice since that calculation is not saved anywhere.
 
-With variables, each expression is nicely labeled for readability and comprehension. Additionally, the `sum` variable can be used to calculate the `average` and to help construct the `message`. However, more lines of code are used. 
+With variables, each expression is nicely labeled for readability and comprehension. Additionally, the calculation for the sum is stored in the `sum` variable allowing us to use it to calculate the `average` and to help construct the `message`. However, more lines of code are used. 
 
 In most cases, the benefits of readability, comprehension, and minimizing repetition outweigh the extra space taken up in a file.
 
@@ -316,6 +331,60 @@ count += 3;
 
 console.log(`count is now ${count}`); // Output: count is now 6
 ```
+
+### Variable Scope
+
+**Scope** refers to the area in our code where a variable is declared that impacts where it can referenced. Files, functions, and code blocks `{}` each create a new scope of varying levels of "visibility".
+
+For example, a variable declared in the scope of a function can be referenced within that function, but cannot be referenced outside of that function:
+
+```js
+const printX = () => {
+  const x = 10; // A function scope variable
+
+  console.log(x); // Can reference x without errors
+}
+printX();
+
+console.log(x); // ReferenceError: x is not defined
+```
+
+Variables can be declared at the following levels of scope, from highest to lowest. Variables can be referenced within lower scopes but not higher scopes:
+* **Global Scope** — Variables that can be referenced across all code running in "script" mode. Includes things like `console`, `Math`, and the `global` object.
+* **Module Scope** — Variables that can only be referenced anywhere within the module in which they are defined. Includes variables declared within a file and outside of a function.
+* **Function Scope** — Variables (and parameters) that can only be referenced within the function where they are defined.
+* **Block Scope** — Variables that can be referenced only within the code block where they are defined.
+ 
+```javascript
+// Global Scope: this value can be referenced in any file. DON'T DO THIS
+global.x = 10; 
+
+// Module Scope: this value can only be referenced within this file
+const friend = 'John'; 
+
+// Function Scope: The myName parameter and message variable can only be referenced within greetFriend
+const greetFriend = (myName) => {
+  // We can access the module scoped `friend` here since we are in a lower scope.
+  const message = `Hi, ${friend}, I'm ${myName}`;
+  
+  console.log(message);
+}
+
+greetFriend('Jane'); 
+// Output: "Hi, John, I'm Jane"
+
+console.log(message); // ReferenceError: message is not defined in this scope
+```
+
+Variables can be referenced by lower scopes but not by higher scopes. For example, the `friend` variable can be referenced in the `greetFriend` scope because it was defined at the higher module scope.
+
+**<details><summary>Q: What would happen if we defined a separate `message` variable in the module scope? Would we still get an error? How would the message variable in the greetFriend scope be impacted?</summary>**
+
+If a separate `message` variable were added to the module scope, the `console.log(message)` statement that is at the end of the program would NOT result in an error. The value for the module scoped `message` would be printed.
+
+Within `greetFriend` however, the "closer" `message` variable would be used and would not interfere with the `message` variable of the outer scope.
+
+</details>
 
 ### The Four Ways To Declare Variables
 There are 4 ways to declare a new variable, *but only the first two of should be used*:
