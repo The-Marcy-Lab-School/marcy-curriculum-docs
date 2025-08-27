@@ -36,8 +36,8 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 - [Module 6: Data Structures & Algorithms](mod-6-ds-a/)
 - [Module 7: React](mod-7-react/)
 - [Module 8: Backend & Fullstack Development](mod-8-backend/)
-- Module 9: Civic Tech Hackathon
-- Module 10: Capstone / Internship
+- [Module 9: Civic Tech Hackathon](mod-9-civic-tech-hackathon/)
+- [Module 10: Capstone](mod-10-capstone/)
 
 ## Learning Principles
 
