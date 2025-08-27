@@ -26,7 +26,7 @@
   * [2. Git & GitHub](mod-0-command-line-interfaces-git-and-github/2-git-github.md)
   * [3. Git Pulling & Merging](mod-0-command-line-interfaces-git-and-github/3-git-pulling-merging.md)
   * [4. Git Branching & PRs](mod-0-command-line-interfaces-git-and-github/4-git-branching.md)
-  * [Important How Tos and Guides](mod-4-project-week/important-how-tos-and-guides/README.md)
+  * Important How Tos and Guides
     * [Local Environment Setup - Mac](environment-setup/local-environment-setup-mac.md)
     * [Local Environment Setup - Windows](environment-setup/local-environment-setup-windows.md)
     * [GitHub Setup](environment-setup/github-setup.md)
@@ -44,7 +44,7 @@
   * [10. Higher Order Functions & Callbacks](mod-1-javascript-fundamentals/8-hof-callbacks.md)
   * [11. Array Higher-Order Methods](mod-1-javascript-fundamentals/9-hof-array-methods.md)
   * [12. Regex (Bonus Chapter!)](mod-1-javascript-fundamentals/10-regex.md)
-  * [Important How Tos and Guides](mod-4-project-week/important-how-tos-and-guides/README.md)
+  * Important How Tos and Guides
     * [How To Code at Marcy: Code Style Guide](how-tos/style-guide.md)
     * [How to Do Short Response and Coding Assignments](how-tos/assignments.md)
     * [How to Debug](how-tos/how-to-debug.md)
@@ -77,7 +77,7 @@
   * [Technical Requirements Checklist](mod-4-project-week/technical-requirements.md)
   * [Free API List](mod-4-project-week/free-apis.md)
   * [Collaborative GitHub](mod-0-command-line-interfaces-git-and-github/4-git-branching.md)
-  * [Important How Tos and Guides](mod-4-project-week/important-how-tos-and-guides/README.md)
+  * Important How Tos and Guides
     * [How to Create a GitHub Organization and Scrum Board](how-tos/how-to-create-scrumboard.md)
     * [How To Start a Project with Vite](how-tos/vite.md)
     * [How To Deploy a Project with GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
@@ -99,7 +99,7 @@
   * [3. Stacks & Queues](mod-6-ds-a/3-stacks-queues.md)
   * [4. Recursion](mod-6-ds-a/4-recursion.md)
   * [5. Trees](mod-6-ds-a/5-trees.md)
-  * [Important How Tos and Guides](mod-6-ds-a/important-how-tos-and-guides/README.md)
+  * Important How Tos and Guides
     * [How to Debug](how-tos/how-to-debug.md)
     * [How to PEDAC](how-tos/how-to-pedac.md)
 * [Mod 7 - React](mod-7-react/README.md)
@@ -112,7 +112,7 @@
   * [6. React Context](mod-7-react/6-react-context.md)
   * [7. Global Context Pattern](mod-7-react/7-global-context-pattern.md)
   * [8. React Project Week Overview](mod-7-react/8-react-project-week.md)
-  * [Important How Tos and Guides](mod-7-react/important-how-tos-and-guides/README.md)
+  * Important How Tos and Guides
     * [How to Create Projects with Vite](how-tos/vite.md)
     * [How to Deploy on GitHub Pages](how-tos/deploying-vite-with-github-pages.md)
 * [Mod 8 - Backend](mod-8-backend/README.md)
@@ -129,7 +129,7 @@
   * [10. Migrations & Seeds](mod-8-backend/10-migrations-and-seeds.md)
   * [11. Schema Design & Normalization](mod-8-backend/11-schema-design-and-normalization.md)
   * [12. Hashing Passwords with Bcrypt](mod-8-backend/12-hashing-passwords-with-bcrypt.md)
-  * [Important How Tos and Guides](mod-8-backend/important-how-tos-and-guides/README.md)
+  * Important How Tos and Guides
     * [How to Deploy on Render](how-tos/deploying-using-render.md)
     * [How to Test your API with Postman](how-tos/test-api-postman.md)
     * [Postgres Setup](environment-setup/postgres-setup.md)
