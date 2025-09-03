@@ -8,6 +8,7 @@
   - [Plan and Delegate!!](#plan-and-delegate)
   - [Meet on your own time](#meet-on-your-own-time)
   - [Test your API!](#test-your-api)
+- [More Reading](#more-reading)
 
 ## Overview
 
@@ -70,3 +71,11 @@ Be in alignment with your teammate outside of the scheduled meetings with your e
 ### Test your API!
 
 Actually write a fetch to make sure that the API works before choosing it for your proposal  
+
+## More Reading
+
+* [Agile Methodologies](agile-methodologies.md)
+* [Deliverables & Milestones](deliverables-milestones.md)
+* [Technical Requirements Checklist](technical-requirements.md)
+* [Free API List](free-apis.md)
+* [Collaborative GitHub](../mod-0-command-line-interfaces-git-and-github/4-git-branching.md)

@@ -11,3 +11,14 @@ In this module, we'll learn about:
 * **Polymorphism** - similar objects can be used interchangeably
 * **Class** — a blueprint for creating objects with shared methods and properties. Classes are particularly useful for creating interfaces.
 * **Interface** — an abstraction layer of an application that provides methods for interacting with a hidden or controlled portion of the application. For example, user interfaces provide buttons (methods) that enable users to interact with your application's code in a controlled manner. 
+
+## Chapters
+
+* [1. Intro to OOP, Encapsulation, Factory Functions, and Closure](1-encapsulation-factories-and-closure.md)
+* [2. Classes](2-classes.md)
+* [3. Private & Static](3-private-properties-static-methods.md)
+* [4. UML Diagrams & Has Many/Belongs To Relationships](5-has-many-belongs-to.md)
+* [5. Challenge: Implementing Has Many/Belongs To](6-has-many-belongs-to-frontend.md)
+* [6. Inheritance](7-inheritance.md)
+* [7. Polymorphism](8-polymorphism.md)
+* [8. Review and Practice](9-review.md)

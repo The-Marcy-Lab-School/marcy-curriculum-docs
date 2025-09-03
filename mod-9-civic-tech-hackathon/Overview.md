@@ -274,4 +274,6 @@ Observe the professionalism and polish of the slides here! Each member has their
 
 ## 👀 What's Next
 
-Head over to the [Civic Tech Hackathon Rubric](rubric.md) to see more details about the requirements for your project and other minor deliverables.
+Check out the [React Express Auth Template Overview](react-express-auth-overview.md) to learn about the code you will start your project with. 
+
+Then read the [Civic Tech Hackathon Rubric](rubric.md) to see more details about the requirements for your project and other minor deliverables.

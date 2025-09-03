@@ -10,3 +10,14 @@ In this module, we'll learn about:
 * **Frontend Routing** — the act of showing different user interfaces depending on the current URL (e.g. the `/about` vs. the `/contact` page)
 * **Client-Side Routing** — a strategy for frontend routing in which the server sends a single set of static assets to the client that are able to change the user interface depending on the current URL.
 * **Server-Side Routing** — a strategy for frontend routing in which the server sends different static assets to the client depending on the current URL.
+
+## Chapters
+
+* [1. Intro to React](1-intro-to-react.md)
+* [2. Events, State, and Forms](2-events-state-and-forms.md)
+* [3. Fetching with useEffect](3-fetching-useeffect.md)
+* [4. React Router](4-react-router.md)
+* [5. Building a Flashcards App](5-flashcards-app.md)
+* [6. React Context](6-react-context.md)
+* [7. Global Context Pattern](7-global-context-pattern.md)
+* [8. React Project Week Overview](8-react-project-week.md)

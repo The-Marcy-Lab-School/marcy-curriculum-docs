@@ -15,4 +15,19 @@ In this module, we'll learn about:
   * **Authentication** — Ensuring that only valid users can access protected content.
   * **Authorization** — Ensuring that a given user has permission to modify content.
 
-By the end of this module you will be able to build an application using the [React + Express + Auth Template](https://github.com/The-Marcy-Lab-School/react-express-auth).
+By the end of this module you will be able to build an application using the [React + Express + Auth Template](../mod-9-civic-tech-hackathon/react-express-auth-overview.md).
+
+## Chapters
+
+* [1. Intro to Express](1-intro-to-express.md)
+* [2. Building a Static Web Server with Middleware](2-building-a-static-web-server-with-middleware.md)
+* [3. Securing API Keys and Environment Variables](3-securing-api-keys-and-environment-variables.md)
+* [4. RESTful CRUD API](4-rest-crud-api.md)
+* [5. Model-View-Controller Architecture](5-model-view-controller.md)
+* [6. SQL and Databases](6-sql-and-databases.md)
+* [7. JOIN (Association) SQL Queries](7-join-sql-queries.md)
+* [8. Knex](8-knex.md)
+* [9. Your First Fullstack App!](9-your-first-fullstack-app.md)
+* [10. Migrations & Seeds](10-migrations-and-seeds.md)
+* [11. Schema Design & Normalization](11-schema-design-and-normalization.md)
+* [12. Hashing Passwords with Bcrypt](12-hashing-passwords-with-bcrypt.md)
