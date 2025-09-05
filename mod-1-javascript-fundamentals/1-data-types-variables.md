@@ -371,13 +371,11 @@ console.log(x); // ReferenceError: x is not defined
 
 Variables can be declared at the following levels of scope, listed from the least reachability to the most reachability:
 * **Block-Scoped Variables** — Variables declared within a "block statement" `{}` (e.g. `if`, `if else`, `else`, `for`, `while`, etc...).
-* **Function-Scoped Variables** — Variables (and parameters) declared within a function are destroyed once the function finishes running.
-* **Module-Scoped Variables** — Variables declared within a file and outside of any function are destroyed once the 
+* **Function-Scoped Variables** — Variables and parameters declared within a function.
+* **Module-Scoped Variables** — Variables declared within a file and outside of any function.
 * **Global-Scoped Variables** — Variables provided by the runtime environment (Node, the Browser). These are things like the `global` and `window` objects. Avoid adding data to these objects.
  
 Scopes can contain other scopes. For example, a file can contain a function that has an `if` block statement inside. Variables declared in the "outer" scope can be referenced anywhere within the "inner" scopes, but not vice-versa.
-
-When a variable that is out of scope is referenced, a `ReferenceError` is thrown.
 
 ```javascript
 // myName is module-scoped. Reachable anywhere in this file.
@@ -412,11 +410,29 @@ greetFriend('Jane');
 console.log(message, myName);
 ```
 
+When a variable that is out of scope is referenced, a `ReferenceError` is thrown.
+
+{% hint style="info" %}
 As a best practice, aim to declare variables in the lowest possible scope where the variable is needed (block or function scope rather than module or global scope). 
 
 For example, in the code snippet above, we must declare the `myName` variable in the module scope since it is referenced in both the `sayHi` function and `greetFriend` function.
 
-**<details><summary>Q: Why is it possible to have two variables called `message` within the `greetFriend` function?</summary>**
+However, we can consolidate the two `message` variables in the conditional block statements and create one shared variable in the function scope. This helps us avoid repetitive code:
+
+```js
+const greetFriend = (friend) => {
+  let message;
+  if (!friend) {
+    message = "I can't say hi if I don't know your name!";
+  } else {
+    message = `Hi, ${friend}, I'm ${myName}. Nice to meet you.`;
+  }
+  console.log(message);
+}
+```
+{% endhint %}
+
+**<details><summary>Q: Why is it even possible to have two variables called `message` within the `greetFriend` function?</summary>**
 
 We can have two variables with the same name as long as they are in different scopes. This is the entire point of scope! It limits name collision errors like `Uncaught SyntaxError: Identifier 'x' has already been declared`
 
