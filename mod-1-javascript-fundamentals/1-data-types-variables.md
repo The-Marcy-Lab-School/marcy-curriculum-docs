@@ -67,8 +67,8 @@ There are also three **reference data types**: Objects, Arrays, and Functions.
 
 | Reference Type | Syntax Example                             | What It Represents              | Common Use Cases                                               |
 | -------------- | ------------------------------------------ | ------------------------------- | -------------------------------------------------------------- |
-| **Object**     | `{ name: "Alex", age: 25 }`                | A collection of key–value pairs | Modeling real-world entities (user profile, product, settings) |
-| **Array**      | `[ "apple", "banana", "cherry" ]`          | An ordered list of values       | Storing lists of items (shopping cart, leaderboard, messages)  |
+| **Object**     | `{ name: "Alex", age: 25 }`                | A collection of data relating to one "thing" | Storing user profile data, storing data about a product |
+| **Array**      | `[ "apple", "banana", "cherry" ]`          | An ordered list of similar values       | Storing lists of items (shopping cart, leaderboard, messages)  |
 | **Function**   | `function greet() { console.log("Hi!"); }` | A reusable block of code        | Performing actions, handling events, calculations              |
 
 ## Operators
