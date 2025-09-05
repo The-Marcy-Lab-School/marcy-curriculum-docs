@@ -14,8 +14,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [Resolution Order of Operations](#resolution-order-of-operations)
 - [Type Coercion \& Truthy vs. Falsy](#type-coercion--truthy-vs-falsy)
 - [Variables](#variables)
-  - [Referencing and Reassigning Variables](#referencing-and-reassigning-variables)
-  - [Variable Scope](#variable-scope)
+  - [Using Variables: Declare, Assign, Reference](#using-variables-declare-assign-reference)
+  - [Scope](#scope)
   - [The Four Ways To Declare Variables](#the-four-ways-to-declare-variables)
   - [Hoisting: Why We Don't Use `var`](#hoisting-why-we-dont-use-var)
 
@@ -26,6 +26,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 * **Type coercion** is the process of converting a value from one data type to another, sometimes automatically. Values can be "truthy" or "falsy" depending on their content.
 * **Variables** are named containers for data. You can reference and reassign variables to store and update information in your program.
   * There are four ways to declare variables: `const` (preferred for values that don't change), `let` (for values that do change), `var` (legacy, avoid using), and global variables (avoid using).
+* **Scope** refers to where a variable is declared. It impacts the "reachability" of the variable (where it can be referenced).
 * **Hoisting** allows some variables and functions to be referenced before they are declared, which can lead to confusing bugs. Prefer `const` and `let` to avoid hoisting
 
 ## Computation is All About Data
@@ -67,8 +68,8 @@ There are also three **reference data types**: Objects, Arrays, and Functions.
 
 | Reference Type | Syntax Example                             | What It Represents              | Common Use Cases                                               |
 | -------------- | ------------------------------------------ | ------------------------------- | -------------------------------------------------------------- |
-| **Object**     | `{ name: "Alex", age: 25 }`                | A collection of data relating to one "thing" | Storing user profile data, storing data about a product |
-| **Array**      | `[ "apple", "banana", "cherry" ]`          | An ordered list of similar values       | Storing lists of items (shopping cart, leaderboard, messages)  |
+| **Object**     | `{ name: "Alex", age: 25 }`                | A collection of data relating to one "thing" | Storing user profile data, storing data about product (name, description, price, etc...) |
+| **Array**      | `[ "apple", "banana", "cherry" ]`          | An ordered list of similar values       | Storing lists (shopping cart items, game high scores, chat messages)  |
 | **Function**   | `function greet() { console.log("Hi!"); }` | A reusable block of code        | Performing actions, handling events, calculations              |
 
 ## Operators
@@ -268,7 +269,7 @@ console.log("1" + String(1));
 
 ## Variables
 
-A **Variable** in JavaScript is a named container for data. By labeling our data, variables enable us to perform a series of computations in a program and "save" our progress along the way.
+A **Variable** in JavaScript is a named container for data. By labeling our data, variables enable us to perform a series of computations in a program and "save" our progress along the way. Descriptive variable names dramatically improve the readability of our code.
 
 Consider the two approaches below to produce the same result. The first does not use variables while the second does. What are the tradeoffs of each approach?
 
@@ -299,13 +300,19 @@ In most cases, the benefits of readability, comprehension, and minimizing repeti
 
 </details>
 
-### Referencing and Reassigning Variables
+### Using Variables: Declare, Assign, Reference
 
-We can either "reference" a variable by name to access its current value or "reassign" the variable to hold a new value:
+There are three things we can do with variables:
+* Create a new variable ("declare the variable"). Use `let` or `const`.
+* Give the variable a new value to hold ("assign the variable a value"). Only possible with `let` variables.
+* Use the value held by the variable ("reference the variable")
 
 ```js
-// Use let because we will reassign this variable
-let count = 0;
+// Declare a variable without an initial value
+let count;
+
+// Assigning the variable the value 0
+count = 0;
 
 // Reference the count variable to access its current value, 0
 console.log(`count starts at ${count}`);
@@ -317,7 +324,7 @@ count = 1;
 console.log(`count is now ${count}`); 
 ```
 
-We can even use the current value of a variable to calculate the value we reassign it to:
+We can even reference the current value of a variable to calculate the new value we assign to it:
 
 ```js
 // The right side of `=` resolves before reassignment. Count is 2
@@ -332,57 +339,86 @@ count += 3;
 console.log(`count is now ${count}`); // Output: count is now 6
 ```
 
-### Variable Scope
+**<details><summary>Q: Can you declare a `const` variable without an initial value? Why or why not?</summary>**
 
-**Scope** refers to the area in our code where a variable is declared that impacts where it can referenced. Files, functions, and code blocks `{}` each create a new scope of varying levels of "visibility".
+You cannot! Since a `const` variable cannot be assigned a new value, it must be given a value immediately when declared otherwise it will forever be `undefined` which isn't very useful. Doing so will throw a `SyntaxError`:
 
-For example, a variable declared in the scope of a function can be referenced within that function, but cannot be referenced outside of that function:
+```js
+let y; // Totally fine since we can change the value assigned to a let variable.
+
+const x; // Uncaught SyntaxError: Missing initializer in const declaration
+```
+
+</details>
+
+### Scope
+
+**Scope** refers to where a variable is declared. The scope of the variable impacts the "reachability" of the variable (where it can be referenced).
+
+For example, a variable declared in the **scope** of a function can only be referenced within that function. It is not reachable outside of the function.
 
 ```js
 const printX = () => {
-  const x = 10; // A function scope variable
+  // x is reachable anywhere in this function
+  const x = 10;
 
-  console.log(x); // Can reference x without errors
+  console.log(x); 
 }
-printX();
+printX(); 
 
 console.log(x); // ReferenceError: x is not defined
 ```
 
-Variables can be declared at the following levels of scope, from highest to lowest. Variables can be referenced within lower scopes but not higher scopes:
-* **Global Scope** — Variables that can be referenced across all code running in "script" mode. Includes things like `console`, `Math`, and the `global` object.
-* **Module Scope** — Variables that can only be referenced anywhere within the module in which they are defined. Includes variables declared within a file and outside of a function.
-* **Function Scope** — Variables (and parameters) that can only be referenced within the function where they are defined.
-* **Block Scope** — Variables that can be referenced only within the code block where they are defined.
+Variables can be declared at the following levels of scope, listed from the least reachability to the most reachability:
+* **Block-Scoped Variables** — Variables declared within a "block statement" `{}` (e.g. `if`, `if else`, `else`, `for`, `while`, etc...).
+* **Function-Scoped Variables** — Variables (and parameters) declared within a function are destroyed once the function finishes running.
+* **Module-Scoped Variables** — Variables declared within a file and outside of any function are destroyed once the 
+* **Global-Scoped Variables** — Variables provided by the runtime environment (Node, the Browser). These are things like the `global` and `window` objects. Avoid adding data to these objects.
  
+Scopes can contain other scopes. For example, a file can contain a function that has an `if` block statement inside. Variables declared in the "outer" scope can be referenced anywhere within the "inner" scopes, but not vice-versa.
+
+When a variable that is out of scope is referenced, a `ReferenceError` is thrown.
+
 ```javascript
-// Global Scope: this value can be referenced in any file. DON'T DO THIS
-global.x = 10; 
+// myName is module-scoped. Reachable anywhere in this file.
+const myName = 'John';
 
-// Module Scope: this value can only be referenced within this file
-const friend = 'John'; 
-
-// Function Scope: The myName parameter and message variable can only be referenced within greetFriend
-const greetFriend = (myName) => {
-  // We can access the module scoped `friend` here since we are in a lower scope.
-  const message = `Hi, ${friend}, I'm ${myName}`;
-  
-  console.log(message);
+const sayHi = () => {
+  // `myName` is reachable anywhere within this file, even in lower scopes like in this function
+  console.log(`Hi, my name is ${myName}`)
 }
 
-greetFriend('Jane'); 
-// Output: "Hi, John, I'm Jane"
+const greetFriend = (friend) => {
+  // Parameters like `friend` are function-scoped. Reachable anywhere in this function.
 
-console.log(message); // ReferenceError: message is not defined in this scope
+  if (!friend) {
+    // message is block-scoped. Reachable only in this block.
+    const message = "I can't say hi if I don't know your name!";
+    console.log(message);
+  } else {
+    // message is block-scoped. Reachable only in this block.
+    const message = `Hi, ${friend}, I'm ${myName}. Nice to meet you.`;
+    console.log(message);
+  }
+}
+
+greetFriend("");
+// Output: I can't say hi if I don't know your name!
+
+greetFriend('Jane');
+// Output: "Hi, Jane, I'm John. Nice to meet you."
+
+// We get ReferenceErrors if we try to reference variables out of scope.
+console.log(message, myName);
 ```
 
-Variables can be referenced by lower scopes but not by higher scopes. For example, the `friend` variable can be referenced in the `greetFriend` scope because it was defined at the higher module scope.
+As a best practice, aim to declare variables in the lowest possible scope where the variable is needed (block or function scope rather than module or global scope). 
 
-**<details><summary>Q: What would happen if we defined a separate `message` variable in the module scope? Would we still get an error? How would the message variable in the greetFriend scope be impacted?</summary>**
+For example, in the code snippet above, we must declare the `myName` variable in the module scope since it is referenced in both the `sayHi` function and `greetFriend` function.
 
-If a separate `message` variable were added to the module scope, the `console.log(message)` statement that is at the end of the program would NOT result in an error. The value for the module scoped `message` would be printed.
+**<details><summary>Q: Why is it possible to have two variables called `message` within the `greetFriend` function?</summary>**
 
-Within `greetFriend` however, the "closer" `message` variable would be used and would not interfere with the `message` variable of the outer scope.
+We can have two variables with the same name as long as they are in different scopes. This is the entire point of scope! It limits name collision errors like `Uncaught SyntaxError: Identifier 'x' has already been declared`
 
 </details>
 
@@ -391,7 +427,7 @@ There are 4 ways to declare a new variable, *but only the first two of should be
  1. `const` declares a block-scoped variable that cannot be reassigned. This should be your go-to variable declaration.
  2. `let` declares a re-assignable block-scoped variable. Use only when reassignment is necessary.
  3. `var` declares a re-assignable, hoisted, function-scoped variable. **Do not use `var`**. Hoisting and function-scoped variables can cause unexpected behavior (read more below).
- 4. Global variables are declared without a keyword. **Do not use global variables**.
+ 4. Global-scoped variables are declared without a keyword. **Do not use global variables**.
 
 ```js
 // Good
