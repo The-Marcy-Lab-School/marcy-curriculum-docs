@@ -16,6 +16,8 @@ The purpose of this repository is to provide a template for full-stack applicati
   - [Getting to know the folder structure](#getting-to-know-the-folder-structure)
   - [Configure your database and environment variables](#configure-your-database-and-environment-variables)
   - [Kickstart the project](#kickstart-the-project)
+  - [Recommended Approach for Building](#recommended-approach-for-building)
+  - [Testing Along the Way](#testing-along-the-way)
 - [Database](#database)
   - [Migrations](#migrations)
     - [Modifying / Adding New Migrations](#modifying--adding-new-migrations)
@@ -195,6 +197,25 @@ Finally, split the terminal (or open two terminals) and run `npm run dev` in bot
 With the application running, try exploring the user flow on the various pages as shown above.
 
 Then, read the remaining sections to learn about the implementation details of the repository and how to work with it.
+
+### Recommended Approach for Building
+
+When building a Full-stack application with so many components, you may struggle to identify the best place to start and how to test along the way.
+
+This document is structured to reflect our recommended approach. We start with the database, then move to the server, then finish with the front-end. At a high level, you can think about working and testing your application from right to left in the diagram below:
+
+![The frontend, server, and database work together to form a full-stack application.](img/full-stack-diagram.svg)
+
+The reason for this has to do with **minimizing pre-requisites**. The units further to the left in the diagram have depend on the functionality of the units to their right. For example, before you can build endpoints, you need controllers and in order to have controllers you need to have models. Before you can build models you need to create the tables in the database.
+
+### Testing Along the Way
+
+After you complete one unit of the application make sure to test that unit before moving on. Here is how you can test each unit of the application:
+* Database Table / Migrations: Run the migration files and check your database using [TablePlus, Postico, or the `psql` CLI](../environment-setup/postgres-setup.md).
+* Model: Create a seed file that uses the model to insert hard-coded values into your table.
+* Controllers / Endpoints: Use [Postman](../how-tos/test-api-postman.md) to send HTTP requests and check your server logs and your database to confirm requests received and the intended actions were taken.
+* Adapters: Run the adapter file with hard-coded calls to your adapter functions. Check your server logs and your database to confirm requests received and the intended actions were taken.
+* Components: Interact with the frontend application as if you were a real user. Check your server logs and your database to confirm requests received and the intended actions were taken.
 
 ## Database
 
