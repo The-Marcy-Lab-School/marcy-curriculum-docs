@@ -211,11 +211,11 @@ The reason for this has to do with **minimizing pre-requisites**. The units furt
 ### Testing Along the Way
 
 After you complete one unit of the application make sure to test that unit before moving on. Here is how you can test each unit of the application:
-* Database Table / Migrations: Run the migration files and check your database using [TablePlus, Postico, or the `psql` CLI](../environment-setup/postgres-setup.md).
-* Model: Create a seed file that uses the model to insert hard-coded values into your table.
-* Controllers / Endpoints: Use [Postman](../how-tos/test-api-postman.md) to send HTTP requests and check your server logs and your database to confirm requests received and the intended actions were taken.
-* Adapters: Run the adapter file with hard-coded calls to your adapter functions. Check your server logs and your database to confirm requests received and the intended actions were taken.
-* Components: Interact with the frontend application as if you were a real user. Check your server logs and your database to confirm requests received and the intended actions were taken.
+* **Database Table / Migrations:** Run the migration files and check your database using [TablePlus, Postico, or the `psql` CLI](../environment-setup/postgres-setup.md).
+* **Model:** Create a seed file that uses the model to insert hard-coded values into your table.
+* **Controllers / Endpoints:** Use [Postman](../how-tos/test-api-postman.md) to send HTTP requests and check your server logs and your database to confirm requests received and the intended actions were taken.
+* **Adapters:** Run the adapter file with hard-coded calls to your adapter functions. Check your server logs and your database to confirm requests received and the intended actions were taken.
+* **Components:** Interact with the frontend application as if you were a real user. Check your server logs and your database to confirm requests received and the intended actions were taken.
 
 ## Database
 
