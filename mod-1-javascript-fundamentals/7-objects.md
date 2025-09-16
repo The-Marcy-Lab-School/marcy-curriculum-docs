@@ -10,7 +10,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [The basics](#the-basics)
   - [Accessing Objects with Dot Notation and Bracket Notation](#accessing-objects-with-dot-notation-and-bracket-notation)
   - [Dynamic Properties Challenge](#dynamic-properties-challenge)
-- [Iterating Over Objects](#iterating-over-objects)
+- [Iterating Over Keys and Values of an Object](#iterating-over-keys-and-values-of-an-object)
 - [Advanced Object Syntax](#advanced-object-syntax)
   - [Object Shorthand Using Variables](#object-shorthand-using-variables)
   - [Destructuring](#destructuring)
@@ -27,7 +27,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 ## The basics
 
 * Objects are a data type that can store multiple pieces of data as **key:value** pairs called **properties**
-* In other languages, they are referred to as **dictionaries**:
+* Objects are also referred to as **dictionaries** and **hashmaps**:
 
 ```js
 // Arrays store values in an order
@@ -144,7 +144,7 @@ To complete this program, add the line `dictionary[newWord] = definition;` to th
 
 </details>
 
-## Iterating Over Objects
+## Iterating Over Keys and Values of an Object
 
 One of the key benefits of an Array is that we can easily iterate through its values with a `for` loop. This is possible because we can use the variable `i` to step through the indexes of the array.
 
@@ -157,9 +157,11 @@ for (let i = 0; i < friends.length; i++) {
 }
 ```
 
-An object doesn't have countable indexes though. And their keys aren't in any particular order.
+We can't use a `for` loop with an object: it doesn't have countable indexes and their keys aren't in any particular order! 
 
-To iterate through an object, we can turn the object into an array using `Object.keys(obj)` which returns an Array of the given object's keys. We can then loop through those keys and use them to access their associated values:
+But we CAN turn the object into an array and _then_ iterate through that array.
+
+The `Object.keys(obj)` function puts all of the keys from the given object (`obj`) into a new array and returns it. We can then loop through those keys and use them to access their associated values:
 
 ```js
 const dictionary = {
@@ -168,18 +170,19 @@ const dictionary = {
   "cat": "the superior pet"
 }
 
-// First get an array of the keys of the object
+// words is an array containing the keys of dictionary
 const words = Object.keys(dictionary);
+
 console.log(words); // ["hello", "rainbow", "cat"]
 
-// Then, iterate through them to get their values
+// We can iterate through words to access their definitions
 for (let i = 0; i < words.length; i++) {
   const word = words[i];
   console.log(`The definition of ${word} is ${dictionary[word]}`);
 }
 ```
 
-If we don't care about the keys, we can just get an array of the object's values with `Object.values(obj)`:
+`Object.values(obj)` does the same thing but instead puts the values of the given object (`obj`) into an array.
 
 ```js
 const dictionary = {
