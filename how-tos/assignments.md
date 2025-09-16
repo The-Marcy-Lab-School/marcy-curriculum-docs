@@ -327,40 +327,7 @@ For this response, the following feedback would be provided:
 
 Below is a great example of a short response answer. As you read, what do you notice about it?
 
-{% code overflow="wrap" %}
-````
-In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`). 
-
-For example, we can simulate flipping a coin using an `if` statement and the `Math.random()` function which generates a number between `0` and `1`. 
-
-```js
-const random = Math.random();
-
-// only print out heads if the random number is between 0.5 and 1
-if (random > 0.5) {
-  console.log("heads");
-}
-
-// otherwise, do nothing
-```
-
-In this example, only when the boolean expression `random > 0.5` is `true` will the string `"heads"` be printed. Otherwise nothing will happen.
-
-When combined with an `else` statement, the programmer can provide an alternative action to perform when the boolean expression is `false`.
-
-```js
-const random = Math.random();
-
-if (random > 0.5) {
-  console.log("heads");
-} else {
-  console.log("tails");
-}
-```
-
-With the addition of the `else` statement, the program will print out `"heads"` if `random > 0.5` is `true` or `"tails"` if it is `false`.
-````
-{% endcode %}
+![An exemplar response](img/sr-markdown-example-2.png)
 
 <details>
 
