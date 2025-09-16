@@ -305,18 +305,7 @@ The examples below each respond to the following prompt:
 
 First, let's look at an example of a response that is technically accurate and complete but would likely receive feedback for improvements. As you read, what feedback would you provide?
 
-{% code overflow="wrap" %}
-```
-They are used if you want to like do one thing or another in your code. Here is an example.
-
-if (true) {
-  console.log('this');
-} 
-else {
-  console.log('that');
-}
-```
-{% endcode %}
+> ![A response that could use improvement](img/sr-markdown-example-1.png)
 
 <details>
 
