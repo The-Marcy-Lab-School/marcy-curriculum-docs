@@ -322,10 +322,10 @@ You can see the sub-dependencies of a module by opening its own `package.json` f
 In the `prompt-sync/package.json` file, you will notice that `prompt-sync-history` is listed under `"devDependencies"`.
 * **Developer dependencies** are dependencies used by the developer(s) who created the package but aren't needed by the users of the package. They are not added to the `node_modules` folder of the user.
 
-One developer dependency that we will commonly use is the `nodemon` module. Install it using `npm` and the `-D` flag to mark it as a developer dependency:
+One developer dependency that we will commonly use is the `nodemon` module. Install it using `npm` and the `--save-dev` flag to mark it as a developer dependency:
 
 ```sh
-npm i -D nodemon
+npm i --save-dev nodemon
 ```
 
 You should see `nodemon` added to the `"devDependencies"` section of your `package.json` (version numbers may vary):
@@ -368,7 +368,7 @@ The process of first writing tests and then writing code to satisfy those tests 
 At Marcy, we use the Node module [Jest](https://jestjs.io/) to write automated tests for coding assignments. 
 
 ```sh
-npm i -D jest
+npm i --save-dev jest
 ```
 
 Automated tests are JavaScript files that:
