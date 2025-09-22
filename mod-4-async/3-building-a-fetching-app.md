@@ -23,9 +23,7 @@ Remove the starter code.
 
 ## Plan
 
-Before you build anything, draw a wireframe:
-
-![](../fullstack-curriculum/mod-3-async/pokedex-wireframe.svg)
+Before you build anything, draw a wireframe
 
 Then plan out the logic:
 

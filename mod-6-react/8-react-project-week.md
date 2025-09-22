@@ -63,11 +63,11 @@ You are free to use any API that you choose; there are a few things we will requ
 * It must be free 
 * It should NOT require an API key
   * APIs that require an API key can only be deployed with a proxy server (which you will learn to build in the backend unit)
-* Check out this list of [Free APIs from the Mod 4 Project Week](../mod-4-project-week/free-apis.md).
+* Check out this list of [Free APIs from the Mod 4 Project Week](../projects/free-apis.md).
 
 ### Deployment
 
-Deployment is a requirement for this project! Check out this resource for [deploying a Vite project to Github pages](../how-tos/deploying-vite-with-github-pages.md)
+Deployment is a requirement for this project! Check out this resource for [deploying a Vite project to Github pages](../projects/deploying-vite-with-github-pages.md)
 
 ## Project Planning Artifacts
 

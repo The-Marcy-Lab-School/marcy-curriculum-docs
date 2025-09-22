@@ -29,15 +29,13 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 
 - [Module 0: Command Line Interfaces, Git & GitHub](mod-0-command-line-interfaces-git-and-github)
 - [Module 1: JavaScript Fundamentals](mod-1-javascript-fundamentals)
-- [Module 2: HTML, CSS, and DOM](mod-2-html-css-dom)
-- [Module 3: Asynchronous Programming with APIs](mod-3-async)
-- [Module 4: Project Week!](mod-4-project-week/)
-- [Module 5: Object-Oriented Programming (OOP)](mod-5-oop/)
-- [Module 6: Data Structures & Algorithms](mod-6-ds-a/)
-- [Module 7: React](mod-7-react/)
-- [Module 8: Backend & Fullstack Development](mod-8-backend/)
-- [Module 9: Civic Tech Hackathon](mod-9-civic-tech-hackathon/)
-- [Module 10: Capstone](mod-10-capstone/)
+- [Module 2: Object-Oriented Programming (OOP)](mod-2-oop/)
+- [Module 3: HTML, CSS, and DOM](mod-3-html-css-dom)
+- [Module 4: Asynchronous Programming with APIs](mod-4-async)
+- [Module 5: Backend Servers & Databases](mod-5-backend/)
+- [Module 6: React & Fullstack Applications](mod-6-react/)
+- [Civic Tech Hackathon](mod-9-civic-tech-hackathon/)
+- [Capstone](mod-10-capstone/)
 
 ## Learning Principles
 

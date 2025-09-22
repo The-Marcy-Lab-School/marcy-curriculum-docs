@@ -213,7 +213,7 @@ The reason for this has to do with **minimizing pre-requisites**. The units furt
 After you complete one unit of the application make sure to test that unit before moving on. Here is how you can test each unit of the application:
 * **Database Table / Migrations:** Run the migration files and check your database using [TablePlus, Postico, or the `psql` CLI](../environment-setup/postgres-setup.md).
 * **Model:** Create a seed file that uses the model to insert hard-coded values into your table.
-* **Controllers / Endpoints:** Use [Postman](../how-tos/test-api-postman.md) to send HTTP requests and check your server logs and your database to confirm requests received and the intended actions were taken.
+* **Controllers / Endpoints:** Use [Postman](../mod-5-backend/test-api-postman.md) to send HTTP requests and check your server logs and your database to confirm requests received and the intended actions were taken.
 * **Adapters:** Run the adapter file with hard-coded calls to your adapter functions. Check your server logs and your database to confirm requests received and the intended actions were taken.
 * **Components:** Interact with the frontend application as if you were a real user. Check your server logs and your database to confirm requests received and the intended actions were taken.
 
@@ -235,7 +235,7 @@ require('dotenv').config(); // load the .env file
 
 ### Migrations
 
-> For an overview of migrations and seeds, check out the chapter on [Migrations and Seeds](https://marcylabschool.gitbook.io/marcy-lab-school-docs/mod-8-backend/10-migrations-and-seeds).
+> For an overview of migrations and seeds, check out the chapter on [Migrations and Seeds](https://marcylabschool.gitbook.io/marcy-lab-school-docs/mod-5-backend/10-migrations-and-seeds).
 
 Migration files are stored in the `server/db/migrations` folder. To run them, run the following command:
 
@@ -927,4 +927,4 @@ Below are the pages/components that use the context:
 
 ## Deploying
 
-For instructions on deployment, check out the Marcy Lab School Docs guide on [How to Deploy On Render](https://marcylabschool.gitbook.io/marcy-lab-school-docs/how-tos/deploying-using-render) making sure to follow the instructions for deploying both a server and a database.
+For instructions on deployment, check out the Marcy Lab School Docs guide on [How to Deploy On Render](https://marcylabschool.gitbook.io/marcy-lab-school-docs/projects/deploying-using-render) making sure to follow the instructions for deploying both a server and a database.

@@ -1,4 +1,4 @@
-As you build this project, you will need to be incredibly organized and communicate well with your partner.
+As you build any project, you will need to be incredibly organized and communicate well with your teammates.
 
 Throughout your career, as you work on more projects and on more teams, you will realize that the people you enjoy working with most are excellent communicators and are highly organized. Additionally, being able to demonstrate your communication skills and approach to organization can really set you apart in the hiring process.
 
@@ -34,7 +34,7 @@ By sharing these details, the scrum board is meticulously maintained, every team
 
 ## Retrospective
 
-Following the completion of project week, you will have an opportunity to reflect on your experience. Doing so encourages you to celebrate your wins and identify how you want to improve. You may ask yourself:
+Following the completion of a project, you will have an opportunity to reflect on your experience. Doing so encourages you to celebrate your wins and identify how you want to improve. You may ask yourself:
 
 - What kind of teammate was I? 
 - Did I communicate well? 

@@ -282,7 +282,7 @@ With a **development server**, we can simulate this **HTTP request-response cycl
 
 ### Live Server
 
-While it is easy enough to build a server of your own using [Express](../mod-8-backend/1-intro-to-express.md), we can also use a tool like Live Server.
+While it is easy enough to build a server of your own using [Express](../mod-5-backend/1-intro-to-express.md), we can also use a tool like Live Server.
 
 **Do the following to add live server to your environment**:
 

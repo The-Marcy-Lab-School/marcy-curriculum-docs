@@ -242,7 +242,7 @@ Setting `flex-wrap: wrap`, flex items will be pushed to the next line when there
 
 ## Challenge: Styling a Navbar using Flexbox
 
-One of the most common uses of flexbox is to style a navigation bar. Open up [`1-navbar`](../fullstack-curriculum/mod-2-html-css-dom/lecture/1-navbar/) and look at the `<header>` element:
+One of the most common uses of flexbox is to style a navigation bar. Open up the `1-navbar` file and look at the `<header>` element:
 
 ```html
 <!-- Often, the header contains a logo and a nav component -->

@@ -29,5 +29,5 @@ In this module, we'll learn about:
 * [8. Flexbox](flexbox.md)
 * [9. Grid & Media Queries](grid-media-queries.md)
 * [10. ESModules](esmodules.md)
-* [11. Vite](../how-tos/vite.md)
+* [11. Vite](../projects/vite.md)
 * [12. LocalStorage](localStorage.md)

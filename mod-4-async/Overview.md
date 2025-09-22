@@ -19,3 +19,4 @@ In this module, we'll learn about:
 * [3. Building a Fetching App](3-building-a-fetching-app.md)
 * [4. Async & Await](4-async-await.md)
 * [5. A Generic Fetch Handler](5-generic-fetch-handler.md)
+* [6. Project Week!](6-project-week-overview.md)
