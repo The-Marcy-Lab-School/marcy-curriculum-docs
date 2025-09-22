@@ -15,6 +15,7 @@
   * [How to Maintain and Professional GitHub Project & Profile](projects/github-readme-and-profile.md)
   * [How to Create A GitHub Organization and Scrumboard](projects/how-to-create-scrumboard.md)
   * [How to Create Projects with Vite](projects/vite.md)
+  * [Free API List](projects/free-apis.md)
   * [How to Deploy on GitHub Pages](projects/deploying-vite-with-github-pages.md)
   * [How to Deploy on Render](projects/deploying-using-render.md)
 * [Mod 0 - Command Line Interfaces, Git, and GitHub](mod-0-command-line-interfaces-git-and-github/README.md)
