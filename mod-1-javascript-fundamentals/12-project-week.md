@@ -2,10 +2,6 @@
 
 - [Overview](#overview)
 - [Project Options](#project-options)
-- [Project Grading](#project-grading)
-  - [Technical Details (15 points)](#technical-details-15-points)
-  - [Reflection (2 points)](#reflection-2-points)
-  - [Professionalism \& Craftsmanship (5 points)](#professionalism--craftsmanship-5-points)
 - [Tips for Success](#tips-for-success)
 - [Setup Instructions](#setup-instructions)
 - [🎮 Project 1: Rock–Paper–Scissors CLI Game](#-project-1-rockpaperscissors-cli-game)
@@ -20,6 +16,10 @@
   - [Key Features to Implement:](#key-features-to-implement-2)
   - [Data Structure](#data-structure-2)
   - [Stretch Features to Consider:](#stretch-features-to-consider-2)
+- [Project Grading](#project-grading)
+  - [Technical Details (15 points)](#technical-details-15-points)
+  - [Reflection (2 points)](#reflection-2-points)
+  - [Professionalism \& Craftsmanship (5 points)](#professionalism--craftsmanship-5-points)
 
 ## Overview
 
@@ -40,56 +40,10 @@ Create a CRUD application where users can add, remove, and view items in their s
 **🧠 Project 3: Quiz Game** (The most challenging and new!)
 Develop a multiple-choice quiz application with questions, scoring, and replay functionality.
 
-## Project Grading
-
-Your project will be assessed on the following criteria (22 points total):
-* Technical Details (15 points)
-* Reflection (2 points)
-* Professionalism & Craftsmanship (5 points)
-
-### Technical Details (15 points)
-
-**Core JavaScript Concepts (7 points)**
-1. Variables: Uses clear, descriptive names that explain what data they hold
-2. Functions: Breaks code into multiple functions that each handle specific tasks
-3. Conditionals: Includes at least one `if/else` statement that changes behavior based on user input
-4. Loops: Uses at least one `while` loop to repeatedly prompt the user
-5. String Methods: Uses string methods (like `.toLowerCase()`, `.trim()`, etc.) to validate user input
-6. Higher Order Array Methods: Uses at least one array higher-order method (like `.forEach()`, `.filter()`, `.reduce()`, etc...)
-7. Objects: Uses at least one object to organize related data together
-
-**Code Organization (4 points)**
-1. Split your code into **at least 3 separate modules** (files)
-2. Use `require()` and `module.exports` to connect your modules
-3. Follows a logical file structure:
-  - `index.js` — the entry point of the application that displays a menu to the user.
-  - `menu.js` — handles the main menu loop and handles user input.
-  - A data layer (choose a name!) — handles the logic related to managing the data for your application.
-4. A `package.json` file exists and includes dependencies for the project
-
-**User Interaction (4 points)**
-1. Creates an interactive experience that responds to user choices using the `prompt-sync` package
-2. Provides warning messages when invalid input is provided and allows the user to try again.
-3. Provides confirmation messages when user actions are completed.
-4. All messages printed to the console have consistent spacing and are free of spelling and grammar mistakes.
-
-### Reflection (2 points)
-In `REFLECTIONS.md`, respond to the prompts below. Your responses should each contain about 150-250 words and demonstrate thoughtful reflection.
-
-  1. Which project requirement did you find most challenging and how did you overcome this challenge? Be specific in your response.
-  2. Share one technical concept that you gained a deeper understanding of through building this project. Explain that concept in simple terms and explain how it is used in your project.
-
-### Professionalism & Craftsmanship (5 points)
-1. Code is functional and free of bugs. Does not throw errors when used under expected circumstances.
-2. Code is well-organized, spacing is consistent, variable/function names are descriptive, comments are concise and purposeful, and no unused code remains.
-3. Commits are small, frequent, and have meaningful commit messages.
-4. A branch is used for development while the `main` branch is always functional
-5. The `README.md` includes setup instructions, usage examples, and clear explanation of functionality. All writing in the `README.md` file and the `REFLECTION.md` file is polished and free of typos and grammatical errors.
-
-
 ## Tips for Success
 
 - **Leverage The Case Study**: Make use of the [Task Manager Case Study](https://github.com/The-Marcy-Lab-School/swe-casestudy-1-cli-task-manager) as a guide for building your project.
+- **Refer to the Requirements**: Ensure that your project meets all of the requirements listed at the bottom of this page before submitting.
 - **Start Simple**: Get basic functionality working first, then add features
 - **Test Frequently**: Run your code often to catch issues early
 - **Plan Your Functions**: Think about what each function should do before coding
@@ -354,3 +308,56 @@ In addition, use a separate **array of objects** to store high score history. Ea
 * Implement a difficulty system with easy, medium, and hard questions
 * Add a timer for each question to create a more challenging experience
 * Allow saving/loading quiz results and high scores to/from a JSON file using the `fs` module
+
+## Project Grading
+
+We care deeply about the quality of the code that is produced at Marcy. Even if your application works as described, was it created following best practices? Did you effectively use all of the skills from the module? Were you able to learn and grow from this project-building process?
+
+To ensure that your project meets Marcy's standards of excellence, your project will be assessed on the following criteria (22 points total):
+* Technical Details (15 points)
+  * Core JavaScript Concepts (7 points)
+  * Code Organization (4 points)
+  * User Interaction (4 points)
+* Reflection (2 points)
+* Professionalism & Craftsmanship (5 points)
+
+### Technical Details (15 points)
+
+Technical details are broken up further into three groups:
+
+**Core JavaScript Concepts (7 points)**
+1. Variables: Uses clear, descriptive names that explain what data they hold
+2. Functions: Breaks code into multiple functions that each handle specific tasks
+3. Conditionals: Includes at least one `if/else` statement that changes behavior based on user input
+4. Loops: Uses at least one `while` loop to repeatedly prompt the user
+5. String Methods: Uses string methods (like `.toLowerCase()`, `.trim()`, etc.) to validate user input
+6. Higher Order Array Methods: Uses at least one array higher-order method (like `.forEach()`, `.filter()`, `.reduce()`, etc...)
+7. Objects: Uses at least one object to organize related data together
+
+**Code Organization (4 points)**
+1. Split your code into **at least 3 separate modules** (files)
+2. Use `require()` and `module.exports` to connect your modules
+3. Follows a logical file structure:
+  - `index.js` — the entry point of the application that displays a menu to the user.
+  - `menu.js` — handles the main menu loop and handles user input.
+  - A data layer (choose a name!) — handles the logic related to managing the data for your application.
+4. A `package.json` file exists and includes dependencies for the project
+
+**User Interaction (4 points)**
+1. Creates an interactive experience that responds to user choices using the `prompt-sync` package
+2. Provides warning messages when invalid input is provided and allows the user to try again.
+3. Provides confirmation messages when user actions are completed.
+4. All messages printed to the console have consistent spacing and are free of spelling and grammar mistakes.
+
+### Reflection (2 points)
+In `REFLECTIONS.md`, respond to the prompts below. Your responses should each contain about 150-250 words and demonstrate thoughtful reflection.
+
+  1. Which project requirement did you find most challenging and how did you overcome this challenge? Be specific in your response.
+  2. Share one technical concept that you gained a deeper understanding of through building this project. Explain that concept in simple terms and explain how it is used in your project.
+
+### Professionalism & Craftsmanship (5 points)
+1. Code is functional and free of bugs. Does not throw errors when used under expected circumstances.
+2. Code is well-organized, spacing is consistent, variable/function names are descriptive, comments are concise and purposeful, and no unused code remains.
+3. Commits are small, frequent, and have meaningful commit messages.
+4. A branch is used for development while the `main` branch is always functional
+5. The `README.md` includes setup instructions, usage examples, and clear explanation of functionality. All writing in the `README.md` file and the `REFLECTION.md` file is polished and free of typos and grammatical errors.

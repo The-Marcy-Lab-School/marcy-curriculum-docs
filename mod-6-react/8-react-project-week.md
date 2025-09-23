@@ -11,15 +11,15 @@
   - [Scrum Board](#scrum-board)
 - [Project Presentation](#project-presentation)
 - [Agile Written Reflection](#agile-written-reflection)
-- [Tech Checklist](#tech-checklist)
-  - [Project Fundamentals (7)](#project-fundamentals-7)
-  - [React Fundamentals (8)](#react-fundamentals-8)
-  - [State Management (10)](#state-management-10)
-  - [React Router (3)](#react-router-3)
-  - [Forms \& Events (5)](#forms--events-5)
-  - [Style (15)](#style-15)
-  - [A11y (12)](#a11y-12)
-  - [README (4)](#readme-4)
+- [Project Grading](#project-grading)
+  - [Project Fundamentals (7 points)](#project-fundamentals-7-points)
+  - [React Fundamentals (8 points)](#react-fundamentals-8-points)
+  - [State Management (10 points)](#state-management-10-points)
+  - [React Router (3 points)](#react-router-3-points)
+  - [Forms \& Events (5 points)](#forms--events-5-points)
+  - [Style (15 points)](#style-15-points)
+  - [A11y (12 points)](#a11y-12-points)
+  - [README (4 points)](#readme-4-points)
 
 ## Welcome!
 Hello everyone, it's been a whirlwind, but believe it or not, you know more than enough to get your React project started! You've already built projects just like this one using Vanilla JS, HTML, and CSS. The whole idea behind this one is that you'll see how much faster and farther you can build when you use a tool like React.
@@ -110,9 +110,13 @@ The specific questions can be found on Canvas.
 
 **Only one reflection per group is required**.
 
-## Tech Checklist
+## Project Grading
 
-### Project Fundamentals (7)
+We care deeply about the quality of the code that is produced at Marcy. Even if your application works as described, was it created following best practices? Did you effectively use all of the skills from the module? Were you able to learn and grow from this project-building process?
+
+To ensure that your project meets Marcy's standards of excellence, your project will be assessed on the following criteria (64 points):
+
+### Project Fundamentals (7 points)
 - [ ] Used Vite for this project
 - [ ] Used React
 - [ ] Used React Router for client side routing
@@ -122,7 +126,7 @@ The specific questions can be found on Canvas.
 - [ ] Use Context at least once (set up a dark mode)
 - [ ] **Bonus: Were able to get it deployed in a functional state**
 
-### React Fundamentals (8)
+### React Fundamentals (8 points)
 - [ ] Created at least 3 components
 - [ ] Have all components in their own files (1 export per file)
 - [ ] Passed props to a component at least 3 times
@@ -132,7 +136,7 @@ The specific questions can be found on Canvas.
 - [ ] Rendered an array of items to the screen at least once
 - [ ] At no point did you ever use any vanilla DOM JS methods
 
-### State Management (10)
+### State Management (10 points)
 - [ ] The `useContext` hook is used at least once
 - [ ] Used the `useEffect` hook at least 2 times
   - [ ] 1st check box
@@ -145,21 +149,19 @@ The specific questions can be found on Canvas.
      - That is a fancy way of saying that you had the state of a component and then passed down the getter and setter functions for the hook to a child component. You've seen us do this!
 - [ ] A Context is created to manage global state
  
-     
-
-### React Router (3)
+### React Router (3 points)
 - [ ] Had at least 2 different pages in the application
 - [ ] Used the proper `Link` components to navigate between pages
 - [ ] Used the `useParams` hook at least once
 
-### Forms & Events (5)
+### Forms & Events (5 points)
 - [ ] Handled at least 2 non-submission events (clicking on something causes a UI change)
   - [ ] 1st check box
   - [ ] 2nd check box
 - [ ] Handled form submission event properly with React syntax
 - [ ] Demonstrated a working controlled Form
 
-### Style (15)
+### Style (15 points)
 - [ ] Navigation bar fits cleanly on mobile and desktop
 - [ ] Navigation visually indicates what page you are on (look into `NavLink`)
   - Think underlines, bolding, etc. this should change as you move around the site
@@ -173,7 +175,7 @@ The specific questions can be found on Canvas.
 - [ ] Buttons have altered visual states for hover, active, and focus
 - [ ] Links have altered visual states for hover, active, and focus
 
-### A11y (12)
+### A11y (12 points)
 - [ ] There is a `main` element on *each* page
 - [ ] There is a `nav` element on *each* page
 - [ ] The `nav` contains a `ul` of links
@@ -188,7 +190,7 @@ The specific questions can be found on Canvas.
   - https://color.a11y.com can check your site for you!
 - [ ] All buttons look like buttons, all links look like links
 
-### README (4)
+### README (4 points)
 
 - [ ] Includes a README.md file
 - [ ] The README file describes the purpose and audience for the application

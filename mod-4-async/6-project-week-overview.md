@@ -10,11 +10,11 @@
   - [Test your API!](#test-your-api)
 - [Deliverables](#deliverables)
 - [Milestones](#milestones)
-- [Technical Requirements](#technical-requirements)
-  - [Fetching Requirements](#fetching-requirements)
-  - [User Interface: Structure and Accessibility](#user-interface-structure-and-accessibility)
-  - [General](#general)
-  - [Form Requirements](#form-requirements)
+- [Project Grading](#project-grading)
+  - [Fetching Requirements (8 points)](#fetching-requirements-8-points)
+  - [User Interface: Structure and Accessibility (13 points)](#user-interface-structure-and-accessibility-13-points)
+  - [General (5 points)](#general-5-points)
+  - [Form Requirements (9 points)](#form-requirements-9-points)
 
 ## Overview
 
@@ -168,29 +168,24 @@ Eventually, you will need to develop the skill of planning out your objectives. 
 
 {% endtabs %} 
 
-## Technical Requirements
+## Project Grading
 
-In order to see how well you're doing with this project, here are all the things we need to see from you. If you get all of these, then you know that you're where you need to be!
+We care deeply about the quality of the code that is produced at Marcy. Even if your application works as described, was it created following best practices? Did you effectively use all of the skills from the module? Were you able to learn and grow from this project-building process?
 
-**Table of Contents:**
-- [Fetching Requirements](#fetching-requirements)
-- [User Interface: Structure and Accessibility](#user-interface-structure-and-accessibility)
-- [Meta](#meta)
-- [Form Requirements](#form-requirements)
+To ensure that your project meets Marcy's standards of excellence, your project will be assessed on the following criteria (35 points total):
 
-### Fetching Requirements
+### Fetching Requirements (8 points)
 
-- [ ] The application makes two fetches:  
-    - [ ] A fetch is made to an API that returns an array of data.  
-    - [ ] A fetch is made to an API that returns a single data value  
+- [ ] A fetch is made to an API that returns an array of data.  
+- [ ] A fetch is made to an API that returns a single data value  
 - [ ] On page load, a fetch call is made, rendering initial fetch data to the screen  
 - [ ] Asynchronous code uses `async` and `await`  
 - [ ] Fetch calls are made using a `try` / `catch` block  
-    - [ ] Errors are handled by `console.warn()`  
+- [ ] Errors are handled by `console.warn()`  
 - [ ] `response.ok` is checked before parsing  
-    - [ ] Throw a new error if the response is NOT ok
+- [ ] Throw a new error if the response is NOT ok
 
-### User Interface: Structure and Accessibility
+### User Interface: Structure and Accessibility (13 points)
 
 - [ ] The `head` has a `title`  
 - [ ] There is a single `main` element on the page  
@@ -206,7 +201,7 @@ In order to see how well you're doing with this project, here are all the things
 - [ ] There are no instances of recreating any semantic elements (using a `div` for a `nav`)  
 - [ ] The entire application is responsive with mobile and desktop compatibility (we recommend a mobile-first approach)
 
-### General
+### General (5 points)
 
 - [ ] The project is created using Vite  
 - [ ] The code exists in more than one JS file  
@@ -214,7 +209,7 @@ In order to see how well you're doing with this project, here are all the things
 - [ ] CSS Flexbox or Grid was used  
 - [ ] The code does not render unescaped text directly to the DOM (`createElement` or other escape method used)
 
-### Form Requirements
+### Form Requirements (9 points)
 
 - [ ] There is a `form` for triggering a fetch or for modifying the fetch results  
     - [ ] `form` elements have an aria-label or aria-labelledby attribute that describes the form  
