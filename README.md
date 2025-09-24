@@ -23,7 +23,7 @@ Welcome to Marcy Lab School's Fullstack Software Engineering Curriculum! Here, y
 
 Over the next year you will learn how to be a Fullstack software engineer! You'll learn the basics of the JavaScript syntax, how to use JavaScript to solve real problems, and then how to organize and optimize your code like a pro!
 
-{% embed url="https://docs.google.com/presentation/d/1rwV47b8VFPdaZLIm4PqQ5VI62JxEBRuqxrjdx7MQQPg/embed?start=false&loop=false&delayms=3000" %}
+{% embed url="https://docs.google.com/presentation/d/1ErVMKugQc4ObNVhreLYplYZP3OsA5AmFyNSDcPKr8PA/embed?start=false&loop=false&delayms=3000" %}
 
 ## Modules in this Curriculum
 
