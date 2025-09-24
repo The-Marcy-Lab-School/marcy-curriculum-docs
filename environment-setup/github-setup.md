@@ -91,7 +91,7 @@ To enable this communication between our Terminal and our GitHub repos, we need 
 
       ![The SSH key has been generated](./img/ed25519.png)
 
-3. Run `cat ~/.ssh/id_ed25519.pub` in your terminal and copy the output (starting from `ssh-ed25519` and ending in `.local`). You'll need it for the next step
+3. Run `cat ~/.ssh/id_ed25519.pub` in your terminal and copy the output (starting from `ssh-ed25519`). You'll need it for the next step
 
 4. Navigate to the homepage of GitHub in your browser. Go to your account settings:
 
