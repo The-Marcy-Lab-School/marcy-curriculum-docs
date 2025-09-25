@@ -1,32 +1,8 @@
 # Command Line Interfaces
 
-* [Slides](1-clis.md#slides)
-* [Overview](1-clis.md#overview)
-* [Terminal vs. Finder/Explorer](1-clis.md#terminal-vs-finderexplorer)
-* [Using the Terminal in VS Code](1-clis.md#using-the-terminal-in-vs-code)
-* [Commands](1-clis.md#commands)
-  * [Printing Directory Information with `pwd` and `ls`](1-clis.md#printing-directory-information-with-pwd-and-ls)
-  * [Navigating Between Directories with `cd`](1-clis.md#navigating-between-directories-with-cd)
-  * [Be Careful when using the `cd` command!](1-clis.md#be-careful-when-using-the-cd-command)
-  * [Making Files and Directories with `mkdir` and `touch`](1-clis.md#making-files-and-directories-with-mkdir-and-touch)
-  * [Executing JavaScript files with `node`](1-clis.md#executing-javascript-files-with-node)
-  * [Terminating a Program with `Control+C`](1-clis.md#terminating-a-program-with-controlc)
-  * [Unfinished Double Quotes and `echo`](1-clis.md#unfinished-double-quotes-and-echo)
-  * [The `cat` Command and Combining Commands with `&&`](1-clis.md#the-cat-command-and-combining-commands-with-)
-  * [Removing, Renaming, and Copying](1-clis.md#removing-renaming-and-copying)
-* [Challenges](1-clis.md#challenges)
-
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1JCyTysddqGIObjgmGS6iLcIcvyyFXKFe6wMVsnSYh64/embed?start=false&loop=false&delayms=3000" %}
-
-## Overview
-
 At the end of the day, a program is just a text file on a computer. So, before we begin programming, we need to learn how programmers create, organize, and otherwise manage the files on their computers.
 
 In this lesson, we'll learn about the Terminal, a program for interacting with a computer's files and executing programs through a command line interface (CLI).
-
-**Objectives**
 
 You will be able to…
 
@@ -36,6 +12,25 @@ You will be able to…
 * Create, copy, delete, and move files and directories
 * How to run a JavaScript program using your CLI
 * Explain what an "argument" is
+  
+  
+**Table of Contents:**
+- [Key Terms \& Commands](#key-terms--commands)
+- [Terminal (CLI) vs. Finder/Explorer (GUI)](#terminal-cli-vs-finderexplorer-gui)
+- [Using the Terminal in VS Code](#using-the-terminal-in-vs-code)
+- [Commands](#commands)
+  - [Printing Directory Information with `pwd` and `ls`](#printing-directory-information-with-pwd-and-ls)
+  - [Navigating Between Directories with `cd`](#navigating-between-directories-with-cd)
+  - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
+  - [Making Files and Directories with `mkdir` and `touch`](#making-files-and-directories-with-mkdir-and-touch)
+  - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
+  - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
+  - [Unfinished Double Quotes and `echo`](#unfinished-double-quotes-and-echo)
+  - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
+  - [Removing, Renaming, and Copying](#removing-renaming-and-copying)
+- [Challenges](#challenges)
+
+## Key Terms & Commands
 
 **Key Terms**
 
@@ -51,18 +46,29 @@ You will be able to…
 **Important CLI commands**
 
 {% hint style="info" %}
-**Note:** In the commands below, argument placeholders will be written like this: `<argument>`. When using these commands, replace the `<argument>` with your desired inputs, making sure to leave out the `<>` as well.
+**Note:** In the commands below, argument placeholders will be written like this: `[argument]`. When using these commands, replace the `[argument]` with your desired inputs, making sure to leave out the `[]` as well.
 {% endhint %}
 
-* `node <file_name.js>` — execute a given `.js` file using Node.
-* `Control + C` — Terminate the currently running program
-* `pwd` — Print the working directory, a.k.a where your terminal navigation currently is located.
-* `ls` — Prints ("lists") the contents of the working directory
-* `cd <directory>` — Change directories to the given directory
-* `cd ../` — Change directories to the parent of the working directory
-* `mkdir <dir_name>` — Make a new directory with the given name.
-* `touch <file_name>` — Make a new file with the given name
-* `cp <file> <dest>` — Move a file to the given directory
+```sh
+# Run a given `.js` file using Node.
+node [filename.js]
+# Terminate the currently running program
+Control + C          
+# Print the working directory, a.k.a where your terminal navigation currently is located.
+pwd                  
+# Prints ("lists") the contents of the working directory
+ls                   
+# Change directories to the given directory
+cd [directory]       
+# Change directories to the parent of the working directory
+cd ../               
+# Make a new directory with the given name.
+mkdir [directory]     
+# Make a new file with the given name
+touch [filename]    
+# Move a file to the given directory
+cp [file] [dest]     
+```
 
 ## Terminal (CLI) vs. Finder/Explorer (GUI)
 
