@@ -1,24 +1,25 @@
 # Git Pulling & Merging
 
-* [Overview](3-git-pulling-merging.md#overview)
-* [Collaborating on a GitHub Repository](3-git-pulling-merging.md#collaborating-on-a-github-repository)
-  * [`git pull` synchronizes local repositories](3-git-pulling-merging.md#git-pull-synchronizes-local-repositories)
-  * [Adding a Collaborator](3-git-pulling-merging.md#adding-a-collaborator)
-  * [Creating a Merge Conflict](3-git-pulling-merging.md#creating-a-merge-conflict)
-  * [Why Can't I Push?](3-git-pulling-merging.md#why-cant-i-push)
-  * [Handling Merge Conflicts](3-git-pulling-merging.md#handling-merge-conflicts)
-* [Tips for success](3-git-pulling-merging.md#tips-for-success)
-
-## Overview
-
 GitHub enables developers across the world to collaborate on projects. In this lesson, we'll learn how to use GitHub to create and manage branches, merge branches, create pull requests, and resolve merge conflicts.
-
-**Objectives**
 
 You will be able to…
 
 * Pull changes from a repository
 * Resolve merge conflicts
+
+**Table of Contents:**
+
+- [Key Terms \& Commands](#key-terms--commands)
+- [Collaborating on a GitHub Repository](#collaborating-on-a-github-repository)
+  - [`git pull` synchronizes local repositories](#git-pull-synchronizes-local-repositories)
+  - [Adding a Collaborator](#adding-a-collaborator)
+  - [Creating a Merge Conflict](#creating-a-merge-conflict)
+  - [Why Can't I Push?](#why-cant-i-push)
+  - [Handling Merge Conflicts](#handling-merge-conflicts)
+- [Tips for success](#tips-for-success)
+
+
+## Key Terms & Commands
 
 **Key Terms**
 
@@ -29,10 +30,12 @@ You will be able to…
 **Important Git commands**
 
 {% hint style="info" %}
-**Note:** In the commands below, argument placeholders will be written like this: `<argument>`. When using these commands, replace the `<argument>` with your desired inputs, making sure to leave out the `<>` as well.
+**Note:** In the commands below, argument placeholders will be written like this: `[argument]`. When using these commands, replace the `[argument]` with your desired inputs, making sure to leave out the `[]` as well.
 {% endhint %}
 
-* `git pull` — download changes from a remote repository
+```sh
+git pull # download changes from a remote repository
+```
 
 ## Collaborating on a GitHub Repository
 
@@ -61,11 +64,16 @@ In the last lesson, you learned about the `git push` command which uploads a loc
 Let's put this into practice. With your partner do the following:
 
 1. Have the developer who first created the repo on GitHub make some edits to `README.md`.
-2. That same developer should then stage their changes (`git add README.md`), commit (`git commit -m "description of commit"`) and then push that commit (`git push`)!
+2. That same developer should then stage their changes, commit, and push:
+      ```sh
+      git add README.md
+      git commit -m "[description of your commit]"
+      git push
+      ```
 3. Double check on GitHub that the commit shows up on the remote repository's commit history.
 4. **Now, the second developer should run the command `git pull`** (if working solo, switch over to the location of the second copy of the repo and run `git pull`)
 
-![](img/git-github-workflow.png)
+![Git push will upload local commits and git pull will download them and attempt to merge.](img/git-github-workflow.png)
 
 By storing repositories remotely on GitHub, any number of developers can have access to a single repository. This push and pull mechanism is essential for collaboration.
 

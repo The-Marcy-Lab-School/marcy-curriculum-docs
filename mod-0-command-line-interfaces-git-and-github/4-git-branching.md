@@ -1,24 +1,6 @@
 # Git Branching & PRs
 
-* [Slides](4-git-branching.md#slides)
-* [Overview](4-git-branching.md#overview)
-* [Intro to Branches](4-git-branching.md#intro-to-branches)
-  * [Keep the Main Branch Stable](4-git-branching.md#keep-the-main-branch-stable)
-  * [Commands for Working with Branches](4-git-branching.md#commands-for-working-with-branches)
-  * [Pull Requests and Code Review](4-git-branching.md#pull-requests-and-code-review)
-  * [Don't Forget to Pull!](4-git-branching.md#dont-forget-to-pull)
-* [How Teams Collaborate Using Branches](4-git-branching.md#how-teams-collaborate-using-branches)
-* [Summary](4-git-branching.md#summary)
-
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1bnEyNrbYlYfB6-ZzcCmZJyFbPkYMbsISWX6XzDvLtyQ/embed?start=false&loop=false&delayms=3000" %}
-
-## Overview
-
 GitHub enables developers across the world to collaborate on projects. In this lesson, we'll learn how to use GitHub to create and manage branches, merge branches, create pull requests, and resolve merge conflicts.
-
-**Objectives**
 
 You will be able to…
 
@@ -27,6 +9,19 @@ You will be able to…
 * Create a pull request.
 * Resolve merge conflicts through the Github GUI
 * Fork a repository.
+
+**Table of Contents:**
+
+- [Key Terms \& Commands](#key-terms--commands)
+- [Intro to Branches](#intro-to-branches)
+  - [Keep the Main Branch Stable](#keep-the-main-branch-stable)
+  - [Commands for Working with Branches](#commands-for-working-with-branches)
+  - [Pull Requests and Code Review](#pull-requests-and-code-review)
+  - [Don't Forget to Pull!](#dont-forget-to-pull)
+- [How Teams Collaborate Using Branches](#how-teams-collaborate-using-branches)
+- [Summary](#summary)
+
+## Key Terms & Commands
 
 **Key Terms**
 
@@ -39,16 +34,16 @@ You will be able to…
 **Important Git commands**
 
 {% hint style="info" %}
-**Note:** In the commands below, argument placeholders will be written like this: `<argument>`. When using these commands, replace the `<argument>` with your desired inputs, making sure to leave out the `<>` as well.
+**Note:** In the commands below, argument placeholders will be written like this: `[argument]`. When using these commands, replace the `[argument]` with your desired inputs, making sure to leave out the `[]` as well.
 {% endhint %}
 
 ```sh
 git branch # see all branches in the local repository
-git branch <branch_name> # create a new branch
-git checkout <branch_name> # switch to a branch
-git checkout main # switch to the main branch
-git merge <branch_name> # merge a branch into the current branch
-git branch -D <branch_name> # delete a branch 
+git branch [branch_name] # create a new branch
+git checkout [branch_name] # switch to a branch
+git checkout -B [branch_name] # create a new branch and switch to it
+git merge [branch_name] # merge a branch into the current branch
+git branch -D [branch_name] # delete a branch 
 ```
 
 ## Intro to Branches

@@ -1,41 +1,40 @@
 # Git & GitHub
 
-* [Slides](2-git-github.md#slides)
-* [Overview](2-git-github.md#overview)
-* [Introduction: Managing Files Can Be Tricky](2-git-github.md#introduction-managing-files-can-be-tricky)
-* [What is a Git Repository?](2-git-github.md#what-is-a-git-repository)
-  * [Git Workflow](2-git-github.md#git-workflow)
-  * [`git init` and `git status`](2-git-github.md#git-init-and-git-status)
-  * [`git add`, `git commit`, and `git log`](2-git-github.md#git-add-git-commit-and-git-log)
-* [GitHub: What is It? Why Use It?](2-git-github.md#github-what-is-it-why-use-it)
-  * [GitHub Workflow](2-git-github.md#github-workflow)
-  * [1. Create A Repository On GitHub](2-git-github.md#1-create-a-repository-on-github)
-  * [2. Make A Local Clone Of The Repository with `git clone`](2-git-github.md#2-make-a-local-clone-of-the-repository-with-git-clone)
-  * [3. Use the normal Git Workflow](2-git-github.md#3-use-the-normal-git-workflow)
-  * [4. Upload local commits to GitHub with `git push`](2-git-github.md#4-upload-local-commits-to-github-with-git-push)
-* [Summary](2-git-github.md#summary)
-
-## Slides
-
-{% embed url="https://docs.google.com/presentation/d/1ZJZB_i15KlU1h6fO_3Up50PFv_c6juj5oRCCIhChK2o/embed?start=false&loop=false&delayms=3000" %}
-
-## Overview
-
-Managing versions of the same files can be tricky, but in this lesson, we'll learn how software engineers manage the changes to their project using a tool called Git. We'll also they can back up and share their projects online using the closest thing to a social network for programmers, GitHub.
-
-**Objectives**
+In this lesson, we'll learn how software engineers manage the changes to their project using a tool called Git. We'll also they can back up and share their projects online using the closest thing to a social network for programmers, GitHub.
 
 You will be able to…
 
-* Learn what a repo is
+* Develop mental models for repositories, Git, and GitHub
 * Differentiate between local and remote repos
 * Create a remote repository on Github
 * Know the steps of the Git workflow
 
+**Table of Contents**
+- [Setup](#setup)
+- [Key Terms and Commands](#key-terms-and-commands)
+- [Mental Model: Git \& GitHub](#mental-model-git--github)
+  - [What is Git?](#what-is-git)
+  - [What is GitHub?](#what-is-github)
+- [The Git Workflow](#the-git-workflow)
+  - [`git init` and `git status`](#git-init-and-git-status)
+  - [`git add`, `git commit`, and `git log`](#git-add-git-commit-and-git-log)
+- [The GitHub Workflow](#the-github-workflow)
+  - [1. Create A Repository On GitHub](#1-create-a-repository-on-github)
+  - [2. Make A Local Clone Of The Repository with `git clone`](#2-make-a-local-clone-of-the-repository-with-git-clone)
+  - [3. Use the normal Git Workflow](#3-use-the-normal-git-workflow)
+  - [4. Upload local commits to GitHub with `git push`](#4-upload-local-commits-to-github-with-git-push)
+- [Summary](#summary)
+
+## Setup
+
+To follow along in this lecture, navigate to your `Development/mod-0` folder in your VS Code terminal and create a new folder inside called `2-git-lecture`.
+
+## Key Terms and Commands
+
 **Key Terms**
 
-* **Repository (or just "repo")** — A collection of files pertaining to a single project.
-* **Git** — A "version control system" that allows us to manage the history of changes made to a repo.
+* **Repository (or just "repo")** — a centralized location where files are stored and managed. Any folder can be considered a repository.
+* **Git** — A "version control system" that allows us to manage the history of changes made to a repo through commits.
 * **Commit** — A "snapshot" of the changes made to a repo. A commit is typically created when a key milestone is reached in a project (e.g. a feature is completed).
 * **Staging Area** — A place to temporarily store changed files to include in the next commit.
 * **Github** — An online host of git repositories with tools for managing git projects and features for collaboration.
@@ -47,49 +46,83 @@ You will be able to…
 **Important Git commands**
 
 {% hint style="info" %}
-**Note:** In the commands below, argument placeholders will be written like this: `<argument>`. When using these commands, replace the `<argument>` with your desired inputs, making sure to leave out the `<>` as well.
+**Note:** In the commands below, argument placeholders will be written like this: `[argument]`. When using these commands, replace the `[argument]` with your desired inputs, making sure to leave out the `[]` as well.
 {% endhint %}
 
-* `git init`
-* `git status`
-* `git add`
-* `git commit`
-* `git clone`
-* `git push`
+```sh
+# add git to the current repo
+git init            
+# check the status of changed files in the repo
+git status          
+# add the given file to the staging area
+git add [filename]  
+# add all changed files to the staging area
+git add -A          
+# creates a new commit from the staged files
+git commit -m "[commit message]" 
+# upload local commits to the remote (GitHub)
+git push            
+# download a git repository from the remote (GitHub)
+git clone           
+```
 
-## Setup
-
-To follow along in this lecture, navigate to your `development/unit-0` folder in your VS Code terminal and create a new folder inside called `2-git-lecture`.
-
-## Introduction: Managing Files Can Be Tricky
+## Mental Model: Git & GitHub
 
 Imagine you're working on a paper. You've got all of your drafts saved in a folder and it looks something like this:
 
 ![](img/my-paper-file-names.png)
 
-Sound familiar? You don't want to delete them in case you want to go back to an older version. So what else can you do?
+**<details><summary>Q: Even though it is messy, what are the benefits of doing this versus just keeping one version of the file?</summary>**
 
-Even for programmers managing different versions of files can be tricky, particularly when you're constantly changing them. To address this problem, software engineers store their code in **Git repositories**.
+It is easier to see how the file has changed over time and to revert to an older version of the file if necessary.
 
-## What is a Git Repository?
+</details>
 
-A **repository (or repo)** is a central location where data is stored and managed. Every folder with files can be considered a repository.
+### What is Git?
 
-A **Git repository** is one that makes use of the **version control system** called **Git**.
+The files of our software projects are changing constantly and we will often want to go back to previous versions of our files. To help manage the versions of our project, software engineers use **Git**.
 
-Version control systems, like Git, maintain a history of every change made to a repo. These changes, called **commits**, are snapshots of a project's code after the completion of a feature.
+> **Git** is a tool that takes snapshots of the files in a project and allows developers to manage them and, if needed, revert to prior version. Git is an example of a **version control system**.
 
-![](img/commit-history.png)
+Git maintains a history of changes through **"commits"** — snapshots of our code that represent a completed unit of work such as a new feature or bug fix. 
+
+![A commit is a snapshot of our code that represents the completion of a unit of work.](img/commit-history.png)
 
 <details>
 
-<summary><strong>Q: What are the benefits of maintaining a commit history like this?</strong></summary>
+<summary><strong>Q: What are the benefits of maintaining a "commit history" like this?</strong></summary>
 
 Developers can revert to previous versions of their project if they need to (for example, if a feature is not working as expected).
 
 </details>
 
-### Git Workflow
+When we use Git for a project, the commits are stored alongside the code files. Together, the files and this commit history form a **Git repository**.
+
+> A **repository (or "repo")** is a centralized location where data is stored and managed. Any folder with files can be considered a repository. A **Git repository** is simply a folder whose files are managed by Git.
+
+### What is GitHub?
+
+![The camera app is like Git. GitHub is where you store the photos online.](./img/person-taking-photo.png)
+
+Think about the camera application on a smartphone. It allows you to take snapshots of the world around you so that you can look back at the history of your life. This is similar to Git (if your camera also allowed you to travel back in time and make changes).
+
+The camera app may also allow you to backup your photos and save them online "in the cloud". This is similar to **GitHub**.
+
+> **GitHub** is a cloud-based "host" for Git repositories. In other words, it stores Git repositories online. GitHub allows developers to store, share and collaborate on their projects.
+
+<figure><img src="img/github.png" alt="GitHub is a social network for developers to backup, share, and collaborate on projects." width="375"><figcaption><p>GitHub is a social network for developers to backup, share, and collaborate on projects.</p></figcaption></figure>
+
+Check out the GitHub repository for [Node](https://github.com/nodejs/node). Here are few things to look for:
+* It has ~45000 commits, each with clear messages, and made by many different developers.
+* It has dozens of branches, each for a different version of the software.
+* The README on the front page gives a detailed overview of the project and instructions for downloading and contributing.
+* It has been forked (duplicated) over 30 thousand times
+
+So, you'll use Git and GitHub in tandem to manage your projects. You'll use Git on your own computers to manage the changes to your project and then you will upload those changes to GitHub.
+
+## The Git Workflow
+
+First, let's look at how we can create commits for our project.
 
 Using git in a project involves moving our code between three phases:
 
@@ -130,29 +163,11 @@ One we have changes that we want to save in the repository, we use the `git add`
 4. `git status` now shows that all changes have been committed
 5. Finally, `git log` shows that our new commit has been added to the commit history!
 
-## GitHub: What is It? Why Use It?
-
-While maintaining a Git repo is a great way to keep track of changes on your own computer, what if we wanted to share the project with others? Or perhaps work on the project on a different computer? Do we upload the files to Google Drive or email them to ourselves?
-
-These options work, but almost every developer uses **GitHub**.
-
-<figure><img src="img/github.png" alt="GitHub is a social network for developers to backup, share, and collaborate on projects." width="375"><figcaption><p>GitHub is a social network for developers to backup, share, and collaborate on projects.</p></figcaption></figure>
-
-**GitHub** is like a social network for developers, making it easy to backup, share and collaborate on projects.
-
-Check out the GitHub repository for [Node](https://github.com/nodejs/node). Here are few things to look for:
-* It has ~45000 commits, each with clear messages, and made by many different developers.
-* It has dozens of branches, each for a different version of the software.
-* The README on the front page gives a detailed overview of the project and instructions for downloading and contributing.
-* It has been forked (duplicated) over 30 thousand times
-
-So, how can we use GitHub?
-
-### GitHub Workflow
+## The GitHub Workflow
 
 Storing our repos on GitHub involves a few setup steps...
 
-1. Create a new repo on GitHub. We call this a **remote repository**. This is the equivalent to using `git init`.
+1. Create a new repo on GitHub. We call this a **remote repository**.
 2. **Clone** (copy) the repo from GitHub onto our own computer. Now we have a **local repository** that is linked to the remote repository.
 
 After setup, whenever we want to make changes to the repo we:
@@ -250,9 +265,9 @@ For future changes, repeat steps 3 and 4!
 
 So, in summary, Git and GitHub are invaluable tools in the toolkit of a software developer that make managing projects and versions easier!
 
-**Git** is a "version control system" that allows us to manage the history of changes made to a repo.
+**Git** is a "version control system" that allows us to manage the history of changes made to a repo. Think of the Camera app on your phone documenting the world around you.
 
-**Github** is an online host of git repositories with tools for managing git projects and features for collaboration.
+**Github** is an online host of git repositories with tools for managing git projects and features for collaboration. Think of where your photos are stored online.
 
 Together, we can manage code in **local repositories** and sync them with **remote repositories**.
 
