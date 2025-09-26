@@ -1,4 +1,4 @@
-# Global Context Pattern
+# 7. Global Context Pattern
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-1-global-context-pattern)!
@@ -6,10 +6,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
 
 **Table of Contents**:
 
-* [Global Context Design Pattern](6-global-context-pattern.md#global-context-design-pattern-1)
-  * [1) Create a `ContextProvider` wrapper component](6-global-context-pattern.md#1-create-a-contextprovider-wrapper-component)
-  * [2) Import and Render the ContextProvider component in main.jsx](6-global-context-pattern.md#2-import-and-render-the-contextprovider-component-in-mainjsx)
-  * [3) Refactor other components as necessary](6-global-context-pattern.md#3-refactor-other-components-as-necessary)
+* [Global Context Design Pattern](7-global-context-pattern.md#global-context-design-pattern-1)
+  * [1) Create a `ContextProvider` wrapper component](7-global-context-pattern.md#1-create-a-contextprovider-wrapper-component)
+  * [2) Import and Render the ContextProvider component in main.jsx](7-global-context-pattern.md#2-import-and-render-the-contextprovider-component-in-mainjsx)
+  * [3) Refactor other components as necessary](7-global-context-pattern.md#3-refactor-other-components-as-necessary)
 
 ## Global Context Design Pattern
 

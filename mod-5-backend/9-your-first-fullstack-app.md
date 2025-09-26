@@ -1,4 +1,4 @@
-# 10. Your First Fullstack App!
+# 9. Your First Fullstack App!
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
@@ -6,7 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 
 Remember, the **model** is the layer of the application that directly manipulates the data. It provides methods that the controllers can use to execute those changes whenever the frontend makes the appropriate request.
 
-![Thus far, our server application used an in-memory array as a "database".](<img/express-middleware-model (2).svg>)
+![Thus far, our server application used an in-memory array as a "database".](<img/express-middleware-model (1) (2).svg>)
 
 Thus far, our server application used an in-memory array as a "database". But this data is not persistent — each time we restart the server, all data created during that running session is lost.
 

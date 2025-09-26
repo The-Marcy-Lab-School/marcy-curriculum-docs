@@ -1,4 +1,4 @@
-# 6. Model-View-Controller Architecture
+# 5. Model-View-Controller Architecture
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
@@ -116,7 +116,7 @@ const serveFellow = (req, res) => {
 
 We need to create a separate model that focuses solely on managing the `friends` database and provides methods for our controllers to use.
 
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<img/express-middleware-model (2).svg>)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<img/express-middleware-model (1) (2).svg>)
 
 ### Server Organization
 

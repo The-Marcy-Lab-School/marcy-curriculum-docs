@@ -1,4 +1,4 @@
-# Mod 7 Overview
+# Overview
 
 Frameworks and Libraries are what make web development so powerful, and so complex. Each framework or library seeks to improve upon some otherwise tedious or disorganized process, promising ease of use and optimizations. Learning how to learn a new framework is an essential skill in the modern age of web development. So, in this module, we will learn React, one of the most popular and in-demand frameworks, used for building smooth and beautiful user interfaces.
 
@@ -15,9 +15,9 @@ In this module, we'll learn about:
 
 * [1. Intro to React](1-intro-to-react.md)
 * [2. Events, State, and Forms](2-events-state-and-forms.md)
-* [3. Fetching with useEffect](3-fetching-useeffect.md)
+* [3. Fetching with useEffect](broken-reference)
 * [4. React Router](4-react-router.md)
 * [5. Building a Flashcards App](5-flashcards-app.md)
 * [6. React Context](6-react-context.md)
 * [7. Global Context Pattern](7-global-context-pattern.md)
-* [8. React Project Week Overview](8-react-project-week.md)
+* [8. React Project Week Overview](broken-reference)

@@ -39,7 +39,7 @@ By contrast, a **dynamic web server** serves content that is generated in real-t
 
 When someone visits your GitHub Pages website, the GitHub servers will simply send your project's HTML, CSS, and JS files to the client.
 
-![When visiting a static website, the server will send HTML, CSS, and JS files to the client](img/client-server-interaction-2.png)
+![When visiting a static website, the server will send HTML, CSS, and JS files to the client](../how-tos/img/client-server-interaction-2.png)
 
 In this article, you will configure GitHub pages to execute a "build process" to convert your Vite project into a production-ready version and deploy it.
 
@@ -122,11 +122,11 @@ Now that your Vite project inside of your repo is set up to properly execute the
 3. Find the <kbd>Pages</kbd> section
 4. Change the **Source** to **GitHub Actions**
 
-![Select your deployment source. Choose GitHub Actions](img/select-deploy-source.png)
+![Select your deployment source. Choose GitHub Actions](../how-tos/img/select-deploy-source.png)
 
 5. Then click on **Actions** and select **set up a workflow yourself**
 
-![Create your own action.](img/create-your-own-action.png)
+![Create your own action.](../how-tos/img/create-your-own-action.png)
 
 6. This will create a `main.yml` file and will allow you to edit it. Here is an example you can follow (note that this assumes that you have called your Vite project folder `app` inside of your repo. If you have named it something else, replace every instance of `app` with the name of your Vite project folder):
 
