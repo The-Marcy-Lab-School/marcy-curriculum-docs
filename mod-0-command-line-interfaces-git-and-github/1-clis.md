@@ -171,9 +171,11 @@ The `pwd` command prints the full file path to the working directory while the `
 ![](img/ls.png)
 
 {% hint style="info" %}
+
 **Note:** In computing, all actions that interact with data fall into one of the four categories called CRUD: **c**reating, **r**eading, **u**pdating, or **d**eleting data. 
 
 Which of these actions do you think `pwd` and `ls` are?
+
 {% endhint %}
 
 ### Navigating Between Directories with `cd`
@@ -183,7 +185,9 @@ The `cd [directory]` command allows you to move to another directory in the file
 An **argument** is an additional piece of information that changes that behavior of a given command. For the `cd` command, we have to also provide a destination.
 
 {% hint style="info" %}
+
 Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
+
 {% endhint %}
 
 For example, suppose we were located in the `/Users` directory inside the following file system:
