@@ -183,7 +183,9 @@ The `cd [directory]` command allows you to move to another directory in the file
 An **argument** is an additional piece of information that changes that behavior of a given command. For the `cd` command, we have to also provide a destination.
 
 {% hint style="info" %}
+
 Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
+
 {% endhint %}
 
 For example, suppose we were located in the `/Users` directory inside the following file system:
