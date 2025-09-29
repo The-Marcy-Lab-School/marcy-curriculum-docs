@@ -24,8 +24,8 @@ You will be able to…
   - [Navigating Between Directories with `cd`](#navigating-between-directories-with-cd)
     - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
   - [Making Files and Directories with `mkdir` and `touch`](#making-files-and-directories-with-mkdir-and-touch)
-    - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
-  - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
+  - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
+    - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
 - [Additional Commands](#additional-commands)
   - [Unfinished Double Quotes, `echo`, and `>>`](#unfinished-double-quotes-echo-and-)
   - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
@@ -247,7 +247,7 @@ touch file1.txt file2.txt
 mkdir dir1 dir2 dir3
 ```
 
-#### Executing JavaScript files with `node`
+### Executing JavaScript files with `node`
 
 A JavaScript program is any file with a `.js` extension, like `hello.js`
 
@@ -255,7 +255,7 @@ The code can be as simple as `console.log("Hello World")`
 
 To run the program, use the command `node hello.js`
 
-### Terminating a Program with `Control+C`
+#### Terminating a Program with `Control+C`
 
 Many programs will end ("terminate") on their own when each statement has been executed.
 
