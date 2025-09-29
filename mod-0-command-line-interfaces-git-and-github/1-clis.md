@@ -16,18 +16,20 @@ You will be able to…
   
 **Table of Contents:**
 - [Key Terms \& Commands](#key-terms--commands)
-- [Terminal (CLI) vs. Finder/Explorer (GUI)](#terminal-cli-vs-finderexplorer-gui)
-- [Using the Terminal in VS Code](#using-the-terminal-in-vs-code)
-- [Commands](#commands)
-  - [Printing Directory Information with `pwd` and `ls`](#printing-directory-information-with-pwd-and-ls)
+- [The File Tree](#the-file-tree)
+  - [Applications for Viewing the File Tree (CLI vs. GUI)](#applications-for-viewing-the-file-tree-cli-vs-gui)
+  - [Using the Terminal in VS Code](#using-the-terminal-in-vs-code)
+- [Essential Commands](#essential-commands)
+  - [Looking at the Working Directory with `pwd` and `ls`](#looking-at-the-working-directory-with-pwd-and-ls)
   - [Navigating Between Directories with `cd`](#navigating-between-directories-with-cd)
-  - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
+    - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
   - [Making Files and Directories with `mkdir` and `touch`](#making-files-and-directories-with-mkdir-and-touch)
-  - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
+    - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
   - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
+- [Additional Commands](#additional-commands)
   - [Unfinished Double Quotes and `echo`](#unfinished-double-quotes-and-echo)
   - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
-  - [Removing, Renaming, and Copying](#removing-renaming-and-copying)
+  - [Removing, Renaming, Moving, and Copying](#removing-renaming-moving-and-copying)
 - [Challenges](#challenges)
 
 ## Key Terms & Commands
@@ -52,29 +54,49 @@ You will be able to…
 ```sh
 # Run a given `.js` file using Node.
 node [filename.js]
+
 # Terminate the currently running program
-Control + C          
+Control + C
+
 # Print the working directory, a.k.a where your terminal navigation currently is located.
-pwd                  
+pwd
+
 # Prints ("lists") the contents of the working directory
-ls                   
-# Change directories to the given directory
-cd [directory]       
+ls    
+
+# Change directories to the given subdirectory
+cd [subdirectory]
+
 # Change directories to the parent of the working directory
-cd ../               
+cd ../
+
 # Make a new directory with the given name.
-mkdir [directory]     
+mkdir [subdirectory]
+
 # Make a new file with the given name
-touch [filename]    
+touch [filename]
+
 # Move a file to the given directory
-cp [file] [dest]     
+cp [file] [dest]
 ```
 
-## Terminal (CLI) vs. Finder/Explorer (GUI)
+## The File Tree
 
-To become a master programmer means first mastering your computer's files.
+The files and folders in your computer are organized in a tree-like structure called the **File Tree**.
 
-If you've ever dug into your computer's file system, you likely have done so using a program like Finder or Windows Explorer.
+![](img/file-structure.png)
+
+We refer to each folder in the file tree as a **directory**. The **root directory** is the top-most folder that contains all other **sub-directories**.
+
+**<details><summary>Q: What are the ways that the file tree is tree-like?</summary>**
+
+The root is like the trunk of the tree and each sub-directory is a branch that can have more branches.
+
+</details>
+
+### Applications for Viewing the File Tree (CLI vs. GUI)
+
+Most operating systems have an application that lets you view the device's file tree. For example, on MacOS there is Finder and on Windows there is Explorer:
 
 ![The finder program](img/finder.png)
 
@@ -112,8 +134,6 @@ Note that some commands like `pwd` can be entered on their own. Other commands l
 
 <summary><strong>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</strong></summary>
 
-Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
-
 For this particular task it might be faster to use a GUI file manager like Finder, however there are many tasks where a CLI like the Terminal can outpace a GUI like Finder.
 
 For example, try this command below to create 8 folders at once!
@@ -126,7 +146,7 @@ In addition, there are some things that Finder simply can't do, like execute fil
 
 </details>
 
-## Using the Terminal in VS Code
+### Using the Terminal in VS Code
 
 While you can use the Terminal application that comes with your laptop, it is often just as convenient to use the one that comes built into your VS Code code editor.
 
@@ -134,22 +154,26 @@ To open up the Terminal panel, go to **File** > **Terminal** and it should show 
 
 ![Use the keyboard shortcut Control+\` to open/close the Terminal](img/vscode-terminal.png)
 
-## Commands
+## Essential Commands
 
 Let's go through some of the most important and commonly used commands.
 
-### Printing Directory Information with `pwd` and `ls`
+### Looking at the Working Directory with `pwd` and `ls`
 
-A **directory** is another term for a "folder" in your computer's file system that contains references to files or possibly other directories.
+In the terminal, you can only interact with one directory at a time, the **working directory**.
 
-The **working directory** is the current location of your terminal's navigation through that file system and where all commands are executed. Think of it as the "you are here" icon in a map.
+Think of it as the "you are here" icon in a map.
+
+![The working directory is your current location in your file tree.](./img/you-are-here.png)
 
 The `pwd` command prints the full file path to the working directory while the `ls` command prints the contents of the working directory:
 
 ![](img/ls.png)
 
 {% hint style="info" %}
-**Note:** In computing, most actions fall into one of the four categories called CRUD: **c**reating, **r**eading, **u**pdating, or **d**eleting data. Which of these actions do you think `pwd` and `ls` are?
+**Note:** In computing, all actions that interact with data fall into one of the four categories called CRUD: **c**reating, **r**eading, **u**pdating, or **d**eleting data. 
+
+Which of these actions do you think `pwd` and `ls` are?
 {% endhint %}
 
 ### Navigating Between Directories with `cd`
@@ -158,9 +182,13 @@ The `cd <directory>` command allows you to move to another directory in the file
 
 An **argument** is an additional piece of information that changes that behavior of a given command. For the `cd` command, we have to also provide a destination.
 
+{% hint style="info" %}
+Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
+{% endhint %}
+
 For example, suppose we were located in the `/Users` directory inside the following file system:
 
-![](img/file-structure.png)
+![The file tree](img/file-structure.png)
 
 I could navigate to "down" to the `/Users/smith` directory with the command:
 
@@ -198,7 +226,7 @@ cd ../../jones/Desktop
 
 </details>
 
-### Be Careful when using the `cd` command!
+#### Be Careful when using the `cd` command!
 
 Using the `cd` command on its own will send you to the root of your entire file system (`~/`). This is the equivalent of using the command:
 
@@ -219,7 +247,7 @@ touch file1.txt file2.txt
 mkdir dir1 dir2 dir3
 ```
 
-### Executing JavaScript files with `node`
+#### Executing JavaScript files with `node`
 
 A JavaScript program is any file with a `.js` extension, like `hello.js`
 
@@ -236,6 +264,8 @@ Other programs can run forever, requiring us to stop them ourselves. For example
 ![The Node REPL is useful for testing out expressions.](img/1-node-repl-expressions.png)
 
 To terminate the program, use the keyboard shortcut `Control+C` (you may need to cancel twice).
+
+## Additional Commands
 
 ### Unfinished Double Quotes and `echo`
 
@@ -263,7 +293,7 @@ ls && cat output.txt
 
 For example, the command above lists the contents of the current working directory and print the contents of `output.txt`
 
-### Removing, Renaming, and Copying
+### Removing, Renaming, Moving, and Copying
 
 `rm <file_name>` removes a file from the working directory
 
