@@ -92,8 +92,8 @@ In order to use branches in a project, we will introduce the following commands,
 
 ```sh
 git branch # see all branches in the local repository
-git branch <branch_name> # create a new branch
-git checkout <branch_name> # switch to a branch
+git branch [branch_name] # create a new branch
+git checkout [branch_name] # switch to a branch
 
 # make changes, add, commit, push
 # this will add your branch to GitHub
@@ -104,7 +104,7 @@ git checkout <branch_name> # switch to a branch
 Use the `-b` flag with `git checkout` to create a new branch and switch to it in one line!
 
 ```sh
-git checkout -b <branch_name>
+git checkout -b [branch_name]
 ```
 {% endhint %}
 

@@ -206,7 +206,7 @@ After setting up the repo, you should be brought to the repo's page on GitHub. C
 Then, back in your Visual Studio Code terminal, run the command:
 
 ```sh
-git clone <pasted git clone url>
+git clone [pasted_git_clone_url]
 ```
 
 For example, it could look like this:
