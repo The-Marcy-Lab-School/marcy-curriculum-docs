@@ -27,7 +27,7 @@ You will be able to…
     - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
   - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
 - [Additional Commands](#additional-commands)
-  - [Unfinished Double Quotes and `echo`](#unfinished-double-quotes-and-echo)
+  - [Unfinished Double Quotes, `echo`, and `>>`](#unfinished-double-quotes-echo-and-)
   - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
   - [Removing, Renaming, Moving, and Copying](#removing-renaming-moving-and-copying)
 - [Challenges](#challenges)
@@ -178,7 +178,7 @@ Which of these actions do you think `pwd` and `ls` are?
 
 ### Navigating Between Directories with `cd`
 
-The `cd <directory>` command allows you to move to another directory in the file system. However, unlike the previous commands, it requires an **argument**.
+The `cd [directory]` command allows you to move to another directory in the file system. However, unlike the previous commands, it requires an **argument**.
 
 An **argument** is an additional piece of information that changes that behavior of a given command. For the `cd` command, we have to also provide a destination.
 
@@ -236,9 +236,9 @@ cd ~
 
 ### Making Files and Directories with `mkdir` and `touch`
 
-`mkdir <dir_name>` creates a new directory in the working directory
+`mkdir [dir_name]` creates a new directory in the working directory
 
-`touch <file_name>` creates a new file in the working directory. Make sure to include the file extension!
+`touch [file_name]` creates a new file in the working directory. Make sure to include the file extension!
 
 You can also create multiple files/directories at once by listing multiple file/directory names:
 
@@ -267,7 +267,7 @@ To terminate the program, use the keyboard shortcut `Control+C` (you may need to
 
 ## Additional Commands
 
-### Unfinished Double Quotes and `echo`
+### Unfinished Double Quotes, `echo`, and `>>`
 
 Another common occurrence is an unfinished string. You can test this with the `echo` command which will print a given string straight to the terminal.
 
@@ -295,13 +295,13 @@ For example, the command above lists the contents of the current working directo
 
 ### Removing, Renaming, Moving, and Copying
 
-`rm <file_name>` removes a file from the working directory
+`rm [file_name]` removes a file from the working directory
 
-`rm -r <directory_name>` removes a directory and all of its contents from the working directory. `-r` stands for "recursive".
+`rm -r [directory_name]` removes a directory and all of its contents from the working directory. `-r` stands for "recursive".
 
-`mv <file_name> <new_file_name>` renames a file in the working directory or allows you to move the file to another directory.
+`mv [file_name] [new_file_name]` renames a file in the working directory or allows you to move the file to another directory.
 
-`cp <file_name> <dir_name>` copies a file into a directory.
+`cp [file_name] [dir_name]` copies a file into a directory.
 
 ## Challenges
 
