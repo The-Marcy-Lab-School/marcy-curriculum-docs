@@ -28,7 +28,17 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 
 {% embed url="https://docs.google.com/presentation/d/1ErVMKugQc4ObNVhreLYplYZP3OsA5AmFyNSDcPKr8PA/embed?delayms=3000&loop=false&start=false" %}
 
-## Modules in this Curriculum
+## The Curriculum
+
+At the Marcy Lab School, you will learn how to build full-stack web applications using the PERN stack (Postgres, Express, React, Node). In addition, you will become familiar with a variety of languages, technologies, developer tools, and more including:
+* **Languages:** HTML, CSS, JS, SQL, sh
+* **Frameworks & Libaries**: React, Express, Knex, Jest, Bcrypt
+* **Technologies**: Nodejs, PostgreSQL
+* **Developer Tools**: VS Code, Cursor, GitHub, Git, Terminal, TablePlus, Postman
+
+### Course Modules
+
+The core curriculum is delivered over the course of 9 months with a final 3-month "Capstone" period with individual modules spanning 1 to 6 weeks:
 
 * [Module 0: Command Line Interfaces, Git & GitHub](mod-0-command-line-interfaces-git-and-github/)
 * [Module 1: JavaScript Fundamentals](mod-1-javascript-fundamentals/)
@@ -40,19 +50,145 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 * [Civic Tech Hackathon](mod-9-civic-tech-hackathon/)
 * [Capstone](mod-10-capstone/)
 
-## Learning Principles
+## Technical Competencies
 
-* **Go slow now to go far later.**
-  * Mastery of the fundamentals takes time but it is worth it.
-  * If you understand the fundamentals, you can reason about any of the abstractions built on top of them.
-* **Your words are your world.**
-  * Vocabulary matters. Your mental models can only be as strong as the language you have to describe them.
-  * The quality of your solution is determined by your ability to articulate the problem.
-* **Learning is a skill...**
-  * …and it is the most important skill in the world.
-  * ....and like all other skills, it can be developed and improved upon with intentional practice.
-  * We learn by repeated exposure. What was once intimidating becomes familiar and approachable through repetition.
-  * AI tools like ChatGPT are shortcuts for writing code, but they are not shortcuts for learning. Learn from your community (peers, Google, and StackOverflow, even)!
+Writing code is not the primary skill of a software engineer—it's the medium. Yes, software engineers must know syntax, however, just as writing prose is the medium through which authors tell stories, coding is the medium through which engineers express ideas, design systems, and solve problems. Especially with the advancements of AI, the skills that truly matter for software engineers are **durable skills** that extend beyond any single technology. 
+
+The competencies listed below provide shared vocabulary that we can use amongst instructors to align on what motivates our curriculum and to model in the classroom and teach in every lesson. These competencies can also be shared directly with fellows to help articulate their strengths and areas of growth, enabling us to provide more targeted support and enabling them to better focus their efforts on closing gaps.
+
+*Note: these competencies often will overlap and support each other. For example, technical communication requires effective mental modeling and systems-level thinking.*
+
+**<details><summary>1. Technical Communication</summary>**
+
+As a software engineer, you must be able to communicate effectively for a variety of audiences: hiring managers, teammates, junior engineers, AI chatbots. Across the many domains in which you must be able to communicate effectively, the *what*, **the *how*, and the *why* and all three must be delivered with the utmost clarity:
+
+- *Communicating Product Development:* What are you building and why? What users did you have in mind? How did you prioritize which features to build first and which features did you decide to leave out?
+- *Communicating Tool Selection:* What specific tools and technologies are you using? What alternatives did you consider and why did you choose this specific stack? What were the tradeoffs?
+- *Communicating Code Structure:* How is your solution organized? What are the key components and how do they interact? What considerations were you making for the team members who might have to maintain this code?
+- *Communicating Problem Solving:* What were the key implementation challenges? What limitations did you face? How did you work within or around them?
+
+The ability to communicate well improves team collaboration and instills confidence in your competence as an engineer. The impression you make through your communication may be the single most important factor in securing a job. This is true of all industries, not just software engineering.
+
+**Indicators**
+
+- Shares not just what they did, but how they did it and why it matters.
+- Articulates technical decisions and their impact on the project timeline, performance, or user experience
+- Uses effective analogies, diagrams, and code snippets to enhance explanations
+- Adapts communication style based on audience (technical vs. non-technical stakeholders)
+- Can effectively communicate in both writing and in oral presentations.
+
+**Pitfalls:** struggling to explain code clearly, lack of audience awareness, difficulty articulating technical decisions and tradeoffs
+
+</details>
+
+**<details><summary>2. Building Mental Models</summary>**
+
+Software engineering is full of complexity. Not only is there a vast scope of concepts, tools, and technologies to learn, any given software project can contain millions of lines of code, hundreds or more files, and dozens or more interdependent parts. To deal with this complexity, you need the ability to quickly build mental models for any topic.
+
+A mental model distills a complex concept, system, algorithm, tool or technology into its most essential parts such that it can be used or explained simply without getting lost in the details. In other words, it is an **abstraction**.
+
+Mental models also enable us to organize the great variety of concepts we must learn into recognizable categories. Then, when we encounter problems that we've seen before, we know which tools and technologies to reach for.
+
+**Indicators**
+
+- Can illustrate a concept using an analogy or a diagram.
+- Can explain a concept clearly with simplified language.
+- Corrects misconceptions when new evidence emerges.
+- Can communicate algorithms using pseudocode.
+- Can identify essential vs. extraneous details when analyzing a problem.
+- Accurately applies known solutions, data structures, and algorithms to new but similar problems.
+- Makes informed technical decisions based on understanding of high-level tradeoffs.
+
+**Pitfalls:** memorizing syntax without understanding why, holding misconceptions, difficulty transferring knowledge to new situations.
+
+</details>
+
+**<details><summary>3. Thinking in Systems</summary>**
+
+Any set of things that work together can be considered a system. Systems can range in scale from a simple algorithm to a complex, multi-layered application. 
+
+*Thinking in Systems* is the ability to zoom out and see how a system works as a whole, to break down the system into smaller components, and to identify the dependencies between connected components. 
+
+For example, the diagram below represents the layers of a full-stack PERN stack application. As software engineers, we need to be able to view an application in this manner and understand how the layers communicate with each other.
+
+![A full-stack PERN application system diagram.](./mod-9-civic-tech-hackathon/img/full-stack-diagram.svg)
+
+Systems-level thinking enables us to design, reason about, implement, and debug complex algorithms all the way up to complex applications. It is what separates “programmers” (those who can write functional code) from “software engineers” (those who can design reliable and maintainable code).
+
+**Indicators**
+
+- Sees the big picture and how pieces connect (front-end, back-end, DB, APIs).
+- Anticipates ripple effects of a change.
+- Designs for extensibility, debug-ability, and reliability, not just “getting it to work.”
+- Breaks large problems into smaller ones.
+- Identifies dependencies between subtasks.
+
+**Pitfalls:** tunnel vision on one layer of the stack, failing to anticipate ripple effects, struggling to “zoom out.”
+
+</details>
+
+**<details><summary>4. Methodical Debugging</summary>**
+
+Mental models may allow you “vibe-code” your way to a sloppily hacked-together application, but once things break, a real engineer will know how to follow a methodical approach to debug the problem, identify the root cause, and implement a fix. Randomly trying solutions or guessing at the root cause won’t cut it!
+
+**Indicators**
+
+- Debugs with a structured approach instead of randomly trying fixes. (see [Problem Solving & Debugging Process](https://www.notion.so/Problem-Solving-Debugging-Process-262b1966ed7480b5842ed3d5c8d0b189?pvs=21) )
+- Reads error messages and test output carefully and investigates root causes.
+- Tries multiple strategies when initial approach fails.
+- Seeks to understand root causes rather than applying surface-level fixes.
+- Can trace through code execution to understand program behavior.
+- Tests solutions comprehensively, ensuring edge cases are covered.
+
+**Pitfalls:** frequently “guessing” at what the problem is without systematically finding the root, jumping into code without planning an approach first, ignoring error messages, not asking for help in a timely manner, giving up too quickly when the initial approach doesn’t work.
+
+</details>
+
+**<details><summary>5. Detail Orientation</summary>**
+
+As a professional software engineer you are going to be working on a team. Therefore writing functional code is just the prerequisite. The quality of *how* you code, communicate, and collaborate will be what distinguishes you from the crowd as an engineer that teams want to work with.
+
+Detail Orientation is about taking pride in every line of code you write and in every document that you produce.
+
+**Indicators**
+
+- Reads documentation and instructions thoroughly.
+- Writes clean, readable code that follows established style guides and coding conventions.
+- Creates well-structured, error-free documentation, READMEs, and presentations
+- Double-checks work before submitting for review or presentation.
+- Proactively seeks feedback and implements learnings in subsequent work.
+- Follows git best practices
+
+**Pitfalls:** Submitting code that raises numerous linting flags and doesn’t adhere to known style guides. Creating documentation, technical writing, and technical presentations that are error-filled or contain typos or technical inaccuracies. Repeating the same mistakes without incorporating feedback.
+
+</details>
+
+## Learning at Marcy
+
+{% embed url="https://docs.google.com/presentation/d/1G0kbcmXU5PUGbXWz5XB5F_XWFdnQDrRcpmxrdz413bs/embed?delayms=3000&loop=false&start=false" %}
+
+Learning is a skill and, just like any other skill, it can be developed and improved upon with intentional practice. At Marcy, we will help you hone your learning skills by encouraging you to follow the 4-step iterative process:
+
+1. Gather Information
+2. Utilize, apply, and organize that information
+3. Reflect on your learnings and gaps
+4. Gather more information to refine your understanding
+
+Generative AI tools can massively increase your learning potential but only if you use them intentionally! You have to be an active participant in your learning — AI can't learn for you. Some strategies for using AI intentionally include.
+
+Ask ChatGPT to help you by...
+- **Making complex topics easier to understand**: 
+  - "Break down this concept into smaller, digestible parts"
+  - "Connect this idea to something I already know"
+  - "Provide multiple perspectives or explanations for this topic"
+- **Overcoming challenges with AI support**: 
+  - "Here is my code. Identify the mistakes and explain it step-by-step so I can fix it myself"
+  - "Check out my definition for the forEach function. It feels like something is off. Can you check my work for misconceptions?"
+  - "I just studied how JavaScript arrays work. Generate 5 practice questions for me ranging from easy to challenging that test my understanding of array methods."
+- **Planning next steps**
+  - "I am trying to learn about React hooks, what should I master first?"
+  - "I am building a project, where should I start first?"
+  - "I've just finished an interview, what should I do to follow up to leave a good impression?"
 
 ## Tips and Tricks to Success at Marcy
 
