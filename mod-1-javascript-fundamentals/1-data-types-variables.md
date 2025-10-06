@@ -72,6 +72,23 @@ There are also three **reference data types**: Objects, Arrays, and Functions.
 | **Array**      | `[ "apple", "banana", "cherry" ]`          | An ordered list of similar values       | Storing lists (shopping cart items, game high scores, chat messages)  |
 | **Function**   | `function greet() { console.log("Hi!"); }` | A reusable block of code        | Performing actions, handling events, calculations              |
 
+**<details><summary>Q: Open up YouTube.com. What examples can you come up with for each of the primitive and reference data types listed above?</summary>**
+
+Here are some examples of each of the primitive data types:
+
+* String: The title of a video
+* Number: The number of views on a video
+* Boolean: Indicator for whether or not you have liked (or disliked) a video
+* Undefined: The blank search input box
+* Null: The current user (when you are logged out)
+
+Here are some examples of each of the reference data types:
+* Object: A single video with all of the related data (view count, likes, comments, etc...)
+* Array: All of the comments for a single video
+* Function: Clicking on the "Subscribe" button triggers some sort of "subscribe" functionality
+
+</details>
+
 ## Operators
 
 Now that we know the types of data, let's use our computers to generate data with **operators**!
