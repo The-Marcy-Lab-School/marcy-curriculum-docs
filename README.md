@@ -60,7 +60,7 @@ The competencies listed below provide shared vocabulary that we can use amongst 
 
 **<details><summary>1. Technical Communication</summary>**
 
-As a software engineer, you must be able to communicate effectively for a variety of audiences: hiring managers, teammates, junior engineers, AI chatbots. Across the many domains in which you must be able to communicate effectively, the *what*, **the *how*, and the *why* and all three must be delivered with the utmost clarity:
+As a software engineer, you must be able to communicate effectively for a variety of audiences: hiring managers, teammates, junior engineers, AI chatbots. Across the many domains in which you must be able to communicate effectively, the *what*, the *how*, and the *why* and all three must be delivered with the utmost clarity:
 
 - *Communicating Product Development:* What are you building and why? What users did you have in mind? How did you prioritize which features to build first and which features did you decide to leave out?
 - *Communicating Tool Selection:* What specific tools and technologies are you using? What alternatives did you consider and why did you choose this specific stack? What were the tradeoffs?
