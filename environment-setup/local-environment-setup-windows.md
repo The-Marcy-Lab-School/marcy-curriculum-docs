@@ -11,6 +11,8 @@ Today, we'll be setting up our local development environment for Windows 10. For
     - [Upgrade from WSL 1 to WSL 2](#upgrade-from-wsl-1-to-wsl-2)
 - [Visual Studio Code, Node, and Your Local Development Environment](#visual-studio-code-node-and-your-local-development-environment)
   - [Download VSCode for Windows](#download-vscode-for-windows)
+  - [Familiarize yourself with VS Code](#familiarize-yourself-with-vs-code)
+  - [Configure VS Code](#configure-vs-code)
   - [Download Node and NPM](#download-node-and-npm)
   - [Set up local Development directory](#set-up-local-development-directory)
 
@@ -103,6 +105,36 @@ You should pin Ubuntu Terminal and VS Code to the taskbar since you'll be using 
 
 ![taskbar](./img/taskbar.png)
 
+### Familiarize yourself with VS Code
+
+Now, let's get to know the VS Code layout!
+   * Your directories and files are in the left panel. You should see your `Development` folder as the root with your sub-directories listed inside.
+   * VS Code has an integrated Terminal application that you can use by selecting **Terminal > New Terminal** from the top menu bar. 
+   * The VS Code Terminal is *exactly* the same as your Mac "Terminal". Anything you do in Terminal you can do here as well.
+
+![VS Code on MacOS](./img/vscode.png)
+
+### Configure VS Code
+
+1. Go to your settings (click on the cog in the bottom-left corner) and search for "save".
+    
+    * Set **Files: Auto Save** to **onFocusChange**
+    * CHECK the checkbox for **Editor: Format On Save**
+
+    ![Turn on Auto Save and Format on Save.](./img/vs-code-save-settings.png)
+
+2. Stay in your settings and search for "compact folders": 
+
+    * UNCHECK the checkbox for **Explorer: Compact Folders**.
+
+    ![Turn off Compact Folders](./img/vs-code-compact-folders.png)
+
+3. Finally, in your settings search for "AI Features"
+
+    * CHECK the checkbox for **Chat: Disable AI Features**.
+
+    ![Disable AI Features](./img/vs-code-disable-ai-features.png)
+
 ### Download Node and NPM
 
 > Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-nvm-nodejs-and-npm). 
@@ -136,12 +168,4 @@ Using your Terminal as a command line, create a folder structure where you can p
 - `mkdir mod-{0..7}` etc... to make multiple folders at once.
 - `ls` to list the contents of `Development/` and ensure the folders were created.
 
-Next, type the command `code .` into your terminal and it will open VS Code for you. You'll use this command a lot so remember it!
-
-Familiarize yourself with VS Code. This will be your new coding environment.
-
-- Your directories and files are in the left panel.
-- You can start a new "VS Code Terminal" by selecting View > Terminal from the top menu bar.
-- The "VS Code Terminal" works _exactly_ the same as your Ubuntu "Terminal"!
-
-![vscode](./img/vscode.png)
+Next, type the command `code .` into your terminal and it will open VS Code at the current directory (your "Development" folder). You'll use this command a lot so remember it!

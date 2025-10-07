@@ -6,7 +6,8 @@ Today, we'll be setting up our local development environment for Mac. For the Wi
 - [Table of Contents](#table-of-contents)
 - [Set up local `Development` directory](#set-up-local-development-directory)
 - [Download VS Code](#download-vs-code)
-- [Familiarize yourself with VS Code](#familiarize-yourself-with-vs-code)
+  - [Familiarize yourself with VS Code](#familiarize-yourself-with-vs-code)
+  - [Configure VS Code](#configure-vs-code)
 - [Download Node and NPM](#download-node-and-npm)
 - [Write your first JavaScript program](#write-your-first-javascript-program)
 
@@ -60,8 +61,16 @@ If it does not show up, follow these steps to install VS Code:
 
 ![download](./img/download.png)
 
-## Familiarize yourself with VS Code
-Now, we're going to explore Visual Studio Code.
+### Familiarize yourself with VS Code
+
+Now, let's get to know the VS Code layout!
+   * Your directories and files are in the left panel. You should see your `Development` folder as the root with your sub-directories listed inside.
+   * VS Code has an integrated Terminal application that you can use by selecting **Terminal > New Terminal** from the top menu bar. 
+   * The VS Code Terminal is *exactly* the same as your Mac "Terminal". Anything you do in Terminal you can do here as well.
+
+![VS Code on MacOS](./img/vscode.png)
+
+### Configure VS Code
 
 First, we'll add the very helpful `code` command which can quickly open up a VS Code window from the Terminal.
 1. Open VS Code and open the Command Palette by typing Shift+Command+P (⇧⌘P). Then type 'shell command' to find the Shell Command: Install 'code' command in PATH command. Click it to install. 
@@ -77,14 +86,26 @@ First, we'll add the very helpful `code` command which can quickly open up a VS 
     - Enter `ls` to see the directories at the root.
     - Enter `code Development` to open a new VS Code window rooted in the `~/Development/` folder
     
-Remember this `code` command in the future. It can be used to open up a VS Code window in whatever folder you choose!
+    Remember this `code` command in the future. It can be used to open up a VS Code window in whatever folder you choose!
 
-Now, let's get to know the VS Code layout!
-   * Your directories and files are in the left panel. You should see your `Development` folder as the root with your sub-directories listed inside.
-   * VS Code has an integrated Terminal application that you can use by selecting **Terminal > New Terminal** from the top menu bar. 
-   * The VS Code Terminal is *exactly* the same as your Mac "Terminal". Anything you do in Terminal you can do here as well.
+4. Go to your settings (click on the cog in the bottom-left corner) and search for "save".
+    
+    * Set **Files: Auto Save** to **onFocusChange**
+    * CHECK the checkbox for **Editor: Format On Save**
 
-![VS Code on MacOS](./img/vscode.png)
+    ![Turn on Auto Save and Format on Save.](./img/vs-code-save-settings.png)
+
+5. Stay in your settings and search for "compact folders": 
+
+    * UNCHECK the checkbox for **Explorer: Compact Folders**.
+
+    ![Turn off Compact Folders](./img/vs-code-compact-folders.png)
+
+6. Finally, in your settings search for "AI Features"
+
+    * CHECK the checkbox for **Chat: Disable AI Features**.
+
+    ![Disable AI Features](./img/vs-code-disable-ai-features.png)
 
 ## Download Node and NPM
 
