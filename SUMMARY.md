@@ -5,6 +5,7 @@
   * [Local Environment Setup - Mac](environment-setup/local-environment-setup-mac.md)
   * [Local Environment Setup - Windows](environment-setup/local-environment-setup-windows.md)
   * [GitHub Setup](environment-setup/github-setup.md)
+  * [Loom Setup](environment-setup/loom.md)
   * [Postgres Setup](environment-setup/postgres-setup.md)
 * [Coding Guides](how-tos/README.md)
   * [Software Engineering Assignments Guide](how-tos/working-with-assignments.md)
