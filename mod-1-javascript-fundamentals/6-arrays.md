@@ -5,20 +5,19 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 {% endhint %}
 
 **Table of Contents**
+- [Array Basics](#array-basics)
+  - [Arrays Are Mutable](#arrays-are-mutable)
+  - [Array Methods for Adding and/or Removing Values](#array-methods-for-adding-andor-removing-values)
+- [Reference vs. Primitive Values](#reference-vs-primitive-values)
+  - [How Reference Types (Arrays and Objects) are Stored in Memory](#how-reference-types-arrays-and-objects-are-stored-in-memory)
+  - [Mutability vs. Reassignment](#mutability-vs-reassignment)
+  - [Impure and Pure Functions](#impure-and-pure-functions)
+  - [Making Copies of Arrays to Make Pure Functions with the Spread Syntax](#making-copies-of-arrays-to-make-pure-functions-with-the-spread-syntax)
+  - [Copying Array Challenge](#copying-array-challenge)
+- [Advanced Array Syntax](#advanced-array-syntax)
+  - [2D Arrays](#2d-arrays)
+  - [Destructuring Assignment and Rest Operator](#destructuring-assignment-and-rest-operator)
 
-* [Slides](6-arrays.md#slides)
-* [Array Basics](6-arrays.md#array-basics)
-  * [Arrays Are Mutable](6-arrays.md#arrays-are-mutable)
-  * [Array Methods for Adding and/or Removing Values](6-arrays.md#array-methods-for-adding-andor-removing-values)
-* [Reference vs. Primitive Values](6-arrays.md#reference-vs-primitive-values)
-  * [How Reference Types (Arrays and Objects) are Stored in Memory](6-arrays.md#how-reference-types-arrays-and-objects-are-stored-in-memory)
-  * [Pass by Reference](6-arrays.md#pass-by-reference)
-  * [Impure and Pure Functions](6-arrays.md#impure-and-pure-functions)
-  * [Making Copies of Arrays to Make Pure Functions with the Spread Syntax](6-arrays.md#making-copies-of-arrays-to-make-pure-functions-with-the-spread-syntax)
-  * [Copying Array Challenge](6-arrays.md#copying-array-challenge)
-* [Advanced Array Syntax](6-arrays.md#advanced-array-syntax)
-  * [2D Arrays](6-arrays.md#2d-arrays)
-  * [Destructuring Assignment and Rest Operator](6-arrays.md#destructuring-assignment-and-rest-operator)
 
 ## Array Basics
 
@@ -165,17 +164,34 @@ Arrays and Objects are considered **reference types**. Let's see why.
 
 ### How Reference Types (Arrays and Objects) are Stored in Memory
 
-When a variable is created, a chunk of your computer's RAM is assigned to hold some data. Primitive values are small enough to be stored in memory. Arrays and objects (a.k.a "reference types") however can grow to be any size and therefore cannot be contained within a single **memory address**.
+When a variable is created, a chunk of your computer's memory is assigned to hold some data. Primitive values are small enough to be stored in memory as-is. Arrays and objects (a.k.a "reference types") however can grow to be any size and therefore cannot be contained within a single memory slot.
 
-So, instead, they are stored in an area called the **heap** and a **reference to their heap address** is stored in the variable instead.
+Instead, the data in arrays and objects are stored in an area called the **heap** and a **reference to their heap address** is stored in the variable instead.
 
 {% embed url="https://docs.google.com/presentation/d/13d9TXTogmt4hV9DLuHzARExbcu3A7Nr9dnY69Zz5fKw/embed?start=false&loop=false&delayms=3000" %}
 
 As a result, we can mutate the contents of an array without reassigning the variable because the variable doesn't hold the array, it holds a reference to the array!
 
-### Pass by Reference
+### Mutability vs. Reassignment
 
-when you copy an array or object from one variable to another, or you pass an array or object into a function, the reference is being passed, not the array or object itself.
+Consider the code below, what will the value of `nums` and `clone` be after the program runs?
+
+```js
+const nums = [1,2,3];
+const clone = nums;
+clone[1] = 20;
+
+console.log(nums);  // [1,20,3]
+console.log(clone); // [1,20,3]
+```
+
+Both `nums` and `clone` will hold the values `[1,20,3]`. Why? 
+
+Again, this is because arrays are reference types because:
+* When we assign `clone = nums`, the "value" of `nums` is the **reference** to the array `[1,2,3]`, not the array itself. So, `clone` also holds a reference to the exact same array
+* When we mutate `clone[1]`, we are mutating the array referenced by `clone` which is the same array referenced by `nums`. So, both `nums` and `clone` return the mutated array.
+
+The same thing happens when we invoke a function and provide a reference type as an argument:
 
 ```js
 const emptyTheArray = (arr) => {
@@ -186,31 +202,22 @@ const emptyTheArray = (arr) => {
 // 1. The array below is created in the heap and the "reference" to its location is stored in letters
 const letters = ['a', 'b', 'c'];
 
-// 2. When we invoke emptyTheArray, we "pass the reference" to the function
+// 2. When we invoke emptyTheArray, we assign the "reference" to the function parameter "arr"
 emptyTheArray(letters);
 
 // 4. The array referenced by letters has been modified by the function!
 console.log(letters); // Prints []
 ```
 
-Because variables store immutable raw data values (not references), it is said that we "pass by value" when we pass strings, numbers, or booleans into a function. There is no way to mutate the incoming value in a way that would affect the variable in the outer scope.
+It is impossible for this behavior to occur when dealing with primitive values like strings, numbers, and booleans because they are immutable.
 
 ```js
-// 3. When this function is invoked, the variables oldName and newName are created locally
-const changeName = (oldName, newName) => {
-  // 4. I can reassign oldName, but this isn't doing anything to the myName variable whose value was passed in
-  oldName = newName;
-}
-
-// 1. I declare the variable myName to store the immutable string 'ben'`
-const myName = 'ben';
-
-// 2. I pass the value itself to changeName
-changeName(myName, 'fred');
-
-// 5. There is nothing that changeName can do to mutate the value held by myName aside from reassigning the myName variable itself
-console.log(myName); // Prints 'ben'
+let x = 10;
+let y = x;
+y++; // shorthand for y = y + 1
 ```
+
+In this example, even though it *looks* like we're mutating the value `y`, we are NOT. We're reassigning `y` to store a completely different value (`11`). 
 
 ### Impure and Pure Functions
 

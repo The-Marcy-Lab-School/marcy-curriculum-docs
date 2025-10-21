@@ -10,6 +10,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [The basics](#the-basics)
   - [Accessing Objects with Dot Notation and Bracket Notation](#accessing-objects-with-dot-notation-and-bracket-notation)
   - [Dynamic Properties Challenge](#dynamic-properties-challenge)
+- [Objects are Reference Types](#objects-are-reference-types)
 - [Iterating Over Keys and Values of an Object](#iterating-over-keys-and-values-of-an-object)
 - [Advanced Object Syntax](#advanced-object-syntax)
   - [Object Shorthand Using Variables](#object-shorthand-using-variables)
@@ -74,7 +75,7 @@ const dictionary = {
 
 ### Accessing Objects with Dot Notation and Bracket Notation
 
-* Object values can be accessed and/or modified using dot notation or bracket notation
+* Object values can be accessed and/or mutated using dot notation or bracket notation
 
 ```js
 // Dot notation is the faster to type and easier to read than bracket notation
@@ -143,6 +144,40 @@ while (true) {
 To complete this program, add the line `dictionary[newWord] = definition;` to the end
 
 </details>
+
+## Objects are Reference Types
+
+We've already learned that arrays are reference types and so are objects. In fact, arrays are just a kind of object!
+
+So, when we assign an object to a variable, we are storing a reference to the object's location in memory, not the values themselves. 
+
+And when we assign a variable holding an object to another variable, each variable holds a reference to the same object
+
+```js
+const sheep = { name: 'benny', noise: 'baaaa' };
+const clone = sheep;    // both variables reference the same object
+clone.noise = 'BAAAAA'; // mutating the referenced object
+
+console.log(sheep); // { name: 'benny', noise: 'BAAAAAA' }
+console.log(clone); // { name: 'benny', noise: 'BAAAAAA' }
+```
+
+We can also use the spread syntax (`...`) to copy the values of one object into a new object. This is particularly useful when creating pure functions:
+
+```js
+const sheep = { name: 'benny', noise: 'baaaa' };
+
+const makeLoudClone = (obj) => {
+  const clone = { ...obj }; // copy the values of obj into a new object
+  clone.noise = clone.noise.toUpperCase();
+  return clone;
+}
+
+const clone = makeLoudClone(sheep);
+
+console.log(sheep); // { name: 'benny', noise: 'baaaa' }
+console.log(clone); // { name: 'benny', noise: 'BAAAA' }
+```
 
 ## Iterating Over Keys and Values of an Object
 
