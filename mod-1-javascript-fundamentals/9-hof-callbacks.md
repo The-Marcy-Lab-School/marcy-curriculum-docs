@@ -7,17 +7,18 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 **Table of Contents**:
 
 - [Summary](#summary)
-- [First, Animation!](#first-animation)
-- [What is a Higher-Order Function?](#what-is-a-higher-order-function)
-- [A Basic higher-order Function and Callback Example](#a-basic-higher-order-function-and-callback-example)
+- [Functions are "First-Class" Values](#functions-are-first-class-values)
+  - [Functions Stored in Objects are Referred to as "Methods"](#functions-stored-in-objects-are-referred-to-as-methods)
+  - [Functions Passed into Other Functions Are "Callbacks". The Function That Receives the Callback is a "Higher Order Function".](#functions-passed-into-other-functions-are-callbacks-the-function-that-receives-the-callback-is-a-higher-order-function)
+  - [Some Fun Examples](#some-fun-examples)
   - [Do Not Invoke The Callback](#do-not-invoke-the-callback)
-  - [Using Inline Callback Functions](#using-inline-callback-functions)
-- [Some Fun Examples: `setTimeout` and `setInterval`](#some-fun-examples-settimeout-and-setinterval)
 - [Array Iterators](#array-iterators)
   - [forEach](#foreach)
 
 ## Summary
 
+* **Functions are "first-class" values** meaning they can be stored in variables and data structures (arrays/objects), passed to functions as arguments, and returned from functions.
+* A **method** is a function stored in an object.
 * **Higher-order functions (HOFs)** are functions that accept other functions as input and/or return functions, enabling powerful programming patterns and code reuse.
 * **Callback functions** are functions passed as arguments to higher-order functions, allowing you to customize behavior without modifying the HOF itself.
 * When passing callbacks to HOFs, avoid invoking them (don't use parentheses) - the HOF will handle the invocation with the correct parameters.
@@ -25,55 +26,146 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 * Common HOF examples include `setTimeout`, `setInterval`, and array methods like `forEach`, which demonstrate how callbacks enable asynchronous and iterative programming.
 * Understanding HOFs and callbacks is fundamental to modern JavaScript development and functional programming concepts.
 
-## First, Animation!
+## Functions are "First-Class" Values
 
-Check out this script below which continuously prints out a character 👾 moving back and forth across the terminal. How can something "animated" like this be created?
+Pop Quiz! Identify the data types stored in each variable below:
 
-![A script where an alien emoji is moving back and forth across the terminal](img/8-alien-bouncing.gif)
-
-An animation is nothing more than a series of changing images shown in rapid succession. To simulate that experience, we can write a program that executes an `animateAlien` function every 0.05 seconds which changes the position of the 👾 character on each execution.
-
-The only way this is possible is with **higher-order functions** and **callbacks**.
-
-## What is a Higher-Order Function?
-
-In the past, we have compared functions to recipes. In both, they are a series of instructions to execute. There may also be opportunities to customize the ingredients (parameters) that determine how the dish (the returned value) comes out.
-
-Now, imagine that you have a personal chef. They can cook anything you want, all you had to do is give them a recipe and they will add their "special sauce". If a recipe is a function, then the chef that can make any recipe is a "higher-order" function.
-
-> A **higher-order function (HOF)** is a function that accepts another function as input and/or returns a function
->
-> A **callback function** is the function that is provided to a higher-order function as an argument. It is invoked by the higher-order function.
-
-## A Basic higher-order Function and Callback Example
-
-The simplest possible higher-order function that can exist looks like this:
-
-{% code title="0-intro-to-callbacks.js" lineNumbers="true" %}
 ```js
-// This higher-order function takes in callback and executes it.
-const executeCallback = (callback) => {
-  callback();
+const a = 'hello world';
+const b = 42;
+const c = true;
+const d = [1, 2, 3];
+const e = { name: 'Ada' };
+const f = () => { 
+  console.log("hello world"); 
+};
+```
+
+**<details><summary>Answers</summary>**
+1. String
+2. Number
+3. Boolean
+4. Array
+5. Object
+6. Function
+</details>
+
+What we can see from this is that functions are just another type of data and, like other dat types, it can be stored in a variable. This ability to be stored in a variable is the first quality that describes **functions as "first class" values**.
+
+### Functions Stored in Objects are Referred to as "Methods"
+
+Functions can also be stored in objects and, less commonly, arrays. When stored in an object, we refer to the function as a **method**.
+
+```js
+const methods = {
+  sayHi: () => {
+    console.log("Hi");
+  },
+  greet: (name) => {
+    console.log(`Hello ${name}`);
+  },
+  isEven: (number) => {
+    return number % 2 === 0;
+  }
+};
+
+methods.sayHi();                // Hi
+methods.greet('Ada');           // Hello Ada
+console.log(methods.isEven(4)); // true
+```
+
+Try defining your own method called `isOdd` and test it out!
+
+### Functions Passed into Other Functions Are "Callbacks". The Function That Receives the Callback is a "Higher Order Function".
+
+Here is a "normal" function that takes in a string as an argument:
+
+```js
+const greet = (name) => {
+  console.log(`Hello ${name}`);
 }
+
+greet('Ada');  // Passing a string as an argument
+```
+
+Just like strings, functions can be passed to other functions as arguments. In these cases, we call the function argument a **"callback function"** and the function receiving the callback is a **"higher order function"**
+
+```js
+// First, we define the callback
+const tick = () => {
+  console.log("Tick");
+}
+setInterval(tick, 1000); // This higher order function takes in a callback and a number
+
+// setTimeout also takes in a callback and a number. 
+// Here, we define the callback "anonymously" or "inline"
+setTimeout(() => {
+  console.log("10 seconds have passed");
+}, 10000);
+```
+
+Two classic examples of higher-order functions that are built into Node are:
+1. `setTimeout(callback, delay)`
+2. `setInterval(callback, delay)`
+
+Each function takes in a `callback` function and a `delay` number as arguments and then invoke the `callback` after `delay` milliseconds have passed.
+
+**Q: Can you tell the difference between how `setTimeout` and `setInterval` work?**
+
+**<details><summary>Answer</summary>**
+
+`setTimeout` only invokes the callback once whereas `setInterval` will continuously invoke the callback.
+
+</details>
+
+### Some Fun Examples
+
+This one creates a "loading wheel" animation:
+
+{% code title="2-fun-examples.js" %}
+```javascript
+const chars = ["\\", "|", "/", "-"];
+let i = 0;
+
+// empty the console each time and print the next character in the sequence
+const loopThroughChars = () => {
+  console.clear()
+  console.log(chars[i]);
+  i++;
+  if (i >= 4) i = 0;
+};
+
+setInterval(loopThroughChars, 250);
 ```
 {% endcode %}
 
-While this function doesn't really provide any usefulness to us, it helps demonstrate how callbacks work.
+This one animates an alien that bounces across the screen:
 
-Any function can be a callback function if it is passed to a higher-order function:
+{% code title="2-fun-examples.js" overflow="wrap" %}
+```javascript
+let str = '👾';
+let forward = true;
 
-```js
-// Any simple function can be a callback.
-const sayHello = () => console.log("hello world");
+const animateAlien = () => {
+  // console.clear();   // uncomment this for a single-row experience
+  console.log(str);
 
-// We pass in the callback to the higher-order function
-executeCallback(sayHello);
-// hello world
+  if (forward) {
+    // add white space to the front
+    str = ' ' + str;
+  } else {
+    // remove 1 white space from the front
+    str = str.slice(1);
+  }
+
+  // Turn around when reaching either side of the terminal
+  const terminalWidth = process.stdout.columns;
+  if (str.length === terminalWidth || str.length === 2) {
+    forward = !forward;
+  }
+};
 ```
-
-The callback must be compatible with how the higher-order function will invoke the callback. In the definition of `executeCallback`, the `callback` input will be invoked without arguments. Therefore, our provided callback `sayHello` shouldn't have parameters.
-
-**Challenge**: Create your own callback function that prints something to the console. Consider whether or not your callback can include parameters. Then, use `executeCallback` to execute your callback. 
+{% endcode %}
 
 ### Do Not Invoke The Callback
 
@@ -100,61 +192,6 @@ executeCallback(undefined) // undefined is not a function
 ```
 
 </details>
-
-### Using Inline Callback Functions
-
-When using higher-order functions, we will often provide the callback as an anonymous arrow function for a more streamlined appearance:
-
-```js
-// Assuming we don't need to reuse this callback, we can provide it inline.
-executeCallback(() => { 
-  const roll = Math.ceil(Math.random() * 6);
-  console.log(`Dice Roll: ${roll}`)
-});
-```
-
-**Challenge**: Refactor your code so that it uses an inline callback.
-
-## Some Fun Examples: `setTimeout` and `setInterval`
-
-Let's look at some higher-order functions that you would actually use!
-
-Two classic examples of higher-order functions that are built into Node are `setTimeout(callback, delay)` and `setInterval(callback, delay)`. 
-
-These globally available functions each take in a `callback` and a `delay` input and invoke the `callback` after `delay` milliseconds have passed.
-
-`setTimeout` will invoke the `callback` only once. In the example below, the `sayHi` callback is invoked after 2000 milliseconds (2 seconds):
-
-{% code title="1-setTimeout-setInterval.js" lineNumbers="true" %}
-```javascript
-const sayHi = () => {
-  console.log('hi');
-};
-
-setTimeout(sayHi, 2000);
-// after 2 seconds... "hi"
-```
-{% endcode %}
-
-`setInterval` will repeatedly invoke the `callback` function with the given `delay` in between. In the example below, the `loopThroughChars` callback function will be executed every 250 milliseconds.
-
-{% code title="1-setTimeout-setInterval.js" lineNumbers="true" %}
-```javascript
-const chars = ["\\", "|", "/", "-"];
-let i = 0;
-
-// empty the console each time and print the next character in the sequence
-const loopThroughChars = () => {
-  console.clear()
-  console.log(chars[i]);
-  i++;
-  if (i >= 4) i = 0;
-};
-
-setInterval(loopThroughChars, 250);
-```
-{% endcode %}
-
 
 ## Array Iterators
 
