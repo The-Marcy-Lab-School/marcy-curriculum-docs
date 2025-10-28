@@ -14,7 +14,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
   - [First Test](#first-test)
   - [Practice: Add A Test](#practice-add-a-test)
   - [`toEqual` and `.not`](#toequal-and-not)
-  - [Tests Allow Us To Refactor with Confidence](#tests-allow-us-to-refactor-with-confidence)
+  - [Refactor with Confidence](#refactor-with-confidence)
 - [Test-Driven Development](#test-driven-development)
   - [Step 1: Define New Requirements](#step-1-define-new-requirements)
   - [Step 2: Write Tests Before Code (They Will Fail)](#step-2-write-tests-before-code-they-will-fail)
@@ -26,7 +26,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 - [Extension / Practice](#extension--practice)
 - [Key Takeaways](#key-takeaways)
 
-
 ## Learning Objectives
 
 By the end of this lesson, you should be able to:
@@ -35,23 +34,10 @@ By the end of this lesson, you should be able to:
 * Write tests with Jest using `test()` and `expect()`.
 * Use unit tests to safely **refactor** code that uses loops into **higher-order array methods**.
 * Apply **test-driven development (TDD)** to add new functionality by writing tests before implementation.
-* Use Jest’s common matchers to check equality and array contents.
+* Use Jest’s common matchers to check equality.
   * `.toBe`
   * `.toEqual`
-  * `.toContain`
-
-> “What happens when you change code that already works?”
-
-Show them how **tests act as a safety net** — you can change how code is written, as long as it still *does the same thing*.
-
-Then introduce the key idea of the lesson:
-
-> “Today, we’ll use tests in two ways: first to make sure we don’t break existing behavior, and then to guide us in adding new features.”
-
-Connect to recent content:
-
-> “You’ve just learned how to use array methods like `.map()`, `.filter()`, and `.find()` — but when we refactor code that uses loops, we want to make sure it *still works the same way*. That’s what tests help us prove.”
-
+  * `.not`
 
 ## A Basic Example
 
@@ -109,6 +95,8 @@ Rather than testing functions directly in the files where they live, it is bette
 Let's learn [Jest](https://jestjs.io/docs/getting-started), the most popular framework for creating test files in JavaScript / Node. 
 
 ### Installation & Setup
+
+Install `jest` as a developer dependency (with the `--save-dev` flag)
 
 ```bash
 npm install --save-dev jest
@@ -217,7 +205,7 @@ This example demonstrates a few new details about `expect()` calls.
 * The `.not` property can be added in the middle of any `expect().matcher()` statement to check the opposite of an expectation.
 
 
-### Tests Allow Us To Refactor with Confidence
+### Refactor with Confidence
 
 Now that we have passing tests, we can change *how* the code works — as long as it keeps passing the same tests.
 
