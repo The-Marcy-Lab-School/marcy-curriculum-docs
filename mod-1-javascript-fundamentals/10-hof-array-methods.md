@@ -1,7 +1,7 @@
 # Array Higher Order Methods
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-2-1-hof-array-methods)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-10-hof-array-methods)!
 {% endhint %}
 
 **Table of Contents**
