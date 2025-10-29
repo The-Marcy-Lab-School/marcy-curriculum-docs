@@ -88,13 +88,13 @@ Let's see how we can leverage this in object-oriented programming.
 
 ## Encapsulation and `this`
 
-Let's imagine we want to create a program that manages a list of friends.
+Imagine we want to create a program that manages a list of friends. We want to be able to
+1. add a friend to the list
+2. print out all of the people we're friends with.
 
-In functional programming, might write something like this:
+With a more **functional programming** approach, might write functions like this:
 
 ```js
-const friends = ['ada', 'bart'];
-
 const addFriendToList = (friends, newFriend) => {
   const friendsCopy = [...friends]
   friendsCopy.push(newFriend);
@@ -107,13 +107,14 @@ const printFriends = (friends) => {
   });
 };
 
+const friends = ['ada', 'bart'];
 const newFriends = addFriendToList(friends, 'caleb');
 printFriends(newFriends);
 ```
 
-Note how the functions are pure: they do not reference global variables and aim to avoid modifying variables passed into them.
+Note how the functions are pure: they do not reference global variables and aim to avoid modifying variables passed into them. These are key goals of functional programming.
 
-In object-oriented programming, we have a different goal entirely: encapsulation. 
+In object-oriented programming, we have a different goal entirely: **encapsulation**. 
 
 **Encapsulation is achieved by grouping data and the functions that operate on that data into one object**, like the `friendsManager` object below. In this example, the `friendsManager` object contains both the list of `friends` as well as the actions that you can perform with that list: `addFriend` and `printFriend`.
 
