@@ -184,8 +184,10 @@ const friendsManager = {
     this.friends.push(newFriend);
   },
   printFriends() {
-    console.log(this.friends)
-  }
+    this.friends.forEach((friend) => {
+      console.log(`I am friends with ${friend}`);
+    });
+  },
 }
 
 friendsManager.addFriend('daniel'); // this gets added
@@ -233,8 +235,10 @@ const makeFriendsManager = () => {
       friends.push(newFriend);
     },
     printFriends() {
-      console.log(friends);
-    }
+      this.friends.forEach((friend) => {
+        console.log(`I am friends with ${friend}`);
+      });
+    },
   }
   return friendsManager;
 }
@@ -268,8 +272,10 @@ const makeFriendsManager = () => {
       friends.push(newFriend);
     },
     printFriends() {
-      console.log(friends);
-    }
+      this.friends.forEach((friend) => {
+        console.log(`I am friends with ${friend}`);
+      });
+    },
     getFriends() {
       // return a copy of the array, not the array itself
       return [...friends]; 
