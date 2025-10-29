@@ -1,16 +1,17 @@
 # Mod 5 - Object-Oriented Programming
 
-Did you know that almost everything in JavaScript is really an object under the hood? In this module, you will learn how to harness the principles of Object-Oriented Programming that underlie everything we do in JavaScript. These skills will help you organize your code in order to build consistent and predictable programs.
+Object-Oriented Programming is a style of programming (a "paradigm") that uses **objects to manage state (data) and behavior** in an application. While OOP does let us do some new things, more than anything, it helps us write better, more organized code.
 
-In this module, we'll learn about:
+It can be defined by its 4 pillars:
 
-* **Object-Oriented Programming** — a style of programming (a "paradigm") that uses objects to manage state (data) and behavior in an application.
-* **Encapsulation** - bundling data and methods into a single unit while protecting the data
-* **Abstraction** - hiding complexity through functions and prototypes
-* **Inheritance** - sharing behavior between objects
+* **Encapsulation** - bundling methods with the data they operate on while hiding / protecting access to the data
+* **Abstraction** - creating interfaces that hiding complexity behind functions
+* **Inheritance** - sharing behavior between classes
 * **Polymorphism** - similar objects can be used interchangeably
-* **Class** — a blueprint for creating objects with shared methods and properties. Classes are particularly useful for creating interfaces.
-* **Interface** — an abstraction layer of an application that provides methods for interacting with a hidden or controlled portion of the application. For example, user interfaces provide buttons (methods) that enable users to interact with your application's code in a controlled manner. 
+
+![The four pillars of object oriented programming are abstraction, inheritance, polymorphism, and encapsulation.](img/oop-pillars.png)
+
+Throughout this module, we will be learning about these four pillars and how we implement them in JavaScript using the `class` syntax.
 
 ## Chapters
 

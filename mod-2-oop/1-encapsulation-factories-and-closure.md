@@ -6,97 +6,143 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 
 **Table of Contents:**
 
-* [Intro to Mod 5: Object-Oriented Programming (OOP)](1-encapsulation-factories-and-closure.md#intro-to-mod-5-object-oriented-programming-oop)
-* [Encapsulation Helps us Create Interfaces for Managing Data](1-encapsulation-factories-and-closure.md#encapsulation-helps-us-create-interfaces-for-managing-data)
-* [Hiding Data From Direct Access](1-encapsulation-factories-and-closure.md#hiding-data-from-direct-access)
-  * [Closures Let Us Hide Data](1-encapsulation-factories-and-closure.md#closures-let-us-hide-data)
-  * [Always Return Copies of Pass-By-Reference Values](1-encapsulation-factories-and-closure.md#always-return-copies-of-pass-by-reference-values)
-  * [Every Instance Creates a New Closure](1-encapsulation-factories-and-closure.md#every-instance-creates-a-new-closure)
-* [Quiz!](1-encapsulation-factories-and-closure.md#quiz)
-* [Challenge](1-encapsulation-factories-and-closure.md#challenge)
-* [Summary](1-encapsulation-factories-and-closure.md#summary)
+- [Closures](#closures)
+  - [A Closure Counter](#a-closure-counter)
+- [Encapsulation and `this`](#encapsulation-and-this)
+  - [Hiding Data From Direct Access](#hiding-data-from-direct-access)
+  - [Factory Functions and Closures Let Us Hide Data](#factory-functions-and-closures-let-us-hide-data)
+  - [Always Return Copies of Pass-By-Reference Values](#always-return-copies-of-pass-by-reference-values)
+  - [Every Instance Creates a New Closure](#every-instance-creates-a-new-closure)
+- [Quiz!](#quiz)
+- [Challenge](#challenge)
+- [Summary](#summary)
 
-## Intro to Mod 5: Object-Oriented Programming (OOP)
+## Closures
 
-Object-Oriented Programming is a style of programming (a "paradigm") that uses **objects to manage state (data) and behavior** in an application. While OOP does let us do some new things, more than anything, it helps us write better, more organized code.
-
-It can be defined by its 4 pillars:
-
-* **Encapsulation** - bundling methods with the data they operate on while hiding / protecting access to the data
-* **Abstraction** - creating interfaces that hiding complexity behind functions
-* **Inheritance** - sharing behavior between classes
-* **Polymorphism** - similar objects can be used interchangeably
-
-![The four pillars of object oriented programming are abstraction, inheritance, polymorphism, and encapsulation.](img/oop-pillars.png)
-
-Throughout this module, we will be learning about these four pillars and how we implement them in JavaScript using the `class` syntax.
-
-## Encapsulation Helps us Create Interfaces for Managing Data
-
-In functional programming, we separate our _functions_ from the _data_ they operate on. Pure functions promote **consistency** & **predictability**.
+Consider this function `addSuffixToEachWord` below. It takes in an array of words and returns a new array with a given `suffix` added to the end of each word.
 
 ```js
-// Functional Programming separates data from functionality
-const friends = ['ahmad', 'brandon', 'carmen'];
-
-const getUpdatedFriendList = (friends, newFriend) => {
-  // keep it pure, make a new list
-  const newList = [...friends, newFriend]; 
-  return newList;
+const addSuffixToEachWord = (words, suffix) => {
+  return words.map((word) => word + suffix);
 }
 
-const newFriends = getUpdatedFriendList(friends, 'deema');
-console.log(newFriends); // ['ahmad', 'brandon', 'carmen', 'deema'];
+const words = ['lime', 'lemon', 'gator'];
+const drinks = addSuffixToEachWord(words, 'ade');
 
-// the original array is not modified
-console.log(friends); // ['ahmad', 'brandon', 'carmen'];
+console.log(drinks); // ['limeade', 'lemonade', 'gatorade'];
 ```
 
-In object-oriented programming, we group functions with the data that they operate on. This is called **encapsulation**.
+Without you knowing it, this example creates something called a **closure**
 
-In the example below, `friendsManager` contains both the list of `friends` as well as the actions that you can perform with that list.
+**Closures are created when an "inner function" maintains references to variables in its surrounding scope (an "outer function").**
+
+**<details><summary>Q: In this example, what is the "outer" function and what is the "inner" function? Which variable from the outer function is referenced by the inner function?</summary>**
+
+The outer function is `addSuffixToEachWord` and the inner function is the anonymous callback function `(word) => word + suffix`.
+
+The inner function references the parameter `suffix` from the outer function's scope.
+
+</details>
+
+### A Closure Counter
+
+The applications of closures are really interesting. Consider this classic example:
+
+```js
+// The "outer function" declares the count variable in its scope
+const makeCounter = () => {
+  let count = 0;
+
+  // the "inner function" references the count variable in the surrounding scope
+  const counter = () => {
+    count++;
+    console.log(count);
+  }
+
+  return counter;
+}
+
+const myCounter = makeCounter();
+myCounter(); // prints 1
+myCounter(); // prints 2
+myCounter(); // prints 3
+
+console.log(count); // ReferenceError: count is not defined
+```
+
+In this example, the outer function `makeCounter` declares a variable `count` that is referenced by the inner function `counter`. Once the `makeCounter` function finishes executing, we have no way to directly reference the `count` variable. However, due to the closure, the `myCounter` function can still reference it and can increment and print it!
+
+One cool thing about closure is that each time the outer function is invoked, a new `count` variable and a new inner function are created, each with their own instances of closure:
+
+```js
+const myCounter = makeCounter();
+const yourCounter = makeCounter();
+
+myCounter(); // 1
+myCounter(); // 2
+yourCounter(); // 1
+yourCounter(); // 2
+```
+
+Let's see how we can leverage this in object-oriented programming. 
+
+## Encapsulation and `this`
+
+Let's imagine we want to create a program that manages a list of friends.
+
+In functional programming, might write something like this:
+
+```js
+const addFriendToList = (friends, newFriend) => {
+  const clone = [...friends]
+  clone.push(newFriend);
+  return clone;
+};
+
+const printFriends = (friends) => {
+  friends.forEach((friend) => {
+    console.log(`I am friends with ${friend}`)
+  });
+};
+
+const friends = ['ada', 'bart'];
+
+const newFriends = addFriendToList(friends, 'caleb');
+printFriends(newFriends);
+```
+
+Note how the functions are pure: they do not reference global variables and aim to avoid modifying variables passed into them.
+
+In object-oriented programming, we have a different goal entirely: encapsulation. 
+
+**Encapsulation is achieved by grouping data and the functions that operate on that data into one object**, like the `friendsManager` object below. In this example, the `friendsManager` object contains both the list of `friends` as well as the actions that you can perform with that list: `addFriend` and `printFriend`.
 
 ```js
 // Object Oriented Programming encapsulates data with functionality
 const friendsManager = {
-  friends: [],
-  // a "method" is a function stored inside of an object
+  friends: ['ada', 'bart'],
   addFriend(newFriend) {
     this.friends.push(newFriend);
-    // `this` refers to the "owner" of the method. 
-    // i.e. the object on which the method is invoked
   },
   printFriends() {
-    console.log(this.friends)
+    this.friends.forEach((friend) => {
+      console.log(`I am friends with ${friend}`);
+    });
   }
 }
 
-// Here, friendsManager invokes addFriend 
-// so `this` === friendsManager
-friendsManager.addFriend('ahmad');
-friendsManager.addFriend('brandon');
-friendsManager.addFriend('carmen');
-
+friendsManager.addFriend('caleb');
+friendsManager.addFriend('deema');
 friendsManager.printFriends();
 ```
+
+Object-oriented programming and encapsulation gives us a new, incredibly powerful, and often misunderstood tool: the `this` keyword.
+
+**`this` refers to the object that is executing the current function**. The `this` keyword allows the methods `addFriend` and `printFriends` to avoid needing to have the `friends` array explicitly passed into them — they just refer to `this.friends`!
 
 {% hint style="info" %}
-`this` is one of the most complicated topics in JavaScript. Check out this video to learn more: [JavaScript this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh).
+Check out this video to learn more about the [this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh)!
 {% endhint %}
-
-Encapsulation helps us create interfaces for managing a piece of data. In this case, `friendsManager` provides the methods `addFriend` and `printFriends` for interacting with the `friends` array.
-
-While we _could_ add to and print `friends` directly, using the provided methods is more readable and produces more consistent and predictable outcomes:
-
-```js
-friendsManager.friends.push('motun');
-console.log(friendsManager.friends);
-// versus
-friendsManager.addFriend('motun');
-friendsManager.printFriends();
-```
-
-<details>
 
 <summary><strong>Q: How would you add a <code>friendsManager.removeLast()</code> method that removes the last friend that was added?</strong></summary>
 
@@ -119,7 +165,9 @@ const friendsManager = {
 
 </details>
 
-## Hiding Data From Direct Access
+### Hiding Data From Direct Access
+
+Another core principle of encapsulation is **restricting access to and object's data.**
 
 Consider the `friendsManager` example again. Notice that we've added a guard clause to ensure that only strings are added as friends.
 
@@ -156,15 +204,13 @@ You can modify the `friendsManager.friends` array either through the `addFriend(
 
 </details>
 
-A core tenet of encapsulation in OOP is to **restrict access to an object's internal data**, like `friendsManager.friends`. If we are able to ensure `friendsManager.friends` is only interacted with through the methods `addFriend` and `printFriends`, we can guarantee that our rules for adding new friends are enforced.
+If we are able to ensure `friendsManager.friends` is only interacted with through the methods `addFriend` and `printFriends`, we can guarantee that our rules for adding new friends are enforced.
 
-### Closures Let Us Hide Data
-
-One amazing feature of JavaScript is the ability to create a **closure**. Closures are created when an "inner function" maintains references to variables in its surrounding scope (an "outer function").
+### Factory Functions and Closures Let Us Hide Data
 
 We can leverage closures to control access to the `friends` array by doing the following:
 
-* We declare a function `makeFriendsManager`. This is our "outer" function
+* We declare a "factory function" called `makeFriendsManager`. This is our "outer" function.
 * Inside, we declare the `friendsManager` object and return it.
 * We declare the `friends` array as its own variable, outside of `friendsManager`. It can no longer be accessed directly via the object but can be referenced by the methods `addFriend` and `printFriends`
 
