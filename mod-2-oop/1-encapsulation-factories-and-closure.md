@@ -1,7 +1,7 @@
 # 1. Intro to OOP, Encapsulation, Factory Functions, and Closure
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-0-encapsulation-factories-closure)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-1-encapsulation-factories-closure)!
 {% endhint %}
 
 **Table of Contents:**
