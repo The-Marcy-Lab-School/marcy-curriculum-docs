@@ -145,6 +145,8 @@ Object-oriented programming and encapsulation gives us a new, incredibly powerfu
 Check out this video to learn more about the [this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh)!
 {% endhint %}
 
+<details>
+
 <summary><strong>Q: How would you add a <code>friendsManager.removeLast()</code> method that removes the last friend that was added?</strong></summary>
 
 ```js
