@@ -151,14 +151,14 @@ Check out this video to learn more about the [this Keyword](https://www.youtube.
 
 ```js
 const friendsManager = {
-  friends: [],
-  // a "method" is a function stored inside of an object
+  friends: ['ada', 'bart'],
   addFriend(newFriend) {
     this.friends.push(newFriend);
-    // `this` refers to the "owner" of the method. 
   },
   printFriends() {
-    console.log(this.friends)
+    this.friends.forEach((friend) => {
+      console.log(`I am friends with ${friend}`);
+    });
   },
   removeLast() {
     this.friends.pop()
