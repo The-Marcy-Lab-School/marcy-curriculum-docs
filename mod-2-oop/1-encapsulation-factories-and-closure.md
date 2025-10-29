@@ -93,10 +93,12 @@ Let's imagine we want to create a program that manages a list of friends.
 In functional programming, might write something like this:
 
 ```js
+const friends = ['ada', 'bart'];
+
 const addFriendToList = (friends, newFriend) => {
-  const clone = [...friends]
-  clone.push(newFriend);
-  return clone;
+  const friendsCopy = [...friends]
+  friendsCopy.push(newFriend);
+  return friendsCopy;
 };
 
 const printFriends = (friends) => {
@@ -104,8 +106,6 @@ const printFriends = (friends) => {
     console.log(`I am friends with ${friend}`)
   });
 };
-
-const friends = ['ada', 'bart'];
 
 const newFriends = addFriendToList(friends, 'caleb');
 printFriends(newFriends);
