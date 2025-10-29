@@ -179,8 +179,9 @@ const friendsManager = {
   friends: [],
   addFriend(newFriend) {
     if (typeof newFriend !== 'string') {
-      throw Error('new friends must be strings');
-    };
+      console.log('new friends must be strings');
+      return;
+    }
     this.friends.push(newFriend);
   },
   printFriends() {
@@ -230,8 +231,9 @@ const makeFriendsManager = () => {
   const friendsManager = {
     addFriend(newFriend) {
       if (typeof newFriend !== 'string') {
-        throw Error('new friends must be strings');
-      };
+        console.log('new friends must be strings');
+        return;
+      }
       friends.push(newFriend);
     },
     printFriends() {
@@ -267,8 +269,9 @@ const makeFriendsManager = () => {
   const friendsManager = {
     addFriend(newFriend) {
       if (typeof newFriend !== 'string') {
-        throw Error('new friends must be strings');
-      };
+        console.log('new friends must be strings');
+        return;
+      }
       friends.push(newFriend);
     },
     printFriends() {
@@ -336,14 +339,20 @@ const makeFriendsManager = (...initialFriends) => {
   const friends = [...initialFriends];
 
   const friendsManager = {
-    getFriends() {
-      return [...friends]; 
-    },
     addFriend(newFriend) {
       if (typeof newFriend !== 'string') {
-        throw Error('new friends must be strings');
-      };
+        console.log('new friends must be strings');
+        return;
+      }
       friends.push(newFriend);
+    },
+    printFriends() {
+      this.friends.forEach((friend) => {
+        console.log(`I am friends with ${friend}`);
+      });
+    },
+    getFriends() {
+      return [...friends]; 
     }
   }
   return friendsManager;
@@ -468,15 +477,20 @@ const makeFriendsManager = (...initialFriends) => {
   const friends = [...initialFriends];
 
   const friendsManager = {
-    getFriends() {
-      return [...friends]; 
-    },
     addFriend(newFriend) {
       if (typeof newFriend !== 'string') {
         throw Error('new friends must be strings');
       };
       friends.push(newFriend);
-    }
+    },
+    printFriends() {
+      this.friends.forEach((friend) => {
+        console.log(`I am friends with ${friend}`);
+      });
+    },
+    getFriends() {
+      return [...friends]; 
+    },
   }
   return friendsManager;
 }
