@@ -69,8 +69,8 @@ Now, imagine that in addition to our `Book` class, we had a `Library` class. Eve
 
 ```js
 class Library {
-  #books = [];                // Private Instance Property
-  static #allLibraries = []   // Private Class Property
+  #books = [];
+  static #allLibraries = []
 
   constructor(name, address) {
     this.name = name;
@@ -80,30 +80,60 @@ class Library {
     Library.#allLibraries.push(this);
   }
 
-  // Library Instance Methods
-  addBook(title, author, genre) {
-    // When adding a book to the Library, a new Book instance is created. 
-    const addedBook = new Book(title, author, genre);
-    // The Book is added to this library's collection, forming the "has many/belongs to" relationship
-    this.#books.push(addedBook);
-    return addedBook;
+  // Library Instance Methods - Managing the collection
+  addBook(book) {
+    // Check if book is already in this library's collection
+    if (!this.#books.includes(book)) {
+      this.#books.push(book);
+    }
+    return book;
   }
+
   listBooks() {
     return [...this.#books];
   }
+
   removeBook(id) {
     const matchingBookIndex = this.#books.findIndex((book) => book.id === id);
-    this.#books.splice(matchingBookIndex, 1);
+    if (matchingBookIndex !== -1) {
+      this.#books.splice(matchingBookIndex, 1);
+    }
+  }
+
+  hasBook(book) {
+    return this.#books.includes(book);
   }
 
   // Library Class Methods
   static list() {
     return [...Library.#allLibraries];
   }
+
   static find(id) {
     return Library.#allLibraries.find((library) => library.id === id);
   }
 }
+```
+
+You can use these classes together like so:
+
+```js
+// Create books
+const book1 = new Book("1984", "Orwell", "Dystopian");
+const book2 = new Book("Beloved", "Morrison", "Historical Fiction");
+
+// Create libraries
+const publicLib = new Library("City Library", "123 Main St");
+const schoolLib = new Library("School Library", "456 Oak Ave");
+
+// Books can belong to multiple libraries
+publicLib.addBook(book1);
+publicLib.addBook(book2);
+schoolLib.addBook(book1);  // Same book, different library
+
+// Remove from one library doesn't affect the other
+publicLib.removeBook(book1.id);
+console.log(schoolLib.hasBook(book1)); // true - still in school library
 ```
 
 <details>
