@@ -77,7 +77,7 @@ In functional programming, separation of concerns is achieved by separating data
 
 In object-oriented programming, rather than separating data from functions, we take the opposite approach: **encapsulation**. 
 
-**Encapsulation refers to the grouping data and the methods that operate on that data into one object**, like the `friendsManager` object below.
+**Encapsulation refers to the bundling of data and the methods that operate on that data into one object**, like the `friendsManager` object below.
 
 ```js
 // Object Oriented Programming encapsulates data with functionality
