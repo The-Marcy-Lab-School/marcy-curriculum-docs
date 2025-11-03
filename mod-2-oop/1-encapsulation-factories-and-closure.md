@@ -6,10 +6,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents:**
 
-- [Closures](#closures)
+- [Key Concepts](#key-concepts)
+- [Functional Programming vs. Object-Oriented Programming](#functional-programming-vs-object-oriented-programming)
+  - [OOP: Separation of Concerns through Encapsulation](#oop-separation-of-concerns-through-encapsulation)
+- [What is `this`?](#what-is-this)
+  - [Factory Functions and `this`](#factory-functions-and-this)
+  - [A broader definition of `this`](#a-broader-definition-of-this)
+- [Quick Aside: Closures](#quick-aside-closures)
   - [A Closure Counter](#a-closure-counter)
-- [Encapsulation and `this`](#encapsulation-and-this)
-  - [Hiding Data From Direct Access](#hiding-data-from-direct-access)
+- [Restricting Access to Data Supports Encapsulation](#restricting-access-to-data-supports-encapsulation)
   - [Factory Functions and Closures Let Us Hide Data](#factory-functions-and-closures-let-us-hide-data)
   - [Always Return Copies of Pass-By-Reference Values](#always-return-copies-of-pass-by-reference-values)
   - [Every Instance Creates a New Closure](#every-instance-creates-a-new-closure)
@@ -17,7 +22,281 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Challenge](#challenge)
 - [Summary](#summary)
 
-## Closures
+## Key Concepts
+
+* **Encapsulation** refers to the bundling of data with the methods that operate that data into a single object.
+* **Data Hiding** is the act of restricting access to data in object such that they can only be accessed in a controlled manner through public methods.
+* The **`this`** keyword in JavaScript refers to the current execution context. In methods, `this` refers to the object invoking the method.
+* A **Factory** is a type of function that creates and returns objects with a defined set of properties and methods.
+* An **instance** is a single object returned from a factory that maintains its own set of data that is distinct from other instances made by the factory.
+* A **closure** is created when an "inner function" references a variable declared in the surround scope.
+
+## Functional Programming vs. Object-Oriented Programming
+
+When designing software, we should seek to adhere to principles that will guide us towards creating **consistent** and **predictable** software. The two most common approaches (or "paradigms") are
+1. Functional Programming
+2. Object-Oriented Programming
+
+Imagine we want to create a program that manages a list of friends. We want to be able to
+1. add a friend to the list
+2. print out all of the people we're friends with.
+
+With a more **functional programming** approach, we might write pure functions like this:
+
+```js
+const addFriendToList = (friends, newFriend) => {
+  const friendsCopy = [...friends]
+  friendsCopy.push(newFriend);
+  return friendsCopy;
+};
+
+const printFriends = (username, friends) => {
+  friends.forEach((friend) => {
+    console.log(`${username} is friends with ${friend}`)
+  });
+};
+
+const friends = ['ada', 'bart'];
+const newFriends = addFriendToList(friends, 'cleo');
+
+printFriends('ben', friends);
+// ben is friends with ada
+// ben is friends with bart
+
+printFriends('ben', newFriends);
+// ben is friends with ada
+// ben is friends with bart
+// ben is friends with cleo
+```
+
+Note how the functions are pure: they do not reference global variables and aim to avoid modifying variables passed into them. As a result, the functions behave consistently and predictably.
+
+In functional programming, separation of concerns is achieved by separating data from methods.
+
+### OOP: Separation of Concerns through Encapsulation
+
+In object-oriented programming, rather than separating data from functions, we take the opposite approach: **encapsulation**. 
+
+**Encapsulation refers to the grouping data and the methods that operate on that data into one object**, like the `friendsManager` object below.
+
+```js
+// Object Oriented Programming encapsulates data with functionality
+const friendsManager = {
+  username: 'ben',
+  friends: ['ada', 'bart'],
+  addFriend(newFriend) {
+    this.friends.push(newFriend);
+  },
+  printFriends() {
+    this.friends.forEach((friend) => {
+      console.log(`${this.username} is friends with ${friend}`);
+    });
+  }
+}
+
+friendsManager.printFriends();
+// ben is friends with ada
+// ben is friends with bart
+
+friendsManager.addFriend('cleo');
+friendsManager.printFriends();
+// ben is friends with ada
+// ben is friends with bart
+// ben is friends with cleo
+```
+
+In this example, the `friendsManager` object contains both the list of `friends` as well as the actions that you can perform with that list: `addFriend` and `printFriend`.
+
+In object-oriented programming, separation of concerns is achieved by separating the *features* of an application and containing all data and functionality related to that feature in one object.
+
+**<details><summary>Q: If you were building a social media application, what are some other features that we could encapsulate with objects?</summary>**
+
+For example, in this "social network" application, while the `friendsManager` object manages the `friends` data, we could build another object that manages data related to messages sent between friends or one that manages an individual's account data.
+
+</details>
+
+
+## What is `this`?
+
+Object-oriented programming and encapsulation gives us a new, incredibly powerful, and often misunderstood tool: the `this` keyword.
+
+**When a method is invoked on an object, the `this` keyword refers to the object that is invoking the method**. As a result, `this.friends` will refer to the `friendsManager.friends` array.
+
+```js
+const friendsManager = {
+  username: 'ben',
+  friends: ['ada', 'bart'],
+  addFriend(newFriend) {
+    console.log(this); // <-- printing this will print the execution context
+    this.friends.push(newFriend);
+  },
+  printFriends() {
+    this.friends.forEach((friend) => {
+      console.log(`${this.username} is friends with ${friend}`);
+    });
+  }
+}
+
+// When invoking a method on friendsManager, the execution context becomes the friendsManager object
+friendsManager.addFriend('cleo');
+friendsManager.printFriends();
+```
+
+The `this` keyword allows the methods `addFriend` and `printFriends` to avoid needing to have the `friends` array explicitly passed into them — they just refer to `this.friends`!
+
+<details>
+
+<summary><strong>Q: How would you add a <code>friendsManager.removeLast()</code> method that removes the last friend that was added?</strong></summary>
+
+```js
+const friendsManager = {
+  username: 'ben',
+  friends: ['ada', 'bart'],
+  addFriend(newFriend) {
+    this.friends.push(newFriend);
+  },
+  printFriends() {
+    this.friends.forEach((friend) => {
+      console.log(`${this.username} is friends with ${friend}`);
+    });
+  },
+  removeLast() {
+    this.friends.pop()
+  }
+}
+```
+
+</details>
+
+### Factory Functions and `this`
+
+One major benefit of `this` is when we want to have multiple objects share the same functionality. Imagine you were to create a second object to manager a different user's friends:
+
+```js
+const bensFriends = {
+  username: 'ben',
+  friends: ['ada', 'bart'],
+  addFriend(newFriend) {
+    this.friends.push(newFriend);
+  },
+  printFriends() {
+    this.friends.forEach((friend) => {
+      console.log(`${this.username} is friends with ${friend}`);
+    });
+  },
+  removeLast() {
+    this.friends.pop()
+  }
+}
+
+const adasFriends = {
+  username: 'ada',
+  friends: ['ben', 'cleo'],
+  addFriend(newFriend) {
+    this.friends.push(newFriend);
+  },
+  printFriends() {
+    this.friends.forEach((friend) => {
+      console.log(`${this.username} is friends with ${friend}`);
+    });
+  },
+  removeLast() {
+    this.friends.pop()
+  }
+}
+```
+
+This is obviously repetitive. To simplify the logic, we can create a **factory function** — a function that creates and returns objects with the same set of properties and methods.
+
+```js
+const createFriendsManager = (username) => {
+  return {
+    username,
+    friends: [],
+    addFriend(newFriend) {
+      this.friends.push(newFriend);
+    },
+    printFriends() {
+      this.friends.forEach((friend) => {
+        console.log(`${this.username} is friends with ${friend}`);
+      });
+    },
+    removeLast() {
+      this.friends.pop()
+    }
+  }
+}
+
+const bensFriends = createFriendsManager('ben');
+const adasFriends = createFriendsManager('ada');
+
+bensFriends.addFriend('ada');
+bensFriends.addFriend('bart');
+
+adasFriends.addFriend('ben');
+adasFriends.addFriend('cleo');
+
+bensFriends.printFriends();
+// ben is friends with ada
+// ben is friends with bart
+
+adasFriends.printFriends();
+// ada is friends with ben
+// ada is friends with cleo
+```
+
+
+A factory function further demonstrates the power of `this`. Both objects `bensFriends` and `adasFriends` can make use of the `addFriend` and `printFriends` methods without us needing to define that method twice in our code. When the method is invoked, the value of `this` will change according to the execution context: it will be whichever object is invoking the method.
+
+{% hint style="info" %}
+We refer to `bensFriends` and `adasFriends` as **instances of the factory**.
+{% endhint %}
+
+### A broader definition of `this`
+
+More broadly, **the `this` keyword refers to the current "context" where it is being used**.
+
+When `this` is used in a function declared in the global scope (not in a global arrow function though), `this` will refer to the `globalThis` object. 
+
+```js
+// globally declared variables (without let/const/var) are added to the globalThis object
+firstName = 'Ben';
+
+// globalThis has things like setTimeout and setInterval, and now has firstName too
+console.log(globalThis);
+
+// What does `this` reference since when there is no object? The globalThis object!
+function sayMyName() {
+  console.log(this.firstName);
+  console.log(this === globalThis);
+}
+
+sayMyName();
+// Expected Output:
+// Ben
+// true
+```
+
+When we create an object and add sayMyName as a method, `this` references the object:
+
+```js
+function sayMyName() {
+  console.log(this.firstName);
+  console.log(this === globalThis);
+}
+
+const obj = { firstName: 'Ada' };
+obj.sayMyName = sayMyName;
+
+obj.sayMyName();
+// Expected Output:
+// Ada
+// false
+```
+
+Check out this video to learn more about the [this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh)!
+
+## Quick Aside: Closures
 
 Consider this function `addSuffixToEachWord` below. It takes in an array of words and returns a new array with a given `suffix` added to the end of each word.
 
@@ -86,149 +365,79 @@ yourCounter(); // 2
 
 Let's see how we can leverage this in object-oriented programming. 
 
-## Encapsulation and `this`
+## Restricting Access to Data Supports Encapsulation
 
-Imagine we want to create a program that manages a list of friends. We want to be able to
-1. add a friend to the list
-2. print out all of the people we're friends with.
-
-With a more **functional programming** approach, might write functions like this:
-
-```js
-const addFriendToList = (friends, newFriend) => {
-  const friendsCopy = [...friends]
-  friendsCopy.push(newFriend);
-  return friendsCopy;
-};
-
-const printFriends = (friends) => {
-  friends.forEach((friend) => {
-    console.log(`I am friends with ${friend}`)
-  });
-};
-
-const friends = ['ada', 'bart'];
-const newFriends = addFriendToList(friends, 'caleb');
-printFriends(newFriends);
-```
-
-Note how the functions are pure: they do not reference global variables and aim to avoid modifying variables passed into them. These are key goals of functional programming.
-
-In object-oriented programming, we have a different goal entirely: **encapsulation**. 
-
-**Encapsulation is achieved by grouping data and the functions that operate on that data into one object**, like the `friendsManager` object below. In this example, the `friendsManager` object contains both the list of `friends` as well as the actions that you can perform with that list: `addFriend` and `printFriend`.
-
-```js
-// Object Oriented Programming encapsulates data with functionality
-const friendsManager = {
-  friends: ['ada', 'bart'],
-  addFriend(newFriend) {
-    this.friends.push(newFriend);
-  },
-  printFriends() {
-    this.friends.forEach((friend) => {
-      console.log(`I am friends with ${friend}`);
-    });
-  }
-}
-
-friendsManager.addFriend('caleb');
-friendsManager.addFriend('deema');
-friendsManager.printFriends();
-```
-
-Object-oriented programming and encapsulation gives us a new, incredibly powerful, and often misunderstood tool: the `this` keyword.
-
-**`this` refers to the object that is executing the current function**. The `this` keyword allows the methods `addFriend` and `printFriends` to avoid needing to have the `friends` array explicitly passed into them — they just refer to `this.friends`!
-
-{% hint style="info" %}
-Check out this video to learn more about the [this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh)!
-{% endhint %}
-
-<details>
-
-<summary><strong>Q: How would you add a <code>friendsManager.removeLast()</code> method that removes the last friend that was added?</strong></summary>
-
-```js
-const friendsManager = {
-  friends: ['ada', 'bart'],
-  addFriend(newFriend) {
-    this.friends.push(newFriend);
-  },
-  printFriends() {
-    this.friends.forEach((friend) => {
-      console.log(`I am friends with ${friend}`);
-    });
-  },
-  removeLast() {
-    this.friends.pop()
-  }
-}
-```
-
-</details>
-
-### Hiding Data From Direct Access
-
-Another core principle of encapsulation is **restricting access to and object's data.**
+As mentioned earlier, the goal of any programming paradigm is to write code that will behave *consistently* and *predictably*.
 
 Consider the `friendsManager` example again. Notice that we've added a guard clause to ensure that only strings are added as friends.
 
 ```js
-const friendsManager = {
-  friends: [],
-  addFriend(newFriend) {
-    if (typeof newFriend !== 'string') {
-      console.log('new friends must be strings');
-      return;
+const createFriendsManager = (username) => {
+  return {
+    username,
+    friends: [],
+    addFriend(newFriend) {
+      if (typeof newFriend !== 'string') { // new guard clause
+        console.log('new friends must be strings');
+        return;
+      }
+      this.friends.push(newFriend);
+    },
+    printFriends() {
+      this.friends.forEach((friend) => {
+        console.log(`${this.username} is friends with ${friend}`);
+      });
+    },
+    removeLast() {
+      this.friends.pop()
     }
-    this.friends.push(newFriend);
-  },
-  printFriends() {
-    this.friends.forEach((friend) => {
-      console.log(`I am friends with ${friend}`);
-    });
-  },
+  }
 }
 
-friendsManager.addFriend('daniel'); // this gets added
-friendsManager.addFriend(true);     // this does not
+const bensFriends = createFriendsManager('ben');
+
+bensFriends.addFriend('daniel'); // this gets added
+bensFriends.addFriend(true);     // this does not
 
 // What about this is NOT consistent or predictable?
-friendsManager.friends.push('emmaneul');
-friendsManager.friends.push(42);
+bensFriends.friends.push('emmanuel');
+bensFriends.friends.push(42);
+
+bensFriends.printFriends(); // What is printed here?
 ```
 
 <details>
 
-<summary><strong>Q: What about the last two lines in the example are NOT consistent or predictable?</strong></summary>
+<summary><strong>Q: What about this example is NOT consistent or predictable? What is printed by the last statement?</strong></summary>
 
 You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
 
 * The `friends` array can be directly modified from the outside, which leads to uncontrolled additions like `friendsManager.friends.push(42)`. This results in an array that might have invalid data types, such as numbers and booleans mixed with strings, violating the intended structure of the friends list.
-* This unpredictability leads to bugs and confusion, as the integrity of the data inside `friendsManager` cannot be guaranteed. How to Make the Code More Consistent Using Closures:
+* This unpredictability leads to bugs and confusion, as the integrity of the data inside `friendsManager` cannot be guaranteed.
+
+The final statement shows that `'emmanuel'` and `42` have been added to the list.
 
 </details>
 
-If we are able to ensure `friendsManager.friends` is only interacted with through the methods `addFriend` and `printFriends`, we can guarantee that our rules for adding new friends are enforced.
+If we are unable to ensure `friendsManager.friends` is only interacted with through the methods `addFriend` and `printFriends`, we cannot guarantee that our rules for adding new friends are enforced.
 
 ### Factory Functions and Closures Let Us Hide Data
 
-We can leverage closures to control access to the `friends` array by doing the following:
+**Encapsulation encourages consistency and predictability by restricting access to the data in objects.** 
 
-* We declare a "factory function" called `makeFriendsManager`. This is our "outer" function.
-* Inside, we declare the `friendsManager` object and return it.
+In JavaScript, we can leverage closures and factory functions to restrict access to the `friends` array by doing the following:
 * We declare the `friends` array as its own variable, outside of `friendsManager`. It can no longer be accessed directly via the object but can be referenced by the methods `addFriend` and `printFriends`
 
 ```js
 // First, we make a function that returns our friendsManager. 
 // This is an "outer" function
-const makeFriendsManager = () => {
+const makeFriendsManager = (username) => {
   // This variable is in the "outer" function's scope. 
   // friends is referenced by addFriend and printFriends but is not in the friendsManager itself.
   const friends = [];
 
   const friendsManager = {
+    username, // we can leave username "public" if we don't care about how it is used or reassigned.
     addFriend(newFriend) {
       if (typeof newFriend !== 'string') {
         console.log('new friends must be strings');
@@ -238,19 +447,20 @@ const makeFriendsManager = () => {
     },
     printFriends() {
       this.friends.forEach((friend) => {
-        console.log(`I am friends with ${friend}`);
+        console.log(`${this.username} is friends with ${friend}`);
       });
     },
+    // add a getter method to get a copy of the friends array
   }
   return friendsManager;
 }
 
-const bensFriendsManager = makeFriendsManager();
-bensFriendsManager.addFriend('zo')
-bensFriendsManager.addFriend('motun')
-bensFriendsManager.printFriends() // ['zo', 'motun']
+const bensFriends = makeFriendsManager();
+bensFriends.addFriend('zo')
+bensFriends.addFriend('motun')
+bensFriends.printFriends() // ['zo', 'motun']
 
-console.log(bensFriendsManager.friends) // undefined
+console.log(bensFriends.friends) // undefined
 console.log(friends); // reference error!
 ```
 
@@ -263,10 +473,11 @@ Because `addFriend` and `printFriends` were declared within the same scope as `f
 Suppose we wanted to provide a way to access the list of `friends`, we would add a "getter" method like `getFriends`:
 
 ```js
-const makeFriendsManager = () => {
+const makeFriendsManager = (username) => {
   const friends = [];
 
   const friendsManager = {
+    username,
     addFriend(newFriend) {
       if (typeof newFriend !== 'string') {
         console.log('new friends must be strings');
@@ -276,7 +487,7 @@ const makeFriendsManager = () => {
     },
     printFriends() {
       this.friends.forEach((friend) => {
-        console.log(`I am friends with ${friend}`);
+        console.log(`${this.username} is friends with ${friend}`);
       });
     },
     getFriends() {
