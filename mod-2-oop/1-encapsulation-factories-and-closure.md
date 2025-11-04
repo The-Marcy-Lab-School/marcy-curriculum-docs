@@ -28,11 +28,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 ## Key Concepts
 
 * **Encapsulation** refers to the bundling of data with the methods that operate that data into a single object.
-* **Data Hiding** is the act of restricting access to data in object such that they can only be accessed in a controlled manner through public methods.
+* An **interface** is a "shared boundary" where two or more components of a system can interact and exchange information.
 * The **`this`** keyword in JavaScript refers to the current execution context. In methods, `this` refers to the object invoking the method.
 * A **Factory** is a type of function that creates and returns objects with a defined set of properties and methods.
 * An **instance** is a single object returned from a factory that maintains its own set of data that is distinct from other instances made by the factory.
 * A **closure** is created when an "inner function" references a variable declared in the surround scope.
+* **Data Hiding** is the act of restricting access to data in object such that they can only be accessed in a controlled manner through public methods.
 
 ## Functional Programming vs. Object-Oriented Programming
 
@@ -108,9 +109,15 @@ friendsManager.printFriends();
 // ben is friends with cleo
 ```
 
-In this example, the `friendsManager` object contains both the list of `friends` as well as the actions that you can perform with that list: `addFriend` and `printFriend`.
+In this example, the `friendsManager` object contains both the list of `friends` as well as the actions that you can perform with that list: `addFriend` and `printFriend`. We can call this object the **"interface"** for this feature of managing friends.
 
-In object-oriented programming, separation of concerns is achieved by separating the *features* of an application and containing all data and functionality related to that feature in one object.
+{% hint style="info" %}
+An **interface** is a "shared boundary" where two or more components of a system can interact and exchange information. For example, your keyboard, mouse/trackpad, and screen together are the interface that you use to interact with your computer. Similarly, the methods of an encapsulated object are the interface that the caller of those methods can use to interact with the object's data.
+
+Interfaces do not expose the inner details of the tool/machine/program that the user is operating — they instead provide well-defined and controlled access points for the user to operate it.
+{% endhint %}
+
+In summary, separation of concerns is achieved in OOP by identifying the *features* of an application and using objects to create an **interface** for each.
 
 **<details><summary>Q: If you were building a social media application, what are some other features that we could encapsulate with objects?</summary>**
 
@@ -543,10 +550,12 @@ const makeFriendsManager = (username) => {
         console.log('new friends must be strings');
         return;
       }
-      friends.push(newFriend);
+      // use closure to reference the friends variable
+      friends.push(newFriend); 
     },
     printFriends() {
-      this.friends.forEach((friend) => {
+      // use closure to reference the friends variable
+      friends.forEach((friend) => { 
         console.log(`${this.username} is friends with ${friend}`);
       });
     },
@@ -586,7 +595,7 @@ const makeFriendsManager = (username) => {
       friends.push(newFriend);
     },
     printFriends() {
-      this.friends.forEach((friend) => {
+      friends.forEach((friend) => {
         console.log(`${this.username} is friends with ${friend}`);
       });
     },
@@ -658,7 +667,7 @@ const makeFriendsManager = (...initialFriends) => {
       friends.push(newFriend);
     },
     printFriends() {
-      this.friends.forEach((friend) => {
+      friends.forEach((friend) => {
         console.log(`I am friends with ${friend}`);
       });
     },
@@ -795,7 +804,7 @@ const makeFriendsManager = (...initialFriends) => {
       friends.push(newFriend);
     },
     printFriends() {
-      this.friends.forEach((friend) => {
+      friends.forEach((friend) => {
         console.log(`I am friends with ${friend}`);
       });
     },
