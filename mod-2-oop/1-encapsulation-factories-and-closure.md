@@ -12,6 +12,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [What is `this`?](#what-is-this)
   - [Factory Functions and `this`](#factory-functions-and-this)
   - [A broader definition of `this`](#a-broader-definition-of-this)
+    - [Global Scope](#global-scope)
+    - [Arrow Functions](#arrow-functions)
+    - [Function Declarations](#function-declarations)
 - [Quick Aside: Closures](#quick-aside-closures)
   - [A Closure Counter](#a-closure-counter)
 - [Restricting Access to Data Supports Encapsulation](#restricting-access-to-data-supports-encapsulation)
@@ -256,45 +259,142 @@ We refer to `bensFriends` and `adasFriends` as **instances of the factory**.
 
 More broadly, **the `this` keyword refers to the current "context" where it is being used**.
 
-When `this` is used in a function declared in the global scope (not in a global arrow function though), `this` will refer to the `globalThis` object. 
+#### Global Scope
+
+In the global scope, `this` will refer to an empty object:
 
 ```js
-// globally declared variables (without let/const/var) are added to the globalThis object
-firstName = 'Ben';
+console.log(this); // prints {}
+```
 
-// globalThis has things like setTimeout and setInterval, and now has firstName too
+#### Arrow Functions
+
+Arrow functions, no matter how they are invoked, will always inherit the value of `this` from their parent's scope.
+
+```js
+// Arrow function in the global scope
+const arrow = () => {
+  console.log(this);
+}
+
+arrow(); // prints {}
+
+// Arrow Function as a method
+const obj1 = {
+  description: 'obj1',
+  arrow: () => {
+    // the object doesn't create a new scope so the parent scope is still the global scope
+    console.log(this);
+  }
+}
+obj1.arrow(); // prints {}
+
+// Arrow function nested inside another function
+const obj2 = {
+  description: 'obj2',
+  method() {
+    const nested = () => {
+      // the parent scope is now the `obj2.method` function whose `this` value is `obj2`
+      console.log(this);
+    }
+    nested(); // prints obj2
+  }
+}
+obj2.method();
+```
+
+#### Function Declarations
+
+All functions made with the `function` keyword behave in the same manner.
+
+In global function declarations and in global function expressions, `this` refers to the `global` object.
+
+```js
+// Function declaration in the global scope
+function functionDeclaration() {
+  console.log(this);
+}
+functionDeclaration(); // prints the global object
+
+// Function expression in the global scope
+const functionExpression = function() {
+  console.log(this);
+}
+functionExpression(); // prints the global object
+```
+
+In methods of objects declared with either the method definition shorthand or defined as a function expression, `this` refers to the object invoking the method.
+
+```js
+const obj3 = {
+  description: 'obj3',
+  methodDefinition() {
+    // method definition shorthand (equivalent to a function expression below)
+    console.log(this);
+  },
+  methodExpression: function() {
+    // method as a function expression
+    console.log(this);
+  },
+};
+
+obj3.methodDefinition(); // prints obj3
+obj3.methodExpression(); // prints obj3
+```
+
+
+**Challenge: So, what is printed in each of these scenarios?**
+
+```js
+// a globally scoped variable
+description = 'global scope';
 console.log(globalThis);
 
-// What does `this` reference since when there is no object? The globalThis object!
-function sayMyName() {
-  console.log(this.firstName);
-  console.log(this === globalThis);
+// a globally scoped "function declaration"
+function printDescription() {
+  console.log(`global function declaration — ${this.description}`);
+}
+printDescription();
+
+
+const obj = {
+  description: 'an object',
+  printDescription() {
+    // method definition shorthand (use this!)
+    console.log(`method definition — ${this.description}`);
+  },
+  printDescriptionFunction: function() {
+    // method declared as a function expression
+    console.log(`function expression method — ${this.description}`);
+    const nested = () => {
+      console.log(`nested arrow — ${this.description}`);
+    }
+    nested();
+  },
+  printDescriptionArrow: () => {
+    // method declared as an arrow function
+    console.log(`arrow method — ${this.description}`);
+  },
 }
 
-sayMyName();
-// Expected Output:
-// Ben
-// true
+obj.printDescription();
+obj.printDescriptionFunction();
+obj.printDescriptionArrow();
 ```
 
-When we create an object and add sayMyName as a method, `this` references the object:
+**<details><summary>Answer</summary>**
 
-```js
-function sayMyName() {
-  console.log(this.firstName);
-  console.log(this === globalThis);
-}
-
-const obj = { firstName: 'Ada' };
-obj.sayMyName = sayMyName;
-
-obj.sayMyName();
-// Expected Output:
-// Ada
-// false
+```
+global function declaration — global scope
+method definition — an object
+function expression method — an object
+nested arrow — an object
+arrow method — global scope
 ```
 
-Check out this video to learn more about the [this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh)!
+</details>
+
+Check out this video for a different explanation of the [this Keyword](https://www.youtube.com/watch?v=gvicrj31JOM\&ab_channel=ProgrammingwithMosh)!
 
 ## Quick Aside: Closures
 
