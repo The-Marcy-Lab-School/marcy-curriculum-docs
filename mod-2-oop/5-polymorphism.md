@@ -1,87 +1,121 @@
 # Polymorphism
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-4-polymorphism)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-5-polymorphism)!
 {% endhint %}
 
 **Table of Contents:**
+- [Key Concepts](#key-concepts)
+- [Classes Review](#classes-review)
 - [Polymorphism](#polymorphism-1)
-- [Using Classes with Other Classes](#using-classes-with-other-classes)
-- [Challenge: User and Admin](#challenge-user-and-admin)
 - [Challenge](#challenge)
 - [Summary](#summary)
 
-## Polymorphism
+## Key Concepts
 
-Polymorphism means "many forms".
+* **Polymorphism** refers to multiple types of objects sharing the same interface (they have the same property and method names) even if their underlying implementations are different.
 
-Polymorphism is a concept in object-oriented programming where multiple types of objects share "signatures" (they have the same property and method names even if their values/implementations are different).
+## Classes Review
 
-![](img/polymorphism.png)
+So far in this Object-Oriented Programming unit we've learned:
+* How to **encapsulate** data and methods into objects.
+* How to use both **factory functions** and **classes** to create **interfaces** that provide well-defined and controlled access points for interacting with internal data.
+* How to create long **prototype chains** through **inheritance**.
 
-The impact of polymorphism is that **our program can reliably use different types of objects in the same way** if they all descend from the same parent class.
+We can see all of this in action in this prototype chain: `MarcyStudent` → `Student` → `Person`
 
 ```js
 class Person {
-  constructor(name) {
-    this.name = name;
-    this.friends = [];
+  constructor(first, last, age) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
   }
-  makeFriend(friend) {
-    this.friends.push(friend)
-    console.log(`Hi ${friend}, my name is ${this.name}, nice to meet you!`);
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
   }
-}
-
-class Programmer extends Person {
-  // the constructor can be inherited too as long as the signature doesn't need changing
-
-  // here we totally override the parent method
-  makeFriend(friend) {
-    this.friends.push(friend);
-    console.log('tap tap tap');
+  introduce() {
+    return `Hi, I'm ${this.firstName} and I'm ${this.age} years old.`;
   }
 }
 
-class Musician extends Person {
-  constructor(name, instrument) {
-    super(name);
-    this.instrument = instrument;
+class Student extends Person {
+  courses = [];
+
+  constructor(first, last, age, subject, school) {
+    super(first, last, age); 
+    this.subject = subject;
+    this.school = school;
   }
-  makeFriend(friend) { // Method Override
-    super.makeFriend(friend)
-    console.log(`I can play the ${this.instrument}. Do you know any instruments?`);
+
+  introduce() {
+    return `${super.introduce()}. I am studying ${this.subject} at ${this.school}.`
+  }
+  
+  enrollInCourse(courseName) {
+    this.courses.push(courseName);
   }
 }
 
-const carmen = new Person("Carmen");
-const reuben = new Programmer("Reuben");
-const ben = new Musician("Ben", "Piano");
-const people = [carmen, reuben, ben];
+class MarcyStudent extends Student {
+  static validCourses = ['Leadership & Development', 'Technical Interview Prep', 'Technical Lecture'];
+  
+  constructor(first, last, age) {
+    super(first, last, age, "Software Engineering", "Marcy Lab School")
+  }
 
-// Ben, reuben, and carmen are all hanging out. 
-// Maya enters the room and wants to be friends with everyone!
-// Because everyone is a Person, we can do this:
-people.forEach(person => person.makeFriend("Maya"));
-
-// Output:
-// "Hi Maya, my name is Carmen, nice to meet you!"
-// "Hi Maya, my name is Reuben, nice to meet you!"
-// "Hi Maya, my name is Ben, nice to meet you!"
-// "I can play the Piano. Do you know any instruments?"
+  enrollInCourse(courseName) {
+    if (!MarcyStudent.validCourses.includes(courseName)) {
+      return 'Invalid Course Name';
+    }
+    super(courseName);
+  }
+}
 ```
 
-This demonstrates polymorphism because `ben`, `reuben`, and `carmen` are all descendants of `Person` which we know defines a `makeFriend` method. Even though `reuben` and `carmen` are different subtypes, we can treat them as `Person` objects as well. 
+## Polymorphism
 
-A `Person` can come in "many forms".
+Recall that subclasses are considered instances of their superclasses. 
 
-**<details><summary>Question: What does `super.makeFriend(friend)` do?</summary>**
+```js
+const ada = new MarcyStudent('Ada', 'Lovelace', 24);
+console.log(ada instanceof MarcyStudent); // true
+console.log(ada instanceof Student); // true
+console.log(ada instanceof Person); // true
+```
 
-  `super.makeFriend(friend)` will call the superclass's `makeFriend` method, adding the `friend` argument to the `this.friends` array and printing out the greeting message. It is common when method overriding to invoke the superclass's version of the method and then adding on additional statements to execute.
-  
-</details>
+Because of this, we can treat instances of each class as if they are a `Person`, knowing that they will each have at the very least the properties `firstName`, `lastName`, `age`, and the methods `fullName()` and `introduce()`.
 
-Let's look at another example of polymorphism. In this example, we have a `Car` class and a `RaceCar` subclass. 
+```js
+const ada = new MarcyStudent('Ada', 'Lovelace', 24);
+const alan = new Student('Alan', 'Turing', 27, 'Mathematics', 'Cambridge University');
+const reuben = new Person('Reuben', 'Ogbonna', 36);
+
+const people = [ada, alan, reuben];
+
+people.forEach((person) => {
+  if (person instanceof Person) {
+    console.log(person.introduce());
+  }
+})
+/* 
+Hi, I'm Ada and I'm 24 years old. I am studying Software Engineering at Marcy Lab School.
+Hi, I'm Alan and I'm 27 years old. I am studying Mathematics at Cambridge University.
+Hi, I'm Reuben and I'm 36 years old.
+*/
+```
+
+This ability to use these objects in a similar manner, knowing they all descend from the `Person` class, is called **Polymorphism**.
+
+> Polymorphism → poly ("many") + morph ("form") → "having many forms"
+>
+> For example: A `Person` can come in "many forms".
+
+**Polymorphism is the OOP concept where many different objects can be treated similarly because they share the same interface despite having different implementations.**
+
+The impact of polymorphism is that **our program can reliably use different types of objects in the same way** if they all descend from the same parent class.
+
+**Question: Take a look at the example below. How would you explain how it demonstrates Polymorphism?**
 
 ```js
 class Car {
@@ -96,12 +130,9 @@ class Car {
 }
 
 class RaceCar extends Car {
-
-  // the constructor can be inherited too as long as the signature doesn't need changing
-  
-  drive() { // Method Override
+  drive() {
     console.log("Vah... Vah...");
-    super.drive(); // invoke the parent class method
+    super.drive();
     console.log("WHEEEEEEE!!!!");
   }
 }
@@ -115,57 +146,15 @@ cars.forEach((car) => car.makeSound());
 // since they are all Cars, they all have drive, even if they behave differently
 ```
 
+**<details><summary>Answer</summary>**
+
 Both classes implement a method called `drive` but they have their own implementations. The code that calls these methods doesn't care how each class implements `drive()` — as long as instances of `Car` and `RaceCar` have a `makeSound` method at all, the code will work.
 
 The subclass `RaceCar` uses the `Car` `drive` method sandwiched between two of its own `console.log` statements.
 
 `Car` objects can come in many forms (they look the same, but they may behave differently).
 
-## Using Classes with Other Classes
-
-**Challenge: Refactor the `makeFriend` method so that instead of adding a friend's name, it takes in a Person object. When a person is added as a friend, both person objects should have each other as friends.**
-
-<details><summary>Solution</summary>
-
-We only have to modify the `Person` class and all subclasses will inherit the new behavior. Instead of passing in a friend's name, pass in the entire Person object and have both friends add each other to the friend list.
-
-We have to be careful to not create an infinite recursion. We will end up with a **circular reference** though.
-
-```js
-class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-    this.friends = [];
-  }
-  makeFriend(friend) {
-    if (this.friends.includes(friend)) {
-      return;
-    }
-    
-    this.friends.push(friend)
-    console.log(`Hi ${friend.name}, my name is ${this.name}, nice to meet you!`);
-    
-    friend.makeFriend(this);
-  }
-  doActivity(activity) {
-    console.log(`${this.name} is ${activity}`);
-  }
-}
-
-const ben = new Person("Ben", 28);
-const carmen = new Person("Carmen", 22);
-const reuben = new Person("Reuben", 35);
-
-ben.makeFriend(carmen);
-ben.makeFriend(reuben);
-
-console.log(ben, reuben, carmen)
-```
-
 </details>
-
-## Challenge: User and Admin
 
 ## Challenge
 

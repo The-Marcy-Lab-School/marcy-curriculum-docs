@@ -13,6 +13,14 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 
 ## Intro: Class Diagrams
 
+We can visualize the inheritance relationships between classes with a **Unified Modeling Language (UML) diagram** (we'll learn how to make these soon!):
+
+![A Person class sits at the top of the "tree". A Doctor, a Professor, and a Student class sit below and all inherit from the Person class. A GraduateStudent class inherits from the Student class.](./img/inheritance.png)
+
+* Each box represents a class with the properties defined in the top half and methods defined in the bottom half. 
+* The arrows and labels indicate the direction of inheritance
+* Subclasses do not need to list inherited properties and methods unless they are overridden
+
 When building an application, the first step is always to make a plan.
 
 * We plan the features of the application with **user stories**

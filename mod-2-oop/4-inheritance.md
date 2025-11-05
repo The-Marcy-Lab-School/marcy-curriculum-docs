@@ -283,7 +283,9 @@ console.log(reuben.teach('classes')); // Hello class, today we will be learning 
 ```
 
 Then, create class called `MarcyStudent` that is a subclass of `Student`.
-All instances of `MarcyStudent` should have `subject` be set to `"Software Engineering"` and `school` be set to `"Marcy Lab School"`. All other functionality should be inherited.
+* All instances of `MarcyStudent` should have `subject` be set to `"Software Engineering"` and `school` be set to `"Marcy Lab School"`. 
+* It should have a static `validCourses` array 
+* `enrollInCourse` should be overridden to first check if the provided course is in the `validCourses` array before adding the course to the `courses` array.
 
 ### Study Questions
 
