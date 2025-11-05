@@ -1,7 +1,7 @@
 # 3. Private & Static
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-2-private-properties-static-methods)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-private-properties-static-methods)!
 {% endhint %}
 
 **Table of Contents:**
