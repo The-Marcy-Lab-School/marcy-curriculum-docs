@@ -10,7 +10,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [A Person and a Student](#a-person-and-a-student)
   - [`extends`](#extends)
   - [`super`](#super)
-- [Subclasses of Subclasses](#subclasses-of-subclasses)
+- [Prototype Chain: Subclasses of Subclasses](#prototype-chain-subclasses-of-subclasses)
   - [Array is a Subclass of Object](#array-is-a-subclass-of-object)
 - [Practice \& Review](#practice--review)
   - [Coding Challenge](#coding-challenge)
@@ -18,7 +18,13 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ## Key Concepts
 
-* **Inheritance** describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. As a result, instances of the subclass can reuse and add to the methods defined in a superclass. 
+* **Inheritance** describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. Instances of the subclass can reuse and add to the methods defined in a superclass. 
+* The **`Subclass extends Superclass`** syntax defines an inheritance relationship between two classes
+* **The `super` keyword references the superclass of a given subclass:**
+  1. We can invoke `super()` in the subclass constructor to invoke the superclass's `constructor()`.
+  2. We can invoke `super.method()` in an **overridden method** to use the behavior of that same method from the superclass.
+* The **prototype chain** describes the linked structure where each object inherits methods from a prototype, which may inherit methods from another prototype, forming a chain.
+  * When you access a property or method, JavaScript walks up this chain until it finds what you're looking for (or reaches the end).
 
 ## Inheritance
 
@@ -196,9 +202,9 @@ The `super` keyword is most often used in one of two ways:
 
 Notice that the `fullName` method is inherited from the `Person` class and is NOT overridden. It will behave the same way for student instances and person instances.
 
-## Subclasses of Subclasses
+## Prototype Chain: Subclasses of Subclasses
 
-Suppose that a `GraduateStudent` class simply extends `Student` without overriding any methods:
+Suppose that a `GraduateStudent` class simply extends `Student` without overriding any methods. We create a chain of inheritance: `GraduateStudent` → `Student` → `Person`. 
 
 ```js
 class GraduateStudent extends Student {
@@ -209,12 +215,21 @@ const ada = new GraduateStudent('Ada', 'Lovelace', 30, 'Computer Science', 'Marc
 console.log(ada.fullName()); // where is this method defined?
 ```
 
-We've created a chain of inheritance: `GraduateStudent` → `Student` → `Person`. When a `GraduateStudent` instance invokes `fullName()`, JavaScript will do the following:
-- Check to see if the `GraduateStudent` class has `fullName()` defined as an "own property" (it doesn't)
-- Next, it will look at its superclass, `Student`, to see if *it* has `fullName()` defined as an own property (it doesn't either)
-- Finally, it will look at *its* superclass, `Person` where it will find the definition of `fullName()`.
+We can refer to this series of connected classes as a **prototype chain**: The linked structure where each object inherits methods from a prototype, which may inherit methods from another prototype, forming a chain:
+* The `ada` object inherits methods from the `GraduateStudent` prototype
+  * The `GraduateStudent` prototype inherits methods from the `Student` prototype
+    * The `Student` prototype inherits methods from the `Person` prototype
+      * The `Person` prototype inherits methods from the `Object` prototype
+      * The `Object` prototype is the end of the chain.
 
-This series of connected classes is called a **prototype chain** which refers to the fact that, just like an instance inherits methods through its class's prototype, **a subclass inherits methods through its superclass's prototype**. 
+When you access a property or method, JavaScript walks up this chain until it finds what you're looking for (or reaches the end).
+
+For example, when we invoke `ada.fullName()`, JavaScript will look for the `fullName()` definition in the following order:
+
+- In the object itself (the `ada` instance properties)
+- In the class prototype (the shared methods in the `GraduateStudent` class)
+- In the parent class prototype (the inherited methods in the `Student` class)
+- In the parent class's parent class prototype (the inherited methods in the `Person` class)
 
 We can see this if we look at the "own properties" of each class's prototype in the chain:
 
@@ -229,17 +244,9 @@ Object.getOwnPropertyNames(Person.prototype);
 // [ 'constructor', 'fullName', 'introduce' ] <--- here it is
 ```
 
-This becomes somewhat easier to see when we use the Node Debugger:
+This is somewhat easier to see when we use the Node Debugger:
 
 ![](img/prototype-chain-debugger.png)
-
-We can visualize the inheritance relationships between classes with a **Unified Modeling Language (UML) diagram** (we'll learn how to make these soon!):
-
-![A Person class sits at the top of the "tree". A Doctor, a Professor, and a Student class sit below and all inherit from the Person class. A GraduateStudent class inherits from the Student class.](./img/inheritance.png)
-
-* Each box represents a class with the properties defined in the top half and methods defined in the bottom half. 
-* The arrows and labels indicate the direction of inheritance
-* Subclasses do not need to list inherited properties and methods unless they are overridden
 
 ### Array is a Subclass of Object
 
