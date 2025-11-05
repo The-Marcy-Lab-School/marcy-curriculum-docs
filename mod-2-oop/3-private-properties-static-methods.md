@@ -6,20 +6,30 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 
 **Table of Contents:**
 
-* [Private Properties](3-private-properties-static-methods.md#private-properties)
-* [Naming Convention](3-private-properties-static-methods.md#naming-convention)
-* [Using `#` Notation](3-private-properties-static-methods.md#using--notation)
-* [Static Properties and Methods](3-private-properties-static-methods.md#static-properties-and-methods)
-* [Quiz!](3-private-properties-static-methods.md#quiz)
-  * [What do you think will log to the console?](3-private-properties-static-methods.md#what-do-you-think-will-log-to-the-console)
-  * [What is the purpose of using the # notation for a property in a class?](3-private-properties-static-methods.md#what-is-the-purpose-of-using-the--notation-for-a-property-in-a-class)
-  * [How do you call a static method on a class?](3-private-properties-static-methods.md#how-do-you-call-a-static-method-on-a-class)
-* [Challenge: Car Class](3-private-properties-static-methods.md#challenge-car-class)
-* [Summary](3-private-properties-static-methods.md#summary)
+- [Key Concepts](#key-concepts)
+- [Private Properties](#private-properties)
+  - [Naming Convention](#naming-convention)
+  - [Using `#` Notation](#using--notation)
+  - [Private Methods](#private-methods)
+- [Static Properties and Methods](#static-properties-and-methods)
+- [Quiz!](#quiz)
+  - [What do you think will log to the console?](#what-do-you-think-will-log-to-the-console)
+  - [What is the purpose of using the # notation for a property in a class?](#what-is-the-purpose-of-using-the--notation-for-a-property-in-a-class)
+  - [How do you call a static method on a class?](#how-do-you-call-a-static-method-on-a-class)
+- [Challenge: Car Class](#challenge-car-class)
+
+
+## Key Concepts
+
+* The `#` symbol can be placed in front of any property or method to make it private.
+* Properties and methods should be made private when...
+  * **Encapsulation and Data Protection:** If we want to ensure that the property is managed only by the class methods and not by any external code, the property should be private. This will protect against unexpected changes to the object's state. 
+  * **Internal Implementation Details:** If a property/method is only used within the class itself (like a helper function), it should be private.
+* The `static` keyword can be placed in front of any property or method to make it belong to the class itself rather than the instances of the class.
 
 ## Private Properties
 
-In the previous lectures, we've been creating classes and instances, but we've left some of our properties open to direct manipulation. For example, in the `User` class, we have a `password` property:
+In the previous lectures, we've been creating classes and instances, but we've left some of our properties open to direct manipulation. For example, in this `User` class, we have a `password` property:
 
 ```js
 class User {
@@ -50,17 +60,19 @@ class User {
 const ben = new User('ben', 'ben@mail.com');
 ben.validatePassword('1234'); // No password set.
 ben.setPassword('1234');
-ben.validatePassword('1234'); // It Matches!
-ben.password = '1212';// what will this do?
-ben.validatePassword('1234'); // is this true?
-ben.validatePassword('1212');// what about this one?
+ben.validatePassword('1234'); // It matches!
+
+// The password is public so we can mutate it directly.
+ben.password = '1212';
+ben.validatePassword('1234'); // Wrong password!
+ben.validatePassword('1212'); // It matches!
 ```
 
 Ideally, we wouldn't want the `password` property to be directly accessible and modifiable. This is where the concept of **private properties** comes in.
 
 <details>
 
-<summary><strong>Q. What happens when were try to access the password property?</strong></summary>
+<summary><strong>Q: What happens when were try to access the password property?</strong></summary>
 
 The password property is a public property, meaning it can be accessed from outside the class instances.
 
@@ -68,7 +80,7 @@ You can still directly modify it from outside the class instance. This is genera
 
 </details>
 
-## Naming Convention
+### Naming Convention
 
 JavaScript, prior to ES6, didn't have built-in support for private properties. Developers often used a naming convention to indicate that a property should be treated as private. Conventionally, a property that's intended to be private is prefixed with an underscore `_`. This serves as a signal to other developers that the property shouldn't be accessed directly.
 
@@ -101,16 +113,18 @@ class User {
 }
 
 const ben = new User('ben', 'ben@mail.com');
-ben.validatePassword('1234'); // No password set.
-ben.setPassword('1234');
-ben.validatePassword('1234'); // It Matches!
+
+// Even though it looks weird, we can still access this "private" property
+console.log(ben._password);
 ```
 
-While this convention is widely used, it's important to note that it doesn't provide true encapsulation or prevent access to the property. It's more of a suggestion to other developers.
+While this convention is widely used, it's important to note that it doesn't provide true encapsulation or prevent access to the property. It's more of a suggestion to other developers to not treat that property as public.
 
-## Using `#` Notation
+### Using `#` Notation
 
-Starting from ECMAScript 2019, JavaScript introduced a # notation for denoting private fields directly within the class body. This provides a cleaner and more explicit way to declare private properties. In the User class example, the #password is used as a private property.
+Starting from ECMAScript 2019, JavaScript introduced the `#privateField` notation for denoting private fields directly within the class body. This provides a cleaner and more explicit way to declare private properties. 
+
+In the User class example, the `#password` is used as a private property:
 
 ```js
 class User {
@@ -144,11 +158,49 @@ const ben = new User('ben', 'ben@mail.com');
 ben.validatePassword('1234'); // No password set.
 ben.setPassword('1234');
 ben.validatePassword('1234'); // It Matches!
+
+console.log(ben.password); // undefined
 ```
+
+**Encapsulation and Data Protection:** If we want to ensure that the property is managed only by the class methods and not by any external code, the property should be private. This will protect against unexpected changes to the object's state. 
+
+### Private Methods
+
+Methods can also be marked as private by putting a `#` in front of the method name. 
+
+For example, here we have a `Die` class with a public `roll()` method that lets the caller roll a die any number of times. It uses the private method `#getSingleRoll()` as a "helper" method:
+
+```js
+class Die {
+  constructor(sides) {
+    this.sides = sides;
+  }
+
+  roll(times) {
+    const rolls = [];
+    for (let i = 0; i < times; i++) {
+      rolls.push(this.#getSingleRoll());
+    }
+    return rolls;
+  }
+  
+  // a private "helper" method
+  #getSingleRoll() {
+    return Math.ceil(Math.random() * this.sides);
+  }
+}
+
+const sixSided = new Die(6);
+console.log(sixSided.roll(3)); // Prints a random set of three rolls such as [ 2, 3, 6 ]
+```
+
+**Internal Implementation Details:** If a property/method is only used within the class itself (like a helper function), it should be private.
 
 ## Static Properties and Methods
 
-So far, all the methods and properties we've defined in our classes are instance methods and properties. This means they belong to and operate on instances of the class. However, there are cases where it's more appropriate to define methods/properties that are associated with the class itself rather than its instances. These are called static methods/properties.
+So far, all the methods and properties we've defined in our classes are instance methods and properties. This means they belong to and operate on instances of the class. 
+
+However, there are cases where it's more appropriate to define methods/properties that are associated with the class itself rather than its instances. These are called static methods/properties.
 
 Static methods are defined using the `static` keyword before the method/property name. They are referenced by the class itself, not on instances of the class.
 
@@ -191,7 +243,7 @@ console.log(unitCircle.getCircumference()); // 6.28318
 console.log(bigCircle.getCircumference()); // 62.8318
 ```
 
-While each `Circle` instance could have their own value of `PI`, it wouldn't make much sense since the value of `PI` is constant and the same for all circles.
+Since the value of `PI` is the same for all circles, it can be defined once as a static property of the `Circle` class rather than having it be defined for each circle instance.
 
 And here is an example of a class with a private static property and a static method:
 
@@ -245,7 +297,7 @@ console.log(User.getAllUsers()); // [ User {}, User {}, User {} ]
 
 In this case, we define `getAllUsers` as a static method of the class `User`. This is because the action of getting all users should not belong to any one user instance. Instead, the entire `User` class should keep track of the instances created from it.
 
-When deciding to create a method or property as a static method or an instance method, ask yourself "should this property/method belong to an individual user, or the entire class?"
+When deciding to whether or not to make a property or method static, ask yourself "should this property/method belong to an individual instance, or to the entire class?"
 
 ## Quiz!
 
@@ -338,7 +390,3 @@ Lets create a class called `Car` that has the following:
 * Implement an instance method `displayInfo()` that logs information about the car.
 * Implement another instance method `honkHorn()` to simulate honking the car's horn in the console.
 * Use a static method called `generateLicensePlate()` that a license plate `'ABC123'`.
-
-## Summary
-
-In this lecture, we covered the concept of private properties in JavaScript classes using naming conventions and the `#` notation. We also explored static methods and their use cases, creating a makeAdmin static method for the User class. Static methods provide a way to define utility functions associated with a class itself, rather than with instances of the class.
