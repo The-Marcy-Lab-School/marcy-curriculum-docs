@@ -8,12 +8,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 
 - [Key Concepts](#key-concepts)
 - [Private Properties](#private-properties)
-  - [Naming Convention](#naming-convention)
-  - [Using `#` Notation](#using--notation)
+  - [`#privateField` Notation](#privatefield-notation)
   - [Private Methods](#private-methods)
 - [Static Properties and Methods](#static-properties-and-methods)
+  - [Tracking All Instances](#tracking-all-instances)
 - [Quiz!](#quiz)
-  - [What do you think will log to the console?](#what-do-you-think-will-log-to-the-console)
   - [What is the purpose of using the # notation for a property in a class?](#what-is-the-purpose-of-using-the--notation-for-a-property-in-a-class)
   - [How do you call a static method on a class?](#how-do-you-call-a-static-method-on-a-class)
 - [Challenge: Car Class](#challenge-car-class)
@@ -29,138 +28,97 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5
 
 ## Private Properties
 
-In the previous lectures, we've been creating classes and instances, but we've left some of our properties open to direct manipulation. For example, in this `User` class, we have a `password` property:
+In the previous lectures, we've been creating classes and instances, but we've left some of our properties open to direct manipulation. For example, in this `Person` class, we have a `friends` array that can be directly mutated without using the provided `addFriend` method:
 
 ```js
-class User {
-  constructor(name, email) {
+class Person {
+  friends = [];
+
+  constructor(name, age) {
     this.name = name;
-    this.email = email;
-    this.password = null;
+    this.age = age;
+  }
+  
+  addFriend(newFriend) {
+    if (typeof newFriend !== 'string') {
+      return;
+    }
+    this.friends.push(newFriend);
   }
 
-  setPassword(newPassword) {
-    this.password = newPassword;
-  }
-
-  validatePassword(passwordToCheck) {
-    if (!this.password) {
-      console.log('No password set.');
-      return false;
-    }
-    if (passwordToCheck === this.password) {
-      console.log('It matches!');
-      return true;
-    }
-    console.log('Wrong password!');
-    return false;
+  greet() {
+    console.log(`Hi, I'm ${this.name}. I am ${this.age} years old and I have ${this.friends.length} friends.`);
   }
 }
 
-const ben = new User('ben', 'ben@mail.com');
-ben.validatePassword('1234'); // No password set.
-ben.setPassword('1234');
-ben.validatePassword('1234'); // It matches!
+const ada = new Person('Ada Lovelace', 36)
+ada.addFriend('Alan');
+ada.addFriend('Nikola');
 
-// The password is public so we can mutate it directly.
-ben.password = '1212';
-ben.validatePassword('1234'); // Wrong password!
-ben.validatePassword('1212'); // It matches!
+ada.friends.push(null);
+ada.friends.push(false);
+ada.greet(); // Hi, I'm Ada Lovelace. I am 36 years old and I have 4 friends.
+
+// But do you have 4 friends Ada?
 ```
 
-Ideally, we wouldn't want the `password` property to be directly accessible and modifiable. This is where the concept of **private properties** comes in.
+Ideally, we wouldn't want the `friends` property to be directly accessible and modifiable. This is where the concept of **private properties** comes in.
 
 <details>
 
-<summary><strong>Q: What happens when were try to access the password property?</strong></summary>
+<summary><strong>Q: What are the downside of making the `friends` property directly accessible?</strong></summary>
 
-The password property is a public property, meaning it can be accessed from outside the class instances.
-
-You can still directly modify it from outside the class instance. This is generally not recommended for sensitive information like passwords.
+It is possible to improperly modify the `friends` array and produce unexpected results.
 
 </details>
 
-### Naming Convention
+### `#privateField` Notation
 
-JavaScript, prior to ES6, didn't have built-in support for private properties. Developers often used a naming convention to indicate that a property should be treated as private. Conventionally, a property that's intended to be private is prefixed with an underscore `_`. This serves as a signal to other developers that the property shouldn't be accessed directly.
-
-Here's an example using the `_` convention:
+We can make any property private by declaring it as a **private field** using the `#privateField` syntax. We can reference that property anywhere in the class using `this.#privateField`:
 
 ```js
-class User {
-  constructor(name, email) {
+class Person {
+  #friends = [];
+
+  constructor(name, age) {
     this.name = name;
-    this.email = email;
-    this._password = null;// here
+    this.age = age;
+  }
+  
+  addFriend(newFriend) {
+    if (typeof newFriend !== 'string') {
+      return;
+    }
+    this.#friends.push(newFriend);
   }
 
-  setPassword(newPassword) {
-    this._password = newPassword;// here
+  greet() {
+    console.log(`Hi, I'm ${this.name}. I am ${this.age} years old and I have ${this.#friends.length} friends.`);
   }
 
-  validatePassword(passwordToCheck) {
-    if (!this._password) {// here
-      console.log('No password set.');
-      return false;
-    }
-    if (passwordToCheck === this._password) {// here
-      console.log('It matches!');
-      return true;
-    }
-    console.log('Wrong password!');
-    return false;
+  getFriends() {
+    // return a copy to avoid exposing the private array
+    return [...this.#friends];
   }
 }
 
-const ben = new User('ben', 'ben@mail.com');
+const ada = new Person('Ada Lovelace', 36)
+ada.addFriend('Alan');
+ada.addFriend('Nikola');
 
-// Even though it looks weird, we can still access this "private" property
-console.log(ben._password);
+// getFriends returns a copy that keeps the private array protected
+const friends = ada.getFriends();
+friends.push(null);
+friends.push(false);
+console.log(ada.getFriends()); // [ 'Alan', 'Nikola' ]
+
+ada.greet(); // Hi, I'm Ada Lovelace. I am 36 years old and I have 2 friends.
+
+console.log(ada.friends); // undefined
+console.log(ada.#friends); // Error
 ```
 
-While this convention is widely used, it's important to note that it doesn't provide true encapsulation or prevent access to the property. It's more of a suggestion to other developers to not treat that property as public.
-
-### Using `#` Notation
-
-Starting from ECMAScript 2019, JavaScript introduced the `#privateField` notation for denoting private fields directly within the class body. This provides a cleaner and more explicit way to declare private properties. 
-
-In the User class example, the `#password` is used as a private property:
-
-```js
-class User {
-  #password;  // Declare the private field here
-
-  constructor(name, email) {
-    this.name = name;
-    this.email = email;
-    this.#password = null;
-  }
-
-  setPassword(newPassword) {
-    this.#password = newPassword;
-  }
-
-  validatePassword(passwordToCheck) {
-    if (!this.#password) {
-      console.log('No password set.');
-      return false;
-    }
-    if (passwordToCheck === this.#password) {
-      console.log('It matches!');
-      return true;
-    }
-    console.log('Wrong password!');
-    return false;
-  }
-}
-
-const ben = new User('ben', 'ben@mail.com');
-ben.validatePassword('1234'); // No password set.
-ben.setPassword('1234');
-ben.validatePassword('1234'); // It Matches!
-
-console.log(ben.password); // undefined
-```
+Notice that the new `getFriends()` method returns a copy of the private `#friends` array, making it possible to *see* its contents but ensuring that the original array is not able to be mutated.
 
 **Encapsulation and Data Protection:** If we want to ensure that the property is managed only by the class methods and not by any external code, the property should be private. This will protect against unexpected changes to the object's state. 
 
@@ -198,162 +156,128 @@ console.log(sixSided.roll(3)); // Prints a random set of three rolls such as [ 2
 
 ## Static Properties and Methods
 
-So far, all the methods and properties we've defined in our classes are instance methods and properties. This means they belong to and operate on instances of the class. 
+There are cases where it's more appropriate to define methods/properties that are associated with the class itself rather than its instances. These are called **static methods/properties**.
 
-However, there are cases where it's more appropriate to define methods/properties that are associated with the class itself rather than its instances. These are called static methods/properties.
-
-Static methods are defined using the `static` keyword before the method/property name. They are referenced by the class itself, not on instances of the class.
-
-For example, if we had a `Circle` class with a `Circle.PI` property defined on the class itself:
+Static properties and methods are defined using the `static` keyword before the property/method name. Check out the `Circle` class below:
 
 ```js
 class Circle {
-    constructor(radius) {
-        this.radius = radius;
-    }
+  // this property is owned by the Circle class: Circle.PI
+  static PI = 3.14159;
 
-    // this property is "owned" by the Circle class
-    static PI = 3.14159;
+  constructor(radius) {
+    // this property is owned by each Circle instance: instance.radius
+    this.radius = radius;
+  }
 
-    getArea() {
-        // notice how we can reference Circle.PI inside this instance method
-        return Circle.PI * this.radius * this.radius;
-    }
+  // An "instance method": instance.getArea()
+  getArea() {
+    // notice how we can reference Circle.PI inside this instance method
+    return Circle.PI * this.radius * this.radius;
+  }
 
-    getCircumference() {
-        return 2 * Circle.PI * this.radius;
-    }
+  // A "static method": Circle.isCircle(shape)
+  static isCircle(shape) {
+    return shape instanceof Circle;
+  }
 }
 
-const unitCircle = new Circle(1);
-const bigCircle = new Circle(10);
-
-// The PI value is shared by ALL circles
+// The PI value is shared by ALL circles and doesn't depend on any circle instance
 console.log(Circle.PI); // 3.14159
 
-// each circle instance has a radius 
-console.log(unitCircle.radius); // 1
-console.log(bigCircle.radius); // 10
+// Only the Circle class can verify if an object is a Circle
+const myCircle = new Circle(10);
+console.log(Circle.isCircle(myCircle)); // true
 
-// each circle instance has `getArea` and `getCircumference` methods
-console.log(unitCircle.getArea()); // 3.14159
-console.log(bigCircle.getArea()); // 314.159
+const randomObject = {};
+console.log(Circle.isCircle(randomObject)); // false
 
-console.log(unitCircle.getCircumference()); // 6.28318
-console.log(bigCircle.getCircumference()); // 62.8318
+// each circle instance has `getArea` which internally references the Circle.PI property
+console.log(myCircle.getArea()); // 314.159
 ```
 
 Since the value of `PI` is the same for all circles, it can be defined once as a static property of the `Circle` class rather than having it be defined for each circle instance.
 
-And here is an example of a class with a private static property and a static method:
+**Independence From Instance State / Shared State**: If a property or method does not depend on the state of a specific instance of the class, it can be `static`. Similarly, if a property or method represents data or functionality that is common to all instances of a class, it can be `static`.
+
+### Tracking All Instances
+
+It is common to track all instances of a class using a combination of static and private properties and methods.
 
 ```js
-class User {
-  #password;            // private instance property without starting value
-  static #allUsers = []  // private static property with a starting value
+class Person {
+  #friends = [];
+  static #allPeople = []; // a private AND static array to track all Person instances
 
-  constructor(name, email, password) {
-    this.name = name;   // set the public instance property
-    this.email = email;
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
 
-    this.#password = password; // set the private instance property
-    User.#allUsers.push(this); // add the user to the Class's list of users
+    // Add the instance being created (this) into the static allPeople array
+    Person.#allPeople.push(this);
   }
-
-  // public static method
-  static getAllUsers() { 
-    return [...User.#allUsers]
-  }
-
-  setPassword(newPassword) {
-    this.#password = newPassword;
-  }
-
-  validatePassword(passwordToCheck) {
-    if (!this.#password) {
-      console.log('No password set.');
-      return false;
+  
+  addFriend(newFriend) {
+    if (typeof newFriend !== 'string') {
+      return;
     }
-    if (passwordToCheck === this.#password) {
-      console.log('It matches!');
-      return true;
-    }
-    console.log('Wrong password!');
-    return false;
+    this.#friends.push(newFriend);
+  }
+
+  greet() {
+    console.log(`Hi, I'm ${this.name}. I am ${this.age} years old and I have ${this.#friends.length} friends.`);
+  }
+
+  getFriends() {
+    // return a copy to avoid exposing the private array
+    return [...this.#friends];
+  }
+
+  static getPeopleCount() {
+    return Person.#allPeople.length;
+  }
+
+  static findPersonByName(name) {
+    return Person.#allPeople.find((person) => person.name === name);
   }
 }
 
-const ben = new User('ben', 'ben@mail.com', 123);
-const carmen = new User('carmen', 'carmen@mail.com', 456);
-const zo = new User('zo', 'zo@mail.com', 789);
+const ada = new Person('Ada Lovelace', 36);
+const alan = new Person('Alan Turing', 30);
+const reuben = new Person('Reuben Ogbonna', 37);
 
-// we made the static `allUsers` property private so it can't be modified
-// except by the constructor
-console.log(User.allUsers); // undefined
-
-// so instead we use the static method:
-console.log(User.getAllUsers()); // [ User {}, User {}, User {} ]
+console.log(Person.getPeopleCount()); // 3
+console.log(Person.findPersonByName('Alan Turing')); 
+// Person { name: 'Alan Turing', age: 30 }
 ```
-
-In this case, we define `getAllUsers` as a static method of the class `User`. This is because the action of getting all users should not belong to any one user instance. Instead, the entire `User` class should keep track of the instances created from it.
-
-**Independence From Instance State / Shared State**: If a property or method does not depend on the state of a specific instance of the class, it can be `static`. Similarly, if a property or method represents data or functionality that is common to all instances of a class, it can be `static`.
 
 ## Quiz!
 
-Consider the following code snippet:
+The following code snippet has some errors! What is it?
 
 ```js
 class Counter {
   #value = 0;
 
   increment() {
-    this.#value++;
+    this.value++;
   }
 
   getValue() {
-    return this.#value;
+    return this.value;
   }
 
-  static reset() {
-    this.#value = 0;
+  reset() {
+    this.value = 0;
   }
 }
-
-const counter1 = new Counter();
-const counter2 = new Counter();
-
-counter1.increment();
-counter1.increment();
-
-console.log(counter1.getValue()); // ?
-console.log(counter2.getValue()); // ?
-
-Counter.reset();
-
-console.log(counter1.getValue()); // ?
-console.log(counter2.getValue()); // ?
-
 ```
-
-### What do you think will log to the console?
 
 <details>
 
 <summary>Answer</summary>
 
-```js
-console.log(counter1.getValue()); // 2
-console.log(counter2.getValue()); // 0
-
-console.log(counter1.getValue()); // TypeError: Cannot read private member #value from an object whose class did not declare it
-console.log(counter2.getValue()); // TypeError: Cannot read private member #value from an object whose class did not declare it
-
-```
-
-Explanation:
-
-`counter1` has its own private #value property, which is different from the one in `counter2`. When `Counter.reset()` is called, it tries to access the private `#value` property on the class itself, resulting in a TypeError.
+The `value` field is a private field so it should be referenced with `this.#value` instead of `this.value` in each of the instance methods.
 
 </details>
 
