@@ -1,136 +1,284 @@
 # Inheritance
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-3-inheritance)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-4-inheritance)!
 {% endhint %}
 
 **Table of Contents:**
-- [Inheritance and "Is A" Relationships](#inheritance-and-is-a-relationships)
-- [Array is a Subclass of Object](#array-is-a-subclass-of-object)
-- [Establishing Inheritance Between Custom Classes](#establishing-inheritance-between-custom-classes)
-- [Extends and Super](#extends-and-super)
-- [Refactor Challenge](#refactor-challenge)
-- [Summary](#summary)
+- [Key Concepts](#key-concepts)
+- [Inheritance](#inheritance-1)
+  - [A Person and a Student](#a-person-and-a-student)
+  - [`extends`](#extends)
+  - [`super`](#super)
+- [Subclasses of Subclasses](#subclasses-of-subclasses)
+  - [Array is a Subclass of Object](#array-is-a-subclass-of-object)
+- [Practice \& Review](#practice--review)
+  - [Coding Challenge](#coding-challenge)
+  - [Study Questions](#study-questions)
 
-## Inheritance and "Is A" Relationships
+## Key Concepts
 
-**Inheritance** is a pillar of object-oriented programming. It describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. As a result, instances of the sub-class can use methods defined in a super-class. 
+* **Inheritance** describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. As a result, instances of the subclass can reuse and add to the methods defined in a superclass. 
 
-We call this an "Is A" relationship
+## Inheritance
+
+### A Person and a Student
+
+Imagine we have this `Person` class. 
+
+```js
+class Person {
+  constructor(first, last, age) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+  }
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+  introduce() {
+    return `Hi, I'm ${this.firstName} and I'm ${this.age} years old.`;
+  }
+}
+
+const ada = new Person('Ada', 'Lovelace', 30);
+console.log(ada.fullName()); // Ada Lovelace
+console.log(ada.introduce()); // Hi, I'm Ada and I'm 30 years old.
+```
+
+I want to make another class called `Student` that can do everything a `Person` can, with some additional properties and behaviors that only instances of `Student` will have.
+
+```js
+class Student {
+  courses = [];
+
+  constructor(first, last, age, subject, school) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.subject = subject;
+    this.school = school;
+  }
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+  introduce() {
+    return `Hi, I'm ${this.firstName} and I'm ${this.age} years old. I am studying ${this.subject} at ${this.school}.`;
+  }
+  enrollInCourse(courseName) {
+    this.courses.push(courseName);
+  }
+}
+
+const alan = new Student('Alan', 'Turing', 24, 'Computer Science', 'Marcy Lab School');
+console.log(alan.fullName()); // Alan Turing
+console.log(alan.introduce()); // Hi, I'm Alan and I'm 24 years old. I am studying Computer Science at Marcy Lab School.
+
+ada.enrollInCourse('Leadership & Development');
+ada.enrollInCourse('Technical Interview Prep');
+console.log(ada.courses); // [ 'Leadership & Development', 'Technical Interview Prep' ]
+```
+
+**<details><summary>Question: What best practice is NOT demonstrated by this code?</summary>**
+
+This code breaks the DRY principle (Don't Repeat Yourself). In the `Student` class we duplicate the code for the `fullname` method and much of the `constructor` and `introduce` methods stay the same.
+
+</details> 
+
+### `extends`
+
+A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"A Student is a Person"** to explain this relationship. 
+
+In JavaScript, we formalize this relationship using the `Subclass extends Superclass` syntax:
+
+```js
+const Person = require('./Person');
+
+class Student extends Person {
+
+}
+
+const ada = new Student('Ada', 'Lovelace', 30);
+console.log(ada.fullName()); // Ada Lovelace
+console.log(ada.introduce()); // Hi, I'm Ada and I'm 30 years old.
+```
+
+With just this `extends` keyword, **every instance of `Student` "inherits" the properties and methods from the `Person` class.**
+
+Furthermore, instances of `Student` are *also* instances of `Person`.
+
+```js
+console.log(ada instanceof Student);  // true
+console.log(ada instanceof Person);   // true
+```
+
+### `super`
+
+We don't want our `Student` class to just be a carbon-copy of the `Person` class. When we want to add new functionality to a subclass and still leverage the functionality of the superclass, we use the `super` keyword.
+
+**The `super` keyword references the superclass of a given subclass:**
+
+{% tabs %}
+
+{% tab title="Student.js" %} 
+
+```js
+const Person = require('./Person');
+
+class Student extends Person {
+  // A field unique to Students
+  courses = [];
+
+  constructor(first, last, age, subject, school) {
+    // Invoke the superclass constructor
+    super(first, last, age); 
+
+    // Assign instance properties unique to Students
+    this.subject = subject;
+    this.school = school;
+  }
+  
+  // fullName is inherited from Person
+
+  // Overriding the introduce method
+  introduce() {
+    // Invoke the Person's version of the introduce method
+    return `${super.introduce()}. I am studying ${this.subject} at ${this.school}.`
+  }
+  
+  // A method unique to Student
+  enrollInCourse(courseName) {
+    this.courses.push(courseName);
+  }
+}
+
+const ada = new Student('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
+console.log(ada.fullName()); // Ada Lovelace
+console.log(ada.introduce()); // Hi, I'm Ada and I'm 30 years old. I am studying Computer Science at Marcy Lab School.
+
+ada.enrollInCourse('Leadership & Development');
+ada.enrollInCourse('Technical Interview Prep');
+console.log(ada.courses); // [ 'Leadership & Development', 'Technical Interview Prep' ]
+```
+
+{% endtab %}
+
+{% tab title="Person.js" %} 
+
+```js
+class Person {
+  constructor(first, last, age) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+  }
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+  introduce() {
+    return `Hi, I'm ${this.firstName} and I'm ${this.age} years old.`;
+  }
+}
+
+module.exports = Person;
+```
+
+{% endtab %}
+
+{% endtabs %} 
+
+The `super` keyword is most often used in one of two ways:
+
+1. We can invoke `super()` in the subclass constructor to invoke the superclass's `constructor()`. 
+     - In the `Student` constructor, `super()` invokes the `Person`'s constructor which assigns the properties `firstName`, `lastName`, and `age` to the new `Student` instance.
+2. We can invoke `super.method()` in an **overridden method** to use the behavior of that same method from the superclass.
+    - The `introduce()` method is overridden in the `Student` class but uses `super.introduce()` to invoke the `introduce` method defined in the `Person` class.
+
+Notice that the `fullName` method is inherited from the `Person` class and is NOT overridden. It will behave the same way for student instances and person instances.
+
+## Subclasses of Subclasses
+
+Suppose that a `GraduateStudent` class simply extends `Student` without overriding any methods:
+
+```js
+class GraduateStudent extends Student {
+  // inherits all methods from Student including the constructor
+}
+const ada = new GraduateStudent('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
+
+console.log(ada.fullName()); // where is this method defined?
+```
+
+We've created a chain of inheritance: `GraduateStudent` → `Student` → `Person`. When a `GraduateStudent` instance invokes `fullName()`, JavaScript will do the following:
+- Check to see if the `GraduateStudent` class has `fullName()` defined as an "own property" (it doesn't)
+- Next, it will look at its superclass, `Student`, to see if *it* has `fullName()` defined as an own property (it doesn't either)
+- Finally, it will look at *its* superclass, `Person` where it will find the definition of `fullName()`.
+
+This series of connected classes is called a **prototype chain** which refers to the fact that, just like an instance inherits methods through its class's prototype, **a subclass inherits methods through its superclass's prototype**. 
+
+We can see this if we look at the "own properties" of each class's prototype in the chain:
+
+```js
+Object.getOwnPropertyNames(ada);
+// [ 'firstName', 'lastName', 'age', 'courses', 'subject', 'school' ]
+Object.getOwnPropertyNames(GraduateStudent.prototype);
+// [ 'constructor' ]
+Object.getOwnPropertyNames(Student.prototype);
+// [ 'constructor', 'introduce', 'enrollInCourse' ]
+Object.getOwnPropertyNames(Person.prototype);
+// [ 'constructor', 'fullName', 'introduce' ] <--- here it is
+```
+
+This becomes somewhat easier to see when we use the Node Debugger:
+
+![](img/prototype-chain-debugger.png)
+
+We can visualize the inheritance relationships between classes with a **Unified Modeling Language (UML) diagram** (we'll learn how to make these soon!):
 
 ![A Person class sits at the top of the "tree". A Doctor, a Professor, and a Student class sit below and all inherit from the Person class. A GraduateStudent class inherits from the Student class.](./img/inheritance.png)
 
-**<details><summary>Question: Using the terms "subclass" and "superclass", what is the inheritance relationship between the `Professor` class and the `Person` class? What about the `GraduateStudent` class and the `Person` class?</summary>**
+* Each box represents a class with the properties defined in the top half and methods defined in the bottom half. 
+* The arrows and labels indicate the direction of inheritance
+* Subclasses do not need to list inherited properties and methods unless they are overridden
 
-Both `Professor` and `GraduateStudent` are subclasses of the `Person` class.
+### Array is a Subclass of Object
 
-</details>
-
-## Array is a Subclass of Object
-
-The `Array` class is a sub-class of the `Object` class which is the super-class.
+This is all precisely why `typeof []` gives us `"object"` — every array is an instance of the the `Array` class which is a subclass of the `Object` class!
 
 Every Array instance gets methods from the `Array.prototype` which inherits methods from the `Object.prototype`. Therefore, all arrays can use `Object.prototype` methods like `toString()`.
 
 Try running the following code:
 
 ```js
+debugger;
 const arr = [1,2,3];
 
 console.log(arr.toString());
 console.log(arr); // expand the prototype chain to find the .toString() method
 
-console.log(typeof arr); 
-console.log(arr instanceof Array);
-console.log(arr instanceof Object);
+console.log(typeof arr); // "object"
+console.log(arr instanceof Array);  // True
+console.log(arr instanceof Object); // True
 ```
 
-## Establishing Inheritance Between Custom Classes
+## Practice & Review 
 
-Imagine we have a `Person` class. I want to make another class called `Programmer` that can do everything a `Person` can, with some additional properties and behaviors that only instances of `Programmer` will have.
+### Coding Challenge
 
-**How NOT to do it**:
-```js
-class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-    this.friends = [];
-  }
-  makeFriend(friend) {
-    this.friends.push(friend)
-    console.log(`Hi ${friend}, my name is ${this.name}, nice to meet you!`);
-  }
-  doActivity(activity) {
-    console.log(`${this.name} is ${activity}`);
-  }
-}
-
-class Programmer {
-  constructor(name, age, language) {
-    this.name = name;
-    this.age = age;
-    this.friends = [];
-    this.favoriteLanguage = language;
-  }
-  makeFriend(friend) {
-    this.friends.push(friend)
-    console.log(`Hi ${friend}, my name is ${this.name}, nice to meet you!`);
-  }
-  doActivity(activity) {
-    console.log(`${this.name} is ${activity}`);
-  }
-  code() {
-    this.doActivity(`writing some ${this.favoriteLanguage} code.`);
-  }
-}
-```
-
-**<details><summary>Question: What bad practice exists this code?</summary>**
-
-This code breaks the DRY rule (Don't Repeat Yourself). Much of the code in `Programmer` is the same as the code in `Person`. Wouldn't it be great for `Programmer` to automatically inherit the `makeFriend` and `doActivity` methods? 
-
-</details>
-
-## Extends and Super
-To remove the repetitive code AND to establish a relationship between `Programmer` and `Person`, we use the `extends` and `super` keywords to define our `Programmer` class:
+Create a class called `Professor` that is a subclass of `Person` with the following behavior:
 
 ```js
-class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-    this.friends = [];
-  }
-  makeFriend(friend) {
-    this.friends.push(friend)
-    console.log(`Hi ${friend}, my name is ${this.name}, nice to meet you!`);
-  }
-  doActivity(activity) {
-    console.log(`${this.name} is ${activity}`);
-  }
-}
+const reuben = new Professor('Reuben', 'Ogbonna', 36, 'Software Engineering', 'Marcy Lab School');
 
-class Programmer extends Person {
-  constructor(name, age, language) {
-    super(name, age);                 // invoke the Person constructor, setting the name, age, and friends properties on `this`
-    this.favoriteLanguage = language; // add a favoriteLanguage property only for Programmers
-  }
-  
-  // makeFriend is inherited
-  // doActivity is inherited
-  
-  code() { // a new method only Programmer instances can use
-    this.doActivity(`writing some ${this.favoriteLanguage} code.`);
-  }
-}
+console.log(reuben.fullName()); // Reuben Ogbonna
+console.log(reuben.introduce()); // Hi, I'm Reuben and I'm 36 years old. I each Software Engineering at Marcy Lab School.
+console.log(reuben.teach('classes')); // Hello class, today we will be learning about classes.
 ```
 
-## Refactor Challenge
+Then, create class called `MarcyStudent` that is a subclass of `Student`.
+All instances of `MarcyStudent` should have `subject` be set to `"Software Engineering"` and `school` be set to `"Marcy Lab School"`. All other functionality should be inherited.
 
-Create another subclass called `WebDeveloper` that extends the `Programmer` class. It should have its `favoriteLanguage` be set to `"JavaScript"` by default.
-
-Add a `deploy` method to the `WebDeveloper` class that leverages the inherited `doActivity` method to print out a message saying `[Name] is deploying.`
+### Study Questions
 
 Then, with a partner, discuss these questions:
 
@@ -160,41 +308,3 @@ Then, with a partner, discuss these questions:
 `code` invokes the `doActivity` method inherited from `Person.prototype`
 
 </details>
-
-## Summary
-
-* **Inheritance** occurs when a **child class** inherits properties and methods from a **parent class**
-  * The `extends` keyword creates this relationship
-  * The `super` keyword references the parent class
-  * You can invoke `super()` to invoke the parent class constructor.
-
-```js
-class Person {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-    this.friends = [];
-  }
-  makeFriend(friend) {
-    this.friends.push(friend)
-    console.log(`Hi ${friend}, my name is ${this.name}, nice to meet you!`);
-  }
-  doActivity(activity) {
-    console.log(`${this.name} is ${activity}`);
-  }
-}
-
-class Programmer extends Person {
-  constructor(name, age, language) {
-    super(name, age);                 // invoke the Person constructor, setting the name, age, and friends properties on `this`
-    this.favoriteLanguage = language; // add a favoriteLanguage property only for Programmers
-  }
-  
-  // makeFriend is inherited
-  // doActivity is inherited
-  
-  code() { // a new method only Programmer instances can use
-    this.doActivity(`writing some ${this.favoriteLanguage} code.`);
-  }
-}
-```
