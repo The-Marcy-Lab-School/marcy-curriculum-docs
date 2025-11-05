@@ -105,7 +105,7 @@
 * [Capstone](mod-10-capstone/README.md)
   * [Overview](mod-10-capstone/overview.md)
 * [Data Structures & Algorithms](mod-x-ds-a/README.md)
-  * [Overview](mod-x-ds-a/overview.md)
+  * [Overview](mod-x-ds-a/Overview.md)
   * [1. Nodes & Linked Lists](./mod-x-ds-a/1-nodes-linked-lists.md)
   * [2. Singly & Doubly Linked Lists](mod-x-ds-a/2-singly-doubly-linked-lists.md)
   * [3. Stacks & Queues](mod-x-ds-a/3-stacks-queues.md)
