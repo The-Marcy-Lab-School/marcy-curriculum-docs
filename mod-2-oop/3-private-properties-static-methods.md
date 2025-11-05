@@ -120,7 +120,17 @@ console.log(ada.#friends); // Error
 
 Notice that the new `getFriends()` method returns a copy of the private `#friends` array, making it possible to *see* its contents but ensuring that the original array is not able to be mutated.
 
-**Encapsulation and Data Protection:** If we want to ensure that the property is managed only by the class methods and not by any external code, the property should be private. This will protect against unexpected changes to the object's state. 
+**Make properties private for encapsulation and data protection:** If we want to ensure that the property is managed only by the class methods and not by any external code, the property should be private. This will protect against unexpected changes to the object's "state" (the data held by an object). 
+
+**<details><summary>Q: If you were designing a `User` class, what properties might be private?</summary>**
+
+Examples could include:
+- password
+- social security number
+- bank account numbers
+- home address
+
+</details>
 
 ### Private Methods
 
@@ -152,7 +162,16 @@ const sixSided = new Die(6);
 console.log(sixSided.roll(3)); // Prints a random set of three rolls such as [ 2, 3, 6 ]
 ```
 
-**Internal Implementation Details:** If a property/method is only used within the class itself (like a helper function), it should be private.
+**Make methods private to hide internal implementation details:** If a property/method is only used within the class itself (like a helper function), it should be private.
+
+**<details><summary>Q: If you were designing a `User` class, what internal helper methods might exist that you would make private?</summary>**
+
+Examples could include:
+- `#isValidPassword()` could be used internally to verify that a given password satisfies all requirements (e.g. is at least 8 characters long, uses 3 symbols, etc...)
+- `#formatDisplayName()` could be used to standardize how usernames are displayed so that they are all lowercase and replace spaces with underscores 
+
+</details>
+
 
 ## Static Properties and Methods
 
@@ -198,7 +217,7 @@ console.log(myCircle.getArea()); // 314.159
 
 Since the value of `PI` is the same for all circles, it can be defined once as a static property of the `Circle` class rather than having it be defined for each circle instance.
 
-**Independence From Instance State / Shared State**: If a property or method does not depend on the state of a specific instance of the class, it can be `static`. Similarly, if a property or method represents data or functionality that is common to all instances of a class, it can be `static`.
+**Make properties and methods static when they are independent from instance state or have shared behavior across instances**: If a property or method does not depend on the state of a specific instance of the class, it can be `static`. Similarly, if a property or method represents data or functionality that is common to all instances of a class, it can be `static`.
 
 ### Tracking All Instances
 
@@ -250,6 +269,25 @@ console.log(Person.getPeopleCount()); // 3
 console.log(Person.findPersonByName('Alan Turing')); 
 // Person { name: 'Alan Turing', age: 30 }
 ```
+
+**<details><summary>Q: If you were designing a `User` class, what properties and methods might be static and belong to the `User` class?</summary>**
+
+Here are some static properties that a `User` class might have:
+- `static allUsers = []`
+- `static minimumAge = 13`
+- `static usernameMaximumLength = 20`
+- `static allowablePasswordSpecialCharacters = ['?', '!', '@']`
+
+Here are some static methods that a `User` class might have:
+- `static getAllUsers()`
+- `static findUserByUsername(username)`
+- `static isValidPassword(password)`
+
+The decision to make a method static or private is a tricky one and there may not always be a clear answer! You may notice that the `isValidPassword` method could be either private or static depending on how it is implemented.
+
+The key is to be consistent with your decisions.
+
+</details>
 
 ## Quiz!
 
