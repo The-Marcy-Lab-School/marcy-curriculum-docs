@@ -297,7 +297,7 @@ console.log(User.getAllUsers()); // [ User {}, User {}, User {} ]
 
 In this case, we define `getAllUsers` as a static method of the class `User`. This is because the action of getting all users should not belong to any one user instance. Instead, the entire `User` class should keep track of the instances created from it.
 
-When deciding to whether or not to make a property or method static, ask yourself "should this property/method belong to an individual instance, or to the entire class?"
+**Independence From Instance State / Shared State**: If a property or method does not depend on the state of a specific instance of the class, it can be `static`. Similarly, if a property or method represents data or functionality that is common to all instances of a class, it can be `static`.
 
 ## Quiz!
 
