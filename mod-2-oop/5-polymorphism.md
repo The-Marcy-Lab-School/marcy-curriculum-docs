@@ -8,19 +8,21 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Key Concepts](#key-concepts)
 - [Classes Review](#classes-review)
 - [Polymorphism](#polymorphism-1)
+  - [Why does this matter?](#why-does-this-matter)
 - [Challenge](#challenge)
 - [Summary](#summary)
 
 ## Key Concepts
 
-* **Polymorphism** refers to multiple types of objects sharing the same interface (they have the same property and method names) even if their underlying implementations are different.
+* **Polymorphism** is the OOP concept where different types of objects can be treated the same way because they share the same interface (the same method names) even though each type implements those methods differently.
 
 ## Classes Review
 
 So far in this Object-Oriented Programming unit we've learned:
 * How to **encapsulate** data and methods into objects.
 * How to use both **factory functions** and **classes** to create **interfaces** that provide well-defined and controlled access points for interacting with internal data.
-* How to create long **prototype chains** through **inheritance**.
+* How to use **inheritance** to reuse and extend class interfaces.
+* How to identify where methods are defined in a **prototype chain**.
 
 We can see all of this in action in this prototype chain: `MarcyStudent` → `Student` → `Person`
 
@@ -61,17 +63,19 @@ class MarcyStudent extends Student {
   static validCourses = ['Leadership & Development', 'Technical Interview Prep', 'Technical Lecture'];
   
   constructor(first, last, age) {
-    super(first, last, age, "Software Engineering", "Marcy Lab School")
+    super(first, last, age, "Software Engineering", "Marcy Lab School");
   }
 
   enrollInCourse(courseName) {
     if (!MarcyStudent.validCourses.includes(courseName)) {
       return 'Invalid Course Name';
     }
-    super(courseName);
+    super.enrollInCourse(courseName);
   }
 }
 ```
+
+Now, let's introduce the final pillar of object-oriented programming: **polymorphism**.
 
 ## Polymorphism
 
@@ -84,7 +88,13 @@ console.log(ada instanceof Student); // true
 console.log(ada instanceof Person); // true
 ```
 
-Because of this, we can treat instances of each class as if they are a `Person`, knowing that they will each have at the very least the properties `firstName`, `lastName`, `age`, and the methods `fullName()` and `introduce()`.
+**Polymorphism is the OOP concept where different types of objects can be treated the same way because they share the same interface (the same method names) even though each type implements those methods differently.**
+
+> Polymorphism → poly ("many") + morph ("form") → "having many forms"
+>
+> For example: A `Person` can take "many forms" — it could be a `Person`, a `Student`, or a `MarcyStudent`, but they can all be treated as a `Person` because they share the same interface.
+
+In this example, `ada`, `alan`, and `reuben` each have the method `introduce()` despite having different implementations. This means that we can write code like this:
 
 ```js
 const ada = new MarcyStudent('Ada', 'Lovelace', 24);
@@ -93,27 +103,22 @@ const reuben = new Person('Reuben', 'Ogbonna', 36);
 
 const people = [ada, alan, reuben];
 
-people.forEach((person) => {
-  if (person instanceof Person) {
-    console.log(person.introduce());
-  }
-})
-/* 
-Hi, I'm Ada and I'm 24 years old. I am studying Software Engineering at Marcy Lab School.
-Hi, I'm Alan and I'm 27 years old. I am studying Mathematics at Cambridge University.
-Hi, I'm Reuben and I'm 36 years old.
-*/
+// This method works with any type of Person
+const printIntroduction = (person) => {
+  console.log(`Introducing ${person.fullName()}:`);
+  console.log(person.introduce());
+};
+
+people.forEach(printIntroduction);
+// Introducing Ada Lovelace:
+// Hi, I'm Ada and I'm 24 years old. I am studying Software Engineering at Marcy Lab School.
+// Introducing Alan Turing:
+// Hi, I'm Alan and I'm 27 years old. I am studying Mathematics at Cambridge University.
+// Introducing Reuben Ogbonna:
+// Hi, I'm Reuben and I'm 36 years old.
 ```
 
-This ability to use these objects in a similar manner, knowing they all descend from the `Person` class, is called **Polymorphism**.
-
-> Polymorphism → poly ("many") + morph ("form") → "having many forms"
->
-> For example: A `Person` can come in "many forms".
-
-**Polymorphism is the OOP concept where many different objects can be treated similarly because they share the same interface despite having different implementations.**
-
-The impact of polymorphism is that **our program can reliably use different types of objects in the same way** if they all descend from the same parent class.
+Polymorphism works *because* of the prototype chain - when we call `person.fullName()` or `person.introduce()`, JavaScript walks up the prototype chain to find the most specific implementation.
 
 **Question: Take a look at the example below. How would you explain how it demonstrates Polymorphism?**
 
@@ -142,19 +147,39 @@ const car2 = new RaceCar("Ferrari", "Portofino");
 const car3 = new Car("Tesla", "Model X");
 
 const cars = [car1, car2, car3];
-cars.forEach((car) => car.makeSound()); 
+cars.forEach((car) => car.drive()); 
 // since they are all Cars, they all have drive, even if they behave differently
 ```
 
 **<details><summary>Answer</summary>**
 
-Both classes implement a method called `drive` but they have their own implementations. The code that calls these methods doesn't care how each class implements `drive()` — as long as instances of `Car` and `RaceCar` have a `makeSound` method at all, the code will work.
-
-The subclass `RaceCar` uses the `Car` `drive` method sandwiched between two of its own `console.log` statements.
-
-`Car` objects can come in many forms (they look the same, but they may behave differently).
+Both `Car` and `RaceCar` implement the `drive()` method, but with different behaviors. The code `cars.forEach((car) => car.drive())` works on all cars regardless of their specific type - we can treat them uniformly because they share the same interface. This is **polymorphism**: same method name, different implementations, treated the same way in our code.
 
 </details>
+
+### Why does this matter?
+
+Without polymorphism, a function like `printIntroduction` would need to confirm that incoming `person` objects have the `fullName()` and `introduce()` methods. Without this check, an error could be thrown for trying to invoke an undefined method.
+
+```js
+// Without polymorphism, you'd need to check if methods exist:
+const printIntroduction = (person) => {
+  if (person.fullName && person.introduce) {
+    console.log(`Introducing ${person.fullName()}`);
+    console.log(person.introduce());
+  } else {
+    console.log("This object can't introduce itself!");
+  }
+}
+
+// With polymorphism: just trust the interface!
+const printIntroduction = (person) => {
+  console.log(`Introducing ${person.fullName()}`);
+  console.log(person.introduce());
+}
+```
+
+**When to use polymorphism:** Polymorphism shines when you're working with collections of related objects (like arrays of different users, or lists of different vehicles) and you want to treat them uniformly. If you find yourself writing lots of if `(type === 'X')` or `instanceof` checks, that's a sign polymorphism could simplify your code.
 
 ## Challenge
 
@@ -174,6 +199,13 @@ An `Admin` should be a subclass of `User`. It should also have:
 
 Then, create a user instance and an admin instance and demonstrate how to use all of their methods.
 
+Finally, create an array containing both the user and admin, and loop through them calling `login()` on each. Notice how polymorphism lets you treat them uniformly even though one is a User and one is an Admin."
+
+```js
+const users = [user, admin];
+users.forEach(u => u.login()); // polymorphism in action!
+```
+
 ## Summary
 
 * **Polymorphism** ("many forms") occurs when multiple types of objects share "signatures" (they have the same property and method names).
@@ -192,10 +224,7 @@ class Car {
   }
 }
 
-class RaceCar extends Car {
-
-  // the constructor can be inherited too as long as the signature doesn't need changing
-  
+class RaceCar extends Car {  
   drive() { // Method Override
     console.log("Vah... Vah...");
     super.drive(); // invoke the parent class method
@@ -208,6 +237,6 @@ const car2 = new RaceCar("Ferrari", "Portofino");
 const car3 = new Car("Tesla", "Model X");
 
 const cars = [car1, car2, car3];
-cars.forEach((car) => car.makeSound()); 
+cars.forEach((car) => car.drive()); 
 // since they are all Cars, they all have drive, even if they behave differently
 ```
