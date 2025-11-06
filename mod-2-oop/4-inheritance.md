@@ -219,7 +219,9 @@ console.log(ada.fullName()); // where is this method defined?
 console.log(ada.toString()); // where is this method defined?
 ```
 
-Remember that an instance like `ada` inherits methods from its prototype `GraduateStudent.prototype`. Since `GraduateStudent` is a subclass of `Student`, `GraduateStudent.prototype` inherits methods from `Student.prototype`.
+Remember that an instance like `ada` inherits methods from its prototype `GraduateStudent.prototype`:
+* As a subclass, `GraduateStudent.prototype` also inherits methods from `Student.prototype`.
+* Therefore, `ada` *also* inherits methods from `Student.prototype` (i.e. its prototype's prototype).
 
 We describe this series of connected prototypes as a **prototype chain**. It is the linked structure that JavaScript follows when looking up properties and methods:
 
