@@ -14,7 +14,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [Setting Properties With A Constructor](#setting-properties-with-a-constructor)
   - [Optional Constructor Parameters \& Overwriting Public Class Fields](#optional-constructor-parameters--overwriting-public-class-fields)
   - [Defining Instance Methods](#defining-instance-methods)
-  - ["Own Properties" and Prototypes](#own-properties-and-prototypes)
+- ["Own Properties" and Prototypes](#own-properties-and-prototypes)
+  - [Array Prototype](#array-prototype)
+  - [Why This Matters](#why-this-matters)
 - [Quiz!](#quiz)
 - [Challenge](#challenge)
 - [Summary](#summary)
@@ -272,11 +274,11 @@ ada.addFriend('Nikola');
 ada.greet(); // Hi, I'm Ada Lovelace. I am 36 years old and I have 2 friends.
 ```
 
-### "Own Properties" and Prototypes
+## "Own Properties" and Prototypes
 
 In JavaScript, a property of an object is considered **"own properties"** if that property is defined directly on the object. For instances of a given class, only the public class fields and properties set in the constructor are "own properties". For the `Person` class, these would be `friends`, `name`, and `age`.
 
-You can see which properties are **"own properties"** held by an object using the `Object.getOwnPropertyNames()` method:
+You can see which properties are **"own properties"** held by an object using the `Object.getOwnPropertyNames()` static method:
 
 ```js
 console.log(Object.getOwnPropertyNames(ada)); // [ 'friends', 'name', 'age' ]
@@ -284,24 +286,33 @@ console.log(Object.getOwnPropertyNames(ada)); // [ 'friends', 'name', 'age' ]
 
 So, where are the methods `addFriend` and `greet` stored if not in the instances? And how can those instances still invoke those methods?
 
-In JavaScript when we create a class, the methods of the class are stored as own properties of the `Class.prototype` object. For example, we can see the methods owned by the `Person.prototype`:
+In JavaScript when we create a class, **the methods of the class are stored as own properties of the `Class.prototype` object.** For example, we can see the properties owned by the `Person.prototype`:
 
 ```js
 // Person.prototype holds the methods available to all Person instances
 console.log(Object.getOwnPropertyNames(Person.prototype)); // [ 'constructor', 'addFriend', 'greet' ]
 ```
 
-Instances created from a class are linked that class's prototype and have access to its methods. We can see the prototype of an instance using the `Object.getPrototypeOf()` method:
+Every Person instance has access to that `Person.prototype` object. It is described as *"the prototype of a Person instance"*. 
+
+We can get the prototype of an instance using the `Object.getPrototypeOf()` static method:
 
 ```js
+console.log(Object.getPrototypeOf(ada) === Person.prototype); // true
 console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(ada))); // [ 'constructor', 'addFriend', 'greet' ]
 ```
 
-We can see the same thing is true for arrays:
+As you can see, the prototype of the `ada` instance *is* the object `Person.prototype`
+
+### Array Prototype
+
+We can see the same thing is true for arrays. The "own properties" of an array are the indexes of the array and the `length` property. Array methods are stored in the prototype object `Array.prototype`.
 
 ```js
-console.log(Object.getOwnPropertyNames(['a', 'b', 'c'])); // ['0', '1', '2', 'length']
-console.log(Object.getOwnPropertyNames(Array.prototype)); // same as [].__proto__
+const arr = ['a', 'b', 'c'];
+console.log(Object.getPrototypeOf(arr) === Array.prototype); // true
+console.log(Object.getOwnPropertyNames(arr)); // ['0', '1', '2', 'length']
+console.log(Object.getOwnPropertyNames(Array.prototype));
 /* 
 [
   'length',        'constructor',    'at',
@@ -322,10 +333,16 @@ console.log(Object.getOwnPropertyNames(Array.prototype)); // same as [].__proto_
 */
 ```
 
-All of this shows us the main benefit of classes compared to factory functions: the **methods are truly shared between instances.**
+This is often why you will see methods like `arr.push()` written as `Array.prototype.push`.
+
+### Why This Matters
+
+All of this shows us the main benefit of classes compared to factory functions: the **methods are truly shared between instances because they are owned by their prototype, not the instance.**
 
 ```js
 console.log(ada.addFriend === alan.addFriend); // true
+console.log(ada.addFriend === Person.prototype.addFriend); // true
+console.log(alan.addFriend === Person.prototype.addFriend); // true
 ```
 
 ## Quiz!
