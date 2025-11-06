@@ -22,7 +22,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 * The **`Subclass extends Superclass`** syntax defines an inheritance relationship between two classes
 * **The `super` keyword references the superclass of a given subclass:**
   1. We can invoke `super()` in the subclass constructor to invoke the superclass's `constructor()`.
-  2. We can invoke `super.method()` in an **overridden method** to use the behavior of that same method from the superclass.
+  2. We can invoke `super.method()` in an **overridden method** to invoke the superclass's version of the method on the subclass instance.
 * The **prototype chain** describes the linked structure where each object inherits methods from a prototype, which may inherit methods from another prototype, forming a chain.
   * When you access a property or method, JavaScript walks up this chain until it finds what you're looking for (or reaches the end).
 
@@ -30,7 +30,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ### A Person and a Student
 
-Imagine we have this `Person` class. 
+Consider this `Person` class. 
 
 ```js
 class Person {
@@ -52,7 +52,7 @@ console.log(ada.fullName()); // Ada Lovelace
 console.log(ada.introduce()); // Hi, I'm Ada and I'm 30 years old.
 ```
 
-I want to make another class called `Student` that can do everything a `Person` can, with some additional properties and behaviors that only instances of `Student` will have.
+I want to make another class called `Student` that can do everything a `Person` can. In addition, `Student`  will have some additional properties and methods.
 
 ```js
 class Student {
@@ -85,21 +85,24 @@ ada.enrollInCourse('Technical Interview Prep');
 console.log(ada.courses); // [ 'Leadership & Development', 'Technical Interview Prep' ]
 ```
 
-**<details><summary>Question: What best practice is NOT demonstrated by this code?</summary>**
+**<details><summary>Question: What similarities and differences do you see between these two classes? What coding style rule is this breaking?</summary>**
 
-This code breaks the DRY principle (Don't Repeat Yourself). In the `Student` class we duplicate the code for the `fullname` method and much of the `constructor` and `introduce` methods stay the same.
+A `Student` has every property and method that a `Person` has but it also has the public field `courses` as well as the properties `subject` and `sschool`. The `introduce()` method is implemented slightly differently and the `enrollInCourse` method is new.
+
+This code breaks the DRY principle (Don't Repeat Yourself). In the `Student` class we duplicate the code for the `fullname` method and most of the code in the `constructor` and `introduce` methods stays the same.
 
 </details> 
 
 ### `extends`
 
-A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"A Student is a Person"** to explain this relationship. 
+A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"a Student *is a* Person"** to describe this relationship. 
 
 In JavaScript, we formalize this relationship using the `Subclass extends Superclass` syntax:
 
 ```js
 const Person = require('./Person');
 
+// Student is the "Subclass", Person is the "Superclass"
 class Student extends Person {
 
 }
@@ -193,45 +196,43 @@ module.exports = Person;
 
 {% endtabs %} 
 
-The `super` keyword is most often used in one of two ways:
+This example shows the two common usages of the `super` keyword:
 
-1. We can invoke `super()` in the subclass constructor to invoke the superclass's `constructor()`. 
+1. `super()` — invokes the superclass constructor
      - In the `Student` constructor, `super()` invokes the `Person`'s constructor which assigns the properties `firstName`, `lastName`, and `age` to the new `Student` instance.
-2. We can invoke `super.method()` in an **overridden method** to use the behavior of that same method from the superclass.
+2. `super.method()` — invokes a method defined in the superclass. Often used to **override** the behavior of that method while still using some of the behavior from the superclass.
     - The `introduce()` method is overridden in the `Student` class but uses `super.introduce()` to invoke the `introduce` method defined in the `Person` class.
 
 Notice that the `fullName` method is inherited from the `Person` class and is NOT overridden. It will behave the same way for student instances and person instances.
 
 ## Prototype Chain: Subclasses of Subclasses
 
-Suppose that a `GraduateStudent` class simply extends `Student` without overriding any methods. We create a chain of inheritance: `GraduateStudent` → `Student` → `Person`. 
+Suppose that a `GraduateStudent` class simply extends `Student` without overriding any methods.
 
 ```js
 class GraduateStudent extends Student {
-  // inherits all methods from Student including the constructor
+  // inherits all methods from Student
 }
 const ada = new GraduateStudent('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
 
 console.log(ada.fullName()); // where is this method defined?
+console.log(ada.toString()); // where is this method defined?
 ```
 
-We can refer to this series of connected classes as a **prototype chain**: The linked structure where each object inherits methods from a prototype, which may inherit methods from another prototype, forming a chain:
-* The `ada` object inherits methods from the `GraduateStudent` prototype
-  * The `GraduateStudent` prototype inherits methods from the `Student` prototype
-    * The `Student` prototype inherits methods from the `Person` prototype
-      * The `Person` prototype inherits methods from the `Object` prototype
-      * The `Object` prototype is the end of the chain.
+Remember that an instance like `ada` inherits methods from its prototype `GraduateStudent.prototype`. Since `GraduateStudent` is a subclass of `Student`, `GraduateStudent.prototype` inherits methods from `Student.prototype`.
 
-When you access a property or method, JavaScript walks up this chain until it finds what you're looking for (or reaches the end).
+We describe this series of connected prototypes as a **prototype chain**. It is the linked structure that JavaScript follows when looking up properties and methods:
 
-For example, when we invoke `ada.fullName()`, JavaScript will look for the `fullName()` definition in the following order:
+`ada` → `GraduateStudent.prototype` → `Student.prototype` → `Person.prototype` → `Object.prototype` → `null`
 
-- In the object itself (the `ada` instance properties)
-- In the class prototype (the shared methods in the `GraduateStudent` class)
-- In the parent class prototype (the inherited methods in the `Student` class)
-- In the parent class's parent class prototype (the inherited methods in the `Person` class)
+When you call `ada.someMethod()`, JavaScript searches up this chain until it finds `someMethod` or reaches the end (`null`).
 
-We can see this if we look at the "own properties" of each class's prototype in the chain:
+```js
+console.log(ada.fullName()); // Found on Person.prototype  
+console.log(ada.toString()); // Found on Object.prototype
+```
+
+We can see this if we look at the "own properties" of each class's prototype in the chain.
 
 ```js
 Object.getOwnPropertyNames(ada);
@@ -241,8 +242,16 @@ Object.getOwnPropertyNames(GraduateStudent.prototype);
 Object.getOwnPropertyNames(Student.prototype);
 // [ 'constructor', 'introduce', 'enrollInCourse' ]
 Object.getOwnPropertyNames(Person.prototype);
-// [ 'constructor', 'fullName', 'introduce' ] <--- here it is
+// [ 'constructor', 'fullName', 'introduce' ]
 ```
+
+**<details><summary>Q: So, where the <code>ada.introduce()</code> method will be found in the prototype chain?</summary>**
+
+Remember how we overrode the `introduce` method in `Student`? That is why it shows up in both `Student.prototype` and `Person.prototype`. 
+
+Even though `Person` also has an implementation of this method, we use the `Student` implementation since `Student` is "closer" to `ada` in the chain.
+
+</details>
 
 This is somewhat easier to see when we use the Node Debugger:
 
@@ -278,14 +287,51 @@ Create a class called `Professor` that is a subclass of `Person` with the follow
 const reuben = new Professor('Reuben', 'Ogbonna', 36, 'Software Engineering', 'Marcy Lab School');
 
 console.log(reuben.fullName()); // Reuben Ogbonna
-console.log(reuben.introduce()); // Hi, I'm Reuben and I'm 36 years old. I each Software Engineering at Marcy Lab School.
-console.log(reuben.teach('classes')); // Hello class, today we will be learning about classes.
+console.log(reuben.introduce()); // Hi, I'm Reuben and I'm 36 years old. I teach Software Engineering at Marcy Lab School.
+console.log(reuben.teach('object-oriented programming')); // Hello class, today we will be learning about object-oriented programming.
 ```
 
 Then, create class called `MarcyStudent` that is a subclass of `Student`.
 * All instances of `MarcyStudent` should have `subject` be set to `"Software Engineering"` and `school` be set to `"Marcy Lab School"`. 
-* It should have a static `validCourses` array 
+* It should have a static `validCourses` array: `['Leadership & Development', 'Technical Interview Prep', 'Technical Lecture']`
 * `enrollInCourse` should be overridden to first check if the provided course is in the `validCourses` array before adding the course to the `courses` array.
+
+**<details><summary>Solution</summary>**
+
+**Professor**
+
+```js
+class Professor extends Person {
+  constructor(first, last, age, subject, school) {
+    super(first, last, age);
+    this.subject = subject;
+    this.school = school;
+  }
+  introduce() {
+    return `${super.introduce()}. I teach ${this.subject} at ${this.school}.`;
+  }
+  teach(topic) {
+    return `Hello class, today we will be learning about ${topic}.`;
+  }
+}
+```
+
+**MarcyStudent**
+
+```js
+class MarcyStudent extends Student {
+  static validCourses = ['Leadership & Development', 'Technical Interview Prep', 'Technical Lecture'];
+  constructor(first, last, age) {
+    super(first, last, age, "Software Engineering", "Marcy Lab School");
+  }
+  enrollInCourse(course) {
+    if (validCourses.includes(course)) {
+      super.enrollInCourse();
+    }
+  }
+}
+```
+</details>
 
 ### Study Questions
 
