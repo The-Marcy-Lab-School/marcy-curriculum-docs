@@ -32,10 +32,10 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 
 At the Marcy Lab School, you will learn how to build full-stack web applications using the PERN stack (Postgres, Express, React, Node). In addition, you will become familiar with a variety of languages, technologies, developer tools, and more including:
 
-* **Languages:** HTML, CSS, JS, SQL, sh
-* **Frameworks & Libaries**: React, Express, Knex, Jest, Bcrypt
+* **Languages:** Bash, JS, HTML, CSS, SQL
+* **Frameworks & Libraries**: DOM API, React, Express, Knex, Jest, Bcrypt
 * **Technologies**: Nodejs, PostgreSQL
-* **Developer Tools**: VS Code, Cursor, GitHub, Git, Terminal, TablePlus, Postman
+* **Developer Tools**: VS Code, Git, GitHub, Command-Line, Chrome Developer Tools, Cursor, TablePlus, Postman
 
 ### Course Modules
 
