@@ -10,10 +10,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [A Person and a Student](#a-person-and-a-student)
   - [`extends`](#extends)
   - [`super`](#super)
+  - [Challenge: Professor Class](#challenge-professor-class)
 - [Prototype Chain: Subclasses of Subclasses](#prototype-chain-subclasses-of-subclasses)
-  - [Array is a Subclass of Object](#array-is-a-subclass-of-object)
+  - [Array.prototype](#arrayprototype)
+  - [Object.prototype and the Prototype Chain](#objectprototype-and-the-prototype-chain)
+  - [Quiz!](#quiz)
 - [Practice \& Review](#practice--review)
-  - [Coding Challenge](#coding-challenge)
   - [Study Questions](#study-questions)
 
 ## Key Concepts
@@ -125,7 +127,7 @@ console.log(ada instanceof Person);   // true
 
 We don't want our `Student` class to just be a carbon-copy of the `Person` class. When we want to add new functionality to a subclass and still leverage the functionality of the superclass, we use the `super` keyword.
 
-**The `super` keyword references the superclass of a given subclass:**
+**The `super` keyword references the superclass of a given subclass. `super` allows us to extend the functionality of the superclass's methods:**
 
 {% tabs %}
 
@@ -205,83 +207,7 @@ This example shows the two common usages of the `super` keyword:
 
 Notice that the `fullName` method is inherited from the `Person` class and is NOT overridden. It will behave the same way for student instances and person instances.
 
-## Prototype Chain: Subclasses of Subclasses
-
-Suppose that a `GraduateStudent` class simply extends `Student` without overriding any methods.
-
-```js
-class GraduateStudent extends Student {
-  // inherits all methods from Student
-}
-const ada = new GraduateStudent('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
-
-console.log(ada.fullName()); // where is this method defined?
-console.log(ada.toString()); // where is this method defined?
-```
-
-Remember that an instance like `ada` inherits methods from its prototype `GraduateStudent.prototype`:
-* As a subclass, `GraduateStudent.prototype` also inherits methods from `Student.prototype`.
-* Therefore, `ada` *also* inherits methods from `Student.prototype` (i.e. its prototype's prototype).
-
-We describe this series of connected prototypes as a **prototype chain**. It is the linked structure that JavaScript follows when looking up properties and methods:
-
-`ada` → `GraduateStudent.prototype` → `Student.prototype` → `Person.prototype` → `Object.prototype` → `null`
-
-When you call `ada.someMethod()`, JavaScript searches up this chain until it finds `someMethod` or reaches the end (`null`).
-
-```js
-console.log(ada.fullName()); // Found on Person.prototype  
-console.log(ada.toString()); // Found on Object.prototype
-```
-
-We can see this if we look at the "own properties" of each class's prototype in the chain.
-
-```js
-Object.getOwnPropertyNames(ada);
-// [ 'firstName', 'lastName', 'age', 'courses', 'subject', 'school' ]
-Object.getOwnPropertyNames(GraduateStudent.prototype);
-// [ 'constructor' ]
-Object.getOwnPropertyNames(Student.prototype);
-// [ 'constructor', 'introduce', 'enrollInCourse' ]
-Object.getOwnPropertyNames(Person.prototype);
-// [ 'constructor', 'fullName', 'introduce' ]
-```
-
-**<details><summary>Q: So, where the <code>ada.introduce()</code> method will be found in the prototype chain?</summary>**
-
-Remember how we overrode the `introduce` method in `Student`? That is why it shows up in both `Student.prototype` and `Person.prototype`. 
-
-Even though `Person` also has an implementation of this method, we use the `Student` implementation since `Student` is "closer" to `ada` in the chain.
-
-</details>
-
-This is somewhat easier to see when we use the Node Debugger:
-
-![](img/prototype-chain-debugger.png)
-
-### Array is a Subclass of Object
-
-This is all precisely why `typeof []` gives us `"object"` — every array is an instance of the the `Array` class which is a subclass of the `Object` class!
-
-Every Array instance gets methods from the `Array.prototype` which inherits methods from the `Object.prototype`. Therefore, all arrays can use `Object.prototype` methods like `toString()`.
-
-Try running the following code:
-
-```js
-debugger;
-const arr = [1,2,3];
-
-console.log(arr.toString());
-console.log(arr); // expand the prototype chain to find the .toString() method
-
-console.log(typeof arr); // "object"
-console.log(arr instanceof Array);  // True
-console.log(arr instanceof Object); // True
-```
-
-## Practice & Review 
-
-### Coding Challenge
+### Challenge: Professor Class
 
 Create a class called `Professor` that is a subclass of `Person` with the following behavior:
 
@@ -334,6 +260,137 @@ class MarcyStudent extends Student {
 }
 ```
 </details>
+
+## Prototype Chain: Subclasses of Subclasses
+
+### Array.prototype
+
+Have you considered how arrays are able to use methods like `push` and `forEach`?
+
+If we look at the "own properties" of an array (the properties defined on the array), we don't see any of its methods:
+
+```js
+const arr = ['a', 'b', 'c'];
+const arrayProperties = Object.getOwnPropertyNames(arr);
+console.log(arrayProperties); // ['0', '1', '2', 'length']
+```
+
+As we can see, the properties of an array are just the indexes for each value and the `length` property. So, where are those methods defined?
+
+We get a hint if we look at the [documentation for the array method `push()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push). Notice how it names the method as `Array.prototype.push`?
+
+Arrays are able to use array methods because:
+1. Methods like `push` and `forEach` are defined as methods of the `Array` class and are therefore inherited by all `Array` instances. We can see those methods by looking at the properties of the `Array.prototype` object.
+
+    ```js
+    const arrayMethods = Object.getOwnPropertyNames(Array.prototype);
+    console.log(arrayMethods);
+    /* 
+    [
+      'length',        'constructor',    'at',
+      'concat',        'copyWithin',     'fill',
+      'find',          'findIndex',      'findLast',
+      'findLastIndex', 'lastIndexOf',    'pop',
+      'push',  <---    'reverse',        'shift',
+      'unshift',       'slice',          'sort',
+      'splice',        'includes',       'indexOf',
+      'join',          'keys',           'entries',
+      'values',        'forEach',  <---  'filter',
+      'flat',          'flatMap',        'map',
+      'every',         'some',           'reduce',
+      'reduceRight',   'toLocaleString', 'toString',
+      'toReversed',    'toSorted',       'toSpliced',
+      'with'
+    ] 
+    */
+    ```
+
+2. Whenever we create an **"array literal"** (using square brackets `[]`), we are actually creating a new instance of the `Array` class!
+
+    ```js
+    // these do the same thing
+    let arr2 = ['dee', 'too']; // using "array literal" syntax
+    let arr3 = new Array('dee', 'too');  // using the Array class constructor
+
+    console.log(arr2 instanceof Array); // true
+    console.log(arr3 instanceof Array); // true
+    ```
+
+### Object.prototype and the Prototype Chain
+
+Now, in that list of `Array.prototype` methods, can you find a method called `hasOwnProperty`?
+
+It's not there, and yet we can invoke that method on an `Array` instance:
+
+```js
+const letters = ['a', 'b', 'c'];
+
+// .hasOwnProperty returns true if a given property name is an "own property".
+console.log(letters.hasOwnProperty(1)); // true 
+console.log(letters.hasOwnProperty('push')); // false
+```
+
+The `Object.prototype.hasOwnProperty` method is defined as a part of the `Object` class from which *all* classes are extended, including the `Array` class and the classes we've made here like `Person` and `Student`.
+
+```js
+const ada = new Student('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
+const letters = ['a', 'b', 'c'];
+
+console.log(ada instanceof Object);
+console.log(letters instanceof Object);
+```
+
+Since arrays are instances of the `Array` class which extends the `Object` class, we end up with what we call a **prototype chain: a linked structure of objects inheriting methods from class prototypes, which can inherit methods from other class prototypes, and so on...**
+
+`letters` → `Array.prototype` → `Object.prototype` → `null`
+
+**The prototype chain is used by JavaScript to find method definitions when the method can't be found the object invoking the method.**
+
+For example, when `letters.push()` is invoked, JavaScript looks at `letters` to see if it has the definition of `push`. When it doesn't find it, it looks at inside of `Array.prototype` where it finds the definition of `push`.
+
+When `letters.hasOwnProperty()` is invoked, JavaScript looks at `letters`, then `Array.prototype`, and then finally at `Object.prototype` to find the definition.
+
+If we were to invoke a non-existent method like `letters.foo()`, JavaScript would look at `letters`, then `Array.prototype`, then `Object.prototype` and then would run out of prototypes to look at. At this point, JavaScript would determine that `foo` is not a function and throw a `TypeError`.
+
+### Quiz!
+
+Consider the `ada` instance of the `Student` class below.
+
+```js
+const ada = new Student('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
+```
+
+**<details><summary>Q: Using arrows, draw out the prototype chain for `ada`.</summary>**
+
+`ada` → `Student.prototype` → `Person.prototype` → `Object.prototype` → `null`
+
+</details>
+
+Consider the code below:
+
+```js
+ada.fullName()
+ada.toString()
+ada.name
+ada.introduce()
+ada.blah()
+```
+
+**<details><summary>Q: For each line of code, describe how JavaScript walks up the prototype chain and where it finds the definition.</summary>**
+
+`.fullName()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype` where it finds the definition.
+`.toString()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype` where it finds the definition.
+`.fullName()` is found in `ada` so JavaScript doesn't do anything.
+`.introduce()` is not in `ada` so JavaScript looks at `Student.prototype` where it finds the definition. It ignores the definition in `Person.prototype` because it has found a "closer" definition.
+`.blah()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype`. It doesn't find it there so JavaScript throws a `TypeError`.
+
+</details>
+
+If you run the Node debugger, you can see the prototype chain by looking at the `[[Prototype]]` field of any object:z
+
+![](img/prototype-chain-debugger.png)
+
+## Practice & Review 
 
 ### Study Questions
 
