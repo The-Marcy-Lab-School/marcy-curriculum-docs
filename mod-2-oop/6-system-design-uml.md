@@ -313,3 +313,26 @@ Analyze the UML diagram for the pet adoption system and, for each feature, desig
 * Are any new class instances created? If so, with what properties?
 * Which properties are used from each class to make the feature work?
 * Which methods are invoked, and in what order, to make the feature work?
+
+**<details><summary>Answer</summary>**
+
+**Adopters need some way to apply for pet adoption**:
+
+- An adopter registers for an account, creating a new `adopter` instance with `name` and `email`. The `#applications` property is set to an empty array by default.
+- The adopter invokes `shelter.getAvailablePets()` to see which pets are available for adoption.
+- The adopter creates a new `application` instance with `adopter.createApplication(pet)`. The `#applicationStatus` property is set to `"pending"` by default.
+- When the adopter is ready to submit the application, they send it to the shelter via `shelter.receiveApplication(application)` which can validate if the pet in the application (`application.getPet()`) is held by that shelter.
+
+**The shelter needs a way to review applications and approve or reject them**:
+
+- Shelter staff can invoke `shelter.getPendingApplications()` to see all applications with a `"pending"` status (`application.getStatus()`).
+- For each application, invoke either:
+  - `application.approve()`: 
+    - Sets its status to `"approved"`
+    - The shelter sets the pet's availability to `false` via `application.getPet().setAvailability(false)`
+    - Automatically rejects other applications for the pet via `shelter.rejectApplicationsForPet(this.pet)`
+  - `application.reject()`:
+    - Sets its status to `"rejected"`
+    - The pet remains available.
+
+</details>
