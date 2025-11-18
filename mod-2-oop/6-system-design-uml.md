@@ -16,14 +16,14 @@ By the end of this lesson, you'll be able to answer this question: **Consider an
     - [Multiplicity](#multiplicity)
     - [Label](#label)
     - [Practice](#practice)
-- [System Design Analysis](#system-design-analysis)
+- [Flow Charts](#flow-charts)
 
 ## Key Concepts
-- **System design** is the process of understanding the *responsibilities* of the components of a system and their *relationships/interactions* to/with one another. 
-- **Class Systems** are classes with *relationships* and *responsibilities* working together
-- An **entity** is a single component of a system, such as a class in a class system.
+- **System design** is the process of understanding (1) the *components* of a system, (2) the *responsibilities* of those components, and (3) their *relationships to/interactions with* each other.
+- An **"entity"** is a single component of a system, such as a class in a class-based system.
 - **Unified Modeling Language (UML)** is an industry-standard format for representing the components of a system, their responsibilities, and their relationships.
-- A **multiplicity** labels how many of one class relates to another (e.g. "one-to-many" → "*One* doctor *has many* appointments")
+- A **multiplicity** labels how many of one class relates to another (e.g. "one-to-many" → "*One* doctor *has many* appointments").
+- **Flow Charts** are used to clearly define how entities are used within the processes of a system.
 
 ## OOP Review / Practice
 
@@ -288,49 +288,25 @@ The labels are a nice touch to include in your UML diagram.
 
 **Practice:** Add an arrow to your UML diagram to indicate the relationship between your `Library` and `Book` class. Include a label and multiplicity notation.
 
-## System Design Analysis
+## Flow Charts
 
-Now that we understand how to create a UML diagram, how do we decide what goes into it?
+Once we have a UML diagram, there is one essential step remaining: we need to clearly describe how each requested feature can be implemented using the classes defined in the UML diagram.
 
-Let's analyze the Pet Adoption Center system design and see if we can learn from it. Remember, the Pet Adoption Center requested that the system include the following:
+For example, for the requirement *"The shelter needs a way to accept new Pets to be put up for adoption"*, a flowchart might like this:
+
+![A flowchart showing the process of a pet being added to a shelter.](./img/pet-donation-flowchart.png)
+
+Notice that this flowchart clearly answers these questions:
+* Are any new class instances created? If so, with what properties?
+* Which properties are used from each class to make the feature work?
+* Which methods are invoked, and in what order, to make the feature work?
+
+Creating a flowchart is also an *iterative* process. You may sketch out a flowchart for a process and then realize that your UML diagram is missing a crucial piece to make the process work, leading you to update your UML diagram and then redraw the flowchart.
+
+Let's design a flow chart for the remaining processes for the Pet Adoption Center. Remember, the Pet Adoption Center requested that the system include the following:
 
 > - The shelter needs a way to accept new Pets to be put up for adoption.
 > - Adopters need some way to apply for pet adoption.
 > - The shelter needs a way to review applications and approve or reject them.
 
-![A UML Diagram shows the responsibilities and relationships of classes in a system.](./img/uml-diagram-pet-adoption-system.png)
-
-Analyze the UML diagram for the pet adoption system and, for each feature, identify:
-* Are any new class instances created? If so, with what properties?
-* Which properties are used from each class to make the feature work?
-* Which methods are invoked, and in what order, to make the feature work?
-
-**<details><summary>Answer</summary>**
-
-**The shelter needs a way to accept new Pets to be put up for adoption**:
-
-- When a new shelter registers on the application, they create a new `shelter` instance with a `name`. The `#pets` and `#applications` properties are each set to empty arrays by default.
-- When a pet owner decides to surrender a pet, they create a new `pet` instance with a `name`, `species`, and `breed`. The `#isAvailable` property is set to `false` by default.
-- They invoke `shelter.addPet(pet)` to transfer the pet to shelter management.
-- The shelter sets the pet's availability to `true` upon intake via `pet.setAvailability(true)`.
-
-**Adopters need some way to apply for pet adoption**:
-
-- An adopter registers for an account, creating a new `adopter` instance with `name` and `email`. The `#applications` property is set to an empty array by default.
-- The adopter invokes `shelter.getAvailablePets()` to see which pets are available for adoption.
-- The adopter creates a new `application` instance with `adopter.createApplication(pet)`. The `#applicationStatus` property is set to `"pending"` by default.
-- When the adopter is ready to submit the application, they send it to the shelter via `shelter.receiveApplication(application)` which can validate if the pet in the application (`application.getPet()`) is held by that shelter.
-
-**The shelter needs a way to review applications and approve or reject them**:
-
-- Shelter staff can invoke `shelter.getPendingApplications()` to see all applications with a `"pending"` status (`application.getStatus()`).
-- For each application, invoke either:
-  - `application.approve()`: 
-    - Sets its status to `"approved"`
-    - The shelter sets the pet's availability to `false` via `application.getPet().setAvailability(false)`
-    - Automatically rejects other applications for the pet via `shelter.rejectApplicationsForPet(this.pet)`
-  - `application.reject()`:
-    - Sets its status to `"rejected"`
-    - The pet remains available.
-
-</details>
+Analyze the UML diagram for the pet adoption system and, for each feature, design a flow chart that identifies:
