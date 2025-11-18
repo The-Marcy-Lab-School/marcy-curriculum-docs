@@ -4,13 +4,14 @@
 
 - [Design Challenge: A School System](#design-challenge-a-school-system)
 - [System Design Strategies \& Principles](#system-design-strategies--principles-1)
-  - [Strategy 1: The Coordinator Pattern](#strategy-1-the-coordinator-pattern)
-  - [Strategy 2: Creator Responsibility](#strategy-2-creator-responsibility)
-  - [Strategy 3: Status-Driven Behavior](#strategy-3-status-driven-behavior)
-  - [Strategy 4: Cascading Updates](#strategy-4-cascading-updates)
-  - [Strategy 5: Bidirectional References](#strategy-5-bidirectional-references)
-  - [Strategy 6: Validation Boundaries](#strategy-6-validation-boundaries)
-  - [Strategy 7: Private vs. Public Properties](#strategy-7-private-vs-public-properties)
+  - [System Design Strategies](#system-design-strategies)
+    - [The Coordinator Pattern](#the-coordinator-pattern)
+    - [Status-Driven Behavior](#status-driven-behavior)
+    - [The Intermediary Object Pattern](#the-intermediary-object-pattern)
+  - [Common Design Decisions](#common-design-decisions)
+    - [Private vs. Public Properties](#private-vs-public-properties)
+    - [Bidirectional References](#bidirectional-references)
+    - [Creator Responsibility](#creator-responsibility)
 - [System Design Strategies Summary](#system-design-strategies-summary)
 
 ## Design Challenge: A School System
@@ -39,6 +40,35 @@ We'll discuss these decision points as a class.
 
 ## System Design Strategies & Principles
 
+When you're designing a new system, ask:
+
+1. **Do I need a coordinator?** 
+   - Are there multiple entity types that interact?
+   - Do I need to enforce rules about their interactions?
+
+2. **Who creates new objects?**
+   - Who initiates this action in real life?
+
+3. **Do objects move through stages/states?**
+   - Are there multi-step processes?
+   - Can an action only happen at certain times?
+
+4. **When something changes, what else needs to update?**
+   - Map out the consequences
+
+5. **What needs to know about what?**
+   - Map out who queries whom
+   - Only add two-way references if truly needed
+
+6. **Where can bad data enter?**
+   - Add validation at every boundary
+
+7. **Should properties/methods be private or public?**
+   - Is this property core to the object's behavior or needs to be tightly controlled?
+   - Does it need validation or restricted access?
+
+
+
 Recall the system design prompt from the last lesson:
 
 > Imagine that a nation-wide Pet Adoption Center approaches you to build an application for them. The application needs to handle the following:
@@ -50,11 +80,16 @@ A UML diagram for the Pet Shelter might look like this:
 
 ![A UML Diagram shows the responsibilities and relationships of classes in a system.](./img/uml-diagram-pet-adoption-system.png)
 
-Today, we'll look into the **process** for creating a system like this from scratch. What principles should we follow? What concrete strategies can we use to steer us in the right direction?
+Today, we'll look into the **process** for creating a system like this from scratch.  What are common design decisions that you will face? What principles should we follow to make those decisions? What concrete strategies can we use to steer us in the right direction?
 
 When facing a system design problem, you can use these strategies to make decisions about responsibilities and relationships:
 
-### Strategy 1: The Coordinator Pattern
+### System Design Strategies
+
+#### The Coordinator Pattern
+
+**What it is:** The Coordinator Pattern is a design strategy where one class (the "coordinator") is responsible for managing and overseeing interactions between multiple related entities in a system.
+
 **When to use:** Your system has multiple entities that need to interact with each other in controlled ways.
 
 **How it works:** Create a central class that:
@@ -74,30 +109,10 @@ When facing a system design problem, you can use these strategies to make decisi
 
 **Alternative pattern:** Direct relationships (entities interact without a coordinator). This is simpler but harder to validate and maintain.
 
-### Strategy 2: Creator Responsibility
-**The question:** When object A needs to be connected to object B, who should create that connection object?
+#### Status-Driven Behavior
 
-**Guideline:** The entity that initiates the action in the real world should create the object.
+**What it is:** Status-Driven Behavior is a design strategy where objects maintain an internal state (status) that controls what actions they can perform and how they behave at different stages of a process.
 
-**In the Pet Adoption System:**
-- Adopters create applications: `adopter.createApplication(pet, shelter)`
-- Why? Because adopters fill out applications in real life
-- The adopter instantiates the `Application` object and passes it to the shelter
-
-**Other examples:**
-- School: the school creates transcripts → `school.generateTranscript(student)`
-- Online store: customers create shopping carts → `customer.createCart()`
-- Event management: attendees create RSVPs → `attendee.createRSVP(event)`
-
-**Tradeoff to consider:**
-- **Creator pattern:** More realistic, allows "drafts" before submission, separates creation from validation
-- **Coordinator creates:** Simpler (one less step), but less flexible
-
-**Discussion question:** "Who experiences this action in real life?" usually points to the creator.
-
----
-
-### Strategy 3: Status-Driven Behavior
 **When to use:** Your system has multi-step processes where objects move through different states.
 
 **How it works:**
@@ -128,27 +143,76 @@ methodName() {
 }
 ```
 
----
+#### The Intermediary Object Pattern
 
-### Strategy 4: Cascading Updates
-**The question:** When one change needs to trigger other changes, where should that logic live?
+**What it is:** The Intermediary Object Pattern introduces a new class to represent the *relationship* or *transaction* between two or more entities. This intermediary (sometimes called a "join" or "association" class) acts as a connector that not only links the related objects, but also stores information relevant to their interaction.
+
+**When to use:** Use this pattern when you have two classes that are connected and you need to keep track of extra data about the connection or if you have two classes that can be connected in a "many-to-many" capacity (a pet can have many adopters applying for it, an adopter can apply for many pets).
+
+**How it works:**
+- Create an intermediary class (e.g., `Application` in pet adoption) that links the two main entities.
+- Store references to those entities in the intermediary.
+- Move any connection-specific properties (status, application date, notes, etc.) to the intermediary.
 
 **In the Pet Adoption System:**
-- When an application is approved, the shelter manages the cascading updates by:
-  - invoking `application.approve()` to update its status to `"approved"` (immediate change)
-  - invoking `pet.setAvailability(false)` is called to update its availability to `false` (direct consequence)
-  - invoking `this.rejectApplicationsForPet(pet)` to ensure only one application can be approved for the given pet (system-wide effect)
+- The `Application` class connects an `Adopter` and a `Pet`.
+- It includes properties for the adopter, the pet, the application status, and any other details related to the application.
+- The system tracks *which* adopter applied for *which* pet, the current status, etc., *per-application*.
 
-**Why this matters:** Without cascading updates, you'd have competing applications for a pet that's already adopted. The system would be in an invalid state.
+**In a School System:**
+- The `Enrollment` class connects a `Student` and a `Course`.
+- It can store the `grade` the student received in the course, their enrollment date, etc.
+- You don't put the grade on the `Student` or the `Course`—it lives on the *Enrollment object* because it relates specifically to that pairing.
 
-**Alternative considered:** Let the application call `this.#pet.setAvailability(false)` AND call `this.shelter.rejectApplicationsForPet(this.#pet)`. This would centralize the logic but would require the application to have a reference to the `shelter`.
+**Benefits:**
+- Keeps your system flexible and realistic—supports many-to-many relationships (a student can take many courses, and a course has many students).
+- Prevents bloated entity classes by moving connection-specific logic and data into its own class.
+- Makes it easy to handle complex business rules and queries (e.g., find all courses a student has grades for, or all adopters who applied for a pet).
 
-### Strategy 5: Bidirectional References
-**The question:** If object A needs to know about object B, does object B need to know about object A?
+**Pattern Example:**
+```js
+class Enrollment {
+  constructor(student, course, grade = null) {
+    this.student = student;
+    this.course = course;
+    this.grade = grade;
+  }
+}
+```
+- Here, each `Enrollment` connects a unique pairing of student and course, with their grade specific to that pairing.
+
+### Common Design Decisions
+
+#### Private vs. Public Properties
+
+**Guiding question:** Which properties and methods should be private, and which should be public?
+
+**Guideline:** 
+* Default to making properties private (`-` in UML diagrams) for "business logic" data—data that if set to an invalid state would break the system. 
+* Only make properties public (`+`) when the data requires no validation or protection.
+
+**Tradeoff:**
+- Private properties: Require more code (getters and setters) but enforce encapsulation and invariants; prevent outside interference; reduce bugs
+- Public properties: Simpler usage, but risk accidental/invalid mutations
+
+**In the Pet Adoption System:**
+- Shelter's array of pets should be private: Only shelter methods should modify this directly.
+- The status of an application should be private: It should only be updated by carefully controlled methods (like `approve()` or `reject()`).
+- Public properties can include things like a pet's name or an adopter's contact info, assuming they're just data and not core business logic.
+
+#### Bidirectional References
+
+**Guiding question:** If object A needs to know about object B, does object B need to know about object A?
 
 **Options:**
-- **One-way:** A knows about B, but B doesn't know about A
-- **Two-way:** A knows about B, AND B knows about A
+- **Uni-Directional / One-way:** A knows about B, but B doesn't know about A
+- **Bi-Directional / Two-way:** A knows about B, AND B knows about A
+
+**Guidline:**
+- Use one-way when only one direction is queried frequently
+  - e.g. An application needs to list the pet that is being applied for but pets do not need to know which applications are open for it (the shelter tracks this).
+- Use two-way when both directions get queried frequently
+  - e.g. An application needs to list the adopter that is applying for the pet AND an adopter should be able to see which applications they have created.
 
 **In the Pet Adoption System:**
 - Application → Pet (one-way): Applications reference pets
@@ -157,77 +221,20 @@ methodName() {
 - Shelter → Applications (one-way): Shelter stores all applications
 - Shelter → Pets (one-way): Shelter stores all pets
 
-**When to use one-way:**
-- Only one direction is queried frequently
-  - e.g. Pets don't need to know what applications reference them (the shelter tracks this)
-
-**When to use two-way:**
-- Both directions get queried frequently
-  - Adopters need to see which applications they have created
-  - A shelter should be able to find the adopter via the application.
-
 **Tradeoff:**
-- One-way: Simpler, less code, less chance of bugs
+- One-way: Simpler, fewer references, less chance of bugs
 - Two-way: More flexible queries, but need coordinator to keep both sides synced
 
----
+#### Creator Responsibility
 
-### Strategy 6: Validation Boundaries
-**The question:** Where should validation logic live?
+**Guiding question:** When object A needs to be connected to object B, who should create that connection object?
 
-**Guideline:** Validate at the boundary where external data enters your system.
-
-**In the Pet Adoption System:**
-- `shelter.addPet(pet)`: Validates it's a Pet instance before storing
-- `shelter.receiveApplication(application)`: Validates the pet belongs to this shelter and is available
-- `application.approve()`: Validates status is "pending" before approving
-
-**Validation pattern:**
-```js
-methodName(input) {
-  // Validate input
-  if (/* invalid */) {
-    console.log("Why it's invalid");
-    return; // or return false
-  }
-  
-  // Proceed with action
-  // ...
-}
-```
-
-**Why validate?**
-- Prevents bad data from corrupting your system
-- Makes debugging easier (fail fast with clear messages)
-- Enforces business rules
-
----
-
-### Strategy 7: Private vs. Public Properties
-
-**The question:** Which properties and methods should be private, and which should be public?
-
-**Guideline:** Default to making properties private (`-` in UML diagrams). Only make properties public (`+`) when absolutely necessary—such as when the information is truly just data and requires no validation or protection.
+**Guideline:** The entity that initiates the action in the real world should create the object.
 
 **In the Pet Adoption System:**
-- Shelter's array of pets should be private: Only shelter methods should modify this directly.
-- The status of an application should be private: It should only be updated by carefully controlled methods (like `approve()` or `reject()`).
-- Public properties can include things like a pet's name or an adopter's contact info, assuming they're just data and not core business logic.
-
-**When to use private properties (`-`):**
-- Internal state that could be set to invalid values if changed carelessly
-- Properties that should only change under controlled, specific conditions
-- Properties that are core to the object's behavior or identity
-
-**When to use public properties (`+`):**
-- Data fields that require no validation and can be freely read or set
-- Basic configuration/settings exposed for convenience
-
-**Tradeoff:**
-- Private properties: Require more code (getters and setters) but enforce encapsulation and invariants; prevent outside interference; reduce bugs
-- Public properties: Simpler usage, but risk accidental/invalid mutations
-
----
+- Adopters create applications: `adopter.createApplication(pet, shelter)`
+- Why? Because adopters fill out applications in real life
+- The adopter instantiates the `Application` object and passes it to the shelter
 
 ## System Design Strategies Summary
 
