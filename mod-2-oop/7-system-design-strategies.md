@@ -40,35 +40,6 @@ We'll discuss these decision points as a class.
 
 ## System Design Strategies & Principles
 
-When you're designing a new system, ask:
-
-1. **Do I need a coordinator?** 
-   - Are there multiple entity types that interact?
-   - Do I need to enforce rules about their interactions?
-
-2. **Who creates new objects?**
-   - Who initiates this action in real life?
-
-3. **Do objects move through stages/states?**
-   - Are there multi-step processes?
-   - Can an action only happen at certain times?
-
-4. **When something changes, what else needs to update?**
-   - Map out the consequences
-
-5. **What needs to know about what?**
-   - Map out who queries whom
-   - Only add two-way references if truly needed
-
-6. **Where can bad data enter?**
-   - Add validation at every boundary
-
-7. **Should properties/methods be private or public?**
-   - Is this property core to the object's behavior or needs to be tightly controlled?
-   - Does it need validation or restricted access?
-
-
-
 Recall the system design prompt from the last lesson:
 
 > Imagine that a nation-wide Pet Adoption Center approaches you to build an application for them. The application needs to handle the following:
@@ -80,9 +51,10 @@ A UML diagram for the Pet Shelter might look like this:
 
 ![A UML Diagram shows the responsibilities and relationships of classes in a system.](./img/uml-diagram-pet-adoption-system.png)
 
-Today, we'll look into the **process** for creating a system like this from scratch.  What are common design decisions that you will face? What principles should we follow to make those decisions? What concrete strategies can we use to steer us in the right direction?
-
-When facing a system design problem, you can use these strategies to make decisions about responsibilities and relationships:
+Today, we'll look into the **process** for creating a system like this from scratch.
+-  What are common design decisions that you will face? 
+-  What principles should we follow to make those decisions? 
+-  What concrete strategies can we use to steer us in the right direction?
 
 ### System Design Strategies
 
