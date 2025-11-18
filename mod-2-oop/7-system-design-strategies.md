@@ -1,9 +1,9 @@
 # System Design Strategies & Principles
 
-**Table of Contents**
+**Table of Contents:**
 
 - [Design Challenge: A School System](#design-challenge-a-school-system)
-- [System Design Strategies \& Principles](#system-design-strategies--principles-1)
+- [System Design Strategies and Principles](#system-design-strategies-and-principles)
   - [System Design Strategies](#system-design-strategies)
     - [The Coordinator Pattern](#the-coordinator-pattern)
     - [Status-Driven Behavior](#status-driven-behavior)
@@ -13,6 +13,7 @@
     - [Bidirectional References](#bidirectional-references)
     - [Creator Responsibility](#creator-responsibility)
 - [System Design Strategies Summary](#system-design-strategies-summary)
+
 
 ## Design Challenge: A School System
 
@@ -38,7 +39,7 @@ Your design should answer these three questions:
 
 We'll discuss these decision points as a class.
 
-## System Design Strategies & Principles
+## System Design Strategies and Principles
 
 Recall the system design prompt from the last lesson:
 
