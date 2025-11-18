@@ -310,3 +310,6 @@ Let's design a flow chart for the remaining processes for the Pet Adoption Cente
 > - The shelter needs a way to review applications and approve or reject them.
 
 Analyze the UML diagram for the pet adoption system and, for each feature, design a flow chart that identifies:
+* Are any new class instances created? If so, with what properties?
+* Which properties are used from each class to make the feature work?
+* Which methods are invoked, and in what order, to make the feature work?
