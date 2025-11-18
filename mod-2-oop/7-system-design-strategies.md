@@ -244,27 +244,23 @@ When you're designing a new system, ask:
    - Are there multiple entity types that interact?
    - Do I need to enforce rules about their interactions?
 
-2. **Who creates new objects?**
-   - Who initiates this action in real life?
-
-3. **Do objects move through stages/states?**
+2. **Do objects move through stages/states?**
    - Are there multi-step processes?
    - Can an action only happen at certain times?
 
-4. **When something changes, what else needs to update?**
-   - Map out the consequences
+3. **Do I need to represent data about a relationship?**
+   - Create an intermediary object
 
-5. **What needs to know about what?**
-   - Map out who queries whom
-   - Only add two-way references if truly needed
-
-6. **Where can bad data enter?**
-   - Add validation at every boundary
-
-7. **Should properties/methods be private or public?**
+4. **Should properties/methods be private or public?**
    - Is this property core to the object's behavior or needs to be tightly controlled?
    - Does it need validation or restricted access?
 
+5. **Is this relationship bi-directional?**
+   - Map out who queries whom
+   - Only add two-way references if truly needed
+
+6. **Who creates new objects?**
+   - Who initiates this action in real life?
 
 ---
 
