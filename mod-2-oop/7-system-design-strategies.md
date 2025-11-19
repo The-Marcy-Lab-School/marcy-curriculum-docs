@@ -235,8 +235,6 @@ When you're designing a new system, ask:
 6. **Who creates new objects?**
    - Who initiates this action in real life?
 
----
-
 **Practice:** Look at the School/Course/Student system. Which strategies does it use?
 
 <details><summary>Answer</summary>
