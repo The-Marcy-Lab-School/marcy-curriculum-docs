@@ -9,12 +9,14 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - [Classes Review](#classes-review)
 - [Polymorphism](#polymorphism-1)
   - [Why does this matter?](#why-does-this-matter)
+  - [Inheritance Is Not Required For Polymorphism](#inheritance-is-not-required-for-polymorphism)
 - [Challenge](#challenge)
 - [Summary](#summary)
 
 ## Key Concepts
 
 * **Polymorphism** is the OOP concept where different types of objects can be treated the same way because they share the same interface (the same method names) even though each type implements those methods differently.
+  * Inheritance is not required to achieve polymorphism. However, inheritance guarantees polymorphism and improves the reusability of our code.
 
 ## Classes Review
 
@@ -180,6 +182,65 @@ const printIntroduction = (person) => {
 ```
 
 **When to use polymorphism:** Polymorphism shines when you're working with collections of related objects (like arrays of different users, or lists of different vehicles) and you want to treat them uniformly. If you find yourself writing lots of if `(type === 'X')` or `instanceof` checks, that's a sign polymorphism could simplify your code.
+
+### Inheritance Is Not Required For Polymorphism
+
+Look at the code below, does it use inheritance? Does it demonstrate polymorphism?
+
+```js
+class Dog() {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} said woof`);
+  }
+}
+
+class Cat() {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} said meow`);
+  }
+}
+
+const animals = [new Dog('snoopy'), new Cat('garfield')];
+animals.forEach(animal => animal.speak());
+// snoopy said woof
+// garfield said meow
+```
+
+This code does NOT use inheritance but it DOES demonstrate polymorphism, though a looser form of polymorphism. Since `Cat` and `Dog` each define a `speak` method, instances of these classes can be treated the same as "things that speak". 
+
+> This kind of loose polymorphism is often referred to as **"duck typing"** ("if it walks like a duck and it quacks like a duck, then it must be a duck").
+
+Though not required, *inheritance guarantees polymorphic behavior* through inherited methods. It also reduces the amount of code we have to rewrite. 
+
+In this example, if `Cat` and `Dog` had a shared `Animal` parent class, they could inherit its `constructor()`:
+
+```js
+class Animal() {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} said something`);
+  }
+}
+
+class Dog() {
+  speak() {
+    console.log(`${this.name} said woof`);
+  }
+}
+class Cat() {
+  speak() {
+    console.log(`${this.name} said meow`);
+  }
+}
+```
 
 ## Challenge
 
