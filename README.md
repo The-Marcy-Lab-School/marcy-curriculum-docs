@@ -30,7 +30,7 @@ Over the next year you will learn how to be a Fullstack software engineer! You'l
 
 ## The Curriculum
 
-At the Marcy Lab School, you will learn how to build full-stack web applications using the PERN stack (Postgres, Express, React, Node). In addition, you will become familiar with a variety of languages, technologies, developer tools, and more including:
+In the Software Engineering Fellowship at Marcy Lab School, you will learn how to build full-stack web applications using the PERN stack (Postgres, Express, React, Node). In addition, you will learn a variety of languages, technologies, developer tools, and more including:
 
 * **Languages:** Bash, JS, HTML, CSS, SQL
 * **Frameworks & Libraries**: DOM API, React, Express, Knex, Jest, Bcrypt
