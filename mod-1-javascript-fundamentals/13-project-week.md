@@ -56,13 +56,13 @@ Develop a multiple-choice quiz application with questions, scoring, and replay f
 ## Setup Instructions
 
 _Complete these steps after you have chosen your project!_
-
-1. Create a new folder with a descriptive name for your project.
-2. Run `npm init -y`.
-3. Install `prompt-sync` with `npm install prompt-sync`.
-4. Add, commit, and push all files with the commit message `"init"`
-5. Create a feature branch called `development` where you will create new features: `git checkout -b development`
-6. Begin Coding!
+1. Go to https://github.com/The-Marcy-Lab-School/swe-project-1-cli-app and click "Use this template" to create a new repository. Set yourself as the owner and give your project a descriptive name!
+2. Clone your repo down to your computer.
+3. Run `npm init -y`.
+4. Install `prompt-sync` with `npm install prompt-sync`.
+5. Add, commit, and push all files with the commit message `"init"`
+6. Create a feature branch called `development` where you will create new features: `git checkout -b development`
+7. Begin Coding!
 
 When you have completed a feature, have tested it in your branch, and are ready to merge it into the main branch, use the following commands:
 
