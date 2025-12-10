@@ -2,8 +2,8 @@
 
 - [Overview](#overview)
 - [Project Options](#project-options)
-- [Tips for Success](#tips-for-success)
 - [Setup Instructions](#setup-instructions)
+- [Tips for Success](#tips-for-success)
 - [🎮 Project 1: Rock–Paper–Scissors CLI Game](#-project-1-rockpaperscissors-cli-game)
   - [Key Features to Implement:](#key-features-to-implement)
   - [Data Structure](#data-structure)
@@ -40,19 +40,6 @@ Create a CRUD application where users can add, remove, and view items in their s
 **🧠 Project 3: Quiz Game** (The most challenging and new!)
 Develop a multiple-choice quiz application with questions, scoring, and replay functionality.
 
-## Tips for Success
-
-- **Leverage The Case Study**: Make use of the [Task Manager Case Study](https://github.com/The-Marcy-Lab-School/swe-casestudy-1-cli-task-manager) as a guide for building your project.
-- **Refer to the Requirements**: Ensure that your project meets all of the requirements listed at the bottom of this page before submitting.
-- **Start Simple**: Get basic functionality working first, then add features
-- **Test Frequently**: Run your code often to catch issues early
-- **Plan Your Functions**: Think about what each function should do before coding
-- **Handle Edge Cases**: What happens if a user enters invalid input?
-- **Be Creative**: Add your own questions, features, or improvements!
-- **Use Meaningful Names**: Your variable and function names should explain their purpose
-
-*Remember: The goal is to demonstrate your understanding of JavaScript fundamentals while building something functional and fun!*
-
 ## Setup Instructions
 
 _Complete these steps after you have chosen your project!_
@@ -81,6 +68,19 @@ git push
 # return to the feature branch
 git checkout development
 ```
+
+## Tips for Success
+
+- **Leverage The Case Study**: Make use of the [Task Manager Case Study](https://github.com/The-Marcy-Lab-School/swe-casestudy-1-cli-task-manager) as a guide for building your project.
+- **Refer to the Requirements**: Ensure that your project meets all of the requirements listed at the bottom of this page before submitting.
+- **Start Simple**: Get basic functionality working first, then add features
+- **Test Frequently**: Run your code often to catch issues early
+- **Plan Your Functions**: Think about what each function should do before coding
+- **Handle Edge Cases**: What happens if a user enters invalid input?
+- **Be Creative**: Add your own questions, features, or improvements!
+- **Use Meaningful Names**: Your variable and function names should explain their purpose
+
+*Remember: The goal is to demonstrate your understanding of JavaScript fundamentals while building something functional and fun!*
 
 ## 🎮 Project 1: Rock–Paper–Scissors CLI Game
 
