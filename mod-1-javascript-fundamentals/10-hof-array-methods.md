@@ -170,7 +170,7 @@ console.log(admins);
 
 **<details><summary>Solution</summary>**
 ```js
-const admins = users.filter((user) => user.admin === true);
+const admins = users.filter((user) => user.isAdmin === true);
 ```
 </details>
 
