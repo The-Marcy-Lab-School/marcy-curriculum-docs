@@ -43,7 +43,7 @@ Develop a multiple-choice quiz application with questions, scoring, and replay f
 ## Setup Instructions
 
 _Complete these steps after you have chosen your project!_
-1. Go to https://github.com/The-Marcy-Lab-School/swe-project-1-cli-app and click "Use this template" to create a new repository. Set yourself as the owner and give your project a descriptive name!
+1. Go to the [swe-project-1-cli-app template repository](https://github.com/The-Marcy-Lab-School/swe-project-1-cli-app) and click "Use this template" to create a new repository. Set yourself as the owner and give your project a descriptive name!
 2. Clone your repo down to your computer.
 3. Run `npm init -y`.
 4. Install `prompt-sync` with `npm install prompt-sync`.
