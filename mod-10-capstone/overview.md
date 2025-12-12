@@ -59,8 +59,8 @@ Fellows participating in the Independent Research Track may choose from one of t
     - Java is right behind JavaScript and Python in terms of popularity and it is used for a variety of applications. Spring is the most popular framework for building Web APIs.
     - Recommended if you are interested potentially in Android mobile development or “Enterprise”-level development.
 - C# → ASP .NET (Learn an "Enterprise" backend language + framework)
-    - Java is right behind JavaScript and Python in terms of popularity and it is used for a variety of applications. Spring is the most popular framework for building Web APIs.
-    - Recommended if you are interested potentially in Android mobile development or “Enterprise”-level development.
+    - C# is a powerful, statically typed language widely used for building Windows applications, enterprise software, and backend web services. ASP.NET is the leading framework for creating robust web APIs and web applications with C#.
+    - Recommended if you are interested in enterprise-level web development, building large-scale backend systems, or want experience with Microsoft's tech ecosystem.
 - TypeScript → Next.js (Go deeper into JavaScript web development)
     - Next.js + Typescript provides a more professional JavaScript full stack experience with type safety and performance optimizations
     - Recommended if you want to dive deeper into modern full stack Web Development
