@@ -29,8 +29,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 * The **`instanceof` operator** can be used to check if a given object is derived from a given class.
 * The **`constructor()` method** is invoked when the `new Class()` syntax is used.
   * Inside the `constructor()`, the value of `this` is the new instance object.
-* **Own properties** are properties defined directly on an object.
-* The **Prototype Chain** is the mechanism through which 
+* **Own properties** are properties defined directly on an object (as opposed to those inherited from the class)
 
 ## Intro: Reviewing OOP, Encapsulation, Factory Functions, and Interfaces
 

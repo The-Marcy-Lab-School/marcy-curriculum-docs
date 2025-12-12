@@ -18,7 +18,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 ## Summary
 
 * **Functions** are named containers for statements that can be invoked to execute code, improving readability and reducing repetition.
-* **Parameters** are variables defined in a function declaration, allowing functions to accept input and change behavior. **Arguments** are the actual values passed when calling a function.
+* **Parameters** are placeholders for inputs given to the function. Parameters can be used by their function to change the function's behavior.
+* **Arguments** are the actual values given when invoking a function.
 * **Return statements** allow functions to produce values that can be used elsewhere in your program and terminate function execution.
 * **Scope** determines where variables can be accessed. Global scope variables are accessible everywhere, while local scope variables are only accessible within their function or block.
 * There are multiple ways to define functions: **arrow functions** (preferred), **function declarations**, and **function expressions**. Arrow functions can use implicit returns for concise syntax.
