@@ -38,7 +38,7 @@ Similarly, **HTML (Hypertext Markup Language)** is a markup language and our bro
 
 To illustrate the difference between markup languages and regular `.txt` files, do the following:
 
-* In your `unit-2` folder, create a new folder called `intro-to-html`
+* In your `mod-3` folder, create a new folder called `intro-to-html`
 * Create two files called `index.txt` and `index.html`
 * Put the code above inside both of them:
 * Right click on the `index.html` file and select Reveal in Finder/Explorer
