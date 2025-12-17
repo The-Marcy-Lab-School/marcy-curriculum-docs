@@ -108,17 +108,22 @@ The first HTML file you should create for a new website should always be `index.
 
 ### The `file://` protocol vs the `https://` protocol
 
-When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retrieve the `.html` file from your file system.
-
 ![using the file protocol to get the html file](../.gitbook/assets/index-file-protocol.png)
 
-Most of the time, your browser will be using the **`https://` protocol** to get the `.html` file from a **server**.
+When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retrieve the `.html` file from your file system.
 
-A **server** is just another computer, somewhere else, that provides a resource to another computer (over the internet in this case)
+![The file protocol loads files directly from your own computer](./img/file-protocol.png)
+
+The rest of the time, your browser will likely be using the **`https://` protocol** to get web files file from a **server**.
+
+![using the https protocol to get the html file](../.gitbook/assets/github-https-protocol.png)
+
+A **server** is just another computer, somewhere else, that provides a resource to another computer.
 
 **HTTPS** (Hypertext Transfer Protocol Secure) is how your browser communicates with a server over the internet.
 
-![using the https protocol to get the html file](../.gitbook/assets/github-https-protocol.png)
+![The http protocol loads files over the internet](./img/http-protocol.png)
+
 
 ## How to write HTML
 
