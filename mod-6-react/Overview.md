@@ -15,9 +15,9 @@ In this module, we'll learn about:
 
 * [1. Intro to React](1-intro-to-react.md)
 * [2. Events, State, and Forms](2-events-state-and-forms.md)
-* [3. Fetching with useEffect](broken-reference)
+* [3. Fetching with useEffect](/broken/pages/ntK9CxxztmNok7fKWJ6c)
 * [4. React Router](4-react-router.md)
 * [5. Building a Flashcards App](5-flashcards-app.md)
 * [6. React Context](6-react-context.md)
 * [7. Global Context Pattern](7-global-context-pattern.md)
-* [8. React Project Week Overview](broken-reference)
+* [8. React Project Week Overview](/broken/pages/uIneUTYdq51uZJxp4XYQ)

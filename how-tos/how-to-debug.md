@@ -1,21 +1,21 @@
-# Debugging & Problem Solving
+# Debugging & Rubber Ducking Guide
 
 **Table of Contents:**
-- [Debugging and Rubber Ducking](#debugging-and-rubber-ducking)
-  - [How to Rubber Duck](#how-to-rubber-duck)
 
+* [Debugging and Rubber Ducking](how-to-debug.md#debugging-and-rubber-ducking)
+  * [How to Rubber Duck](how-to-debug.md#how-to-rubber-duck)
 
 ## Debugging and Rubber Ducking
 
-**Debugging** refers to the process of detecting, locating, and fixing problems, or “bugs,” in computer code. 
+**Debugging** refers to the process of detecting, locating, and fixing problems, or “bugs,” in computer code.
 
-It is one of the most essential skills to learn and yet, it is incredibly difficult to learn, particularly for new programmers. 
+It is one of the most essential skills to learn and yet, it is incredibly difficult to learn, particularly for new programmers.
 
 One strategy that is widely used in the industry is called **rubber-ducking** which is essentially explaining your problem to a rubber duck.
 
 Yes... a literal rubber duck.
 
-![a rubber duck](img/rubber-duck.png)
+![a rubber duck](../.gitbook/assets/rubber-duck.png)
 
 How does this help you resolve the problems in your code? The idea of debugging a program by talking to a rubber duck comes from The Pragmatic Programmer (Hunt & Adams, 1999):
 
@@ -26,7 +26,6 @@ How does this help you resolve the problems in your code? The idea of debugging 
 First, grab a rubber duck (or some other inanimate object that you feel comfortable talking to).
 
 Then, have a conversation with your duck where your duck asks you the following questions (and you reply!):
-
 
 **🦆 What is your code supposed to do? What should the output be?**
 

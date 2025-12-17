@@ -68,7 +68,7 @@ Before jumping into building out your database schema, it is essential to take t
 
 Database schema designs are most often communicated through an **Entity Relationship Diagram**
 
-![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](<img/labeled-erd (1).png>)
+![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](<../.gitbook/assets/labeled-erd (1).png>)
 
 <details>
 
@@ -135,7 +135,7 @@ This creates a table called `students` with a single `id` column.
 
 Below, you can see that I've also created tables for `teachers`, `classes` and `enrollments`
 
-![Using dbdiagram, we can create tables.](img/dbdiagram-step-1.png)
+![Using dbdiagram, we can create tables.](../.gitbook/assets/dbdiagram-step-1.png)
 
 ### Step 2 - Define Columns
 
@@ -155,7 +155,7 @@ Table students {
 }
 ```
 
-![Every property of a table should include a name and type.](img/dbdiagram-step-2.png)
+![Every property of a table should include a name and type.](../.gitbook/assets/dbdiagram-step-2.png)
 
 ### Step 3 - Determine Relationships
 
@@ -186,7 +186,7 @@ Ref: "classes"."id" < "enrollments"."class_id"
 
 Or, using the dbdiagram.io tool, we can click and drag to draw connections between the tables:
 
-![Tables can reference other tables to create one-to-many relationships.](img/dbdiagram-step-3.gif)
+![Tables can reference other tables to create one-to-many relationships.](../.gitbook/assets/dbdiagram-step-3.gif)
 
 Notice the lines drawn between tables are also labeled:
 

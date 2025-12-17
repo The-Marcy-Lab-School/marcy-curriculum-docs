@@ -1,4 +1,4 @@
-# 14. React Express Auth Template Overview
+# React Express Auth Template Overview
 
 {% hint style="info" %}
 Follow along with the React Express + Auth Template repository [here](https://github.com/The-Marcy-Lab-School/react-express-auth)!
@@ -6,43 +6,44 @@ Follow along with the React Express + Auth Template repository [here](https://gi
 
 The purpose of this repository is to provide a template for full-stack applications that may be studied and built on top of. In this document, you will find information explaining how the components of this full-stack application interact with each other as well as specific implementation details for user authentication.
 
-![The frontend, server, and database work together to form a full-stack application.](img/full-stack-diagram.svg)
+![The frontend, server, and database work together to form a full-stack application.](../.gitbook/assets/full-stack-diagram.svg)
 
 **Table of Contents**
 
-- [Application Overview](#application-overview)
-- [Getting Started](#getting-started)
-  - [Create your repo](#create-your-repo)
-  - [Getting to know the folder structure](#getting-to-know-the-folder-structure)
-  - [Configure your database and environment variables](#configure-your-database-and-environment-variables)
-  - [Kickstart the project](#kickstart-the-project)
-  - [Recommended Approach for Building](#recommended-approach-for-building)
-  - [Testing Along the Way](#testing-along-the-way)
-- [Database](#database)
-  - [Migrations](#migrations)
-    - [Modifying / Adding New Migrations](#modifying--adding-new-migrations)
-  - [Seeds](#seeds)
-- [The Server Application](#the-server-application)
-  - [Server Overview](#server-overview)
-  - [User Model](#user-model)
-  - [Controllers and API endpoints](#controllers-and-api-endpoints)
-  - [Creating New Users: Securing Passwords with Bcrypt](#creating-new-users-securing-passwords-with-bcrypt)
-    - [`User.create()` vs. the `User` constructor](#usercreate-vs-the-user-constructor)
-  - [Logging In: Authentication and Authorization](#logging-in-authentication-and-authorization)
-    - [Cookies and Session Authentication](#cookies-and-session-authentication)
-    - [Generating Cookies with Handle Cookie Sessions](#generating-cookies-with-handle-cookie-sessions)
-    - [Adding the User ID to a Cookie on Login](#adding-the-user-id-to-a-cookie-on-login)
-    - [Session Authentication and Authorization](#session-authentication-and-authorization)
-- [Front-end](#front-end)
-  - [Frontend Utils](#frontend-utils)
-  - [Adapters](#adapters)
-  - [Example Page Component](#example-page-component)
-  - [Current User Context](#current-user-context)
-- [Deploying](#deploying)
+* [Application Overview](react-express-auth-overview.md#application-overview)
+* [Getting Started](react-express-auth-overview.md#getting-started)
+  * [Create your repo](react-express-auth-overview.md#create-your-repo)
+  * [Getting to know the folder structure](react-express-auth-overview.md#getting-to-know-the-folder-structure)
+  * [Configure your database and environment variables](react-express-auth-overview.md#configure-your-database-and-environment-variables)
+  * [Kickstart the project](react-express-auth-overview.md#kickstart-the-project)
+  * [Recommended Approach for Building](react-express-auth-overview.md#recommended-approach-for-building)
+  * [Testing Along the Way](react-express-auth-overview.md#testing-along-the-way)
+* [Database](react-express-auth-overview.md#database)
+  * [Migrations](react-express-auth-overview.md#migrations)
+    * [Modifying / Adding New Migrations](react-express-auth-overview.md#modifying--adding-new-migrations)
+  * [Seeds](react-express-auth-overview.md#seeds)
+* [The Server Application](react-express-auth-overview.md#the-server-application)
+  * [Server Overview](react-express-auth-overview.md#server-overview)
+  * [User Model](react-express-auth-overview.md#user-model)
+  * [Controllers and API endpoints](react-express-auth-overview.md#controllers-and-api-endpoints)
+  * [Creating New Users: Securing Passwords with Bcrypt](react-express-auth-overview.md#creating-new-users-securing-passwords-with-bcrypt)
+    * [`User.create()` vs. the `User` constructor](react-express-auth-overview.md#usercreate-vs-the-user-constructor)
+  * [Logging In: Authentication and Authorization](react-express-auth-overview.md#logging-in-authentication-and-authorization)
+    * [Cookies and Session Authentication](react-express-auth-overview.md#cookies-and-session-authentication)
+    * [Generating Cookies with Handle Cookie Sessions](react-express-auth-overview.md#generating-cookies-with-handle-cookie-sessions)
+    * [Adding the User ID to a Cookie on Login](react-express-auth-overview.md#adding-the-user-id-to-a-cookie-on-login)
+    * [Session Authentication and Authorization](react-express-auth-overview.md#session-authentication-and-authorization)
+* [Front-end](react-express-auth-overview.md#front-end)
+  * [Frontend Utils](react-express-auth-overview.md#frontend-utils)
+  * [Adapters](react-express-auth-overview.md#adapters)
+  * [Example Page Component](react-express-auth-overview.md#example-page-component)
+  * [Current User Context](react-express-auth-overview.md#current-user-context)
+* [Deploying](react-express-auth-overview.md#deploying)
 
 ## Application Overview
 
 This repository provides a foundation for any application you want to build that requires users. Using this template repository, you can add any additional features and designs that you desire! For example, you might create:
+
 * A social media application where users can create/manage groups, forums, posts, comments, likes, etc…
 * An event management application where users can create/manage events, RSVPs, etc...
 * A personal productivity application where users can create/manage journal entries, trackers, todo lists, etc…
@@ -50,9 +51,10 @@ This repository provides a foundation for any application you want to build that
 
 The backend of this repository already includes migrations and seeds, a model, and endpoints to manage a `users` table with the following properties:
 
-<img style="width:300px" alt="A users table with a primary key id, username, password_hash, and timestamps" src="img/rea-template-erd.png">
+![A users table with a primary key id, username, password\_hash, and timestamps](../.gitbook/assets/rea-template-erd.png)
 
 With this functionality, users can:
+
 * Register (create) a new user account with a username and password
 * Log in using their credentials.
 * View a list of all users
@@ -62,9 +64,10 @@ With this functionality, users can:
 
 The frontend is built using React with very minimal styling. Below, you can see the user journey as they navigate through the frontend:
 
-![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](img/rea-template-mockup.png)
+![The user journey map of the React Express Auth template shows how to navigate through the authentication flow.](../.gitbook/assets/rea-template-mockup.png)
 
 Here is a detailed breakdown of the user journey above and how the frontend interacts with various backend endpoints:
+
 * When a user visits the `"/"` page, they see the Home page and navigation buttons to either a login page or a sign up page.
 * Users can authenticate by visiting the `"/login"` or `"/sign-up"` pages.
   * Login requests are sent to the `POST /api/auth/login` endpoint.
@@ -104,7 +107,7 @@ The root of the entire repo also has a `package.json` file. It has no dependenci
 
 Before you can actually start building, you need to create a Postgres database and configure your server to connect with it using environment variables:
 
-* Create a Postgres database with a name of your choice. This will just be the name of *your* local database so it doesn't need to match with the other members of your team.
+* Create a Postgres database with a name of your choice. This will just be the name of _your_ local database so it doesn't need to match with the other members of your team.
 * In the `server/` folder, make a new file called `.env` and copy the contents of `.env.template` into your `.env` file.
 * Update the values in `.env` to match your Postgres database information (username, password, database name)
 * Replace the `SESSION_SECRET` value with your own random string. This is used to encrypt the cookie's `userId` value.
@@ -162,7 +165,8 @@ module.exports = {
 };
 ```
 
-The `connection` configuration determines how Knex connects to your database. 
+The `connection` configuration determines how Knex connects to your database.
+
 * In `development` mode, assuming that the `PG_CONNECTION_STRING` value is blank, then Knex will use the configuration object with `host`, `port`, `user`, `password` and `database` set by your environment variables. If those values are also blank, there are default values provided.
 * When you eventually deploy your database on Render, you will be given a `PG_CONNECTION_STRING` value from Render. You can add this to your environment variables to connect directly to your deployed database. If a `PG_CONNECTION_STRING` value exists, Knex will use it to connect to your deployed database, not your local one.
 * In `production` mode (which is used when you deploy your server application), a deployed database and the `PG_CONNECTION_STRING` is expected.
@@ -190,7 +194,7 @@ cd server && npm i && npm run migrate && npm run seed
 
 After installing dependencies and running the migrations and seeds, you should see that a `users` table has been created and seeded with three users. Check out the `server/db/` folder to see how migrations and seeds were configured.
 
-Finally, split the terminal (or open two terminals) and run `npm run dev` in both the `frontend/` directory and in the `server/` directory. 
+Finally, split the terminal (or open two terminals) and run `npm run dev` in both the `frontend/` directory and in the `server/` directory.
 
 **You're all set up now. Have fun!**
 
@@ -204,13 +208,14 @@ When building a Full-stack application with so many components, you may struggle
 
 This document is structured to reflect our recommended approach. We start with the database, then move to the server, then finish with the front-end. At a high level, you can think about working and testing your application from right to left in the diagram below:
 
-![The frontend, server, and database work together to form a full-stack application.](img/full-stack-diagram.svg)
+![The frontend, server, and database work together to form a full-stack application.](../.gitbook/assets/full-stack-diagram.svg)
 
 The reason for this has to do with **minimizing pre-requisites**. The units further to the left in the diagram have depend on the functionality of the units to their right. For example, before you can build endpoints, you need controllers and in order to have controllers you need to have models. Before you can build models you need to create the tables in the database.
 
 ### Testing Along the Way
 
 After you complete one unit of the application make sure to test that unit before moving on. Here is how you can test each unit of the application:
+
 * **Database Table / Migrations:** Run the migration files and check your database using [TablePlus, Postico, or the `psql` CLI](../environment-setup/postgres-setup.md).
 * **Model:** Create a seed file that uses the model to insert hard-coded values into your table.
 * **Controllers / Endpoints:** Use [Postman](../mod-5-backend/test-api-postman.md) to send HTTP requests and check your server logs and your database to confirm requests received and the intended actions were taken.
@@ -292,7 +297,7 @@ Note that instead of using `knex.schema.createTable`, we are using `.alterTable`
 
 ### Seeds
 
-There is a single seed file stored in the `server/db/seeds` folder. Instead of creating new seed files for your other tables, simply add additional seed data into this `init.js` file. 
+There is a single seed file stored in the `server/db/seeds` folder. Instead of creating new seed files for your other tables, simply add additional seed data into this `init.js` file.
 
 Run the seed file with:
 
@@ -302,23 +307,24 @@ npx knex seed:run
 
 The provided `init.js` seed file uses the `User.create` model method to generate the following data:
 
-![In TablePlus, we can see the users created by the seed file. Notice how the password\_hash property stores hashed passwords.](img/users-tableplus.png)
+![In TablePlus, we can see the users created by the seed file. Notice how the password\_hash property stores hashed passwords.](../.gitbook/assets/users-tableplus.png)
 
 Notice how the passwords have been hashed! This is because the `User.create` method takes care of hashing passwords for us using `bcrypt`.
 
 ## The Server Application
 
 > **Chapters in this Section:**
-> - [Server Overview](#server-overview)
-> - [User Model](#user-model)
-> - [Controllers and API endpoints](#controllers-and-api-endpoints)
-> - [Creating New Users: Securing Passwords with Bcrypt](#creating-new-users-securing-passwords-with-bcrypt)
->   - [`User.create()` vs. the `User` constructor](#usercreate-vs-the-user-constructor)
-> - [Logging In: Authentication and Authorization](#logging-in-authentication-and-authorization)
->   - [Cookies and Session Authentication](#cookies-and-session-authentication)
->   - [Generating Cookies with Handle Cookie Sessions](#generating-cookies-with-handle-cookie-sessions)
->   - [Adding the User ID to a Cookie on Login](#adding-the-user-id-to-a-cookie-on-login)
->   - [Session Authentication and Authorization](#session-authentication-and-authorization)
+>
+> * [Server Overview](react-express-auth-overview.md#server-overview)
+> * [User Model](react-express-auth-overview.md#user-model)
+> * [Controllers and API endpoints](react-express-auth-overview.md#controllers-and-api-endpoints)
+> * [Creating New Users: Securing Passwords with Bcrypt](react-express-auth-overview.md#creating-new-users-securing-passwords-with-bcrypt)
+>   * [`User.create()` vs. the `User` constructor](react-express-auth-overview.md#usercreate-vs-the-user-constructor)
+> * [Logging In: Authentication and Authorization](react-express-auth-overview.md#logging-in-authentication-and-authorization)
+>   * [Cookies and Session Authentication](react-express-auth-overview.md#cookies-and-session-authentication)
+>   * [Generating Cookies with Handle Cookie Sessions](react-express-auth-overview.md#generating-cookies-with-handle-cookie-sessions)
+>   * [Adding the User ID to a Cookie on Login](react-express-auth-overview.md#adding-the-user-id-to-a-cookie-on-login)
+>   * [Session Authentication and Authorization](react-express-auth-overview.md#session-authentication-and-authorization)
 
 ### Server Overview
 
@@ -331,7 +337,7 @@ To design a server that performs these interactions consistently and predictably
 * What does the database expect from the server?
 * What does the server expect back from the database?
 
-![The server sits in between the frontend and the database, interpreting client requests and sending responses.](img/full-stack-diagram.svg)
+![The server sits in between the frontend and the database, interpreting client requests and sending responses.](../.gitbook/assets/full-stack-diagram.svg)
 
 The server is organized into a few key components (from right to left in the diagram):
 
@@ -347,11 +353,12 @@ The server is organized into a few key components (from right to left in the dia
 
 ### User Model
 
-As mentioned above, a model is the right-most component of a server application. 
-* A model interacts directly with the database and can be used by controllers as an interface to the database. 
+As mentioned above, a model is the right-most component of a server application.
+
+* A model interacts directly with the database and can be used by controllers as an interface to the database.
 * An application can have many models and each model is responsible for managing interactions with a particular table in a database. In this template, a single model exists to manage interactions with the `users` table.
 
-![The model is the layer of a server application that directly communicates with the database.](img/full-stack-diagram.svg)
+![The model is the layer of a server application that directly communicates with the database.](../.gitbook/assets/full-stack-diagram.svg)
 
 The `User` model (defined in `server/db/models/User.js`) provides static methods for performing CRUD operations with the `users` table in the database:
 
@@ -374,6 +381,7 @@ static async find(id) {
 ```
 
 Each `User.X` model method follows the same pattern:
+
 * Construct a query
 * Execute the query with `knex.raw`, making sure to insert variables
 * Return the data (for users, we wrap the data in a `new User`. We'll look at why in the chapters below)
@@ -385,87 +393,17 @@ Each `User` method is used by one or more controllers when an API endpoint is re
 A controller is a function that is invoked when a particular endpoint of the server API is requested. Controllers parse the request for data, invoke the appropriate methods of the models to interact with the database, and send responses back to the client.
 
 The template provides API endpoints and controllers that are divided into two categories:
-* **Authentication Endpoints:** These endpoints enable the client to perform actions related to authenticating (registering a new account and logging in / out). 
+
+* **Authentication Endpoints:** These endpoints enable the client to perform actions related to authenticating (registering a new account and logging in / out).
 * **User Endpoints:** These endpoints enable the client to perform various CRUD actions relating to User data.
 
 **Authentication Endpoints**
 
-<table>
-  <thead>
-    <tr>
-      <th width="87.921875">Method</th>
-      <th width="200.9296875">Endpoint</th>
-      <th width="227.21875">Description</th>
-      <th width="148.27734375">Auth Controller</th>
-      <th width="179.328125">User Model Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>POST</td>
-      <td><code>/api/auth/register</code></td>
-      <td>Create a new user and set the cookie userId</td>
-      <td><code>registerUser</code></td>
-      <td><code>create()</code></td>
-    </tr><tr>
-      <td>POST</td>
-      <td><code>/api/auth/login</code></td>
-      <td>Log in to an existing user and set cookie userId value</td>
-      <td><code>loginUser</code></td>
-      <td><code>findByUsername()</code></td>
-    </tr><tr>
-      <td>GET</td>
-      <td><code>/api/auth/me</code></td>
-      <td>Get the current logged in user based on the cookie</td>
-      <td><code>showMe</code></td>
-      <td><code>find()</code></td>
-    </tr><tr>
-      <td>DELETE</td>
-      <td><code>/api/auth/logout</code></td>
-      <td>Log the current user out (delete the cookie)</td>
-      <td><code>logoutUser</code></td>
-      <td>None</td>
-    </tr>
-  </tbody>
-</table>
+<table><thead><tr><th width="87.921875">Method</th><th width="200.9296875">Endpoint</th><th width="227.21875">Description</th><th width="148.27734375">Auth Controller</th><th width="179.328125">User Model Method</th></tr></thead><tbody><tr><td>POST</td><td><code>/api/auth/register</code></td><td>Create a new user and set the cookie userId</td><td><code>registerUser</code></td><td><code>create()</code></td></tr><tr><td>POST</td><td><code>/api/auth/login</code></td><td>Log in to an existing user and set cookie userId value</td><td><code>loginUser</code></td><td><code>findByUsername()</code></td></tr><tr><td>GET</td><td><code>/api/auth/me</code></td><td>Get the current logged in user based on the cookie</td><td><code>showMe</code></td><td><code>find()</code></td></tr><tr><td>DELETE</td><td><code>/api/auth/logout</code></td><td>Log the current user out (delete the cookie)</td><td><code>logoutUser</code></td><td>None</td></tr></tbody></table>
 
 **User Endpoints**
 
-<table>
-  <thead>
-    <tr>
-      <th width="87.734375">Method</th>
-      <th width="170.96484375">Endpoint</th>
-      <th width="208.171875">Description</th>
-      <th width="134.78125">User Controller</th>
-      <th width="151.37109375">User Model Method</th>
-      </tr>
-    </thead>
-  <tbody>
-    <tr>
-      <td>GET</td>
-      <td><code>api/users</code></td>
-      <td>Get the list of all users</td>
-      <td><code>listUsers</code></td>
-      <td><code>list()</code></td>
-    </tr>
-    <tr>
-      <td>GET</td>
-      <td><code>/api/users/:id</code></td>
-      <td>Get a specific user by id</td>
-      <td><code>showUser</code></td>
-      <td><code>find()</code></td>
-    </tr>
-    <tr>
-      <td>PATCH</td>
-      <td><code>/api/users/:id</code></td>
-      <td>Update the username of a specific user by id</td>
-      <td><code>updateUser</code></td>
-      <td><code>update()</code></td>
-    </tr>
-  </tbody>
-</table>
-
+<table><thead><tr><th width="87.734375">Method</th><th width="170.96484375">Endpoint</th><th width="208.171875">Description</th><th width="134.78125">User Controller</th><th width="151.37109375">User Model Method</th></tr></thead><tbody><tr><td>GET</td><td><code>api/users</code></td><td>Get the list of all users</td><td><code>listUsers</code></td><td><code>list()</code></td></tr><tr><td>GET</td><td><code>/api/users/:id</code></td><td>Get a specific user by id</td><td><code>showUser</code></td><td><code>find()</code></td></tr><tr><td>PATCH</td><td><code>/api/users/:id</code></td><td>Update the username of a specific user by id</td><td><code>updateUser</code></td><td><code>update()</code></td></tr></tbody></table>
 
 ### Creating New Users: Securing Passwords with Bcrypt
 
@@ -475,13 +413,12 @@ When starting this project, we seeded our database with users that had hashed pa
 
 Open up the `server/models/User` file and at the top you will see `bcrypt` is imported. This module provides two functions: `hash` and `compare`. Here is how they are used:
 
-*   When a user first creates an account, a controller  invokes `User.create()`. This method hashes the user's given password with `bcrypt.hash()`. Then, the hashed password will be stored in the database alongside the username.
+*   When a user first creates an account, a controller invokes `User.create()`. This method hashes the user's given password with `bcrypt.hash()`. Then, the hashed password will be stored in the database alongside the username.
 
-    ![Hashed passwords are stored in the database alongside usernames.](img/hashed-password-stored-in-db.png)
-
+    ![Hashed passwords are stored in the database alongside usernames.](../.gitbook/assets/hashed-password-stored-in-db.png)
 *   When a user logs in, a controller invokes `User.findByUsername()` to find the hashed password of the given user. `bcrypt.compare` is then used to compare this found password with the given password to see if they match.
 
-    ![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](img/hashed-password-lookup-diagram.png)
+    ![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](../.gitbook/assets/hashed-password-lookup-diagram.png)
 
 #### `User.create()` vs. the `User` constructor
 
@@ -505,7 +442,7 @@ static async create(username, password) {
 }
 ```
 
-`knex.raw` returns an object with a `.rows` property containing the requested data from the database. The `.rows` value is *always* an array, so we grab just the first value which will be the new user. 
+`knex.raw` returns an object with a `.rows` property containing the requested data from the database. The `.rows` value is _always_ an array, so we grab just the first value which will be the new user.
 
 We will get something like this from the database:
 
@@ -517,7 +454,9 @@ rawUserData = {
 }
 ```
 
-**<details><summary>Q: Is there any data that we get from the database that we might NOT want to send back to the client?</summary>**
+<details>
+
+<summary><strong>Q: Is there any data that we get from the database that we might NOT want to send back to the client?</strong></summary>
 
 The password hash! Even if it is difficult to get a plain-text password from a hash, we do not just want to send that data in HTTP requests more than we have to (which is never).
 
@@ -580,7 +519,7 @@ To implement this functionality, we'll use cookies.
 
 In the context of computing and the internet, a **cookie** is a small text file sent by a server to a client and stored on the client along with where the cookie came from. Cookies are saved across browser sessions by default, meaning they will persist after the browser is closed. If a client has a cookie, it will automatically send it with future requests to the server the cookie came from.
 
-![Cookies are created by the server and given to a client. The cookie is automatically sent back to the server on future requests.](img/cookies.png)
+![Cookies are created by the server and given to a client. The cookie is automatically sent back to the server on future requests.](<../.gitbook/assets/cookies (1).png>)
 
 To enable session authentication, when a user logs in, the server sends back a cookie with their user ID inside. That way, whenever the server receives a request with a cookie, it knows:
 
@@ -620,7 +559,7 @@ Here's what's happening:
 * The `name: 'session'` configuration means that this middleware will put cookie data inside an object `req.session`. If we ever want to add data to a cookie, all we have to do is add data to `req.session` within a controller.
 * The `secret: process.env.SESSION_SECRET` configuration sets a secret string used to encode all data stored in cookies so that the data can't easily be read.
 
-If a user sends a request with no cookie, this middleware will create a new empty object stored at `req.session` and send it back with the response.&#x20;
+If a user sends a request with no cookie, this middleware will create a new empty object stored at `req.session` and send it back with the response.
 
 If a cookie DOES exist, this middleware will parse the cookie, and its data will be added to `req.session`.
 
@@ -637,7 +576,7 @@ const logRoutes = (req, res, next) => {
 
 #### Adding the User ID to a Cookie on Login
 
-Remember, the cookie keeps our users logged in and authenticates and authorizes them on future requests. Therefore, we want to give cookies only to users who have logged in (or to users who have just registered).&#x20;
+Remember, the cookie keeps our users logged in and authenticates and authorizes them on future requests. Therefore, we want to give cookies only to users who have logged in (or to users who have just registered).
 
 To see this in action, take a look at the controller that handles login requests:
 
@@ -700,7 +639,7 @@ exports.showMe = async (req, res) => {
 
 Without needing to log in again, the `/api/auth/me` endpoint checks to see if a cookie exists, and if it does, fetches the appropriate user!
 
-![The /api/auth/me endpoint can be checked to quickly authenticate a user who has previously logged in.](img/authentication-diagram.svg)
+![The /api/auth/me endpoint can be checked to quickly authenticate a user who has previously logged in.](../.gitbook/assets/authentication-diagram.svg)
 
 You'll also notice this `req.session` value is checked in the `checkAuthentication` middleware which requires a cookie for certain endpoints to be used:
 
@@ -712,7 +651,7 @@ const checkAuthentication = (req, res, next) => {
 };
 ```
 
-&#x20;Lastly, `req.session` is also checked to authorize a user to update their profile in the `PATCH /api/users/:id` controller:
+Lastly, `req.session` is also checked to authorize a user to update their profile in the `PATCH /api/users/:id` controller:
 
 ```js
 /* 
@@ -746,7 +685,7 @@ exports.updateUser = async (req, res) => {
 
 To paint the picture clearly, this is how the cookie is passed back and forth between client and server enabling authorization:
 
-![When a cookie is created with a userId, it can be checked to authorize certain user requests.](img/authorization-diagram.svg)
+![When a cookie is created with a userId, it can be checked to authorize certain user requests.](../.gitbook/assets/authorization-diagram.svg)
 
 ## Front-end
 
@@ -761,7 +700,7 @@ The front-end is responsible for handling user interactions, sending requests to
 
 While it is developed as a React application and `.jsx` files, it will ultimately be built into static assets (HTML, CSS, and JS files that can be sent directly to the browser).
 
-![In a React application, there are pages, components, and adapters.](img/front-end.svg)
+![In a React application, there are pages, components, and adapters.](../.gitbook/assets/front-end.svg)
 
 The frontend application is organized into a few key components (from right to left in the diagram):
 

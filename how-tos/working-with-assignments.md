@@ -1,24 +1,23 @@
-# How to Do Short Response and Coding Assignments
+# Software Engineering Assignments Guide
 
 **Table of Contents:**
 
-- [What is a SWE Assignment?](#what-is-a-swe-assignment)
-  - [Tips for Working on SWE Coding Assignments](#tips-for-working-on-swe-coding-assignments)
-  - [Jest and Testing](#jest-and-testing)
-  - [Feedback on Coding Assignments](#feedback-on-coding-assignments)
-- [What is a SWE-SR Assignment?](#what-is-a-swe-sr-assignment)
-  - [Scoring on Short Response Assignments](#scoring-on-short-response-assignments)
-  - [Feedback on Short Response Assignments](#feedback-on-short-response-assignments)
-  - [Examples of Short Responses](#examples-of-short-responses)
-    - [A Response That Could Use Improvement](#a-response-that-could-use-improvement)
-    - [An Exemplar Response](#an-exemplar-response)
-- [Using AI on Assignments](#using-ai-on-assignments)
-- [Submitting On Time](#submitting-on-time)
-- [How to Work On Assignments](#how-to-work-on-assignments)
-  - [Assignment Setup](#assignment-setup)
-  - [Submitting the Assignment](#submitting-the-assignment)
-  - [How to Undo a Commit to Main and Move Commits to Draft](#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
-
+* [What is a SWE Assignment?](working-with-assignments.md#what-is-a-swe-assignment)
+  * [Tips for Working on SWE Coding Assignments](working-with-assignments.md#tips-for-working-on-swe-coding-assignments)
+  * [Jest and Testing](working-with-assignments.md#jest-and-testing)
+  * [Feedback on Coding Assignments](working-with-assignments.md#feedback-on-coding-assignments)
+* [What is a SWE-SR Assignment?](working-with-assignments.md#what-is-a-swe-sr-assignment)
+  * [Scoring on Short Response Assignments](working-with-assignments.md#scoring-on-short-response-assignments)
+  * [Feedback on Short Response Assignments](working-with-assignments.md#feedback-on-short-response-assignments)
+  * [Examples of Short Responses](working-with-assignments.md#examples-of-short-responses)
+    * [A Response That Could Use Improvement](working-with-assignments.md#a-response-that-could-use-improvement)
+    * [An Exemplar Response](working-with-assignments.md#an-exemplar-response)
+* [Using AI on Assignments](working-with-assignments.md#using-ai-on-assignments)
+* [Submitting On Time](working-with-assignments.md#submitting-on-time)
+* [How to Work On Assignments](working-with-assignments.md#how-to-work-on-assignments)
+  * [Assignment Setup](working-with-assignments.md#assignment-setup)
+  * [Submitting the Assignment](working-with-assignments.md#submitting-the-assignment)
+  * [How to Undo a Commit to Main and Move Commits to Draft](working-with-assignments.md#how-to-undo-a-commit-to-main-and-move-commits-to-draft)
 
 ## What is a SWE Assignment?
 
@@ -92,7 +91,7 @@ npm run test:w # run the tests each time the file changes ("watch mode")
 
 After running this command, you will see the following output. Initially, all tests will fail.
 
-![Failing Jest tests](img/failing-tests.png)
+![Failing Jest tests](../.gitbook/assets/failing-tests.png)
 
 The test output provides some really useful information.
 
@@ -305,7 +304,7 @@ The examples below each respond to the following prompt:
 
 First, let's look at an example of a response that is technically accurate and complete but would likely receive feedback for improvements. As you read, what feedback would you provide?
 
-> ![A response that could use improvement](img/sr-markdown-example-1.png)
+> <img src="../.gitbook/assets/sr-markdown-example-1.png" alt="A response that could use improvement" data-size="original">
 
 <details>
 
@@ -327,7 +326,7 @@ For this response, the following feedback would be provided:
 
 Below is a great example of a short response answer. As you read, what do you notice about it?
 
-![An exemplar response](img/sr-markdown-example-2.png)
+![An exemplar response](../.gitbook/assets/sr-markdown-example-2.png)
 
 <details>
 
@@ -435,13 +434,13 @@ To submit an assignment, do the following:
     ```
 3.  Create a pull request using the **Pull Request** tab (and ignore the "Compare & pull request" button).
 
-    ![Create a pull request by clicking on the "Pull Request" tab. Ignore the "Compare & pull request" button.](img/assignment-create-a-pr.png)
+    ![Create a pull request by clicking on the "Pull Request" tab. Ignore the "Compare & pull request" button.](../.gitbook/assets/assignment-create-a-pr.png)
 4.  Change the **compare** branch to be your `draft` branch and then click **Create pull request**!
 
-    ![Change the compare branch to be your draft branch](img/assignment-select-draft-branch.png)
+    ![Change the compare branch to be your draft branch](../.gitbook/assets/assignment-select-draft-branch.png)
 5.  Tag your instructor as a **Reviewer**.
 
-    ![alt text](img/assignment-tag-reviewer.png)
+    ![alt text](../.gitbook/assets/assignment-tag-reviewer.png)
 6. Submit the URL of the pull request on canvas. The URL should start with `https://github.com` and end with `/pull/NUMBER`, like this: https://github.com/benspector-mls/hello-world/pull/3
 7. Your instructor will provide feedback on GitHub and will either approve your branch to be merged or will request that you resubmit.
 
@@ -462,7 +461,7 @@ Then, do the following to revert your `main` branch back to the initial commit:
 1. `git checkout main` and `git log` to see the full commit history.
 2.  Find the commit you want to return to. Copy the commit SHA code (a 40-digit code identifying the commit).
 
-    ![A git log showing the commit SHA codes](img/git-log-commit-sha.png)
+    ![A git log showing the commit SHA codes](../.gitbook/assets/git-log-commit-sha.png)
 3. Run the command `git reset --hard <commit_sha>` replacing `<commit_sha>` with the copied SHA from the last step. This will return your `main` branch back to that commit.
 
 {% hint style="danger" %}

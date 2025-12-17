@@ -1,4 +1,4 @@
-# Intro to React
+# 1. Intro to React
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-0-intro-react-f23)!
@@ -289,7 +289,7 @@ const App = () => {
 
 <summary><strong>Q: What will this render?</strong></summary>
 
-<img src="img/message-example.png" alt="" data-size="original">
+<img src="../.gitbook/assets/message-example.png" alt="" data-size="original">
 
 Note how the `className` attribute in JSX is converted into the HTML attribute `class`.
 

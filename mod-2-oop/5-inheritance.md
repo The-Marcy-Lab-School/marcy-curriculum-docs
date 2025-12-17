@@ -1,26 +1,27 @@
-# Inheritance
+# 5. Inheritance
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-4-inheritance)!
 {% endhint %}
 
 **Table of Contents:**
-- [Key Concepts](#key-concepts)
-- [Inheritance](#inheritance-1)
-  - [A Person and a Student](#a-person-and-a-student)
-  - [`extends`](#extends)
-  - [`super`](#super)
-  - [Challenge: Professor Class](#challenge-professor-class)
-- [Prototype Chain: Subclasses of Subclasses](#prototype-chain-subclasses-of-subclasses)
-  - [Array.prototype](#arrayprototype)
-  - [Object.prototype and the Prototype Chain](#objectprototype-and-the-prototype-chain)
-  - [Quiz!](#quiz)
-- [Practice \& Review](#practice--review)
-  - [Study Questions](#study-questions)
+
+* [Key Concepts](5-inheritance.md#key-concepts)
+* [Inheritance](5-inheritance.md#inheritance-1)
+  * [A Person and a Student](5-inheritance.md#a-person-and-a-student)
+  * [`extends`](5-inheritance.md#extends)
+  * [`super`](5-inheritance.md#super)
+  * [Challenge: Professor Class](5-inheritance.md#challenge-professor-class)
+* [Prototype Chain: Subclasses of Subclasses](5-inheritance.md#prototype-chain-subclasses-of-subclasses)
+  * [Array.prototype](5-inheritance.md#arrayprototype)
+  * [Object.prototype and the Prototype Chain](5-inheritance.md#objectprototype-and-the-prototype-chain)
+  * [Quiz!](5-inheritance.md#quiz)
+* [Practice & Review](5-inheritance.md#practice--review)
+  * [Study Questions](5-inheritance.md#study-questions)
 
 ## Key Concepts
 
-* **Inheritance** describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. Instances of the subclass can reuse and add to the methods defined in a superclass. 
+* **Inheritance** describes a relationship between two classes: a **subclass** that inherits methods from a **superclass**. Instances of the subclass can reuse and add to the methods defined in a superclass.
 * The **`Subclass extends Superclass`** syntax defines an inheritance relationship between two classes
 * **The `super` keyword references the superclass of a given subclass:**
   1. We can invoke `super()` in the subclass constructor to invoke the superclass's `constructor()`.
@@ -32,7 +33,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ### A Person and a Student
 
-Consider this `Person` class. 
+Consider this `Person` class.
 
 ```js
 class Person {
@@ -54,7 +55,7 @@ console.log(ada.fullName()); // Ada Lovelace
 console.log(ada.introduce()); // Hi, I'm Ada and I'm 30 years old.
 ```
 
-I want to make another class called `Student` that can do everything a `Person` can. In addition, `Student`  will have some additional properties and methods.
+I want to make another class called `Student` that can do everything a `Person` can. In addition, `Student` will have some additional properties and methods.
 
 ```js
 class Student {
@@ -87,17 +88,19 @@ ada.enrollInCourse('Technical Interview Prep');
 console.log(ada.courses); // [ 'Leadership & Development', 'Technical Interview Prep' ]
 ```
 
-**<details><summary>Question: What similarities and differences do you see between these two classes? What coding style rule is this breaking?</summary>**
+<details>
+
+<summary><strong>Question: What similarities and differences do you see between these two classes? What coding style rule is this breaking?</strong></summary>
 
 A `Student` has every property and method that a `Person` has but it also has the public field `courses` as well as the properties `subject` and `sschool`. The `introduce()` method is implemented slightly differently and the `enrollInCourse` method is new.
 
 This code breaks the DRY principle (Don't Repeat Yourself). In the `Student` class we duplicate the code for the `fullname` method and most of the code in the `constructor` and `introduce` methods stays the same.
 
-</details> 
+</details>
 
 ### `extends`
 
-A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"a Student *is a* Person"** to describe this relationship. 
+A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"a Student&#x20;**_**is a**_**&#x20;Person"** to describe this relationship.
 
 In JavaScript, we formalize this relationship using the `Subclass extends Superclass` syntax:
 
@@ -116,7 +119,7 @@ console.log(ada.introduce()); // Hi, I'm Ada and I'm 30 years old.
 
 With just this `extends` keyword, **every instance of `Student` "inherits" the properties and methods from the `Person` class.**
 
-Furthermore, instances of `Student` are *also* instances of `Person`.
+Furthermore, instances of `Student` are _also_ instances of `Person`.
 
 ```js
 console.log(ada instanceof Student);  // true
@@ -130,9 +133,7 @@ We don't want our `Student` class to just be a carbon-copy of the `Person` class
 **The `super` keyword references the superclass of a given subclass. `super` allows us to extend the functionality of the superclass's methods:**
 
 {% tabs %}
-
-{% tab title="Student.js" %} 
-
+{% tab title="Student.js" %}
 ```js
 const Person = require('./Person');
 
@@ -171,11 +172,9 @@ ada.enrollInCourse('Leadership & Development');
 ada.enrollInCourse('Technical Interview Prep');
 console.log(ada.courses); // [ 'Leadership & Development', 'Technical Interview Prep' ]
 ```
-
 {% endtab %}
 
-{% tab title="Person.js" %} 
-
+{% tab title="Person.js" %}
 ```js
 class Person {
   constructor(first, last, age) {
@@ -193,17 +192,15 @@ class Person {
 
 module.exports = Person;
 ```
-
 {% endtab %}
-
-{% endtabs %} 
+{% endtabs %}
 
 This example shows the two common usages of the `super` keyword:
 
 1. `super()` — invokes the superclass constructor
-     - In the `Student` constructor, `super()` invokes the `Person`'s constructor which assigns the properties `firstName`, `lastName`, and `age` to the new `Student` instance.
+   * In the `Student` constructor, `super()` invokes the `Person`'s constructor which assigns the properties `firstName`, `lastName`, and `age` to the new `Student` instance.
 2. `super.method()` — invokes a method defined in the superclass. Often used to **override** the behavior of that method while still using some of the behavior from the superclass.
-    - The `introduce()` method is overridden in the `Student` class but uses `super.introduce()` to invoke the `introduce` method defined in the `Person` class.
+   * The `introduce()` method is overridden in the `Student` class but uses `super.introduce()` to invoke the `introduce` method defined in the `Person` class.
 
 Notice that the `fullName` method is inherited from the `Person` class and is NOT overridden. It will behave the same way for student instances and person instances.
 
@@ -220,11 +217,14 @@ console.log(reuben.teach('object-oriented programming')); // Hello class, today 
 ```
 
 Then, create class called `MarcyStudent` that is a subclass of `Student`.
-* All instances of `MarcyStudent` should have `subject` be set to `"Software Engineering"` and `school` be set to `"Marcy Lab School"`. 
+
+* All instances of `MarcyStudent` should have `subject` be set to `"Software Engineering"` and `school` be set to `"Marcy Lab School"`.
 * It should have a static `validCourses` array: `['Leadership & Development', 'Technical Interview Prep', 'Technical Lecture']`
 * `enrollInCourse` should be overridden to first check if the provided course is in the `validCourses` array before adding the course to the `courses` array.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 **Professor**
 
@@ -259,6 +259,7 @@ class MarcyStudent extends Student {
   }
 }
 ```
+
 </details>
 
 ## Prototype Chain: Subclasses of Subclasses
@@ -280,7 +281,8 @@ As we can see, the properties of an array are just the indexes for each value an
 We get a hint if we look at the [documentation for the array method `push()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push). Notice how it names the method as `Array.prototype.push`?
 
 Arrays are able to use array methods because:
-1. Methods like `push` and `forEach` are defined as methods of the `Array` class and are therefore inherited by all `Array` instances. We can see those methods by looking at the properties of the `Array.prototype` object.
+
+1.  Methods like `push` and `forEach` are defined as methods of the `Array` class and are therefore inherited by all `Array` instances. We can see those methods by looking at the properties of the `Array.prototype` object.
 
     ```js
     const arrayMethods = Object.getOwnPropertyNames(Array.prototype);
@@ -304,8 +306,7 @@ Arrays are able to use array methods because:
     ] 
     */
     ```
-
-2. Whenever we create an **"array literal"** (using square brackets `[]`), we are actually creating a new instance of the `Array` class!
+2.  Whenever we create an **"array literal"** (using square brackets `[]`), we are actually creating a new instance of the `Array` class!
 
     ```js
     // these do the same thing
@@ -330,7 +331,7 @@ console.log(letters.hasOwnProperty(1)); // true
 console.log(letters.hasOwnProperty('push')); // false
 ```
 
-The `Object.prototype.hasOwnProperty` method is defined as a part of the `Object` class from which *all* classes are extended, including the `Array` class and the classes we've made here like `Person` and `Student`.
+The `Object.prototype.hasOwnProperty` method is defined as a part of the `Object` class from which _all_ classes are extended, including the `Array` class and the classes we've made here like `Person` and `Student`.
 
 ```js
 const ada = new Student('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
@@ -360,7 +361,9 @@ Consider the `ada` instance of the `Student` class below.
 const ada = new Student('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
 ```
 
-**<details><summary>Q: Using arrows, draw out the prototype chain for `ada`.</summary>**
+<details>
+
+<summary><strong>Q: Using arrows, draw out the prototype chain for <code>ada</code>.</strong></summary>
 
 `ada` → `Student.prototype` → `Person.prototype` → `Object.prototype` → `null`
 
@@ -376,48 +379,54 @@ ada.introduce()
 ada.blah()
 ```
 
-**<details><summary>Q: For each line of code, describe how JavaScript walks up the prototype chain and where it finds the definition.</summary>**
+<details>
 
-`.fullName()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype` where it finds the definition.
-`.toString()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype` where it finds the definition.
-`.fullName()` is found in `ada` so JavaScript doesn't do anything.
-`.introduce()` is not in `ada` so JavaScript looks at `Student.prototype` where it finds the definition. It ignores the definition in `Person.prototype` because it has found a "closer" definition.
-`.blah()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype`. It doesn't find it there so JavaScript throws a `TypeError`.
+<summary><strong>Q: For each line of code, describe how JavaScript walks up the prototype chain and where it finds the definition.</strong></summary>
+
+`.fullName()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype` where it finds the definition. `.toString()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype` where it finds the definition. `.fullName()` is found in `ada` so JavaScript doesn't do anything. `.introduce()` is not in `ada` so JavaScript looks at `Student.prototype` where it finds the definition. It ignores the definition in `Person.prototype` because it has found a "closer" definition. `.blah()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype`. It doesn't find it there so JavaScript throws a `TypeError`.
 
 </details>
 
 If you run the Node debugger, you can see the prototype chain by looking at the `[[Prototype]]` field of any object:z
 
-![](img/prototype-chain-debugger.png)
+![](../.gitbook/assets/prototype-chain-debugger.png)
 
-## Practice & Review 
+## Practice & Review
 
 ### Study Questions
 
 Then, with a partner, discuss these questions:
 
-**<details><summary>Question 1: What does `extends` do?</summary>**
+<details>
+
+<summary><strong>Question 1: What does <code>extends</code> do?</strong></summary>
 
 `extends` makes the `WebDeveloper` inherit methods from `Programmer`. It sets `Programmer.prototype` as the prototype for `WebDeveloper`
 
 </details>
 
-**<details><summary>Question 2: What does `super` do?</summary>**
+<details>
+
+<summary><strong>Question 2: What does <code>super</code> do?</strong></summary>
 
 `super()` invokes the `Programmer` constructor function using its own value of `this`. Any properties that the `Programmer` constructor sets on `this` will be set on `WebDeveloper`.
 
 </details>
 
-**<details><summary>Question 3: What do we know about the relationship between a `Programmer` and a `Person`?</summary>**
+<details>
 
-* `WebDeveloper` is said to be a **subclass** of `Programmer`. 
+<summary><strong>Question 3: What do we know about the relationship between a <code>Programmer</code> and a <code>Person</code>?</strong></summary>
+
+* `WebDeveloper` is said to be a **subclass** of `Programmer`.
 * `Programmer` is said to be a **superclass** of `WebDeveloper`.
 * `WebDeveloper` will inherit properties and methods from `Programmer` and `Person`.
 * Instances of `WebDeveloper` are also instances of `Programmer` and of `Person`, but not all instances of `Person` or `Programmer` are instances of `WebDeveloper`.
 
 </details>
 
-**<details><summary>Question 4: How does the `code` method work?</summary>**
+<details>
+
+<summary><strong>Question 4: How does the <code>code</code> method work?</strong></summary>
 
 `code` invokes the `doActivity` method inherited from `Person.prototype`
 

@@ -1,4 +1,4 @@
-# Git & GitHub
+# 2. Git & GitHub
 
 In this lesson, we'll learn how software engineers manage the changes to their project using a tool called Git. We'll also they can back up and share their projects online using the closest thing to a social network for programmers, GitHub.
 
@@ -10,20 +10,21 @@ You will be able to…
 * Know the steps of the Git workflow
 
 **Table of Contents**
-- [Setup](#setup)
-- [Key Terms and Commands](#key-terms-and-commands)
-- [Mental Model: Git \& GitHub](#mental-model-git--github)
-  - [What is Git?](#what-is-git)
-  - [What is GitHub?](#what-is-github)
-- [The Git Workflow](#the-git-workflow)
-  - [`git init` and `git status`](#git-init-and-git-status)
-  - [`git add`, `git commit`, and `git log`](#git-add-git-commit-and-git-log)
-- [The GitHub Workflow](#the-github-workflow)
-  - [1. Create A Repository On GitHub](#1-create-a-repository-on-github)
-  - [2. Make A Local Clone Of The Repository with `git clone`](#2-make-a-local-clone-of-the-repository-with-git-clone)
-  - [3. Use the normal Git Workflow](#3-use-the-normal-git-workflow)
-  - [4. Upload local commits to GitHub with `git push`](#4-upload-local-commits-to-github-with-git-push)
-- [Summary](#summary)
+
+* [Setup](2-git-github.md#setup)
+* [Key Terms and Commands](2-git-github.md#key-terms-and-commands)
+* [Mental Model: Git & GitHub](2-git-github.md#mental-model-git--github)
+  * [What is Git?](2-git-github.md#what-is-git)
+  * [What is GitHub?](2-git-github.md#what-is-github)
+* [The Git Workflow](2-git-github.md#the-git-workflow)
+  * [`git init` and `git status`](2-git-github.md#git-init-and-git-status)
+  * [`git add`, `git commit`, and `git log`](2-git-github.md#git-add-git-commit-and-git-log)
+* [The GitHub Workflow](2-git-github.md#the-github-workflow)
+  * [1. Create A Repository On GitHub](2-git-github.md#1-create-a-repository-on-github)
+  * [2. Make A Local Clone Of The Repository with `git clone`](2-git-github.md#2-make-a-local-clone-of-the-repository-with-git-clone)
+  * [3. Use the normal Git Workflow](2-git-github.md#3-use-the-normal-git-workflow)
+  * [4. Upload local commits to GitHub with `git push`](2-git-github.md#4-upload-local-commits-to-github-with-git-push)
+* [Summary](2-git-github.md#summary)
 
 ## Setup
 
@@ -70,9 +71,11 @@ git clone
 
 Imagine you're working on a paper. You've got all of your drafts saved in a folder and it looks something like this:
 
-![](img/my-paper-file-names.png)
+![](../.gitbook/assets/my-paper-file-names.png)
 
-**<details><summary>Q: Even though it is messy, what are the benefits of doing this versus just keeping one version of the file?</summary>**
+<details>
+
+<summary><strong>Q: Even though it is messy, what are the benefits of doing this versus just keeping one version of the file?</strong></summary>
 
 It is easier to see how the file has changed over time and to revert to an older version of the file if necessary.
 
@@ -84,9 +87,9 @@ The files of our software projects are changing constantly and we will often wan
 
 > **Git** is a tool that takes snapshots of the files in a project and allows developers to manage them and, if needed, revert to prior version. Git is an example of a **version control system**.
 
-Git maintains a history of changes through **"commits"** — snapshots of our code that represent a completed unit of work such as a new feature or bug fix. 
+Git maintains a history of changes through **"commits"** — snapshots of our code that represent a completed unit of work such as a new feature or bug fix.
 
-![A commit is a snapshot of our code that represents the completion of a unit of work.](img/commit-history.png)
+![A commit is a snapshot of our code that represents the completion of a unit of work.](../.gitbook/assets/commit-history.png)
 
 <details>
 
@@ -102,7 +105,7 @@ When we use Git for a project, the commits are stored alongside the code files. 
 
 ### What is GitHub?
 
-![The camera app is like Git. GitHub is where you store the photos online.](./img/person-taking-photo.png)
+![The camera app is like Git. GitHub is where you store the photos online.](../.gitbook/assets/person-taking-photo.png)
 
 Think about the camera application on a smartphone. It allows you to take snapshots of the world around you so that you can look back at the history of your life. This is similar to Git (if your camera also allowed you to travel back in time and make changes).
 
@@ -110,10 +113,11 @@ The camera app may also allow you to backup your photos and save them online "in
 
 > **GitHub** is a cloud-based "host" for Git repositories. In other words, it stores Git repositories online. GitHub allows developers to store, share and collaborate on their projects.
 
-<figure><img src="img/github.png" alt="GitHub is a social network for developers to backup, share, and collaborate on projects." width="375"><figcaption><p>GitHub is a social network for developers to backup, share, and collaborate on projects.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/github.png" alt="GitHub is a social network for developers to backup, share, and collaborate on projects." width="375"><figcaption><p>GitHub is a social network for developers to backup, share, and collaborate on projects.</p></figcaption></figure>
 
 Check out the GitHub repository for [Node](https://github.com/nodejs/node). Here are few things to look for:
-* It has ~45000 commits, each with clear messages, and made by many different developers.
+
+* It has \~45000 commits, each with clear messages, and made by many different developers.
 * It has dozens of branches, each for a different version of the software.
 * The README on the front page gives a detailed overview of the project and instructions for downloading and contributing.
 * It has been forked (duplicated) over 30 thousand times
@@ -130,7 +134,7 @@ Using git in a project involves moving our code between three phases:
 2. The staging area (where we temporarily store changes before committing them)
 3. The repository (where we store our committed changes)
 
-![](img/local-git.png)
+![](../.gitbook/assets/local-git.png)
 
 <details>
 
@@ -144,7 +148,7 @@ Check out [this StackOverflow post which does a great job of explaining!](https:
 
 To use Git in a project, we can start by turning the project into a Git repository with the command `git init`. We can then make changes and use `git status` to see what changes have been made:
 
-![](img/git-init-git-status.png)
+![](../.gitbook/assets/git-init-git-status.png)
 
 1. In the Terminal, we navigated to a folder and ran `git init`, turning the folder into a Git repository.
 2. The `git status` command can be used at any time to see what changes have been made to the repository. At first, we can see that the repo has no changes.
@@ -155,7 +159,7 @@ To use Git in a project, we can start by turning the project into a Git reposito
 
 One we have changes that we want to save in the repository, we use the `git add` command to "stage" the changes and `git commit` to save those changes!
 
-![](img/git-add-git-commit.png)
+![](../.gitbook/assets/git-add-git-commit.png)
 
 1. In the Terminal, we use `git add myfile.txt` to move the `myfile.txt` file into the staging area.
 2. `git status` shows us that `myfile.txt` is ready to be committed.
@@ -175,7 +179,7 @@ After setup, whenever we want to make changes to the repo we:
 3. Use the normal git workflow (make changes › `git add` › `git commit`)
 4. After making commits on our local repository, we **push** the changes to the remote repository.
 
-![](img/git-github-workflow.png)
+![](../.gitbook/assets/git-github-workflow.png)
 
 Let's practice this:
 
@@ -185,7 +189,7 @@ Instead of using the `git init` command to create a _local repository_. We're go
 
 In the upper-right corner of any page, select +, then click **New repository**.
 
-![](img/new-repo.png)
+![](../.gitbook/assets/new-repo.png)
 
 Choose an owner of the repository (you) and give the repository a name.
 
@@ -195,13 +199,13 @@ Make sure to check the **Add a README file** box.
 
 Then click **Create repository**.
 
-![](img/new-repo-settings.png)
+![](../.gitbook/assets/new-repo-settings.png)
 
 ### 2. Make A Local Clone Of The Repository with `git clone`
 
 After setting up the repo, you should be brought to the repo's page on GitHub. Click on the **Code** button (1), make sure to select **SSH** (2), and then click on the **copy** button (3) to copy the git clone url beginning with `git@github.com:...`.
 
-![](img/new-repo-clone.png)
+![](../.gitbook/assets/new-repo-clone.png)
 
 Then, back in your Visual Studio Code terminal, run the command:
 
@@ -232,7 +236,7 @@ Now that you have cloned the repository, you can use the same Git workflow as ab
 
 Now here comes the fun part.
 
-![](img/commit-ahead.png)
+![](../.gitbook/assets/commit-ahead.png)
 
 In the example above, notice how the first `git status` says
 
@@ -253,11 +257,11 @@ Your local repository (on your computer) and your remote repository (on GitHub) 
 
 To upload the local commits to GitHub, run the command `git push`.
 
-![](img/git-push.png)
+![](../.gitbook/assets/git-push.png)
 
 If we look at the repo on GitHub, we should see the latest commit message and the updated `README.md` file!
 
-![](img/updated-repo-with-commit.png)
+![](../.gitbook/assets/updated-repo-with-commit.png)
 
 For future changes, repeat steps 3 and 4!
 
@@ -271,7 +275,7 @@ So, in summary, Git and GitHub are invaluable tools in the toolkit of a software
 
 Together, we can manage code in **local repositories** and sync them with **remote repositories**.
 
-![](img/git-github-workflow.png)
+![](../.gitbook/assets/git-github-workflow.png)
 
 The one command in this diagram that we didn't cover is `git pull`. We'll learn more about this in the next lesson!
 

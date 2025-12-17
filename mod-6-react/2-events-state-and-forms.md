@@ -1,4 +1,4 @@
-# Events, State, and Forms
+# 2. Events, State, and Forms
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-1-managing-state-and-forms)!
@@ -40,7 +40,7 @@ In this lesson, we'll be using an app called `instapets` to demonstrate building
 
 Right now the app is not stateful. It renders 3 hard-coded pet pictures, the form doesn't work and neither do the "Like" buttons.
 
-![](img/instapets-demo.png)
+![](../.gitbook/assets/instapets-demo.png)
 
 Let's build this thing!
 
@@ -204,7 +204,7 @@ const InstagramPost = ({ picture }) => {
 
 Interestingly `setLikes` does NOT change the value of `likes` within the `handleClick` callback. It tells React to re-render the `InstagramPost` component with a new value of `likes`.
 
-![](img/setLikes-rerender.svg)
+![](../.gitbook/assets/setLikes-rerender.svg)
 
 You can see this if you place a `console.log(likes)` statement inside of `handleClick` callback.
 
@@ -304,7 +304,7 @@ The last step to putting this together is having the form submission actually ad
 
 Here is the component tree of the application:
 
-![](img/instapets-component-tree.svg)
+![](../.gitbook/assets/instapets-component-tree.svg)
 
 The challenge is that `PicturesList` is where the `pictures` are defined but we want to update the list of pictures from `NewPetForm`.
 

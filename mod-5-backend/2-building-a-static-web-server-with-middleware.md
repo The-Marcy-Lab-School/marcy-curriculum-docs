@@ -27,7 +27,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 Remember how the Express app works?
 
-![](<img/express-diagram-simple (1).svg>)
+![](<../.gitbook/assets/express-diagram-simple (1).svg>)
 
 1. A client sends a **request** to the server.
 2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
@@ -110,7 +110,7 @@ However, now we also need to add this code to `serveData`. If we had more contro
 
 Instead, we can use a **middleware**. Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.
 
-![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](img/express-middleware.svg)
+![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](../.gitbook/assets/express-middleware.svg)
 
 In many ways, middleware is like a controller. It receives the `req`, `res`, and `next` values. There are two key differences:
 
@@ -174,7 +174,7 @@ Middleware can be custom-made like this `logRoutes`. However, we can also utiliz
 
 When you visit a website, like [https://google.com](https://google.com), you are immediately presented with a rendered website. What's happening there?
 
-![Google's Homepage](img/2-google-homepage.png)
+![Google's Homepage](../.gitbook/assets/2-google-homepage.png)
 
 Now, imagine that the website is just the "static assets" of a React project deployed on GitHub pages! But instead of using GitHub pages, Google has its own servers to store those files and serve them to visiting users.
 

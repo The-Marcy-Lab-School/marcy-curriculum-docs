@@ -37,7 +37,7 @@ In software development, a "code monolith" refers to a single, large, and typica
 
 While there are many approaches for organization and separation of concerns, one highly popular approach is called the **Model-View-Controller (MVC) Architecture**.
 
-![The view sends requests with user inputs to the controller with updates the model. New data is returned to the controller which sends that data in a response to the view.](img/model-view-controller-diagram.png)
+![The view sends requests with user inputs to the controller with updates the model. New data is returned to the controller which sends that data in a response to the view.](../.gitbook/assets/model-view-controller-diagram.png)
 
 This architecture pattern organizes our code into three distinct pieces:
 
@@ -116,7 +116,7 @@ const serveFellow = (req, res) => {
 
 We need to create a separate model that focuses solely on managing the `friends` database and provides methods for our controllers to use.
 
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<img/express-middleware-model (1) (2).svg>)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<../.gitbook/assets/express-middleware-model (1) (1).svg>)
 
 ### Server Organization
 

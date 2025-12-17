@@ -25,11 +25,11 @@
 
 Start by creating an account using your **GitHub** account. This will let you easily deploy straight from a GitHub repository.
 
-![create an account using GitHub](../how-tos/img/create-account.png)
+![create an account using GitHub](../.gitbook/assets/create-account.png)
 
 This will take you to your Dashboard where you can see existing deployments.
 
-![The Render Dashboard](../how-tos/img/dashboard.png)
+![The Render Dashboard](../.gitbook/assets/dashboard.png)
 
 ## Deploy A Server
 
@@ -64,14 +64,14 @@ This will take you to your Dashboard where you can see existing deployments.
    * Instance Type - select **Free**
 6.  Add Any environment variables your application may need:
 
-    ![Add environment variables individually or paste multiple values at a time from a .env file.](../how-tos/img/environment-variables-configuration-render.png)
+    ![Add environment variables individually or paste multiple values at a time from a .env file.](../.gitbook/assets/environment-variables-configuration-render.png)
 7. Select **Deploy Web Service**
 
 This should take you to your web service's dashboard where you can see the latest build information and the URL. In a few minutes your server will be up and running!
 
 Any time that you want to make an update to your deployed server, just commit and push the change to your repo! The deployment process will automatically run your "Build" and "Start" commands (unless you used a public git URL to setup your server in which cause auto-deployments are disabled).
 
-![alt text](../how-tos/img/web-service-dashboard.png)
+![alt text](../.gitbook/assets/web-service-dashboard.png)
 
 ### What Do the Build and Start Commands Do?
 
@@ -81,7 +81,7 @@ Projects built using Vite cannot be served as they are stored in the repository.
 
 After the "Build" command runs, the "Start" command runs to start the server. To ensure that our server works properly, we just need to make sure the server dependencies are installed and then run the `index.js` file with `node`:
 
-![If your project had a vite-project folder for the frontend, and a server folder for the backend, your configuration would look like this](../how-tos/img/render-deploying-static-build-start.png)
+![If your project had a vite-project folder for the frontend, and a server folder for the backend, your configuration would look like this](../.gitbook/assets/render-deploying-static-build-start.png)
 
 As a result, the "continuous deployment" process would look like this:
 

@@ -1,4 +1,4 @@
-# Git Branching & PRs
+# 4. Git Branching & PRs
 
 GitHub enables developers across the world to collaborate on projects. In this lesson, we'll learn how to use GitHub to create and manage branches, merge branches, create pull requests, and resolve merge conflicts.
 
@@ -12,14 +12,14 @@ You will be able to…
 
 **Table of Contents:**
 
-- [Key Terms \& Commands](#key-terms--commands)
-- [Intro to Branches](#intro-to-branches)
-  - [Keep the Main Branch Stable](#keep-the-main-branch-stable)
-  - [Commands for Working with Branches](#commands-for-working-with-branches)
-  - [Pull Requests and Code Review](#pull-requests-and-code-review)
-  - [Don't Forget to Pull!](#dont-forget-to-pull)
-- [How Teams Collaborate Using Branches](#how-teams-collaborate-using-branches)
-- [Summary](#summary)
+* [Key Terms & Commands](4-git-branching.md#key-terms--commands)
+* [Intro to Branches](4-git-branching.md#intro-to-branches)
+  * [Keep the Main Branch Stable](4-git-branching.md#keep-the-main-branch-stable)
+  * [Commands for Working with Branches](4-git-branching.md#commands-for-working-with-branches)
+  * [Pull Requests and Code Review](4-git-branching.md#pull-requests-and-code-review)
+  * [Don't Forget to Pull!](4-git-branching.md#dont-forget-to-pull)
+* [How Teams Collaborate Using Branches](4-git-branching.md#how-teams-collaborate-using-branches)
+* [Summary](4-git-branching.md#summary)
 
 ## Key Terms & Commands
 
@@ -50,11 +50,11 @@ git branch -D [branch_name] # delete a branch
 
 Every repository's commit history has what is called a **"main branch"** or **"trunk"**. Whenever anyone visits a repository on GitHub or clones it down, this is what they will see.
 
-![When you clone a repository, you will clone the main branch](img/on-branch-main.png)
+![When you clone a repository, you will clone the main branch](../.gitbook/assets/on-branch-main.png)
 
 Up until now, we've been pushing our commits directly to the main branch. But as they say...
 
-![One does not simply push to main](img/do-not-push-to-main.png)
+![One does not simply push to main](../.gitbook/assets/do-not-push-to-main.png)
 
 <details>
 
@@ -72,7 +72,7 @@ Rather than pushing our code to the main branch, we can create a separate **feat
 
 A **feature branch** is a copy of the main branch at a point in time and allows developers to work on a feature without impacting the main branch. Branches can be saved on GitHub and are only merged into the main branch when a feature is completed.
 
-![A view of your local repository with a main branch and a feature branch. In this example, the feature branch is for creating a lock screen gallery.](img/branching.png)
+![A view of your local repository with a main branch and a feature branch. In this example, the feature branch is for creating a lock screen gallery.](../.gitbook/assets/branching.png)
 
 Branching ensures that the main branch is always a "stable" version. That is, if someone were to look at the repo, they can look at the main branch and know that it is fully functional. Every merge represents a successful addition of a new feature.
 
@@ -110,7 +110,7 @@ git checkout -b [branch_name]
 
 Try these commands out for yourself! After you push your branch to GitHub, you should be able to see the new commit on the main branch as well as the new branch in the list of branches on GitHub.
 
-![You can see your branches listed on GitHub](img/view-branches-github.png)
+![You can see your branches listed on GitHub](../.gitbook/assets/view-branches-github.png)
 
 ### Pull Requests and Code Review
 
@@ -120,21 +120,21 @@ In the professional world, before we merge ANYTHING into the `main` branch, ther
 
 After pushing an updated branch to GitHub, a notification will appear on the repository page with a call to action: "Compare and pull request".
 
-![When a branch is pushed to GitHub, a notification will appear asking you to create a pull request](img/pull-request.png)
+![When a branch is pushed to GitHub, a notification will appear asking you to create a pull request](../.gitbook/assets/pull-request.png)
 
 A **pull request** (PR) is a request for another developer to review their branch and either merge the branch or request modifications.
 
 When creating a PR, include a description of the changes so that reviewers can quickly provide feedback.
 
-![Descriptions of the key changes help reviewers quickly provide feedback](img/creating-the-pull-request.png)
+![Descriptions of the key changes help reviewers quickly provide feedback](../.gitbook/assets/creating-the-pull-request.png)
 
 The Files Changed tab lets you see the lines of each file that were added, removed, or modified. You can also leave comments and provide a detailed review.
 
-![The Files Changed tab lets you see the exact lines of each file that were added, removed, or modified.](img/reviewing-files-changed-pull-request.png)
+![The Files Changed tab lets you see the exact lines of each file that were added, removed, or modified.](../.gitbook/assets/reviewing-files-changed-pull-request.png)
 
 If everything looks good, you can merge the pull request directly on GitHub!
 
-![If everything looks good, you can merge the pull request directly on GitHub!](img/merge-pull-request.png)
+![If everything looks good, you can merge the pull request directly on GitHub!](../.gitbook/assets/merge-pull-request.png)
 
 After merging, it is up to you if you want to delete the branch or keep working on it.
 
@@ -191,7 +191,7 @@ In this lesson, we learned how to create and manage branches in a project, and h
 
 The diagram below illustrates the entire process:
 
-![A diagram showing the 6 steps to working collaboratively on git: Clone/Pull; Create Branch; Stage/Add; Commit; Push and Make a Pull Request; Resolve and Merge](img/git-workflow-diagram.svg)
+![A diagram showing the 6 steps to working collaboratively on git: Clone/Pull; Create Branch; Stage/Add; Commit; Push and Make a Pull Request; Resolve and Merge](../.gitbook/assets/git-workflow-diagram.svg)
 
 There are 10 steps in this process:
 

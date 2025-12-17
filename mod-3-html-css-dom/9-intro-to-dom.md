@@ -1,4 +1,4 @@
-# The Document Object Model (DOM) API
+# 4. The Document Object Model (DOM) API
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-0-dom)!
@@ -346,4 +346,4 @@ This is because of an unfortunate fact: **browsers simply do not allow modules t
 
 But have no fear, this is actually quite easy. Just download the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) VS Code extension. A "Go Live" button will appear in the bottom right hand corner of your IDE. Just open the file you want to serve and click "Go Live" and voila — the file will be served via the `http://` protocol instead of `file://`!
 
-![The Live Server extension makes it easy to serve your HTML files via HTTP](img/live-server.png)
+![The Live Server extension makes it easy to serve your HTML files via HTTP](../.gitbook/assets/live-server.png)

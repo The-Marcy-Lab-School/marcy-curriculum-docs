@@ -1,4 +1,4 @@
-# LocalStorage
+# 12. LocalStorage
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-4-0-localStorage)!
@@ -32,7 +32,7 @@ Making video games is one of the greatest joys of programming. And for good reas
 
 Suppose we had a game where the user is challenged to click a button as many times as they can in 5 seconds.
 
-![a game where the user is challenged to click a button as many times as they can in 5 seconds.](img/speed-clicker.gif)
+![a game where the user is challenged to click a button as many times as they can in 5 seconds.](../.gitbook/assets/speed-clicker.gif)
 
 To encourage the competitive spirit of gaming, a key feature that we want to implement is a leaderboard to display the user's previous scores. Take a look at the `speed-clicker-game` where we've implemented this game!
 
@@ -414,7 +414,7 @@ Using `localStorage`, we will build a **data layer** that is used to inform what
 
 This cycle of **data > view > handle events > data** looks like this:
 
-![](img/data-layer-diagram.png)
+![](../.gitbook/assets/data-layer-diagram.png)
 
 ## Removing Values
 

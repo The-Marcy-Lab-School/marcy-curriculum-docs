@@ -1,4 +1,4 @@
-# Stacks & Queues
+# 3. Stacks & Queues
 
 * [Essential Questions](3-stacks-queues.md#essential-questions)
 * [Key Terms](3-stacks-queues.md#key-terms)
@@ -49,7 +49,7 @@ An **abstract data type (ADT)** is a high-level ("abstract") description about h
 
 Abstract data types are **language-agnostic** — they may be implemented differently in different programming languages but they will all have the same high-level behavior. Arrays in every programming language will have ordered values that are accessible via an index!
 
-![Thought cloud of cars](img/abstract-cars.png)
+![Thought cloud of cars](../.gitbook/assets/abstract-cars.png)
 
 In the real world, the idea of a car is similar to an abstract data type. All cars have doors, wheels, and an engine and with my driver's license, I can operate pretty much any kind of car. However, each manufacturer has a different approach to creating their cars and, under the hood (literally), they may look very different.
 
@@ -70,7 +70,7 @@ If you're thinking — "hey these operations are the same as an Array!" — you'
 
 Imagine you are making pancakes. When each pancake is ready, you add it to a plate until you have a nice _stack_ of pancakes.
 
-![](img/pancakes.png)
+![](../.gitbook/assets/pancakes.png)
 
 Which pancake would you eat first? The first pancakes you added to the plate, or the last?
 
@@ -117,7 +117,7 @@ Queues are often referred to as "first in, first out" (FIFO) data structures.
 
 Imagine you go to a restaurant. There's a line of people waiting. Some audacious, rule-breaking people may cut straight to the front, but they will likely receive some serious glares.
 
-![credit: Royston Robertson](img/queue-cartoon.png)
+![credit: Royston Robertson](../.gitbook/assets/queue-cartoon.png)
 
 According to the norms of society, the **first** person in line is the **first** person to be served.
 

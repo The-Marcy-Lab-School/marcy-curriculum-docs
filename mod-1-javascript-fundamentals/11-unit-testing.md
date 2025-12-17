@@ -1,4 +1,4 @@
-# Introduction to Unit Testing with Jest
+# 12. Jest & Test Driven Development
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-11-unit-testing)!
@@ -6,25 +6,25 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents**
 
-- [Learning Objectives](#learning-objectives)
-- [A Basic Example](#a-basic-example)
-  - [Test Files](#test-files)
-- [Jest](#jest)
-  - [Installation \& Setup](#installation--setup)
-  - [First Test](#first-test)
-  - [Practice: Add A Test](#practice-add-a-test)
-  - [`toEqual` and `.not`](#toequal-and-not)
-  - [Refactor with Confidence](#refactor-with-confidence)
-- [Test-Driven Development](#test-driven-development)
-  - [Step 1: Define New Requirements](#step-1-define-new-requirements)
-  - [Step 2: Write Tests Before Code (They Will Fail)](#step-2-write-tests-before-code-they-will-fail)
-  - [Step 3: Implement Just Enough Code to Pass](#step-3-implement-just-enough-code-to-pass)
-  - [Reflection](#reflection)
-- [Banking System Challenge](#banking-system-challenge)
-  - [Refactoring with Confidence](#refactoring-with-confidence)
-  - [Adding a New Feature with TDD](#adding-a-new-feature-with-tdd)
-- [Extension / Practice](#extension--practice)
-- [Key Takeaways](#key-takeaways)
+* [Learning Objectives](11-unit-testing.md#learning-objectives)
+* [A Basic Example](11-unit-testing.md#a-basic-example)
+  * [Test Files](11-unit-testing.md#test-files)
+* [Jest](11-unit-testing.md#jest)
+  * [Installation & Setup](11-unit-testing.md#installation--setup)
+  * [First Test](11-unit-testing.md#first-test)
+  * [Practice: Add A Test](11-unit-testing.md#practice-add-a-test)
+  * [`toEqual` and `.not`](11-unit-testing.md#toequal-and-not)
+  * [Refactor with Confidence](11-unit-testing.md#refactor-with-confidence)
+* [Test-Driven Development](11-unit-testing.md#test-driven-development)
+  * [Step 1: Define New Requirements](11-unit-testing.md#step-1-define-new-requirements)
+  * [Step 2: Write Tests Before Code (They Will Fail)](11-unit-testing.md#step-2-write-tests-before-code-they-will-fail)
+  * [Step 3: Implement Just Enough Code to Pass](11-unit-testing.md#step-3-implement-just-enough-code-to-pass)
+  * [Reflection](11-unit-testing.md#reflection)
+* [Banking System Challenge](11-unit-testing.md#banking-system-challenge)
+  * [Refactoring with Confidence](11-unit-testing.md#refactoring-with-confidence)
+  * [Adding a New Feature with TDD](11-unit-testing.md#adding-a-new-feature-with-tdd)
+* [Extension / Practice](11-unit-testing.md#extension--practice)
+* [Key Takeaways](11-unit-testing.md#key-takeaways)
 
 ## Learning Objectives
 
@@ -53,10 +53,11 @@ const doubleArrayPurely = (arr) => {
 };
 ```
 
+<details>
 
-**<details><summary>Q: Imagine you were given this function and asked to verify that it works. How would you test it? What do you expect to happen when testing?</summary>**
+<summary><strong>Q: Imagine you were given this function and asked to verify that it works. How would you test it? What do you expect to happen when testing?</strong></summary>
 
-To test this manually, you could invoke the function with some sample data and see if the *output* matches what you *expect*.
+To test this manually, you could invoke the function with some sample data and see if the _output_ matches what you _expect_.
 
 ```js
 const nums = [1, 2, 3, 4];
@@ -76,8 +77,6 @@ console.log(copyOfNums);
 
 </details>
 
-</details>
-
 ### Test Files
 
 > "Now that we've tested the application, what should we do with the tests? Do we delete them? Do we comment them out? If we keep them, where can they live?"
@@ -85,6 +84,7 @@ console.log(copyOfNums);
 With manual testing, you're always left with this question. You've spent time and effort to create the tests so deleting them is wasteful, but we can't just leave them in our code because they add clutter.
 
 Rather than testing functions directly in the files where they live, it is better to create separate **test files** that import functions and test them against sample inputs. Test files provide a number of benefits:
+
 * **Separation of concerns**: our source code can focus on functionality while test files focus on testing.
 * **Automation**: test files can be executed with a single command or can be configured to run automatically whenever a commit is made, ensuring all new code is functional.
 * **Documentation**: test files serve as living documentation, showing how functions are expected to behave.
@@ -92,7 +92,7 @@ Rather than testing functions directly in the files where they live, it is bette
 
 ## Jest
 
-Let's learn [Jest](https://jestjs.io/docs/getting-started), the most popular framework for creating test files in JavaScript / Node. 
+Let's learn [Jest](https://jestjs.io/docs/getting-started), the most popular framework for creating test files in JavaScript / Node.
 
 ### Installation & Setup
 
@@ -112,7 +112,7 @@ Modify the `package.json` file to include a `"test"` script.
 
 ### First Test
 
-We've created a simple example to demonstrate how to create a test file. 
+We've created a simple example to demonstrate how to create a test file.
 
 In the file called `src/sum.js`, we've exported a simple `sum` function.
 
@@ -137,8 +137,9 @@ test('adds two numbers', () => {
 ```
 
 The `test()` function creates a new test to run with a description of the test and a callback function that should contain at least one `expect().matcher()` call.
+
 * `expect(expression)` takes in an expression to test
-* `toBe(expected)` is an example of a **matcher method** (there are many others). It takes in the value we expect the `expression` to be *strictly equal* to as if we had compared them using the `===` operator.
+* `toBe(expected)` is an example of a **matcher method** (there are many others). It takes in the value we expect the `expression` to be _strictly equal_ to as if we had compared them using the `===` operator.
 
 Run the test with:
 
@@ -148,9 +149,9 @@ npm test sum
 
 And you should see:
 
-![The sum.test.js test has a passing test.](./img/sum-passing-tests.png)
+![The sum.test.js test has a passing test.](../.gitbook/assets/sum-passing-tests.png)
 
-Each time we invoke `test(message, fn)`, a new test is created and will appear with the provided `message` in the test output. 
+Each time we invoke `test(message, fn)`, a new test is created and will appear with the provided `message` in the test output.
 
 We see a passing test because in the `test()` callback, the `expect(expression)` value was equal to the `toBe(expected)` value.
 
@@ -158,7 +159,9 @@ We see a passing test because in the `test()` callback, the `expect(expression)`
 
 In the `tests/sum.test.js` file, add a new test with the message `"adds negatives"` and confirms that the `sum` function will work properly for inputs like `-3` and `-2`.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 test('addsNegatives', () => {
@@ -172,9 +175,9 @@ Run the `npm test sum` command again and you should now see both tests in the te
 
 ### `toEqual` and `.not`
 
-Take a look back at the `src/doubleArrayPurely.js` file. 
+Take a look back at the `src/doubleArrayPurely.js` file.
 
-We've already created a test for you in the accompanying `tests/doubleArrayPurely.test.js` file. 
+We've already created a test for you in the accompanying `tests/doubleArrayPurely.test.js` file.
 
 Since we are now working with a reference type (an array), we need to test the output of our function using the `.toEqual` matcher method.
 
@@ -200,16 +203,18 @@ test('does not mutate the original array', () => {
 ```
 
 This example demonstrates a few new details about `expect()` calls.
+
 * The `toEqual()` matcher is used to compare equality of the contents within objects and arrays, rather than comparing their references
 * The `.toBe()` matcher can be used to compare the references of objects
 * The `.not` property can be added in the middle of any `expect().matcher()` statement to check the opposite of an expectation.
 
-
 ### Refactor with Confidence
 
-Now that we have passing tests, we can change *how* the code works — as long as it keeps passing the same tests.
+Now that we have passing tests, we can change _how_ the code works — as long as it keeps passing the same tests.
 
-**<details><summary>Challenge: Refactor `doubleArrayPurely` to use the higher-order method `map`</summary>**
+<details>
+
+<summary><strong>Challenge: Refactor <code>doubleArrayPurely</code> to use the higher-order method <code>map</code></strong></summary>
 
 ```js
 const doubleArrayPurely = (arr) => {
@@ -223,15 +228,17 @@ Run `npm test doubleArrayPurely` again: the tests should still pass.
 
 ## Test-Driven Development
 
-So far we've been looking at tests *after* we have already written the code. The tests just tell us whether the code we've already written works as expected.
+So far we've been looking at tests _after_ we have already written the code. The tests just tell us whether the code we've already written works as expected.
 
 **Test-driven development** is a workflow for creating software that starts with tests and then uses those tests as a guide for what code to write. Test driven development has a number of benefits:
+
 * **Clear Requirements** - Writing tests first forces you to clearly define what your code should do before writing it
 * **Better Design** - Starting with tests helps you design cleaner, more modular code that's easier to test
 * **Fewer Bugs** - Having comprehensive tests from the start helps catch bugs early in development
 * **Faster Development** - While it may seem slower at first, TDD often leads to faster development by catching issues early
 
 Let's try it out. We'll follow 4 steps:
+
 1. Define new requirements
 2. Write tests before code (they will fail)
 3. Implement just enough code to pass
@@ -242,24 +249,30 @@ Let's try it out. We'll follow 4 steps:
 **New Feature:** The `doubleArrayPurely` function should be able to arrays containing numbers mixed with strings and other values.
 
 **Requirements:**
+
 * If a given value in the array is a number, multiply the number by 2
 * If a given value in the array is a string, concatenate the value to itself: (`"abc"` > `"abcabc"`)
 * If a given value is neither, do nothing to it, just add it to the array.
 
 ### Step 2: Write Tests Before Code (They Will Fail)
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 test('can double strings and numbers', () => {
   expect(doubleArrayPurely([1, 2, 'a', 'b'])).toEqual([2, 4, 'aa', 'bb']);
 });
 ```
+
 </details>
 
 ### Step 3: Implement Just Enough Code to Pass
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 const doubleArrayPurely = (arr) => {
@@ -274,12 +287,12 @@ const doubleArrayPurely = (arr) => {
   });
 };
 ```
-</details>
 
+</details>
 
 ### Reflection
 
-* How did writing tests *before* code clarify what the function should do?
+* How did writing tests _before_ code clarify what the function should do?
 
 ## Banking System Challenge
 
@@ -299,7 +312,7 @@ And a `transaction` like this:
 const depositTransaction = { owner: "Alice", amount: 50 };
 ```
 
-The `deposit` function below is designed to process one of these transactions and get an updated set of bank accounts. It is a pure function: 
+The `deposit` function below is designed to process one of these transactions and get an updated set of bank accounts. It is a pure function:
 
 ```js
 const deposit = (accounts, transaction) => {
@@ -322,6 +335,7 @@ const deposit = (accounts, transaction) => {
 ```
 
 It works by doing the following:
+
 1. It iterates through each account and makes a copy of the account object, adding it to the `updatedAccounts` array.
 2. It then updates the balance of only the account whose owner matches the `transaction` owner.
 3. Finally, it returns the updated accounts.
@@ -369,9 +383,11 @@ describe('deposit', () => {
 
 ### Refactoring with Confidence
 
-Now that we have passing tests, we can change *how* the code works — as long as it keeps passing the same tests.
+Now that we have passing tests, we can change _how_ the code works — as long as it keeps passing the same tests.
 
-**<details><summary>Challenge: Refactor `deposit` to use the higher-order method `map`</summary>**
+<details>
+
+<summary><strong>Challenge: Refactor <code>deposit</code> to use the higher-order method <code>map</code></strong></summary>
 
 ```js
 const deposit = (accounts, transaction) => {
@@ -404,7 +420,9 @@ Requirements:
 
 **Step 2: Write Tests Before Code (Red)**
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 // bank.test.js
@@ -446,7 +464,9 @@ describe('withdraw', () => {
 
 **Step 3: Implement Just Enough Code to Pass (Green)**
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 const withdraw = (owner, amount) => {
@@ -476,12 +496,14 @@ const withdraw = (owner, amount) => {
 ## Key Takeaways
 
 **Testing** provides the following benefits:
+
 * **Separation of concerns**: our source code can focus on functionality while test files focus on testing.
 * **Automation**: test files can be executed with a single command or can be configured to run automatically whenever a commit is made, ensuring all new code is functional.
 * **Documentation**: test files serve as living documentation, showing how functions are expected to behave.
 * **Confidence**: having a comprehensive test suite gives developers confidence when making changes.
 
 **Test-driven development** is a workflow for creating software that starts with tests and then uses those tests as a guide for what code to write. Test driven development has a number of benefits:
+
 * **Clear Requirements** - Writing tests first forces you to clearly define what your code should do before writing it
 * **Better Design** - Starting with tests helps you design cleaner, more modular code that's easier to test
 * **Fewer Bugs** - Having comprehensive tests from the start helps catch bugs early in development

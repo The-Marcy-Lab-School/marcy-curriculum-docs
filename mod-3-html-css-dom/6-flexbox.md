@@ -1,4 +1,4 @@
-# Flexbox
+# 8. Flexbox
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-flexbox)!
@@ -47,7 +47,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 Open https://www.youtube.com/ and see how elements shift in size as you resize the window.
 
-![Three youtube videos in a row](img/youtube.png)
+![Three youtube videos in a row](../.gitbook/assets/youtube.png)
 
 <details>
 
@@ -57,7 +57,7 @@ They should be `display: flex;` elements!
 
 </details>
 
-![Flex containers and flex items](img/flex-container-items.png)
+![Flex containers and flex items](../.gitbook/assets/flex-container-items.png)
 
 * **Flexbox** is a display type used for arranging elements inside of a container in a row or a column.
 * The parent element gets the `display: flex` property, making it a **flex container**.
@@ -83,7 +83,7 @@ Consider the following HTML:
 
 By default these elements elements will stack on top of each other.
 
-![block elements will stack on top of each other](img/before-flexbox.png)
+![block elements will stack on top of each other](../.gitbook/assets/before-flexbox.png)
 
 <details>
 
@@ -95,7 +95,7 @@ By default, `div` elements will be block elements. Block elements always stack o
 
 By setting the adding Flexbox to the parent container (the `div.flex-container` element), its children will be placed horizontally in a row!
 
-![Adding display:flex will place the flex items in a row](img/display-flex.png)
+![Adding display:flex will place the flex items in a row](../.gitbook/assets/display-flex.png)
 
 ```css
 .flex-container {
@@ -124,7 +124,7 @@ Let's jump into each!
 
 Flexbox has two axes, the **main axis** and the **cross axis**. Flex items flow along the main axis and, by default stretch along the cross axis.
 
-![flexbox has two axes, the main axis and the cross axis](img/flex-box-axes.svg)
+![flexbox has two axes, the main axis and the cross axis](../.gitbook/assets/flex-box-axes.svg)
 
 By default, the main axis runs in the "row" direction, arranged left to right.
 
@@ -157,7 +157,7 @@ Gap is perhaps the most useful feature of Flexbox. The `gap` property makes addi
 
 Note that the gap will only be applied to the space between the elements, not before the first element and after the last element.
 
-![](img/flex-gap.png)
+![](../.gitbook/assets/flex-gap.png)
 
 <details>
 
@@ -178,7 +178,7 @@ The `flex` property controls how much a flex item will grow or shrink within a c
 
 By default, flex items will only take up as much space as they need. However, if there is extra space, flex items with the `flex` property will flex to take up that space.
 
-![](img/flex-demo.gif)
+![](../.gitbook/assets/flex-demo.gif)
 
 ```css
 /* The flex property controls the relative "growth rate" of a flex item when there is excess space */
@@ -211,7 +211,7 @@ By default, flex items will arrange themselves at the start of the _main axis_ (
 }
 ```
 
-![Justify content values showing flex-start, flex-end, center, space-between, space-around](img/justify-content.png)
+![Justify content values showing flex-start, flex-end, center, space-between, space-around](../.gitbook/assets/justify-content.png)
 
 ### Align Items (Flex Container Property)
 
@@ -224,7 +224,7 @@ By default, flex items will stretch along the _cross axis_. We can change this b
 }
 ```
 
-![Align items values showing flex-start, flex-end, center, stretch, baseline](img/align-items.png)
+![Align items values showing flex-start, flex-end, center, stretch, baseline](../.gitbook/assets/align-items.png)
 
 ### Flex Wrap (Flex Container Property)
 
@@ -232,7 +232,7 @@ By default, flex items will all try to fit onto one line. If there isn't enough 
 
 Setting `flex-wrap: wrap`, flex items will be pushed to the next line when there isn't enough space.
 
-![Alt text](img/flex-wrap.png)
+![Alt text](../.gitbook/assets/flex-wrap.png)
 
 ```css
 .container {
@@ -261,7 +261,7 @@ One of the most common uses of flexbox is to style a navigation bar. Open up the
 
 Below, you can see what the header currently looks like (left) and what we want it to look like (right). What is different?
 
-![Without flexbox, items are aligned vertically. With flex box, we can align items horizontally with nice spacing](img/flexbox-comparison.png)
+![Without flexbox, items are aligned vertically. With flex box, we can align items horizontally with nice spacing](../.gitbook/assets/flexbox-comparison.png)
 
 **Q: How do we fix this?**
 

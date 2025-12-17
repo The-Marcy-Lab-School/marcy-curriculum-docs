@@ -1,17 +1,18 @@
-# Intro to Programming
+# 1. Intro to Programming
 
 **Table of Contents**
-- [Setup](#setup)
-- [Key Terms](#key-terms)
-- [What is a program?](#what-is-a-program)
-- [Running a file with Node](#running-a-file-with-node)
-- [The Console](#the-console)
-  - [Debunking The Console.log Myth](#debunking-the-consolelog-myth)
-- [Control Flow](#control-flow)
-  - [Conditional Statements](#conditional-statements)
-  - [Functions and Function Calls.](#functions-and-function-calls)
-  - [Inspecting the Control Flow With Node](#inspecting-the-control-flow-with-node)
-- [Code Style and Readability](#code-style-and-readability)
+
+* [Setup](0-intro-to-programming.md#setup)
+* [Key Terms](0-intro-to-programming.md#key-terms)
+* [What is a program?](0-intro-to-programming.md#what-is-a-program)
+* [Running a file with Node](0-intro-to-programming.md#running-a-file-with-node)
+* [The Console](0-intro-to-programming.md#the-console)
+  * [Debunking The Console.log Myth](0-intro-to-programming.md#debunking-the-consolelog-myth)
+* [Control Flow](0-intro-to-programming.md#control-flow)
+  * [Conditional Statements](0-intro-to-programming.md#conditional-statements)
+  * [Functions and Function Calls.](0-intro-to-programming.md#functions-and-function-calls)
+  * [Inspecting the Control Flow With Node](0-intro-to-programming.md#inspecting-the-control-flow-with-node)
+* [Code Style and Readability](0-intro-to-programming.md#code-style-and-readability)
 
 ## Setup
 
@@ -37,13 +38,12 @@
 
 A program is a text file with instructions to accomplish some task. It will be made up of comments, expressions, and statements:
 
-* **Comments** are ignored and help to explain the code.
+*   **Comments** are ignored and help to explain the code.
 
     ```js
     // this is a comment
     ```
-
-* **Expressions** are raw data values or the results of operations. Expressions on their own do nothing.
+*   **Expressions** are raw data values or the results of operations. Expressions on their own do nothing.
 
     ```js
     // index.js
@@ -51,10 +51,10 @@ A program is a text file with instructions to accomplish some task. It will be m
     'hello'
     true
     ```
+*   **Statements** change the program.
 
-* **Statements** change the program.
+    \{% code title="index.js" lineNumbers="true" %\}
 
-    {% code title="index.js" lineNumbers="true" %}
     ```js
     // creating a variable increases the memory/storage used by the program
     let instructor = 'ben';
@@ -67,7 +67,8 @@ A program is a text file with instructions to accomplish some task. It will be m
       mood = 'happy';
     }
     ```
-    {% endcode %}
+
+    \{% endcode %\}
 
 **Additional Notes on Expressions:**
 
@@ -76,7 +77,7 @@ A program is a text file with instructions to accomplish some task. It will be m
 
 ## Running a file with Node
 
-When we want to run the code in a file, we use a piece of software called **Node**. 
+When we want to run the code in a file, we use a piece of software called **Node**.
 
 > Node is a program for interpreting and executing JavaScript code
 
@@ -91,7 +92,7 @@ node index.js
 
 ## The Console
 
-`console.log()` is a built-in function that prints text to the Terminal output. 
+`console.log()` is a built-in function that prints text to the Terminal output.
 
 ```js
 console.log("hello world!");
@@ -115,7 +116,7 @@ print('hello')
 Myth: "If our program doesn't print anything to the screen, then it isn't working or it isn't doing anything!"
 {% endhint %}
 
-It is common to think that without `console.log()`, the program isn't doing anything. This is not the case! 
+It is common to think that without `console.log()`, the program isn't doing anything. This is not the case!
 
 This program below runs a loop one billion times! Even if you don't see any output, notice that it takes a moment for it to finish running:
 
@@ -177,7 +178,7 @@ if (instructor !== 'ben') {
 
 ### Functions and Function Calls.
 
-**Functions** are containers for statements. 
+**Functions** are containers for statements.
 
 A **function call** statement also changes the control flow by "activating" the function. Calling a function effectively means: "execute the first line of code in the function next".
 
@@ -203,15 +204,15 @@ The `return` statement "returns" the control flow to the line of code that calle
 
 You can view the exact control flow of a program by using the built in VS Code **Run and Debug panel**.
 
-![The run and debug panel is found on the left side of the screen](img/0-debugger-panel.png)
+![The run and debug panel is found on the left side of the screen](../.gitbook/assets/0-debugger-panel.png)
 
 Once you open the panel, open a `.js` file and add a `debugger;` statement wherever you would like to inspect your code. Then, click "Run and Debug" and select the "Node" configuration.
 
-![The debugger will pause execution at the debugger statement.](img/0-debugger-running.png)
+![The debugger will pause execution at the debugger statement.](../.gitbook/assets/0-debugger-running.png)
 
 At the top, you will see the debugger control panel where you can control the execution of the program.
 
-![The debugger provides various buttons to control the execution of the program.](img/0-debugger-explanation.svg)
+![The debugger provides various buttons to control the execution of the program.](../.gitbook/assets/0-debugger-explanation.svg)
 
 ## Code Style and Readability
 
