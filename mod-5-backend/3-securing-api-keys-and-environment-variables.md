@@ -52,7 +52,7 @@ Once you have an API key, clone the practice repository linked above and do the 
     This value is imported and used by the `frontend/src/adapters/nytAdapters.js` file to send a request to the NYT API. The file is already added to `.gitignore`.
 * Finally, run the program with `npm run dev`. You should see the application below:
 
-![An app using the NYT API to show top stories in the Arts section](img/3-nyt-app.png)
+![An app using the NYT API to show top stories in the Arts section](../.gitbook/assets/3-nyt-app.png)
 
 ## Never Use API Keys In The Frontend
 
@@ -81,7 +81,7 @@ NEVER send requests with API keys from client-side (frontend) applications!
 
 To understand why, run the `frontend` application from the provided repo, view the Networks tab and refresh the page. Then, look through the requests sent by the application and see if you can find the exposed API key!
 
-![The Network tab can expose API Keys used by the client-side (frontend) application.](img/3-nyt-api-key-exposed-network-tab.png)
+![The Network tab can expose API Keys used by the client-side (frontend) application.](../.gitbook/assets/3-nyt-api-key-exposed-network-tab.png)
 
 All requests sent by the client will appear in this Network tab. Even if the API key is hidden in a gitignored file or stored in an environment variable (more on that soon), the client-side (frontend) application still needs to embed that value into the HTTP request URL. There is simply no way to hide it from this Networks tab.
 
@@ -93,7 +93,7 @@ Server-side (backend) code on the other hand is much more secure. A client can s
 
 So, to securely use an API key, we must use it in our server-side code. This means building a server to make requests on behalf of the client, acting as a sort of middleman. As long as the server has the API key, the client doesn't need it!
 
-![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<img/express-api-middleman (1).svg>)
+![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<../.gitbook/assets/express-api-middleman (1).svg>)
 
 In other words, the client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.
 
@@ -192,7 +192,7 @@ const serveTopArtStories = async (req, res, next) => {
 
 For example, on Render, you can add environment variables when configuring your new web service.
 
-![Add environment variables when configuring render web servces](img/3-environment-variables-configuration-render.png)
+![Add environment variables when configuring render web servces](../.gitbook/assets/3-environment-variables-configuration-render.png)
 
 ## Same Origin Requests from the Frontend
 
@@ -200,7 +200,7 @@ Now our server can perform an API request using a protected API key.
 
 Let's update the frontend React application to use our server instead of directly accessing the NYT API.
 
-![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<img/express-api-middleman (1).svg>)
+![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<../.gitbook/assets/express-api-middleman (1).svg>)
 
 Let's update the `url` that our adapter function uses and remove the filter code which is now handled server-side:
 

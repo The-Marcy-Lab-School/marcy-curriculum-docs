@@ -1,4 +1,4 @@
-# ESModules
+# 10. ESModules
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-3-esmodules)!
@@ -264,7 +264,7 @@ The **Cross-Origin Resource Sharing (CORS)** policy is a security feature implem
 
 For some reason, when you open a file using the `file://` protocol (local file system) and attempt to access a resource from any other location (including your own file system), it will consider it to be a different origin.
 
-![face palm](img/face-palm.png)
+![face palm](../.gitbook/assets/face-palm.png)
 
 To get around this, **we need to serve our `html` file using the `http://` protocol from a Server, not from our file system**. This helps the browser see that all of the files are coming from the same origin.
 
@@ -276,7 +276,7 @@ A **server** is just a computer that shares its resources over the internet. A u
 
 When we visit a URL, like [https://www.google.com](https://www.google.com), our browser converts the **Domain Name** (`google.com`) into the **IP Address** of the server computer where the code for Google lives. Then, our computer sends a **request** to that server computer over the internet and the server sends a **response**.
 
-![The client server interaction](../how-tos/img/client-server-interaction.png)
+![The client server interaction](../.gitbook/assets/client-server-interaction.png)
 
 With a **development server**, we can simulate this **HTTP request-response cycle** by having our computer act as both the client and the server.
 
@@ -289,7 +289,7 @@ While it is easy enough to build a server of your own using [Express](../mod-5-b
 * Go to the VS Code Extension library and find Live Server. Install it.
 * Open your `index.html` file and click on the **Go Live** button in the bottom right corner of your screen
 
-![Install live server](img/live-server.png)
+![Install live server](../.gitbook/assets/live-server.png)
 
 Running your web app through a local development server will allow you to simulate a more typical web environment with `http://` or `https://` protocols, which should prevent CORS issues during testing.
 

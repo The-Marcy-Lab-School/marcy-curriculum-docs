@@ -1,4 +1,4 @@
-# Building a Flashcards App
+# 5. Building a Flashcards App
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/benspector-mls/flashcards)!
@@ -42,7 +42,7 @@ I know that I'll need some flashcard data to render.
 
 To get myself started, I used ChatGPT to give me a dataset of flashcards rather than come up with my own set of questions. I asked for the data in JSON format so that I could easily import it into my app.
 
-![I asked chat gpt to give me a dataset of flashcard to study react](img/chatgpt-data-prompt.png)
+![I asked chat gpt to give me a dataset of flashcard to study react](../.gitbook/assets/chatgpt-data-prompt.png)
 
 I then stored the resulting data in a `.json` file called `src/db/flashcards.json` (I made a `src/db` folder since this is sort of like my "database").
 
@@ -88,7 +88,7 @@ Using the JSON file we created above, we can create a mock API. To set it up we 
 2. Create the `.json` file. We did this already: `db/flashcards.json`
 3. From the root of your vite project, split your terminal and run `json-server --watch db/flashcards.json --port 4000` to start a mock back-end server on port 4000.
 
-![](img/split-terminal.gif)
+![](../.gitbook/assets/split-terminal.gif)
 
 4. Now, you will have an API that you can access via the URL http://localhost:4000/flashcards (try visiting that URL in your browser!)
 

@@ -28,7 +28,7 @@ You'll use Loom throughout the program to record project demonstrations, practic
 4. Sign in with your Loom account
 5. Follow the prompts to configure your microphone and camera settings
 
-![Access the Loom extension in your Chrome toolbar](img/loom-extensions.png)
+![Access the Loom extension in your Chrome toolbar](../.gitbook/assets/loom-extensions.png)
 
 ## Recording Your First Video
 
@@ -41,8 +41,8 @@ You'll use Loom throughout the program to record project demonstrations, practic
 4. Click "Start Recording"
 5. When finished, click the stop button in the Loom control bar
 
-![Record your screen using the Loom Chrome extension](img/loom-record-screen.png)
+![Record your screen using the Loom Chrome extension](../.gitbook/assets/loom-record-screen.png)
 
 6. Your video will automatically upload and generate a shareable link
 
-![Share the link to your recording](img/loom-share-link.png)
+![Share the link to your recording](../.gitbook/assets/loom-share-link.png)

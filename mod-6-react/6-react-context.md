@@ -1,30 +1,30 @@
-# React Context
+# 6. React Context
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-0-react-context)!
 {% endhint %}
 
 **Table of Contents**:
-- [Terms](#terms)
-- [Problem: Props Drilling](#problem-props-drilling)
-  - [Passing State From App to LikesButton](#passing-state-from-app-to-likesbutton)
-- [Solution: useContext](#solution-usecontext)
-  - [1. Create a context object](#1-create-a-context-object)
-  - [2. Render a Context Provider](#2-render-a-context-provider)
-  - [3. Use the Context](#3-use-the-context)
-- [Summary](#summary)
+
+* [Terms](6-react-context.md#terms)
+* [Problem: Props Drilling](6-react-context.md#problem-props-drilling)
+  * [Passing State From App to LikesButton](6-react-context.md#passing-state-from-app-to-likesbutton)
+* [Solution: useContext](6-react-context.md#solution-usecontext)
+  * [1. Create a context object](6-react-context.md#1-create-a-context-object)
+  * [2. Render a Context Provider](6-react-context.md#2-render-a-context-provider)
+  * [3. Use the Context](6-react-context.md#3-use-the-context)
+* [Summary](6-react-context.md#summary)
 
 ## Terms
 
-- **Context (English Definition)** — The circumstances that form the setting for an event, statement, or idea, and in terms of which it can be fully understood and assessed.
-- **Props Drilling** - When we pass a piece of state through 2 or more child components before reaching the component that uses the state.
-- **React Context** — the combination of:
+* **Context (English Definition)** — The circumstances that form the setting for an event, statement, or idea, and in terms of which it can be fully understood and assessed.
+* **Props Drilling** - When we pass a piece of state through 2 or more child components before reaching the component that uses the state.
+* **React Context** — the combination of:
   1. an object where we can store global data and
   2. a "wrapper" component that provides its data to all descendants
-- **`createContext`** — A function exported from `react` that creates a new `Context` object.
-- **`Context.Provider`** — A component created from a `Context` object that provides all of its descendants with access to the `Context` object's values.
-- **`useContext`** — A React hook for retrieving the values of a `Context` object.
-
+* **`createContext`** — A function exported from `react` that creates a new `Context` object.
+* **`Context.Provider`** — A component created from a `Context` object that provides all of its descendants with access to the `Context` object's values.
+* **`useContext`** — A React hook for retrieving the values of a `Context` object.
 
 ## Problem: Props Drilling
 
@@ -32,9 +32,9 @@ Consider the instagram clone app that renders something like this:
 
 > Note how there is a **total tally** of likes at the top that sums the likes on each individual picture.
 
-![](./img/instapets-screenshot.png)
+![](../.gitbook/assets/instapets-screenshot.png)
 
-![](./img/instacat-component-tree.svg)
+![](../.gitbook/assets/instacat-component-tree.svg)
 
 ### Passing State From App to LikesButton
 
@@ -56,7 +56,8 @@ const App = () => {
 };
 ```
 
-However, the component that uses `incrementTotalLikes` is `LikesButton` which is 3 layers away from `App`. 
+However, the component that uses `incrementTotalLikes` is `LikesButton` which is 3 layers away from `App`.
+
 * So we first pass `incrementTotalLikes` to `PicturesList`...
 * Which passes it to each `InstagramPost` instance...
 * Which passes it down to `LikesButton`...
@@ -92,16 +93,17 @@ In plain english, "context" means:
 > the circumstances that form the setting for an event, statement, or idea, and in terms of which it can be fully understood and assessed.
 
 In React, Context is the combination of:
+
 1. an object where we can store global data and
 2. a "wrapper" component that provides its data to all descendants
 
-<img src='./img/instagram-context-diagram.svg' style="max-width: 800px">
+![](../.gitbook/assets/instagram-context-diagram.svg)
 
 To use React's Context API, there are **3 concepts to understand**.
 
-- Making a Context object - `const Context = createContext(startingValue)`
-- Rendering a Context Provider - `<Context.Provider values={values} />`
-- Getting values from a Context - `useContext(Context)`
+* Making a Context object - `const Context = createContext(startingValue)`
+* Rendering a Context Provider - `<Context.Provider values={values} />`
+* Getting values from a Context - `useContext(Context)`
 
 ### 1. Create a context object
 
@@ -118,12 +120,13 @@ const InstagramContext = createContext({});
 export default InstagramContext;
 ```
 
-- We create a new folder called `context/` in our `src` folder
-- `createContext` is a named export of the `react` library
-- We invoke `createContext` to create a new `InstagramContext` object which we export.
-- It can take in a `defaultValue` argument. For now, we'll just use an empty object.
+* We create a new folder called `context/` in our `src` folder
+* `createContext` is a named export of the `react` library
+* We invoke `createContext` to create a new `InstagramContext` object which we export.
+* It can take in a `defaultValue` argument. For now, we'll just use an empty object.
 
 The `InstagramContext` object is the "glue" that makes context possible. We are going to use it to:
+
 1. Wrap our app's components in a `<InstagramContext.Provider value={contextValues} />` component, providing all descendants with access to the `contextValues` that we choose.
 2. Use the `useContext(InstagramContext)` hook to get access to the `contextValues` within a descendent component.
 
@@ -164,11 +167,12 @@ const App = () => {
 export default App;
 ```
 
-   We first import the `InstagramContext` we just created.
-- `InstagramContext.Provider` is a component that we can wrap around any piece of the application that we want to have access to the `InstagramContext`.
-- The `value` prop of the `InstagramContext.Provider` determines the data available to the children of the `InstagramContext.Provider`
-- Now, we can safely remove the `incrementTotalLikes` prop from the `PicturesList` and all intermediate components.
-- We can also remove the `totalLikes` prop from the `Header`
+We first import the `InstagramContext` we just created.
+
+* `InstagramContext.Provider` is a component that we can wrap around any piece of the application that we want to have access to the `InstagramContext`.
+* The `value` prop of the `InstagramContext.Provider` determines the data available to the children of the `InstagramContext.Provider`
+* Now, we can safely remove the `incrementTotalLikes` prop from the `PicturesList` and all intermediate components.
+* We can also remove the `totalLikes` prop from the `Header`
 
 ### 3. Use the Context
 
@@ -201,9 +205,9 @@ const LikesButton = () => {
 export default LikesButton;
 ```
 
-- `useContext` is imported from `react` alongside `useState`
-- The `InstagramContext` itself is also imported. This will be needed when we invoke `useContext`
-- `useContext` is invoked at the top of the `LikesButton` component. It takes in a `Context` object and returns the `value` prop of the associated `InstagramContext.Provider`.
+* `useContext` is imported from `react` alongside `useState`
+* The `InstagramContext` itself is also imported. This will be needed when we invoke `useContext`
+* `useContext` is invoked at the top of the `LikesButton` component. It takes in a `Context` object and returns the `value` prop of the associated `InstagramContext.Provider`.
 
 > ⚠️ We can take this even further and use the Context for every value in the application. However, there is a delicate balance between storing TOO much in context and keeping the state close to the components that need it.
 
@@ -215,8 +219,8 @@ Think of Context as an object where we can store global data and that any compon
 
 To use React's Context API, there are **3 concepts to understand**.
 
-- Making a Context object - `const Context = createContext()`
-- Rendering a Context Provider - `<Context.Provider values={} />`
-- Getting values from a Context - `useContext()`
+* Making a Context object - `const Context = createContext()`
+* Rendering a Context Provider - `<Context.Provider values={} />`
+* Getting values from a Context - `useContext()`
 
-<img src='./img/instagram-context-diagram.svg' style="max-width: 800px">
+![](../.gitbook/assets/instagram-context-diagram.svg)

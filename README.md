@@ -118,7 +118,7 @@ _Thinking in Systems_ is the ability to zoom out and see how a system works as a
 
 For example, the diagram below represents the layers of a full-stack PERN stack application. As software engineers, we need to be able to view an application in this manner and understand how the layers communicate with each other.
 
-![A full-stack PERN application system diagram.](mod-9-civic-tech-hackathon/img/full-stack-diagram.svg)
+![A full-stack PERN application system diagram.](.gitbook/assets/full-stack-diagram.svg)
 
 Systems-level thinking enables us to design, reason about, implement, and debug complex algorithms all the way up to complex applications. It is what separates “programmers” (those who can write functional code) from “software engineers” (those who can design reliable and maintainable code).
 

@@ -1,26 +1,23 @@
-# Fetch
+# 2. Fetch
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch)!
 {% endhint %}
 
-- [What is a Web API?](#what-is-a-web-api)
-- [The `fetch()` function](#the-fetch-function)
-  - [Steps 1 and 2: Getting A Response Object](#steps-1-and-2-getting-a-response-object)
-  - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
-  - [Steps 5 and 6: Do Something With the Data (and Errors)](#steps-5-and-6-do-something-with-the-data-and-errors)
-- [Challenge: Make Your Own API App](#challenge-make-your-own-api-app)
-- [Sending POST, PATCH, and DELETE Requests](#sending-post-patch-and-delete-requests)
-- [More Information About Requests and Responses](#more-information-about-requests-and-responses)
-  - [HTTP Status Codes](#http-status-codes)
-  - [URL Structure](#url-structure)
+* [What is a Web API?](2-fetch.md#what-is-a-web-api)
+* [The `fetch()` function](2-fetch.md#the-fetch-function)
+  * [Steps 1 and 2: Getting A Response Object](2-fetch.md#steps-1-and-2-getting-a-response-object)
+  * [Steps 3 and 4: Reading Data From the Response Object](2-fetch.md#steps-3-and-4-reading-data-from-the-response-object)
+  * [Steps 5 and 6: Do Something With the Data (and Errors)](2-fetch.md#steps-5-and-6-do-something-with-the-data-and-errors)
+* [Challenge: Make Your Own API App](2-fetch.md#challenge-make-your-own-api-app)
+* [Sending POST, PATCH, and DELETE Requests](2-fetch.md#sending-post-patch-and-delete-requests)
+* [More Information About Requests and Responses](2-fetch.md#more-information-about-requests-and-responses)
+  * [HTTP Status Codes](2-fetch.md#http-status-codes)
+  * [URL Structure](2-fetch.md#url-structure)
 
 In the last lesson, we learned about how to handle asynchronous functions with Promises. Today we will learn perhaps the most important asynchronous function, `fetch`. The `fetch` function lets us request data from a **web API**
 
 ## What is a Web API?
-
-
-
 
 Remember, API stands for "Application Programming Interface". An interface can be thought of as a set of tools or resources. So an API is a set of tools that an application can interact with to create a program. Very generic, right?
 
@@ -35,37 +32,36 @@ A **web API** is another type of API whose interface is made up of URLs that eac
 An API endpoint is a URL that provides access to one of the API's resources. Each of the following URLs provides a different set of data (paste them into your browser's URL bar):
 
 * https://dog.ceo/api/breeds/list/all
-
 * https://dog.ceo/api/breeds/image/random
 
 When we use the HTTPS protocol, we are sending a request over the internet to the dog.ceo servers. Those servers are set up to listen for incoming requests, perform the requested actions according to the endpoint that was targeted, and then send back a response.
 
-![](img/http-request-response-cycle.png)
+![](../.gitbook/assets/http-request-response-cycle.png)
 
 The request includes the URL and a CRUD-related verb indicating what you want to do with the requested data:
-* "POST" - Create 
+
+* "POST" - Create
 * "GET" - Read
 * "PATCH" - Update
 * "DELETE" - Delete
 
 Status codes are the three-digit codes that provide information about the response:
-* `200` OK: The request was successful 
-* `400` Bad Request: The server received the request but was unable to process it due to malformed syntax 
-* `403` Forbidden: The server understood the request but denied it 
-* `404` Not Found: The server could not find the requested resource 
+
+* `200` OK: The request was successful
+* `400` Bad Request: The server received the request but was unable to process it due to malformed syntax
+* `403` Forbidden: The server understood the request but denied it
+* `404` Not Found: The server could not find the requested resource
 * `500` Internal Server Error: The server experienced something unexpected that prevented it from fulfilling the request
 
 {% hint style="info" %}
-
 Web APIs make it possible for applications to utilize data from other sources and combine them in interesting ways. For example, we can build an application that uses the Google Maps API to get directions from point A to point B and then use a weather API to display the weather along the route.
-
 {% endhint %}
 
 But before we get ahead of ourselves, let's look at how to use the `fetch` function to send an HTTP request to a web API.
 
 ## The `fetch()` function
 
-The `fetch` function is used to send HTTP requests from within our programs. It returns a `Promise` object. 
+The `fetch` function is used to send HTTP requests from within our programs. It returns a `Promise` object.
 
 When, using the `fetch` function, we will follow these 6 steps:
 
@@ -102,6 +98,7 @@ Let's break this down.
 ### Steps 1 and 2: Getting A Response Object
 
 Let's start with the first two steps:
+
 1. Invoke `fetch` with an API endpoint (a specific URL provided by a web API). A promise is returned.
 2. Define promise handlers with `.then` and `.catch`
 
@@ -120,14 +117,15 @@ fetchPromise
 
 We should get something that looks like this:
 
-![A response object printed to the console](img/response-object.png)
+![A response object printed to the console](../.gitbook/assets/response-object.png)
 
 The returned object is a [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object. It contains useful information about both the request and the response including:
-  * `response.body` — a stream of data that we can read to get the response data
-  * `response.ok` — indicates if the response succeeded or failed
-  * `response.status` — a 3-digit code the type of success or failure that occurred (`200` means the requested data was returned)
-  * `response.statusText` — a string with more information about the response
-  * `response.url` — the endpoint requested
+
+* `response.body` — a stream of data that we can read to get the response data
+* `response.ok` — indicates if the response succeeded or failed
+* `response.status` — a 3-digit code the type of success or failure that occurred (`200` means the requested data was returned)
+* `response.statusText` — a string with more information about the response
+* `response.url` — the endpoint requested
 
 The `response.body` is the main thing we want from this response, but as you can see it is a `ReadableStream` object, not a string or normal object with the data inside.
 
@@ -153,14 +151,18 @@ fetchPromise
 
 Step 3 is a guard clause for step 4, so let's start with step 4 and then return to step 3:
 
-![Data is downloaded and processed in chunks, rather than all at once](img/readable-stream.png)
+![Data is downloaded and processed in chunks, rather than all at once](../.gitbook/assets/readable-stream.png)
 
 When an HTTP request is sent to a web API, the response data isn't sent back all at once. Instead, it is sent back in a continuous "stream" of data chunks. That's what the `ReadableStream` in the `response.body` is.
 
-**<details><summary>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</summary>**
-Getting data from another source requires two steps: first downloading the data and then reading it. If the data is really large, downloading the data can become a blocking task. 
- 
+<details>
+
+<summary><strong>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</strong></summary>
+
+Getting data from another source requires two steps: first downloading the data and then reading it. If the data is really large, downloading the data can become a blocking task.
+
 By chunking the data, we can download the data in smaller pieces and start the process of reading it as it comes in. If we had to wait for all of the data to be downloaded before we started reading it, the process would take longer.
+
 </details>
 
 Reading the incoming data stream is an asynchronous process that we can initiate by invoking the `response.json()` function, which will read the data stream as JSON.
@@ -169,7 +171,6 @@ Reading the incoming data stream is an asynchronous process that we can initiate
 Using `response.json()` assumes that the data is in JSON format (99% of the time it will be). If it isn't, there are [other methods available](https://developer.mozilla.org/en-US/docs/Web/API/Response#instance_methods).
 {% endhint %}
 
-
 `response.json()` returns a promise.
 
 ```js
@@ -177,7 +178,7 @@ Using `response.json()` assumes that the data is in JSON format (99% of the time
 const readingPromise = response.json();
 ```
 
-However, before we do this, we need to check to see if the `response` failed. If it did, then there won't be any data to read in. We don't want to start an asynchronous process unnecessarily if we don't have to. 
+However, before we do this, we need to check to see if the `response` failed. If it did, then there won't be any data to read in. We don't want to start an asynchronous process unnecessarily if we don't have to.
 
 So, we include a guard clause that checks the `response.ok` property and throws a useful error with the status of the response:
 
@@ -244,26 +245,26 @@ fetchPromise
   })
 ```
 
-- What you do will depend on the API you're using
-- For example, the dog.ceo API puts the image source URL in the `responseBody.message` property. 
-- Every web API should include documentation that outlines the structure of the `responseBody` data.
+* What you do will depend on the API you're using
+* For example, the dog.ceo API puts the image source URL in the `responseBody.message` property.
+* Every web API should include documentation that outlines the structure of the `responseBody` data.
 
-The final step of handling errors isn't that new or interesting. If an error is thrown (or if a Promise rejects), we catch it and print it out. However, we should be aware of what can cause an error (or a rejected Promise). 
+The final step of handling errors isn't that new or interesting. If an error is thrown (or if a Promise rejects), we catch it and print it out. However, we should be aware of what can cause an error (or a rejected Promise).
 
 There are two likely causes of errors / rejected Promises:
-* A `fetch()` Promise rejects when the request itself fails. For example, the URL might be malformed (`hxxp://example.com`) or there is a network error (you don't have internet). 
-  * **Note**: a `fetch()` promise can still resolve but have `response.ok` be `false`. For example, if the URL is properly formatted but the API you are requesting from is down, the `fetch()` call itself will work but `response.ok` will be `false`. You can check the [HTTP status code](#http-status-codes) to see exactly what caused the request to fail. In this case, we manually throw our own `Error` in step 3.
-* A `response.json()` Promise rejects when the `response` body is NOT in JSON format and therefore cannot be read.
 
+* A `fetch()` Promise rejects when the request itself fails. For example, the URL might be malformed (`hxxp://example.com`) or there is a network error (you don't have internet).
+  * **Note**: a `fetch()` promise can still resolve but have `response.ok` be `false`. For example, if the URL is properly formatted but the API you are requesting from is down, the `fetch()` call itself will work but `response.ok` will be `false`. You can check the [HTTP status code](2-fetch.md#http-status-codes) to see exactly what caused the request to fail. In this case, we manually throw our own `Error` in step 3.
+* A `response.json()` Promise rejects when the `response` body is NOT in JSON format and therefore cannot be read.
 
 ## Challenge: Make Your Own API App
 
 Now that you know how to use APIs, use the 6-step structure above to send and handle `fetch` requests to other APIs! Here are a few other free API endpoints that you can try:
 
-- https://api.thecatapi.com/v1/images/search
-- https://pokeapi.co/api/v2/pokemon/pikachu
-- https://v2.jokeapi.dev/joke/Programming
-- https://api.sunrise-sunset.org/json?lat=40.7128&lng=-74.0060&tzid=America/New_York
+* https://api.thecatapi.com/v1/images/search
+* https://pokeapi.co/api/v2/pokemon/pikachu
+* https://v2.jokeapi.dev/joke/Programming
+* https://api.sunrise-sunset.org/json?lat=40.7128\&lng=-74.0060\&tzid=America/New\_York
 
 Can you build an application that fetches this data and then displays it in some useful way? We've provided the `2-fetching-challenge` starting template for you to start working with.
 
@@ -271,26 +272,24 @@ Can you build an application that fetches this data and then displays it in some
 
 HTTP requests are not exactly requests for data; they are requests to perform a CRUD action. Consider these examples related to Instagram:
 
-- The client requests to post a new picture on their profile (Create)
-- The client requests to see all posts made by Beyonce (Read)
-- The client requests to update a post they made yesterday (Update)
-- The client requests to delete a post they made yesterday (Delete)
+* The client requests to post a new picture on their profile (Create)
+* The client requests to see all posts made by Beyonce (Read)
+* The client requests to update a post they made yesterday (Update)
+* The client requests to delete a post they made yesterday (Delete)
 
 Each of these requests to perform CRUD actions has an HTTP verb that is associated with it.
 
-- `POST` - Create
-- `GET` - Read
-- `PATCH` - Update
-- `DELETE` - Delete
+* `POST` - Create
+* `GET` - Read
+* `PATCH` - Update
+* `DELETE` - Delete
 
 This HTTP verb or “method” is sent in the HTTP Request so that the server knows what kind of request it is receiving.
 
 The default behavior of using `fetch` is to make a `GET` request, but we can also make other kinds of requests by defining an `options` object. We then pass the `options` object as a second argument to `fetch`. Here are some examples of POST (create), PATCH (update), and DELETE (delete) requests:
 
 {% tabs %}
-
-{% tab title="POST" %} 
-
+{% tab title="POST" %}
 When sending a POST request, we often will need to send a **request body**. Before sending, we `JSON.stringify` that data and tell the API that we're sending `"application/json"` data.
 
 ```js
@@ -308,11 +307,9 @@ const options = {
 fetch(url, options);
 // handle the fetch promise, etc...
 ```
-
 {% endtab %}
 
-{% tab title="PATCH" %} 
-
+{% tab title="PATCH" %}
 When sending a PATCH request, we are often updating a single resource. So, notice how the `url` now ends with `/users/2` to indicate that we want to update the user with id 2. The request body will include our desired changes. Again, we `JSON.stringify` that data and tell the API that we're sending `"application/json"` data.
 
 ```js
@@ -330,11 +327,9 @@ const options = {
 fetch(url, options);
 // handle the fetch promise, etc...
 ```
-
 {% endtab %}
 
-{% tab title="DELETE" %} 
-
+{% tab title="DELETE" %}
 When sending a DELETE request, we are often deleting a single resource. So, notice how the `url` now ends with `/users/2` to indicate that we want to delete the user with id 2. No data needs to be sent with the request so we leave out `body` and `headers`.
 
 ```js
@@ -347,33 +342,32 @@ const options = {
 fetch(url, options);
 // handle the fetch promise, etc...
 ```
-
 {% endtab %}
+{% endtabs %}
 
-{% endtabs %} 
+Most of the `options` object is boilerplate (it's mostly the same each time):
 
-Most of the `options` object is boilerplate (it's mostly the same each time): 
 * The `method` determines the kind of request
 * The `body` determines **what** we send to the server. Note that it must be `JSON.stringify()`-ed first.
 * The `headers` object provides meta-data about the request. It can provide many pieces of information but here all we need to share is the format of the data we are sending to the API.
 
 To see this in action, check out the example in `3-post-requests` which uses a form to create new users:
 
-![Filling out the form will send a POST request to create a new user. The newly created user is displayed in a list.](img/create-new-user-app.png)
+![Filling out the form will send a POST request to create a new user. The newly created user is displayed in a list.](../.gitbook/assets/create-new-user-app.png)
 
 ## More Information About Requests and Responses
 
 ### HTTP Status Codes
 
-Every Response that we receive from a server will include a status code indicating how the request was processed. Was the resource found and returned? Was the resource not found? What there an error? Did the POST request successfully create a new resource? 
+Every Response that we receive from a server will include a status code indicating how the request was processed. Was the resource found and returned? Was the resource not found? What there an error? Did the POST request successfully create a new resource?
 
 Responses are grouped in five classes:
 
-- Informational responses (100 – 199)
-- Successful responses (200 – 299)
-- Redirection messages (300 – 399)
-- Client error responses (400 – 499)
-- Server error responses (500 – 599)
+* Informational responses (100 – 199)
+* Successful responses (200 – 299)
+* Redirection messages (300 – 399)
+* Client error responses (400 – 499)
+* Server error responses (500 – 599)
 
 Important ones to know are 200, 201, 204, 404, and 500
 
@@ -381,7 +375,7 @@ Important ones to know are 200, 201, 204, 404, and 500
 
 Every URL has a few parts. Understanding those parts can help us fetch precisely the data we want.
 
-Consider this URL which tells us information about the sunrise and sunset at a particular [latitude and longitude](https://en.wikipedia.org/wiki/Geographic_coordinate_system#Latitude_and_longitude):
+Consider this URL which tells us information about the sunrise and sunset at a particular [latitude and longitude](https://en.wikipedia.org/wiki/Geographic_coordinate_system#Latitude_and_longitude):
 
 ```
 https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2023-3-15
@@ -389,8 +383,8 @@ https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2023-3-15
 
 Let's break it down:
 
-- `https://api.sunrise-sunset.org` — This is the **host**. It tells the client where the resource is hosted/located.
-- `/json` - This is the **path**. It shows what resource is being requested
-- `?lat=36.7201600&lng=-4.4203400&date=2023-3-15` - These are **query parameters** and this particular URL has 3: `lat`, `lng`, and `date`. Query parameters begin with a `?` are are separated with `&`. Each parameter uses the format `name=value`. Try changing the `date` parameter!
+* `https://api.sunrise-sunset.org` — This is the **host**. It tells the client where the resource is hosted/located.
+* `/json` - This is the **path**. It shows what resource is being requested
+* `?lat=36.7201600&lng=-4.4203400&date=2023-3-15` - These are **query parameters** and this particular URL has 3: `lat`, `lng`, and `date`. Query parameters begin with a `?` are are separated with `&`. Each parameter uses the format `name=value`. Try changing the `date` parameter!
 
 When using a new API, make sure to look at that API's [documentation](https://api.sunrise-sunset.org/) (often found at the host address) to understand how to format the request URL.

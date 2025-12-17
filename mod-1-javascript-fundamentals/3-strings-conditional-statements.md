@@ -1,26 +1,27 @@
-# Strings & Conditional Statements
+# 4. String Methods & Conditional Statements
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1-3-strings-conditional-statements)!
 {% endhint %}
 
 **Table of Contents:**
-- [Summary](#summary)
-- [Strings](#strings)
-  - [Escaping Characters](#escaping-characters)
-  - [String Interpolation](#string-interpolation)
-  - [String Indexes and Bracket Notation](#string-indexes-and-bracket-notation)
-  - [Strings are Immutable](#strings-are-immutable)
-  - [String Length](#string-length)
-  - [String Methods](#string-methods)
-- [Conditional Statements](#conditional-statements)
-  - [`if/else if/else` statements](#ifelse-ifelse-statements)
-  - [Order Matters](#order-matters)
-  - [Only `if` statements](#only-if-statements)
-  - [Guard Clauses](#guard-clauses)
-  - [Use Ternary Operators To Simplify Conditionals](#use-ternary-operators-to-simplify-conditionals)
 
-![A string of characters is like a bracelet with beads on it](img/bracelet.png)
+* [Summary](3-strings-conditional-statements.md#summary)
+* [Strings](3-strings-conditional-statements.md#strings)
+  * [Escaping Characters](3-strings-conditional-statements.md#escaping-characters)
+  * [String Interpolation](3-strings-conditional-statements.md#string-interpolation)
+  * [String Indexes and Bracket Notation](3-strings-conditional-statements.md#string-indexes-and-bracket-notation)
+  * [Strings are Immutable](3-strings-conditional-statements.md#strings-are-immutable)
+  * [String Length](3-strings-conditional-statements.md#string-length)
+  * [String Methods](3-strings-conditional-statements.md#string-methods)
+* [Conditional Statements](3-strings-conditional-statements.md#conditional-statements)
+  * [`if/else if/else` statements](3-strings-conditional-statements.md#ifelse-ifelse-statements)
+  * [Order Matters](3-strings-conditional-statements.md#order-matters)
+  * [Only `if` statements](3-strings-conditional-statements.md#only-if-statements)
+  * [Guard Clauses](3-strings-conditional-statements.md#guard-clauses)
+  * [Use Ternary Operators To Simplify Conditionals](3-strings-conditional-statements.md#use-ternary-operators-to-simplify-conditionals)
+
+![A string of characters is like a bracelet with beads on it](../.gitbook/assets/image.png)
 
 ## Summary
 
@@ -138,9 +139,10 @@ console.log(message[message.length - 12]);
 ### String Methods
 
 A **method** is a function that is attached to a value. Often, methods are used to manipulate the value they are attached to.
+
 * Methods are invoked using **dot notation**: `value.method()`
 
-First, let's look at some "read only" string methods that return a boolean: `includes`, `startsWith`, `endsWith`, 
+First, let's look at some "read only" string methods that return a boolean: `includes`, `startsWith`, `endsWith`,
 
 ```js
 const fruits = 'apples, bananas, cherries';
@@ -213,9 +215,11 @@ console.log(apples.replaceAll('p', 'g'));
 
 Conditional statements allow us to change the behavior of our programs based on the current values of our data.
 
-![In a decision tree, depending on the conditions, we can make different decisions.](img/decision-tree.png)
+![In a decision tree, depending on the conditions, we can make different decisions.](../.gitbook/assets/decision-tree.png)
 
-**<details><summary>Q: In the decision tree above, what are the variables that will impact the end result?</summary>**
+<details>
+
+<summary><strong>Q: In the decision tree above, what are the variables that will impact the end result?</strong></summary>
 
 The first variable is the `weather` and then, depending on the weather, the variable `time` or `hungry` is used to determine whether to walk or take the bus.
 
@@ -333,15 +337,18 @@ console.log(isItHot(105));
 // Output: ???
 ```
 
-**<details><summary>Q: Why doesn't the last return statement need an `if` statement?</summary>**
+<details>
+
+<summary><strong>Q: Why doesn't the last return statement need an <code>if</code> statement?</strong></summary>
 
 If the program makes it to the last `return "Nah"` statement, we can assume that the temperature is less than or equal to 75 because none of the other conditions were `true`.
 
 </details>
 
 ### Use Ternary Operators To Simplify Conditionals
-- `if` and `else` statements let you choose between one of two code blocks to execute.
-- The ternary operator `condition ? valA : valB` is used to choose between one of two values.
+
+* `if` and `else` statements let you choose between one of two code blocks to execute.
+* The ternary operator `condition ? valA : valB` is used to choose between one of two values.
 
 ```js
 // Okay - Use an If statement to choose which code block to execute

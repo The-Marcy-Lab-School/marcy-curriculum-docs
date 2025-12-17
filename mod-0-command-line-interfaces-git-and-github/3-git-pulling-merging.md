@@ -1,4 +1,4 @@
-# Git Pulling & Merging
+# 3. Git Pulling & Merging
 
 GitHub enables developers across the world to collaborate on projects. In this lesson, we'll learn how to use GitHub to create and manage branches, merge branches, create pull requests, and resolve merge conflicts.
 
@@ -9,15 +9,14 @@ You will be able to…
 
 **Table of Contents:**
 
-- [Key Terms \& Commands](#key-terms--commands)
-- [Collaborating on a GitHub Repository](#collaborating-on-a-github-repository)
-  - [`git pull` synchronizes local repositories](#git-pull-synchronizes-local-repositories)
-  - [Adding a Collaborator](#adding-a-collaborator)
-  - [Creating a Merge Conflict](#creating-a-merge-conflict)
-  - [Why Can't I Push?](#why-cant-i-push)
-  - [Handling Merge Conflicts](#handling-merge-conflicts)
-- [Tips for success](#tips-for-success)
-
+* [Key Terms & Commands](3-git-pulling-merging.md#key-terms--commands)
+* [Collaborating on a GitHub Repository](3-git-pulling-merging.md#collaborating-on-a-github-repository)
+  * [`git pull` synchronizes local repositories](3-git-pulling-merging.md#git-pull-synchronizes-local-repositories)
+  * [Adding a Collaborator](3-git-pulling-merging.md#adding-a-collaborator)
+  * [Creating a Merge Conflict](3-git-pulling-merging.md#creating-a-merge-conflict)
+  * [Why Can't I Push?](3-git-pulling-merging.md#why-cant-i-push)
+  * [Handling Merge Conflicts](3-git-pulling-merging.md#handling-merge-conflicts)
+* [Tips for success](3-git-pulling-merging.md#tips-for-success)
 
 ## Key Terms & Commands
 
@@ -41,7 +40,7 @@ git pull # download changes from a remote repository
 
 An app published to the App Store (or Play Store, I see you Android users) is essentially the same as a repository uploaded to GitHub.
 
-![](img/app-store.png)
+![](../.gitbook/assets/app-store.png)
 
 Just like downloading an app, anyone can download a repo from GitHub using the `git clone` command.
 
@@ -64,16 +63,17 @@ In the last lesson, you learned about the `git push` command which uploads a loc
 Let's put this into practice. With your partner do the following:
 
 1. Have the developer who first created the repo on GitHub make some edits to `README.md`.
-2. That same developer should then stage their changes, commit, and push:
-      ```sh
-      git add README.md
-      git commit -m "[description of your commit]"
-      git push
-      ```
+2.  That same developer should then stage their changes, commit, and push:
+
+    ```sh
+    git add README.md
+    git commit -m "[description of your commit]"
+    git push
+    ```
 3. Double check on GitHub that the commit shows up on the remote repository's commit history.
 4. **Now, the second developer should run the command `git pull`** (if working solo, switch over to the location of the second copy of the repo and run `git pull`)
 
-![Git push will upload local commits and git pull will download them and attempt to merge.](img/git-github-workflow.png)
+![Git push will upload local commits and git pull will download them and attempt to merge.](../.gitbook/assets/git-github-workflow.png)
 
 By storing repositories remotely on GitHub, any number of developers can have access to a single repository. This push and pull mechanism is essential for collaboration.
 
@@ -86,7 +86,7 @@ Before moving on, the owner of the shared repo should add their partner as a col
 1. Go into the settings of the repo, go to Collaborators, and click on "Add people".
 2. Add their partner as a collaborator using their GitHub username or Email and have their partner accept the invitation.
 
-![Add collaborators on GitHub](img/add-collaborators.png)
+![Add collaborators on GitHub](../.gitbook/assets/add-collaborators.png)
 
 ### Creating a Merge Conflict
 
@@ -103,7 +103,7 @@ Whichever developer managed to push their changes first (or has a better interne
 
 The developer who pushed second will be given this message:
 
-![The remote repository has changes that are not in the local repository. Git pull to download those changes](img/failed-to-push.png)
+![The remote repository has changes that are not in the local repository. Git pull to download those changes](../.gitbook/assets/failed-to-push.png)
 
 ### Why Can't I Push?
 
@@ -115,7 +115,7 @@ They _could_ try to "force" their push through by running `git push -f` but this
 
 In this case, developer 2 is missing the commit from developer 1 in their local repo and needs to pull down the changes.
 
-![alt text](img/failed-to-push-diagram.png)
+![alt text](../.gitbook/assets/failed-to-push-diagram.png)
 
 So, the developer who pushed last should run `git pull`
 
@@ -135,7 +135,7 @@ Okay take a deep breath. Merge conflicts are often scary when they are first enc
 
 VS Code provides a nice UI to help us resolve the conflict:
 
-![](img/merge-conflict.png)
+![](<../.gitbook/assets/merge-conflict (1).png>)
 
 Let's break down what we see here:
 
@@ -157,7 +157,7 @@ To resolve this conflict we can:
 3. Once you've made your choice, save the file, stage the changes, commit them, and push the changes.
    * Typically, you can use the commit message `"resolving merge conflicts"`
 
-![](img/resolving-merge-conflict.gif)
+![](../.gitbook/assets/resolving-merge-conflict.gif)
 
 Hurrayy!!! You've solved the merge conflict! Piece of cake.
 

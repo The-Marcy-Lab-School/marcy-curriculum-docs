@@ -256,7 +256,7 @@ WHERE	people.name = 'Carmen Salas';
 
 We can illustrate the relationships between tables with an **entity relation diagram (ERD)**:
 
-![ERD with one to many and many to many relationships](<img/labeled-erd (1).png>)
+![ERD with one to many and many to many relationships](<../.gitbook/assets/labeled-erd (1).png>)
 
 > _created using https://dbdiagram.io/_
 

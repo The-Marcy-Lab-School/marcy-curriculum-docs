@@ -22,7 +22,7 @@ You will be using Github Projects to organize and manage your workflow. You can 
 
 * From the organization overview page, click on the Repositories tab.
 
-![](../how-tos/img/new-org-repo.png)
+![](../.gitbook/assets/new-org-repo.png)
 
 * Click on Create a new repository
 * Give your repository a fun name that matches the name of your game!
@@ -34,18 +34,18 @@ You will be using Github Projects to organize and manage your workflow. You can 
 
 * From the repository homepage, click on the Projects tab.
 
-![](../how-tos/img/repo-projects.png)
+![](../.gitbook/assets/repo-projects.png)
 
 * Click on the dropdown next to Link a project and select New project
 
-![](../how-tos/img/new-project.png)
+![](../.gitbook/assets/new-project.png)
 
 * Then, click on New project
   * Name the project board: “Scrum Board”
   * Create a **Board**, not a Table
 * Modify the settings which can be found by clicking on the three dots ... in the top right corner and then selecting **Settings**
 
-![](../how-tos/img/project-settings.png)
+![](../.gitbook/assets/project-settings.png)
 
 * \[Optional] Add a description and a README
 * Change the visibility to **Public**

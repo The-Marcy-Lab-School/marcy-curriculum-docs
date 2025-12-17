@@ -51,11 +51,11 @@ Take a look at the `db.sql` file. It contains the SQL commands to create and pop
     ```
 4. Connect to the `playground` database (or, in the `psql` CLI, run `\c playground`)
 
-![](img/tableplus.png)
+![](../.gitbook/assets/tableplus.png)
 
 5. Copy-Paste the commands from `db.sql` into the TablePlus SQL query editor (or in `psql` connected to the `playground` database) and Run All
 
-![](img/tableplus-run-all.png)
+![](../.gitbook/assets/tableplus-run-all.png)
 
 1. Mac users can run CMD+R and you will see the tables!
 
@@ -65,7 +65,7 @@ When we move the data of our server application out of the server's memory and i
 
 **Knex** is a library that allows a Node project to connect to a database and execute SQL queries using that database.
 
-![client server database diagram](<img/client-server-database-diagram (1).svg>)
+![client server database diagram](<../.gitbook/assets/client-server-database-diagram (1).svg>)
 
 Assuming we already have a database, in order to use Knex in a server application, we must:
 
@@ -334,7 +334,7 @@ const deletePetByName = async(name) => {
 
 These challenges illustrate many-to-many relationships:
 
-![erd with one to many and many to many relationships](<img/labeled-erd (1).png>)
+![erd with one to many and many to many relationships](<../.gitbook/assets/labeled-erd (1).png>)
 
 **`authors`, `books`, and `author_book`**
 

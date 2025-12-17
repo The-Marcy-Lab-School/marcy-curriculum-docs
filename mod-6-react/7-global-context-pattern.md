@@ -13,7 +13,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
 
 ## Global Context Design Pattern
 
-![](img/instagram-context-diagram.svg)
+![](../.gitbook/assets/instagram-context-diagram.svg)
 
 The illustration above shows how we can **wrap the&#x20;**_**entire**_ **`App` component in our context**, but in the example we only wrap the `PostList` component.
 

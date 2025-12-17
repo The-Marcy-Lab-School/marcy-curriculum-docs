@@ -1,33 +1,36 @@
-# Introduction to System Design
+# 7. Introduction to System Design & UML Diagrams
 
 You've been writing classes for weeks. Today we're zooming out. Systems-level thinking means seeing how multiple classes work together to solve a real problem. This isn't just academic—when you interview, you'll be asked to design systems.
 
 By the end of this lesson, you'll be able to answer this question: **Consider an application for making a pet adoption system: What classes exist, what are their responsibilities, and what are the interactions between them? Illustrate this system with a UML diagram.**
 
 **Table of Contents:**
-- [Key Concepts](#key-concepts)
-- [OOP Review / Practice](#oop-review--practice)
-- [Case Study: Pet Adoption Center](#case-study-pet-adoption-center)
-- [System Design](#system-design)
-  - [UML Diagrams \& Iterative Design](#uml-diagrams--iterative-design)
-  - [UML Syntax: Class Responsibilities](#uml-syntax-class-responsibilities)
-  - [UML Syntax: Relationships](#uml-syntax-relationships)
-    - [Arrows: Uni-Directional vs. Bi-Directional](#arrows-uni-directional-vs-bi-directional)
-    - [Multiplicity](#multiplicity)
-    - [Label](#label)
-    - [Practice](#practice)
-- [Flow Charts](#flow-charts)
+
+* [Key Concepts](7-system-design-uml.md#key-concepts)
+* [OOP Review / Practice](7-system-design-uml.md#oop-review--practice)
+* [Case Study: Pet Adoption Center](7-system-design-uml.md#case-study-pet-adoption-center)
+* [System Design](7-system-design-uml.md#system-design)
+  * [UML Diagrams & Iterative Design](7-system-design-uml.md#uml-diagrams--iterative-design)
+  * [UML Syntax: Class Responsibilities](7-system-design-uml.md#uml-syntax-class-responsibilities)
+  * [UML Syntax: Relationships](7-system-design-uml.md#uml-syntax-relationships)
+    * [Arrows: Uni-Directional vs. Bi-Directional](7-system-design-uml.md#arrows-uni-directional-vs-bi-directional)
+    * [Multiplicity](7-system-design-uml.md#multiplicity)
+    * [Label](7-system-design-uml.md#label)
+    * [Practice](7-system-design-uml.md#practice)
+* [Flow Charts](7-system-design-uml.md#flow-charts)
 
 ## Key Concepts
-- **System design** is the process of understanding (1) the *components* of a system, (2) the *responsibilities* of those components, and (3) their *relationships to/interactions with* each other.
-- An **"entity"** is a single component of a system, such as a class in a class-based system.
-- **Unified Modeling Language (UML)** is an industry-standard format for representing the components of a system, their responsibilities, and their relationships.
-- A **multiplicity** labels how many of one class relates to another (e.g. "one-to-many" → "*One* doctor *has many* appointments").
-- **Flow Charts** are used to clearly define how entities are used within the processes of a system.
+
+* **System design** is the process of understanding (1) the _components_ of a system, (2) the _responsibilities_ of those components, and (3) their _relationships to/interactions with_ each other.
+* An **"entity"** is a single component of a system, such as a class in a class-based system.
+* **Unified Modeling Language (UML)** is an industry-standard format for representing the components of a system, their responsibilities, and their relationships.
+* A **multiplicity** labels how many of one class relates to another (e.g. "one-to-many" → "_One_ doctor _has many_ appointments").
+* **Flow Charts** are used to clearly define how entities are used within the processes of a system.
 
 ## OOP Review / Practice
 
 Create a `Book` class:
+
 * Properties:
   * `title`: String, public, set by the constructor
   * `author`: String, public, set by the constructor
@@ -35,9 +38,10 @@ Create a `Book` class:
 * Methods: None
 
 Then, create a `Library` class:
+
 * Properties:
   * `name`: String, public, set by the constructor
-  * `books`: Book[], private, starting value of `[]`
+  * `books`: Book\[], private, starting value of `[]`
 * Methods:
   * `getBooks()`: Returns a copy of the private books array
   * `addBook(book)`: Adds the given book to the private books array. Bonus if you can add a guard clause that ensures that all books added to the library come from the `Book` class.
@@ -61,7 +65,10 @@ myLibrary.addBook({ description: "I'm a book!" });
 console.log(myLibrary.getBooks()); // [ Book { title: "Beloved", author: "Toni Morrison", genre: "Historical Fiction"} ]
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
+
 ```js
 class Book {
   constructor(title, author, genre) {
@@ -88,32 +95,37 @@ class Library {
   }
 }
 ```
+
 </details>
 
 ## Case Study: Pet Adoption Center
 
-![The Pet Adoption Center wants your help designing a system.](./img/pet-adoption-banner.png)
+![The Pet Adoption Center wants your help designing a system.](../.gitbook/assets/pet-adoption-banner.png)
 
 > Imagine that a nation-wide Pet Adoption Center approaches you to build an application for them. The application needs to handle the following:
-> - Each shelter location needs a way to accept new Pets to be put up for adoption and keep track of them.
-> - Adopters need some way to apply for pet adoption.
-> - The shelter needs a way to review applications and approve or reject them.
+>
+> * Each shelter location needs a way to accept new Pets to be put up for adoption and keep track of them.
+> * Adopters need some way to apply for pet adoption.
+> * The shelter needs a way to review applications and approve or reject them.
 
 **Pause and Think: How would you go about building an application to handle these requirements? Where would you start?**
 
 ## System Design
 
-**System design** is the process of understanding (1) the *components* of a system, (2) the *responsibilities* of those components, and (3) their *relationships to/interactions with* each other.
+**System design** is the process of understanding (1) the _components_ of a system, (2) the _responsibilities_ of those components, and (3) their _relationships to/interactions with_ each other.
 
 System design is a very broad term but in the context of Object-Oriented Programming (OOP), we can narrow its definition down a bit:
-* **Components**: The *classes* in your application (the "things").
+
+* **Components**: The _classes_ in your application (the "things").
   * Example: a Library and Book
-* **Responsibilities**: The *properties* and *methods* that each class "owns"
+* **Responsibilities**: The _properties_ and _methods_ that each class "owns"
   * Example: A Library has `#books` and methods `addBook`, `getBooks`
 * **Relationships**: Inheritance or references between classes
   * Example: a Library references Books, or perhaps a Biography extends a Book
 
-**<details><summary>Discussion Question: What are the components, responsibilities (properties/methods), and relationships for the Pet Adoption Center application?</summary>**
+<details>
+
+<summary><strong>Discussion Question: What are the components, responsibilities (properties/methods), and relationships for the Pet Adoption Center application?</strong></summary>
 
 Components could include shelters, owners, pets, adopters/applicants, applications, release forms, etc...
 
@@ -129,18 +141,21 @@ This is just scratching the surface — there is certainly a lot more that goes 
 
 Designing a system well can be really hard. Often times, many iterations of "wrong" solutions must be thrown away before the "right" solution emerges. To provide structure to this iterative design process, engineers turn to **UML Diagrams**.
 
-**Unified Modeling Language (UML)** and **UML Diagrams** are the industry-standard format for visualizing: 
+**Unified Modeling Language (UML)** and **UML Diagrams** are the industry-standard format for visualizing:
+
 1. the components/classes of a system (a.k.a. **"entities"**)
 2. the responsibilities of each entity (properties and methods)
 3. the relationships between entities
 
 A UML diagram for the Pet Shelter might look like this:
 
-![A UML Diagram shows the responsibilities and relationships of classes in a system.](./img/uml-diagram-pet-adoption-system.png)
+![A UML Diagram shows the responsibilities and relationships of classes in a system.](../.gitbook/assets/uml-diagram-pet-adoption-system.png)
 
 **Take a few minutes to scan over the diagram.**
 
-**<details><summary>Q: Without looking too closely, what are the visual components that show the entities in the system? What <i>responsibilities</i> and <i>relationships</i> do you see?</summary>**
+<details>
+
+<summary><strong>Q: Without looking too closely, what are the visual components that show the entities in the system? What </strong><em><strong>responsibilities</strong></em><strong> and </strong><em><strong>relationships</strong></em><strong> do you see?</strong></summary>
 
 * Boxes represent classes with properties and methods inside
 * Arrows show relationships with labels and numbers
@@ -149,14 +164,15 @@ A UML diagram for the Pet Shelter might look like this:
 
 This system looks pretty complex, and it is! But it didn't get created in an hour — it took many iterations to get to this somewhat final form.
 
-UML Diagrams provide engineers a way to *iterate* on and *communicate* about a system's design without committing any time or resources to implementing it in code.
+UML Diagrams provide engineers a way to _iterate_ on and _communicate_ about a system's design without committing any time or resources to implementing it in code.
 
 {% hint style="info" %}
 UML Diagrams are like a draft of a system before it is implemented in code.
 {% endhint %}
 
+<details>
 
-**<details><summary>Q: Why is it useful to create a UML diagram as a "first draft" of a system before implementing the system in code?</summary>**
+<summary><strong>Q: Why is it useful to create a UML diagram as a "first draft" of a system before implementing the system in code?</strong></summary>
 
 UML diagrams allow engineers to think through the design and iterate on it until they are absolutely certain about what they are building. It would be a massive waste of time and resources to build a system only to have to rebuild it due to a poor design.
 
@@ -170,11 +186,11 @@ With generative AI, a well-designed system document can be handed off and built 
 
 In a UML diagram, each box represents a single entity (class) with its name, properties, and methods inside:
 
-![A single entity (class) is drawn as a box with (1) the name of the class, (2) the properties of the class, (3) the methods of the class](./img/uml-diagram-pet.png)
+![A single entity (class) is drawn as a box with (1) the name of the class, (2) the properties of the class, (3) the methods of the class](../.gitbook/assets/uml-diagram-pet.png)
 
 * A `+` indicates a public property (e.g. `+ name: String`)
 * A `-` indicates a private property (e.g. `- isAvailable: Boolean`)
-* Each property is listed with their data type. 
+* Each property is listed with their data type.
 * Methods include parameter names and the returned type.
 
 **Practice:** On your whiteboard or in your journal, draw a UML diagram for the `Book` class and the `Libary` class:
@@ -206,7 +222,9 @@ class Library {
 }
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 Here is a text-based UML Diagram for Book and Library
 
@@ -231,20 +249,22 @@ Here is a text-based UML Diagram for Book and Library
 | + getBooks(): Book[]  |
 └───────────────────────┘
 ```
-</details>
 
+</details>
 
 ### UML Syntax: Relationships
 
 To illustrate relationships between classes in a system, we use a combination of arrows, labels, and **multiplicity** notation:
 
-![Arrows, labels, and multiplicity notation show the relationships between classes.](./img/uml-diagram-pet-adoption-system.png)
+![Arrows, labels, and multiplicity notation show the relationships between classes.](../.gitbook/assets/uml-diagram-pet-adoption-system.png)
 
 #### Arrows: Uni-Directional vs. Bi-Directional
 
-- Arrows indicate that one class reference another. References can either be **uni-directional** (one-way) or **bi-directional** (two-way)
+* Arrows indicate that one class reference another. References can either be **uni-directional** (one-way) or **bi-directional** (two-way)
 
-**<details><summary>Q: For each relationship, identify which are uni-directional and which are bi-directional</summary>**
+<details>
+
+<summary><strong>Q: For each relationship, identify which are uni-directional and which are bi-directional</strong></summary>
 
 * Shelter --> Pet (one-way)
 * Shelter --> Application (one-way)
@@ -257,27 +277,44 @@ To illustrate relationships between classes in a system, we use a combination of
 
 The numbers at each end of the arrow is called **multiplicity notation**. It indicates how many instances of one class can be associated with instances of another class:
 
-For example, each shelter holds references to 0 or more pets which can be notated like: `Shelter 1 --> 0..* Pet` 
+For example, each shelter holds references to 0 or more pets which can be notated like: `Shelter 1 --> 0..* Pet`
 
 More examples of multiplicity notation include:
- * Exactly one: `1`
- * Zero or more: `0..*`
- * One or more: `1..*`
 
-**<details><summary>Q: Can an Adopter submit zero applications?</summary>**
+* Exactly one: `1`
+* Zero or more: `0..*`
+* One or more: `1..*`
+
+<details>
+
+<summary><strong>Q: Can an Adopter submit zero applications?</strong></summary>
+
 Yes
+
 </details>
 
-**<details><summary>Q: Can an Application exist without an Adopter?</summary>**
+<details>
+
+<summary><strong>Q: Can an Application exist without an Adopter?</strong></summary>
+
 No
+
 </details>
 
-**<details><summary>Q: Can one Pet have multiple applications?</summary>**
+<details>
+
+<summary><strong>Q: Can one Pet have multiple applications?</strong></summary>
+
 Yes
+
 </details>
 
-**<details><summary>Q: Can an Application be for multiple pets?</summary>**
+<details>
+
+<summary><strong>Q: Can an Application be for multiple pets?</strong></summary>
+
 No
+
 </details>
 
 #### Label
@@ -292,47 +329,51 @@ The labels are a nice touch to include in your UML diagram.
 
 Once we have a UML diagram, there is one essential step remaining: we need to clearly describe how each requested feature can be implemented using the classes defined in the UML diagram.
 
-For example, for the requirement *"The shelter needs a way to accept new Pets to be put up for adoption"*, a flowchart might like this:
+For example, for the requirement _"The shelter needs a way to accept new Pets to be put up for adoption"_, a flowchart might like this:
 
-![A flowchart showing the process of a pet being added to a shelter.](./img/pet-donation-flowchart.png)
+![A flowchart showing the process of a pet being added to a shelter.](../.gitbook/assets/pet-donation-flowchart.png)
 
 Notice that this flowchart clearly answers these questions:
+
 * Are any new class instances created? If so, with what properties?
 * Which properties are used from each class to make the feature work?
 * Which methods are invoked, and in what order, to make the feature work?
 
-Creating a flowchart is also an *iterative* process. You may sketch out a flowchart for a process and then realize that your UML diagram is missing a crucial piece to make the process work, leading you to update your UML diagram and then redraw the flowchart.
+Creating a flowchart is also an _iterative_ process. You may sketch out a flowchart for a process and then realize that your UML diagram is missing a crucial piece to make the process work, leading you to update your UML diagram and then redraw the flowchart.
 
 Let's design a flow chart for the remaining processes for the Pet Adoption Center. Remember, the Pet Adoption Center requested that the system include the following:
 
-> - The shelter needs a way to accept new Pets to be put up for adoption.
-> - Adopters need some way to apply for pet adoption.
-> - The shelter needs a way to review applications and approve or reject them.
+> * The shelter needs a way to accept new Pets to be put up for adoption.
+> * Adopters need some way to apply for pet adoption.
+> * The shelter needs a way to review applications and approve or reject them.
 
 Analyze the UML diagram for the pet adoption system and, for each feature, design a flow chart that identifies:
+
 * Are any new class instances created? If so, with what properties?
 * Which properties are used from each class to make the feature work?
 * Which methods are invoked, and in what order, to make the feature work?
 
-**<details><summary>Answer</summary>**
+<details>
+
+<summary><strong>Answer</strong></summary>
 
 **Adopters need some way to apply for pet adoption**:
 
-- An adopter registers for an account, creating a new `adopter` instance with `name` and `email`. The `#applications` property is set to an empty array by default.
-- The adopter invokes `shelter.getAvailablePets()` to see which pets are available for adoption.
-- The adopter creates a new `application` instance with `adopter.createApplication(pet)`. The `#applicationStatus` property is set to `"pending"` by default.
-- When the adopter is ready to submit the application, they send it to the shelter via `shelter.receiveApplication(application)` which can validate if the pet in the application (`application.getPet()`) is held by that shelter.
+* An adopter registers for an account, creating a new `adopter` instance with `name` and `email`. The `#applications` property is set to an empty array by default.
+* The adopter invokes `shelter.getAvailablePets()` to see which pets are available for adoption.
+* The adopter creates a new `application` instance with `adopter.createApplication(pet)`. The `#applicationStatus` property is set to `"pending"` by default.
+* When the adopter is ready to submit the application, they send it to the shelter via `shelter.receiveApplication(application)` which can validate if the pet in the application (`application.getPet()`) is held by that shelter.
 
 **The shelter needs a way to review applications and approve or reject them**:
 
-- Shelter staff can invoke `shelter.getPendingApplications()` to see all applications with a `"pending"` status (`application.getStatus()`).
-- For each application, invoke either:
-  - `application.approve()`: 
-    - Sets its status to `"approved"`
-    - The shelter sets the pet's availability to `false` via `application.getPet().setAvailability(false)`
-    - Automatically rejects other applications for the pet via `shelter.rejectApplicationsForPet(this.pet)`
-  - `application.reject()`:
-    - Sets its status to `"rejected"`
-    - The pet remains available.
+* Shelter staff can invoke `shelter.getPendingApplications()` to see all applications with a `"pending"` status (`application.getStatus()`).
+* For each application, invoke either:
+  * `application.approve()`:
+    * Sets its status to `"approved"`
+    * The shelter sets the pet's availability to `false` via `application.getPet().setAvailability(false)`
+    * Automatically rejects other applications for the pet via `shelter.rejectApplicationsForPet(this.pet)`
+  * `application.reject()`:
+    * Sets its status to `"rejected"`
+    * The pet remains available.
 
 </details>

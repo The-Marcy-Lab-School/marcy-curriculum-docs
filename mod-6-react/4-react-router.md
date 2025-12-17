@@ -51,7 +51,7 @@ Normally, when we click on a link like...
 
 With React Router, we can do the same kind of navigation, _but we actually never leave the page_. **Instead of opening a separate HTML file, the same HTML file is used, but we just render different components to the screen.**
 
-![gif of react router](img/react-router-demo.gif)
+![gif of react router](../.gitbook/assets/react-router-demo.gif)
 
 😮 _oooooh so smooth_...
 

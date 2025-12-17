@@ -1,29 +1,31 @@
-# Event
+# 5. Events
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-1-lecture-dom-events)!
 {% endhint %}
 
 **Table of Contents**
-- [Event Driven Programming: Listen and React](#event-driven-programming-listen-and-react)
-- [addEventListener](#addeventlistener)
-  - [Event Type](#event-type)
-  - [Event Handlers and the `event` Object](#event-handlers-and-the-event-object)
-  - [Challenge](#challenge)
-- [Good to Be Aware of, Not to Use: Inline Handlers](#good-to-be-aware-of-not-to-use-inline-handlers)
-- [Event Propagation](#event-propagation)
-  - [Event Delegation](#event-delegation)
-- [Removing Event Listeners](#removing-event-listeners)
+
+* [Event Driven Programming: Listen and React](events.md#event-driven-programming-listen-and-react)
+* [addEventListener](events.md#addeventlistener)
+  * [Event Type](events.md#event-type)
+  * [Event Handlers and the `event` Object](events.md#event-handlers-and-the-event-object)
+  * [Challenge](events.md#challenge)
+* [Good to Be Aware of, Not to Use: Inline Handlers](events.md#good-to-be-aware-of-not-to-use-inline-handlers)
+* [Event Propagation](events.md#event-propagation)
+  * [Event Delegation](events.md#event-delegation)
+* [Removing Event Listeners](events.md#removing-event-listeners)
 
 ## Event Driven Programming: Listen and React
 
 Imagine a website with a button. Each time you click on the button, something happens (maybe the color changes!). How would you program something like this?
 
-![](./img/events.png)
+![](../.gitbook/assets/events.png)
 
 In **event-driven programming**, we instruct our program to **listen for events** and **react when the event is triggered**.
 
 An event can be triggered by:
+
 * clicking a button
 * moving your mouse
 * pressing a key on your keyboard
@@ -68,18 +70,19 @@ button.addEventListener('mousemove', () => {
 ### Event Type
 
 The first argument of `.addEventListener()` is a string that defines the event type to listen for such as:
-- `"click"` - an element was clicked
-- `"mousemove"` - the mouse moved over an element
-- `"keydown"` - a key was pressed down
-- `"keyup"` - a key was released
-- `"submit"` - a form was submitted
-- `"input"` - the `value` of an `input`, `select`, or `textarea` has changed
+
+* `"click"` - an element was clicked
+* `"mousemove"` - the mouse moved over an element
+* `"keydown"` - a key was pressed down
+* `"keyup"` - a key was released
+* `"submit"` - a form was submitted
+* `"input"` - the `value` of an `input`, `select`, or `textarea` has changed
 
 You can find more information about [Events on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event).
 
 ### Event Handlers and the `event` Object
 
-The second argument of `addEventListener` is an **event handler**, a callback function that is invoked when the specified event fires "on" the given element. 
+The second argument of `addEventListener` is an **event handler**, a callback function that is invoked when the specified event fires "on" the given element.
 
 The handler will be invoked by `addEventListener` with an `event` object as an input. This `event` object has many useful properties / methods about the event, like the `event.type` and `event.target`:
 
@@ -95,8 +98,9 @@ button.addEventListener("click", handleEvent);
 ```
 
 These two properties are perhaps the most important. They are on every `event` object regardless of the event type:
-- `event.target` — the Element that triggered the event.
-- `event.currentTarget` — The Element that is is handling the event (often the same as `event.target` but can also be different. See [event delegation](#event-delegation) below).
+
+* `event.target` — the Element that triggered the event.
+* `event.currentTarget` — The Element that is is handling the event (often the same as `event.target` but can also be different. See [event delegation](events.md#event-delegation) below).
 
 {% hint style="info" %}
 Tip: Whenever you are trying a new type of event, log the `event` object to the console to see what properties are available! For example, the [MouseEvent object](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) has different properties than the [KeyboardEvent object](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent).
@@ -121,7 +125,9 @@ const changeToRandomColor = (event) => {
 
 How would you trigger it to be invoked whenever a key was pressed anywhere on the page? What about if you moved your mouse over an element with the id `mouse-area`?
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 document.querySelector("#mouse-area").addEventListener('mousemove', changeToRandomColor)
@@ -169,8 +175,8 @@ document.querySelector('#middle').addEventListener('click', testPropagation);
 document.querySelector('#outer').addEventListener('click', testPropagation);
 ```
 
-- `event.target` is the Element that triggered the event
-- `event.currentTarget` is the Element handling the event
+* `event.target` is the Element that triggered the event
+* `event.currentTarget` is the Element handling the event
 
 With event propagation, the element handling the event (`event.currentTarget`) will be a parent of the event that triggered the event (`event.target`)
 
@@ -223,7 +229,7 @@ document.querySelector("#picture-list img:nth-child(3)").addEventListener('mouse
 document.querySelector("#picture-list img:nth-child(3)").addEventListener('mouseout', toggleBorder);
 ```
 
-...but that looks kind of awful. If we had 100 images, then we'd need 200 event listeners... 🤮 
+...but that looks kind of awful. If we had 100 images, then we'd need 200 event listeners... 🤮
 
 Instead, we can just add the event listener to the container, the `ul#picture-list`. This requires one important tweak: we have to make sure that only events triggered by the `img` elements themselves are handled with a guard clause
 
@@ -246,7 +252,8 @@ ul.addEventListener('mouseout', toggleBorder);
 Pretty neat, right?!
 
 ## Removing Event Listeners
-One of the reasons why passing a named callback function to your listeners is better is because you can then remove them if you need to. 
+
+One of the reasons why passing a named callback function to your listeners is better is because you can then remove them if you need to.
 
 ```js
 const handleCountClick = (e) => {
@@ -263,6 +270,6 @@ removeListenerButton.addEventListener('click', (e) => {
 })
 ```
 
-We remove event listeners to limit user interactions and also be 100% sure that we aren't committing memory leaks when we remove elements. (However, modern browsers are pretty good at cleaning up after us). 
+We remove event listeners to limit user interactions and also be 100% sure that we aren't committing memory leaks when we remove elements. (However, modern browsers are pretty good at cleaning up after us).
 
 **Q: Why can we write the `removeListenerButton` event listener as an inline arrow function but we can't for the `counterButton` event listener?**

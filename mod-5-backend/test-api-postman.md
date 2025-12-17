@@ -8,7 +8,7 @@ The VS Code extension makes it incredibly easy to test your API without leaving 
 * Download the Postman VS Code extension and sign in to your account.
 * Create a collection and name it.
 
-![A collection on Postman is used to organize API calls for a single project](../how-tos/img/postman-collections.png)
+![A collection on Postman is used to organize API calls for a single project](../.gitbook/assets/postman-collections.png)
 
 * Add a request for each of your endpoints:
   * `GET /api/fellows`
@@ -19,4 +19,4 @@ The VS Code extension makes it incredibly easy to test your API without leaving 
 * Requests that require a body, select the **body** tab, then **raw**, and choose **JSON** from the type dropdown.
 * Then, test out your server's endpoints using Postman
 
-![A POST request with a JSON body is received by the server and a response is sent. Postman displays the response.](../how-tos/img/postman-testing.png)
+![A POST request with a JSON body is received by the server and a response is sent. Postman displays the response.](../.gitbook/assets/postman-testing.png)

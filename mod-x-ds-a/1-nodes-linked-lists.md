@@ -1,4 +1,4 @@
-# Nodes & Linked Lists
+# 1. Nodes & Linked Lists
 
 ## Essential Questions
 
@@ -18,7 +18,7 @@
 
 ## Nodes
 
-In the Stack and Queue data structure, 
+In the Stack and Queue data structure,
 
 A **Graph** is a category of abstract data type that is used to organize relationships between data.
 
@@ -28,15 +28,15 @@ The thing that all graphs share is that they are comprised of **nodes** that hol
 
 #### Linked Lists
 
-<img src="./img/linked-list.png">
+![](../.gitbook/assets/linked-list.png)
 
 #### Doubly Linked Lists
 
-<img src="./img/doubly-linked-list.png">
+![](../.gitbook/assets/doubly-linked-list.png)
 
 #### Trees
-<img src="./img/tree.jpeg">
 
+![](../.gitbook/assets/tree.jpeg)
 
 ## Making a Node Class for Linked Lists
 
@@ -44,7 +44,7 @@ Nodes themselves typically do not have any methods.
 
 The simplest kind of node is the one used in a linked list. It holds its own data and a pointer to the `next` node in the list.
 
-<img src="./img/linked-list.png">
+![](../.gitbook/assets/linked-list.png)
 
 ```js
 // depending on how the node is used, it may have a next, prev, parent, or children, property
@@ -69,9 +69,9 @@ console.log(nodeA, nodeB, nodeC); // What do you expect to see?
 
 ## Making a Linked List Class
 
-<img src="./img/linked-list.png">
+![](../.gitbook/assets/linked-list.png)
 
-The linked list itself holds only a reference to a `head` node and various methods for modifying or "traversing" the list. 
+The linked list itself holds only a reference to a `head` node and various methods for modifying or "traversing" the list.
 
 ```js
 class LinkedList {
@@ -92,6 +92,7 @@ class LinkedList {
 **Q: What is the way/what are the ways that we can traverse a linked list?**
 
 Some linked lists may also implement:
+
 * adding a new node in the middle
 * removing a node from the middle
 
@@ -101,7 +102,7 @@ Some linked lists may also implement:
 
 * Inputs: data to add
 * Output: the new `head` of the linked list
-* Behavior: the new node should be the new `head` of the linked list and it should point to the previous `head` of the linked list 
+* Behavior: the new node should be the new `head` of the linked list and it should point to the previous `head` of the linked list
 
 ```js
 const list = new LinkedList();
@@ -116,7 +117,9 @@ console.log(list.head.next.next);
 // Node { data: 'a', next: null }
 ```
 
-<details><summary>Solution</summary>
+<details>
+
+<summary>Solution</summary>
 
 ```js
 class LinkList {
@@ -131,12 +134,12 @@ class LinkList {
 }
 ```
 
-1. The new node is going at the beginning of the list. So it's `next` pointer should point to the existing `head` of the list. 
+1. The new node is going at the beginning of the list. So it's `next` pointer should point to the existing `head` of the list.
 2. Then, the list's `head` pointer should now point at the new node.
 3. Test:
-    - Adding to a list with multiple nodes
-    - Adding to an empty list
-    - Adding to a list with one value
+   * Adding to a list with multiple nodes
+   * Adding to an empty list
+   * Adding to a list with one value
 
 </details>
 
@@ -159,7 +162,9 @@ console.log(list.head.next.next);
 // Node { data: 'c', next: null }
 ```
 
-<details><summary>Solution</summary>
+<details>
+
+<summary>Solution</summary>
 
 ```js
 class LinkList {
@@ -187,10 +192,10 @@ class LinkList {
 1. To put the new node at the end of the list, we need to first get to the end of the list, starting at the list's `head`. We'll use a `currNode` variable to keep track of where we are in the list.
 2. Using a `while` loop, we iterate as long as the `currNode` has a `next` node to move to.
 3. We'll reach the tail node once `currNode` has no `next` node. At this point, we set the `currNode` (which is the tail) to point to the new node.
-3. Test:
-    - Adding to a list with multiple nodes
-    - Adding to an empty list
-    - Adding to a list with one node
+4. Test:
+   * Adding to a list with multiple nodes
+   * Adding to an empty list
+   * Adding to a list with one node
 
 </details>
 
@@ -217,7 +222,9 @@ nodeC.next = nodeA; // a cycle!
 isCyclic(list.head); // true
 ```
 
-<details><summary>Solution</summary>
+<details>
+
+<summary>Solution</summary>
 
 ```js
 function isCyclic(headNode) {

@@ -1,26 +1,26 @@
-# Classes
+# 3. Classes
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-classes)!
 {% endhint %}
 
 **Table of Contents:**
-- [Key Concepts](#key-concepts)
-- [Intro: Reviewing OOP, Encapsulation, Factory Functions, and Interfaces](#intro-reviewing-oop-encapsulation-factory-functions-and-interfaces)
-  - [Factory Functions Waste Memory](#factory-functions-waste-memory)
-- [Classes](#classes-1)
-  - [Class Definition and `new`](#class-definition-and-new)
-  - [Instanceof](#instanceof)
-  - [Setting Properties With A Constructor](#setting-properties-with-a-constructor)
-  - [Optional Constructor Parameters \& Overwriting Public Class Fields](#optional-constructor-parameters--overwriting-public-class-fields)
-  - [Defining Instance Methods](#defining-instance-methods)
-- ["Own Properties" and Prototypes](#own-properties-and-prototypes)
-  - [Array Prototype](#array-prototype)
-  - [Why This Matters](#why-this-matters)
-- [Quiz!](#quiz)
-- [Challenge](#challenge)
-- [Summary](#summary)
 
+* [Key Concepts](3-classes.md#key-concepts)
+* [Intro: Reviewing OOP, Encapsulation, Factory Functions, and Interfaces](3-classes.md#intro-reviewing-oop-encapsulation-factory-functions-and-interfaces)
+  * [Factory Functions Waste Memory](3-classes.md#factory-functions-waste-memory)
+* [Classes](3-classes.md#classes-1)
+  * [Class Definition and `new`](3-classes.md#class-definition-and-new)
+  * [Instanceof](3-classes.md#instanceof)
+  * [Setting Properties With A Constructor](3-classes.md#setting-properties-with-a-constructor)
+  * [Optional Constructor Parameters & Overwriting Public Class Fields](3-classes.md#optional-constructor-parameters--overwriting-public-class-fields)
+  * [Defining Instance Methods](3-classes.md#defining-instance-methods)
+* ["Own Properties" and Prototypes](3-classes.md#own-properties-and-prototypes)
+  * [Array Prototype](3-classes.md#array-prototype)
+  * [Why This Matters](3-classes.md#why-this-matters)
+* [Quiz!](3-classes.md#quiz)
+* [Challenge](3-classes.md#challenge)
+* [Summary](3-classes.md#summary)
 
 ## Key Concepts
 
@@ -86,13 +86,14 @@ An **interface** is a "shared boundary" where two or more components of a system
 Interfaces do not expose the inner details of the tool/machine/program that the user is operating — they instead provide well-defined and controlled access points for the user to operate it.
 {% endhint %}
 
-In summary, separation of concerns is achieved in OOP by identifying the *features* of an application and **encapsulating** the data and methods for those features in objects to create **interfaces** for each feature.
+In summary, separation of concerns is achieved in OOP by identifying the _features_ of an application and **encapsulating** the data and methods for those features in objects to create **interfaces** for each feature.
 
 ### Factory Functions Waste Memory
 
 The instances `reuben` and `maya` definitely have the same behavior. But do they _share_ that behavior? That is, **are the methods `reuben.addFriend` and `maya.addFriend` really the same function in memory?**
 
-Printing out the objects themselves shows us two identical-*seeming* objects:
+Printing out the objects themselves shows us two identical-_seeming_ objects:
+
 ```js
 console.log(reuben);
 // {
@@ -119,7 +120,7 @@ To address this memory issue, in 2016 classes were introduced to JavaScript. Let
 
 ## Classes
 
-![classes define properties and methods that instances inherit](img/classes.png)
+![classes define properties and methods that instances inherit](../.gitbook/assets/classes.png)
 
 A **class** is similar to a factory function in that it can be used to create objects that all have the same interface (the same set of properties and methods).
 
@@ -164,7 +165,6 @@ const ben = Person(); // error: you must use the new keyword to invoke a constru
 ```
 {% endhint %}
 
-
 ### Instanceof
 
 We can use the `instanceof` operator (kind of like the `typeof` operator) to see if an object is derived from the given class.
@@ -180,6 +180,7 @@ console.log([] instanceof Array); // true
 ### Setting Properties With A Constructor
 
 We can add properties to the objects created by a class in two ways:
+
 1. Define public class fields within the class body.
 2. Define a `constructor()` that accepts values when the instance is initialized.
 
@@ -209,7 +210,6 @@ As you can see, each instance of `Person` has the properties `friends`, `name`, 
 * `constructor` is a "reserved" method name. When the `new Class()` syntax is used, JavaScript will look to see if the class has a `constructor()` and will automatically execute it.
   * Inside of a `constructor()`, the `this` keyword references the new instance object being created.
 * Public class fields are added to every instance of a class. `this` is not needed to define a public class field.
-
 
 All of the properties in this example are "public" and the objects are mutable.
 
@@ -243,7 +243,7 @@ console.log(gonzalo); // Person { name: 'gonzalo', age: 36, friends: ['ben', 'ca
 
 ### Defining Instance Methods
 
-Here's where classes start to shine. We can add methods that all instances share by defining them inside the class body *without* commas between them. Inside a method, the `this` keyword will refer to whichever instance is invoking the method.
+Here's where classes start to shine. We can add methods that all instances share by defining them inside the class body _without_ commas between them. Inside a method, the `this` keyword will refer to whichever instance is invoking the method.
 
 ```js
 class Person {
@@ -292,7 +292,7 @@ In JavaScript when we create a class, **the methods of the class are stored as o
 console.log(Object.getOwnPropertyNames(Person.prototype)); // [ 'constructor', 'addFriend', 'greet' ]
 ```
 
-Every Person instance has access to that `Person.prototype` object. It is described as *"the prototype of a Person instance"*. 
+Every Person instance has access to that `Person.prototype` object. It is described as _"the prototype of a Person instance"_.
 
 We can get the prototype of an instance using the `Object.getPrototypeOf()` static method:
 
@@ -301,7 +301,7 @@ console.log(Object.getPrototypeOf(ada) === Person.prototype); // true
 console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(ada))); // [ 'constructor', 'addFriend', 'greet' ]
 ```
 
-As you can see, the prototype of the `ada` instance *is* the object `Person.prototype`
+As you can see, the prototype of the `ada` instance _is_ the object `Person.prototype`
 
 ### Array Prototype
 
@@ -396,7 +396,6 @@ const dog = new Animal('canine', 'woof');
 
 </details>
 
-
 ## Challenge
 
 Create a class called `FoodItem`. Every instance of `FoodItem` should have the following properties and methods
@@ -435,7 +434,6 @@ class FoodItem {
 ```
 
 </details>
-
 
 Now, create a second class called `ShoppingCart`. Every instance of `ShoppingCart` should have the following properties and methods:
 
@@ -479,8 +477,6 @@ class ShoppingCart {
 ```
 
 </details>
-
-
 
 ## Summary
 

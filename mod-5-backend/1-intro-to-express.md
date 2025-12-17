@@ -56,7 +56,7 @@ So how do the client and server interact?
 2. The server receives the request and determines what kind of **response** to send
 3. The client receives the response and does something using the data!
 
-![express diagram](<img/express-diagram-simple (1).svg>)
+![express diagram](<../.gitbook/assets/express-diagram-simple (1).svg>)
 
 <details>
 
@@ -263,7 +263,7 @@ app.listen(port, () => console.log(`listening at http://localhost:${port}`));
 * The first argument defines the **port** number
 * The second argument is a callback that gets executed when the server starts listening. It is often used to print out the host and port.
 
-![host port](img/host-port.png)
+![host port](../.gitbook/assets/host-port.png)
 
 The **host** is like our home address.
 

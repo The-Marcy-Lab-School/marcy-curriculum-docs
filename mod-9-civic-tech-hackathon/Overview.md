@@ -2,24 +2,23 @@
 
 **Table of Contents**
 
-<!-- no toc -->
-- [🧭 Overview](#overview)
-  - [🌈 What does Civic Tech Hackathon Represent in the Program Arc?](#what-does-civic-tech-hackathon-represent-in-the-program-arc)
-  - [🚀 How Will Civic Tech Hackathon _feel_?](#how-will-civic-tech-hackathon-feel)
-  - [😌 What skills and mindsets lead to success?](#what-skills-and-mindsets-lead-to-success)
-- [📆 Calendar, Rituals, and Support Meetings](#calendar-rituals-and-support-meetings)
-  - [🕰️ Sample Schedule](#sample-schedule)
-  - [👥 Whole-Group Meetings](#whole-group-meetings)
-  - [🤝 Support Meetings](#support-meetings)
-  - [🥲 Fridays and Weekends](#fridays-and-weekends)
-- [🏃 Sprints](#sprints)
-- [✅ Key Deliverables and Examples](#key-deliverables-and-examples)
-  - [Entity Relationship Diagram](#entity-relationship-diagram)
-  - [Wireframe](#wireframe)
-  - [Product Specification Sheet](#product-specifications-sheet)
-  - [Polished GitHub Repository](#polished-github-repository)
-  - [Demo Day Presentation \& Project Demo:](#demo-day-presentation-and-project-demo)
-- [👀 What's Next](#whats-next)
+* [🧭 Overview](Overview.md#overview)
+  * [🌈 What does Civic Tech Hackathon Represent in the Program Arc?](Overview.md#what-does-civic-tech-hackathon-represent-in-the-program-arc)
+  * [🚀 How Will Civic Tech Hackathon _feel_?](Overview.md#how-will-civic-tech-hackathon-feel)
+  * [😌 What skills and mindsets lead to success?](Overview.md#what-skills-and-mindsets-lead-to-success)
+* [📆 Calendar, Rituals, and Support Meetings](Overview.md#calendar-rituals-and-support-meetings)
+  * [🕰️ Sample Schedule](Overview.md#sample-schedule)
+  * [👥 Whole-Group Meetings](Overview.md#whole-group-meetings)
+  * [🤝 Support Meetings](Overview.md#support-meetings)
+  * [🥲 Fridays and Weekends](Overview.md#fridays-and-weekends)
+* [🏃 Sprints](Overview.md#sprints)
+* [✅ Key Deliverables and Examples](Overview.md#key-deliverables-and-examples)
+  * [Entity Relationship Diagram](Overview.md#entity-relationship-diagram)
+  * [Wireframe](Overview.md#wireframe)
+  * [Product Specification Sheet](Overview.md#product-specifications-sheet)
+  * [Polished GitHub Repository](Overview.md#polished-github-repository)
+  * [Demo Day Presentation & Project Demo:](Overview.md#demo-day-presentation-and-project-demo)
+* [👀 What's Next](Overview.md#whats-next)
 
 ## 🧭 Overview
 
@@ -68,17 +67,18 @@ Throughout the Software Engineering Fellowship, you have developed these skills 
 
 Below you can see a sample schedule for a typical week during Civic Tech Hackathon. As you can see, there is quite a lot of time for project work time!
 
-![A sample of your week during Civic Tech Hackathon](img/cth-sample-schedule.png)
+![A sample of your week during Civic Tech Hackathon](../.gitbook/assets/cth-sample-schedule.png)
 
 Here are some key details to note:
-- Sprints will kick off on Thursdays 
-- End-of-sprint demos and retrospectives on Wednesdays
-- Two code challenges per week
-- Daily mindful morning and stand up
-- Daily stand down
-- Two manager meetings per week
-- (Scrum Masters only) Scrum Master workshops
-- Lots of work time!
+
+* Sprints will kick off on Thursdays
+* End-of-sprint demos and retrospectives on Wednesdays
+* Two code challenges per week
+* Daily mindful morning and stand up
+* Daily stand down
+* Two manager meetings per week
+* (Scrum Masters only) Scrum Master workshops
+* Lots of work time!
 
 Below, you can learn more about each event.
 
@@ -164,9 +164,7 @@ This isn't shown on the calendar! With support and coaching from the instruction
 Should our team expect to work on Fridays, Saturdays, and Sundays? **YES!**
 
 {% hint style="success" %}
-
 This is it! This is your final exam and your most important portfolio project to date. The time and effort you put into these three weeks may have a greater impact on your future career than any other three weeks in your entire life!
-
 {% endhint %}
 
 Collaborate with your team to find times over the weekends to communicate and get work done! By working on weekends **you can get up to 6 days of extra work done** over the course of these three weeks of CTH! That is almost an entire week of extra time, so take advantage of it!
@@ -179,9 +177,10 @@ Rather than aiming to build the entire application in one go, we've broken down 
 
 <table><thead><tr><th width="144.44921875">Sprint</th><th>Objectives / Priorities</th></tr></thead><tbody><tr><td>0 - Planning</td><td>• Get final approval on the proposal.<br>• Complete the Product Spec Sheet, ERD, and Mockups<br>• Set up your GitHub organization, repository, and Scrumboard</td></tr><tr><td>1 - First Feature</td><td>• Database, Model, and Controllers work together to Read and Create a primary resource (post, event, etc...)<br>• Adapters are built for key endpoints, frontend page routing is established, and key components are built (forms, buttons, content lists)<br>• Integration testing of frontend and backend is complete.</td></tr><tr><td>2 - MVP Complete</td><td>• Fullstack functionality on two user-created resources.<br>• Full CRUD on at least one user-created resource<br>• Styling and page layout is beginning to take shape</td></tr><tr><td>3 - Polish + Present!</td><td>• Ironing out bugs for a full demo<br>• Styling is polished and consistent<br>• Presentations are practiced and ready to present<br>• Project is Deployed</td></tr></tbody></table>
 
-These are the high-level priorities of each sprint but it will be up to each group to determine how to divide the work to meet these objectives. 
+These are the high-level priorities of each sprint but it will be up to each group to determine how to divide the work to meet these objectives.
 
 Here are some tips:
+
 * Divide your group into frontend and server/database. You can always switch after a sprint to gain exposure to the full stack.
 * Decide early what data will be transferred between the frontend and server. Then, work quickly to build adapters and endpoints to establish that connection.
 * In the first sprint, focus on substance, not style. This applies most to the frontend. Build your pages and routing first. Then the forms and data containers. Finally, hook them up to your adapters to just get them working.
@@ -194,7 +193,7 @@ In addition to the fullstack web application that you build, you will need to co
 
 A well designed Entity Relationship Diagram (ERD) can quickly communicate the data that is most important to your application. It will serve your team as a source-of-truth for any questions about the data needed to work with a particular type of resource.
 
-![The ERD can quickly communicate the data that is most important to your application.](img/collective-erd.png)
+![The ERD can quickly communicate the data that is most important to your application.](../.gitbook/assets/collective-erd.png)
 
 Here are the requirements for an ERD:
 
@@ -211,7 +210,7 @@ Here are the requirements for an ERD:
 
 The wireframe should clearly show the various frontend views of your application and how users can navigate between them. Like the endpoint, it will serve your team as a source-of-truth for the design, layout, and expected functionality of your frontend application.
 
-![The wireframe should clearly show the various frontend views of your application and how users can navigate between them.](img/morocole-wireframe.png)
+![The wireframe should clearly show the various frontend views of your application and how users can navigate between them.](../.gitbook/assets/morocole-wireframe.png)
 
 Here are the requirements for a wireframe:
 
@@ -225,40 +224,43 @@ Here are the requirements for a wireframe:
 ### Product Specifications Sheet
 
 A Product Specifications Sheet communicates the user stories for an application and the technical details required to implement them, such as:
-- The page and URL path for a feature
-- Essential frontend components (forms, buttons, links, etc...), 
-- What follows a user interaction (submitting a form, clicking a button, etc...)
-- Backend endpoints used to create, read, update, or delete data.
+
+* The page and URL path for a feature
+* Essential frontend components (forms, buttons, links, etc...),
+* What follows a user interaction (submitting a form, clicking a button, etc...)
+* Backend endpoints used to create, read, update, or delete data.
 
 If filled out thoroughly, a product spec sheet can quickly be translated into tickets for a scrum board.
 
 **Example**: [Collective Product Spec Sheet](https://docs.google.com/document/d/1XMYMneXbcWDDc7LnudcuHeOBe8rnB17HWvWbj33Q4p0/edit?tab=t.0#heading=h.g9ezow49xe4g)
 
-![The product spec sheet breaks down the technical details required to build a user story feature.](img/collective-product-spec-sheet.png)
+![The product spec sheet breaks down the technical details required to build a user story feature.](../.gitbook/assets/collective-product-spec-sheet.png)
 
 Here are the requirements for a product spec sheet:
-- The What, Why, and Who sections clearly and concisely describe the application and audience.
-- "Must-Haves" product requirements are essential to meeting the needs of the intended audience
-- "Nice-to-Haves" can reasonably be excluded from the application while still meeting the needs of the intended audience
-- Technical requirements are decomposed for every "Must-Haves" product requirement.
-- Technical requirements include:
-  - The name of the page that the feature is included on and the URL path for the page
-  - A description of any essential frontend components that the user will interact with (forms, buttons, links, containers for data, etc...)
-  - An explanation of what happens when a user interacts with a form / button / link
-  - An explanation of any interactions with the backend including endpoints to fetch from and if authentication or authorization is required."
-- The ERD and Mockup are linked at the bottom
+
+* The What, Why, and Who sections clearly and concisely describe the application and audience.
+* "Must-Haves" product requirements are essential to meeting the needs of the intended audience
+* "Nice-to-Haves" can reasonably be excluded from the application while still meeting the needs of the intended audience
+* Technical requirements are decomposed for every "Must-Haves" product requirement.
+* Technical requirements include:
+  * The name of the page that the feature is included on and the URL path for the page
+  * A description of any essential frontend components that the user will interact with (forms, buttons, links, containers for data, etc...)
+  * An explanation of what happens when a user interacts with a form / button / link
+  * An explanation of any interactions with the backend including endpoints to fetch from and if authentication or authorization is required."
+* The ERD and Mockup are linked at the bottom
 
 ### Polished GitHub Repository
 
-The repository is the most important artifact for your technical audience. The code inside will demonstrate your technical prowess. 
+The repository is the most important artifact for your technical audience. The code inside will demonstrate your technical prowess.
 
 The README is the first impression of your application that your technical audience will experience so make sure that your README is clean, professional, and provides clear instructions for working with your application.
 
 **Example**: [https://github.com/ENiA-collective/collective](https://github.com/ENiA-collective/collective)
 
-![A clean README is the introduction to your application for technical audiences.](img/collective-github.png)
+![A clean README is the introduction to your application for technical audiences.](../.gitbook/assets/collective-github.png)
 
 Here are the requirements for your GitHub Repository:
+
 * The README is complete with mission statement, team members, usage, and technologies used
 * The README includes links to the proposal and scrum board.
 * The repository has a scrum board linked under Projects. The scrum board has descriptive tickets, assignees, and clear organization.
@@ -274,6 +276,6 @@ Observe the professionalism and polish of the slides here! Each member has their
 
 ## 👀 What's Next
 
-Check out the [React Express Auth Template Overview](react-express-auth-overview.md) to learn about the code you will start your project with. 
+Check out the [React Express Auth Template Overview](react-express-auth-overview.md) to learn about the code you will start your project with.
 
 Then read the [Civic Tech Hackathon Rubric](rubric.md) to see more details about the requirements for your project and other minor deliverables.

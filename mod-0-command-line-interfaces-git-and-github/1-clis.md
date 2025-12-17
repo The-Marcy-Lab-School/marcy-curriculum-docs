@@ -1,4 +1,4 @@
-# Command Line Interfaces
+# 1. Command Line Interfaces
 
 At the end of the day, a program is just a text file on a computer. So, before we begin programming, we need to learn how programmers create, organize, and otherwise manage the files on their computers.
 
@@ -12,25 +12,25 @@ You will be able to…
 * Create, copy, delete, and move files and directories
 * How to run a JavaScript program using your CLI
 * Explain what an "argument" is
-  
-  
+
 **Table of Contents:**
-- [Key Terms \& Commands](#key-terms--commands)
-- [The File Tree](#the-file-tree)
-  - [Applications for Viewing the File Tree (CLI vs. GUI)](#applications-for-viewing-the-file-tree-cli-vs-gui)
-  - [Using the Terminal in VS Code](#using-the-terminal-in-vs-code)
-- [Essential Commands](#essential-commands)
-  - [Looking at the Working Directory with `pwd` and `ls`](#looking-at-the-working-directory-with-pwd-and-ls)
-  - [Navigating Between Directories with `cd`](#navigating-between-directories-with-cd)
-    - [Be Careful when using the `cd` command!](#be-careful-when-using-the-cd-command)
-  - [Making Files and Directories with `mkdir` and `touch`](#making-files-and-directories-with-mkdir-and-touch)
-  - [Executing JavaScript files with `node`](#executing-javascript-files-with-node)
-    - [Terminating a Program with `Control+C`](#terminating-a-program-with-controlc)
-- [Additional Commands](#additional-commands)
-  - [Unfinished Double Quotes, `echo`, and `>>`](#unfinished-double-quotes-echo-and-)
-  - [The `cat` Command and Combining Commands with `&&`](#the-cat-command-and-combining-commands-with-)
-  - [Removing, Renaming, Moving, and Copying](#removing-renaming-moving-and-copying)
-- [Challenges](#challenges)
+
+* [Key Terms & Commands](1-clis.md#key-terms--commands)
+* [The File Tree](1-clis.md#the-file-tree)
+  * [Applications for Viewing the File Tree (CLI vs. GUI)](1-clis.md#applications-for-viewing-the-file-tree-cli-vs-gui)
+  * [Using the Terminal in VS Code](1-clis.md#using-the-terminal-in-vs-code)
+* [Essential Commands](1-clis.md#essential-commands)
+  * [Looking at the Working Directory with `pwd` and `ls`](1-clis.md#looking-at-the-working-directory-with-pwd-and-ls)
+  * [Navigating Between Directories with `cd`](1-clis.md#navigating-between-directories-with-cd)
+    * [Be Careful when using the `cd` command!](1-clis.md#be-careful-when-using-the-cd-command)
+  * [Making Files and Directories with `mkdir` and `touch`](1-clis.md#making-files-and-directories-with-mkdir-and-touch)
+  * [Executing JavaScript files with `node`](1-clis.md#executing-javascript-files-with-node)
+    * [Terminating a Program with `Control+C`](1-clis.md#terminating-a-program-with-controlc)
+* [Additional Commands](1-clis.md#additional-commands)
+  * [Unfinished Double Quotes, `echo`, and `>>`](1-clis.md#unfinished-double-quotes-echo-and-)
+  * [The `cat` Command and Combining Commands with `&&`](1-clis.md#the-cat-command-and-combining-commands-with-)
+  * [Removing, Renaming, Moving, and Copying](1-clis.md#removing-renaming-moving-and-copying)
+* [Challenges](1-clis.md#challenges)
 
 ## Key Terms & Commands
 
@@ -84,11 +84,13 @@ cp [file] [dest]
 
 The files and folders in your computer are organized in a tree-like structure called the **File Tree**.
 
-![](img/file-structure.png)
+![](../.gitbook/assets/file-structure.png)
 
 We refer to each folder in the file tree as a **directory**. The **root directory** is the top-most folder that contains all other **sub-directories**.
 
-**<details><summary>Q: What are the ways that the file tree is tree-like?</summary>**
+<details>
+
+<summary><strong>Q: What are the ways that the file tree is tree-like?</strong></summary>
 
 The root is like the trunk of the tree and each sub-directory is a branch that can have more branches.
 
@@ -98,17 +100,18 @@ The root is like the trunk of the tree and each sub-directory is a branch that c
 
 Most operating systems have an application that lets you view the device's file tree. For example, on MacOS there is Finder and on Windows there is Explorer:
 
-![The finder program](img/finder.png)
+![The finder program](../.gitbook/assets/finder.png)
 
 These applications allow you to manage files through a **graphical user interface (GUI)** — a user interface with buttons and icons that let you do things like click and drag-and-drop.
 
 These GUIs are examples of an "abstraction"—a layer that hides complexity—and GUIs present a tradeoff:
+
 * GUIs are easy to use and easy to learn for beginners
 * What you can do with GUIs is limited to how they were designed
 
 When we want more fine-tuned control over how we interact with our computer's files, we can turn to a **command line interface (CLI)**, often called the **Terminal**. The Terminal is a program for interacting with a computer's files by executing typed-in commands:
 
-![The Terminal program](img/1-cli-terminal.png)
+![The Terminal program](../.gitbook/assets/1-cli-terminal.png)
 
 In the screenshot above, you can see this user entering commands:
 
@@ -152,7 +155,7 @@ While you can use the Terminal application that comes with your laptop, it is of
 
 To open up the Terminal panel, go to **File** > **Terminal** and it should show up at the bottom:
 
-![Use the keyboard shortcut Control+\` to open/close the Terminal](img/vscode-terminal.png)
+![Use the keyboard shortcut Control+\` to open/close the Terminal](../.gitbook/assets/vscode-terminal.png)
 
 ## Essential Commands
 
@@ -164,19 +167,19 @@ In the terminal, you can only interact with one directory at a time, the **worki
 
 Think of it as the "you are here" icon in a map.
 
-![The working directory is your current location in your file tree.](./img/you-are-here.png)
+![The working directory is your current location in your file tree.](../.gitbook/assets/you-are-here.png)
 
 The `pwd` command prints the full file path to the working directory while the `ls` command prints the contents of the working directory:
 
-![](img/ls.png)
+![](../.gitbook/assets/ls.png)
 
-{% hint style="info" %}
+\{% hint style="info" %\}
 
-**Note:** In computing, all actions that interact with data fall into one of the four categories called CRUD: **c**reating, **r**eading, **u**pdating, or **d**eleting data. 
+**Note:** In computing, all actions that interact with data fall into one of the four categories called CRUD: **c**reating, **r**eading, **u**pdating, or **d**eleting data.
 
 Which of these actions do you think `pwd` and `ls` are?
 
-{% endhint %}
+\{% endhint %\}
 
 ### Navigating Between Directories with `cd`
 
@@ -184,15 +187,15 @@ The `cd [directory]` command allows you to move to another directory in the file
 
 An **argument** is an additional piece of information that changes that behavior of a given command. For the `cd` command, we have to also provide a destination.
 
-{% hint style="info" %}
+\{% hint style="info" %\}
 
 Use the Tab key to autocomplete commands and filenames! Just start typing and hit Tab to autocomplete.
 
-{% endhint %}
+\{% endhint %\}
 
 For example, suppose we were located in the `/Users` directory inside the following file system:
 
-![The file tree](img/file-structure.png)
+![The file tree](../.gitbook/assets/file-structure.png)
 
 I could navigate to "down" to the `/Users/smith` directory with the command:
 
@@ -265,7 +268,7 @@ Many programs will end ("terminate") on their own when each statement has been e
 
 Other programs can run forever, requiring us to stop them ourselves. For example, when we use the `node` command on its own, it will start the **Node REPL (Read, Evaluate, Print Loop)** program which just waits for Javascript input, executes it, and then prints the result:
 
-![The Node REPL is useful for testing out expressions.](img/1-node-repl-expressions.png)
+![The Node REPL is useful for testing out expressions.](../.gitbook/assets/1-node-repl-expressions.png)
 
 To terminate the program, use the keyboard shortcut `Control+C` (you may need to cancel twice).
 
@@ -275,7 +278,7 @@ To terminate the program, use the keyboard shortcut `Control+C` (you may need to
 
 Another common occurrence is an unfinished string. You can test this with the `echo` command which will print a given string straight to the terminal.
 
-![An unfinished double quote will be produce dquote> in the Terminal, waiting for you to finish the string.](img/1-cli-echo-unfinished-dquote.png)
+![An unfinished double quote will be produce dquote> in the Terminal, waiting for you to finish the string.](../.gitbook/assets/1-cli-echo-unfinished-dquote.png)
 
 You can also use the output from an `echo` command and send the output into another file using the `>>` append operator.
 

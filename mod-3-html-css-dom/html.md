@@ -1,4 +1,4 @@
-# HTML
+# 1. HTML
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-0-html)!
@@ -47,7 +47,7 @@ To illustrate the difference between markup languages and regular `.txt` files, 
 
 What is the difference between how they are presented by Chrome?
 
-![A txt and an html file side by side.](img/txt-vs-html.png)
+![A txt and an html file side by side.](../.gitbook/assets/txt-vs-html.png)
 
 At the end of the day, your browser is essentially built to render text and images.
 
@@ -60,13 +60,13 @@ At the end of the day, your browser is essentially built to render text and imag
 
 When you open an HTML file directly to view in your browser, your browser uses the `file://` **protocol** to retrieve the `.html` file from your file system.
 
-![using the file protocol to get the html file](img/index-file-protocol.png)
+![using the file protocol to get the html file](../.gitbook/assets/index-file-protocol.png)
 
 * Most of the time, your browser will be using the **`https://` protocol** to get the `.html` file from a **server**.
 * A **server** is just another computer, somewhere else, that provides a resource to another computer (over the internet in this case)
 * **HTTPS** (Hypertext Transfer Protocol Secure) is how your browser communicates with a server.
 
-![using the https protocol to get the html file](img/github-https-protocol.png)
+![using the https protocol to get the html file](../.gitbook/assets/github-https-protocol.png)
 
 ## How to write HTML
 

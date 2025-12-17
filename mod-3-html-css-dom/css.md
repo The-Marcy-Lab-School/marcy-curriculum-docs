@@ -1,28 +1,29 @@
-# CSS
+# 2. CSS
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-1-css)!
 {% endhint %}
 
 **Table of Contents**
-- [Before CSS There Was Only HTML](#before-css-there-was-only-html)
-- [What is CSS?](#what-is-css)
-- [Linking/Loading CSS Files](#linkingloading-css-files)
-- [Anatomy of CSS](#anatomy-of-css)
-- [Selectors](#selectors)
-- [Selector Specificity](#selector-specificity)
-- [Units: `px` vs `%` vs `rems`](#units-px-vs--vs-rems)
-- [Quiz!](#quiz)
+
+* [Before CSS There Was Only HTML](css.md#before-css-there-was-only-html)
+* [What is CSS?](css.md#what-is-css)
+* [Linking/Loading CSS Files](css.md#linkingloading-css-files)
+* [Anatomy of CSS](css.md#anatomy-of-css)
+* [Selectors](css.md#selectors)
+* [Selector Specificity](css.md#selector-specificity)
+* [Units: `px` vs `%` vs `rems`](css.md#units-px-vs--vs-rems)
+* [Quiz!](css.md#quiz)
 
 ## Before CSS There Was Only HTML
 
 When the world wide web was born, it was just a means of communicating information. The world of design hadn't yet made its way to the internet and websites looked like this:
 
-![An HTML page with no styling.](img/html-page-no-css.png)
+![An HTML page with no styling.](../.gitbook/assets/html-page-no-css.png)
 
 With just the addition of CSS, that same paged can be dramatically transformed:
 
-![The same page with CSS.](img/css-zen-garden.png)
+![The same page with CSS.](../.gitbook/assets/css-zen-garden.png)
 
 You can see this page at [https://csszengarden.com/](https://csszengarden.com/), a website dedicated to showing the power of CSS. It showcases a variety of designs of the the exact same HTML. The only thing that changes is the CSS!
 
@@ -76,7 +77,7 @@ p.vivid {
 
 * A CSS rule is made up of a **selector** and a **declarations**
 
-![Anatomy of a CSS rule with one selector and two declarations](img/css-anatomy-of-a-rule.png)
+![Anatomy of a CSS rule with one selector and two declarations](../.gitbook/assets/css-anatomy-of-a-rule.png)
 
 * the **selector** is what chooses the element(s) that will be styled
 * the **declarations** are the actual styles that will be applied
@@ -98,7 +99,7 @@ h1 {
 
 ## Selectors
 
-* There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css\_selectors.php)). The most common selectors are:
+* There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css_selectors.php)). The most common selectors are:
   * By tag (select all `p` elements)
   * By class name (select all elements with `class="blue"`)
   * By id name (select the element with `id="email-form"`)
@@ -182,7 +183,6 @@ p {
 * The `p` with the `id="subtitle"` attribute will be red, because it's more specific than the selector `p`.
 
 {% hint style="info" %}
-
 Specificity can be calculated! Start at 0, add 100 for each ID value, add 10 for each class value (or pseudo-class or attribute selector), add 1 for each element selector or pseudo-element.
 
 Note: Inline style gets a specificity value of `1000`, and is always given the highest priority!
@@ -190,7 +190,6 @@ Note: Inline style gets a specificity value of `1000`, and is always given the h
 Note 2: There is one exception to this rule: if you use the `!important` rule, it will even override inline styles!
 
 [Read more about CSS Specificity here](https://www.w3schools.com/css/css_specificity.asp)
-
 {% endhint %}
 
 ## Units: `px` vs `%` vs `rems`
@@ -206,7 +205,6 @@ div {
   width: 100px;
 }
 ```
-
 
 * The `rem` unit sets a size of an element relative to the browser's **base font size** which is typically `16px` by default. User's can change their base font size as an accessibility feature. If your website uses `rem` units instead of `px`, your font will scale according to your user's accessibility settings.
 
@@ -269,8 +267,6 @@ p {
 
 </details>
 
-
-
 **Q: How would you make all `p` tags blue? How would you make only the `p` tags with `class="fun"` green? How would you make the second `p` tag `orange`?**
 
 ```html
@@ -298,8 +294,6 @@ p {
 ```
 
 </details>
-
-
 
 **Q: What will be the color of paragraph?**
 
@@ -330,8 +324,6 @@ It will be blue! The selector `p.fun` is the most specific selector that applies
 
 </details>
 
-
-
 **Q: what is the width of the `img` element based on the CSS below?**
 
 ```css
@@ -350,8 +342,6 @@ A 200px wide element with 5px of padding on either side and 5px of margin on eit
 
 </details>
 
-
-
 **Q: By default, the `width` property affects the size of the "content" box and padding and margin are added to the outside of this content box. What kinds of challenges does this present?**
 
 <details>
@@ -361,8 +351,6 @@ A 200px wide element with 5px of padding on either side and 5px of margin on eit
 To set the absolute size of an element, we have to calculate the width, padding, and border properties of the box model, which can either be challenging or annoying to maintain.
 
 </details>
-
-
 
 **Q: What will the total width of the `img` element be after applying the CSS rules below? What will the width of the content box be?**
 
@@ -388,8 +376,6 @@ The `margin` will still add `10px` of space on all sides causing the element to 
 
 </details>
 
-
-
 **Q: A user sets their font size to "extra-large" which changes the base font size to `32px`. What will the size of an element with `font-size: 2rem;` be in pixels?**
 
 <details>
@@ -399,4 +385,3 @@ The `margin` will still add `10px` of space on all sides causing the element to 
 `1rem` is equal to the base font size of `32px` so `2rem` will be `64px`.
 
 </details>
-

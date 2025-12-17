@@ -1,4 +1,4 @@
-# Grid & Media Queries
+# 9. Grid & Media Queries
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-grid-media-queries)!
@@ -65,7 +65,7 @@ We've learned that Flexbox is a `display` type that allows us to arrange items i
 
 **Grid** on the other hand is a `display` type that allows us to arrange items inside a container into rows AND columns
 
-![Flexbox lets us make one dimensional layouts while grid lets us make two-dimensional layouts](img/flex-vs-grid.png)
+![Flexbox lets us make one dimensional layouts while grid lets us make two-dimensional layouts](../.gitbook/assets/flex-vs-grid.png)
 
 <details>
 
@@ -77,10 +77,9 @@ In a grid, grid items can span across multiple rows and/or columns
 
 </details>
 
-\
+<br>
 
-
-![An example of a website using grid to make a photo gallery. There are 5 columns and 5 rows.](img/grid-photo-gallery-example.png)
+![An example of a website using grid to make a photo gallery. There are 5 columns and 5 rows.](../.gitbook/assets/grid-photo-gallery-example.png)
 
 ## Grid Template Columns and Fractional Units
 
@@ -116,7 +115,7 @@ The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes t
 }
 ```
 
-![](img/template-columns.png)
+![](../.gitbook/assets/template-columns.png)
 
 **Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?**
 
@@ -130,8 +129,7 @@ The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes t
 
 </details>
 
-\
-
+<br>
 
 **Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.**
 
@@ -147,8 +145,7 @@ grid-template-columns: 1fr 2fr 2fr 1fr; /* make 4 equal-sized columns */
 
 </details>
 
-\
-
+<br>
 
 ## Media Queries
 
@@ -186,14 +183,13 @@ To set the number of grid columns to 2 at 700 pixels, we need to add a second ru
 
 </details>
 
-\
-
+<br>
 
 ## Spanning Rows and Columns
 
 In a grid, the position of grid-items can span multiple rows and/or columns
 
-![A grid with 2 columns and 4 rows. An element on the first row spans both columns. An element on the second row spans only the left column. An element on the third row also only spans the left column. A single element in the right column spans rows 2 and 3. Finally an element in the fourth row spans both columns.](img/grid-span.png)
+![A grid with 2 columns and 4 rows. An element on the first row spans both columns. An element on the second row spans only the left column. An element on the third row also only spans the left column. A single element in the right column spans rows 2 and 3. Finally an element in the fourth row spans both columns.](../.gitbook/assets/grid-span.png)
 
 **Q: How many rows and columns does this layout have?**
 
@@ -201,12 +197,11 @@ In a grid, the position of grid-items can span multiple rows and/or columns
 
 <summary>Answer</summary>
 
-<img src="img/grid-span-with-tracks.png" alt="" data-size="original">
+<img src="../.gitbook/assets/grid-span-with-tracks.png" alt="" data-size="original">
 
 </details>
 
-\
-
+<br>
 
 ### Grid Tracks
 
@@ -233,7 +228,7 @@ In a grid, the position of grid-items can span multiple rows and/or columns
 
 **Challenge: Using media queries and `grid-row`/`grid-column`, produce the grid layout below for screen sizes above `992px`**
 
-![A grid layout with two rows and four columns. The first row has a grid item spanning columns 1 and 2, a grid item in column 3, and a grid item spanning from row 1 to row 2. The second row has a a grid item in column 1, a grid item spanning columns 2 and 3, and the bottom of the grid item in column 3 that spans both rows.](img/grid-span-challenge.png)
+![A grid layout with two rows and four columns. The first row has a grid item spanning columns 1 and 2, a grid item in column 3, and a grid item spanning from row 1 to row 2. The second row has a a grid item in column 1, a grid item spanning columns 2 and 3, and the bottom of the grid item in column 3 that spans both rows.](../.gitbook/assets/grid-span-challenge.png)
 
 <details>
 
@@ -261,14 +256,13 @@ In a grid, the position of grid-items can span multiple rows and/or columns
 
 </details>
 
-\
-
+<br>
 
 ## Bonus! - Flexbox Media Query Challenge
 
 Using media queries and the `display: flex` properties, achieve the responsive design below starting with the code found in `5-responsive-flexbox-challenge/`
 
-![](img/flexbox-media-query-challenge.png)
+![](../.gitbook/assets/flexbox-media-query-challenge.png)
 
 **Q: What do you notice if different about the two layouts?**
 
@@ -281,8 +275,7 @@ Using media queries and the `display: flex` properties, achieve the responsive d
 
 </details>
 
-\
-
+<br>
 
 ## Grid Areas
 
@@ -296,7 +289,7 @@ Honestly, to learn about alignment, just visit [Josh Comeau's interactive guide 
 * `justify-items` controls the horizontal alignment of each item within its own column
 * `justify-self` controls the horizontal alignment of a single item within the grid.
 
-![A screenshot from Josh Comeau's blog on CSS Grid showing the justify content property](img/grid-justify-content.png)
+![A screenshot from Josh Comeau's blog on CSS Grid showing the justify content property](../.gitbook/assets/grid-justify-content.png)
 
 **Controlling the Vertical Alignment of Rows**
 

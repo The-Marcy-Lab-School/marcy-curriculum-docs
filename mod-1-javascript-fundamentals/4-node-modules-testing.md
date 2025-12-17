@@ -1,4 +1,4 @@
-# Node & Node Modules
+# 5. Node Modules & Testing
 
 In this lesson we'll learn the history of Node and the fundamentals of using Node Modules to build JavaScript programs.
 
@@ -8,22 +8,21 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 
 **Table of Contents:**
 
-- [Summary](#summary)
-- [What is Node?](#what-is-node)
-- [Modules](#modules)
-  - [Exporting with `module.exports` (CommonJS)](#exporting-with-moduleexports-commonjs)
-  - [Importing with `require()` (CommonJS)](#importing-with-require-commonjs)
-    - [Destructuring Shorthand](#destructuring-shorthand)
-- [Node Package Manager (NPM)](#node-package-manager-npm)
-  - [Installing and Using Dependencies from NPM](#installing-and-using-dependencies-from-npm)
-  - [Dependencies, `package.json`, and `node_modules`](#dependencies-packagejson-and-node_modules)
-  - [Developer Dependencies](#developer-dependencies)
-- [Jest Module and Testing](#jest-module-and-testing)
-- [NPM Tips and Tricks](#npm-tips-and-tricks)
-  - [`package.json` Scripts](#packagejson-scripts)
-  - [`npm init -y`](#npm-init--y)
-- [Madlib Challenge](#madlib-challenge)
-
+* [Summary](4-node-modules-testing.md#summary)
+* [What is Node?](4-node-modules-testing.md#what-is-node)
+* [Modules](4-node-modules-testing.md#modules)
+  * [Exporting with `module.exports` (CommonJS)](4-node-modules-testing.md#exporting-with-moduleexports-commonjs)
+  * [Importing with `require()` (CommonJS)](4-node-modules-testing.md#importing-with-require-commonjs)
+    * [Destructuring Shorthand](4-node-modules-testing.md#destructuring-shorthand)
+* [Node Package Manager (NPM)](4-node-modules-testing.md#node-package-manager-npm)
+  * [Installing and Using Dependencies from NPM](4-node-modules-testing.md#installing-and-using-dependencies-from-npm)
+  * [Dependencies, `package.json`, and `node_modules`](4-node-modules-testing.md#dependencies-packagejson-and-node_modules)
+  * [Developer Dependencies](4-node-modules-testing.md#developer-dependencies)
+* [Jest Module and Testing](4-node-modules-testing.md#jest-module-and-testing)
+* [NPM Tips and Tricks](4-node-modules-testing.md#npm-tips-and-tricks)
+  * [`package.json` Scripts](4-node-modules-testing.md#packagejson-scripts)
+  * [`npm init -y`](4-node-modules-testing.md#npm-init--y)
+* [Madlib Challenge](4-node-modules-testing.md#madlib-challenge)
 
 ## Summary
 
@@ -41,20 +40,19 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/1
 * **Jest** is an npm module that provides functions for creating automated tests.
 * **Test-Driven Development** is a style of programming in which tests are created first and steer the functionality to be built.
 
-
 ## What is Node?
 
-JavaScript started out as a language that could only be used to create programs that ran in the browser. Server-side code (the code running on the computer that sends the website to your browser) had to be written in another language, such as PHP or Java. 
+JavaScript started out as a language that could only be used to create programs that ran in the browser. Server-side code (the code running on the computer that sends the website to your browser) had to be written in another language, such as PHP or Java.
 
 In 2009, the **Node Runtime Environment** (or simply "Node") was invented to allow programmers to create server-side programs with JavaScript, thus opening the door for fullstack JavaScript development.
 
 To run a JavaScript program using Node, we use the terminal command `node <file_name>`:
 
-![Node is a program for running JavaScript files](img/1-node-script.png)
+![Node is a program for running JavaScript files](../.gitbook/assets/1-node-script.png)
 
 You can also use the `node` command on its own to open the Node read-evaluate-print-loop (REPL) which can be useful for testing expressions:
 
-![The Node REPL is useful for testing out expressions.](../mod-0-command-line-interfaces-git-and-github/img/1-node-repl-expressions.png)
+![The Node REPL is useful for testing out expressions.](../.gitbook/assets/1-node-repl-expressions.png)
 
 ## Modules
 
@@ -160,7 +158,9 @@ module.exports = {
 ```
 {% endcode %}
 
-**<details><summary>Q: Why do we use an Object to export many values instead of an Array?</summary>**
+<details>
+
+<summary><strong>Q: Why do we use an Object to export many values instead of an Array?</strong></summary>
 
 If the `module.exports` were an array...
 
@@ -202,7 +202,9 @@ main();
 ```
 {% endcode %}
 
-**<details><summary>Q: How does this file structure demonstrate separation of concerns? What is the concern of each file?</summary>**
+<details>
+
+<summary><strong>Q: How does this file structure demonstrate separation of concerns? What is the concern of each file?</strong></summary>
 
 Each file is concerned with only one aspect of the functionality of the entire program.
 
@@ -242,7 +244,7 @@ While you could figure this out, there is no need to reinvent the wheel! Instead
 
 Visit https://www.npmjs.com/ to explore available packages. Start by searching up the "prompt-sync" package.
 
-![The prompt sync page on npmjs.com shows the synopsis, basic usage, and an installation command](img/1-npm-prompt-sync.png)
+![The prompt sync page on npmjs.com shows the synopsis, basic usage, and an installation command](../.gitbook/assets/1-npm-prompt-sync.png)
 
 ### Installing and Using Dependencies from NPM
 
@@ -267,7 +269,7 @@ const prompt = createPrompt();
 
 We can now use the `prompt` function in our code to add user input functionality!
 
-{% code title="index.js" overflow="wrap"%}
+{% code title="index.js" overflow="wrap" %}
 ```javascript
 // imports...
 
@@ -304,22 +306,24 @@ When you download a package from NPM, it is called a **dependency**.
 Every dependency of a project, and its version number, will be listed in the file `package.json` (if the file doesn't exist, the `npm i` command will create it). The existence of this file turns our project into a **package**.
 
 {% hint style="info" %}
- **JavaScript Object Notation (JSON)** is a file format for representing data in an JavaScript-Object-like notation with key:value pairs.
+**JavaScript Object Notation (JSON)** is a file format for representing data in an JavaScript-Object-like notation with key:value pairs.
 {% endhint %}
 
-![Installing a module using npm adds the module name and version number to a list of dependencies in the package.json file](img/1-package-json-dependencies.png)
+![Installing a module using npm adds the module name and version number to a list of dependencies in the package.json file](../.gitbook/assets/1-package-json-dependencies.png)
 
 The downloaded module will be placed in a `node_modules/` folder along with any **sub-dependencies** that the module itself may require.
 
 You can see the sub-dependencies of a module by opening its own `package.json` file. All modules listed under `"dependencies"` will also be installed in `node_modules/`.
+
 * In `prompt-sync/package.json`, we can see it has `strip-ansi` as a dependency.
 * In `strip-ansi/package.json`, we can see it has `ansi-regex` as a dependency.
 
-![For prompt-sync, we can see that it has two of its own dependencies that were also added to node\_modules: ansi-regex and strip-ansi:](img/1-prompt-sync-dependencies.png)
+![For prompt-sync, we can see that it has two of its own dependencies that were also added to node\_modules: ansi-regex and strip-ansi:](../.gitbook/assets/1-prompt-sync-dependencies.png)
 
 ### Developer Dependencies
 
 In the `prompt-sync/package.json` file, you will notice that `prompt-sync-history` is listed under `"devDependencies"`.
+
 * **Developer dependencies** are dependencies used by the developer(s) who created the package but aren't needed by the users of the package. They are not added to the `node_modules` folder of the user.
 
 One developer dependency that we will commonly use is the `nodemon` module. Install it using `npm` and the `--save-dev` flag to mark it as a developer dependency:
@@ -361,11 +365,11 @@ nodemon index.js
 
 ## Jest Module and Testing
 
-Tests are an essential part of professional software development. Without testing our code, we run the risk of deploying code with unexpected bugs. With testing, we are forced to think critically about how we expect our program to behave and then write our code to satisfy those tests. 
+Tests are an essential part of professional software development. Without testing our code, we run the risk of deploying code with unexpected bugs. With testing, we are forced to think critically about how we expect our program to behave and then write our code to satisfy those tests.
 
 The process of first writing tests and then writing code to satisfy those tests is called **Test-Driven Development (TDD)**.
 
-At Marcy, we use the Node module [Jest](https://jestjs.io/) to write automated tests for coding assignments. 
+At Marcy, we use the Node module [Jest](https://jestjs.io/) to write automated tests for coding assignments.
 
 ```sh
 npm i --save-dev jest
@@ -423,7 +427,7 @@ jest --watchAll # run the tests each time the file changes ("watch mode")
 
 When tests fail, you will see the following output:
 
-![Failing Jest tests](../how-tos/img/failing-tests.png)
+![Failing Jest tests](../.gitbook/assets/failing-tests.png)
 
 The test output provides some really useful information.
 
@@ -460,7 +464,7 @@ You can add a `"scripts"` section to the `package.json` file to make it easier t
 }
 ```
 
-To use these commands, we can type `npm run script_name`: 
+To use these commands, we can type `npm run script_name`:
 
 ```sh
 npm run start
