@@ -133,20 +133,20 @@ A **server** is just another computer, somewhere else, that provides a resource 
 
 ```html
 <!-- This is a "heading" -->
-<h1>My awesome website</h1>
+<h1>Ada's Website</h1>
 
 <!-- This is a "paragraph" -->
 <p>My name is Ada Lovelace and I am a programmer.</p>
 
 <!-- A subheading -->
-<h2>Hobbies</h2>
+<h2>Programming Skills</h2>
 
 <!-- This is an "unordered list", a.k.a. a bullet list -->
 <ul>
   <!-- "list items" are nested inside the ul -->
-  <li>coding</li>
-  <li>soccer</li>
-  <li>cooking</li>
+  <li>JavaScript Fundamentals</li>
+  <li>Git & GitHub</li>
+  <li>OOP and Classes</li>
 </ul>
 
 <!-- A button! -->
@@ -194,7 +194,7 @@ Every HTML document starts with the same "boilerplate" code (repetitive, standar
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- The title appears in the browser tab -->
-    <title>Document</title>
+    <title>Ada's Website</title>
   </head>
   <body>
     <!-- Visible Elements Go Here -->
@@ -223,7 +223,7 @@ Tags can have **attributes** that provide additional information for the element
 For example, to create a **hyperlink** to navigate to another page, we make an "anchor" element
 ```html
 <!-- Attributes go in the opening tag -->
-<a href="./about">Our About Page</a>
+<a href="./about">About Me</a>
 ```
 Attributes and their values go in the opening tag of an element.
 * `href` is the **attribute** (short for "hyperlink reference")
@@ -280,6 +280,8 @@ A cooler version of an image is `figure` with a nested image and `figcaption`!
 {% hint style="info" %}
 Notice that the image element doesn't require a closing bracket. It is considered a **self-closing tag** or a **void tag**.
 {% endhint %}
+
+**TODO:** Go to your GitHub profile. Right-click your profile image and select **Copy Image Address**. Then, add an image to your website with that URL as the source.
 
 ### Ids and Classes
 
@@ -339,20 +341,24 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
   </div>
 </div>
 <div id="main-content">
-  <div id="articles">
-    <div class="article">
-      <h2>Article 1</h2>
-      <p>Some content...</p>
-    </div>
-    <div class="article">
-      <h2>Article 1</h2>
-      <p>Some content...</p>
-    </div>
+  <div id="image-container">
+    <img src="img-url.png" />
   </div>
-  <div id="image-gallery">
-    <img src="image-1.png" />
-    <img src="image-2.png" />
-    <img src="image-3.png" />
+  <div class="section">
+    <h2>Programming Skills</h2>
+    <ul>
+      <li>JavaScript Fundamentals</li>
+      <li>Git & GitHub</li>
+      <li>OOP and Classes</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Favorite Quotes</h2>
+    <ol>
+      <li>Quote 1...</li>
+      <li>Quote 2...</li>
+      <li>Quote 3...</li>
+    </ol>
   </div>
 </div>
 </div id="footer">
@@ -361,7 +367,7 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
 </div>
 ```
 
-Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, `<nav>`, `<article>` were added, transforming our HTML into this:
+Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, and `<nav>` were added, transforming our HTML into this:
 
 ```html
 <header>
@@ -372,20 +378,25 @@ Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, 
   </nav>
 </header>
 <main>
-  <section id="articles">
-    <article>
-      <h2>Article 1</h2>
-      <p>Some content...</p>
-    </article>
-    <article>
-      <h2>Article 1</h2>
-      <p>Some content...</p>
-    </article>
+  <figure>
+    <img src="img-url.png" alt="Profile Picture" >
+    <figcaption>It's nice to meet you!</figcaption>
+  </figure>
+  <section>
+    <h2>Programming Skills</h2>
+    <ul>
+      <li>JavaScript Fundamentals</li>
+      <li>Git & GitHub</li>
+      <li>OOP and Classes</li>
+    </ul>
   </section>
-  <section id="image-gallery">
-    <img src="image-1.png" />
-    <img src="image-2.png" />
-    <img src="image-3.png" />
+  <section>
+    <h2>Favorite Quotes</h2>
+    <ol>
+      <li>Quote 1...</li>
+      <li>Quote 2...</li>
+      <li>Quote 3...</li>
+    </ol>
   </section>
 </main>
 </footer>
