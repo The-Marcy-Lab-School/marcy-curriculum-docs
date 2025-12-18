@@ -27,6 +27,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [Units: `px` vs `%` vs `rems`](#units-px-vs--vs-rems)
 - [Development Workflow](#development-workflow)
 - [Quiz!](#quiz)
+- [Complete CSS](#complete-css)
 
 ## Key Concepts
 
@@ -358,11 +359,11 @@ p {
 
 ```css
 p {
-  font-size: 16px;              /* size of text */
+  font-size: 16px;                /* size of text */
   font-family: Arial, sans-serif; /* typeface */
-  font-weight: bold;             /* normal, bold, or 100-900 */
-  text-align: center;            /* left, center, right, justify */
-  line-height: 1.5;              /* spacing between lines */
+  font-weight: bold;              /* normal, bold, or 100-900 */
+  text-align: center;             /* left, center, right, justify */
+  line-height: 1.5;               /* spacing between lines */
 }
 ```
 
@@ -383,11 +384,11 @@ We'll explore spacing in detail when we cover the box model, but for now:
 
 ### Units: `px` vs `%` vs `rems`
 
-* The `px` unit sets the exact size of an element. **Setting the size of an element using `px` values should be avoided if possible** as they don't comply with accessibility standards.
+* The `px` unit sets the exact size of a property. **Setting the size of an element using `px` values should be avoided if possible** as they don't comply with accessibility standards.
 
 ```css
 p {
-  font-size: 30px;
+  padding: 30px;
 }
 
 div {
@@ -399,7 +400,7 @@ div {
 
 ```css
 p {
-  /* 32px if the base font size is 16px */
+  /* if the base font size is 16px, 2rem === 32px */
   font-size: 2rem; 
 }
 ```
@@ -572,3 +573,47 @@ h1, h2, h3 {
 Bonus: You can also use **RGBA** for transparency: `color: rgba(255, 0, 0, 0.5);`
 
 </details>
+
+## Complete CSS
+
+```css
+body {
+  background: azure;
+  color: midnightblue;
+  font-family: Helvetica;
+  text-align: center;
+  margin: auto;
+  padding: 2rem;
+}
+ul, ol {
+  margin: auto;
+  width: fit-content;
+  text-align: left;
+}
+li {
+  font-family: roboto;
+  margin-bottom: 0.5rem;
+}
+/* All elements with the class "devtool" will be orange */
+.devtool {
+  background: orange;
+}
+
+/* All elements with the class "js-skill" will be yellow */
+.js-skill {
+  background: yellow;
+}
+
+.web-dev-skill {
+  background: lightgreen;
+}
+
+#profile-picture {
+  border-radius: 50%;
+}
+
+/* a link when the mouse hovers over it */
+a:hover { color: red } 
+/* a link the moment it is clicked */
+a:active { color: green; } 
+```
