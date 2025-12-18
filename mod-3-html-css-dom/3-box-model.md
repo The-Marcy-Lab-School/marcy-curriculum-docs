@@ -14,7 +14,7 @@
     - [Centering with Margin](#centering-with-margin)
 - [Display](#display)
 - [The Box-Sizing Problem](#the-box-sizing-problem)
-- [The Solution: border-box](#the-solution-border-box)
+  - [The Solution: border-box reset](#the-solution-border-box-reset)
   - [General CSS Reset](#general-css-reset)
 - [Test your Skills!](#test-your-skills)
 - [Complete HTML \& CSS](#complete-html--css)
@@ -206,6 +206,10 @@ section {
 
 The space between the sections is **40px**, not 60px. The larger margin (40px) "wins".
 
+{% hint style="info" %}
+**Tip:** If you want consistent spacing, pick one direction (either `margin-bottom` or `margin-top`) and stick with it for all of your elements. This avoids margin collapse entirely.
+{% endhint %}
+
 Remember: this only happens with vertical margins, not horizontal margins 🤷.
 
 #### Centering with Margin
@@ -272,15 +276,20 @@ nav a {
 }
 ```
 
+**<details><summary>Q: What is the width of a navigation link?</summary>**
+
 You might expect each link to be 200px wide. But the **actual width** is:
 - Content: 200px
 - Padding: 20px left + 20px right = 40px
 - Border: 3px left + 3px right = 6px
 - **Total width: 246px**
 
+</details>
+
+
 This is confusing and makes layout calculations difficult.
 
-## The Solution: border-box
+### The Solution: border-box reset
 
 Add this to the **top** of your CSS file:
 
@@ -323,6 +332,8 @@ This reset:
 - Ensures consistent behavior across all browsers
 
 You'll then add spacing intentionally where you need it, giving you full control over your layout.
+
+**TODO:** Take a moment and make adjustments to the padding and margins of the elements of your page until your are satisfied with the overall spacing.
 
 ## Test your Skills!
 
