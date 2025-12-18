@@ -84,7 +84,6 @@ body {
 ul, ol {
   margin: auto;
   width: fit-content;
-  text-align: left;
 }
 ```
 
@@ -122,7 +121,6 @@ Open up your `index.html` file from the `my-profile` folder and add these `<styl
       ul, ol {
         margin: auto;
         width: fit-content;
-        text-align: left;
       }
     </style>
   </head>
@@ -142,11 +140,11 @@ You can also add a `style` attribute directly to an individual element:
 <body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; padding: 20px;">
   <!-- body content -->
 
-  <ul style="margin: auto; width: fit-content; text-align: left;">
+  <ul style="margin: auto; width: fit-content;">
     <!-- unordered list items -->
   </ul>
 
-  <ol style="margin: auto; width: fit-content; text-align: left;">
+  <ol style="margin: auto; width: fit-content;">
     <!-- ordered list items -->
   </ol>
 </body>
@@ -284,7 +282,6 @@ You can apply the same styles to multiple selectors by separating them with a co
 ul, ol {
   margin: auto;
   width: fit-content;
-  text-align: left;
 }
 ```
 
@@ -587,7 +584,6 @@ body {
 ul, ol {
   margin: auto;
   width: fit-content;
-  text-align: left;
 }
 li {
   font-family: roboto;
