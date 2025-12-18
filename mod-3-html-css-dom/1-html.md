@@ -148,10 +148,8 @@ A **server** is just another computer, somewhere else, that provides a resource 
   <li>Command Line Interface</li>
   <li>JavaScript Fundamentals</li>
   <li>OOP and Classes</li>
+  <li>HTML</li>
 </ul>
-
-<!-- A button! -->
-<button>Click me!</button>
 ```
 
 We create a comment with the syntax `<!-- comment -->`
@@ -225,10 +223,13 @@ For example, to create a **hyperlink** to navigate to another page, we make an "
 ```html
 <!-- Attributes go in the opening tag -->
 <a href="./about.html">About Me</a>
+<a href="./index.html">Home</a>
 ```
 Attributes and their values go in the opening tag of an element.
 * `href` is the **attribute** (short for "hyperlink reference")
-* `"./about.html"` is the **value**
+* `"./about.html"` and `"./index.html"` are **values**
+
+**TODO: Add these links to the top of your `index.html` and `about.html` pages.**
 
 {% hint style="info" %}
 The content between the `<a></a>` tags is visible to the user and should indicate the link's destination. Do NOT make hyperlink elements like this:
@@ -243,6 +244,8 @@ Links can also be nested inside of `<p>` tags:
 ```html
 <p>Head to the <a href="https://marcylabschool.gitbook.io">Marcy GitBook</a> to learn more about HTML!</p>
 ```
+
+**TODO: Add these links to the bottom of your `index.html` and `about.html` pages.**
 
 ### Images and Self-Closing Tags (Void Tags)
 
@@ -282,7 +285,7 @@ A cooler version of an image is `figure` with a nested image and `figcaption`!
 Notice that the image element doesn't require a closing bracket. It is considered a **self-closing tag** or a **void tag**.
 {% endhint %}
 
-**TODO:** Go to your GitHub profile. Right-click your profile image and select **Copy Image Address**. Then, add an image to your website with that URL as the source.
+**TODO:** Go to your GitHub profile. Right-click your profile image and select **Copy Image Address**. Then, add a `figure`, `img`, and `figcaption` to your website with that URL as the source and a caption that reads `"It's nice to meet you!"`.
 
 ### Ids and Classes
 
@@ -290,9 +293,11 @@ Two attributes that we can apply to ANY element are `id` and `class`. These allo
 
 ```html
 <ul>
-  <li id="coding" class='blue-text'>coding</li>
-  <li id="soccer">soccer</li>
-  <li id="cooking" class='blue-text' >cooking</li>
+  <li class="devtool">Git & GitHub</li>
+  <li class="devtool">Command Line Interface</li>
+  <li class="js-skill">JavaScript Fundamentals</li>
+  <li class="js-skill">OOP and Classes</li>
+  <li class="webdev-skill" id="current-topic">HTML</li>
 </ul>
 ```
 
@@ -305,19 +310,23 @@ We'll learn more about CSS later but for now you can test this out by adding a `
 <head>
   <!-- other meta tags -->
   <style>
-    /* All elements with this class will be blue */
-    .blue-text {
-      color: blue;
+    /* All elements with class="devtool" will have an orange background */
+    .devtool {
+      background: orange;
     }
-    /* Styles for elements with unique ids */
-    #coding {
-      font-size: 40px;
+
+    /* All elements with class="js-skill" will have a yellow background */
+    .js-skill {
+      background: yellow;
     }
-    #soccer {
-      font-size: 30px;
+    /* All elements with class="webdev-skill" will have a yellow background */
+    .webdev-skill {
+      background: lightgreen;
     }
-    #cooking {
-      font-size: 20px;
+
+    /* Only this one element will be bold */
+    #current-topic {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -334,78 +343,84 @@ Here are some additional things to note about `id` and `class` attributes:
 Prior to HTML5 (released in 2014), the primary way to organize HTML elements was using a "division" element `<div>` with `id` and `class` attributes to describe them:
 
 ```html
-<div id="header">
-  <h1>My Website</h1>
-  <div id="nav">
-    <a href="./index.html">Home</a>
-    <a href="./about.html">About</a>
+<body>
+  <div id="header">
+    <h1>My Website</h1>
+    <div id="nav">
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About</a>
+    </div>
   </div>
-</div>
-<div id="main-content">
-  <div id="image-container">
-    <img src="img-url.png" />
+  <div id="main-content">
+    <div id="image-container">
+      <img src="img-url.png" />
+    </div>
+    <div class="section">
+      <h2>Programming Skills</h2>
+      <ul>
+          <li class="devtool">Git & GitHub</li>
+          <li class="devtool">Command Line Interface</li>
+          <li class="js-skill">JavaScript Fundamentals</li>
+          <li class="js-skill">OOP and Classes</li>
+          <li class="webdev-skill" id="current-topic">HTML</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h2>Favorite Quotes</h2>
+      <ol>
+        <li>Quote 1...</li>
+        <li>Quote 2...</li>
+        <li>Quote 3...</li>
+      </ol>
+    </div>
   </div>
-  <div class="section">
-    <h2>Programming Skills</h2>
-    <ul>
-      <li>Git & GitHub</li>
-      <li>Command Line Interface</li>
-      <li>JavaScript Fundamentals</li>
-      <li>OOP and Classes</li>
-    </ul>
+  <div id="footer">
+    <p>Copyright Marcy Lab School 2025</p>
+    <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
   </div>
-  <div class="section">
-    <h2>Favorite Quotes</h2>
-    <ol>
-      <li>Quote 1...</li>
-      <li>Quote 2...</li>
-      <li>Quote 3...</li>
-    </ol>
-  </div>
-</div>
-<div id="footer">
-  <p>Copyright Marcy Lab School 2025</p>
-  <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
-</div>
+</body>
 ```
 
 Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, and `<nav>` were added, transforming our HTML into this:
 
 ```html
-<header>
-  <h1>My Website</h1>
-  <nav>
-    <a href="./index.html">Home</a>
-    <a href="./about.html">About</a>
-  </nav>
-</header>
-<main>
-  <figure>
-    <img src="img-url.png" alt="Profile Picture" >
-    <figcaption>It's nice to meet you!</figcaption>
-  </figure>
-  <section>
-    <h2>Programming Skills</h2>
-    <ul>
-      <li>Git & GitHub</li>
-      <li>Command Line Interface</li>
-      <li>JavaScript Fundamentals</li>
-      <li>OOP and Classes</li>
-    </ul>
-  </section>
-  <section>
-    <h2>Favorite Quotes</h2>
-    <ol>
-      <li>Quote 1...</li>
-      <li>Quote 2...</li>
-      <li>Quote 3...</li>
-    </ol>
-  </section>
-</main>
-<footer>
-  <p>Copyright Marcy Lab School 2025</p>
-  <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
-</footer>
+<body>
+  <header>
+    <h1>My Website</h1>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About</a>
+    </nav>
+  </header>
+  <main>
+    <figure>
+      <img src="img-url.png" alt="Profile Picture" >
+      <figcaption>It's nice to meet you!</figcaption>
+    </figure>
+    <section>
+      <h2>Programming Skills</h2>
+      <ul>
+          <li class="devtool">Git & GitHub</li>
+          <li class="devtool">Command Line Interface</li>
+          <li class="js-skill">JavaScript Fundamentals</li>
+          <li class="js-skill">OOP and Classes</li>
+          <li class="webdev-skill" id="current-topic">HTML</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Favorite Quotes</h2>
+      <ol>
+        <li>Quote 1...</li>
+        <li>Quote 2...</li>
+        <li>Quote 3...</li>
+      </ol>
+    </section>
+  </main>
+  <footer>
+    <p>Copyright Marcy Lab School 2025</p>
+    <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
+  </footer>
+</body>
 ```
 
 Semantic tags make websites more understandable, accessible, and efficient by giving meaning to HTML content, which boosts search-engine optimization (SEO), helps assistive technologies (like screen readers), improves code readability for developers, and ensures a more consistent user experience across devices. 

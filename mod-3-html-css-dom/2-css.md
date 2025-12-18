@@ -236,6 +236,7 @@ Targets elements with a specific class attribute. Starts with a dot (`.`)
   <li class="devtool">Command Line Interface</li>
   <li class="js-skill">JavaScript Fundamentals</li>
   <li class="js-skill">OOP and Classes</li>
+  <li class="webdev-skill" id="current-topic">HTML</li>
 </ul>
 ```
 
@@ -250,11 +251,16 @@ Targets elements with a specific class attribute. Starts with a dot (`.`)
 .js-skill {
   background: yellow;
 }
+
+/* All elements with the class "webdev-skill" will be lightgreen */
+.webdev-skill {
+  background: lightgreen;
+}
 ```
 
 Remember, multiple elements can share the same class.
 
-**TODO: Add list items to your programming skills list for HTML and CSS. Then, add a class to each list item called `"web-dev-skill"` and a new CSS selector and declaration making the background `lightgreen`.**
+**TODO: Add list items to your programming skills list for CSS. Then, add `class="web-dev-skill"`**
 
 ### ID Selector
 
@@ -606,6 +612,10 @@ li {
 
 .web-dev-skill {
   background: lightgreen;
+}
+
+#current-topic {
+  font-weight: bold;
 }
 
 #profile-picture {
