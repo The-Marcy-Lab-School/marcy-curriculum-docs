@@ -6,19 +6,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [What is a Form?](forms.md#what-is-a-form)
-  * [Form Basic Structure](forms.md#form-basic-structure)
-  * [Inputs](forms.md#inputs)
-  * [Accessibility: Labels and aria-label](forms.md#accessibility-labels-and-aria-label)
-  * [Submit button](forms.md#submit-button)
-* [Handling Form Submissions](forms.md#handling-form-submissions)
-  * [Original Form Submissions](forms.md#original-form-submissions)
-  * [The Modern Way](forms.md#the-modern-way)
-  * [FormData API](forms.md#formdata-api)
-    * [One annoying gotcha: checkboxes](forms.md#one-annoying-gotcha-checkboxes)
-  * [Resetting](forms.md#resetting)
-* [Input types](forms.md#input-types)
-* [Tracking Input and Non Submission Events](forms.md#tracking-input-and-non-submission-events)
+- [What is a Form?](#what-is-a-form)
+  - [Form Basic Structure](#form-basic-structure)
+  - [Inputs](#inputs)
+  - [Accessibility: Labels and aria-label](#accessibility-labels-and-aria-label)
+  - [Submit button](#submit-button)
+- [Handling Form Submissions](#handling-form-submissions)
+  - [Original Form Submissions](#original-form-submissions)
+  - [The Modern Way](#the-modern-way)
+  - [FormData API](#formdata-api)
+    - [One annoying gotcha: checkboxes](#one-annoying-gotcha-checkboxes)
+  - [Resetting](#resetting)
+- [Input types](#input-types)
+- [Tracking Input and Non Submission Events](#tracking-input-and-non-submission-events)
+
 
 **Q: What is a form and why is a form useful?**
 
