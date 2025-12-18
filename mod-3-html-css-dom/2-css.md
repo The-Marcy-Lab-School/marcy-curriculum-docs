@@ -44,6 +44,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ## Intro to CSS
 
+In the previous lesson, we learned how to structure content with HTML and even got a preview of styling with `<style>` tags. Now we'll dive deeper into CSS and learn how to truly transform the appearance of our pages.
+
 When the world wide web was born, it was just a means of communicating information. The world of design hadn't yet made its way to the internet and websites looked like this:
 
 ![An HTML page with no styling.](../.gitbook/assets/html-page-no-css.png)
@@ -54,7 +56,7 @@ But with CSS, we can override those defaults and dramatically transform the page
 
 ![The same page with CSS.](../.gitbook/assets/css-zen-garden.png)
 
-You can see this page at [https://csszengarden.com/](https://csszengarden.com/), a website dedicated to showing the power of CSS. It showcases a variety of designs of the the exact same HTML. The only thing that changes is the CSS!
+You can see this page at [https://csszengarden.com/](https://csszengarden.com/), a website dedicated to showing the power of CSS. It showcases a variety of designs of the exact same HTML. The only thing that changes is the CSS!
 
 **CSS** stands for **Cascading Style Sheets** and it is responsible for defining the appearance of HTML documents including (but not limited to):
 * Colors (background colors, text colors, etc...)
@@ -98,7 +100,7 @@ There are three ways to add CSS to an HTML document:
 
 ### Internal Stylesheets With Style Tags (Fine If You Only Want 1 File)
 
-Open up your `index.html` file from the last lesson and add these `<style>` tags and CSS within the `<head>`:
+Open up your `index.html` file from the `my-profile` folder and add these `<style>` tags and CSS within the `<head>`:
 
 ```html
 <!DOCTYPE html>
@@ -176,7 +178,7 @@ CSS is most commonly written in `.css` files that are loaded by an HTML file via
 </html>
 ```
 
-* The `rel` (relevance) attribute tells the browser what kind of file is being linked (other file types can also be loaded using this tag)
+* The `rel` (relationship) attribute tells the browser what kind of file is being linked (other file types can also be loaded using this tag)
 * The `href` (hyperlink reference) attribute is an absolute/relative path to the `.css` file
 
 **TODO**: Move all of the CSS into a separate file called `index.css` and load it into your HTML file.
@@ -394,7 +396,7 @@ div {
 }
 ```
 
-* The `rem` unit sets a size of an element relative to the browser's **base font size** which is typically `16px` by default. User's can change their base font size as an accessibility feature. If your website uses `rem` units instead of `px`, your font will scale according to your user's accessibility settings.
+* The `rem` unit sets a size of an element relative to the browser's **base font size** which is typically `16px` by default. Users can change their base font size as an accessibility feature. If your website uses `rem` units instead of `px`, your font will scale according to your user's accessibility settings.
 
 ```css
 p {
@@ -483,12 +485,14 @@ p {
 
 </details>
 
-**Q: For the HTML and CSS below, what will be the color of paragraph?**
+**Q: For the HTML and CSS below, what will be the color of paragraph? (pay close attention)**
 
+HTML:
 ```html
 <p class='fun'>Hello World</p> 
 ```
 
+CSS:
 ```css
 .fun {
   color: orange;
@@ -505,7 +509,9 @@ p {
 
 <summary>Answer</summary>
 
-It will be purple! The selector `#its-purple` is the most specific selector that applies to this element.
+Did you fall for my trap?
+
+It will be orange! While the selector `#its-purple` is the most specific selector, the element doesn't have that id! So the most specific selector is the `.fun` class selector.
 
 </details>
 

@@ -25,7 +25,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 ## Key Concepts
 
 - A **Browser** is a program that interprets and renders HTML
-- Browsers use the **`file://` protocol** is used when opening HTML files locally; the **`http(s)://` protocol** is used when accessing them from a server over the internet.
+- Browsers use the **`file://` protocol** when opening HTML files locally; the **`https://` protocol** is used when accessing files from a server over the internet.
 - **index.html** is the default entry point for a website: browsers and servers look for this file automatically.
 * **HTML (Hypertext Markup Language)** describes the **content** and **structure** of a webpage.
 * **HTML elements** are created using **opening and closing tags** (e.g., `<p>content</p>`).
@@ -87,7 +87,7 @@ Just like Markdown, **HTML (Hypertext Markup Language)** is a markup language th
 
 To illustrate the difference between markup languages and regular `.txt` files, do the following:
 
-* In your `mod-3` folder, create a new folder called `intro-to-html`
+* In your `mod-3` folder, create a new folder called `my-profile`
 * Create two files called `index.txt` and `index.html`
 * Put the code above inside both of them:
 * Right click on the `index.html` file and select Reveal in Finder/Explorer
@@ -114,7 +114,7 @@ When you open an HTML file directly to view in your browser, your browser uses t
 
 ![The file protocol loads files directly from your own computer](./img/file-protocol.png)
 
-The rest of the time, your browser will likely be using the **`https://` protocol** to get web files file from a **server**.
+The rest of the time, your browser will likely be using the **`https://` protocol** to get web files from a **server**.
 
 ![using the https protocol to get the html file](../.gitbook/assets/github-https-protocol.png)
 
@@ -224,7 +224,7 @@ Tags can have **attributes** that provide additional information for the element
 For example, to create a **hyperlink** to navigate to another page, we make an "anchor" element
 ```html
 <!-- Attributes go in the opening tag -->
-<a href="./about">About Me</a>
+<a href="./about.html">About Me</a>
 ```
 Attributes and their values go in the opening tag of an element.
 * `href` is the **attribute** (short for "hyperlink reference")
@@ -363,7 +363,7 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
     </ol>
   </div>
 </div>
-</div id="footer">
+<div id="footer">
   <p>Copyright Marcy Lab School 2025</p>
   <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
 </div>
@@ -402,9 +402,9 @@ Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, 
     </ol>
   </section>
 </main>
-</footer>
+<footer>
   <p>Copyright Marcy Lab School 2025</p>
-  <p>Learn more at <a href="marcylabschool.org">marcylabschool.org</a>
+  <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
 </footer>
 ```
 
