@@ -56,13 +56,20 @@ But with CSS, we can override those defaults and dramatically transform the page
 
 ![The same page with CSS.](../.gitbook/assets/css-zen-garden.png)
 
+{% hint style="info" %}
 You can see this page at [https://csszengarden.com/](https://csszengarden.com/), a website dedicated to showing the power of CSS. It showcases a variety of designs of the exact same HTML. The only thing that changes is the CSS!
+{% endhint %}
 
-**CSS** stands for **Cascading Style Sheets** and it is responsible for defining the appearance of HTML documents including (but not limited to):
-* Colors (background colors, text colors, etc...)
-* Typography (font families, font sizes, font weight, text alignment, etc...)
-* Spacing (padding and margin between elements)
-* Layout (how elements automatically "flow" in a document)
+Which website would you rather use? Which one feels more trustworthy and professional? **CSS bridges the gap between content and experience.** As a developer, understanding CSS allows you to:
+
+| Skill | Why It Matters |
+| ----- | -------------- |
+| Control visual hierarchy | Guide users' attention to what's important |
+| Create responsive layouts | Make your app usable on phones, tablets, and desktops |
+| Implement design systems | Build consistent, professional interfaces |
+| Debug styling issues | Fix layout problems that break user experience |
+
+Later, when you learn DOM manipulation with JavaScript, you'll be able to dynamically change CSS in response to user actions—highlighting selected items, showing/hiding elements, animating transitions, and more. A solid CSS foundation makes that JavaScript work much more powerful.
 
 ### CSS Syntax
 
