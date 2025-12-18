@@ -20,6 +20,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [Ids and Classes](#ids-and-classes)
 - [Semantic Elements](#semantic-elements)
 - [Quiz](#quiz)
+- [Complete HTML](#complete-html)
 
 
 ## Key Concepts
@@ -129,7 +130,7 @@ A **server** is just another computer, somewhere else, that provides a resource 
 
 **HTML** (**H**yper**t**ext **M**arkup **L**anguage) is the language used to build webpages. It describes **content** and **structure** of a webpage. In other words, what to display and where/how to display it.
 
-**HTML elements** are created using **tags** wrapped in angle bracket `<>`. In your `index.html` file, add the following elements
+**HTML elements** are created using **tags** wrapped in angle bracket `<>`. In your `index.html` file, replace the content with the following elements:
 
 ```html
 <!-- This is a "heading" -->
@@ -209,9 +210,9 @@ Let's break them down:
 
 {% hint style="info" %}
 **Pro Tip!** In VS Code, when you create an empty `.html` document, type `html` and then from the popup, select `html:5` and hit Enter.
-
-**Try it out**: Create a new HTML page called `about.html`!
 {% endhint %}
+
+**TODO**: Create a new HTML page called `about.html` with an `<h1>About Me</h1>` header inside the body.
 
 ## Attributes: Adding Information to Tags
 
@@ -229,7 +230,7 @@ Attributes and their values go in the opening tag of an element.
 * `href` is the **attribute** (short for "hyperlink reference")
 * `"./about.html"` and `"./index.html"` are **values**
 
-**TODO: Add these links to the top of your `index.html` and `about.html` pages.**
+**TODO: Add these links to your `index.html` and `about.html` pages.**
 
 {% hint style="info" %}
 The content between the `<a></a>` tags is visible to the user and should indicate the link's destination. Do NOT make hyperlink elements like this:
@@ -344,17 +345,22 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
 
 ```html
 <body>
-  <div id="header">
+  <!-- division -->
+  <div id="header"> 
     <h1>My Website</h1>
+    <!-- division -->
     <div id="nav">
       <a href="./index.html">Home</a>
       <a href="./about.html">About</a>
     </div>
   </div>
+  <!-- division -->
   <div id="main-content">
+    <!-- division -->
     <div id="image-container">
       <img src="img-url.png" />
     </div>
+    <!-- division -->
     <div class="section">
       <h2>Programming Skills</h2>
       <ul>
@@ -365,6 +371,7 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
           <li class="webdev-skill" id="current-topic">HTML</li>
       </ul>
     </div>
+    <!-- division -->
     <div class="section">
       <h2>Favorite Quotes</h2>
       <ol>
@@ -374,6 +381,7 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
       </ol>
     </div>
   </div>
+  <!-- division -->
   <div id="footer">
     <p>Copyright Marcy Lab School 2025</p>
     <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a>
@@ -422,6 +430,8 @@ Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, 
   </footer>
 </body>
 ```
+
+**TODO: Add the semantic elements to your document:** `header`, `main`, `footer`, `nav`, and `section`
 
 Semantic tags make websites more understandable, accessible, and efficient by giving meaning to HTML content, which boosts search-engine optimization (SEO), helps assistive technologies (like screen readers), improves code readability for developers, and ensures a more consistent user experience across devices. 
 
@@ -587,3 +597,91 @@ Note: Multiple classes are separated by spaces within the same `class` attribute
 Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose of the content, making the HTML more readable, accessible, and better for SEO.
 
 </details>
+
+## Complete HTML
+
+**index.html**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ben's Website</title>
+  <style>
+    /* All elements with the class "devtool" will be orange */
+    .devtool {
+      background: orange;
+    }
+
+    /* All elements with the class "js-skill" will be yellow */
+    .js-skill {
+      background: yellow;
+    }
+    
+    .web-dev-skill {
+      background: lightgreen;
+    }
+
+    #current-topic {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Website</h1>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About</a>
+    </nav>
+  </header>
+  <main>
+    <figure>
+      <img id="profile-picture" src="https://avatars.githubusercontent.com/u/111444562?v=4" alt="Profile Picture" >
+      <figcaption>It's nice to meet you!</figcaption>
+    </figure>
+    <section>
+      <h2>Programming Skills</h2>
+      <ul>
+        <li class="devtool">Git & GitHub</li>
+        <li class="devtool">Command Line Interface</li>
+        <li class="js-skill">JavaScript Fundamentals</li>
+        <li class="js-skill">OOP and Classes</li>
+        <li class="web-dev-skill" id="current-topic">HTML</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Favorite Quotes</h2>
+      <ol>
+        <li>Quote 1...</li>
+        <li>Quote 2...</li>
+        <li>Quote 3...</li>
+      </ol>
+    </section>
+  </main>
+  </footer>
+    <p>Copyright Marcy Lab School 2025</p>
+    <p>Learn more at <a href="marcylabschool.org">marcylabschool.org</a>
+  </footer>
+</body>
+</html>
+```
+
+**about.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ben's Website</title>
+</head>
+<body>
+    <h1>About Me</h1>
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+</body>
+</html>
+```
