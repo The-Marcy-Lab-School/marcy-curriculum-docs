@@ -56,7 +56,7 @@
   * [Overview](mod-3-html-css-dom/Overview.md)
   * [1. HTML](mod-3-html-css-dom/1-html.md)
   * [2. CSS](mod-3-html-css-dom/2-css.md)
-  * [3. The Box Model and Positioning](mod-3-html-css-dom/3-box-model.md)
+  * [3. The Box Model](mod-3-html-css-dom/3-box-model.md)
   * [4. Forms](mod-3-html-css-dom/4-forms.md)
   * [5. Accessibility (a11y)](mod-3-html-css-dom/5-accessibility.md)
   * [6. Flexbox](mod-3-html-css-dom/6-flexbox.md)
