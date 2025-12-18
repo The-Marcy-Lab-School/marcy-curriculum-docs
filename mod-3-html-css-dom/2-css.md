@@ -6,50 +6,158 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [Before CSS There Was Only HTML](css.md#before-css-there-was-only-html)
-* [What is CSS?](css.md#what-is-css)
-* [Linking/Loading CSS Files](css.md#linkingloading-css-files)
-* [Anatomy of CSS](css.md#anatomy-of-css)
-* [Selectors](css.md#selectors)
-* [Selector Specificity](css.md#selector-specificity)
-* [Units: `px` vs `%` vs `rems`](css.md#units-px-vs--vs-rems)
-* [Quiz!](css.md#quiz)
+- [Key Concepts](#key-concepts)
+- [Intro to CSS](#intro-to-css)
+  - [CSS Syntax](#css-syntax)
+- [Linking/Loading CSS Files](#linkingloading-css-files)
+  - [Internal Stylesheets With Style Tags (Fine If You Only Want 1 File)](#internal-stylesheets-with-style-tags-fine-if-you-only-want-1-file)
+  - [Attributes / Inline Styling (Practically Never Do This)](#attributes--inline-styling-practically-never-do-this)
+  - [External Stylesheets (Best Practice)](#external-stylesheets-best-practice)
+- [Selectors](#selectors)
+  - [Element Selector](#element-selector)
+  - [Class Selector](#class-selector)
+  - [ID Selector](#id-selector)
+  - [Multi-Selectors](#multi-selectors)
+  - [Pseudo-Class Selectors](#pseudo-class-selectors)
+- [Common CSS Properties](#common-css-properties)
+  - [Color Properties](#color-properties)
+  - [Typography Properties](#typography-properties)
+  - [Spacing Properties (Just the Basics)](#spacing-properties-just-the-basics)
+- [The Cascade: Why It's Called "Cascading"](#the-cascade-why-its-called-cascading)
+- [Development Workflow](#development-workflow)
+- [Units: `px` vs `%` vs `rems`](#units-px-vs--vs-rems)
+- [Quiz!](#quiz)
 
-## Before CSS There Was Only HTML
+## Key Concepts
+
+- **CSS (Cascading Style Sheets)** defines the appearance of HTML documents: colors, typography, spacing, and layout.
+- CSS syntax consists of **selectors**, **properties**, and **values**. Each `property: value;` pair is called a **declaration**.
+- CSS can be added via internal `<style>` tags, inline `style` attributes, or external `.css` files. **External stylesheets are the best practice** as they promote reusability and separation of concerns.
+- **Selectors** target elements to style:
+  - Element selector: `p { }` — targets all `<p>` elements
+  - Class selector: `.intro { }` — targets elements with `class="intro"`
+  - ID selector: `#main { }` — targets the element with `id="main"`
+  - Multi-selector: `h1, h2, h3 { }` — targets multiple element types
+  - Pseudo-class selector: `a:hover { }` — targets elements in a specific state
+- **Specificity** determines which styles win when multiple rules apply: ID > Class > Element. If specificity is equal, the last rule wins.
+- **Units**: Use `rem` for font sizes (accessible, scales with user settings), `%` for relative sizing, and avoid `px` for font sizes.
+
+## Intro to CSS
 
 When the world wide web was born, it was just a means of communicating information. The world of design hadn't yet made its way to the internet and websites looked like this:
 
 ![An HTML page with no styling.](../.gitbook/assets/html-page-no-css.png)
 
-With just the addition of CSS, that same paged can be dramatically transformed:
+As you can see, the browser already has some default styles applied to elements of different types. Headings are bigger and bolder than paragraphs. Hyperlinks ("anchors") are blue and underlined.
+
+But with CSS, we can override those defaults and dramatically transform the page. 
 
 ![The same page with CSS.](../.gitbook/assets/css-zen-garden.png)
 
 You can see this page at [https://csszengarden.com/](https://csszengarden.com/), a website dedicated to showing the power of CSS. It showcases a variety of designs of the the exact same HTML. The only thing that changes is the CSS!
 
-## What is CSS?
+**CSS** stands for **Cascading Style Sheets** and it is responsible for defining the appearance of HTML documents including (but not limited to):
+* Colors (background colors, text colors, etc...)
+* Typography (font families, font sizes, font weight, text alignment, etc...)
+* Spacing (padding and margin between elements)
+* Layout (how elements automatically "flow" in a document)
 
-* **CSS** stands for **Cascading Style Sheets**
-* **CSS rules** tell our browser how to display our HTML
-* You can **select** elements on the page by tags, ids, classes, and more, and then apply styles to them.
+### CSS Syntax
+
+CSS is written using **selectors**, **properties**, and **values**:
 
 ```css
-p.vivid {
-  color: purple;
+body {
+  background: azure;
+  color: midnightblue;
   font-family: Helvetica;
-  font-weight: bold;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+}
+
+ul, ol {
+  margin: auto;
+  width: fit-content;
+  text-align: left;
 }
 ```
 
-> CSS let's us say "I want all paragraph elements with the class "vivid" to have purple bold text in Helvetica font.
+* **Selectors** (like `body` or `ul, ol`) specify which HTML element(s) to style. Selectors are followed by curly braces `{}` which contain the properties for the selected element(s).
+* **Properties** (like `background` and `color`) tell our browser the aspect of the element to change.
+* Each property has a set of valid **values** that can be assigned to them (like `azure` or `midnightblue` for colors, `center` for alignment, or `20px` for sizing and spacing.)
 
-* The browser already has some **default styles** but we can override those styles with our own.
-* We can change the **color**, the **size**, the **font**, the **position**, and more of any element on the page.
+Each `property:value;` pair is called a **declaration** that *must* be followed by a semicolon.
 
 ## Linking/Loading CSS Files
 
-* CSS rules are most commonly written in `.css` files
-* In order for CSS rules to be applied to an HTML page, the `.html` file must use a `<link rel="" href="" />` tag that references the `.css` file:
+There are three ways to add CSS to an HTML document:
+1. Inside `<style></style>` tags (this is okay but not preferred)
+2. As attributes of individual elements (don't do this)
+3. Inside a separate `.css` file, loaded via a `<link>` tag.
+
+### Internal Stylesheets With Style Tags (Fine If You Only Want 1 File)
+
+Open up your `index.html` file from the last lesson and add these `<style>` tags and CSS within the `<head>`:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Other meta tags -->
+    <style>
+      body {
+        background: azure;
+        color: midnightblue;
+        font-family: Helvetica;
+        text-align: center;
+        margin: auto;
+        padding: 20px;
+      }
+
+      ul, ol {
+        margin: auto;
+        width: fit-content;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Your content -->
+  </body>
+</html>
+```
+
+This approach works well if you are interested in keeping all of your code inside of one file or need to quickly test some CSS.
+
+### Attributes / Inline Styling (Practically Never Do This)
+
+You can also add a `style` attribute directly to an individual element:
+
+```html
+<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; margin: auto; padding: 20px;">
+  <!-- body content -->
+
+  <ul style="margin: auto; width: fit-content; text-align: left;">
+    <!-- unordered list items -->
+  </ul>
+
+  <ol style="margin: auto; width: fit-content; text-align: left;">
+    <!-- ordered list items -->
+  </ol>
+</body>
+```
+
+**<details><summary>Q: What issues can you foresee with inline styling?</summary>**
+
+**Problem:** This mixes HTML structure with visual styling, making your code harder to maintain. If you want to change the styling of all `ul` and `ol` lists, you'd have to update every single `ul` and `ol` tag.
+
+</details>
+
+
+### External Stylesheets (Best Practice)
+
+CSS is most commonly written in `.css` files that are loaded by an HTML file via the `<link>` element.
 
 ```html
 <!DOCTYPE html>
@@ -58,7 +166,7 @@ p.vivid {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css"> 
+    <link rel="stylesheet" href="./index.css"> 
     <!-- ^ This link tag is how we apply CSS to an HTML page -->
     <!-- It should go in the head -->
   </head>
@@ -71,126 +179,206 @@ p.vivid {
 * The `rel` (relevance) attribute tells the browser what kind of file is being linked (other file types can also be loaded using this tag)
 * The `href` (hyperlink reference) attribute is an absolute/relative path to the `.css` file
 
-> 💡 Tip! Test that the link worked by adding a few super obvious rules in the CSS file to make sure it's actually changing the HTML appearance. For example, make the `body` have a purple background!
+**TODO**: Move all of the CSS into a separate file called `index.css` and load it into your HTML file.
 
-## Anatomy of CSS
+**<details><summary>Q: What are the potential benefits of having CSS in an external file?</summary>**
 
-* A CSS rule is made up of a **selector** and a **declarations**
+Just like modules in a JavaScript program, external stylesheets can be reused by multiple pages that want to have the same styling. When you decide to make a change to the overall style of the website, all pages that use that stylesheet will be updated without the need to update pages individually.
 
-![Anatomy of a CSS rule with one selector and two declarations](../.gitbook/assets/css-anatomy-of-a-rule.png)
+Overall, this makes development and maintenance much easier and more organized.
 
-* the **selector** is what chooses the element(s) that will be styled
-* the **declarations** are the actual styles that will be applied
-
-Declarations are made up of property/value pairs (like an object) and MUST end with a semicolon (unlike an object)
-
-```css
-/* This is a CSS Comment */
-
-/* one line is okay */
-p { color: red; text-align: left; } 
-
-/* Most of the time we spread it out */
-h1 { 
-  color: blue;
-  text-align: center;
-}
-```
+</details>
 
 ## Selectors
 
-* There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css_selectors.php)). The most common selectors are:
-  * By tag (select all `p` elements)
-  * By class name (select all elements with `class="blue"`)
-  * By id name (select the element with `id="email-form"`)
-  * Or some combination of these things
+There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css_selectors.php)). 
+
+The most common selectors are:
+* By element (select all `li` elements)
+* By class name (select all elements with `class="blue"`)
+* By id name (select the element with `id="email-form"`)
+* Or some combination of these things
+
+### Element Selector
+
+Targets all elements of a specific type:
 
 ```css
-/* Select all paragraph elements */
-p { 
-  font-family: fantasy;
-  font-size: 20px;
+li { 
+  font-family: roboto;
+  margin-bottom: 5px;
+}
+```
+
+This styles *every* `<li>` element on the page.
+
+### Class Selector
+
+Targets elements with a specific class attribute. Starts with a dot (`.`)
+
+**HTML:**
+```html
+<h2>Programming Skills</h2>
+<ul>
+  <li class="devtool">Git & GitHub</li>
+  <li class="devtool">Command Line Interface</li>
+  <li class="js-skill">JavaScript Fundamentals</li>
+  <li class="js-skill">OOP and Classes</li>
+</ul>
+```
+
+**CSS:**
+```css
+/* All elements with the class "devtool" will be orange */
+.devtool {
+  background: orange;
 }
 
-/* Select all elements with class="blue" */
-.blue {
-  color: blue;
-}
-
-/* Select all p elements with class="blue" */
-p.blue {
-  font-style: italic;
-}
-
-/* Select the element with id="special" */
-#special {
+/* All elements with the class "js-skill" will be yellow */
+.js-skill {
   background: yellow;
 }
 ```
 
-* You can also select children tags of a particular parent tag
+Remember, multiple elements can share the same class.
+
+### ID Selector
+
+Targets a single element with a specific id attribute. IDs start with a hash (`#`):
+
+**HTML:**
+
+```html
+<img id="profile-picture" src="img-url.png" alt="Profile Picture" >
+```
+
+**CSS:**
 
 ```css
-/* selects all li tags that are in ul tags that have the class="links" attribute */
-ul.links-list > li {
-  color: black;
+#profile-picture {
+  border-radius: 50%;
 }
 ```
 
-* **Pseudo-classes** let us select an element in a particular **state** such as when it is being hovered over or has been clicked:
+Remember, each id should be unique on the page. If you want to style multiple elements the same way, use a class instead.
+
+### Multi-Selectors
+
+You can apply the same styles to multiple selectors by separating them with a comma (`,`). We did this earlier with the `ul` and `ol` elements:
 
 ```css
-a { color: black; }
-a:visited { color: purple } /* a link once a user has visited the page */
-a:hover { color: red } /* a link when the mouse hovers over it */
-a:active { color: blue; } /* a link the moment it is clicked */
+ul, ol {
+  margin: auto;
+  width: fit-content;
+  text-align: left;
+}
 ```
 
-## Selector Specificity
+This applies the styles to all `<ul>` and `<ol>` elements.
 
-* When one HTML element is styled by two conflicting CSS rules, **selector specificity** determines how conflicting style rules are resolved
-* By default, CSS is applied top-to-bottom and the rule that comes last is applied (think of it like coats of paint being applied on top of each other):
+### Pseudo-Class Selectors
+
+**Pseudo-class selectors** let us select an element in a particular **state** such as when it is being hovered over or has been clicked:
+
+```css
+/* a link when the mouse hovers over it */
+a:hover { color: red } 
+/* a link the moment it is clicked */
+a:active { color: green; } 
+```
+
+## Common CSS Properties
+
+### Color Properties
 
 ```css
 p {
-  color: red;
+  color: blue;                    /* text color */
+  background-color: lightgray;    /* background color */
+}
+```
+
+**Color values can be:**
+- **Named colors**: `red`, `blue`, `green`, `hotpink`
+- **Hex codes**: `#FF5733`, `#0000FF`
+- **RGB**: `rgb(255, 87, 51)`
+- **RGBA** (with transparency): `rgba(255, 87, 51, 0.5)`
+
+### Typography Properties
+
+```css
+p {
+  font-size: 16px;              /* size of text */
+  font-family: Arial, sans-serif; /* typeface */
+  font-weight: bold;             /* normal, bold, or 100-900 */
+  text-align: center;            /* left, center, right, justify */
+  line-height: 1.5;              /* spacing between lines */
+}
+```
+
+**About `font-family`**: List multiple fonts separated by commas. The browser uses the first available font. Always end with a generic family like `sans-serif` or `serif` as a fallback.
+
+### Spacing Properties (Just the Basics)
+
+```css
+p {
+  margin: 20px;     /* space outside the element */
+  padding: 10px;    /* space inside the element */
+}
+```
+
+We'll explore spacing in detail when we cover the box model, but for now:
+- **Margin** creates space between elements
+- **Padding** creates space inside an element, between its border and content
+
+## The Cascade: Why It's Called "Cascading"
+
+When multiple CSS rules apply to the same element, the browser follows these rules to determine which styles win:
+
+1. **Specificity**: More specific selectors override less specific ones
+   - ID selectors (`#main-title`) are most specific
+   - Class selectors (`.intro`) are less specific
+   - Element selectors (`p`) are least specific
+
+2. **Source order**: If specificity is equal, the rule that appears last wins
+
+**Example:**
+```css
+p {
+  color: yellow;
 }
 
 p {
+  /* overrides the rule above */
   color: blue;
 }
-```
 
-* The more selectors you add, the more specific the rule is. Selectors with greater specificity will override rules defined by selectors with lesser specificity.
+.intro {
+  color: green;
+}
 
-There are four categories which define the specificity level of a selector:
-
-* Inline styles - Example: `<h1 style="color: pink;">`
-* IDs - Example: `#navbar`
-* Classes, pseudo-classes, attribute selectors - Example: `.test`, `:hover`, `[href]`
-* Elements and pseudo-elements - Example: `h1`, `::marker`
-
-```css
-p#subtitle {
+#special {
   color: red;
 }
-
-p {
-  color: blue;
-}
 ```
 
-* The `p` with the `id="subtitle"` attribute will be red, because it's more specific than the selector `p`.
+```html
+<p>I'm blue</p>
+<p class="intro">I'm green (class beats element)</p>
+<p id="special" class="intro">I'm red (ID beats class)</p>
+```
 
-{% hint style="info" %}
-Specificity can be calculated! Start at 0, add 100 for each ID value, add 10 for each class value (or pseudo-class or attribute selector), add 1 for each element selector or pseudo-element.
+## Development Workflow
 
-Note: Inline style gets a specificity value of `1000`, and is always given the highest priority!
+When building a webpage:
 
-Note 2: There is one exception to this rule: if you use the `!important` rule, it will even override inline styles!
+1. **Start with HTML structure** - Get your content organized with proper semantic elements
+2. **Link your CSS file** - Add the `<link>` tag in your `<head>`
+3. **Add classes/ids to HTML** - Label elements you want to style
+4. **Write CSS rules** - Target elements and apply styles
+5. **Refresh browser** - See your changes (you may need to hard refresh with Cmd+Shift+R or Ctrl+Shift+R)
 
-[Read more about CSS Specificity here](https://www.w3schools.com/css/css_specificity.asp)
-{% endhint %}
+**Debugging tip**: Use your browser's Developer Tools (right-click > Inspect) to see which CSS rules are being applied to an element. This is essential for understanding why styles aren't working as expected.
 
 ## Units: `px` vs `%` vs `rems`
 
@@ -267,7 +455,7 @@ p {
 
 </details>
 
-**Q: How would you make all `p` tags blue? How would you make only the `p` tags with `class="fun"` green? How would you make the second `p` tag `orange`?**
+**Q: For the HTML below, how would you make all `p` tags blue? How would you make only the `p` tags with `class="fun"` green? How would you make the second `p` tag `orange`?**
 
 ```html
 <p class='fun'>first</p>
@@ -295,7 +483,7 @@ p {
 
 </details>
 
-**Q: What will be the color of paragraph?**
+**Q: For the HTML and CSS below, what will be the color of paragraph?**
 
 ```html
 <p class='fun'>Hello World</p> 
@@ -305,83 +493,65 @@ p {
 .fun {
   color: orange;
 }
-p.fun {
-  color: blue;
+#its-purple {
+  color: purple
 }
 p {
   color: red;
 }
-#its-purple {
-  color: purple
-}
 ```
 
 <details>
 
 <summary>Answer</summary>
 
-It will be blue! The selector `p.fun` is the most specific selector that applies to this element.
+It will be purple! The selector `#its-purple` is the most specific selector that applies to this element.
 
 </details>
 
-**Q: what is the width of the `img` element based on the CSS below?**
+**Q: How do you link an external CSS file called `styles.css` to an HTML document? Where in the HTML should this go?**
+
+<details>
+
+<summary>Answer</summary>
+
+Use the `<link>` tag with `rel="stylesheet"` and `href` pointing to the CSS file. It should go in the `<head>`:
+
+```html
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+```
+
+</details>
+
+**Q: How would you apply the same styles to all `h1`, `h2`, AND `h3` elements using a single CSS rule?**
+
+<details>
+
+<summary>Answer</summary>
+
+Use a multi-selector by separating the element selectors with commas:
 
 ```css
-img {
-  width: 200px;
-  padding: 5px;
-  margin: 5px;
+h1, h2, h3 {
+  font-family: Georgia, serif;
+  color: navy;
 }
 ```
 
-<details>
-
-<summary>Answer</summary>
-
-A 200px wide element with 5px of padding on either side and 5px of margin on either side will actually be 220px wide.
-
 </details>
 
-**Q: By default, the `width` property affects the size of the "content" box and padding and margin are added to the outside of this content box. What kinds of challenges does this present?**
+**Q: What are three different ways you could set an element's text color to red in CSS?**
 
 <details>
 
 <summary>Answer</summary>
 
-To set the absolute size of an element, we have to calculate the width, padding, and border properties of the box model, which can either be challenging or annoying to maintain.
+1. **Named color**: `color: red;`
+2. **Hex code**: `color: #FF0000;`
+3. **RGB**: `color: rgb(255, 0, 0);`
 
-</details>
-
-**Q: What will the total width of the `img` element be after applying the CSS rules below? What will the width of the content box be?**
-
-```css
-* {
-  box-sizing: border-box;
-}
-img {
-  width: 200px;
-  padding: 10px;
-  border: 5px solid black;
-  margin: 10px;
-}
-```
-
-<details>
-
-<summary>Answer</summary>
-
-The width of the entire `img` will be `200px` but the width of the image's content box will be `170px`.
-
-The `margin` will still add `10px` of space on all sides causing the element to take up `220px` worth of space.
-
-</details>
-
-**Q: A user sets their font size to "extra-large" which changes the base font size to `32px`. What will the size of an element with `font-size: 2rem;` be in pixels?**
-
-<details>
-
-<summary>Answer</summary>
-
-`1rem` is equal to the base font size of `32px` so `2rem` will be `64px`.
+Bonus: You can also use **RGBA** for transparency: `color: rgba(255, 0, 0, 0.5);`
 
 </details>

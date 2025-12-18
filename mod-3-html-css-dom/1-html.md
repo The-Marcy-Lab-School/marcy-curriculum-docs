@@ -144,8 +144,9 @@ A **server** is just another computer, somewhere else, that provides a resource 
 <!-- This is an "unordered list", a.k.a. a bullet list -->
 <ul>
   <!-- "list items" are nested inside the ul -->
-  <li>JavaScript Fundamentals</li>
   <li>Git & GitHub</li>
+  <li>Command Line Interface</li>
+  <li>JavaScript Fundamentals</li>
   <li>OOP and Classes</li>
 </ul>
 
@@ -347,8 +348,9 @@ Prior to HTML5 (released in 2014), the primary way to organize HTML elements was
   <div class="section">
     <h2>Programming Skills</h2>
     <ul>
-      <li>JavaScript Fundamentals</li>
       <li>Git & GitHub</li>
+      <li>Command Line Interface</li>
+      <li>JavaScript Fundamentals</li>
       <li>OOP and Classes</li>
     </ul>
   </div>
@@ -385,8 +387,9 @@ Then, **semantic elements** like `<header>`, `<main>`, `<footer>`, `<section>`, 
   <section>
     <h2>Programming Skills</h2>
     <ul>
-      <li>JavaScript Fundamentals</li>
       <li>Git & GitHub</li>
+      <li>Command Line Interface</li>
+      <li>JavaScript Fundamentals</li>
       <li>OOP and Classes</li>
     </ul>
   </section>
