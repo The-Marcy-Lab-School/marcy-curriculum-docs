@@ -1,4 +1,4 @@
-# 9. Grid & Media Queries
+# Grid & Media Queries
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-grid-media-queries)!

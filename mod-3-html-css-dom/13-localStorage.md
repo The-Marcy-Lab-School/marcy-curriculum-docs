@@ -1,4 +1,4 @@
-# 12. LocalStorage
+# LocalStorage
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-4-0-localStorage)!

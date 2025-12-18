@@ -1,4 +1,4 @@
-# 4. The Document Object Model (DOM) API
+# The Document Object Model (DOM) API
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-0-dom)!

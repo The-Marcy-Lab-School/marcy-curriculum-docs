@@ -1,4 +1,4 @@
-# 1. HTML
+# HTML
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-0-html)!

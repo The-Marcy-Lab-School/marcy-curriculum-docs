@@ -1,4 +1,4 @@
-# 7. The Box Model and Positioning
+# The Box Model and Positioning
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-0-box-model-display-positioning)!
@@ -6,17 +6,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [Key Terms](box-model.md#key-terms)
-* [Web Design: Everything is a Box](box-model.md#web-design-everything-is-a-box)
-* [Box Model](box-model.md#box-model)
-  * [Sizing is Based on the Content Box](box-model.md#sizing-is-based-on-the-content-box)
-  * [Box Model Defaults and a CSS Reset](box-model.md#box-model-defaults-and-a-css-reset)
-* [Display and Position](box-model.md#display-and-position)
-  * [Display](box-model.md#display)
-  * [Position](box-model.md#position)
-* [Test your Skills!](box-model.md#test-your-skills)
+- [Key Concepts](#key-concepts)
+- [Web Design: Everything is a Box](#web-design-everything-is-a-box)
+- [Box Model](#box-model)
+  - [Sizing is Based on the Content Box](#sizing-is-based-on-the-content-box)
+  - [Box Model Defaults and a CSS Reset](#box-model-defaults-and-a-css-reset)
+- [Display and Position](#display-and-position)
+  - [Display](#display)
+  - [Position](#position)
+- [Test your Skills!](#test-your-skills)
 
-## Key Terms
+## Key Concepts
 
 * **Box Model** — How elements in an HTML document are modeled in the browser and how their dimensions are calculated based on the provided CSS properties. It consists of content, padding, border, and margin.
 * The **content** — the space that the content of an element occupies (the text of a `<p>` tag, the image of an `img` tag, etc...)

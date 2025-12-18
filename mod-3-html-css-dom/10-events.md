@@ -1,4 +1,4 @@
-# 5. Events
+# Events
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-1-lecture-dom-events)!

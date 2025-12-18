@@ -1,4 +1,4 @@
-# 6. Forms
+# Forms
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-2-2-lecture-forms)!
