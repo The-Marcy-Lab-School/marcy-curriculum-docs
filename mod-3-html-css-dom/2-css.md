@@ -208,6 +208,8 @@ The most common selectors are:
 * By id name (select the element with `id="email-form"`)
 * Or some combination of these things
 
+**TODO:** For each of the examples below, try adding them to your `index.html` profile page!
+
 ### Element Selector
 
 Targets all elements of a specific type:
@@ -250,6 +252,8 @@ Targets elements with a specific class attribute. Starts with a dot (`.`)
 ```
 
 Remember, multiple elements can share the same class.
+
+**TODO: Add list items to your programming skills list for HTML and CSS. Then, add a class to each list item called `"web-dev-skill"` and a new CSS selector and declaration making the background `lightgreen`.**
 
 ### ID Selector
 
