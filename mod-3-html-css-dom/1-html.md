@@ -28,19 +28,19 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 - A **Browser** is a program that interprets and renders HTML
 - Browsers use the **`file://` protocol** when opening HTML files locally; the **`https://` protocol** is used when accessing files from a server over the internet.
 - **index.html** is the default entry point for a website: browsers and servers look for this file automatically.
-* **HTML (Hypertext Markup Language)** describes the **content** and **structure** of a webpage.
-* **HTML elements** are created using **opening and closing tags** (e.g., `<p>content</p>`).
-* Tags can **nest** other tags. 
-  * The container is called the **parent**
-  * Elements inside are **children**
-  * Elements at the same level are **siblings**.
-* **Self-closing tags (void tags)** like `<img />` do not require a closing tag.
-* **Attributes** provide additional information and are included in the opening tag (e.g., `href`, `src`, `alt`).
-  * The `id` attribute marks a unique element on the page. 
-  * The `class` attribute can be applied to multiple elements.
-* A properly formatted HTML document includes `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>` tags.
-* **Semantic elements** have names that describe their function (e.g., `heading`, `main`, `footer`, `section`, `aside`, `h1`, `p`, `ul`, `li`). 
-  * **Non-semantic elements** like `div` and `span` are used for grouping elements for the purpose of styling.
+- **HTML (Hypertext Markup Language)** describes the **content** and **structure** of a webpage.
+- **HTML elements** are created using **opening and closing tags** (e.g., `<p>content</p>`).
+- Tags can **nest** other tags. 
+  - The container is called the **parent**
+  - Elements inside are **children**
+  - Elements at the same level are **siblings**.
+- **Self-closing tags (void tags)** like `<img />` do not require a closing tag.
+- **Attributes** provide additional information and are included in the opening tag (e.g., `href`, `src`, `alt`).
+  - The `id` attribute marks a unique element on the page. 
+  - The `class` attribute can be applied to multiple elements.
+- A properly formatted HTML document includes `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>` tags.
+- **Semantic elements** have names that describe their function (e.g., `header`, `main`, `footer`, `section`, `aside`, `h1`, `p`, `ul`, `li`). 
+  - **Non-semantic elements** like `div` and `span` are used for grouping elements for the purpose of styling.
 
 ## Why HTML Matters for JavaScript Developers
 
@@ -619,7 +619,7 @@ Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose
       background: yellow;
     }
     
-    .web-dev-skill {
+    .webdev-skill {
       background: lightgreen;
     }
 
@@ -648,7 +648,7 @@ Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose
         <li class="devtool">Command Line Interface</li>
         <li class="js-skill">JavaScript Fundamentals</li>
         <li class="js-skill">OOP and Classes</li>
-        <li class="web-dev-skill" id="current-topic">HTML</li>
+        <li class="webdev-skill" id="current-topic">HTML</li>
       </ul>
     </section>
     <section>
@@ -660,9 +660,9 @@ Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose
       </ol>
     </section>
   </main>
-  </footer>
+  <footer>
     <p>Copyright Marcy Lab School 2025</p>
-    <p>Learn more at <a href="marcylabschool.org">marcylabschool.org</a>
+    <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
   </footer>
 </body>
 </html>

@@ -82,7 +82,6 @@ body {
   color: midnightblue;
   font-family: Helvetica;
   text-align: center;
-  margin: auto;
   padding: 20px;
 }
 
@@ -121,7 +120,6 @@ Open up your `index.html` file from the `my-profile` folder and add these `<styl
         color: midnightblue;
         font-family: Helvetica;
         text-align: center;
-        margin: auto;
         padding: 20px;
       }
 
@@ -145,7 +143,7 @@ This approach works well if you are interested in keeping all of your code insid
 You can also add a `style` attribute directly to an individual element:
 
 ```html
-<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; margin: auto; padding: 20px;">
+<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; padding: 20px;">
   <!-- body content -->
 
   <ul style="margin: auto; width: fit-content; text-align: left;">
@@ -260,7 +258,7 @@ Targets elements with a specific class attribute. Starts with a dot (`.`)
 
 Remember, multiple elements can share the same class.
 
-**TODO: Add list items to your programming skills list for CSS. Then, add `class="web-dev-skill"`**
+**TODO: Add list items to your programming skills list for CSS. Then, add `class="webdev-skill"`**
 
 ### ID Selector
 
@@ -588,7 +586,6 @@ body {
   color: midnightblue;
   font-family: Helvetica;
   text-align: center;
-  margin: auto;
   padding: 2rem;
 }
 ul, ol {
@@ -610,7 +607,7 @@ li {
   background: yellow;
 }
 
-.web-dev-skill {
+.webdev-skill {
   background: lightgreen;
 }
 

@@ -1,4 +1,4 @@
-# The Box Model and Positioning
+# The Box Model
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-0-box-model-display-positioning)!
@@ -7,14 +7,21 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 **Table of Contents**
 
 - [Key Concepts](#key-concepts)
-- [Web Design: Everything is a Box](#web-design-everything-is-a-box)
+- [The Box Model](#the-box-model-1)
+  - [Web Design 101: Every Element is a Box](#web-design-101-every-element-is-a-box)
 - [Box Model](#box-model)
-  - [Sizing is Based on the Content Box](#sizing-is-based-on-the-content-box)
-  - [Box Model Defaults and a CSS Reset](#box-model-defaults-and-a-css-reset)
-- [Display and Position](#display-and-position)
-  - [Display](#display)
-  - [Position](#position)
+  - [Content, Width, and Height](#content-width-and-height)
+  - [Padding: Space Inside the Box](#padding-space-inside-the-box)
+  - [Border: The Edge of the Box](#border-the-edge-of-the-box)
+  - [Margin: Space Between Elements](#margin-space-between-elements)
+  - [Margin Collapse](#margin-collapse)
+    - [Centering with Margin](#centering-with-margin)
+- [Display](#display)
+- [The Box-Sizing Problem](#the-box-sizing-problem)
+- [The Solution: border-box](#the-solution-border-box)
+  - [General CSS Reset](#general-css-reset)
 - [Test your Skills!](#test-your-skills)
+- [Complete HTML \& CSS](#complete-html--css)
 
 ## Key Concepts
 
@@ -47,15 +54,25 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   * `display: inline-block` elements will sit next to each other (if there is space available) and ARE affected by the `width` and `height` properties
   * `display: none` elements are removed from the flow of the document.
 
-## Web Design: Everything is a Box
+## The Box Model
 
-You are a new web developer and you want to learn how to make pretty websites, right?
+You've learned how to apply colors, fonts, and basic spacing to HTML elements using CSS. Now you need to understand the fundamental concept that controls how elements take up space on a webpage: **the box model**.
 
-The first rule to understanding web design is that **in an HTML website, everything is a box**.
+### Web Design 101: Every Element is a Box
 
-![](../.gitbook/assets/everything-is-a-box.png)
+The first rule to understanding CSS and web design is that **every HTML element is rendered as a rectangular box**.
 
-This becomes immediately clear when you add this CSS rule to a page:
+Even elements that don't look like boxes (paragraphs, headings, links, images, buttons) are all boxes. Understanding how these boxes work is essential for controlling layout and spacing.
+
+Open up your `index.html` file from the `my-profile` folder in the browser. Then do the following:
+1. Right click on your profile picture and select "Inspect". This will open your browser's **Developer Tools** where you can see the HTML structure of your elements and the CSS styles applied to them. In the bottom-right corner is the Box Model diagram.
+
+    ![We can see the box of the profile picture when we inspect it.](./img/box-model-inspect-profile-page.png)
+
+2. Choose the **element selector tool** (look at the developer tools and it is the arrow icon in the top-left corner). 
+3. Then, hover over different elements. You'll see colored rectangles highlighting each element's box. Those rectangles aren't just visual aids—they represent how the browser actually thinks about every element.
+
+You can also see how every element is a box if you add this CSS declaration to your webpage:
 
 ```css
 /* All elements have a 1px solid red border */
@@ -64,189 +81,394 @@ This becomes immediately clear when you add this CSS rule to a page:
 }
 ```
 
+![](../.gitbook/assets/everything-is-a-box.png)
+
 Knowing that everything is a box, we must start by learning how to control those boxes.
 
 ## Box Model
 
-The **box model** defines the size and spacing of any element and it consists of 4 parts:
+The **box model** defines the size and spacing of any element and it consists of 4 parts, from the inside out:
+
+1. The **content** — the space that the content of an element occupies (the text of a `<p>` tag, the image of an `img` tag, etc...)
+2. The **padding** — the space around the content but inside the border. This is the "background" of the content.
+3. The **border** — the space around the padding.
+4. The **margin** — the space around the border and "between" adjacent elements.
+    * Note: Margin is always transparent and the margins of adjacent elements can overlap.
 
 ![The box model has 4 parts: the content, the padding, the border, and the margin](../.gitbook/assets/margin-padding-content.png)
 
-* The **content** — the space that the content of an element occupies (the text of a `<p>` tag, the image of an `img` tag, etc...)
-  * Content can be modified with the `width` and `height` properties.
-* The **padding** — the space around the content but inside the border. This is the "background" of the content.
-  * Padding can be modified with the `padding` property.
-* The **border** — the space around the padding.
-  * Border can be modified with the `border` and `border-radius` properties.
-* The **margin** — the space around the border and "between" adjacent elements.
-  * Margin can be modified with the `margin` property.
-  * Note: Margin is always transparent and the margins of adjacent elements can overlap.
+### Content, Width, and Height
 
-For example, consider the following styles applied to `p` elements:
+The **content area** holds your actual content (text, images, or other nested elements).
+
+You can control the content dimensions with `width` and `height`. 
+
+Let's change the size of our profile picture:
 
 ```css
-p {
-  /* Adding a background helps us see the different parts of the box model */
-  background: gold;
-
-  /* Box Model Properties */
-  width: 100px;
-  height: 50px;
-  padding: 5px;
-  border: 4px solid purple;
-  margin: 10px;
+#profile-picture {
+  border-radius: 50%;
+  width: 300px; /* <-- add this */
 }
 ```
 
-Resulting in the output below:
+Refresh your page. Your picture is now exactly 300px wide instead of the inherent size of the picture.
 
-![](../.gitbook/assets/box-model-properties-example.png)
+### Padding: Space Inside the Box
 
-{% hint style="info" %}
-**Tip:** View your styles using the developer tools! Clicking on an element in the **Elements** tab will pull up the CSS applied to that element in the **Styles** sub-tab.
-{% endhint %}
+**Padding** creates space between the content and the border. It's inside the element so it takes on the element's background color.
 
-### Sizing is Based on the Content Box
-
-An important detail to note is that the `width` and `height` properties affect the **content box**. As a result, by default, the total space that an element occupies is not the same as its `width` and `height`.
-
-<details>
-
-<summary><strong>Question: What is the total width and height of the paragraph elements in the example above (excluding the margins)?</strong></summary>
-
-The total width excluding the margins is 100 + 10 + 8 or 118 (the sum of the content, the padding, and the border).
-
-The total height excluding the margins is 50 + 10 + 8 or 68 (the sum of the content, the padding, and the border).
-
-</details>
-
-Now, Imagine you had a screen that was `1000px` wide and you needed to fit 5 elements perfectly inside that space. However, each element includes `10px` of padding and a `2px` border.
-
-<details>
-
-<summary><strong>Question: What would the <code>width</code> property need to be?</strong></summary>
-
-The answer is `176px`. We take `1000px` and divide it by 5 to get `200px` for each element. Then, we need to also subtract the padding and border from both sides (`200px` minus `20px` of padding minus `4px` of border).
-
-</details>
-
-We can greatly simplify this by changing the `box-sizing` of an element:
+Look at your list items, the text is looking a little bit cramped within their content box. Let's add some padding to give the text content some breathing room:
 
 ```css
-p {
-  background: gold;
+li {
+  font-family: roboto;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem; /* <-- add this. play around with the value */
+}
+```
 
+You can also assign different padding amounts on each side by providing multiple values. Let's make our navigation links more button-like:
+
+```css
+/* Add this entire CSS block */
+nav a {
+  padding: 10px 20px; /* 10px top/bottom, 20px left/right*/
+  background-color: midnightblue;
+  color: white;
+  text-decoration: none;
+}
+```
+
+**When to use padding:** When you want to create space inside an element—like keeping text away from the edges of your list items or making your navigation links more clickable.
+
+### Border: The Edge of the Box
+
+The **border** is the line around the padding. The `border` property has three values: width, style, and color.
+
+Let's add borders to each `section` to visually separate them:
+
+```css
+/* Add this entire CSS block */
+section {
+  border: 2px solid midnightblue;
+  padding: 20px;
+}
+```
+
+Common border styles include `solid`, `dashed`, `dotted`, and `none` (default).
+
+You can also control the curve of the corners of your border with `border-radius`:
+
+```css
+/* Add this entire CSS block */
+section, li, nav a {
+  border-radius: 8px;
+}
+```
+
+### Margin: Space Between Elements
+
+You may feel that the sections are too close to each other. We could also use some space above and below our profile picture.
+
+**Margin** creates space between an element and other elements around it. Margin is outside the element, so it doesn't take on the background color.
+
+Let's add some margin to the sections first
+
+```css
+section {
+  border: 2px solid midnightblue;
+  padding: 20px;
+  margin: 20px; /* <-- add this */
+}
+```
+
+Margin uses the same shorthand syntax as padding so we can add margin just to the top of our profile like so:
+
+```css
+ #profile-picture {
+  border-radius: 50%;
+  width: 300px;
+  margin: 20px 0px; /* only add margin on top/bottom*/
+}
+```
+
+### Margin Collapse
+
+When two vertical margins meet, they don't stack on top of each other. Instead, the space between the elements is equal to the larger of the two margins. This is called **margin collapse**.
+
+Try this with your sections. Replace your `margin` with `margin-top` and `margin-bottom`:
+
+```css
+section {
+  border: 2px solid midnightblue;
+  padding: 20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+```
+
+The space between the sections is **40px**, not 60px. The larger margin (40px) "wins".
+
+Remember: this only happens with vertical margins, not horizontal margins 🤷.
+
+#### Centering with Margin
+
+Notice your `ul, ol` selector already has `margin: auto`. As long as the element has a valid `width` property set (in this case `fit-content` works), the element will be centered on the page.
+
+```css
+ul, ol {
+  margin: auto;
+  width: fit-content;
+  text-align: left;
+}
+```
+
+**Note: This only works if the element has a defined width**. See what happens if you remove the `width` property.
+
+## Display
+
+HTML elements have default display behaviors that affect how they interact with other elements.
+
+For example, notice how pretty much all of the elements are stacked on top of each other. However, the hyperlink `<a>` elements are next to each other.
+
+That's because their `display` is different.
+
+| Display Type            | Examples                           | New Line? | Accepts Height / Width?                    | When To Use                                                       |
+| ----------------------- | ---------------------------------- | --------- | ------------------------------------------ | ----------------------------------------------------------------- |
+| `display: inline`       | `<a>`, `<span>`, `<i>`, `<strong>` | No        | No (but accepts horizontal padding/margin) | For inserting an element within an existing line of text content. |
+| `display: block;`       | Everything else                    | Yes       | Yes                                        | When you want things on a new line.                               |
+| `display: inline-block` | None                               | No        | Yes                                        | Buttons in a navigation bar                                       |
+| `display: none`         | None                               | N/A       | N/A                                        | To completely remove an element from view.                        |
+
+Display affects how an element's width and height can be modified. `display:inline` elements like `<a>` cannot have their width and height controlled. 
+
+If we wanted to keep the `<a>` elements on the same line but also have control over their dimensions, we can change them to have `display:inline-block`:
+
+```css
+ nav a {
+  display: inline-block; /* <-- add this */
+  width: 200px; /* <-- add this */
+  border: 3px solid white;
+  padding: 10px 20px;
+  background-color: midnightblue;
+  color: white;
+  text-decoration: none;
+}
+```
+
+## The Box-Sizing Problem
+
+By default, `width` and `height` only apply to the **content area**. Padding and border are added on top.
+
+Let's see this problem with your navigation links. They currently have this styling:
+
+**index.css**
+```css
+nav a {
+  display: inline-block;
+  width: 200px;
+  border: 3px solid white;
+  padding: 10px 20px;
+  background-color: midnightblue;
+  color: white;
+  text-decoration: none;
+}
+```
+
+You might expect each link to be 200px wide. But the **actual width** is:
+- Content: 200px
+- Padding: 20px left + 20px right = 40px
+- Border: 3px left + 3px right = 6px
+- **Total width: 246px**
+
+This is confusing and makes layout calculations difficult.
+
+## The Solution: border-box
+
+Add this to the **top** of your CSS file:
+
+**index.css**
+```css
+* {
   box-sizing: border-box;
-  /* Now, width and height are the total width and height */
-  width: 100px;
-  height: 50px;
-  padding: 5px;
-  border: 4px solid purple;
-  margin: 10px;
-
 }
+
+/* Rest of your CSS below... */
 ```
 
-The `box-sizing: border-box` style makes it so that the `width` and `height` properties _include_ the padding and border.
+The `*` selector targets all elements. This rule changes how `width` and `height` are calculated.
 
-As a result, the size of the content box shrinks so that the total width and height of the "border box" matches the `width` and `height` properties.
+With `box-sizing: border-box`, `width` includes content, padding, AND border. Now your navigation links are **exactly 200px wide**:
+- Padding: 40px
+- Border: 6px
+- Content: 154px (automatically calculated as 200-40-6)
+- **Total: 200px**
 
-Learn more here: https://css-tricks.com/box-sizing/
+**Always include `box-sizing: border-box` at the top of your CSS. It makes layout predictable and matches how you naturally think about sizing.**
 
-<details>
+### General CSS Reset
 
-<summary><strong>Question: What would the <code>width</code> property need to be with <code>box-sizing: border-box</code>?</strong></summary>
+Different browsers apply different default margins and paddings to elements like `body`, `h1`, `ul`, and `p`. This can cause inconsistent layouts across browsers.
 
-If we set `box-sizing: border-box` the answer is `200px`!
-
-</details>
-
-### Box Model Defaults and a CSS Reset
-
-Consider the website below which can be found in the `1-box-model-basics` folder.
-
-You can see the HTML structure contains some common HTML elements like `h1`, `h2`, `p`, `div`, `ul`, and `li`. To help see the where each element's box begins and ends, we've added `background` colors to each element and a `border` to all elements:
-
-![The index.html file in the 1-box-model-basics folder](../.gitbook/assets/box-model-defaults.png)
-
-In the **Styles** panel of our developer tools, the browser has applied some default styles via the **user agent stylesheet**. For example, the `h1` element has these styles:
-
-```css
-/* User Agent Stylesheet */
-h1 {
-    display: block;
-    font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-}
-```
-
-As you can see if you poke around in the example, most elements have some default `margin` and `padding` styles which can conflict with any styling that we want to apply.
-
-To address this, it is common to define a **CSS Reset** rule that eliminates those default styles:
+A **CSS reset** removes these defaults, giving you a clean, predictable starting point. Add this to the top of every CSS file:
 
 ```css
 * {
-  /* Remove the default margin and padding applied to many elements, giving us full control over spacing */
-  margin: 0px;
-  padding: 0px;
-
-  /* Makes `width` apply to the border box (padding and content are included) */
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-}
-
-ul {
-  list-style: none;
 }
 ```
 
-In addition to resetting the `margin` and `padding` for all elements to `0px`, we change the `box-sizing` property to `border-box`.
+This reset:
+- Removes all default margins and paddings
+- Makes `width` and `height` include padding and border
+- Ensures consistent behavior across all browsers
 
-I also like to remove bullets from `ul` elements.
-
-## Display and Position
-
-### Display
-
-* Notice how the `div` and `p` tags each get a new line, but the `a` and `img` tags are in the same line?
-* That's because their `display` is different:
-
-| Display Type            | New Line? | Accepts Height / Width?                    | When To Use                                                       | Default Elements |
-| ----------------------- | --------- | ------------------------------------------ | ----------------------------------------------------------------- | ---------------- |
-| `display: block;`       | Yes!      | Yes!                                       | When you want things on a new line.                               | Most things!     |
-| `display: inline`       | No        | No (but accepts horizontal padding/margin) | For inserting an element within an existing line of text content. | span, b, i, a    |
-| `display: inline-block` | No        | Yes!                                       | Buttons in a navigation bar!                                      | None             |
-| `display: none`         | N/A       | N/A                                        | To completely remove an element from view.                        | None             |
-
-See what happens when you assign each type of `display` to `div` an `a` and an `img` tag!
-
-### Position
-
-We can also directly control positioning of our elements on the page through "position." This is a very powerful, **but very finicky tool**.
-
-Use this [interactive documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/position) to play around with it.
-
-* `position: static`
-  * Elements render in normal document flow and no offset values can move statically positioned elements
-* `position: relative`
-  * Elements are positioned relative to their normal position
-  * Offset properties like `top`, `right`, `bottom`, `left`, etc. can move elements from their original spot
-  * Other content flows around the _original_ position
-* `position: absolute`
-  * Elements removed from normal document flow, and other elements will be able to fill that space
-  * Positioned relative to nearest positioned ancestor.
-    * This is important, as if the parent isn't `absolute` or `relative` then the child will be positioned relative to the entire body
-    * I've included a parent div for the two rectangles exactly for this reason, so experiment with adding/removing `relative` to i
-* `position: fixed`
-  * Behaves like absolute positioning, except its positioned to the viewport
-* `position: sticky`
-  * this will behave like `relative` until you scroll past it, then it will stick on the top bottom or sides
-  * Finicky, be careful about parents blocking it
+You'll then add spacing intentionally where you need it, giving you full control over your layout.
 
 ## Test your Skills!
 
 Head over to [MDN to test your box model skills](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Box_Model_Tasks)!
+
+## Complete HTML & CSS
+
+**index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <header>
+    <h1>My Website</h1>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About</a>
+    </nav>
+  </header>
+  <main>
+    <figure>
+      <img id="profile-picture" src="https://avatars.githubusercontent.com/u/111444562?v=4" alt="Profile Picture">
+      <figcaption>It's nice to meet you!</figcaption>
+    </figure>
+    <section>
+      <h2>Programming Skills</h2>
+      <ul>
+        <li class="devtool">Git & GitHub</li>
+        <li class="devtool">Command Line Interface</li>
+        <li class="js-skill">JavaScript Fundamentals</li>
+        <li class="js-skill">OOP and Classes</li>
+        <li class="webdev-skill">HTML</li>
+        <li class="webdev-skill" id="current-topic">CSS</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Favorite Quotes</h2>
+      <ol>
+        <li>Quote 1...</li>
+        <li>Quote 2...</li>
+        <li>Quote 3...</li>
+      </ol>
+    </section>
+  </main>
+  <footer>
+    <p>Copyright Marcy Lab School 2025</p>
+    <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
+  </footer>
+</body>
+</html>
+```
+
+**index.css**
+
+```css
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: azure;
+  color: midnightblue;
+  font-family: Helvetica;
+  text-align: center;
+  padding: 2rem;
+}
+
+ul, ol {
+  margin: auto;
+  width: fit-content;
+  text-align: left;
+}
+
+li {
+  font-family: roboto;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+}
+
+nav a {
+  display: inline-block;
+  width: 200px;
+  border: 3px solid white;
+  padding: 10px 20px;
+  background-color: midnightblue;
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  border: 2px solid midnightblue;
+  padding: 20px;
+  margin: 20px;
+}
+
+section, li, nav a {
+  border-radius: 8px;
+}
+
+#profile-picture {
+  border-radius: 50%;
+  width: 300px;
+  margin: 20px 0px;
+}
+
+/* All elements with the class "devtool" will be orange */
+.devtool {
+  background: orange;
+}
+
+/* All elements with the class "js-skill" will be yellow */
+.js-skill {
+  background: yellow;
+}
+
+/* All elements with the class "webdev-skill" will be lightgreen */
+.webdev-skill {
+  background: lightgreen;
+}
+
+#current-topic {
+  font-weight: bold;
+}
+
+/* a link when the mouse hovers over it */
+a:hover { 
+  color: red;
+} 
+
+/* a link the moment it is clicked */
+a:active { 
+  color: green;
+}
+```
+
