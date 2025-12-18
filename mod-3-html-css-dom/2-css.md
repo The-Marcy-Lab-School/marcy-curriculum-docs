@@ -19,13 +19,13 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   - [ID Selector](#id-selector)
   - [Multi-Selectors](#multi-selectors)
   - [Pseudo-Class Selectors](#pseudo-class-selectors)
+  - [The Cascade: Why It's Called "Cascading"](#the-cascade-why-its-called-cascading)
 - [Common CSS Properties](#common-css-properties)
   - [Color Properties](#color-properties)
   - [Typography Properties](#typography-properties)
   - [Spacing Properties (Just the Basics)](#spacing-properties-just-the-basics)
-- [The Cascade: Why It's Called "Cascading"](#the-cascade-why-its-called-cascading)
+  - [Units: `px` vs `%` vs `rems`](#units-px-vs--vs-rems)
 - [Development Workflow](#development-workflow)
-- [Units: `px` vs `%` vs `rems`](#units-px-vs--vs-rems)
 - [Quiz!](#quiz)
 
 ## Key Concepts
@@ -289,6 +289,43 @@ a:hover { color: red }
 a:active { color: green; } 
 ```
 
+### The Cascade: Why It's Called "Cascading"
+
+When multiple CSS rules apply to the same element, the browser follows these rules to determine which styles win:
+
+1. **Specificity**: More specific selectors override less specific ones
+   - ID selectors (`#main-title`) are most specific
+   - Class selectors (`.intro`) are less specific
+   - Element selectors (`p`) are least specific
+
+2. **Source order**: If specificity is equal, the rule that appears last wins
+
+**Example:**
+```css
+p {
+  color: yellow;
+}
+
+p {
+  /* overrides the rule above */
+  color: blue;
+}
+
+.intro {
+  color: green;
+}
+
+#special {
+  color: red;
+}
+```
+
+```html
+<p>I'm blue</p>
+<p class="intro">I'm green (class beats element)</p>
+<p id="special" class="intro">I'm red (ID beats class)</p>
+```
+
 ## Common CSS Properties
 
 ### Color Properties
@@ -333,56 +370,7 @@ We'll explore spacing in detail when we cover the box model, but for now:
 - **Margin** creates space between elements
 - **Padding** creates space inside an element, between its border and content
 
-## The Cascade: Why It's Called "Cascading"
-
-When multiple CSS rules apply to the same element, the browser follows these rules to determine which styles win:
-
-1. **Specificity**: More specific selectors override less specific ones
-   - ID selectors (`#main-title`) are most specific
-   - Class selectors (`.intro`) are less specific
-   - Element selectors (`p`) are least specific
-
-2. **Source order**: If specificity is equal, the rule that appears last wins
-
-**Example:**
-```css
-p {
-  color: yellow;
-}
-
-p {
-  /* overrides the rule above */
-  color: blue;
-}
-
-.intro {
-  color: green;
-}
-
-#special {
-  color: red;
-}
-```
-
-```html
-<p>I'm blue</p>
-<p class="intro">I'm green (class beats element)</p>
-<p id="special" class="intro">I'm red (ID beats class)</p>
-```
-
-## Development Workflow
-
-When building a webpage:
-
-1. **Start with HTML structure** - Get your content organized with proper semantic elements
-2. **Link your CSS file** - Add the `<link>` tag in your `<head>`
-3. **Add classes/ids to HTML** - Label elements you want to style
-4. **Write CSS rules** - Target elements and apply styles
-5. **Refresh browser** - See your changes (you may need to hard refresh with Cmd+Shift+R or Ctrl+Shift+R)
-
-**Debugging tip**: Use your browser's Developer Tools (right-click > Inspect) to see which CSS rules are being applied to an element. This is essential for understanding why styles aren't working as expected.
-
-## Units: `px` vs `%` vs `rems`
+### Units: `px` vs `%` vs `rems`
 
 * The `px` unit sets the exact size of an element. **Setting the size of an element using `px` values should be avoided if possible** as they don't comply with accessibility standards.
 
@@ -416,6 +404,18 @@ p {
   width: 75%;
 }
 ```
+
+## Development Workflow
+
+When building a webpage:
+
+1. **Start with HTML structure** - Get your content organized with proper semantic elements
+2. **Link your CSS file** - Add the `<link>` tag in your `<head>`
+3. **Add classes/ids to HTML** - Label elements you want to style
+4. **Write CSS rules** - Target elements and apply styles
+5. **Refresh browser** - See your changes (you may need to hard refresh with Cmd+Shift+R or Ctrl+Shift+R)
+
+**Debugging tip**: Use your browser's Developer Tools (right-click > Inspect) to see which CSS rules are being applied to an element. This is essential for understanding why styles aren't working as expected.
 
 ## Quiz!
 
