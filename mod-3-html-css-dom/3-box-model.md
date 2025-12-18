@@ -1,9 +1,5 @@
 # The Box Model
 
-{% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-0-box-model-display-positioning)!
-{% endhint %}
-
 **Table of Contents**
 
 - [Key Concepts](#key-concepts)

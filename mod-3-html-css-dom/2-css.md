@@ -1,9 +1,5 @@
 # CSS
 
-{% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-1-css)!
-{% endhint %}
-
 **Table of Contents**
 
 - [Key Concepts](#key-concepts)
