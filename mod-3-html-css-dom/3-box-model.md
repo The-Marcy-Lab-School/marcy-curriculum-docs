@@ -30,7 +30,7 @@
   * Border can be modified with the `border` and `border-radius` properties.
 * The **margin** — the space around the border and "between" adjacent elements.
   * Margin can be modified with the `margin` property.
-  * Note: Margin is always transparent and the margins of adjacent elements can overlap.
+  * **Margin collapse** occurs when two vertical margins meet and the larger margin "wins".
 * The `box-sizing` property determines how the total width and height of an element is calculated.
   * The default `box-sizing: content-box` setting has the `width` and `height` properties affect the content box, with padding and border dimensions added.
   * The `box-sizing:border-box` setting makes the `width` and `height` properties affect the border box, with the content box automatically shrinking to fit inside the padding box.
@@ -239,7 +239,7 @@ That's because their `display` is different.
 | `display: inline`       | `<a>`, `<span>`, `<i>`, `<strong>` | No        | No (but accepts horizontal padding/margin) | For inserting an element within an existing line of text content. |
 | `display: block;`       | Everything else                    | Yes       | Yes                                        | When you want things on a new line.                               |
 | `display: inline-block` | None                               | No        | Yes                                        | Buttons in a navigation bar                                       |
-| `display: none`         | None                               | N/A       | N/A                                        | To completely remove an element from view.                        |
+| `display: none`         | None                               | N/A       | N/A                                        | To completely remove an element from view. Useful for when we want to hide/reveal an element using JavaScript                      |
 
 Display affects how an element's width and height can be modified. `display:inline` elements like `<a>` cannot have their width and height controlled. 
 
