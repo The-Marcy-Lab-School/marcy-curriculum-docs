@@ -396,86 +396,90 @@ Head over to [MDN to test your box model skills](https://developer.mozilla.org/e
 **index.css**
 
 ```css
-/* CSS Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+ul {
+  list-style: none;
+}
+img {
+  width: 100%;
+}
 body {
   background: azure;
   color: midnightblue;
   font-family: Helvetica;
   text-align: center;
+  margin: auto;
   padding: 2rem;
 }
-
-ul, ol {
+header {
+  margin-bottom: 1rem;
+}
+h1,
+h2 {
+  margin-bottom: 1rem;
+}
+figure {
+  margin: 1rem 0;
+}
+footer {
+  margin-top: 2rem;
+}
+ul,
+ol {
   margin: auto;
   width: fit-content;
   text-align: left;
 }
-
 li {
   font-family: roboto;
   margin-bottom: 0.5rem;
   padding: 0.25rem;
 }
-
+.devtool {
+  background: orange;
+}
+.js-skill {
+  background: yellow;
+}
+.web-dev-skill {
+  background: lightgreen;
+}
+#current-topic {
+  font-weight: bold;
+}
+#profile-picture {
+  border-radius: 50%;
+  width: 300px;
+  margin: 20px 0px; /* only add margin on top/bottom*/
+}
+a:hover {
+  color: red;
+}
+a:active {
+  color: green;
+}
 nav a {
   display: inline-block;
-  width: 200px;
+  width: 100px;
   border: 3px solid white;
-  padding: 10px 20px;
+  padding: 10px 20px; /* 10px top/bottom, 20px left/right*/
   background-color: midnightblue;
   color: white;
   text-decoration: none;
 }
-
 section {
   border: 2px solid midnightblue;
   padding: 20px;
-  margin: 20px;
+  margin-bottom: 1rem;
 }
-
-section, li, nav a {
+section,
+li,
+nav a {
   border-radius: 8px;
-}
-
-#profile-picture {
-  border-radius: 50%;
-  width: 300px;
-  margin: 20px 0px;
-}
-
-/* All elements with the class "devtool" will be orange */
-.devtool {
-  background: orange;
-}
-
-/* All elements with the class "js-skill" will be yellow */
-.js-skill {
-  background: yellow;
-}
-
-/* All elements with the class "webdev-skill" will be lightgreen */
-.webdev-skill {
-  background: lightgreen;
-}
-
-#current-topic {
-  font-weight: bold;
-}
-
-/* a link when the mouse hovers over it */
-a:hover { 
-  color: red;
-} 
-
-/* a link the moment it is clicked */
-a:active { 
-  color: green;
 }
 ```
 
