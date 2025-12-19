@@ -603,7 +603,7 @@ Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ben's Website</title>
+  <title>My Website</title>
   <style>
     /* All elements with the class "devtool" will be orange */
     .devtool {

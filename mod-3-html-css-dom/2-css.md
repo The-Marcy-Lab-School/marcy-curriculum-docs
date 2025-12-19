@@ -78,6 +78,8 @@ body {
   color: midnightblue;
   font-family: Helvetica;
   text-align: center;
+  max-width: 725px;
+  margin: auto;
   padding: 20px;
 }
 
@@ -115,6 +117,8 @@ Open up your `index.html` file from the `my-profile` folder and add these `<styl
         color: midnightblue;
         font-family: Helvetica;
         text-align: center;
+        max-width: 725px;
+        margin: auto;
         padding: 20px;
       }
 
@@ -137,7 +141,7 @@ This approach works well if you are interested in keeping all of your code insid
 You can also add a `style` attribute directly to an individual element:
 
 ```html
-<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; padding: 20px;">
+<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; max-width: 725px; margin: auto; padding: 20px;">
   <!-- body content -->
 
   <ul style="margin: auto; width: fit-content;">
@@ -293,9 +297,13 @@ This applies the styles to all `<ul>` and `<ol>` elements.
 
 ```css
 /* a link when the mouse hovers over it */
-a:hover { color: red } 
+a:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
 /* a link the moment it is clicked */
-a:active { color: green; } 
+a:active {
+  background: rgb(100, 100, 206);
+}
 ```
 
 ### The Cascade: Why It's Called "Cascading"
@@ -579,6 +587,8 @@ body {
   color: midnightblue;
   font-family: Helvetica;
   text-align: center;
+  max-width: 725px;
+  margin: auto;
   padding: 2rem;
 }
 ul, ol {
@@ -612,7 +622,11 @@ li {
 }
 
 /* a link when the mouse hovers over it */
-a:hover { color: red } 
+a:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
 /* a link the moment it is clicked */
-a:active { color: green; } 
+a:active {
+  background: rgb(100, 100, 206);
+}
 ```

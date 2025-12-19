@@ -10,7 +10,7 @@
   - [Padding: Space Inside the Box](#padding-space-inside-the-box)
   - [Border: The Edge of the Box](#border-the-edge-of-the-box)
   - [Margin: Space Between Elements](#margin-space-between-elements)
-  - [Margin Collapse](#margin-collapse)
+    - [Margin Collapse](#margin-collapse)
     - [Centering with Margin](#centering-with-margin)
 - [Display](#display)
   - [Display Challenge](#display-challenge)
@@ -194,7 +194,7 @@ Margin uses the same shorthand syntax as padding so we can add margin just to th
 }
 ```
 
-### Margin Collapse
+#### Margin Collapse
 
 When two vertical margins meet, they don't stack on top of each other. Instead, the space between the elements is equal to the larger of the two margins. This is called **margin collapse**.
 
@@ -296,8 +296,8 @@ Let's change the display of the list items (`<li>`) within our list of programmi
     <li class="devtool">Command Line Interface</li>
     <li class="js-skill">JavaScript Fundamentals</li>
     <li class="js-skill">OOP and Classes</li>
-    <li class="web-dev-skill">HTML</li>
-    <li class="web-dev-skill" id="current-topic">CSS</li>
+    <li class="webdev-skill">HTML</li>
+    <li class="webdev-skill" id="current-topic">CSS</li>
   </ul>
 </section>
 ```
@@ -321,8 +321,8 @@ The best way to target them is to add an `id` element to one of their ancestors,
     <li class="devtool">Command Line Interface</li>
     <li class="js-skill">JavaScript Fundamentals</li>
     <li class="js-skill">OOP and Classes</li>
-    <li class="web-dev-skill">HTML</li>
-    <li class="web-dev-skill" id="current-topic">CSS</li>
+    <li class="webdev-skill">HTML</li>
+    <li class="webdev-skill" id="current-topic">CSS</li>
   </ul>
 </section>
 ```
@@ -415,7 +415,7 @@ This reset:
 
 You'll then add spacing intentionally where you need it, giving you full control over your layout.
 
-**TODO:** Take a moment and make adjustments to the padding and margins of the elements of your page until your are satisfied with the overall spacing.
+**TODO:** Take a moment and make adjustments to the padding and margins of the elements of your page until you are satisfied with the overall spacing.
 
 ## Test your Skills!
 
@@ -478,22 +478,20 @@ Head over to [MDN to test your box model skills](https://developer.mozilla.org/e
 **index.css**
 
 ```css
+/* CSS Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-ul {
-  list-style: none;
-}
-img {
-  width: 100%;
-}
+
+/* Project-Specific CSS */
 body {
   background: azure;
   color: midnightblue;
   font-family: Helvetica;
   text-align: center;
+  max-width: 725px;
   margin: auto;
   padding: 2rem;
 }
@@ -527,7 +525,7 @@ li {
 .js-skill {
   background: yellow;
 }
-.web-dev-skill {
+.webdev-skill {
   background: lightgreen;
 }
 #current-topic {
@@ -539,14 +537,14 @@ li {
   margin: 20px 0px; /* only add margin on top/bottom*/
 }
 a:hover {
-  color: red;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 a:active {
-  color: green;
+  background: rgb(100, 100, 206);
 }
 nav a {
   display: inline-block;
-  width: 100px;
+  width: 200px;
   border: 3px solid white;
   padding: 10px 20px; /* 10px top/bottom, 20px left/right*/
   background-color: midnightblue;
