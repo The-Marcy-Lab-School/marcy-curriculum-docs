@@ -13,6 +13,7 @@
   - [Margin Collapse](#margin-collapse)
     - [Centering with Margin](#centering-with-margin)
 - [Display](#display)
+  - [Display Challenge](#display-challenge)
 - [The Box-Sizing Problem](#the-box-sizing-problem)
   - [The Solution: border-box reset](#the-solution-border-box-reset)
   - [General CSS Reset](#general-css-reset)
@@ -136,6 +137,10 @@ nav a {
 }
 ```
 
+{% hint style="info" %}
+The `nav a` selector is an example of a "descendant selector". It selects all `<a>` elements inside of a `<nav>` element. */
+{% endhint %}
+
 **When to use padding:** When you want to create space inside an element—like keeping text away from the edges of your list items or making your navigation links more clickable.
 
 ### Border: The Edge of the Box
@@ -228,24 +233,44 @@ ul, ol {
 
 ## Display
 
-HTML elements have default display behaviors that affect how they interact with other elements.
+HTML elements have default `display` behaviors that affect
+1. how an element's width and height can be modified.
+2. how they interact with other elements.
 
-For example, notice how pretty much all of the elements are stacked on top of each other. However, the hyperlink `<a>` elements are next to each other.
+For example, if we try adding a `width` to the `<a>` elements, nothing happens! 
 
-That's because their `display` is different.
+```css
+nav a {
+  width: 200px; /* <-- add this */
+  border: 3px solid white;
+  padding: 10px 20px;
+  background-color: midnightblue;
+  color: white;
+  text-decoration: none;
+}
+```
 
-| Display Type            | Examples                           | New Line? | Accepts Height / Width?                    | When To Use                                                       |
-| ----------------------- | ---------------------------------- | --------- | ------------------------------------------ | ----------------------------------------------------------------- |
-| `display: inline`       | `<a>`, `<span>`, `<i>`, `<strong>` | No        | No (but accepts horizontal padding/margin) | For inserting an element within an existing line of text content. |
-| `display: block;`       | Everything else                    | Yes       | Yes                                        | When you want things on a new line.                               |
-| `display: inline-block` | None                               | No        | Yes                                        | Buttons in a navigation bar                                       |
-| `display: none`         | None                               | N/A       | N/A                                        | To completely remove an element from view. Useful for when we want to hide/reveal an element using JavaScript                      |
+Also, notice how pretty much all of the elements are stacked on top of each other. However, the hyperlink `<a>` elements are next to each other. 
 
-Display affects how an element's width and height can be modified. `display:inline` elements like `<a>` cannot have their width and height controlled. 
+This is all impacted by the `display` property:
+
+| Display Type            | Examples                           | Makes New Line | Can Set Height / Width?                    | When To Use                                                                                                   |
+| ----------------------- | ---------------------------------- | -------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `display: block;`       | Most elements                      | Yes            | Yes                                        | To stack elements vertically.                                                                                 |
+| `display: inline`       | `<a>`, `<span>`, `<i>`, `<strong>` | No             | No (but can set horizontal padding/margin) | To display elements horizontally within a line of text.                                                       |
+| `display: inline-block` | None                               | No             | Yes                                        | To display elements horizontally with control over height/width                                               |
+| `display: none`         | None                               | N/A            | N/A                                        | To completely remove an element from view. Useful for when we want to hide/reveal an element using JavaScript |
+
+Since `<a>` elements have `display:inline`, they appear next to each other AND we can't set their `height` or `width` properties.
+
+**<details><summary>Q: We want our navigation links (`<a>` tags) to be 200px wide AND keep them on the same line. Which display should we use?</summary>**
 
 If we wanted to keep the `<a>` elements on the same line but also have control over their dimensions, we can change them to have `display:inline-block`:
 
 ```css
+/* This is the "descendant selector"—it selects all <a> elements inside of a <nav> element. 
+This will NOT affect the other <a> elements elsewhere in the page.
+*/
  nav a {
   display: inline-block; /* <-- add this */
   width: 200px; /* <-- add this */
@@ -256,6 +281,63 @@ If we wanted to keep the `<a>` elements on the same line but also have control o
   text-decoration: none;
 }
 ```
+
+</details>
+
+### Display Challenge
+
+Let's change the display of the list items (`<li>`) within our list of programming skills. 
+
+```html
+<section>
+  <h2>Programming Skills</h2>
+  <ul>
+    <li class="devtool">Git & GitHub</li>
+    <li class="devtool">Command Line Interface</li>
+    <li class="js-skill">JavaScript Fundamentals</li>
+    <li class="js-skill">OOP and Classes</li>
+    <li class="web-dev-skill">HTML</li>
+    <li class="web-dev-skill" id="current-topic">CSS</li>
+  </ul>
+</section>
+```
+
+We want them to appear next to each other and have control over their width/height. What display should they have? What is the best way to target those elements?
+
+Try it out, then look at the solution below.
+
+**<details><summary>Solution</summary>**
+
+By default, list items have `display:block` which stacks them on top of each other. To have them listed next to each other, we can give them `display: inline-block`.
+
+The best way to target them is to add an `id` element to one of their ancestors, such as the `<section>`. That allows us to target them using a descendent selector.
+
+**HTML**
+```html
+<section id="programming-skills"> <!-- Add the id here -->
+  <h2>Programming Skills</h2>
+  <ul>
+    <li class="devtool">Git & GitHub</li>
+    <li class="devtool">Command Line Interface</li>
+    <li class="js-skill">JavaScript Fundamentals</li>
+    <li class="js-skill">OOP and Classes</li>
+    <li class="web-dev-skill">HTML</li>
+    <li class="web-dev-skill" id="current-topic">CSS</li>
+  </ul>
+</section>
+```
+
+**CSS:**
+```css
+/* Target all <li> elements that are descendant of the #programming-skills element */
+#programming-skills li {
+  display: inline-block;
+}
+```
+
+Try switching this to `display:inline` and see how it changes.
+
+</details>
 
 ## The Box-Sizing Problem
 
@@ -365,7 +447,7 @@ Head over to [MDN to test your box model skills](https://developer.mozilla.org/e
       <img id="profile-picture" src="https://avatars.githubusercontent.com/u/111444562?v=4" alt="Profile Picture">
       <figcaption>It's nice to meet you!</figcaption>
     </figure>
-    <section>
+    <section id="programming-skills">
       <h2>Programming Skills</h2>
       <ul>
         <li class="devtool">Git & GitHub</li>
@@ -480,6 +562,9 @@ section,
 li,
 nav a {
   border-radius: 8px;
+}
+#programming-skills li {
+  display: inline-block;
 }
 ```
 
