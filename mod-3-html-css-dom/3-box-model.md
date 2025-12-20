@@ -219,11 +219,11 @@ Remember: this only happens with vertical margins, not horizontal margins 🤷.
 
 #### Centering with Margin
 
-Notice your `ul, ol` selector already has `margin: auto`. As long as the element has a valid `width` property set (in this case `fit-content` works), the element will be centered on the page.
+Notice your `ul, ol` selector already has `margin-inline: auto`. As long as the element has a valid `width` property set (in this case `fit-content` works), the element will be centered on the page.
 
 ```css
 ul, ol {
-  margin: auto;
+  margin-inline: auto;
   width: fit-content;
   text-align: left;
 }
@@ -492,7 +492,7 @@ body {
   font-family: Helvetica;
   text-align: center;
   max-width: 725px;
-  margin: auto;
+  margin-inline: auto;
   padding: 2rem;
 }
 header {
@@ -510,7 +510,7 @@ footer {
 }
 ul,
 ol {
-  margin: auto;
+  margin-inline: auto;
   width: fit-content;
   text-align: left;
 }

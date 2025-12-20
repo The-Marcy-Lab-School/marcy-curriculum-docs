@@ -79,12 +79,12 @@ body {
   font-family: Helvetica;
   text-align: center;
   max-width: 725px;
-  margin: auto;
+  margin-inline: auto;
   padding: 20px;
 }
 
 ul, ol {
-  margin: auto;
+  margin-inline: auto;
   width: fit-content;
 }
 ```
@@ -118,12 +118,12 @@ Open up your `index.html` file from the `my-profile` folder and add these `<styl
         font-family: Helvetica;
         text-align: center;
         max-width: 725px;
-        margin: auto;
+        margin-inline: auto;
         padding: 20px;
       }
 
       ul, ol {
-        margin: auto;
+        margin-inline: auto;
         width: fit-content;
       }
     </style>
@@ -141,14 +141,14 @@ This approach works well if you are interested in keeping all of your code insid
 You can also add a `style` attribute directly to an individual element:
 
 ```html
-<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; max-width: 725px; margin: auto; padding: 20px;">
+<body style="background: azure; color: midnightblue; font-family: Helvetica; text-align: center; max-width: 725px; margin-inline: auto; padding: 20px;">
   <!-- body content -->
 
-  <ul style="margin: auto; width: fit-content;">
+  <ul style="margin-inline: auto; width: fit-content;">
     <!-- unordered list items -->
   </ul>
 
-  <ol style="margin: auto; width: fit-content;">
+  <ol style="margin-inline: auto; width: fit-content;">
     <!-- ordered list items -->
   </ol>
 </body>
@@ -284,7 +284,7 @@ You can apply the same styles to multiple selectors by separating them with a co
 
 ```css
 ul, ol {
-  margin: auto;
+  margin-inline: auto;
   width: fit-content;
 }
 ```
@@ -588,11 +588,11 @@ body {
   font-family: Helvetica;
   text-align: center;
   max-width: 725px;
-  margin: auto;
+  margin-inline: auto;
   padding: 2rem;
 }
 ul, ol {
-  margin: auto;
+  margin-inline: auto;
   width: fit-content;
 }
 li {
