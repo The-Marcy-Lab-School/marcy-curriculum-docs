@@ -1,5 +1,9 @@
 # HTML
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-1-html)!
+{% endhint %}
+
 **Table of Contents**
 
 - [Key Concepts](#key-concepts)
@@ -11,12 +15,14 @@
 - [How to Structure Your HTML Documents](#how-to-structure-your-html-documents)
   - [Semantic Page Structure](#semantic-page-structure)
 - [Essential Content Elements](#essential-content-elements)
-  - [Hyperlinks (Anchors) and Attributes](#hyperlinks-anchors-and-attributes)
   - [Headings (Not Header)](#headings-not-header)
-  - [Images with Figure and Figcaption](#images-with-figure-and-figcaption)
-    - [Figure and Figcaption](#figure-and-figcaption)
-  - [Lists](#lists)
   - [Paragraphs](#paragraphs)
+  - [Lists](#lists)
+    - [Challenge: Quotes List](#challenge-quotes-list)
+  - [Hyperlinks (Anchors) and Attributes](#hyperlinks-anchors-and-attributes)
+    - [Nested Hyperlinks](#nested-hyperlinks)
+  - [Images](#images)
+    - [Figure and Figcaption](#figure-and-figcaption)
 - [Complete HTML](#complete-html)
 - [Quiz](#quiz)
 
@@ -96,12 +102,10 @@ An **HTML element** is the building block of a webpage. It tells the browser wha
 
 To illustrate the difference between markup languages and regular `.txt` files, do the following:
 
-* In your `mod-3` folder, create a new folder called `my-profile`
-* Create two files called `index.txt` and `index.html`
-* Put the code above inside both of them:
-* Right click on the `index.html` file and select Reveal in Finder/Explorer
-* Open Chrome. Then drag and drop the `index.html` into the tab bar (there should be a + icon)
-* Then do the same for your `index.txt` file.
+* Clone down the repo linked at the top of this lesson if you haven't already
+* Open Chrome
+* Then drag and drop the `index.html` into the tab bar of Chrome (there should be a + icon)
+* Then do the same for the `index.txt` file.
 
 What is the difference between how they are presented by Chrome?
 
@@ -160,7 +164,7 @@ Let's break this down:
 * `<head>` contains "meta data" (information *about* the website) that won't show up in the webpage itself.
 * `<body>` contains all of the elements that the user will see on the webpage.
 
-**TODO**: Remove the contents of `index.html`. Then, add the boilerplate to your `index.html` file. Change the `<title>` to your name.
+**TODO**: Replace the contents of `index.html` with the boilerplate above. Change the `<title>` to your name.
 
 {% hint style="info" %}
 **Pro Tip!** Don't try to memorize this. In VS Code, when you create an empty `.html` document, just type `html` and then from the popup, select `html:5` and hit Enter. This boilerplate will be inserted into your page!
@@ -222,37 +226,6 @@ Now that we have the basic structure of our website in place, we can begin addin
 
 Most of the content that you will see on a webpage is either text or images but there are more than just one way to create this content.
 
-Let's start with filling out the `header` with links.
-
-### Hyperlinks (Anchors) and Attributes
-
-**Hyperlinks** allow the user to navigate between multiple pages within your website. 
-
-The `<a>` element (anchor) creates a **hyperlink**. It has an `href` "attribute" that specifies the path to the link's destination:
-
-```html
-<a href="./about.html">About Me</a>
-```
-
-In this example, `href` ("hyperlink reference") is the **attribute** while `"./about.html"` is the **value**. The user only sees the text content between the tags `About Me` so it should be descriptive!
-
-**TODO**: 
-1. Add these links to your header. 
-    ```html
-    <header>
-      <a href="./index.html">Home</a>
-      <a href="./about.html">About Me</a>
-      <a href="./projects.html">Projects</a>
-    </header>
-    ```
-2. Then, copy your `index.html` file and name it `about.html`. Then update the `<title>` to say `About`
-3. Again, copy your `index.html` file and name it `projects.html`. Then update the `<title>` to say `Projects`
-4. You should be able to navigate between all three files now!
-
-{% hint style="info" %}
-**Attributes** like `href` are always added to the opening tag of an HTML element and provide additional information about and/or configure the behavior of the element. We'll see a few other attributes as we move through the lesson.
-{% endhint %}
-
 ### Headings (Not Header)
 
 The heading elements `h1` through `h6` are used to indicate the start of a new section:
@@ -297,9 +270,120 @@ Headings `h4`, `h5`, and `h6` also exist but they are rarely necessary.
 Screen readers use this hierarchy to help users navigate, so it's important to use headings in order (don't skip from `h1` to `h4`).
 {% endhint %}
 
-### Images with Figure and Figcaption
+### Paragraphs
 
-Let's add a profile picture to the first section below our `h1`. 
+Paragraph elements (`p`) are used to display plain text.
+
+In the first section, below the `<h1>` element, we can add a paragraph with a "tagline" for our profile page.
+
+```html
+<section>
+  <h1>Ada Lovelace</h1>
+  <!-- Add this tagline-->
+  <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
+</section>
+```
+
+### Lists
+
+We have many skills to display so presenting them in a bulleted or numbered list would be appropriate compared to paragraphs.
+
+Lists are built with a `ul` ("unordered list") or `ol` ("ordered list") that contains any number of `li`s ("list items").
+
+The `li` elements inside of `ul` will appear as a bulleted list.
+
+```html
+<section>
+  <h2>Programming Skills</h2>
+  
+  <h3>Developer Tools</h3>
+  <ul>
+    <li>Git & GitHub</li>
+    <li>Command Line Interface</li>
+  </ul>
+  
+  <h3>JavaScript Skills</h3>
+  <ul>
+    <li>JavaScript Fundamentals</li>
+    <li>OOP and Classes</li>
+  </ul>
+  
+  <h3>Web Development</h3>
+  <ul>
+    <li>HTML</li>
+  </ul>
+</section>
+```
+
+**TODO:** Add these lists of skills below each subheading. Feel free to add any additional skills you'd like to share!
+
+#### Challenge: Quotes List
+
+**Challenge:** In the next section below, add your favorite quotes as an ordered list (`ol`) with at least three list items.
+
+If you can't think of any quotes, here are a few you can use for now:
+
+```
+"Pressure is a privilege" - Arthur Ashe
+"The more I study, the more insatiable do I feel my genius for it to be." - Ada Lovelace
+"I can never lose. I either win or I learn" - Nelson Mandela
+```
+
+Here's a generic example of an ordered list for reference:
+
+```html
+<ol>
+  <li>First item</li>
+  <li>Second item</li>
+  <li>Third item</li>
+</ol>
+```
+
+### Hyperlinks (Anchors) and Attributes
+
+Check out the `about.html` file. I want to provide a way for the user to navigate back and forth between these files.
+
+The `<a>` element (anchor) creates a **hyperlink**. The content in between is what the user sees and the `href` "attribute" specifies the link's destination:
+
+```html
+<a href="./about.html">About Me</a>
+```
+
+In this example, `href` ("hyperlink reference") is the **attribute** while `"./about.html"` is the **value**. The user only sees the text content between the tags `About Me` so it should be descriptive!
+
+**TODO**: 
+1. Add these links to your header. 
+    ```html
+    <header>
+      <a href="./index.html">Home</a>
+      <a href="./about.html">About Me</a>
+      <a href="./projects.html">Projects</a>
+    </header>
+    ```
+2. Then, copy the header into the `about.html` file.
+3. Finally, copy the `about.html` file and name it `projects.html`. Then update the `<title>` and `<h1>` to say `Projects`
+4. You should be able to navigate between all three files now!
+
+{% hint style="info" %}
+**Attributes** like `href` are always added to the opening tag of an HTML element and provide additional information about and/or configure the behavior of the element. We'll see a few other attributes as we move through the lesson.
+{% endhint %}
+
+#### Nested Hyperlinks
+
+Both paragraphs and hyperlinks are considered "inline" elements. This means that when we nest a hyperlink within a paragraph, they appear as a single line of text.
+
+In the footer, let's add a few paragraphs including one with a nested link:
+
+```html
+<footer>
+  <p>Copyright Marcy Lab School 2025</p>
+  <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
+</footer>
+```
+
+### Images
+
+Lastly, this website needs an image. let's add a profile picture to the first section below our `h1`. 
 
 Images use the `<img>` tag with two important attributes:
 * `src` — the source URL or file path of the image
@@ -339,93 +423,6 @@ For images with captions, we can wrap them in a `<figure>` element:
 `<figure>` is another semantic element used to structure our image content. It groups an image with its caption. The `<figcaption>` provides useful context for the image.
 
 **TODO:** Wrap your image in a `figure` and add a `figcaption` to share a message with your users!
-
-### Lists
-
-We have many skills to display so presenting them in a bulleted or numbered list would be appropriate.
-
-Lists are built with a `ul` ("unordered list") or `ol` ("ordered list") that contains any number of `li`s ("list items").
-
-The `li` elements inside of `ul` will appear as a bulleted list.
-
-```html
-<section>
-  <h2>Programming Skills</h2>
-  
-  <h3>Developer Tools</h3>
-  <ul>
-    <li>Git & GitHub</li>
-    <li>Command Line Interface</li>
-  </ul>
-  
-  <h3>JavaScript Skills</h3>
-  <ul>
-    <li>JavaScript Fundamentals</li>
-    <li>OOP and Classes</li>
-  </ul>
-  
-  <h3>Web Development</h3>
-  <ul>
-    <li>HTML</li>
-  </ul>
-</section>
-```
-
-**TODO:** Add these lists of skills below each subheading. Feel free to add any additional skills you'd like to share!
-
-**Challenge:** In the next section below, add your favorite quotes as an ordered list (`ol`) with at least three list items.
-
-If you can't think of any quotes, here are a few you can use for now:
-
-```
-"Pressure is a privilege" - Arthur Ashe
-"The more I study, the more insatiable do I feel my genius for it to be." - Ada Lovelace
-"I can never lose. I either win or I learn" - Nelson Mandela
-```
-
-Here's a generic example of an ordered list for reference:
-
-```html
-<ol>
-  <li>First item</li>
-  <li>Second item</li>
-  <li>Third item</li>
-</ol>
-```
-
-### Paragraphs
-
-And finally, perhaps the simplest element of them all: the paragraph!
-
-Paragraph elements (`p`) are used to display plain text.
-
-In the first section, below the `<h1>` element, we can add a paragraph with a "tagline" for our website.
-
-```html
-<section>
-  <h1>Ada Lovelace</h1>
-  <!-- Add this tagline above your figure -->
-  <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
-  <figure>
-    <img
-      src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg" 
-      alt="Profile Picture" 
-    />
-    <figcaption>It's nice to meet you!</figcaption>
-  </figure>
-</section>
-```
-
-Paragraphs and hyperlinks are considered "inline" elements. This means that when we nest a hyperlink within a paragraph, they appear as a single line of text.
-
-In the footer, let's add a few paragraphs including one with a nested link:
-
-```html
-<footer>
-  <p>Copyright Marcy Lab School 2025</p>
-  <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
-</footer>
-```
 
 ## Complete HTML
 
