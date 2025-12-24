@@ -11,7 +11,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 - [Browsers and Markup Languages](#browsers-and-markup-languages)
   - [HTML is a Markup Language: HTML Syntax](#html-is-a-markup-language-html-syntax)
   - [Browsers Are Programs for Viewing HTML](#browsers-are-programs-for-viewing-html)
-  - [The `file://` protocol vs the `https://` protocol](#the-file-protocol-vs-the-https-protocol)
+  - [Deep Dive: The `file://` protocol vs the `https://` protocol](#deep-dive-the-file-protocol-vs-the-https-protocol)
 - [How to Structure Your HTML Documents](#how-to-structure-your-html-documents)
   - [Semantic Page Structure](#semantic-page-structure)
 - [Essential Content Elements](#essential-content-elements)
@@ -119,7 +119,7 @@ The first HTML file you should create for a new website should always be `index.
 `index.html` is commonly known as the **entry point**.
 {% endhint %}
 
-### The `file://` protocol vs the `https://` protocol
+### Deep Dive: The `file://` protocol vs the `https://` protocol
 
 You're probably familiar with seeing `https://` at the start of your URL bar, but not `file://`.
 
