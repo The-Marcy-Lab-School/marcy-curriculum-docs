@@ -170,15 +170,14 @@ Let's break this down:
 * `<head>` contains "meta data" (information *about* the website) that won't show up in the webpage itself.
 * `<body>` contains all of the elements that the user will see on the webpage.
 
-**TODO**: Replace the contents of `index.html` with the boilerplate above. Change the `<title>` to your name.
 
 {% hint style="info" %}
 **Pro Tip!** Don't try to memorize this. In VS Code, when you create an empty `.html` document, just type `html` and then from the popup, select `html:5` and hit Enter. This boilerplate will be inserted into your page!
 {% endhint %}
 
-{% hint style="info" %}
+**TODO**: Replace the contents of `index.html` with the boilerplate code. Change the `<title>` to your name.
+
 **Remember to refresh!** After saving changes to your HTML file, refresh the browser (Cmd+R on Mac or Ctrl+R on Windows) to see your updates. You'll be doing this constantly as you build!
-{% endhint %}
 
 ### Semantic Page Structure
 
