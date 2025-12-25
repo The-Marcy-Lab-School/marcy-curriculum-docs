@@ -70,9 +70,9 @@ HTML gives you a new environment to apply these skills: **the browser**. Instead
 
 The most basic kind of a file is a `.txt` file which simply stores a string of characters. A `.txt` file is not considered "code" because its characters are interpreted literally.
 
-A **markup language** on the other hand contains symbols that will not be interpreted literally and instead influence how the text inside is viewed.
+A **markup language** contains symbols that will *not* be interpreted literally. Instead, the program rendering the markup language uses those symbols to change how the content is presented.
 
-Markdown (written in `.md` files) is considered a markup language. For example, when we view (**"render"**) the double-asterisk symbols `**` surrounding a word, the text inside will become **bold**:
+For example, in Markdown (written in `.md` files), the double-asterisk symbols `**` surrounding a word causes the text inside to be rendered as **bold**:
 
 ```md
 Here is some **bold** text.
