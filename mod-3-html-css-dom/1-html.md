@@ -8,11 +8,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 - [Key Concepts](#key-concepts)
 - [Why HTML Matters for JavaScript Developers](#why-html-matters-for-javascript-developers)
-- [Browsers and Markup Languages](#browsers-and-markup-languages)
-  - [HTML is a Markup Language: HTML Syntax](#html-is-a-markup-language-html-syntax)
+- [HTML is a Markup Language: HTML Syntax](#html-is-a-markup-language-html-syntax)
   - [Browsers Are Programs for Viewing HTML](#browsers-are-programs-for-viewing-html)
   - [Deep Dive: The `file://` protocol vs the `https://` protocol](#deep-dive-the-file-protocol-vs-the-https-protocol)
 - [How to Structure Your HTML Documents](#how-to-structure-your-html-documents)
+  - [HTML Boilerplate](#html-boilerplate)
   - [Semantic Page Structure](#semantic-page-structure)
 - [Essential Content Elements](#essential-content-elements)
   - [Headings (Not Header)](#headings-not-header)
@@ -66,21 +66,21 @@ HTML gives you a new environment to apply these skills: **the browser**. Instead
 | Output via console.log()     |  Output via updating HTML elements      |
 |  Runs on your computer in the Terminal    |   Runs in user's browser     |
 
-## Browsers and Markup Languages
+## HTML is a Markup Language: HTML Syntax
 
 The most basic kind of a file is a `.txt` file which simply stores a string of characters. A `.txt` file is not considered "code" because its characters are interpreted literally.
 
-A **markup language** contains symbols that will *not* be interpreted literally. Instead, the program rendering the markup language uses those symbols to change how the content is presented.
+Unlike plain text, **markup languages** contain symbols that instruct whatever program is rendering it to change how the content is presented.
 
-For example, in Markdown (written in `.md` files), the double-asterisk symbols `**` surrounding a word causes the text inside to be rendered as **bold**:
+For example, we're already familiar with Markdown (written in `.md` files) where the double-asterisk symbols `**` surrounding a word causes the text inside to be rendered as bold:
 
 ```md
 Here is some **bold** text.
 ```
 
-### HTML is a Markup Language: HTML Syntax
-
 Just like Markdown, **HTML (Hypertext Markup Language)** is a markup language that defines the *structure* and *content* of webpages.
+
+Check out the syntax to create a heading element and a paragraph element:
 
 ```html
 <!-- This is a heading element — it will be larger and bold -->
@@ -100,18 +100,22 @@ An **HTML element** is the building block of a webpage. It tells the browser wha
 
 ### Browsers Are Programs for Viewing HTML
 
-To illustrate the difference between markup languages and regular `.txt` files, do the following:
+At the end of the day, your browser is just a program for interpreting and rendering HTML. It can also interpret/render CSS and execute JavaScript!
+
+To illustrate how your browser reads HTML differently than plain text files, do the following:
 
 * Clone down the repo linked at the top of this lesson if you haven't already
 * Open Chrome
 * Then drag and drop the `index.html` into the tab bar of Chrome (there should be a + icon)
 * Then do the same for the `index.txt` file.
 
-What is the difference between how they are presented by Chrome?
+You should see something like this:
 
 ![A txt and an html file side by side.](../.gitbook/assets/txt-vs-html.png)
 
-At the end of the day, your browser is just a program for interpreting and rendering HTML. It can also interpret/render CSS and execute JavaScript!
+What is the difference between how they are presented by Chrome?
+
+In both cases, the browser is able to render the contents of the file. However, it interprets the `.txt` file literally while interpretting the symbols of the `.html` file to change the appearance of the content.
 
 {% hint style="info" %}
 The first HTML file you should create for a new website should always be `index.html`. Your browser will automatically try to load the `index.html` when given a set of HTML files from a server (or from your computer).
@@ -141,7 +145,9 @@ Whether you're loading a file locally or from a server, your browser is doing th
 
 Let's look at how we can build a website. Along the way, we will encounter a variety of HTML elements with many different tagnames. It may feel overwhelming to try to remember them all but don't panic! Most of HTML is "boilerplate"—repetitive, standard code that you will see over and over again.
 
-For example, every webpage starts with the exact same code:
+### HTML Boilerplate
+
+Speaking of boilerplate code, every webpage starts with the exact same structure:
 
 ```html
 <!DOCTYPE html>
