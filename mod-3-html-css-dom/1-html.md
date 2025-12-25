@@ -10,7 +10,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 - [Why HTML Matters for JavaScript Developers](#why-html-matters-for-javascript-developers)
 - [HTML is a Markup Language: HTML Syntax](#html-is-a-markup-language-html-syntax)
   - [Browsers Are Programs for Viewing HTML](#browsers-are-programs-for-viewing-html)
-  - [Deep Dive: The `file://` protocol vs the `https://` protocol](#deep-dive-the-file-protocol-vs-the-https-protocol)
 - [How to Structure Your HTML Documents](#how-to-structure-your-html-documents)
   - [HTML Boilerplate](#html-boilerplate)
   - [Semantic Page Structure](#semantic-page-structure)
@@ -22,8 +21,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [Hyperlinks (Anchors) and Attributes](#hyperlinks-anchors-and-attributes)
     - [Nested Hyperlinks](#nested-hyperlinks)
   - [Images](#images)
-    - [Figure and Figcaption](#figure-and-figcaption)
+- [Accessible Web Design](#accessible-web-design)
+  - [Figure and Figcaption](#figure-and-figcaption)
+  - [Nav](#nav)
+  - [Sections](#sections)
 - [Complete HTML](#complete-html)
+- [Deep Dive: The `file://` protocol vs the `https://` protocol](#deep-dive-the-file-protocol-vs-the-https-protocol)
 - [Quiz](#quiz)
 
 
@@ -123,24 +126,6 @@ The first HTML file you should create for a new website should always be `index.
 `index.html` is commonly known as the **entry point**.
 {% endhint %}
 
-### Deep Dive: The `file://` protocol vs the `https://` protocol
-
-You're probably familiar with seeing `https://` at the start of your URL bar, but not `file://`.
-
-![using the https protocol to get the html file](../.gitbook/assets/github-https-protocol.png)
-
-When using your browser on the internet, the **`https://` protocol** (hyptertext transfer protocol) is used to load HTML files from a **server**.
-
-![The http protocol loads files over the internet](./img/http-protocol.png)
-
-A **server** is any computer that provides a resource to another computer.
-
-Your browser uses the `file://` **protocol** to retrieve HTML files that come from your file system on your own computer. It all happens on the same computer:
-
-![The file protocol loads files directly from your own computer](./img/file-protocol.png)
-
-Whether you're loading a file locally or from a server, your browser is doing the same thing—receiving and rendering HTML. Later, we'll learn to build servers so others can access our content via `https://`. For now, we'll use `file://` to view files on our own computer.
-
 ## How to Structure Your HTML Documents
 
 Let's look at how we can build a website. Along the way, we will encounter a variety of HTML elements with many different tagnames. It may feel overwhelming to try to remember them all but don't panic! Most of HTML is "boilerplate"—repetitive, standard code that you will see over and over again.
@@ -203,27 +188,9 @@ Add them to your `<body>`:
 </body>
 ```
 
-Furthermore, we will often break up the `main` into various `<section>` elements:
-
-```html
-<main>
-  <section>
-    <!-- We'll add a main title, tagline and profile picture here soon -->
-  </section>
-
-  <section>
-    <!-- We'll add some programming skills here soon -->
-  </section>
-
-  <section>
-    <!-- We'll add quotes here soon -->
-  </section>
-</main>
-```
-
 Rather than adding visible content to the page, these elements provide *structure* that will keep our page organized. This is achieved through **nesting** elements inside each other:
 - The `body` contains the `header`, `main`, and `footer` elements
-- The `main` contains `section` elements
+- Each of those elements will contain other content.
 
 ## Essential Content Elements
 
@@ -233,98 +200,82 @@ Most of the content that you will see on a webpage is either text or images but 
 
 ### Headings (Not Header)
 
-The heading elements `h1` through `h6` are used to indicate the start of a new section:
+The heading elements `h1` through `h6` are used to indicate the start of a new section. When choosing which heading size to use, think of it like a book: 
+1. `h1` is the book title. There should only be one and it should be the first heading you see.
+2. `h2` elements are chapter titles and come at the top of each new section of content.
+3. `h3` elements are like subsection titles within chapters.
+4. Headings `h4`, `h5`, and `h6` also exist but they are rarely necessary.
+
+For our website, we can start by outlining the content with our headers. We want to show our name at the top with headings to showcase our various programming skills.
 
 ```html
 <main>
-  <section>
-    <h1>Ada Lovelace</h1>
-    <!-- We'll add some more information here soon -->
-  </section>
+  <!-- Update this with your own name! -->
+  <h1>Ada Lovelace</h1> 
 
-  <section>
-    <h2>Programming Skills</h2>
+  <h2>Programming Skills</h2>
     
-    <h3>Developer Tools</h3>
-    <!-- We'll add a list of skills here soon -->
+  <h3>Developer Tools</h3>
+  <!-- We'll add a list of skills here soon -->
 
-    <h3>JavaScript Skills</h3>
-    <!-- We'll add a list of skills here soon -->
+  <h3>JavaScript Skills</h3>
+  <!-- We'll add a list of skills here soon -->
     
-    <h3>Web Development</h3>
-    <!-- We'll add a list of skills here soon -->
-  </section>
-
-  <section>
-    <h2>Favorite Quotes</h2>
-    <!-- We'll add a list of quotes here soon -->
-  </section>
+  <h3>Web Development</h3>
+  <!-- We'll add a list of skills here soon -->
 </main>
 ```
 
-When choosing your heading size, think of it like a book: 
-1. `h1` is the book title. There should only be one.
-2. `h2` elements are chapter titles.
-3. `h3` elements are like subsection titles within chapters.
-
-Headings `h4`, `h5`, and `h6` also exist but they are rarely necessary.
-
-**TODO:** Add these headings to each section.
+**TODO:** Add these headings to the `main`.
 
 {% hint style="info" %}
-Screen readers use this hierarchy to help users navigate, so it's important to use headings in order (don't skip from `h1` to `h4`).
+Screen readers use this hierarchy to help users navigate our website in a logical order, so it's important to use headings in order (don't skip from `h1` to `h4` without `h2` and `h3` in between).
 {% endhint %}
 
 ### Paragraphs
 
 Paragraph elements (`p`) are used to display plain text.
 
-In the first section, below the `<h1>` element, we can add a paragraph with a "tagline" for our profile page.
+Below the `<h1>` element, we can add a paragraph with a "tagline" for our profile page that briefly describes who we are.
 
 ```html
-<section>
-  <h1>Ada Lovelace</h1>
-  <!-- Add this tagline-->
-  <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
-</section>
+<h1>Ada Lovelace</h1>
+<!-- Add a tagline like to your site!-->
+<p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
 ```
 
 ### Lists
 
-We have many skills to display so presenting them in a bulleted or numbered list would be appropriate compared to paragraphs.
+Bulleted lists are built with the `ul` element ("unordered list") while numbered lists are built with the `ol` element ("ordered list").
 
-Lists are built with a `ul` ("unordered list") or `ol` ("ordered list") that contains any number of `li`s ("list items").
-
-The `li` elements inside of `ul` will appear as a bulleted list.
+Both kinds of lists act as containers for `li` elements ("list items") which go inside:
 
 ```html
-<section>
-  <h2>Programming Skills</h2>
-  
-  <h3>Developer Tools</h3>
-  <ul>
-    <li>Git & GitHub</li>
-    <li>Command Line Interface</li>
-  </ul>
-  
-  <h3>JavaScript Skills</h3>
-  <ul>
-    <li>JavaScript Fundamentals</li>
-    <li>OOP and Classes</li>
-  </ul>
-  
-  <h3>Web Development</h3>
-  <ul>
-    <li>HTML</li>
-  </ul>
-</section>
+<h3>Developer Tools</h3>
+<ul>
+  <li>Git & GitHub</li>
+  <li>Command Line Interface</li>
+</ul>
+
+<h3>JavaScript Skills</h3>
+<ul>
+  <li>JavaScript Fundamentals</li>
+  <li>OOP and Classes</li>
+</ul>
+
+<h3>Web Development</h3>
+<ul>
+  <li>HTML</li>
+</ul>
 ```
 
 **TODO:** Add these lists of skills below each subheading. Feel free to add any additional skills you'd like to share!
 
 #### Challenge: Quotes List
 
-**Challenge:** In the next section below, add your favorite quotes as an ordered list (`ol`) with at least three list items.
+**Challenge:** Below the list of web development skills, add a new section for our of content for some favorite quotes. It should have:
+1. A `h2` heading with the text content `Favorite Quotes`
+2. A `ul` unordered list with three `li` list items inside for your quotes.
 
 If you can't think of any quotes, here are a few you can use for now:
 
@@ -334,16 +285,6 @@ If you can't think of any quotes, here are a few you can use for now:
 "I can never lose. I either win or I learn" - Nelson Mandela
 ```
 
-Here's a generic example of an ordered list for reference:
-
-```html
-<ol>
-  <li>First item</li>
-  <li>Second item</li>
-  <li>Third item</li>
-</ol>
-```
-
 ### Hyperlinks (Anchors) and Attributes
 
 Check out the `about.html` file. I want to provide a way for the user to navigate back and forth between these files.
@@ -351,13 +292,16 @@ Check out the `about.html` file. I want to provide a way for the user to navigat
 The `<a>` element (anchor) creates a **hyperlink**. The content in between is what the user sees and the `href` "attribute" specifies the link's destination:
 
 ```html
-<a href="./about.html">About Me</a>
+<header>
+  <a href="./index.html">Home</a>
+  <a href="./about.html">About Me</a>
+</header>
 ```
 
 In this example, `href` ("hyperlink reference") is the **attribute** while `"./about.html"` is the **value**. The user only sees the text content between the tags `About Me` so it should be descriptive!
 
 **TODO**: 
-1. Add these links to your header. 
+1. Add the links above to your header.
     ```html
     <header>
       <a href="./index.html">Home</a>
@@ -365,9 +309,9 @@ In this example, `href` ("hyperlink reference") is the **attribute** while `"./a
       <a href="./projects.html">Projects</a>
     </header>
     ```
-2. Then, copy the header into the `about.html` file.
-3. Finally, copy the `about.html` file and name it `projects.html`. Then update the `<title>` and `<h1>` to say `Projects`
-4. You should be able to navigate between all three files now!
+3. Then, copy the header into the `about.html` file.
+4. Finally, copy the `about.html` file and name it `projects.html`. Then update the `<title>` and `<h1>` to say `Projects`
+5. You should be able to navigate between all three files now!
 
 {% hint style="info" %}
 **Attributes** like `href` are always added to the opening tag of an HTML element and provide additional information about and/or configure the behavior of the element. We'll see a few other attributes as we move through the lesson.
@@ -408,13 +352,28 @@ Notice `<img />` is a **self-closing tag** (or **void tag**)—it doesn't need a
 
 If you don't have a GitHub profile picture, use the cat scratcher image above in the meantime!
 
-#### Figure and Figcaption
+## Accessible Web Design
 
-For images with captions, we can wrap them in a `<figure>` element:
+How we structure our HTML does more than just keep our code organized—it has a tangible impact on users with disabilities who rely on tools like screen readers to navigate a webpage.
+
+We've already done a good job at this by:
+1. Using semantic elements like `header`, `main`, and `footer` to organize our content.
+2. Using headings (`h1`, `h2`, etc.) in the proper order.
+3. Using descriptive link names in our anchor tags `<a>`.
+4. Adding the `alt` attribute to our image.
+
+Below are a few more ways we can improve our HTML structure:
+
+### Figure and Figcaption
+
+For the most accessible user experience with our images, we should put our images inside of a `<figure>` element with a `figcaption` to describe the picture:
 
 ```html
 <section>
   <h1>Ada Lovelace</h1>
+  <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
+
+  <!-- Wrap your profile image in a figure with a figcaption -->
   <figure>
     <img
       src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg" 
@@ -428,6 +387,78 @@ For images with captions, we can wrap them in a `<figure>` element:
 `<figure>` is another semantic element used to structure our image content. It groups an image with its caption. The `<figcaption>` provides useful context for the image.
 
 **TODO:** Wrap your image in a `figure` and add a `figcaption` to share a message with your users!
+
+### Nav
+
+We can make our navigation hyperlinks in our `heading` more accessible by wrapping them in a `nav` element:
+
+```html
+<header>
+  <nav>
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About Me</a>
+    <a href="./projects.html">Projects</a>
+  </nav>
+</header>
+```
+
+Again, this helps users use their screen readers to quickly find the navigation links.
+
+### Sections
+
+While the various sized headings (`h1`, `h2`, etc.) do a lot to make our main content more navigable, we can improve things by using `section` elements to contain each sub-grouping of content.
+
+In our website, we have three clear sections:
+1. The section that introduces us (a.k.a. the "hero" section)
+2. The section with our programming skills
+3. The section with our favorite quotes:
+
+```html
+<!-- Hero Section -->
+<section>
+  <h1>Ada Lovelace</h1>
+  <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
+  <figure>
+    <img
+      src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg"
+      alt="Profile Picture"
+    />
+    <figcaption>It's nice to meet you!</figcaption>
+  </figure>
+</section>
+
+<!-- Programming Skills Section -->
+<section>
+  <h2>Programming Skills</h2>
+
+  <h3>Developer Tools</h3>
+  <ul>
+    <li>Git & GitHub</li>
+    <li>Command Line Interface</li>
+  </ul>
+
+  <h3>JavaScript Skills</h3>
+  <ul>
+    <li>JavaScript Fundamentals</li>
+    <li>OOP and Classes</li>
+  </ul>
+
+  <h3>Web Development</h3>
+  <ul>
+    <li>HTML</li>
+  </ul>
+</section>
+
+<!-- Favorite Quotes Section -->
+<section>
+  <h2>Favorite Quotes</h2>
+  <ol>
+    <li>“Pressure is a privilege” - Arthur Ashe</li>
+    <li>“The more I study, the more insatiable do I feel my genius for it to be.” - Ada Lovelace</li>
+    <li>“I can never lose. I either win or I learn” - Nelson Mandela</li>
+  </ol>
+</section>
+```
 
 ## Complete HTML
 
@@ -444,10 +475,12 @@ Here's the complete `index.html` with all the elements we've built. Use this as 
   </head>
   <body>
     <header>
+    <nav>
       <a href="./index.html">Home</a>
       <a href="./about.html">About Me</a>
       <a href="./projects.html">Projects</a>
-    </header>
+    </nav>
+  </header>
     <main>
       <section>
         <h1>Ada Lovelace</h1>
@@ -496,6 +529,26 @@ Here's the complete `index.html` with all the elements we've built. Use this as 
   </body>
 </html>
 ```
+
+## Deep Dive: The `file://` protocol vs the `https://` protocol
+
+This entire time, we've been viewing the `index.html` file in our browser which we opened directly from VS Code. Take a look at the URL Bar.
+
+You're probably familiar with seeing `https://` at the start of your URL bar, but not `file://`.
+
+![using the https protocol to get the html file](../.gitbook/assets/github-https-protocol.png)
+
+When using your browser on the internet, the **`https://` protocol** (hyptertext transfer protocol) is used to load HTML files from a **server**.
+
+![The http protocol loads files over the internet](./img/http-protocol.png)
+
+A **server** is any computer that provides a resource to another computer.
+
+Your browser uses the `file://` **protocol** to retrieve HTML files that come from your file system on your own computer. It all happens on the same computer:
+
+![The file protocol loads files directly from your own computer](./img/file-protocol.png)
+
+Whether you're loading a file locally or from a server, your browser is doing the same thing—receiving and rendering HTML. Later, we'll learn to build servers so others can access our content via `https://`. For now, we'll use `file://` to view files on our own computer.
 
 ## Quiz
 
