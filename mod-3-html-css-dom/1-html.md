@@ -83,7 +83,7 @@ Here is some **bold** text.
 
 Just like Markdown, **HTML (Hypertext Markup Language)** is a markup language that defines the *structure* and *content* of webpages.
 
-Check out the syntax to create a heading element and a paragraph element:
+Check out the syntax to create a heading and paragraph **HTML element**:
 
 ```html
 <!-- This is a heading element — it will be larger and bold -->
