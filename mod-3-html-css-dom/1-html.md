@@ -174,6 +174,10 @@ Now, let's add structure to the `<body>`. Most webpages have three main parts:
 
 Add them to your `<body>`:
 
+{% hint style="info" %}
+**Pro Tip:** To quickly add a new element, simply type the tagname and hit enter to insert the tags. The cursor will be placed in between the opening and closing tags. Hit enter again to open the tags to add content inside.
+{% endhint %}
+
 ```html
 <body>
   <header>
@@ -251,6 +255,8 @@ Bulleted lists are built with the `ul` element ("unordered list") while numbered
 Both kinds of lists act as containers for `li` elements ("list items") which go inside:
 
 ```html
+<h2>Programming Skills</h2>
+
 <h3>Developer Tools</h3>
 <ul>
   <li>Git & GitHub</li>
@@ -273,7 +279,7 @@ Both kinds of lists act as containers for `li` elements ("list items") which go 
 
 #### Challenge: Quotes List
 
-**Challenge:** Below the list of web development skills, add a new section for our of content for some favorite quotes. It should have:
+**Challenge:** Below the list of web development skills, add some of your favorite quotes. You should create:
 1. A `h2` heading with the text content `Favorite Quotes`
 2. A `ul` unordered list with three `li` list items inside for your quotes.
 
@@ -332,7 +338,7 @@ In the footer, let's add a few paragraphs including one with a nested link:
 
 ### Images
 
-Lastly, this website needs an image. let's add a profile picture to the first section below our `h1`. 
+Lastly, this website needs an image. let's add a profile picture right below our tagline `p` element and above the `h2` for our programming skills.
 
 Images use the `<img>` tag with two important attributes:
 * `src` — the source URL or file path of the image
@@ -475,12 +481,12 @@ Here's the complete `index.html` with all the elements we've built. Use this as 
   </head>
   <body>
     <header>
-    <nav>
-      <a href="./index.html">Home</a>
-      <a href="./about.html">About Me</a>
-      <a href="./projects.html">Projects</a>
-    </nav>
-  </header>
+      <nav>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About Me</a>
+        <a href="./projects.html">Projects</a>
+      </nav>
+    </header>
     <main>
       <section>
         <h1>Ada Lovelace</h1>
