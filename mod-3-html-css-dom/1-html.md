@@ -15,7 +15,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 - [Attributes](#attributes)
   - [Hyperlinks](#hyperlinks)
   - [Images](#images)
-- [Structural Elements \& Nesting](#structural-elements--nesting)
+- [Structural Elements: Nesting](#structural-elements-nesting)
   - [Inspecting the HTML Structure: HTML Boilerplate](#inspecting-the-html-structure-html-boilerplate)
 - [Accessible Web Design](#accessible-web-design)
   - [Semantic Page Structure](#semantic-page-structure)
@@ -230,7 +230,7 @@ Notice `<img />` is a **self-closing tag** (or **void tag**)—it doesn't need a
 
 If you don't have a GitHub profile picture, make sure to upload one!
 
-## Structural Elements & Nesting
+## Structural Elements: Nesting
 
 This use of container elements is a key concept in HTML: elements are often *nested* inside one another to build the hierarchy and organization of your web page.
 
