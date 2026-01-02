@@ -24,9 +24,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [Main Sections](#main-sections)
   - [Challenge: Main Sections](#challenge-main-sections)
   - [Figure and Figcaption](#figure-and-figcaption)
-  - [Complete HTML](#complete-html)
 - [Deep Dive: The `file://` protocol vs the `https://` protocol](#deep-dive-the-file-protocol-vs-the-https-protocol)
 - [Quiz](#quiz)
+- [Complete HTML](#complete-html)
 
 
 ## Key Concepts
@@ -452,76 +452,6 @@ Check out how we can do this in the "Hero" section:
 
 `<figure>` is another semantic element used to structure our image content. It groups an image with its caption. The `<figcaption>` provides useful context for the image.
 
-### Complete HTML
-
-Here's the complete `index.html` with all the elements we've built. Use this as a reference to check your work or catch up if you fell behind.
-
-**index.html**
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ada Lovelace</title>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <a href="./index.html">Home</a>
-        <a href="./about.html">About Me</a>
-        <a href="./projects.html">Projects</a>
-      </nav>
-    </header>
-    <main>
-      <section>
-        <h1>Ada Lovelace</h1>
-        <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
-        <figure>
-          <img
-            src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg"
-            alt="Profile Picture"
-          />
-          <figcaption>It's nice to meet you!</figcaption>
-        </figure>
-      </section>
-      <section>
-        <h2>Programming Skills</h2>
-
-        <h3>Developer Tools</h3>
-        <ul>
-          <li>Git & GitHub</li>
-          <li>Command Line Interface</li>
-        </ul>
-
-        <h3>JavaScript Skills</h3>
-        <ul>
-          <li>JavaScript Fundamentals</li>
-          <li>OOP and Classes</li>
-        </ul>
-
-        <h3>Web Development</h3>
-        <ul>
-          <li>HTML</li>
-        </ul>
-      </section>
-      <section>
-        <h2>Favorite Quotes</h2>
-        <ol>
-          <li>“Pressure is a privilege” - Arthur Ashe</li>
-          <li>“The more I study, the more insatiable do I feel my genius for it to be.” - Ada Lovelace</li>
-          <li>“I can never lose. I either win or I learn” - Nelson Mandela</li>
-        </ol>
-      </section>
-    </main>
-    <footer>
-      <p>Copyright Marcy Lab School 2025</p>
-      <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
-    </footer>
-  </body>
-</html>
-```
-
 ## Deep Dive: The `file://` protocol vs the `https://` protocol
 
 This entire time, we've been viewing the `index.html` file in our browser which we opened directly from VS Code. Take a look at the URL Bar.
@@ -661,3 +591,73 @@ Two issues:
 Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose of the content, making the HTML more readable, accessible, and better for SEO.
 
 </details>
+
+## Complete HTML
+
+Here's the complete `index.html` with all the elements we've built. Use this as a reference to check your work or catch up if you fell behind.
+
+**index.html**
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ada Lovelace</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About Me</a>
+        <a href="./projects.html">Projects</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Ada Lovelace</h1>
+        <p>Mathematician | Pioneer of Computing | Visionary Thinker</p>
+        <figure>
+          <img
+            src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg"
+            alt="Profile Picture"
+          />
+          <figcaption>It's nice to meet you!</figcaption>
+        </figure>
+      </section>
+      <section>
+        <h2>Programming Skills</h2>
+
+        <h3>Developer Tools</h3>
+        <ul>
+          <li>Git & GitHub</li>
+          <li>Command Line Interface</li>
+        </ul>
+
+        <h3>JavaScript Skills</h3>
+        <ul>
+          <li>JavaScript Fundamentals</li>
+          <li>OOP and Classes</li>
+        </ul>
+
+        <h3>Web Development</h3>
+        <ul>
+          <li>HTML</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Favorite Quotes</h2>
+        <ol>
+          <li>“Pressure is a privilege” - Arthur Ashe</li>
+          <li>“The more I study, the more insatiable do I feel my genius for it to be.” - Ada Lovelace</li>
+          <li>“I can never lose. I either win or I learn” - Nelson Mandela</li>
+        </ol>
+      </section>
+    </main>
+    <footer>
+      <p>Copyright Marcy Lab School 2025</p>
+      <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
+    </footer>
+  </body>
+</html>
+```

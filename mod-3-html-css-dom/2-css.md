@@ -375,7 +375,6 @@ To target those elements, use a dot (`.`) followed by the class name:
 }
 ```
 
-
 **Rules for classes:**
 * Multiple elements can share the same class.
 * Names are case-sensitive
