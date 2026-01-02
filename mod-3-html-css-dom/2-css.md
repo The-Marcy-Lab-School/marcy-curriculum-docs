@@ -16,7 +16,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
     - [Inspecting CSS With Chrome Developer Tools](#inspecting-css-with-chrome-developer-tools)
 - [Common CSS Properties](#common-css-properties)
   - [Color Properties](#color-properties)
-    - [Color Values](#color-values)
   - [Typography Properties](#typography-properties)
 - [Selectors](#selectors)
   - [Element Selector](#element-selector)
@@ -27,6 +26,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
     - [Child Selectors](#child-selectors)
     - [Pseudo-Class Selectors](#pseudo-class-selectors)
   - [Selector Specificity](#selector-specificity)
+- [Choosing a Color Palette and Custom Variables](#choosing-a-color-palette-and-custom-variables)
 - [Deep Dive On Units: `px` vs `%` vs `rems`](#deep-dive-on-units-px-vs--vs-rems)
 - [Quiz!](#quiz)
 - [Complete CSS](#complete-css)
@@ -239,6 +239,8 @@ One of the most obvious uses of CSS is to apply color to our otherwise black and
 
 In addition to beautifying our page, colors can make a page easier to navigate by visually distinguishing sections from each other.
 
+We will most commonly be setting the background color and text color of our elements:
+
 ```css
 /* These colors will be inherited by all elements */
 body {
@@ -252,18 +254,6 @@ a {
   color: white;
 }
 ```
-
-{% hint style="info" %}
-**Choosing a Color Palette:** When designing a website, it is best to decide on a color palette with just a few colors to stick to. Here is a simple strategy to create a three-color palette:
-- Choose one primary color to define your entire palette (e.g. `midnightblue`) 
-- Choose a second color that has high-contrast with the first (e.g. `powderblue`)
-- Choose a third "accent" color that you can use for call-to-action elements like buttons and forms (e.g. `royalblue`)
-
-You can use a website like [https://mycolor.space](https://mycolor.space/?hex=%236F66CE&sub=1) to help come up with your color palettes!
-
-{% endhint %}
-
-#### Color Values
 
 Color values can be written in a variety of ways. For example, these are all equivalent ways to use the color blue:
 - **Named color**: `blue`
@@ -488,6 +478,50 @@ p {
 <p id="special" class="intro">I'm red (ID beats class)</p>
 ```
 
+## Choosing a Color Palette and Custom Variables
+
+When designing a website, it is best to decide on a color palette with just a few colors to stick to. Here is a useful strategy to create a simple palette:
+  - Choose one primary color to define your entire palette (e.g. `powderblue`) 
+  - Choose a second color that has high-contrast with the first (e.g. `midnightblue`)
+  - Choose a third "accent" color that you can use for call-to-action elements like buttons and forms (e.g. `royalblue`)
+  - Don't shy away from using white and black when needed!
+  
+  {% hint style="info" %}
+  You can use a website like [https://mycolor.space](https://mycolor.space/?hex=%236F66CE&sub=1) to help come up with your color palettes!
+  {% endhint %}
+
+To make it easier to stick to a particular palette, it can be incredibly useful to define **CSS Variables** for your colors.
+
+```css
+/* Declare these variables at the top of your CSS file */
+:root {
+  --color-light: powderblue;
+  --color-dark: midnightblue;
+  --color-accent: royalblue;
+  --color-white: white;
+}
+```
+
+These variables, which *must* begin with `--`, can be defined within any selector. However, those variables will only be available within the "scope" of that element. 
+
+So, it is most common to define them in `:root` which is a special selector that grabs the top-most element of a document (the `html` element). As a result, the variables are globally available.
+
+We can then update our CSS to use those variables using the `var()` property value function:
+
+```css
+body {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
+nav>a {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+```
+
+**TODO:** Decide on a three- or four-color palette and then define variables for your colors using the `:root` selector. Then, update your code to use those variables.
+
 ## Deep Dive On Units: `px` vs `%` vs `rems`
 
 * The `px` unit sets the exact size of a property. **Setting the size of an element using `px` values should be avoided if possible** as they don't comply with accessibility standards.
@@ -671,6 +705,13 @@ Bonus: You can also use **RGBA** for transparency: `color: rgba(255, 0, 0, 0.5);
 ## Complete CSS
 
 ```css
+:root {
+  --color-light: powderblue;
+  --color-dark: midnightblue;
+  --color-accent: royalblue;
+  --color-white: white;
+}
+
 img {
   width: 100%;
 }
@@ -681,25 +722,27 @@ figure {
 }
 
 body {
-  background-color: powderblue;
-  color: midnightblue;
-
-  font-family: Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  text-align: center;
-}
-
-nav>a {
-  background-color: royalblue;
-  color: white;
+  background-color: var(--color-light);
+  color: var(--color-dark);
 }
 
 header {
-  background-color: midnightblue;
+  background-color: var(--color-dark);
+}
+
+nav>a {
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 section {
-  background-color: white;
+  background-color: var(--color-white);
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  text-align: center;
 }
 
 h1 {
@@ -711,23 +754,18 @@ ol {
 }
 
 .programming-skill {
-  background-color: royalblue;
-  color: white;
-}
-
-.quote {
-  background-color: powderblue;
-  color: midnightblue;
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 #tagline,
 figcaption {
   font-style: italic;
-  color: royalblue;
+  color: var(--color-accent);
 }
 
 nav>a:hover {
-  color: royalblue;
-  background-color: white;
+  color: var(--color-accent);
+  background-color: var(--color-white);
 }
 ```
