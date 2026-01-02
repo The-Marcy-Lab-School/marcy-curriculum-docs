@@ -13,8 +13,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
   - [External Stylesheets (Best Practice)](#external-stylesheets-best-practice)
   - [Internal Stylesheets With Style Tags (Fine If You Only Want 1 File)](#internal-stylesheets-with-style-tags-fine-if-you-only-want-1-file)
   - [Inline Styling (Practically Never Do This)](#inline-styling-practically-never-do-this)
+    - [Inspecting CSS With Chrome Developer Tools](#inspecting-css-with-chrome-developer-tools)
 - [Common CSS Properties](#common-css-properties)
   - [Color Properties](#color-properties)
+    - [Color Values](#color-values)
   - [Typography Properties](#typography-properties)
 - [Selectors](#selectors)
   - [Element Selector](#element-selector)
@@ -25,7 +27,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
     - [Child Selectors](#child-selectors)
     - [Pseudo-Class Selectors](#pseudo-class-selectors)
   - [Selector Specificity](#selector-specificity)
-- [Development Workflow](#development-workflow)
 - [Deep Dive On Units: `px` vs `%` vs `rems`](#deep-dive-on-units-px-vs--vs-rems)
 - [Quiz!](#quiz)
 - [Complete CSS](#complete-css)
@@ -205,9 +206,13 @@ You can also add a `style` attribute directly to an individual element but this 
 </body>
 ```
 
-Styles applied to an element using the `style` attribute will override both internal and external stylesheets.
+Inline styles are not a viable option for large scale styling. However, inline styles will always override both internal and external stylesheets. Therefore, it might be useful if you need to quickly test a CSS property and ensure that it will be applied to an element. 
 
-You can see this in action if you open the Chrome Developer Tools and look at the styles applied to the `body` element
+But generally you should avoid this approach.
+
+#### Inspecting CSS With Chrome Developer Tools
+
+You can see how competing styles override each other if you open the Chrome Developer Tools and look at the styles applied to the `body` element
 
 ![](./img/css-overriding-devtools.png)
 
@@ -217,25 +222,22 @@ Notice how the styles "cascade" in the following manner:
 * Third are the external stylesheet styles from `style.css`
 * Last are the **user agent stylesheet** styles. These are the default styles applied by the browser.
 
-Inline styles are not a viable option for large scale styling. However, they can be useful if you need to quickly test a CSS property and ensure that it will be applied to an element. Otherwise, avoid this approach.
+The Chrome Developer Tools are incredibly useful for testing out your CSS styling. For example:
+- Try disabling the inline `background` applied to the body and notice how the page will update immediately to use the next background color in the "cascade".
+- Click on the named color `red` and type in `green` to see the color change
+- Click on the color box and play around with the sliders to find a color that you like for the background.
 
 **TODO:** Remove all inline styles and the internal stylesheet. We'll use the external stylesheet `style.css` moving forward.
 
 ## Common CSS Properties
 
-Now that we know how to apply styles, let's learn the basic styles that we can apply to any HTML element.
+Now that we know how to add CSS to our HTML files, let's learn the basic CSS properties that we can apply to any HTML element.
 
 ### Color Properties
 
 One of the most obvious uses of CSS is to apply color to our otherwise black and white webpages.
 
 In addition to beautifying our page, colors can make a page easier to navigate by visually distinguishing sections from each other.
-
-{% hint style="info" %}
-**Choosing a Color Palette:** When designing a website, it is best to decide on a color palette with just a few colors to stick to. You can use a website like [https://coolors.co/generate](https://coolors.co/generate) to help come up with your color palettes!
-
-Try to find two high contrast colors for your background and text for easy readability and then one or two accent colors for things like buttons and other "call to action" elements.
-{% endhint %}
 
 ```css
 /* These colors will be inherited by all elements */
@@ -251,15 +253,38 @@ a {
 }
 ```
 
-Color values can be written in a variety of ways. For example, these are all equivalent colors:
-- **Named color**: `powderblue`
-- **Hex code**: `#b0e0e6`
-- **RGB**: `rgb(176 224 230)`
-- **RGBA** (a = transparency): `rgba(255, 87, 51, 0.5)`
+{% hint style="info" %}
+**Choosing a Color Palette:** When designing a website, it is best to decide on a color palette with just a few colors to stick to. Here is a simple strategy to create a three-color palette:
+- Choose one primary color to define your entire palette (e.g. `midnightblue`) 
+- Choose a second color that has high-contrast with the first (e.g. `powderblue`)
+- Choose a third "accent" color that you can use for call-to-action elements like buttons and forms (e.g. `royalblue`)
+
+You can use a website like [https://mycolor.space](https://mycolor.space/?hex=%236F66CE&sub=1) to help come up with your color palettes!
+
+{% endhint %}
+
+#### Color Values
+
+Color values can be written in a variety of ways. For example, these are all equivalent ways to use the color blue:
+- **Named color**: `blue`
+- **Red/Green/Blue (RGB)**: `rgb(0, 0, 255)`
+  - Each value ranges from 0 to 255
+- **Hex code**: `#0000ff`
+  - Each pair of base-16 values range from `00` (0) to `ff` (255) and represent red/green/blue.
+
+**<details><summary>Q: How would you make green using RGB and Hex? What about black and white?</summary>**
+
+- Green: `rgb(0, 255, 0)` or `#00ff00`
+- Black: `rgb(0, 0, 0)` or `#000000`
+- White: `rgb(255, 255, 255)` or `#ffffff`
+
+</details>
 
 ### Typography Properties
 
 Your choice of font can add a nice touch of personality to a website. How you configure your typography can also make a big difference in the readability of your site.
+
+Fun fonts can be downloaded from the internet (check out [Google Fonts](https://fonts.google.com/)) but classic fonts like Helvetica and Arial will never let you down:
 
 ```css
 body {
@@ -277,9 +302,11 @@ Again, we can set these properties in the `body` and they will be inherited by a
 
 Here are a few notes to consider for each of these properties
 * **`font-family`**: List multiple fonts separated by commas. The browser uses the first available font. Always end with a generic family like `sans-serif` or `serif` as a fallback.
-* **`line-height`**: A value between `1.4` and `1.6` improves readability. Use unitless numbers (e.g., `1.5`) so the line height scales with the font size.
-* **`text-align`**: Use `left` for natural reading flow in most languages, but `center` can help for headings or to create visual emphasis. Avoid centering large blocks of text for readability.
+* **`line-height`**: A line height between `1.4` and `1.6` improves readability. Use unitless numbers (e.g., `1.5`) so the line height scales with the font size.
+* **`text-align`**: Use `left` for natural reading flow in most languages, but `center` can help for headings or to create visual emphasis. Avoid centering long paragraphs for readability.
 * **`font-size`**: Use relative units like `rem` instead of `px` to ensure that your font responds to each device's base font size. For example, `1rem` is equivalent to `16px` for devices with "normal" text, `12px` for "small" text, and `24px` for "large" text.
+
+**TODO:** Set the text alignment for the `ol` element to `left`
 
 ## Selectors
 
@@ -461,18 +488,6 @@ p {
 <p class="intro">I'm green (class beats element)</p>
 <p id="special" class="intro">I'm red (ID beats class)</p>
 ```
-
-## Development Workflow
-
-When building a webpage:
-
-1. **Start with HTML structure** - Get your content organized with proper semantic elements
-2. **Link your CSS file** - Add the `<link>` tag in your `<head>`
-3. **Add classes/ids to HTML** - Label elements you want to style
-4. **Write CSS rules** - Target elements and apply styles
-5. **Refresh browser** - See your changes (you may need to hard refresh with Cmd+Shift+R or Ctrl+Shift+R)
-
-**Debugging tip**: Use your browser's Developer Tools (right-click > Inspect) to see which CSS rules are being applied to an element. This is essential for understanding why styles aren't working as expected.
 
 ## Deep Dive On Units: `px` vs `%` vs `rems`
 
@@ -675,7 +690,7 @@ body {
   text-align: center;
 }
 
-a {
+nav>a {
   background-color: royalblue;
   color: white;
 }
@@ -688,14 +703,10 @@ section {
   background-color: white;
 }
 
-/* Typography */
-
 h1 {
   font-size: 3rem;
 }
 
-h3,
-ul,
 ol {
   text-align: left;
 }
