@@ -153,7 +153,7 @@ figure {
 }
 ```
 
-**TODO**: Add the CSS above into `style.css` and load it into your HTML file.
+**TODO:** Add the CSS above into `style.css` and load it into your HTML file using the `link` tag. Then, copy that `link` tag into your `about.html` and `portfolio.html` pages.
 
 **<details><summary>Q: What are the benefits of having CSS in an external file?</summary>**
 
@@ -383,7 +383,7 @@ To target those elements, use a dot (`.`) followed by the class name:
 * Cannot contain spaces
 * Use `kebab-case` for multi-word names (e.g., `programming-skill`)
 
-**TODO: Add a `"quote"` class to all of your quote list items and give them a background of `powderblue` and a text color of `midnightblue`.**
+**TODO:** Add a `"quote"` class to all of your quote list items and give them a background of `powderblue` and a text color of `midnightblue`.
 
 ### ID Selector
 
@@ -423,7 +423,7 @@ You can apply the same styles to multiple selectors by separating them with a co
 }
 ```
 
-**TODO: Use the multi-selector syntax to set `text-align: left;` for these elements: `h3`, `ul`, and `ol`.**
+**TODO:** Use the multi-selector syntax to set `text-align: left;` for these elements: `h3`, `ul`, and `ol`.
 
 #### Child Selectors
 
