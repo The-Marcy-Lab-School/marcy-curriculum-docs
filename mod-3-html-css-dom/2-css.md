@@ -153,7 +153,7 @@ figure {
 }
 ```
 
-**TODO:** Add the CSS above into `style.css` and load it into your HTML file using the `link` tag. Then, copy that `link` tag into your `about.html` and `portfolio.html` pages.
+**TODO:** Add the CSS above into `style.css` and load it into your HTML file using the `link` tag. Then, copy that `link` tag into your `contact.html` and `portfolio.html` pages.
 
 **<details><summary>Q: What are the benefits of having CSS in an external file?</summary>**
 

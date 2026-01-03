@@ -191,19 +191,21 @@ Some HTML elements require **attributes**—additional pieces of information use
 A **hyperlink** is an element that lets the user navigate from one page to another by clicking on some text. Hyperlinks are made with the "anchor" tags `<a></a>` and use the "hyperlink reference" attribute `href`:
 
 ```html
-<a href="./about.html">About Me</a>
+<a href="./index.html">Home</a>
+<a href="./projects.html">Projects</a>
+<a href="./contact.html">Contact Me</a>
 ```
 
-In this example, `href` ("hyperlink reference") is the **attribute** while `"./about.html"` is the **value**. The text `About Me` is what the user sees and can click on to navigate.
+In this example, `href` ("hyperlink reference") is the **attribute** which defines where the link will take the user. The text `Home`, `Projects`, and `Contact Me` is what the user sees and can click on to navigate.
 
 Remember, attributes like `href` are always added to the opening tag of an HTML element. 
 
-**TODO:** Add the hyperlink element above to your `index.html` file. Then, in the `about.html` file, create a hyperlink that navigates back to the `index.html` file with the text content `Home`. 
+**TODO:** Add the hyperlink elements above to your `index.html` file. Then, add them in the `projects.html` and `contact.html` files as well.
 
 **Remember to refresh!** After saving changes to your HTML file, refresh the browser (Cmd+R on Mac or Ctrl+R on Windows) to see your updates. You'll be doing this constantly as you build!
 
 {% hint style="info" %}
-Both paragraphs and hyperlinks are considered "inline" elements. This means that when we nest a hyperlink within a paragraph, they appear as a single line of text.
+Paragraphs and hyperlinks are both considered "inline" elements. This means that when we nest a hyperlink within a paragraph, they appear as a single line of text.
 
 ```html
 <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
@@ -303,7 +305,7 @@ Let's break this down:
 
 {% endhint %}
 
-**TODO**: In the `index.html` file, use the emmet abbreviation `html:5` trick to insert the boilerplate code. Then, copy-paste all of the content you've already created into the `body`. Finally, update the `title` inside of the `head` to your name.
+**TODO**: In the `index.html` file, use the emmet abbreviation `html:5` trick to insert the boilerplate code. Then, copy-paste all of the content you've already created into the `body`. Finally, update the `title` inside of the `head` to your name. Do the same for the projects and contact pages
 
 **Remember to refresh!** After saving changes to your HTML file, refresh the browser (Cmd+R on Mac or Ctrl+R on Windows) to see your updates. You'll be doing this constantly as you build!
 
@@ -360,8 +362,8 @@ Our `header` typically includes navigation links to the other pages in the site.
 <header>
   <nav>
     <a href="./index.html">Home</a>
-    <a href="./about.html">About Me</a>
     <a href="./projects.html">Projects</a>
+    <a href="./contact.html">Contact Me</a>
   </nav>
 </header>
 ```
@@ -594,7 +596,7 @@ Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose
 
 ## Complete HTML
 
-Here's the complete `index.html` with all the elements we've built. Use this as a reference to check your work or catch up if you fell behind.
+Here's the complete HTML with all the elements we've built. Use this as a reference to check your work or catch up if you fell behind.
 
 **index.html**
 ```html
@@ -609,8 +611,8 @@ Here's the complete `index.html` with all the elements we've built. Use this as 
     <header>
       <nav>
         <a href="./index.html">Home</a>
-        <a href="./about.html">About Me</a>
         <a href="./projects.html">Projects</a>
+        <a href="./contact.html">Contact Me</a>
       </nav>
     </header>
     <main>
@@ -653,6 +655,64 @@ Here's the complete `index.html` with all the elements we've built. Use this as 
           <li>“I can never lose. I either win or I learn” - Nelson Mandela</li>
         </ol>
       </section>
+    </main>
+    <footer>
+      <p>Copyright Marcy Lab School 2025</p>
+      <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
+    </footer>
+  </body>
+</html>
+```
+
+The projects file and the contacts file have been updated with the proper boilerplate structure and semantic elements.
+
+**projects.html**
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ada Lovelace | Projects</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="./index.html">Home</a>
+        <a href="./projects.html">Projects</a>
+        <a href="./contact.html">Contact Me</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Projects</h1>
+    </main>
+    <footer>
+      <p>Copyright Marcy Lab School 2025</p>
+      <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
+    </footer>
+  </body>
+</html>
+```
+
+**contact.html**
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ada Lovelace | Contact Me</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="./index.html">Home</a>
+        <a href="./projects.html">Projects</a>
+        <a href="./contact.html">Contact Me</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Contact Me</h1>
     </main>
     <footer>
       <p>Copyright Marcy Lab School 2025</p>

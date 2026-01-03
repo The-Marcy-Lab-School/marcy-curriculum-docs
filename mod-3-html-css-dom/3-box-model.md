@@ -604,8 +604,8 @@ Head over to [MDN to test your box model skills](https://developer.mozilla.org/e
     <header>
       <nav>
         <a href="./index.html">Home</a>
-        <a href="./about.html">About Me</a>
         <a href="./projects.html">Projects</a>
+        <a href="./contact.html">Contact Me</a>
       </nav>
     </header>
     <main>
