@@ -1,22 +1,31 @@
 # The Box Model
 
+{% hint style="info" %}
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-3-box-model)!
+{% endhint %}
+
+
 **Table of Contents**
 
 - [Key Concepts](#key-concepts)
-- [The Box Model](#the-box-model-1)
+- [Intro to The Box Model](#intro-to-the-box-model)
   - [Web Design 101: Every Element is a Box](#web-design-101-every-element-is-a-box)
 - [Box Model](#box-model)
   - [Content, Width, and Height](#content-width-and-height)
   - [Padding: Space Inside the Box](#padding-space-inside-the-box)
   - [Border: The Edge of the Box](#border-the-edge-of-the-box)
+    - [Adding Borders to One Side](#adding-borders-to-one-side)
+    - [Border Radius](#border-radius)
   - [Margin: Space Between Elements](#margin-space-between-elements)
     - [Margin Collapse](#margin-collapse)
     - [Centering with Margin](#centering-with-margin)
+  - [Box Shadow](#box-shadow)
 - [Display](#display)
   - [Display Challenge](#display-challenge)
 - [The Box-Sizing Problem](#the-box-sizing-problem)
   - [The Solution: border-box reset](#the-solution-border-box-reset)
   - [General CSS Reset](#general-css-reset)
+- [Organizing Your CSS](#organizing-your-css)
 - [Test your Skills!](#test-your-skills)
 - [Complete HTML \& CSS](#complete-html--css)
 
@@ -24,13 +33,9 @@
 
 * **Box Model** — How elements in an HTML document are modeled in the browser and how their dimensions are calculated based on the provided CSS properties. It consists of content, padding, border, and margin.
 * The **content** — the space that the content of an element occupies (the text of a `<p>` tag, the image of an `img` tag, etc...)
-  * Content can be modified with the `width` and `height` properties.
 * The **padding** — the space around the content but inside the border. This is the "background" of the content.
-  * Padding can be modified with the `padding` property.
 * The **border** — the space around the padding.
-  * Border can be modified with the `border` and `border-radius` properties.
 * The **margin** — the space around the border and "between" adjacent elements.
-  * Margin can be modified with the `margin` property.
   * **Margin collapse** occurs when two vertical margins meet and the larger margin "wins".
 * The `box-sizing` property determines how the total width and height of an element is calculated.
   * The default `box-sizing: content-box` setting has the `width` and `height` properties affect the content box, with padding and border dimensions added.
@@ -51,7 +56,7 @@
   * `display: inline-block` elements will sit next to each other (if there is space available) and ARE affected by the `width` and `height` properties
   * `display: none` elements are removed from the flow of the document.
 
-## The Box Model
+## Intro to The Box Model
 
 You've learned how to apply colors, fonts, and basic spacing to HTML elements using CSS. Now you need to understand the fundamental concept that controls how elements take up space on a webpage: **the box model**.
 
@@ -61,15 +66,15 @@ The first rule to understanding CSS and web design is that **every HTML element 
 
 Even elements that don't look like boxes (paragraphs, headings, links, images, buttons) are all boxes. Understanding how these boxes work is essential for controlling layout and spacing.
 
-Open up your `index.html` file from the `my-profile` folder in the browser. Then do the following:
-1. Right click on your profile picture and select "Inspect". This will open your browser's **Developer Tools** where you can see the HTML structure of your elements and the CSS styles applied to them. In the bottom-right corner is the Box Model diagram.
+Open up your `index.html` file from the last lesson in the browser. Then do the following:
+1. Right click on your website and select "Inspect". This will open your browser's **Developer Tools** where you can see the HTML structure of your elements and the CSS styles applied to them. **In the bottom-right corner is the Box Model diagram.**
 
     ![We can see the box of the profile picture when we inspect it.](./img/box-model-inspect-profile-page.png)
 
 2. Choose the **element selector tool** (look at the developer tools and it is the arrow icon in the top-left corner). 
-3. Then, hover over different elements. You'll see colored rectangles highlighting each element's box. Those rectangles aren't just visual aids—they represent how the browser actually thinks about every element.
+3. Then, hover over different elements to see each element's box.
 
-You can also see how every element is a box if you add this CSS declaration to your webpage:
+You can see clearly how every element is a box if you add this CSS declaration to your webpage:
 
 ```css
 /* All elements have a 1px solid red border */
@@ -90,7 +95,6 @@ The **box model** defines the size and spacing of any element and it consists of
 2. The **padding** — the space around the content but inside the border. This is the "background" of the content.
 3. The **border** — the space around the padding.
 4. The **margin** — the space around the border and "between" adjacent elements.
-    * Note: Margin is always transparent and the margins of adjacent elements can overlap.
 
 ![The box model has 4 parts: the content, the padding, the border, and the margin](../.gitbook/assets/margin-padding-content.png)
 
@@ -98,140 +102,267 @@ The **box model** defines the size and spacing of any element and it consists of
 
 The **content area** holds your actual content (text, images, or other nested elements).
 
-You can control the content dimensions with `width` and `height`. 
+You can control the content dimensions with `width`- and `height`-related properties.
 
-Let's change the size of our profile picture:
+Look at the existing CSS for your `figure` and `img` elements:
 
 ```css
-#profile-picture {
-  border-radius: 50%;
-  width: 300px; /* <-- add this */
+img {
+  width: 100%;
+}
+
+figure {
+  max-width: 300px;
 }
 ```
 
-Refresh your page. Your picture is now exactly 300px wide instead of the inherent size of the picture.
+This is a really common pattern for handling image sizing:
+* The `img` selector sets all images to fill 100% of their container's width. 
+* The `figure` selector uses `max-width: 300px` to constrain the figure (and therefore the image inside it) to a maximum of 300 pixels wide. 
+* If the screen is smaller than 300px, the figure will shrink to fit.
+
+**TODO:** Set a width on our navigation links and a max-width on our sections:
+
+```css
+nav>a {
+  /* ... existing styles ... */
+  width: 10rem;
+}
+
+section {
+  max-width: 600px;
+}
+```
+
+Refresh your page. Notice that the `width` on `nav>a` doesn't seem to work yet—we'll fix that in the Display section!
 
 ### Padding: Space Inside the Box
 
 **Padding** creates space between the content and the border. It's inside the element so it takes on the element's background color.
 
-Look at your list items, the text is looking a little bit cramped within their content box. Let's add some padding to give the text content some breathing room:
+The header is looking a little bit cramped with the links inside. Let's add some padding to give the content some breathing room:
 
 ```css
-li {
-  font-family: roboto;
-  margin-bottom: 0.5rem;
-  padding: 0.25rem; /* <-- add this. play around with the value */
+header {
+  background-color: var(--color-dark);
+  padding: 1rem; /* <-- add this. play around with the value */
 }
 ```
 
-You can also assign different padding amounts on each side by providing multiple values. Let's make our navigation links more button-like:
+You can also assign different padding amounts on each side by providing multiple values. Let's update our navigation links to be more button-like:
 
 ```css
-/* Add this entire CSS block */
-nav a {
-  padding: 10px 20px; /* 10px top/bottom, 20px left/right*/
-  background-color: midnightblue;
-  color: white;
+nav>a {
+  background-color: var(--color-accent);
+  color: var(--color-white);
   text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem; /* <-- 0.5rem top/bottom, 1rem left/right */
 }
 ```
 
-{% hint style="info" %}
-The `nav a` selector is an example of a "descendant selector". It selects all `<a>` elements inside of a `<nav>` element. */
-{% endhint %}
-
-**When to use padding:** When you want to create space inside an element—like keeping text away from the edges of your list items or making your navigation links more clickable.
+**TODO:** Add a padding to your section elements, to each `.programming-skill` element, and to each `.quote` element.
 
 ### Border: The Edge of the Box
 
 The **border** is the line around the padding. The `border` property has three values: width, style, and color.
 
-Let's add borders to each `section` to visually separate them:
+Let's add a border to each `section` to visually separate them and create a "card" effect:
 
 ```css
-/* Add this entire CSS block */
 section {
-  border: 2px solid midnightblue;
-  padding: 20px;
+  background-color: var(--color-white);
+  max-width: 600px;
+  padding: 1rem;
+
+  /* Add this */
+  border: 2px solid var(--color-accent);
 }
 ```
 
 Common border styles include `solid`, `dashed`, `dotted`, and `none` (default).
 
-You can also control the curve of the corners of your border with `border-radius`:
+#### Adding Borders to One Side
+
+You can also add a border to just one side of an element using `border-top`, `border-right`, `border-bottom`, or `border-left`.
+
+Let's add a bottom border to our `h2` elements to create a nice visual separator:
 
 ```css
-/* Add this entire CSS block */
-section, li, nav a {
+h2 {
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 0.5rem;
+}
+```
+
+**TODO:** Add a left border to the quotes. It should be 4px, solid, and using your accent color.
+
+#### Border Radius
+
+You can control the curve of the corners of your border with `border-radius`:
+
+```css
+section {
+  background-color: var(--color-white);
+  max-width: 600px;
+  padding: 1rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 8px; /* <-- add this */
+}
+```
+
+Let's also add `border-radius` to our navigation links:
+
+```css
+nav>a {
+  /* ... existing styles ... */
   border-radius: 8px;
 }
 ```
 
-### Margin: Space Between Elements
+To make a perfectly circular border, use `border-radius: 50%`. This works great for profile pictures! Let's add this to our `#profile-picture`:
 
-You may feel that the sections are too close to each other. We could also use some space above and below our profile picture.
+First, add an `id` to your profile picture so we can style it later:
+
+**HTML:**
+```html
+<figure>
+  <img
+    id="profile-picture"
+    src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg"
+    alt="Profile Picture"
+  />
+  <figcaption>It's nice to meet you!</figcaption>
+</figure>
+```
+
+**CSS:**
+
+```css
+#profile-picture {
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+}
+```
+
+**TODO:** Add a `border` and `border-radius` to the `.programming-skill` class to make them look like tags/badges. Do the same for your navigation links.
+
+### Margin: Space Between Elements
 
 **Margin** creates space between an element and other elements around it. Margin is outside the element, so it doesn't take on the background color.
 
-Let's add some margin to the sections first
+Let's add some space between our navigation elements, but only on the left and right sides:
 
 ```css
-section {
-  border: 2px solid midnightblue;
-  padding: 20px;
-  margin: 20px; /* <-- add this */
+nav>a {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  width: 10rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-dark);
+  border-radius: 8px;
+
+  /* Add this: 0 margin on top/bottom, 0.5rem left/right */
+  margin: 0 0.5rem;
+
+  /* or... */
+  margin-inline: 0.5rem;
 }
 ```
 
-Margin uses the same shorthand syntax as padding so we can add margin just to the top of our profile like so:
+The `margin-inline` property allows you to control the margin on the left and right sides only. Padding and border each have this suffix available as well. You can use the `-block` suffix to work in the vertical direction.
+
+Now, let's add some vertical spacing between elements using `margin-bottom`:
 
 ```css
- #profile-picture {
-  border-radius: 50%;
-  width: 300px;
-  margin: 20px 0px; /* only add margin on top/bottom*/
+header,
+section,
+main,
+footer,
+h1,
+h2,
+h3,
+ul,
+img {
+  margin-bottom: 1rem;
+}
+
+#tagline {
+  margin-bottom: 2rem;
 }
 ```
+
+**Tip:** If you want consistent vertical spacing, pick one direction (either `margin-bottom` or `margin-top`) and stick with it for all of your elements. This avoids "margin collapse" entirely.
+
+**TODO:** Add a margin-bottom of `0.5rem` to every `.quote` element.
 
 #### Margin Collapse
 
 When two vertical margins meet, they don't stack on top of each other. Instead, the space between the elements is equal to the larger of the two margins. This is called **margin collapse**.
 
-Try this with your sections. Replace your `margin` with `margin-top` and `margin-bottom`:
-
-```css
-section {
-  border: 2px solid midnightblue;
-  padding: 20px;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-```
-
-The space between the sections is **40px**, not 60px. The larger margin (40px) "wins".
-
-{% hint style="info" %}
-**Tip:** If you want consistent spacing, pick one direction (either `margin-bottom` or `margin-top`) and stick with it for all of your elements. This avoids margin collapse entirely.
-{% endhint %}
+For example, if one element has `margin-bottom: 40px` and the next element has `margin-top: 20px`, the space between them is **40px**, not 60px. The larger margin (40px) "wins".
 
 Remember: this only happens with vertical margins, not horizontal margins 🤷.
 
 #### Centering with Margin
 
-Notice your `ul, ol` selector already has `margin-inline: auto`. This instructs your browser to set the left and right margins to take up whatever space is available, effectively pushing the content to the center of their container.
+This entire time, our content has been stuck to the left side of the screen. This can't be solved with `text-align: center` because our elements like `section` and `figure` are not text elements!
+
+Instead, we can put equally sized margins on the left and rights sides of our elements with `margin-inline: auto`. This positions the element in the center of their container.
+
+**Note: `margin-inline: auto` only works if the element has a defined width** (like `max-width` or `width`).
+
+Let's use this technique to center our `section` elements:
 
 ```css
-ul, ol {
-  margin-inline: auto;
-  width: fit-content;
-  text-align: left;
+section {
+  background-color: var(--color-white);
+  max-width: 600px;
+  padding: 1rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 8px;
+
+  margin-inline: auto;     /* <-- add this */
 }
 ```
 
-**Note: This only works if the element has a defined width**. See what happens if you remove the `width` property.
+The `margin-inline: auto` property instructs your browser to set the left and right margins to take up whatever space is available, effectively pushing the content to the center of their container.
 
-As long as the element has a valid `width` property set (in this case `fit-content` works), the element will be centered on the page.
+**TODO:** Use this same trick to center the `figure`.
+
+### Box Shadow
+
+To give our sections some visual depth, we can add a **box shadow**. Box shadows create the illusion that an element is floating above the page.
+
+First, let's add a CSS variable for our shadow color in `:root`:
+
+```css
+:root {
+  --color-light: powderblue;
+  --color-dark: midnightblue;
+  --color-accent: royalblue;
+  --color-white: white;
+  --color-shadow: rgba(108, 92, 231, 0.4); /* <-- add this */
+}
+```
+
+The `rgba()` function lets us specify a color with transparency. The last value (`0.4`) is the alpha (opacity), where `0` is fully see-through and `1` is fully opaque.
+
+Now let's add a hover effect to our sections:
+
+```css
+section:hover {
+  box-shadow: 0 0.25rem 1.5rem var(--color-shadow);
+}
+```
+
+The `box-shadow` property effectively draws a "shadow box" behind the element. It takes these values:
+- **Left/Right offset**: `0` (no shift left/right)
+- **Top/Bottom offset**: `0.25rem` (slight shift down)
+- **Blur radius**: `1.5rem` (how blurry the shadow is)
+- **Color**: `var(--color-shadow)` (our semi-transparent purple)
+
+Try hovering over your sections to see the effect!
 
 ## Display
 
@@ -239,20 +370,16 @@ HTML elements have default `display` behaviors that affect
 1. how an element's width and height can be modified.
 2. how they interact with other elements.
 
-For example, if we try adding a `width` to the `<a>` elements, nothing happens! 
+Remember how we tried adding a `width` to the `<a>` elements, but nothing happened?
 
 ```css
-nav a {
-  width: 200px; /* <-- add this */
-  border: 3px solid white;
-  padding: 10px 20px;
-  background-color: midnightblue;
-  color: white;
-  text-decoration: none;
+nav>a {
+  width: 10rem; /* <-- try adding this — it won't work! */
+  /* ... other styles ... */
 }
 ```
 
-Also, notice how pretty much all of the elements are stacked on top of each other. However, the hyperlink `<a>` elements are next to each other. 
+Also, notice how pretty much all of the elements are stacked on top of each other but the hyperlink `<a>` elements are next to each other. 
 
 This is all impacted by the `display` property:
 
@@ -265,22 +392,20 @@ This is all impacted by the `display` property:
 
 Since `<a>` elements have `display:inline`, they appear next to each other AND we can't set their `height` or `width` properties.
 
-**<details><summary>Q: We want our navigation links (`<a>` tags) to be 200px wide AND keep them on the same line. Which display should we use?</summary>**
+**<details><summary>Q: We want our nav links (`<a>` tags) to be 10rem wide AND keep them on the same line. Which display should we use?</summary>**
 
 If we wanted to keep the `<a>` elements on the same line but also have control over their dimensions, we can change them to have `display:inline-block`:
 
 ```css
-/* This is the "descendant selector"—it selects all <a> elements inside of a <nav> element. 
-This will NOT affect the other <a> elements elsewhere in the page.
-*/
- nav a {
-  display: inline-block; /* <-- add this */
-  width: 200px; /* <-- add this */
-  border: 3px solid white;
-  padding: 10px 20px;
-  background-color: midnightblue;
-  color: white;
-  text-decoration: none;
+nav>a {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+
+  display: inline-block;    /* <-- add this */
+  width: 10rem;             /* <-- now this works! */
+  margin-inline: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 ```
 
@@ -288,23 +413,9 @@ This will NOT affect the other <a> elements elsewhere in the page.
 
 ### Display Challenge
 
-Let's change the display of the list items (`<li>`) within our list of programming skills. 
+Let's change the display of the `.programming-skill` list items so they appear next to each other instead of stacked vertically.
 
-```html
-<section>
-  <h2>Programming Skills</h2>
-  <ul>
-    <li class="devtool">Git & GitHub</li>
-    <li class="devtool">Command Line Interface</li>
-    <li class="js-skill">JavaScript Fundamentals</li>
-    <li class="js-skill">OOP and Classes</li>
-    <li class="webdev-skill">HTML</li>
-    <li class="webdev-skill" id="current-topic">CSS</li>
-  </ul>
-</section>
-```
-
-We want them to appear next to each other and have control over their width/height. What display should they have? What is the best way to target those elements?
+We want them to appear next to each other and have control over their width/height. What display should they have?
 
 Try it out, then look at the solution below.
 
@@ -312,32 +423,19 @@ Try it out, then look at the solution below.
 
 By default, list items have `display:block` which stacks them on top of each other. To have them listed next to each other, we can give them `display: inline-block`.
 
-The best way to target them is to add an `id` element to one of their ancestors, such as the `<section>`. That allows us to target them using a descendent selector.
-
-**HTML**
-```html
-<section id="programming-skills"> <!-- Add the id here -->
-  <h2>Programming Skills</h2>
-  <ul>
-    <li class="devtool">Git & GitHub</li>
-    <li class="devtool">Command Line Interface</li>
-    <li class="js-skill">JavaScript Fundamentals</li>
-    <li class="js-skill">OOP and Classes</li>
-    <li class="webdev-skill">HTML</li>
-    <li class="webdev-skill" id="current-topic">CSS</li>
-  </ul>
-</section>
-```
-
 **CSS:**
 ```css
-/* Target all <li> elements that are descendant of the #programming-skills element */
-#programming-skills li {
-  display: inline-block;
+.programming-skill {
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: inline-block; /* <-- add this */
+  background-color: var(--color-accent);
+  color: var(--color-light);
+  border: 1px solid var(--color-dark);
 }
 ```
 
-Try switching this to `display:inline` and see how it changes.
+Try switching this to `display:inline` and see how it changes — notice how the padding behaves differently!
 
 </details>
 
@@ -347,26 +445,23 @@ By default, `width` and `height` only apply to the **content area**. Padding and
 
 Let's see this problem with your navigation links. They currently have this styling:
 
-**index.css**
 ```css
-nav a {
+nav>a {
   display: inline-block;
-  width: 200px;
-  border: 3px solid white;
-  padding: 10px 20px;
-  background-color: midnightblue;
-  color: white;
-  text-decoration: none;
+  width: 10rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-dark);
+  /* ... other styles ... */
 }
 ```
 
-**<details><summary>Q: What is the width of a navigation link?</summary>**
+**<details><summary>Q: What is the actual width of a nav link?</summary>**
 
-You might expect each link to be 200px wide. But the **actual width** is:
-- Content: 200px
-- Padding: 20px left + 20px right = 40px
-- Border: 3px left + 3px right = 6px
-- **Total width: 246px**
+You might expect each link to be 10rem (160px) wide. But the **actual width** is:
+- Content: 160px
+- Padding: 16px left + 16px right = 32px
+- Border: 2px left + 2px right = 4px
+- **Total width: 196px**
 
 </details>
 
@@ -377,7 +472,6 @@ This is confusing and makes layout calculations difficult.
 
 Add this to the **top** of your CSS file:
 
-**index.css**
 ```css
 * {
   box-sizing: border-box;
@@ -388,11 +482,11 @@ Add this to the **top** of your CSS file:
 
 The `*` selector targets all elements. This rule changes how `width` and `height` are calculated.
 
-With `box-sizing: border-box`, `width` includes content, padding, AND border. Now your navigation links are **exactly 200px wide**:
-- Padding: 40px
-- Border: 6px
-- Content: 154px (automatically calculated as 200-40-6)
-- **Total: 200px**
+With `box-sizing: border-box`, `width` includes content, padding, AND border. Now your nav links are **exactly 10rem wide**:
+- Padding: 32px
+- Border: 4px
+- Content: 124px (automatically calculated as 160-32-4)
+- **Total: 160px (10rem)**
 
 **Always include `box-sizing: border-box` at the top of your CSS. It makes layout predictable and matches how you naturally think about sizing.**
 
@@ -408,16 +502,85 @@ A **CSS reset** removes these defaults, giving you a clean, predictable starting
   padding: 0;
   box-sizing: border-box;
 }
+
+img {
+  width: 100%;
+}
+
+ul, ol {
+  list-style: none;
+}
 ```
 
 This reset:
 - Removes all default margins and paddings
 - Makes `width` and `height` include padding and border
+- Makes images fill their container width by default
+- Removes bullet points from lists (we'll add our own styling)
 - Ensures consistent behavior across all browsers
 
 You'll then add spacing intentionally where you need it, giving you full control over your layout.
 
-**TODO:** Take a moment and make adjustments to the padding and margins of the elements of your page until you are satisfied with the overall spacing.
+## Organizing Your CSS
+
+As your CSS file grows, it helps to organize your code into sections using comments. Here's a recommended structure:
+
+```css
+/* ================================
+Base Styles: Color Palette (CSS Variables)
+================================ */
+:root {
+  --color-accent: royalblue;
+  --color-dark: midnightblue;
+  /* ... */
+}
+
+/* ================================
+Base Styles: CSS Reset
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================================
+Base Styles: Spacing
+================================ */
+header,
+section,
+main {
+  margin-bottom: 1rem;
+}
+
+/* ================================
+Component: Header & Navigation
+================================ */
+header {
+  /* header styles */
+}
+
+nav>a {
+  /* nav link styles */
+}
+
+/* ================================
+Component: Sections
+================================ */
+section {
+  /* section styles */
+}
+
+/* ... and so on ... */
+```
+
+This organization makes it easy to:
+- Find specific styles quickly
+- Understand the structure of your CSS
+- Add new styles in the right place
+- Debug issues faster
+
+**TODO:** Take a moment to organize your CSS file using comment sections, then make adjustments to the padding and margins of the elements of your page until you are satisfied with the overall spacing.
 
 ## Test your Skills!
 
@@ -430,141 +593,232 @@ Head over to [MDN to test your box model skills](https://developer.mozilla.org/e
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
-  <link rel="stylesheet" href="./index.css">
-</head>
-<body>
-  <header>
-    <h1>My Website</h1>
-    <nav>
-      <a href="./index.html">Home</a>
-      <a href="./about.html">About</a>
-    </nav>
-  </header>
-  <main>
-    <figure>
-      <img id="profile-picture" src="https://avatars.githubusercontent.com/u/111444562?v=4" alt="Profile Picture">
-      <figcaption>It's nice to meet you!</figcaption>
-    </figure>
-    <section id="programming-skills">
-      <h2>Programming Skills</h2>
-      <ul>
-        <li class="devtool">Git & GitHub</li>
-        <li class="devtool">Command Line Interface</li>
-        <li class="js-skill">JavaScript Fundamentals</li>
-        <li class="js-skill">OOP and Classes</li>
-        <li class="webdev-skill">HTML</li>
-        <li class="webdev-skill" id="current-topic">CSS</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Favorite Quotes</h2>
-      <ol>
-        <li>Quote 1...</li>
-        <li>Quote 2...</li>
-        <li>Quote 3...</li>
-      </ol>
-    </section>
-  </main>
-  <footer>
-    <p>Copyright Marcy Lab School 2025</p>
-    <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
-  </footer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ada Lovelace</title>
+
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About Me</a>
+        <a href="./projects.html">Projects</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Ada Lovelace</h1>
+        <p id="tagline">Mathematician | Pioneer of Computing | Visionary Thinker</p>
+        <figure>
+          <img
+            id="profile-picture"
+            src="https://media.newyorker.com/photos/64123041652f9d9fe976fff0/master/pass/ra1146.jpg"
+            alt="Profile Picture"
+          />
+          <figcaption>It's nice to meet you!</figcaption>
+        </figure>
+      </section>
+      <section id="programming-skills">
+        <h2>Programming Skills</h2>
+
+        <h3>Developer Tools</h3>
+        <ul>
+          <li class="programming-skill">Git & GitHub</li>
+          <li class="programming-skill">Command Line Interface</li>
+        </ul>
+
+        <h3>JavaScript Skills</h3>
+        <ul>
+          <li class="programming-skill">JavaScript Fundamentals</li>
+          <li class="programming-skill">OOP and Classes</li>
+        </ul>
+
+        <h3>Web Development</h3>
+        <ul>
+          <li class="programming-skill">HTML</li>
+          <li class="programming-skill">CSS</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Favorite Quotes</h2>
+        <ul>
+          <li class="quote">"Pressure is a privilege" - Arthur Ashe</li>
+          <li class="quote">"The more I study, the more insatiable do I feel my genius for it to be." - Ada Lovelace</li>
+          <li class="quote">"I can never lose. I either win or I learn" - Nelson Mandela</li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <p>Copyright Marcy Lab School 2025</p>
+      <p>Learn more at <a href="https://marcylabschool.org">marcylabschool.org</a></p>
+    </footer>
+  </body>
 </html>
 ```
 
-**index.css**
+**style.css**
 
 ```css
-/* CSS Reset */
+/* ================================
+Base Styles: Color Palette (CSS Variables)
+================================ */
+:root {
+  --color-light: powderblue;
+  --color-dark: midnightblue;
+  --color-accent: royalblue;
+  --color-white: white;
+  --color-shadow: rgba(108, 92, 231, 0.4);
+}
+
+/* ================================
+Base Styles: CSS Reset
+================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Project-Specific CSS */
-body {
-  background: azure;
-  color: midnightblue;
-  font-family: Helvetica;
-  text-align: center;
-  max-width: 725px;
-  margin-inline: auto;
-  padding: 2rem;
+img {
+  width: 100%;
 }
-header {
-  margin-bottom: 1rem;
+
+ul, ol {
+  list-style: none;
 }
+
+/* ================================
+Base Styles: Spacing
+================================ */
+
+header,
+section,
+main,
+footer,
 h1,
-h2 {
+h2,
+h3,
+ul,
+img {
   margin-bottom: 1rem;
 }
-figure {
-  margin: 1rem 0;
+
+#tagline {
+  margin-bottom: 2rem;
 }
-footer {
-  margin-top: 2rem;
+
+/* ================================
+Typography (headings and paragraphs)
+================================ */
+h1 {
+  font-size: 3rem;
 }
-ul,
+
+h2 {
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 0.5rem;
+}
+
 ol {
-  margin-inline: auto;
-  width: fit-content;
   text-align: left;
 }
-li {
-  font-family: roboto;
-  margin-bottom: 0.5rem;
-  padding: 0.25rem;
+
+/* ================================
+Component: Body
+================================ */
+body {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: center;
+  line-height: 1.5;
 }
-.devtool {
-  background: orange;
+
+/* ================================
+Component: Header & Navigation
+================================ */
+
+header {
+  background-color: var(--color-dark);
+  padding: 1rem;
 }
-.js-skill {
-  background: yellow;
-}
-.webdev-skill {
-  background: lightgreen;
-}
-#current-topic {
-  font-weight: bold;
-}
-#profile-picture {
-  border-radius: 50%;
-  width: 300px;
-  margin: 20px 0px; /* only add margin on top/bottom*/
-}
-a:hover {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-}
-a:active {
-  background: rgb(100, 100, 206);
-}
-nav a {
+
+nav>a {
+  background-color: var(--color-accent);
+  color: var(--color-white);
   display: inline-block;
-  width: 200px;
-  border: 3px solid white;
-  padding: 10px 20px; /* 10px top/bottom, 20px left/right*/
-  background-color: midnightblue;
-  color: white;
-  text-decoration: none;
-}
-section {
-  border: 2px solid midnightblue;
-  padding: 20px;
-  margin-bottom: 1rem;
-}
-section,
-li,
-nav a {
+  width: 10rem;
+  margin-inline: 0.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
 }
-#programming-skills li {
+
+nav>a:hover {
+  background-color: var(--color-white);
+  color: var(--color-accent);
+}
+
+/* ================================
+Component: Sections
+================================ */
+
+section {
+  background-color: var(--color-white);
+  max-width: 600px;
+  padding: 1rem;
+  border: 2px solid var(--color-accent);
+  border-radius: 8px;
+  margin-inline: auto;
+}
+
+section:hover {
+  box-shadow: 0 0.25rem 1.5rem var(--color-shadow);
+}
+
+/* ================================
+Component: Hero Section
+================================ */
+
+figure {
+  max-width: 300px;
+  margin-inline: auto;
+}
+
+#profile-picture {
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+}
+
+#tagline, figcaption {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* ================================
+Component: Skills Section
+================================ */
+
+.programming-skill {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-dark);
+  border-radius: 8px;
   display: inline-block;
 }
-```
 
+/* ================================
+Component: Quotes Section
+================================ */
+
+.quote {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  padding: 1rem;
+  border-left: 4px solid var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+```
