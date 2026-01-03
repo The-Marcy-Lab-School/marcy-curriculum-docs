@@ -278,6 +278,10 @@ Fun fonts can be downloaded from the internet (check out [Google Fonts](https://
 
 ```css
 body {
+  background-color: powderblue;
+  color: midnightblue;
+
+  /* Add these */
   font-family: Helvetica, Arial, sans-serif;
   line-height: 1.5;     /* spacing between lines */
   text-align: center;   /* left, center, right, justify */
@@ -372,7 +376,7 @@ To target those elements, use a dot (`.`) followed by the class name:
 * Cannot contain spaces
 * Use `kebab-case` for multi-word names (e.g., `programming-skill`)
 
-**TODO:** Add a `"quote"` class to all of your quote list items and give them a background of `powderblue` and a text color of `midnightblue`.
+**TODO:** Add a `"quote"` class to all of your quote list items and give them a background color of `powderblue` and a text color of `midnightblue`.
 
 ### ID Selector
 
@@ -440,6 +444,8 @@ nav>a:hover {
   color: royalblue;
 }
 ```
+
+Add this style just below the `nav>a` selector.
 
 ### Selector Specificity
 
@@ -723,6 +729,9 @@ figure {
 body {
   background-color: var(--color-light);
   color: var(--color-dark);
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  text-align: center;
 }
 
 header {
@@ -734,14 +743,13 @@ nav>a {
   color: var(--color-white);
 }
 
-section {
+nav>a:hover {
+  color: var(--color-accent);
   background-color: var(--color-white);
 }
 
-body {
-  font-family: Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  text-align: center;
+section {
+  background-color: var(--color-white);
 }
 
 h1 {
@@ -757,14 +765,14 @@ ol {
   color: var(--color-white);
 }
 
+.quote {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
 #tagline,
 figcaption {
   font-style: italic;
   color: var(--color-accent);
-}
-
-nav>a:hover {
-  color: var(--color-accent);
-  background-color: var(--color-white);
 }
 ```
