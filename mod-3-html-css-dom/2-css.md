@@ -718,7 +718,6 @@ img {
 
 figure {
   max-width: 300px;
-  margin-inline: auto;
 }
 
 body {
