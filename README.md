@@ -61,7 +61,7 @@ _Note: these competencies often will overlap and support each other. For example
 
 <details>
 
-<summary><strong>1. Technical Communication</strong></summary>
+<summary><strong>1. Technical Communication: Clearly articulating the "what, how, and why" of technical decisions and product development to diverse audiences, from stakeholders to teammates.</strong></summary>
 
 As a software engineer, you must be able to communicate effectively for a variety of audiences: hiring managers, teammates, junior engineers, AI chatbots. Across the many domains in which you must be able to communicate effectively, the _what_, the _how_, and the _why_ and all three must be delivered with the utmost clarity:
 
@@ -86,7 +86,7 @@ The ability to communicate well improves team collaboration and instills confide
 
 <details>
 
-<summary><strong>2. Building Mental Models</strong></summary>
+<summary><strong>2. Building Mental Models: Creating simplified abstractions of complex systems to focus on essential concepts, enabling faster learning and better problem-solving.</strong></summary>
 
 Software engineering is full of complexity. Not only is there a vast scope of concepts, tools, and technologies to learn, any given software project can contain millions of lines of code, hundreds or more files, and dozens or more interdependent parts. To deal with this complexity, you need the ability to quickly build mental models for any topic.
 
@@ -110,7 +110,7 @@ Mental models also enable us to organize the great variety of concepts we must l
 
 <details>
 
-<summary><strong>3. Thinking in Systems</strong></summary>
+<summary><strong>3. Thinking in Systems: Analyzing how individual components and dependencies interact within a larger framework to design reliable, scalable, and maintainable software.</strong></summary>
 
 Any set of things that work together can be considered a system. Systems can range in scale from a simple algorithm to a complex, multi-layered application.
 
@@ -136,7 +136,7 @@ Systems-level thinking enables us to design, reason about, implement, and debug 
 
 <details>
 
-<summary><strong>4. Methodical Debugging</strong></summary>
+<summary><strong>4. Methodical Debugging: Applying a structured, methodical approach to identify root causes and implement comprehensive fixes rather than relying on guesswork.</strong></summary>
 
 Mental models may allow you “vibe-code” your way to a sloppily hacked-together application, but once things break, a real engineer will know how to follow a methodical approach to debug the problem, identify the root cause, and implement a fix. Randomly trying solutions or guessing at the root cause won’t cut it!
 
@@ -155,7 +155,7 @@ Mental models may allow you “vibe-code” your way to a sloppily hacked-togeth
 
 <details>
 
-<summary><strong>5. Detail Orientation</strong></summary>
+<summary><strong>5. Detail Orientation: Taking professional pride in producing clean, well-documented code and error-free materials that adhere to industry best practices and team standards.</strong></summary>
 
 As a professional software engineer you are going to be working on a team. Therefore writing functional code is just the prerequisite. The quality of _how_ you code, communicate, and collaborate will be what distinguishes you from the crowd as an engineer that teams want to work with.
 
