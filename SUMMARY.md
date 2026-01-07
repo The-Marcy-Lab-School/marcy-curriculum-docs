@@ -65,7 +65,7 @@
   * [9. Events](mod-3-html-css-dom/10-events.md)
   * [10. Handling Forms](mod-3-html-css-dom/11-handling-forms.md)
   * [11. ESModules](mod-3-html-css-dom/12-esmodules.md)
-  * [12. Vite](../projects/vite.md)
+  * [12. Vite](./projects/vite.md)
   * [13. LocalStorage](mod-3-html-css-dom/13-localStorage.md)
 * [Mod 4 - Async & APIs](mod-4-async/README.md)
   * [Overview](mod-4-async/Overview.md)
