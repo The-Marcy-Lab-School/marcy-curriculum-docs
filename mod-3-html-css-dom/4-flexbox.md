@@ -53,55 +53,63 @@ Open https://www.youtube.com/ and see how elements shift in size as you resize t
 
 <summary><strong>Q: Look at a row of video "cards". Are they <code>display:inline</code>, <code>display:block</code> or something else? Guess, then inspect the page!</strong></summary>
 
-They should be `display: flex;` elements!
+They are `display: flex;` elements!
 
 </details>
 
-![Flex containers and flex items](../.gitbook/assets/flex-container-items.png)
-
-* **Flexbox** is a display type used for arranging elements inside of a container in a row or a column.
-* The parent element gets the `display: flex` property, making it a **flex container**.
-* The children of the flex container automatically become **flex items**
-
 ## Flexbox Puts Things In A Row
 
-With Flexbox, the most common use case is arranging identical elements in a row that will grow or shrink according to the available space.
 
-Consider the following HTML:
+**Flexbox** (Flexible Box Layout) is a CSS layout system designed for arranging elements in one dimension—either as a row or as a column.
+
+To use Flexbox, you need two things:
+
+1. A **flex container** (the parent)
+2. **Flex items** (the children)
+
+![Flex containers and flex items](../.gitbook/assets/flex-container-items.png)
+
+* The parent element gets the `display: flex` property, making it a **flex container**. 
+* The children of the flex container are referred to as **flex items**.
+
+### Example
+
+Consider the following HTML elements:
 
 {% code title="0-flexbox-demo/index.html" %}
 ```html
-<div class="flex-container" id="squares-container">
-  <div class="flex-item">A</div>
-  <div class="flex-item">AB</div>
-  <div class="flex-item">ABC</div>
-  <div class="flex-item">ABCD</div>
-  <div class="flex-item">ABCDE</div>
-</div>
+<section id="letters-container">
+  <p>A</p>
+  <p>AB</p>
+  <p>ABC</p>
+  <p>ABCD</p>
+  <p>ABCDE</p>
+</section>
 ```
+
 {% endcode %}
 
-By default these elements elements will stack on top of each other.
+They are styled with background colors and some padding but are otherwise using their default `display`. By default these elements elements will stack on top of each other.
 
 ![block elements will stack on top of each other](../.gitbook/assets/before-flexbox.png)
 
 <details>
 
-<summary><strong>Q: Why is this the default behavior of divs?</strong></summary>
+<summary><strong>Q: Why are they stacked on top of each other rather than side by side?</strong></summary>
 
-By default, `div` elements will be block elements. Block elements always stack on top of each other and take up the full width available to them.
+By default, `p` elements will be block elements. Block elements always stack on top of each other and take up the full width available to them.
 
 </details>
 
-By setting the adding Flexbox to the parent container (the `div.flex-container` element), its children will be placed horizontally in a row!
-
-![Adding display:flex will place the flex items in a row](../.gitbook/assets/display-flex.png)
+By adding `display: flex;` to the parent container, its children will be placed horizontally in a row!
 
 ```css
-.flex-container {
+#letters-container {
   display: flex;
 }
 ```
+![Adding display:flex will place the flex items in a row](../.gitbook/assets/display-flex.png)
+
 
 The flex items will all stretch vertically to have equal height but will only take up as much width as is needed.
 
@@ -131,7 +139,7 @@ By default, the main axis runs in the "row" direction, arranged left to right.
 We can arrange flex items in a column (top to bottom) by setting the `flex-direction` property to `column`:
 
 ```css
-.flex-container {
+#letters-container {
   display: flex;
   flex-direction: column;
 }
@@ -149,7 +157,7 @@ Knowing the direction of these two axes plays an essential role in controlling h
 Gap is perhaps the most useful feature of Flexbox. The `gap` property makes adding space between elements incredibly easy:
 
 ```css
-.flex-container {
+#letters-container {
   display: flex;
   gap: 1rem;
 }
@@ -182,12 +190,12 @@ By default, flex items will only take up as much space as they need. However, if
 
 ```css
 /* The flex property controls the relative "growth rate" of a flex item when there is excess space */
-.flex-item {
+#letters-container>p {
   flex: 1;
 }
 
 /* Hovering over a flex item will cause it to grow 3x the size of other flex items */
-.flex-item:hover {
+#letters-container>p:hover {
   flex: 3;
 }
 ```
@@ -205,7 +213,7 @@ With `flex: 3;` applied to the one hovered element, it will take 3 times as much
 By default, flex items will arrange themselves at the start of the _main axis_ (left to right in the row direction) of the flex container. We can change this behavior using `justify-content`:
 
 ```css
-.flex-container {
+#letters-container {
   display: flex;
   justify-content: space-between;
 }
@@ -218,7 +226,7 @@ By default, flex items will arrange themselves at the start of the _main axis_ (
 By default, flex items will stretch along the _cross axis_. We can change this behavior using `align-items`.
 
 ```css
-.flex-container {
+#letters-container {
   display: flex;
   align-items: flex-start;
 }
