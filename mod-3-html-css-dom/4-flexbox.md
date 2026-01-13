@@ -25,7 +25,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 * [Learn Flexbox in 15 minutes](https://www.youtube.com/watch?v=fYq5PXgSsbE\&ab_channel=WebDevSimplified)
 * [A great video to learn flexbox](https://www.youtube.com/watch?v=u044iM9xsWU\&ab_channel=KevinPowell)
 
-## Terms
+## Key Concepts
 
 * **Flexbox** - a `display` type that arranges flexible elements in a container in a row or column.
 * **Flex Container** - the element with `display:flex`.
