@@ -1,39 +1,58 @@
 # Grid & Media Queries
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-grid-media-queries)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-5-grid-media-queries)!
 {% endhint %}
 
-* [Terms](grid-media-queries.md#terms)
-* [Grid vs Flexbox](grid-media-queries.md#grid-vs-flexbox)
-* [Grid Template Columns and Fractional Units](grid-media-queries.md#grid-template-columns-and-fractional-units)
-* [Media Queries](grid-media-queries.md#media-queries)
-* [Spanning Rows and Columns](grid-media-queries.md#spanning-rows-and-columns)
-  * [Grid Tracks](grid-media-queries.md#grid-tracks)
-* [Bonus! - Flexbox Media Query Challenge](grid-media-queries.md#bonus---flexbox-media-query-challenge)
-* [Grid Areas](grid-media-queries.md#grid-areas)
-* [Grid Alignment](grid-media-queries.md#grid-alignment)
+**Table of Contents**:
+- [Key Concepts](#key-concepts)
+- [Grid vs Flexbox](#grid-vs-flexbox)
+- [Grid Template Columns](#grid-template-columns)
+  - [Fractional Units (`fr`) and `repeat()`](#fractional-units-fr-and-repeat)
+  - [Grid Template Columns Quiz](#grid-template-columns-quiz)
+  - [Controlling Row Height with `grid-auto-rows`](#controlling-row-height-with-grid-auto-rows)
+- [Responsive Web Design \& Media Queries](#responsive-web-design--media-queries)
+  - [Breakpoints](#breakpoints)
+  - [Flexbox Media Query Challenge](#flexbox-media-query-challenge)
+- [Grid Alignment](#grid-alignment)
+  - [Justify Content (Horizontal Spacing)](#justify-content-horizontal-spacing)
+  - [Align Items (Vertical Alignment)](#align-items-vertical-alignment)
+  - [Centering Items in a Grid](#centering-items-in-a-grid)
+- [Going Further: Spanning Rows and Columns](#going-further-spanning-rows-and-columns)
 
-## Terms
 
-* **CSS Grid** is a `display` type that is useful for arranging items in a container into rows and columns!
-  * By default, grid items are arranged in a single column
-* The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes the grid container's available width to each grid item without overflowing.
-* **Grid Tracks** are numbered starting at `1` and go between columns and rows.
-* **Grid Properties**
-  * `grid-template-columns` defines for the grid container the number of columns and the width of each column
-    * `grid-auto-rows` controls the size of newly created rows
-    * `grid-column` determines which column a grid item will start in (and, optionally, which column it will end in)
-    * `grid-row` determines which row a grid item will start in (and, optionally, which row it will end in)
-  * `grid-template-area` defines the layout and size of the `grid-area`s (see below) within the grid container.
-    * `grid-area` assigns a grid-area name to a grid item
-* **Media queries** allow us to apply CSS _in response_ to changes to the device's screen size (and other things too!). They are how we implement **responsive web design**, ensuring usability across all devices.
-* **Breakpoints** are points at which a responsive web design will shift. We set them using `@media (min-width)` and `@media(max-width)`
-* **Mobile-First Design** is a strategy for designing our websites for mobile devices and using media queries to modify that design for progressively larger screens.
+## Key Concepts
+
+* **CSS Grid** is a `display` type that is used to arrange elements in two dimensions (rows and columns).
+  * The **grid container** is the parent element with the `display: grid` property
+  * **Grid items** are any elements inside of the grid container.
+* `grid-template-columns` defines for the grid container the number of columns and the width of each column. 
+  * The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes the available space in the grid container to each grid item without overflowing. 
+  * To create evenly sized columns, we often use the `repeat()` function like this: 
+      
+      ```css
+      .grid-container {
+        /* three equal columns */
+        grid-template-columns: repeat(3, fr);
+      }
+      ```
+
+* **Grid tracks** are lines that indicate the start and end of a column. For example, grid track 1 and grid track 2 outline the first column.
+
+    <img src="./img/grid-span-with-tracks.png" alt="a grid with grid tracks" style="max-width: 400px">
+    
+
+* **Responsive Web Design** is a strategy for creating websites that adapt their layout and content to ensure usability across devices of all sizes (phones, tablets, desktops, etc...).
+  * **Media queries** allow us to apply CSS _in response_ to changes to the device's screen size (and other things too!).
+  * **Breakpoints** are specific screen sizes at which a responsive web design will shift. We define them in CSS using media queries `@media (min-width)` and `@media(max-width)`
+  * **Mobile-First Design** is a responsive web design strategy that starts with designing for mobile devices first and using media queries to modify that design for progressively larger screens
+
+**Mobile-First Responsive Design Example Using Grid and Media Queries:**
 
 ```css
 .grid-container { 
   display: grid;
+  /* The default grid is a single column */
 }
 
 
@@ -61,15 +80,13 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 ## Grid vs Flexbox
 
-We've learned that Flexbox is a `display` type that allows us to arrange items inside a container into rows OR columns.
+We've learned that Flexbox is a `display` type that allows us to arrange items in single dimension: horizontally or vertically.
 
-**Grid** on the other hand is a `display` type that allows us to arrange items inside a container into rows AND columns
+**Grid** on the other hand is a `display` type that allows us to arrange items in *two* dimensions: rows and columns.
 
 ![Flexbox lets us make one dimensional layouts while grid lets us make two-dimensional layouts](../.gitbook/assets/flex-vs-grid.png)
 
-<details>
-
-<summary>Q: Consider the gallery in the image below. It is made using grid. How many rows and columns are there in the photo gallery example from the previous part?</summary>
+**<details><summary>Q: Consider the gallery in the image below. It is made using grid. How many rows and columns are there?</summary>**
 
 There are 5 columns and 5 rows
 
@@ -77,23 +94,37 @@ In a grid, grid items can span across multiple rows and/or columns
 
 </details>
 
-<br>
+![An example of a website using grid to make a photo gallery. Photos can span across rows and columns](./img/grid-photo-gallery-example.png)
 
-![An example of a website using grid to make a photo gallery. There are 5 columns and 5 rows.](../.gitbook/assets/grid-photo-gallery-example.png)
+## Grid Template Columns
 
-## Grid Template Columns and Fractional Units
-
-By default, a grid will have only 1 column. We can add additional columns using `grid-template-columns`:
+By default, a grid will have only 1 column. We can define the number of columns and their sizes using `grid-template-columns`:
 
 ```css
 .grid-container { 
   display: grid;
-  /* make 2 columns. The first will be 100px wide, the second will be 200px wide. */
   grid-template-columns: 100px 200px; 
 }
 ```
 
-The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes the grid container's available width to each grid item without overflowing.
+This will  make 2 columns. The first will be `100px` wide, the second will be `200px` wide.
+
+Above we are specifying an exact column width using the `px` unit. Even if there is more space available in the parent container, the columns won't grow or shrink to use it.
+
+### Fractional Units (`fr`) and `repeat()`
+
+If we want our columns to grow and shrink with the page, we can use the `fr` unit which is equal to one fraction of the *available* space. 
+
+```css
+.grid-container { 
+  display: grid;
+  grid-template-columns: 1fr 2fr; 
+}
+```
+
+Above, the first column gets 1 fraction of the space and the second gets 2 fractions. In other words, the first column gets one third (1/3) of the space and the second gets two thirds (2/3).
+
+To create four equal columns, just give them each `1fr`:
 
 ```css
 .grid-container { 
@@ -103,9 +134,9 @@ The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes t
 }
 ```
 
-We often simplify this using the `repeat()` function:
+Think of it like dividing a pizza: if you have 4 columns each set to `1fr`, each column gets 1 slice of the total available width, so they are all equal (all 1/4 of the space).
 
-The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes the grid container's available width to each grid item without overflowing.
+We can simplify this using the `repeat()` function:
 
 ```css
 .grid-container { 
@@ -115,13 +146,11 @@ The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes t
 }
 ```
 
+### Grid Template Columns Quiz
+
 ![](../.gitbook/assets/template-columns.png)
 
-**Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?**
-
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?</summary>**
 
 * If there are more elements than columns, they will flow into a new row that is created automatically.
 * By default, row height is determined by the largest row item.
@@ -129,13 +158,7 @@ The `fr` unit (the "fractional unit") is unique to grid. It evenly distributes t
 
 </details>
 
-<br>
-
-**Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.**
-
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.</summary>**
 
 We can make columns of different sizes by adjusting the relative `fr` units. To make the middle columns twice as wide as the outer columns, use `2fr` instead of `1fr`
 
@@ -145,28 +168,63 @@ grid-template-columns: 1fr 2fr 2fr 1fr; /* make 4 equal-sized columns */
 
 </details>
 
-<br>
+### Controlling Row Height with `grid-auto-rows`
 
-## Media Queries
+When grid items overflow into new rows, those rows are created automatically. By default, each row's height is determined by its tallest item—which can result in uneven rows.
 
-**Media queries** allow us to apply CSS _in response_ to changes to the device's screen size (and other things too!). Media queries are how we implement **responsive web design**, ensuring usability across all devices.
+The `grid-auto-rows` property lets you control the height of these automatically-created rows:
 
-**Breakpoints** are points at which a responsive web design will shift. Below are commonly agreed upon breakpoints for web development. They don't target every specific use case or device, but the ranges provide broad coverage.
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px; /* All rows will be exactly 200px tall */
+}
+```
 
-| Breakpoint                         | Dimensions |
-| ---------------------------------- | ---------- |
-| X-Small Devices (portrait phones)  | < 576px    |
-| Small Devices (landscape phones)   | ≥ 576px    |
-| Medium Devices (tables)            | ≥ 768px    |
-| Large Devices (desktops)           | ≥ 992px    |
-| X-Large Devices (large desktops)   | ≥ 1200px   |
-| XX-Large Devices (larger desktops) | ≥ 1400px   |
+**Common values for `grid-auto-rows`:**
 
-**Challenge**: At `700px` and `900px`, change the number of columns to 2 and then to 3.
+| Value | Behavior |
+| ----- | -------- |
+| `200px` | Fixed height — all rows are exactly 200px |
+| `1fr` | Equal height — all rows share the available space equally |
+| `40vh` | Responsive height — rows are 40% of the viewport width (great for square grid items!) |
 
-<details>
+Using viewport units like `vw` is particularly useful for photo galleries where you want images to maintain a consistent aspect ratio as the screen resizes.
 
-<summary>Answer</summary>
+## Responsive Web Design & Media Queries
+
+Head over to YouTube and play around with the size of your window. You should notice that the grid of videos will change its layout as the screen shrinks and grows!
+
+![The number of columns increases as the screen size increases.](./img/media-queries-example.gif)
+
+This is an example of **responsive web design** which is a strategy for creating websites that adapt their layout and content to ensure usability across devices of all sizes (phones, tablets, desktops, etc...).
+
+Responsive web design is implemented using **media queries** which allow programmers to specify CSS rules that are applied based on the device's screen size.
+
+Open the example in `3-media-queries/index.html` and notice how the background color of each box changes as the size increases due to the following code:
+
+```css
+@media (min-width: 600px) {
+  .box {
+    background: plum;
+  }
+}
+
+@media (min-width: 700px) {
+  .box {
+    background: orchid;
+  }
+}
+```
+
+* The @media keyword starts a new media query
+* The `(min-width: 600px)` syntax indicates the minimum width for a screen to apply those styles. Any screen that is 600px or wider will apply those styles.
+* Inside the media query, we use normal CSS selectors to define rules.
+
+**Challenge**: At `700px` add a second column. At `800px` to set the background to `mediumpurple` and text color to `white`. At `900px` add a third column.
+
+<details><summary>Solution</summary>
 
 To set the number of grid columns to 2 at 700 pixels, we need to add a second ruleset to the media query.
 
@@ -179,120 +237,130 @@ To set the number of grid columns to 2 at 700 pixels, we need to add a second ru
     grid-template-columns: 1fr 1fr;
   }
 }
-```
 
-</details>
-
-<br>
-
-## Spanning Rows and Columns
-
-In a grid, the position of grid-items can span multiple rows and/or columns
-
-![A grid with 2 columns and 4 rows. An element on the first row spans both columns. An element on the second row spans only the left column. An element on the third row also only spans the left column. A single element in the right column spans rows 2 and 3. Finally an element in the fourth row spans both columns.](../.gitbook/assets/grid-span.png)
-
-**Q: How many rows and columns does this layout have?**
-
-<details>
-
-<summary>Answer</summary>
-
-<img src="../.gitbook/assets/grid-span-with-tracks.png" alt="" data-size="original">
-
-</details>
-
-<br>
-
-### Grid Tracks
-
-* **Grid Tracks** are numbered starting at `1` and go between columns and rows.
-* Grid track numbers can be used to span grid items across columns and/or rows using `grid-row` and `grid-column`
-
-```css
-.grid-item:nth-child(1) {
-  grid-row: 1;
-  grid-column: 1 / 3;
-}
-.grid-item:nth-child(4) {
-  grid-row: 2;
-  grid-column: 2 / 4
-}
-.grid-item:nth-child(5) {
-  grid-row: 1 / 3;
-  grid-column: 3
-}
-```
-
-* To specify the starting row / column for a grid-item, simply provide the grid track number as the value.
-* To span across multiple rows/columns, the syntax is `start-row / end-row`
-
-**Challenge: Using media queries and `grid-row`/`grid-column`, produce the grid layout below for screen sizes above `992px`**
-
-![A grid layout with two rows and four columns. The first row has a grid item spanning columns 1 and 2, a grid item in column 3, and a grid item spanning from row 1 to row 2. The second row has a a grid item in column 1, a grid item spanning columns 2 and 3, and the bottom of the grid item in column 3 that spans both rows.](../.gitbook/assets/grid-span-challenge.png)
-
-<details>
-
-<summary>Answer</summary>
-
-```css
-@media (min-width: 992px) {
-  .grid-container {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+@media (min-width: 800px) {
+  .box {
+    background: mediumpurple;
+    color: white;
   }
-  .grid-item:nth-child(1) {
-    grid-row: 1;
-    grid-column: 1 / 3;
-  }
-  .grid-item:nth-child(4) {
-    grid-row: 2;
-    grid-column: 2 / 4;
-  }
-  .grid-item:nth-child(5) {
-    grid-row: 1 / 3;
-    grid-column: 4;
+}
+
+@media (min-width: 900px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 ```
 
 </details>
 
-<br>
+### Breakpoints
 
-## Bonus! - Flexbox Media Query Challenge
+**Breakpoints** are points at which a responsive web design will shift. Below are commonly agreed upon breakpoints for web development. They don't target every specific use case or device, but the ranges provide broad coverage.
 
-Using media queries and the `display: flex` properties, achieve the responsive design below starting with the code found in `5-responsive-flexbox-challenge/`
+| Breakpoint                         | Dimensions |
+| ---------------------------------- | ---------- |
+| X-Small Devices (portrait phones)  | < 576px    |
+| Small Devices (landscape phones)   | ≥ 576px    |
+| Medium Devices (tables)            | ≥ 768px    |
+| Large Devices (desktops)           | ≥ 992px    |
+| X-Large Devices (large desktops)   | ≥ 1200px   |
+| XX-Large Devices (larger desktops) | ≥ 1400px   |
+
+### Flexbox Media Query Challenge
+
+Using media queries and the `display: flex` properties, achieve the responsive design below starting with the code found in `4-responsive-flexbox-challenge/`
 
 ![](../.gitbook/assets/flexbox-media-query-challenge.png)
 
-**Q: What do you notice if different about the two layouts?**
-
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Q: What do you notice if different about the two layouts?</summary>**
 
 * Mobile view: navigation links are in a row and are above the `main`
 * Desktop view: navigation links are in a column and are to the side of `main`
 
 </details>
 
-<br>
-
-## Grid Areas
-
 ## Grid Alignment
 
-Honestly, to learn about alignment, just visit [Josh Comeau's interactive guide to CSS grid](https://www.joshwcomeau.com/css/interactive-guide-to-grid/#alignment-9) but here are the bullets.
+Good news: **alignment in Grid works just like Flexbox!** You already know `justify-content` and `align-items` from the Flexbox lesson. These properties work the same way in Grid, with one key difference:
 
-**Controlling the Horizontal Alignment of Columns**
+| Property | Flexbox | Grid |
+| -------- | ------- | ---- |
+| `justify-content` | Spaces items along the **main axis** | Spaces **columns** horizontally |
+| `align-items` | Aligns items along the **cross axis** | Aligns items **vertically** within their row |
 
-* `justify-content` controls the horizontal alignment of the _columns_ within the entire grid
-* `justify-items` controls the horizontal alignment of each item within its own column
-* `justify-self` controls the horizontal alignment of a single item within the grid.
+### Justify Content (Horizontal Spacing)
+
+In Grid, `justify-content` controls how the **columns** are spaced horizontally within the grid container. This is useful when your columns don't take up the full width of the container.
+
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  justify-content: space-between; /* or: start, end, center, space-around, space-evenly */
+}
+```
+
+Play around with this interactive demo on [Josh Comeau's blog](https://www.joshwcomeau.com/css/interactive-guide-to-grid/#alignment).
 
 ![A screenshot from Josh Comeau's blog on CSS Grid showing the justify content property](../.gitbook/assets/grid-justify-content.png)
 
-**Controlling the Vertical Alignment of Rows**
+### Align Items (Vertical Alignment)
 
-* `align-content` controls the vertical alignment of the _rows_ within the entire grid
-* `align-items` controls the vertical alignment of each item within its own row
-* `align-self` controls the vertical alignment of a single item within the grid.
+In Grid, `align-items` controls how items are aligned **vertically** within their row. By default, grid items stretch to fill the full height of their row. You can change this:
+
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center; /* or: start, end, stretch (default) */
+}
+```
+
+This is particularly useful when your grid items have different heights and you want them aligned at the top, center, or bottom of each row.
+
+### Centering Items in a Grid
+
+Just like with Flexbox, you can center items both horizontally and vertically by combining these properties:
+
+```css
+.grid-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+{% hint style="info" %}
+For a deeper dive into Grid alignment, check out [Josh Comeau's interactive guide to CSS Grid](https://www.joshwcomeau.com/css/interactive-guide-to-grid/#alignment-9).
+{% endhint %}
+
+## Going Further: Spanning Rows and Columns
+
+{% hint style="warning" %}
+This section covers advanced Grid features. Feel free to skip this for now and come back to it later!
+{% endhint %}
+
+In a grid, grid items can span multiple rows and/or columns to create more complex layouts like this:
+
+![A grid with 2 columns and 4 rows. An element on the first row spans both columns. An element on the second row spans only the left column. An element on the third row also only spans the left column. A single element in the right column spans rows 2 and 3. Finally an element in the fourth row spans both columns.](../.gitbook/assets/grid-span.png)
+
+To achieve this, we use **grid tracks**—numbered lines that indicate the start and end of each column and row. Grid tracks start at `1`.
+
+<img src="../.gitbook/assets/grid-span-with-tracks.png" alt="A grid showing the numbered grid tracks" style="max-width: 400px">
+
+We can position items using `grid-row` and `grid-column` with the syntax `start-track / end-track`:
+
+```css
+/* This item spans from column track 1 to column track 3 (two columns) */
+.grid-item:nth-child(1) {
+  grid-column: 1 / 3;
+}
+
+/* This item spans from row track 2 to row track 4 (two rows) */
+.grid-item:nth-child(4) {
+  grid-row: 2 / 4;
+}
+```
+
+This is an advanced technique used for magazine-style layouts and complex photo galleries.

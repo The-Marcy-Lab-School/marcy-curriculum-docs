@@ -4,7 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-1-html)!
 {% endhint %}
 
-**Table of Contents**
+**Table of Contents**:
 
 - [Key Concepts](#key-concepts)
 - [Why HTML Matters for JavaScript Developers](#why-html-matters-for-javascript-developers)

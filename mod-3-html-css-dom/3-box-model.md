@@ -5,7 +5,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 {% endhint %}
 
 
-**Table of Contents**
+**Table of Contents**:
 
 - [Key Concepts](#key-concepts)
 - [Intro to The Box Model](#intro-to-the-box-model)

@@ -6,18 +6,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 **Table of Contents**:
 
-* [Terms](flexbox.md#terms)
-* [Explore Flexbox on Youtube](flexbox.md#explore-flexbox-on-youtube)
-* [Flexbox Puts Things In A Row](flexbox.md#flexbox-puts-things-in-a-row)
-* [Controlling Flex Items](flexbox.md#controlling-flex-items)
-  * [Flex Direction (Flex Container Property)](flexbox.md#flex-direction-flex-container-property)
-  * [Gap (Flex Container Property)](flexbox.md#gap-flex-container-property)
-  * [Flex (Flex Item Property)](flexbox.md#flex-flex-item-property)
-  * [Justify Content (Flex Container Property)](flexbox.md#justify-content-flex-container-property)
-  * [Align Items (Flex Container Property)](flexbox.md#align-items-flex-container-property)
-  * [Flex Wrap (Flex Container Property)](flexbox.md#flex-wrap-flex-container-property)
-* [Challenge: Styling a Navbar using Flexbox](flexbox.md#challenge-styling-a-navbar-using-flexbox)
-* [Some More Examples!](flexbox.md#some-more-examples)
+- [Key Concepts](#key-concepts)
+- [Explore Flexbox on Youtube](#explore-flexbox-on-youtube)
+- [Flexbox Puts Things In A Row](#flexbox-puts-things-in-a-row)
+  - [Example](#example)
+- [Controlling Flex Items](#controlling-flex-items)
+  - [Flex Direction (Flex Container Property)](#flex-direction-flex-container-property)
+  - [Gap (Flex Container Property)](#gap-flex-container-property)
+  - [Flex (Flex Item Property)](#flex-flex-item-property)
+  - [Justify Content (Flex Container Property)](#justify-content-flex-container-property)
+  - [Align Items (Flex Container Property)](#align-items-flex-container-property)
+  - [Flex Wrap (Flex Container Property)](#flex-wrap-flex-container-property)
+- [Challenge: Styling a Navbar using Flexbox](#challenge-styling-a-navbar-using-flexbox)
+- [Some More Examples!](#some-more-examples)
+
 
 **Resources**:
 

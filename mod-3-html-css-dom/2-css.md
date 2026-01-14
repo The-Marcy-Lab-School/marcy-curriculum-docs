@@ -4,7 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-2-css)!
 {% endhint %}
 
-**Table of Contents**
+**Table of Contents**:
 
 - [Key Concepts](#key-concepts)
 - [Intro to CSS](#intro-to-css)

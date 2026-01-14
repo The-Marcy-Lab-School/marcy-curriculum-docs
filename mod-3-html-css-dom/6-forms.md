@@ -1,10 +1,10 @@
 # Forms
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-5-forms)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-6-forms)!
 {% endhint %}
 
-**Table of Contents**
+**Table of Contents**:
 
 - [Key Concepts](#key-concepts)
 - [What is a Form?](#what-is-a-form)
