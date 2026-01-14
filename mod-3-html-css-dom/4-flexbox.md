@@ -1,7 +1,7 @@
 # Flexbox
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-1-flexbox)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-4-flexbox)!
 {% endhint %}
 
 **Table of Contents**:
