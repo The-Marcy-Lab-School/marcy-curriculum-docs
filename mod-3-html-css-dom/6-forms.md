@@ -43,12 +43,16 @@ A form is a collection of inputs that can be filled out by a user to submit a co
 
 **Q: What are some forms you've filled out recently? What data did they collect?**
 
+**<details><summary>Click Here To See Some Examples</summary>**
+
 Examples you might see:
 - Signing up for a website (username, email, password)
 - Applying for a job (name, resume, cover letter)
 - Making a purchase (shipping address, payment info)
 - Booking an event (date, number of attendees)
 - Leaving a review (rating, written feedback)
+
+</details>
 
 Today we'll build a **Job Application Tracker** — a form that helps you stay organized when applying to multiple companies. This is a tool you'll actually use during your job search.
 
