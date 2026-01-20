@@ -110,11 +110,6 @@ Every form follows a similar pattern:
     <input type="text" />
   </div>
 
-  <div>
-    <label>Application Date</label>
-    <input type="date" />
-  </div>
-
   <button type="submit">Save Application</button>
 </form>
 ```
@@ -126,6 +121,7 @@ Every form follows a similar pattern:
 - `<input>`: Where users enter data
 - `<button>`: Submits the form
 
+**TODO:** Take 5 minutes to recreate this form structure in the `body` of your `index.html` file below the `h1` element.
 
 {% hint style="info" %}
 **Why do we wrap each label and input in divs?**
@@ -151,7 +147,34 @@ Inputs are where users enter their data. The `type` attribute determines what ki
 
 Each input type behaves differently — `text` accepts any characters, `number` only accepts digits, `date` shows a calendar picker, and so on.
 
-**TODO:** Inside your form, add in two more `<input>` elements: one for the expected salary and one for a job posting URL. For each, add a `<label>` describing the form input and surround the pair with a `<div>`.
+**TODO:** Inside your form, add in three more `<input>` elements: (1) application date, (2) expected salary, (3) a job posting URL. For each, add a `<label>` describing the form input and surround the label/input pair with a `<div>`.
+
+**<details><summary>Solution</summary>**
+
+We'll use a "date" type input for the application date, a "number" type input for the salary, and a "url" type input for the job posting url. Make sure to add a `<label>` for each `<input>` and wrap them in a `<div>`:
+
+```html
+<form>
+  <!-- Other form elements... -->
+
+  <div>
+    <label>Application Date</label>
+    <input type="date" />
+  </div>
+
+  <div>
+    <label>Expected Salary</label>
+    <input type="number" />
+  </div>
+  
+  <div>
+    <label>Job Posting URL</label>
+    <input type="url" />
+  </div>
+</form>
+```
+
+</details>
 
 ### Labels
 
@@ -189,9 +212,48 @@ Nothing. The label is just text. The `for` attribute is what creates the connect
 
 **TODO:** Add a `for` and matching `id` attribute to each pair of labels and inputs.
 
+**<details><summary>Solution</summary>**
+
+At this point, your form should look like this:
+
+```html
+<form>
+  <h2>Track Your Job Application</h2>
+
+  <div>
+    <label for="company-name">Company Name</label>
+    <input type="text" id="company-name"/>
+  </div>
+
+  <div>
+    <label for="position-title">Position Title</label>
+    <input type="text" id="position-title"/>
+  </div>
+
+  <div>
+    <label for="application-date">Application Date</label>
+    <input type="date" id="application-date"/>
+  </div>
+
+  <div>
+    <label for="salary">Salary</label>
+    <input type="number" id="salary"/>
+  </div>
+
+  <div>
+    <label for="job-posting-url">Job Posting URL</label>
+    <input type="url" id="job-posting-url"/>
+  </div>
+
+    <button type="submit">Save Application</button>
+</form>
+```
+
+</details>
+
 ### Submit button
 
-And finally, every form needs a submit button.
+Technically, a form can be submitted without a submit button by pressing the <kbd>Enter</kbd> key. However, including a button to click on is an accessibility best practice.
 
 ```html
 <form>
@@ -201,7 +263,7 @@ And finally, every form needs a submit button.
 </form>
 ```
 
-The `type="submit"` is actually optional (it's the default), but being explicit is good practice. A label isn't needed for this button.
+Additionally, the `type="submit"` is actually optional (it's the default), but being explicit is good practice. A label isn't needed for this button as long as the text content is descriptive.
 
 When a user clicks the submit button (or presses Enter), the browser collects all the form data and sends it somewhere. But where?
 
@@ -278,9 +340,17 @@ Let's add a textarea where we can take notes about the application.
 <!-- Long text (notes, cover letter) -->
  <div>
   <label for="notes">Notes</label>
-  <textarea id="notes" rows="5" cols="40" placeholder="Interview prep, follow-up reminders, etc." name="notes"></textarea>
+  <textarea 
+    id="notes" 
+    rows="5" 
+    cols="40" 
+    placeholder="Interview prep, follow-up reminders, etc." 
+    name="notes">
+  </textarea>
 </div>
 ```
+
+**TODO:** Add the textarea input to your form.
 
 ### Checkboxes
 
@@ -295,6 +365,8 @@ Checkboxes are useful when you need a yes/no answer to something.
 ```
 
 It is common to see the label placed *after* the checkbox.
+
+**TODO:** Add the checkbox input to your form.
 
 ### Select
 
@@ -314,6 +386,8 @@ The `<select>` element creates a dropdown menu. It acts as a container for `<opt
   </select>
 </div>
 ```
+
+**TODO:** Add the dropdown select input to your form.
 
 ### Radios, Fieldset, and Legend
 
@@ -341,6 +415,8 @@ Each radio input has a `value` attribute which defines how the selected input wi
 ```
 
 The `<fieldset>` and `<legend>` elements are used to group together a set of related input elements. They are particularly useful for radio elements which otherwise may look a bit untidy but can be used to group together any kind of input.
+
+**TODO:** Add the fieldset and radio inputs to your form.
 
 ### When To Use Each Input Type
 - `type="text"` — Any short, open-ended text
