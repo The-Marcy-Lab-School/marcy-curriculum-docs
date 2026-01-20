@@ -58,21 +58,25 @@ Today we'll build a **Job Application Tracker** — a form that helps you stay o
 
 Not every user interaction needs a form. Use a form when you're **collecting multiple pieces of related data that will be submitted together**.
 
-**Use a form:**
+**Use a form when:**
 - ✅ Registering a new user (name, email, password, preferences)
-- ✅ Tracking a job application (company, position, date, status)
-- ✅ Creating a profile (bio, skills, location, social links)
+- ✅ Recording a job application (company, position, date, status)
+- ✅ Paying for something by credit card (cardholder name, credit card number, expiration, zip code)
 
-**Don't use a form:**
+**A form isn't necessary for:**
 - ❌ A single search input that filters results as you type
 - ❌ A button that opens/closes a menu
 - ❌ A link that navigates to a new page
 - ❌ A single checkbox that toggles dark mode
 
-**<details><summary>Q: Why wouldn't we use a form for a search bar that filters a list?</summary>**
-Forms are for submitting data all at once. Search filters often update the search results immediately as you type — you're not "submitting" anything. 
+Can you think of other examples?
 
-You can use a standalone `<input>` and listen for typing events.
+**<details><summary>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership. </summary>**
+
+(A) Clicking on a like button would not require a form since there is just one input to interact with: the button
+
+(B) Searching for a flight and (C) signing up for a gym membership would both require forms since there are multiple pieces of information to submit.
+
 </details>
 
 ### Form Basic Structure
