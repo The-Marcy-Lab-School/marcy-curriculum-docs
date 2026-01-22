@@ -68,6 +68,7 @@
   * [12. ESModules](mod-3-html-css-dom/12-esmodules.md)
   * [13. Vite](./projects/vite.md)
   * [14. LocalStorage](mod-3-html-css-dom/13-localStorage.md)
+  * [Cheatsheet](./mod-3-html-css-dom/cheatsheet.md)
 * [Mod 4 - Async & APIs](mod-4-async/README.md)
   * [Overview](mod-4-async/Overview.md)
   * [1. Promises](mod-4-async/1-promises.md)

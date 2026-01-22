@@ -33,3 +33,4 @@ In this module, we'll learn about:
 * [12. ESModules](./12-esmodules.md)
 * [13. Vite](../projects/vite.md)
 * [14. LocalStorage](./13-localStorage.md)
+* [Cheatsheet](./cheatsheet.md)

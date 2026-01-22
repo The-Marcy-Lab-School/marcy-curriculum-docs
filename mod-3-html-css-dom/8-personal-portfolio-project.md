@@ -262,7 +262,7 @@ Your final project must be submitted via Canvas and will be evaluated on the fol
 
 **📚 Resources:**
 
-- [Web Development Cheatsheet](./0-cheatsheet.md) — Quick reference for HTML, CSS, and DOM
+- [Web Development Cheatsheet](./cheatsheet.md) — Quick reference for HTML, CSS, and DOM
 - [Investigation Guide](https://docs.google.com/document/d/1EtJqo6H6ORwC2maBSQPePHkUtkdWoPe9oevKdJCxsJo/copy) — Analyze sample designs
 - [About Me Content Worksheet](https://docs.google.com/document/d/1o4Y_uWSn387CfAMjcTDd4ybb-srKIlODhEXLP8MNsdY/copy) — Craft your story
 - [Formspree Setup](./6-forms.md#setting-up-formspree) — Formspree setup instructions
