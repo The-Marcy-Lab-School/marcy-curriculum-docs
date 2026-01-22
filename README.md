@@ -53,9 +53,11 @@ The core curriculum is delivered over the course of 9 months with a final 3-mont
 
 ## Technical Competencies
 
-Writing code is not the primary skill of a software engineer—it's the medium. Yes, software engineers must know syntax, however, just as writing prose is the medium through which authors tell stories, coding is the medium through which engineers express ideas, design systems, and solve problems. Especially with the advancements of AI, the skills that truly matter for software engineers are **durable skills** that extend beyond any single technology.
+Software Engineering has always and continues to require mastery over syntax and deep knowledge of relevant technologies, libraries, and APIs.
 
-The competencies listed below provide shared vocabulary that we can use amongst instructors to align on what motivates our curriculum and to model in the classroom and teach in every lesson. These competencies can also be shared directly with fellows to help articulate their strengths and areas of growth, enabling us to provide more targeted support and enabling them to better focus their efforts on closing gaps.
+However, writing code is is simply the medium through which engineers express ideas, design systems, and solve problems. The competencies listed below are the durable skills that will allow a software engineer to transcend any single tech stack and become a leader of their team.
+
+These competencies provide shared vocabulary and alignment between Marcy instructors, who design curriculum and model excellence in the classroom, and Marcy fellows who seek guidance on their strengths and areas of growth.
 
 _Note: these competencies often will overlap and support each other. For example, technical communication requires effective mental modeling and systems-level thinking._
 
