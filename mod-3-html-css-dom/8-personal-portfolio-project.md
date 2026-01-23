@@ -85,7 +85,9 @@ AI tools (ChatGPT, Claude, GitHub Copilot, etc.) are **required** for this proje
 
 **📝 AI Usage Log (Required)**
 
-Create a Google doc to track your AI usage. For each use case below, you are **required** to document:
+Make a copy of this [AI Usage Document](https://docs.google.com/document/d/1xxhC0GWMqWOzoeY7_aCX8ERWY6avB4RrS5LAqla8CSI/copy) to track your usage.
+
+For each use case below, you are **required** to document:
 1. What you asked for (your prompt)
 2. What you received (the AI's response)
 3. What you changed and why
@@ -265,6 +267,7 @@ Your final project must be submitted via Canvas and will be evaluated on the fol
 - [Web Development Cheatsheet](./cheatsheet.md) — Quick reference for HTML, CSS, and DOM
 - [Investigation Guide](https://docs.google.com/document/d/1EtJqo6H6ORwC2maBSQPePHkUtkdWoPe9oevKdJCxsJo/copy) — Analyze sample designs
 - [About Me Content Worksheet](https://docs.google.com/document/d/1o4Y_uWSn387CfAMjcTDd4ybb-srKIlODhEXLP8MNsdY/copy) — Craft your story
+- [AI Usage Document](https://docs.google.com/document/d/1xxhC0GWMqWOzoeY7_aCX8ERWY6avB4RrS5LAqla8CSI/copy) — Document your AI usage
 - [Formspree Setup](./6-forms.md#setting-up-formspree) — Formspree setup instructions
 - [Sample Portfolio Designs](https://benspector-mls.github.io/) — See different layout approaches
 
@@ -318,13 +321,13 @@ It will be essential that you prioritize your work appropriately. It can be incr
 **Before you write any code:**
 - [ ] Set up your GitHub repository
 - [ ] Review the [Sample Designs Investigation](#sample-designs-investigation) and decide on your color palette, fonts, and layout
-- [ ] Complete the [About Me Content Worksheet](#telling-your-story) to determine the content on your page.
+- [ ] Make a copy of the [AI Usage Document](https://docs.google.com/document/d/1xxhC0GWMqWOzoeY7_aCX8ERWY6avB4RrS5LAqla8CSI/copy)
 
 **Then build:**
 - [ ] HTML structure
 - [ ] Ensure that you use semantic HTML throughout (`header`, `main`, `footer`, `nav`, `section`, `aside`, etc.)
 - [ ] Ensure that you use lists for repeating content (navigation links, skills, projects, etc.)
-- [ ] Add your About Me content and placeholder text for projects
+- [ ] Add placeholder text for your About Me section and placeholder text for projects
 
 **Deliverable:** HTML-only site with all content and structure
 
@@ -352,6 +355,7 @@ It will be essential that you prioritize your work appropriately. It can be incr
 ---
 
 #### Checkpoint 4: Polish and Deploy (Tuesday)
+- [ ] Complete the [About Me Content Worksheet](#telling-your-story) to determine the content on your page. Replace your placeholder content.
 - [ ] Add stretch features (sticky nav, animations) if time allows
 - [ ] Test form submission to Formspree (refer to the [Forms chapter](./6-forms.md#setting-up-formspree) for setup instructions)
 - [ ] Validate HTML and CSS
