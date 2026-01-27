@@ -66,7 +66,7 @@
 * [Mod 4 - Interactive Web Applictions](mod-4-interactive-web-applications/README.md)
   * [Overview](mod-4-interactive-web-applications/Overview.md)
   * [1. Intro to Interactive Pages](mod-4-interactive-web-applications/1-intro-to-interactive-pages.md)
-  * [2. Events](mod-4-interactive-web-applications/2-events.md)
+  * [2. Dynamic Content](mod-4-interactive-web-applications/2-dynamic-content.md)
   * [3. Handling Forms](mod-4-interactive-web-applications/3-handling-forms.md)
   * [4. Promises](mod-4-interactive-web-applications/4-promises.md)
   * [5. Fetching & APIs](mod-4-interactive-web-applications/5-fetch-APIs.md)

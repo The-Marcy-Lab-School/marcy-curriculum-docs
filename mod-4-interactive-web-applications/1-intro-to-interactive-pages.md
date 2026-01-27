@@ -111,6 +111,9 @@ console.log(heading.id);           // "greeting"
 heading.textContent = "Welcome!";  // Change the text
 heading.style.color = "blue";      // Change the color
 heading.classList.add("italic");    // Add a CSS class
+
+// Removing the element completely
+heading.remove();
 ```
 
 Try these modifications in your DevTools console!
@@ -304,7 +307,6 @@ button.addEventListener('click', changeColorRandomly);
 
 const heading = document.querySelector("h1");
 heading.addEventListener('mouseover', changeColorRandomly);
-
 ```
 
 </details>

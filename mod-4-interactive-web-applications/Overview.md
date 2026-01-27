@@ -18,7 +18,7 @@ In this module, we'll learn about:
 ## Chapters
 
 * [1. The Document Object Model (DOM)](./1-intro-to-dom.md)
-* [2. Events](./2-events.md)
+* [2. Dynamic Content](./2-dynamic-content.md)
 * [3. Handling Forms](./3-handling-forms.md)
 * [4. Promises](./4-promises.md)
 * [5. Fetch & APIs](./5-fetch-APIs.md)
