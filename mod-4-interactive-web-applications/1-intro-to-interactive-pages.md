@@ -48,6 +48,8 @@ With JavaScript, you can make your pages respond to user actions:
 
 This is what we mean by **interactive web applications**. Let's see how it works.
 
+In this lesson we'll first learn how to use JavaScript to manually manipulate HTML elements before learning how to make elements interactive.
+
 ## The Document Object Model (DOM)
 
 Consider this HTML structure:
