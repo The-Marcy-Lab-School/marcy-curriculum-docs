@@ -223,14 +223,14 @@ Your final project must be submitted via Canvas and will be evaluated on the fol
 - [ ] Uses lists (`ul`, `li`) for repetitive elements (navigation links, skill items, projects, etc.)
 - [ ] Contact form is structured properly (`label` elements for all inputs, appropriate `input` types, a button to submit)
 
-**CSS Best Practices (2 points):**
-- [ ] Uses CSS Variables to store colors and avoid repetition
-- [ ] CSS comments are used to organize CSS
-
 **CSS Layout (3 points):**
 - [ ] Uses CSS Flexbox at least once to effectively create a one-dimensional layout
 - [ ] Uses CSS Grid at least once to effectively create a two-dimensional layout
+
+**CSS Best Practices (2 points):**
+- [ ] Uses CSS Variables to store colors and avoid repetition
 - [ ] Padding, margins, and gaps provide ample space for elements to "breathe"
+- [ ] CSS comments are used to organize CSS
 
 **Responsive Design (3 points):**
 - [ ] Mobile-first approach (base styles work on small screens)
