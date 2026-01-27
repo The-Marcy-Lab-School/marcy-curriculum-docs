@@ -6,16 +6,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 **Table of Contents**
 
-* [Synchronous vs. Asynchronous Functions and `setTimeout`](1-promises.md#synchronous-vs-asynchronous-functions-and-settimeout)
-  * [Executing Asynchronous Code With Callbacks](1-promises.md#executing-asynchronous-code-with-callbacks)
-  * [Sequential Asynchronous Callbacks Leads to Callback Hell](1-promises.md#sequential-asynchronous-callbacks-leads-to-callback-hell)
-* [Promises!](1-promises.md#promises-1)
-  * [Sequential Asynchronous Functions With Promises](1-promises.md#sequential-asynchronous-functions-with-promises)
-  * [Promise.all()](1-promises.md#promiseall)
-* [Making Promises](1-promises.md#making-promises)
-  * [A Function that Makes and Returns a Promise](1-promises.md#a-function-that-makes-and-returns-a-promise)
-* [Summary](1-promises.md#summary)
-  * [Coming up...](1-promises.md#coming-up)
+- [Synchronous vs. Asynchronous Functions and `setTimeout`](#synchronous-vs-asynchronous-functions-and-settimeout)
+  - [Executing Asynchronous Code With Callbacks](#executing-asynchronous-code-with-callbacks)
+  - [Sequential Asynchronous Callbacks Leads to Callback Hell](#sequential-asynchronous-callbacks-leads-to-callback-hell)
+- [Promises!](#promises)
+  - [Sequential Asynchronous Functions With Promises](#sequential-asynchronous-functions-with-promises)
+  - [Promise.all()](#promiseall)
+- [Making Promises](#making-promises)
+  - [A Function that Makes and Returns a Promise](#a-function-that-makes-and-returns-a-promise)
+- [Summary](#summary)
+  - [Coming up...](#coming-up)
+
 
 ## Synchronous vs. Asynchronous Functions and `setTimeout`
 

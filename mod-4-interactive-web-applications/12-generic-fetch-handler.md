@@ -4,6 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-3-async-await)!
 {% endhint %}
 
+**Table of Contents:**
 - [The Fetch Helper](#the-fetch-helper)
   - [Why Are We Checking the Content Type?](#why-are-we-checking-the-content-type)
 - [A Useful Improvement](#a-useful-improvement)

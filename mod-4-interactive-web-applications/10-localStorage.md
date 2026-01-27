@@ -5,15 +5,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 {% endhint %}
 
 **Table of Contents**
+- [Key Terms](#key-terms)
+- [Lets Make a Leaderboard!](#lets-make-a-leaderboard)
+- [`localStorage` Lets Us Store Data That Persists](#localstorage-lets-us-store-data-that-persists)
+- [JSON.stringify() and JSON.parse()](#jsonstringify-and-jsonparse)
+  - [Adding the leaderboard to LocalStorage](#adding-the-leaderboard-to-localstorage)
+- [`localStorage` Helpers](#localstorage-helpers)
+  - [Data Layer: Creating an API for `localStorage`](#data-layer-creating-an-api-for-localstorage)
+- [Removing Values](#removing-values)
 
-* [Key Terms](localStorage.md#key-terms)
-* [Lets Make a Leaderboard!](localStorage.md#lets-make-a-leaderboard)
-* [`localStorage` Lets Us Store Data That Persists](localStorage.md#localstorage-lets-us-store-data-that-persists)
-* [JSON.stringify() and JSON.parse()](localStorage.md#jsonstringify-and-jsonparse)
-  * [Adding the leaderboard to LocalStorage](localStorage.md#adding-the-leaderboard-to-localstorage)
-* [`localStorage` Helpers](localStorage.md#localstorage-helpers)
-  * [Data Layer: Creating an API for `localStorage`](localStorage.md#data-layer-creating-an-api-for-localstorage)
-* [Removing Values](localStorage.md#removing-values)
 
 ## Key Terms
 

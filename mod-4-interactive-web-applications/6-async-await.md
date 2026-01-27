@@ -4,11 +4,11 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-3-async-await)!
 {% endhint %}
 
+**Table of Contents:**
 - [Intro: Promise Returning Is Tricky](#intro-promise-returning-is-tricky)
   - [The benefits of `async`/`await`](#the-benefits-of-asyncawait)
 - [Fetching "Synchronously" with Async/Await](#fetching-synchronously-with-asyncawait)
   - [Handling Errors with Try/Catch](#handling-errors-with-trycatch)
-
 
 ## Intro: Promise Returning Is Tricky
 

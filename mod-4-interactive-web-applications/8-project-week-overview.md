@@ -1,5 +1,6 @@
 # Mod 4 Project Week
 
+**Table of Contents:**
 - [Overview](#overview)
   - [Learning Objectives](#learning-objectives)
 - [Tips for Success](#tips-for-success)

@@ -4,16 +4,18 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch)!
 {% endhint %}
 
-* [What is a Web API?](2-fetch.md#what-is-a-web-api)
-* [The `fetch()` function](2-fetch.md#the-fetch-function)
-  * [Steps 1 and 2: Getting A Response Object](2-fetch.md#steps-1-and-2-getting-a-response-object)
-  * [Steps 3 and 4: Reading Data From the Response Object](2-fetch.md#steps-3-and-4-reading-data-from-the-response-object)
-  * [Steps 5 and 6: Do Something With the Data (and Errors)](2-fetch.md#steps-5-and-6-do-something-with-the-data-and-errors)
-* [Challenge: Make Your Own API App](2-fetch.md#challenge-make-your-own-api-app)
-* [Sending POST, PATCH, and DELETE Requests](2-fetch.md#sending-post-patch-and-delete-requests)
-* [More Information About Requests and Responses](2-fetch.md#more-information-about-requests-and-responses)
-  * [HTTP Status Codes](2-fetch.md#http-status-codes)
-  * [URL Structure](2-fetch.md#url-structure)
+**Table of Contents:**
+- [What is a Web API?](#what-is-a-web-api)
+- [The `fetch()` function](#the-fetch-function)
+  - [Steps 1 and 2: Getting A Response Object](#steps-1-and-2-getting-a-response-object)
+  - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
+  - [Steps 5 and 6: Do Something With the Data (and Errors)](#steps-5-and-6-do-something-with-the-data-and-errors)
+- [Challenge: Make Your Own API App](#challenge-make-your-own-api-app)
+- [Sending POST, PATCH, and DELETE Requests](#sending-post-patch-and-delete-requests)
+- [More Information About Requests and Responses](#more-information-about-requests-and-responses)
+  - [HTTP Status Codes](#http-status-codes)
+  - [URL Structure](#url-structure)
+
 
 In the last lesson, we learned about how to handle asynchronous functions with Promises. Today we will learn perhaps the most important asynchronous function, `fetch`. The `fetch` function lets us request data from a **web API**
 

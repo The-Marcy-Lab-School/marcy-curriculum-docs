@@ -4,16 +4,17 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-3-3-esmodules)!
 {% endhint %}
 
-* [Key Concepts](esmodules.md#key-concepts)
-* [Loading JavaScript into our HTML](esmodules.md#loading-javascript-into-our-html)
-* [Remember `module.exports` and `require()`?](esmodules.md#remember-moduleexports-and-require)
-* [Importing and Exporting with ESModules](esmodules.md#importing-and-exporting-with-esmodules)
-  * [Turning Scripts Into Modules](esmodules.md#turning-scripts-into-modules)
-    * [CORS](esmodules.md#cors)
-  * [What is a Server?](esmodules.md#what-is-a-server)
-  * [Live Server](esmodules.md#live-server)
-  * [Summary](esmodules.md#summary)
-* [Challenge](esmodules.md#challenge)
+**Table of Contents:**
+- [Key Concepts](#key-concepts)
+- [Loading JavaScript into our HTML](#loading-javascript-into-our-html)
+- [Remember `module.exports` and `require()`?](#remember-moduleexports-and-require)
+- [Importing and Exporting with ESModules](#importing-and-exporting-with-esmodules)
+  - [Turning Scripts Into Modules](#turning-scripts-into-modules)
+    - [CORS](#cors)
+  - [What is a Server?](#what-is-a-server)
+  - [Live Server](#live-server)
+  - [Summary](#summary)
+- [Challenge](#challenge)
 
 ## Key Concepts
 

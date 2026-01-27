@@ -6,16 +6,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [What is the DOM?](intro-to-dom.md#what-is-the-dom)
-* [The Chrome Developer Tools](intro-to-dom.md#the-chrome-developer-tools)
-* [The `document` object](intro-to-dom.md#the-document-object)
-  * [Selecting Elements in the DOM (Read)](intro-to-dom.md#selecting-elements-in-the-dom-read)
-  * [Modifying Elements in the DOM (Update / Delete)](intro-to-dom.md#modifying-elements-in-the-dom-update--delete)
-  * [Creating Elements (Create)](intro-to-dom.md#creating-elements-create)
-* [Linking JS files to HTML](intro-to-dom.md#linking-js-files-to-html)
-  * [Variables are Added to the Global Namespace](intro-to-dom.md#variables-are-added-to-the-global-namespace)
-    * [Option 1 — Use an IIFE (the old way)](intro-to-dom.md#option-1--use-an-iife-the-old-way)
-    * [Option 2 — Use Modules (the modern way)](intro-to-dom.md#option-2--use-modules-the-modern-way)
+- [Key Concepts](#key-concepts)
+- [What is the DOM?](#what-is-the-dom)
+- [The Chrome Developer Tools](#the-chrome-developer-tools)
+- [The `document` object](#the-document-object)
+  - [Selecting Elements in the DOM (Read)](#selecting-elements-in-the-dom-read)
+  - [Modifying Elements in the DOM (Update / Delete)](#modifying-elements-in-the-dom-update--delete)
+  - [Creating Elements (Create)](#creating-elements-create)
+- [Linking JS files to HTML](#linking-js-files-to-html)
+  - [Variables are Added to the Global Namespace](#variables-are-added-to-the-global-namespace)
+    - [Option 1 — Use an IIFE (the old way)](#option-1--use-an-iife-the-old-way)
+    - [Option 2 — Use Modules (the modern way)](#option-2--use-modules-the-modern-way)
 
 ## Key Concepts
 

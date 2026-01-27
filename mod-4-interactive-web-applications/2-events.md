@@ -6,15 +6,16 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [Event Driven Programming: Listen and React](events.md#event-driven-programming-listen-and-react)
-* [addEventListener](events.md#addeventlistener)
-  * [Event Type](events.md#event-type)
-  * [Event Handlers and the `event` Object](events.md#event-handlers-and-the-event-object)
-  * [Challenge](events.md#challenge)
-* [Good to Be Aware of, Not to Use: Inline Handlers](events.md#good-to-be-aware-of-not-to-use-inline-handlers)
-* [Event Propagation](events.md#event-propagation)
-  * [Event Delegation](events.md#event-delegation)
-* [Removing Event Listeners](events.md#removing-event-listeners)
+- [Key Concepts](#key-concepts)
+- [Event Driven Programming: Listen and React](#event-driven-programming-listen-and-react)
+- [addEventListener](#addeventlistener)
+  - [Event Type](#event-type)
+  - [Event Handlers and the `event` Object](#event-handlers-and-the-event-object)
+  - [Challenge](#challenge)
+- [Good to Be Aware of, Not to Use: Inline Handlers](#good-to-be-aware-of-not-to-use-inline-handlers)
+- [Event Propagation](#event-propagation)
+  - [Event Delegation](#event-delegation)
+- [Removing Event Listeners](#removing-event-listeners)
 
 ## Key Concepts
 
