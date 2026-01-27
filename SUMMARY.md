@@ -65,7 +65,7 @@
   * [Cheatsheet](./mod-3-html-css/cheatsheet.md)
 * [Mod 4 - Interactive Web Applictions](mod-4-interactive-web-applications/README.md)
   * [Overview](mod-4-interactive-web-applications/Overview.md)
-  * [1. The Document Object Model (DOM)](mod-4-interactive-web-applications/1-intro-to-dom.md)
+  * [1. Intro to Interactive Pages](mod-4-interactive-web-applications/1-intro-to-interactive-pages.md)
   * [2. Events](mod-4-interactive-web-applications/2-events.md)
   * [3. Handling Forms](mod-4-interactive-web-applications/3-handling-forms.md)
   * [4. Promises](mod-4-interactive-web-applications/4-promises.md)

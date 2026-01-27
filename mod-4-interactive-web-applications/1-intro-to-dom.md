@@ -37,12 +37,12 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 The DOM is the **Document Object Model**. It is representation of the HTML structure of your website in a JavaScript object format.
 
-For example, consider this HTML:
+Consider this HTML:
 
 ```html
-<h3 id="main-list-heading">Wow a list!</h3>
+<h2 id="main-list-heading">Wow a list!</h2>
 <ul id='my-list'>
-  <li class="special-item">Here's an item in the main list</li>
+  <li>Here's an item in the main list</li>
   <li>Oh wow another one in main list</li>
   <li>And main list item</li>
 </ul>
