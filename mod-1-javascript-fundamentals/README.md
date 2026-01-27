@@ -1,1 +1,1 @@
-# Mod 1 - JavaScriptFundamentals
+# Mod 1 - JavaScript Fundamentals

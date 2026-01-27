@@ -36,7 +36,7 @@ An API endpoint is a URL that provides access to one of the API's resources. Eac
 
 When we use the HTTPS protocol, we are sending a request over the internet to the dog.ceo servers. Those servers are set up to listen for incoming requests, perform the requested actions according to the endpoint that was targeted, and then send back a response.
 
-![](../.gitbook/assets/http-request-response-cycle.png)
+![The HTTP request and response cycl](../.gitbook/assets/http-request-response-cycle.png)
 
 The request includes the URL and a CRUD-related verb indicating what you want to do with the requested data:
 

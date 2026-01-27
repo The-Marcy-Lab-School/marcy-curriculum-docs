@@ -75,7 +75,7 @@ The standard domain name and IP address of a local development server are:
 
 There are important differences between how the `file://` and `https://` protocols serve resources. One key difference between the `file://` and `https://` protocols are how they handle resource sharing.
 
-As we discovered in the [ESModules lecture](../mod-3-html-css-dom/esmodules.md), we can't use ESModules with the normal `file://` protocol without running into CORS (cross-origin resource sharing) issues. We need to use the `http://` protocol to enable our files to import values from each other.
+As we discovered in the [ESModules lecture](../mod-3-html-css/esmodules.md), we can't use ESModules with the normal `file://` protocol without running into CORS (cross-origin resource sharing) issues. We need to use the `http://` protocol to enable our files to import values from each other.
 
 By using a development server, we can use the HTTP protocol throughout the entire development process.
 

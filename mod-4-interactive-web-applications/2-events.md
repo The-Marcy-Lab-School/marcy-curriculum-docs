@@ -16,6 +16,22 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
   * [Event Delegation](events.md#event-delegation)
 * [Removing Event Listeners](events.md#removing-event-listeners)
 
+## Key Concepts
+
+* **Event-driven programming** — a programming paradigm where we instruct our program to listen for events and react when they are triggered.
+* **Event** — an action that can be detected by the browser, such as a click, key press, mouse movement, form submission, page load, or window resize.
+* **Event listener** — a registration on an element that listens for a specific event type.
+* **Event handler** — a callback function that is invoked when an event is triggered.
+* **`element.addEventListener(eventType, handler)`** — a method to register an event listener on an element. The `eventType` is a string (e.g., `"click"`, `"keydown"`, `"submit"`) and the `handler` is a callback function.
+* **`event` object** — an object automatically passed to event handlers containing information about the event.
+  * **`event.target`** — the element that triggered the event.
+  * **`event.currentTarget`** — the element that is handling the event (may differ from `event.target` due to event propagation).
+* **Event propagation (bubbling)** — when an event is triggered on an element, it "bubbles up" to all parent elements, allowing them to also detect and handle the event.
+* **`event.stopPropagation()`** — a method to prevent an event from bubbling up to parent elements.
+* **Event delegation** — a design pattern where a parent element handles events for its children, using `event.target` to determine which child triggered the event.
+* **`element.matches(selector)`** — a method that returns `true` if the element matches the given CSS selector. Useful for filtering events in event delegation.
+* **`element.removeEventListener(eventType, handler)`** — a method to remove an event listener. Requires a reference to the original handler function.
+
 ## Event Driven Programming: Listen and React
 
 Imagine a website with a button. Each time you click on the button, something happens (maybe the color changes!). How would you program something like this?

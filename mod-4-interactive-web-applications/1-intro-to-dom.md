@@ -17,6 +17,21 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
     * [Option 1 — Use an IIFE (the old way)](intro-to-dom.md#option-1--use-an-iife-the-old-way)
     * [Option 2 — Use Modules (the modern way)](intro-to-dom.md#option-2--use-modules-the-modern-way)
 
+## Key Concepts
+
+* **DOM (Document Object Model)** — a representation of the HTML structure of a website in a JavaScript object format. The browser automatically generates the DOM when loading a webpage.
+* **Chrome Developer Tools** — tools accessible via F12 or right-click > Inspect that allow us to interact with the source code of the page.
+  * The **Elements** tab lets you view and manually manipulate the DOM.
+  * The **Console** tab lets you view `console.log` messages and dynamically manipulate the DOM.
+* **`document` object** — the DOM packaged in an object. Its properties allow us to access various elements of the DOM.
+* **Node** — each element in the document tree. Each node has a `.children` array.
+* **CRUD operations** — the four types of operations we can perform on the DOM:
+  * **Create** — add new elements using `document.createElement()`
+  * **Read** — find existing elements using `querySelector` or `querySelectorAll`
+  * **Update** — modify existing elements (e.g., change `textContent`, `id`, `classList`)
+  * **Delete** — remove elements using `.remove()`
+* **Modules** — JavaScript files loaded with `type="module"` that enable ES6 `import`/`export` syntax and do not add variables to the global namespace.
+
 ## What is the DOM?
 
 The DOM is the **Document Object Model**. It is representation of the HTML structure of your website in a JavaScript object format.
