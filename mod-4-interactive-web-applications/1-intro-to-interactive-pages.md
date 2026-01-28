@@ -97,7 +97,7 @@ document.querySelector('div p');
 
 Open your browser's DevTools (F12 or right-click → Inspect), go to the Console tab, and try selecting elements on any webpage using this method.
 
-Once you have a reference to an element, you can read and modify its properties:
+Once you have a reference to an element, you can read and modify its properties. You can even completely remove the element from the DOM:
 
 ```js
 // Store the object in a variable to reference it multiple times
@@ -110,7 +110,8 @@ console.log(heading.id);           // "greeting"
 // Modify properties
 heading.textContent = "Welcome!";  // Change the text
 heading.style.color = "blue";      // Change the color
-heading.classList.add("italic");    // Add a CSS class
+heading.style.fontSize = "1rem";    // Change the font size
+heading.classList.add("italic");   // Add a CSS class
 
 // Removing the element completely
 heading.remove();
@@ -139,7 +140,7 @@ Here is the full pattern. Copy it into your DevTools console:
 // 1. Query: select the button
 const button = document.querySelector('#click-me');
 
-// 2 & 3. Listen and React: when clicked, change the heading
+// 2 & 3. Listen and React: when clicked, change the heading color
 button.addEventListener('click', () => {
   const heading = document.querySelector('#greeting');
   if (heading.style.color !== "red") {
