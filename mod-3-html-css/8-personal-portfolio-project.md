@@ -8,6 +8,9 @@
     - [AI Usage Guidelines](#ai-usage-guidelines)
   - [Science Fair Presentation and Reflection Questions](#science-fair-presentation-and-reflection-questions)
   - [Project Requirements and Assessment Criteria](#project-requirements-and-assessment-criteria)
+    - [Technical Details (20 points)](#technical-details-20-points)
+    - [Reflection \& Presentation (4 points)](#reflection--presentation-4-points)
+    - [Professionalism \& Craftsmanship (4 points)](#professionalism--craftsmanship-4-points)
   - [Summary](#summary)
 - [Getting Started](#getting-started)
   - [1. Repository Setup](#1-repository-setup)
@@ -211,6 +214,14 @@ In addition to showing off your project, you will be expected to reflect on the 
 
 Your final project must be submitted via Canvas and will be evaluated on the following criteria. Use this list as a guide for completing this project.
 
+To ensure that your project meets Marcy's standards of excellence, your project will be assessed on the following criteria (28 points total):
+
+* Technical Details (20 points)
+* Reflection & Presentation (4 points)
+* Professionalism & Craftsmanship (4 points)
+
+#### Technical Details (20 points)
+
 **Portfolio Content (5 points):**
 - [ ] Has a navigation bar with link to access each page/section of the website
 - [ ] Has a "hero" section that introduces the user to the portfolio page
@@ -245,11 +256,21 @@ Your final project must be submitted via Canvas and will be evaluated on the fol
 - [ ] Has a sticky header (a header that stays at the top as you scroll)
 - [ ] At least one CSS transition or animation
 
-**Deployment & Polish (4 points):**
+#### Reflection & Presentation (4 points)
+
+In your README.md file, you must respond to all reflection questions and include your AI usage document:
+
+- [ ] Share one technical concept that you developed greater mastery over in this project. Demonstrate how *you* understand that concept by sharing your mental model of the concept. Then, show how you used that concept in your project.
+- [ ] Choose one project requirement that you found challenging and are proud of implementing. Describe what made it challenging and how you were able to implement the requirement by walking through your code as succinctly as possible. Remember that your audience does not know your code nearly as well as you do so you’ll have to break it down in a logical manner for them to quickly understand it.
+- [ ] How did you leverage AI to assist your development of this project?
+- [ ] AI Usage document is linked in the README
+
+#### Professionalism & Craftsmanship (4 points)
+
 - [ ] Portfolio page is accessible at `username.github.io`
-- [ ] README.md file contains reflection questions and responses
-- [ ] README.md file includes a link to your AI Usage Document.
 - [ ] All images and links work
+- [ ] Code is well-organized, spacing is consistent, comments are concise and purposeful, and no unused code remains.
+- [ ] All writing in the README.md file is polished and free of typos and grammatical errors.
 
 ### Summary
 
