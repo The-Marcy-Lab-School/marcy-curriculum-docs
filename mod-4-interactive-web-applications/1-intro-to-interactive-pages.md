@@ -431,3 +431,38 @@ Your task is to do the following:
 1. Add an event listener that changes the background color of the body whenever the "space" key is pressed
 2. Add an event listener to the `+` button that increases the font size of the `"#instructions"` section by `1px`.
 3. Add an event listener to the `-` button that decreases the font size of the `"#instructions"` section by `1px`.
+
+**<details><summary>Solution</summary>**
+
+{% code title="1-random-colors/index.js" %}
+```javascript
+const generateRandomColor = () => {
+  const colorOptions = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+  const index = Math.floor(Math.random() * colorOptions.length);
+  return colorOptions[index];
+}
+
+// add a keydown event listener to the body
+document.body.addEventListener('keydown', (event) => {
+  if (event.code === "Space") {
+    document.body.style.backgroundColor = generateRandomColor();
+  }
+});
+
+const increaseButton = document.querySelector('#increase-button');
+const decreaseButton = document.querySelector('#decrease-button');
+const instructions = document.querySelector('#instructions');
+
+let fontSize = 16;
+increaseButton.addEventListener('click', () => {
+  fontSize += 1;
+  instructions.style.fontSize = `${fontSize}px`;
+})
+
+decreaseButton.addEventListener('click', () => {
+  fontSize -= 1;
+  instructions.style.fontSize = `${fontSize}px`;
+})
+```
+{% endcode %}
+</details>
