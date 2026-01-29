@@ -223,11 +223,11 @@ Your final project must be submitted via Canvas and will be evaluated on the fol
 - [ ] Uses lists (`ul`, `li`) for repetitive elements (navigation links, skill items, projects, etc.)
 - [ ] Contact form is structured properly (`label` elements for all inputs, appropriate `input` types, a button to submit)
 
-**CSS Layout (3 points):**
+**CSS Layout (2 points):**
 - [ ] Uses CSS Flexbox at least once to effectively create a one-dimensional layout
 - [ ] Uses CSS Grid at least once to effectively create a two-dimensional layout
 
-**CSS Best Practices (2 points):**
+**CSS Best Practices (3 points):**
 - [ ] Uses CSS Variables to store colors and avoid repetition
 - [ ] Padding, margins, and gaps provide ample space for elements to "breathe"
 - [ ] CSS comments are used to organize CSS
@@ -245,7 +245,7 @@ Your final project must be submitted via Canvas and will be evaluated on the fol
 - [ ] Has a sticky header (a header that stays at the top as you scroll)
 - [ ] At least one CSS transition or animation
 
-**Deployment & Polish (2 points):**
+**Deployment & Polish (4 points):**
 - [ ] Portfolio page is accessible at `username.github.io`
 - [ ] README.md file contains reflection questions and responses
 - [ ] README.md file includes a link to your AI Usage Document.
