@@ -21,8 +21,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
   - [Challenge: Todo List with Form](#challenge-todo-list-with-form)
 - [Form Validation with JavaScript](#form-validation-with-javascript)
   - [Challenge: Registration Form with Validation](#challenge-registration-form-with-validation)
-- [Resetting Forms](#resetting-forms)
-- [Other Form Events](#other-form-events)
+- [Additional Reading](#additional-reading)
+  - [Resetting Forms](#resetting-forms)
+  - [Other Form Events](#other-form-events)
 - [Looking Ahead: Sending Form Data to APIs](#looking-ahead-sending-form-data-to-apis)
 
 ## Key Concepts
@@ -482,7 +483,10 @@ Forms become really powerful when combined with dynamic content. We can use form
 
 Let's build a simple contact list. When the user submits the form, we'll add a new contact card to the page.
 
-**HTML:**
+{% tabs %}
+
+{% tab title="HTML" %} 
+
 ```html
 <form id="contact-form">
   <div>
@@ -498,10 +502,20 @@ Let's build a simple contact list. When the user submits the form, we'll add a n
   <button type="submit">Add Contact</button>
 </form>
 
-<ul id="contacts-list"></ul>
+<ul id="contacts-list">
+  <!-- Add contact cards here. For example:
+   <li>
+    <strong>Ada Lovelace:</strong>
+    <a href="tel:1234567890">1234567890</a>
+   </li>
+   -->
+</ul>
 ```
 
-**JavaScript:**
+{% endtab %}
+
+{% tab title="JavaScript" %} 
+
 ```js
 const contactForm = document.querySelector('#contact-form');
 const contactsList = document.querySelector('#contacts-list');
@@ -518,11 +532,11 @@ const handleSubmit = (event) => {
   const strong = document.createElement('strong');
   const phoneLink = document.createElement('a');
 
-  strong.textContent = name;
+  strong.textContent = `${name}: `;
   phoneLink.href = `tel:${phone}`;
   phoneLink.textContent = phone;
 
-  li.append(strong, document.createElement('br'), phoneLink);
+  li.append(strong, phoneLink);
   contactsList.append(li);
 
   // Reset form for next entry
@@ -531,6 +545,11 @@ const handleSubmit = (event) => {
 
 contactForm.addEventListener('submit', handleSubmit);
 ```
+
+{% endtab %}
+
+{% endtabs %} 
+
 
 Notice how we:
 1. Extract the form data
@@ -624,7 +643,12 @@ HTML validation attributes (`required`, `min`, `max`, etc.) are great, but somet
 
 Let's build a registration form with custom validation:
 
-**HTML:**
+{% tabs %}
+
+{% tab title="HTML" %} 
+
+In the HTML, pay attention to the `<span class="error" id="input-name-error"></span>` elements that have been added for each input. 
+
 ```html
 <form id="registration-form">
   <div>
@@ -654,25 +678,41 @@ Let's build a registration form with custom validation:
   <button type="submit">Register</button>
 </form>
 
-<div id="success-message"></div>
+<div id="success-message">
+  <h3 id="success-heading"></h3>
+  <p id="success-welcome"></p>
+</div>
 ```
 
-**CSS:**
+{% endtab %}
+
+{% tab title="CSS" %}
+
+Here, we've created a class to make errors stand out.
+
 ```css
 .error {
   color: red;
   font-size: 0.875rem;
   display: block;
-  min-height: 1.25rem; /* Reserve space even when empty */
+  
+  /* Reserve space even when empty */
+  min-height: 1.25rem; 
 }
 ```
 
-**JavaScript:**
+{% endtab %}
+
+{% tab title="JavaScript" %}
+
+In the JavaScript, pay attention to how the helper functions work within the form submission event handler.
+
 ```js
 const registrationForm = document.querySelector('#registration-form');
-const successMessage = document.querySelector('#success-message');
+const successHeading = document.querySelector('#success-heading');
+const successWelcome = document.querySelector('#success-welcome');
 
-// Validation helper function
+// Helper Function: Form validation
 const validateForm = (formData) => {
   const errors = {};
 
@@ -701,7 +741,7 @@ const validateForm = (formData) => {
   return errors;
 };
 
-// Display error messages
+// Helper Function: Display error messages
 const displayErrors = (errors) => {
   // Clear all previous errors
   document.querySelectorAll('.error').forEach(span => span.textContent = '');
@@ -715,14 +755,13 @@ const displayErrors = (errors) => {
   });
 };
 
-const handleSubmit = (event) => {
+registrationForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const form = event.target;
 
-  // Extract form data
   const formData = Object.fromEntries(new FormData(form));
 
-  // Validate
+  // Validate the form data to get any errors
   const errors = validateForm(formData);
 
   // If there are errors, display them and stop
@@ -731,25 +770,21 @@ const handleSubmit = (event) => {
     return; // Don't submit if there are errors!
   }
 
-  // If validation passes, clear errors and show success
-  displayErrors({}); // Clear any previous errors
+  // If there are no errors, clear out any previous errors
+  displayErrors({});
 
-  // Clear previous success message
-  successMessage.textContent = '';
-
-  const successHeading = document.createElement('h3');
-  const welcomeText = document.createElement('p');
-
+  // Update the success message
   successHeading.textContent = 'Registration Successful!';
-  welcomeText.textContent = `Welcome, ${formData.username}!`;
-
-  successMessage.append(successHeading, welcomeText);
+  successWelcome.textContent = `Welcome, ${formData.username}!`;
 
   form.reset();
-};
-
-registrationForm.addEventListener('submit', handleSubmit);
+});
 ```
+
+{% endtab %}
+
+{% endtabs %} 
+
 
 This example demonstrates:
 * Custom validation logic (username length, password requirements, matching passwords)
@@ -902,7 +937,9 @@ input.valid {
 
 </details>
 
-## Resetting Forms
+## Additional Reading
+
+### Resetting Forms
 
 After successfully processing a form, it's common to clear the inputs so the form is ready for the next entry.
 
@@ -939,7 +976,7 @@ A reset button automatically clears the form without any JavaScript needed!
 * ❌ When validation fails (keep the data so users can fix errors)
 * ❌ When editing existing data (you want to keep the current values)
 
-## Other Form Events
+### Other Form Events
 
 Besides the `submit` event, there are several other useful form events:
 
