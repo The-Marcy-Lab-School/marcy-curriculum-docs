@@ -202,7 +202,6 @@ const button = document.querySelector('#blow-btn');
 // 2. Listen for "click" events
 button.addEventListener('click', () => {
   // 3. Handle the event
-  const balloon = document.querySelector('#balloon');
   balloon.style.fontSize = "32px";
 });
 ```
