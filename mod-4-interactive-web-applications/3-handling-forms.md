@@ -508,22 +508,25 @@ const contactsList = document.querySelector('#contacts-list');
 
 const handleSubmit = (event) => {
   event.preventDefault();
-  const form = event.target;
 
   // Extract form data using FormData API
-  const formData = Object.fromEntries(new FormData(form));
+  const formData = Object.fromEntries(new FormData(contactForm));
   const { name, phone } = formData;
 
   // Create, Modify, Append pattern!
   const li = document.createElement('li');
-  li.innerHTML = `
-    <strong>${name}</strong><br>
-    <a href="tel:${phone}">${phone}</a>
-  `;
+  const strong = document.createElement('strong');
+  const phoneLink = document.createElement('a');
+
+  strong.textContent = name;
+  phoneLink.href = `tel:${phone}`;
+  phoneLink.textContent = phone;
+
+  li.append(strong, document.createElement('br'), phoneLink);
   contactsList.append(li);
 
   // Reset form for next entry
-  form.reset();
+  contactForm.reset();
 };
 
 contactForm.addEventListener('submit', handleSubmit);
@@ -730,10 +733,17 @@ const handleSubmit = (event) => {
 
   // If validation passes, clear errors and show success
   displayErrors({}); // Clear any previous errors
-  successMessage.innerHTML = `
-    <h3>Registration Successful!</h3>
-    <p>Welcome, ${formData.username}!</p>
-  `;
+
+  // Clear previous success message
+  successMessage.textContent = '';
+
+  const successHeading = document.createElement('h3');
+  const welcomeText = document.createElement('p');
+
+  successHeading.textContent = 'Registration Successful!';
+  welcomeText.textContent = `Welcome, ${formData.username}!`;
+
+  successMessage.append(successHeading, welcomeText);
 
   form.reset();
 };
@@ -854,10 +864,17 @@ const handleSubmit = (event) => {
   }
 
   displayErrors({});
-  successMessage.innerHTML = `
-    <h3>Registration Successful!</h3>
-    <p>Welcome, ${formData.username}!</p>
-  `;
+
+  // Clear previous success message
+  successMessage.textContent = '';
+
+  const successHeading = document.createElement('h3');
+  const welcomeText = document.createElement('p');
+
+  successHeading.textContent = 'Registration Successful!';
+  welcomeText.textContent = `Welcome, ${formData.username}!`;
+
+  successMessage.append(successHeading, welcomeText);
 
   form.reset();
 };
