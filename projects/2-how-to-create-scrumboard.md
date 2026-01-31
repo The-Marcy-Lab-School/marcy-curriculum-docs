@@ -2,10 +2,10 @@
 
 **Table of Contents:**
 
-* [Set up Github Organization](how-to-create-scrumboard.md#set-up-github-organization)
-* [Create an organization repository](how-to-create-scrumboard.md#create-an-organization-repository)
-* [Create a project board for the repository](how-to-create-scrumboard.md#create-a-project-board-for-the-repository)
-* [Tips for Using a Scrum Board](how-to-create-scrumboard.md#Tips-for-Using-a-Scrum-Board)
+- [Set up Github Organization](#set-up-github-organization)
+- [Create an organization repository](#create-an-organization-repository)
+- [Create a project board for the repository](#create-a-project-board-for-the-repository)
+- [Tips for Using a Scrum Board](#tips-for-using-a-scrum-board)
 
 You will be using Github Projects to organize and manage your workflow. You can follow the instructions below to get started!
 
@@ -47,7 +47,7 @@ You will be using Github Projects to organize and manage your workflow. You can 
 
 ![](../.gitbook/assets/project-settings.png)
 
-* \[Optional] Add a description and a README
+* [Optional] Add a description and a README
 * Change the visibility to **Public**
 
 ## Tips for Using a Scrum Board

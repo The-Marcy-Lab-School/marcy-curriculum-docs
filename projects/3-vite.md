@@ -2,17 +2,18 @@
 
 **Table of Contents**:
 
-* [Background](vite.md#background)
-  * [What is a Server?](vite.md#what-is-a-server)
-  * [Development Servers and Deployment](vite.md#development-servers-and-deployment)
-* [What is Vite?](vite.md#what-is-vite)
-  * [Vite Quick Starter](vite.md#vite-quick-starter)
-  * [Make the Project Your Own!](vite.md#make-the-project-your-own)
-* [Play Around with Vite Features](vite.md#play-around-with-vite-features)
-  * [Importing CSS](vite.md#importing-css)
-  * [Importing JSON and other Files](vite.md#importing-json-and-other-files)
-  * [Importing Node Modules](vite.md#importing-node-modules)
-* [Vite's Build Tool and Deployment](vite.md#vites-build-tool-and-deployment)
+- [Background](#background)
+  - [What is a Server?](#what-is-a-server)
+  - [Development Servers and Deployment](#development-servers-and-deployment)
+- [What is Vite?](#what-is-vite)
+  - [Vite Quick Starter](#vite-quick-starter)
+  - [Make the Project Your Own!](#make-the-project-your-own)
+- [Play Around with Vite Features](#play-around-with-vite-features)
+  - [Importing CSS](#importing-css)
+  - [Importing JSON and other Files](#importing-json-and-other-files)
+  - [Importing Node Modules](#importing-node-modules)
+- [Vite's Build Tool and Deployment](#vites-build-tool-and-deployment)
+
 
 {% embed url="https://www.youtube.com/watch?v=UnsukVi6hJY&ab_channel=TheMarcyLabSchool" %}
 

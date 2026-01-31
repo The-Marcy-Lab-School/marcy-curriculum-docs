@@ -1,7 +1,6 @@
 # Larger APIs
 These APIs give you an incredible amount of data to play with. You may not care about the subject, but when it comes to building something with several routes, these are great options
 
-
 ## Pokemon API
 A massive set of data about pokemon
 - https://pokeapi.co/

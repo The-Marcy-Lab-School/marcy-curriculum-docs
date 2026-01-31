@@ -5,9 +5,9 @@ As you build any project, you will need to be incredibly organized and communica
 Throughout your career, as you work on more projects and on more teams, you will realize that the people you enjoy working with most are excellent communicators and are highly organized. Additionally, being able to demonstrate your communication skills and approach to organization can really set you apart in the hiring process.
 
 In the world of software engineering, one methodology for successful communication and organization is called "The Agile Methodology" (look it up!). While there are many aspects to this methodology, we will focus on three of its most important practices: 
-1. Maintaining a scrum board
-2. Holding stand-up and stand-down meetings.
-3. Sprints
+- [Scrum Board](#scrum-board)
+- [Daily stand-up and stand-down](#daily-stand-up-and-stand-down)
+- [Retrospective](#retrospective)
 
 ## Scrum Board
 

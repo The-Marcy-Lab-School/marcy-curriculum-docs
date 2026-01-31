@@ -2,13 +2,14 @@
 
 **Table of Contents:**
 
-* [Overview](deploying-using-render.md#overview)
-  * [Render vs. Github Pages](deploying-using-render.md#render-vs-github-pages)
-  * [Create An Account](deploying-using-render.md#create-an-account)
-* [Deploy A Server](deploying-using-render.md#deploy-a-server)
-  * [What Do the Build and Start Commands Do?](deploying-using-render.md#what-do-the-build-and-start-commands-do)
-* [Deploy A Database](deploying-using-render.md#deploy-a-database)
-* [Future changes to your code](deploying-using-render.md#future-changes-to-your-code)
+- [Overview](#overview)
+  - [Render vs. Github Pages](#render-vs-github-pages)
+  - [Create An Account](#create-an-account)
+- [Deploy A Server](#deploy-a-server)
+  - [What Do the Build and Start Commands Do?](#what-do-the-build-and-start-commands-do)
+- [Deploy A Database](#deploy-a-database)
+- [Future changes to your code](#future-changes-to-your-code)
+
 
 ## Overview
 

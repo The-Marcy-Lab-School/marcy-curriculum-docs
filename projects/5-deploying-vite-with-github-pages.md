@@ -8,14 +8,15 @@ This resource covers deploying a Vanilla JS Vite app using Github Pages.
 
 **Table of Contents**
 
-* [Prerequisites](deploying-vite-with-github-pages.md#prerequisites)
-* [What is Github Pages?](deploying-vite-with-github-pages.md#what-is-github-pages)
-* [Steps to Deploy on GitHub Pages](deploying-vite-with-github-pages.md#steps-to-deploy-on-github-pages)
-  * [1) Configure Vite for Deployment on Github Pages](deploying-vite-with-github-pages.md#1-configure-vite-for-deployment-on-github-pages)
-  * [2 and 3) Configure GitHub Pages and Create an Action](deploying-vite-with-github-pages.md#2-and-3-configure-github-pages-and-create-an-action)
-* [Troubleshooting](deploying-vite-with-github-pages.md#troubleshooting)
-  * [Files are not being loaded properly](deploying-vite-with-github-pages.md#files-are-not-being-loaded-properly)
-  * [Multi-Page Applications](deploying-vite-with-github-pages.md#multi-page-applications)
+- [Prerequisites](#prerequisites)
+- [What is Github Pages?](#what-is-github-pages)
+- [Steps to Deploy on GitHub Pages](#steps-to-deploy-on-github-pages)
+  - [1) Configure Vite for Deployment on Github Pages](#1-configure-vite-for-deployment-on-github-pages)
+  - [2 and 3) Configure GitHub Pages and Create an Action](#2-and-3-configure-github-pages-and-create-an-action)
+- [Troubleshooting](#troubleshooting)
+  - [Files are not being loaded properly](#files-are-not-being-loaded-properly)
+  - [Multi-Page Applications](#multi-page-applications)
+
 
 {% embed url="https://youtu.be/KHDeInjoyYg" %}
 
