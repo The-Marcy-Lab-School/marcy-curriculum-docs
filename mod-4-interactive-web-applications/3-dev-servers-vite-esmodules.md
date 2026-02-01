@@ -12,11 +12,10 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
   - [Development Servers and Deployment](#development-servers-and-deployment)
 - [What is Vite?](#what-is-vite)
   - [Vite Quick Starter](#vite-quick-starter)
-- [ES Modules: Sharing Code Between Files](#es-modules-sharing-code-between-files)
   - [How the Counter App Uses ES Modules](#how-the-counter-app-uses-es-modules)
+- [ES Modules: A Closer Look](#es-modules-a-closer-look)
   - [Why Use Modules?](#why-use-modules)
   - [Import and Export Syntax](#import-and-export-syntax)
-  - [Module Scripts, CORS, and Live Server](#module-scripts-cors-and-live-server)
   - [Try It: Add a Small Module](#try-it-add-a-small-module)
   - [Importing CSS](#importing-css)
   - [Importing JSON and other Files](#importing-json-and-other-files)
@@ -26,6 +25,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
   - [Task 2: Use Modules](#task-2-use-modules)
   - [Solution](#solution)
 - [Additional Reading](#additional-reading)
+  - [Module Scripts, CORS, and Live Server](#module-scripts-cors-and-live-server)
   - [Vite's Build Tool and Deployment](#vites-build-tool-and-deployment)
   - [Importing Node Modules](#importing-node-modules)
 
@@ -171,15 +171,13 @@ To stop the development server enter <kbd>Ctrl + C</kbd>.
 To restart the development server, use the command `npm run dev`.
 {% endhint %}
 
-## ES Modules: Sharing Code Between Files
+### How the Counter App Uses ES Modules
 
 The Vite counter app already uses **ES modules**. This section walks through how it works so you can use the same pattern in your own projects
 
 The key features of a project built with ES modules are:
-1. only using one `<script>` tag in the `index.html` file that loads `main.js`
-2. `main.js` importing code from other files
-
-### How the Counter App Uses ES Modules
+1. There is only one `<script type="module">` tag in the `index.html` file that loads the "entry point" JavaScript file (`main.js`).
+2. Other files are loading into the entry point file using imports.
 
 **1. Only one script in the HTML**
 
@@ -189,7 +187,9 @@ Open `index.html`. The body has a single script tag:
 <script type="module" src="/src/main.js"></script>
 ```
 
-The `type="module"` attribute tells the browser to treat `main.js` as an EcmaScript (ES) module. That means **only this file is loaded by the HTML** and every other file is loaded when `main.js` asks for it.
+The `type="module"` attribute tells the browser to treat `main.js` as an ECMAScript (ES) module and allows it to import the remaining files.
+
+We often refer to `main.js` as the **"entry point"**.
 
 **2. `main.js` imports what it needs**
 
@@ -205,13 +205,17 @@ import { setupCounter } from './counter.js'
 setupCounter(document.querySelector('#counter'))
 ```
 
-The `import` keyword is the ES module syntax that is equivalent to the `require()` keyword in Node. Notice that it can be used to import a variety of file types and has similar **default import** and **named import** varieties:
+The `import` keyword is how we import values when running JavaScript in the browser. It is the equivalent to `require()` in Node.
 
 * `import './style.css'` — loads the CSS (Vite allows importing CSS in JS). No variable name; the import runs for its side effect.
 * `import javascriptLogo from './javascript.svg'` — **default import**: the SVG file exports one value (the URL), so we give it a name.
 * `import { setupCounter } from './counter.js'` — **named import**: `counter.js` exports a function named `setupCounter`, so we pull it out with curly braces.
 
 With these imports, the code is able to use `setupCounter` to wire up the button without ever touching the global scope—everything comes from *explicit* imports.
+
+{% hint style="info" %}
+The `import` (and `export`) keywords will not work unless the entry point is loaded as a module using the `<script type="module">` tag.
+{% endhint %}
 
 **3. `counter.js` exports the function**
 
@@ -233,13 +237,22 @@ The **named export** `export function setupCounter(...)` makes that function ava
 
 So the flow is: **HTML loads `main.js` → `main.js` imports `counter.js` and `style.css` → the counter runs.** The result is only one script tag with clear dependencies.
 
+## ES Modules: A Closer Look
+
 ### Why Use Modules?
 
-Without modules, you'd load multiple `<script>` tags and rely on the **global namespace**—every variable would be shared across all files. That leads to:
+Without modules, you'd load multiple `<script>` tags and rely on each file adding variables to the **global namespace**—every variable would be shared across all files. 
+
+```html
+<script src="src/counter.js"></script>
+<script src="src/main.js"></script>
+```
+
+That leads to:
 
 * Unclear dependencies making it hard to know where a variable comes from
-* Load order issues (e.g. if `dom-helpers.js` uses `posts`, you must load `posts.js` first)
 * Messy global variables with many files mutating the same names.
+* Load order issues (e.g. if `main.js` uses code from `counter.js`, you must load `counter.js` first)
 
 With **ES modules**, you explicitly **export** what you share and **import** what you use. Only the entry file is in the HTML; the rest are loaded via imports. Dependencies are clear and the global namespace stays clean. The counter app is already structured this way and should be emulated for your own projects!
 
@@ -269,18 +282,6 @@ If you've used Node, you've seen **CommonJS** (`module.exports` and `require()`)
   import theMainThing from './the-main-thing.js'; // default
   import './style.css';                           // side effect only
   ```
-
-### Module Scripts, CORS, and Live Server
-
-The script tag must have `type="module"` to use `import`/`export`. Vite's template already does that but you can certainly use module scripts outside of Vite.
-
-One important limitation though: **browsers do not allow module loading over the `file://` protocol.** If you open the HTML file directly from your file system, the browser treats it as origin `null` and blocks loading other local files (including your `.js` modules) because of **CORS**. 
-
-You must serve the page over `http://`—e.g. with `npm run dev`—so modules work. That's why we use a development server like Vite.
-
-Another popular option for serving a page over HTTP is the **Live Server** extension. It is quick and easy to setup although it lacks the build tool that Vite comes with and doesn't work with React projects. As such, we only recommend it for simple testing and prefer Vite for building projects from the ground up.
-
-[Learn more about CORS.](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
 ### Try It: Add a Small Module
 
@@ -393,14 +394,14 @@ img {
 }
 
 body {
-  background: black;
+  background: slategray;
   color: white;
   text-align: center;
   font-family: math;
 }
 
 header, footer {
-  background-color: black;
+  background-color: slategray;
   padding: 1rem;
 }
 
@@ -423,7 +424,8 @@ nav a:hover {
 }
 
 main {
-  background: #333;
+  background: white;
+  color: black;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -477,6 +479,19 @@ If you were able to implement this all in the `main.js` file, congrats! Now, tak
 The solution can be found in the `adas-photography-solution/` folder.
 
 ## Additional Reading
+
+### Module Scripts, CORS, and Live Server
+
+The script tag must have `type="module"` to use `import`/`export`. Vite's template already does that but you can certainly use module scripts outside of Vite.
+
+One important limitation though: **browsers do not allow module loading over the `file://` protocol.** If you open the HTML file directly from your file system, the browser treats it as origin `null` and blocks loading other local files (including your `.js` modules) because of **CORS**. 
+
+[Learn more about CORS.](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+
+You must serve the page over `http://` so modules work. That's why we use a development server like Vite.
+
+Another popular option for serving a page over HTTP is the **Live Server** extension. It is quick and easy to setup although it lacks the build tool that Vite comes with and doesn't work with React projects. As such, we only recommend it for simple testing and prefer Vite for building projects from the ground up.
+
 
 ### Vite's Build Tool and Deployment
 
