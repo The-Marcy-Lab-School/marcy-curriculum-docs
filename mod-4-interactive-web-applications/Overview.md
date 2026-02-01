@@ -14,14 +14,3 @@ In this module, we'll learn about:
 * **`fetch()`** — a function that sends an HTTP request to an API to create, get (read), update, or delete data managed by that API.
 * **API (Application Programming Interface)** — a web service that manages a set (or sets) of data and provides access to that data through specific endpoints.
 * **Endpoint** — a URL address that a client can send HTTP requests to in order to interact with a portion of an API.
-
-## Chapters
-
-* [1. The Document Object Model (DOM)](./1-intro-to-dom.md)
-* [2. Dynamic Content](./2-dynamic-content.md)
-* [3. Handling Forms](./3-handling-forms.md)
-* [4. Promises](./4-promises.md)
-* [5. Fetch & APIs](./5-fetch-APIs.md)
-* [6. Async & Await](./6-async-await.md)
-* [Interactive Web Applications Project](./8-project-week-overview.md)
-* [Cheatsheet](./cheatsheet.md)

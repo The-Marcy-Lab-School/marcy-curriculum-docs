@@ -1,11 +1,12 @@
 # 1. Promises
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-0-intro-to-promises)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-4-promises)!
 {% endhint %}
 
 **Table of Contents**
 
+- [Key Concepts](#key-concepts)
 - [Synchronous vs. Asynchronous Functions and `setTimeout`](#synchronous-vs-asynchronous-functions-and-settimeout)
   - [Executing Asynchronous Code With Callbacks](#executing-asynchronous-code-with-callbacks)
   - [Sequential Asynchronous Callbacks Leads to Callback Hell](#sequential-asynchronous-callbacks-leads-to-callback-hell)
@@ -17,6 +18,21 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 - [Summary](#summary)
   - [Coming up...](#coming-up)
 
+## Key Concepts
+
+* **Synchronous code** — runs in order, one statement at a time; each must finish before the next starts.
+* **Asynchronous code** — starts a process (e.g., a timer or file read) and does not block; later code can run while waiting. Often uses callbacks or Promises to handle completion.
+* **Callback hell** — nested callbacks used to run async operations one after another; hard to read and maintain.
+* **Promise** — an object representing a pending async operation. It can be **pending**, **resolved** (fulfilled), or **rejected**.
+
+**Key Syntax**
+* **`new Promise((resolve, reject) => { ... })`** — creates a new Promise. 
+  * Call `resolve(value)` on success
+  * Call `reject(value)` on failure.
+* **`promise.then(onFulfilled).catch(onRejected)`** — handle a Promise’s result or error. 
+  * **`.then()`** — schedules a callback to run when a Promise resolves; Returning a value (or Promise) from `.then()` passes it to the next `.then()`.
+  * **`.catch()`** — schedules a callback to run when a Promise rejects; used to handle errors in a chain.
+* **`Promise.all(arrayOfPromises)`** — returns a Promise that resolves when all given Promises resolve, with an array of their values; rejects if any of them reject.
 
 ## Synchronous vs. Asynchronous Functions and `setTimeout`
 
@@ -61,9 +77,7 @@ setTimeout(() => { // this task takes 2 seconds
 }, 2000)
 ```
 
-<details>
-
-<summary><strong>Q: In what order will the console log statements be executed? What happens if we set the timeouts to <code>0</code> milliseconds?</strong></summary>
+**<details><summary>Q: In what order will the console log statements be executed? What happens if we set the timeouts to 0 milliseconds?</summary>**
 
 ```
 starting the first task
@@ -91,9 +105,7 @@ Other examples of asynchronous operations include:
 * counting down a timer
 * waiting for a user to click on a button.
 
-<details>
-
-<summary><strong>Q: <code>setTimeout</code> uses a callback to handle the completion of the timer. Which example from that list have we already used that also uses callbacks?</strong></summary>
+**<details><summary>Q: setTimeout uses a callback to handle the completion of the timer. Which example from that list have we already used that also uses callbacks?</summary>**
 
 Event handlers!
 
@@ -425,11 +437,11 @@ const rollPromise = new Promise((resolve, reject) => {
 rollPromise
   .then((successMessage) => {
     console.log(successMessage);
-    // Prints "Success! X was rolled" (where X is a number 3-6)
+    // Prints "Success! X was rolled" (assuming X is a number 3-6)
   })
   .catch((failureMessage) => {
     console.error(failureMessage);
-    // Prints "Failure. X was rolled" (where X is 1 or 2)
+    // Prints "Failure. X was rolled" (assuming X is 1 or 2)
   })
 ```
 
@@ -464,9 +476,7 @@ makeGuarantee().then(data => {
 Most often, you don’t create Promises yourself. You’ll just "consume" them from functions like `fs.readFile` or `fetch`.
 {% endhint %}
 
-<details>
-
-<summary><strong>Q: Is it possible for an asynchronous function to complete before a synchronous function?</strong></summary>
+**<details><summary>Q: Is it possible for an asynchronous function to complete before a synchronous function?</summary>**
 
 Synchronous code will **always** be executed before asynchronous code.
 
@@ -483,9 +493,7 @@ Using a Promise involves two steps:
 
 > Imagine walking into a Pizza shop and you ask for a slice of cheese pizza. The pizza isn’t ready yet so you have to wait. The person at the register gives you a ticket to claim your slice when it is ready. Meanwhile, you are free to run other errands and can return later to pick up your pizza. You get notified that the pizza is done so you return to the shop, hand in your ticket, and take your pizza home.
 
-<details>
-
-<summary><strong>Q: In the pizza shop example, what is the promise object we are given? what is the resulting value?</strong></summary>
+**<details><summary>Q: In the pizza shop example, what is the promise object we are given? what is the resulting value?</summary>**
 
 The ticket is the promise. The resulting value is the pizza (or them telling us that they ran out of pizza).
 

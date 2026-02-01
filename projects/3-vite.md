@@ -136,7 +136,7 @@ To start a new project using Vite, do the following:
     ```
 7. Open up [http://localhost:5173](http://localhost:5173) to view the starter application. As you can see, Vite provides you with a simple counter application to get started.
 
-![The Vite starter project is a simple counter application.](img/vite-starter-project.png)
+![The Vite starter project is a simple counter application.](../.gitbook/assets/vite-starter-project.png)
 
 {% hint style="info" %}
 💡 **Tips**: You don't need to stop and start you Vite development server when you make changes because it has "hot reloading". Make a few changes to the application and notice it auto-update!

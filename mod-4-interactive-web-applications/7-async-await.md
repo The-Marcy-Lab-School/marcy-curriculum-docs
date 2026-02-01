@@ -5,10 +5,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 {% endhint %}
 
 **Table of Contents:**
+- [Key Concepts](#key-concepts)
 - [Intro: Promise Returning Is Tricky](#intro-promise-returning-is-tricky)
   - [The benefits of `async`/`await`](#the-benefits-of-asyncawait)
 - [Fetching "Synchronously" with Async/Await](#fetching-synchronously-with-asyncawait)
   - [Handling Errors with Try/Catch](#handling-errors-with-trycatch)
+
+## Key Concepts
+
+* **`async` function** — a function that always returns a Promise. Lets you use `await` inside it.
+* **`await`** — used inside an `async` function; pauses until the Promise resolves, then gives you the resolved value. Makes async code look like synchronous code.
+* **`try` / `catch`** — run code in `try`; if any of it throws (including from `await`), execution jumps to `catch` so you can handle the error instead of crashing.
 
 ## Intro: Promise Returning Is Tricky
 
