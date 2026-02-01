@@ -29,9 +29,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
   - [Vite's Build Tool and Deployment](#vites-build-tool-and-deployment)
   - [Importing Node Modules](#importing-node-modules)
 
-
-{% embed url="https://www.youtube.com/watch?v=UnsukVi6hJY&ab_channel=TheMarcyLabSchool" %}
-
 ## Key Concepts
 
 * **Server** — Any computer that stores, manages, and shares resources over the internet.
