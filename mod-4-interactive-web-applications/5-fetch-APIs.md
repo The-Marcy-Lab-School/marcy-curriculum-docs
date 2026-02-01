@@ -1,7 +1,7 @@
 # 2. Fetch
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-0-1-intro-to-fetch)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-5-fetch)!
 {% endhint %}
 
 **Table of Contents:**
