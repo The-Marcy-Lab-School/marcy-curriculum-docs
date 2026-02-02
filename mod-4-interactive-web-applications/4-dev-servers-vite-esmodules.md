@@ -1,7 +1,7 @@
 # How to Create Projects with Vite
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-3-dev-servers-vite-esmodules)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-4-dev-servers-vite-esmodules)!
 {% endhint %}
 
 **Table of Contents**:

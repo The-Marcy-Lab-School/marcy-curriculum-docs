@@ -1,7 +1,7 @@
 # 1. Promises
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-6-promises)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-3-promises)!
 {% endhint %}
 
 **Table of Contents**
