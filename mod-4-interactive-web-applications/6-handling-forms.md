@@ -2,6 +2,8 @@
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-4-handling-forms)!
+
+Clone down the repo, `cd` into it and run `npm i` to install dependencies.
 {% endhint %}
 
 **Table of Contents:**
@@ -9,8 +11,8 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 - [Forms Review: What We Learned in Module 3](#forms-review-what-we-learned-in-module-3)
 - [Why Handle Forms with JavaScript?](#why-handle-forms-with-javascript)
 - [Handling Form Submissions](#handling-form-submissions)
-  - [Original Form Submissions](#original-form-submissions)
-  - [The Modern Way: Preventing Default and Extracting Data](#the-modern-way-preventing-default-and-extracting-data)
+  - [HTML Form Submissions: `action` and `method`](#html-form-submissions-action-and-method)
+  - [JavaScript Form Submissions: Preventing Default and Extracting Data](#javascript-form-submissions-preventing-default-and-extracting-data)
   - [Challenge: Login Form Handler](#challenge-login-form-handler)
 - [Two Ways to Extract Form Data](#two-ways-to-extract-form-data)
   - [Method 1: form.elements](#method-1-formelements)
@@ -97,7 +99,7 @@ All of these use JavaScript to handle form submissions!
 
 ## Handling Form Submissions
 
-### Original Form Submissions
+### HTML Form Submissions: `action` and `method`
 
 Before we learn the modern way, let's understand what forms do by default.
 
@@ -139,7 +141,7 @@ Notice how the form data appears in the URL! This is because we used `method="GE
 
 This default behavior is **NOT what we want** for modern web applications. We want to stay on the same page and handle the data with JavaScript!
 
-### The Modern Way: Preventing Default and Extracting Data
+### JavaScript Form Submissions: Preventing Default and Extracting Data
 
 To handle form submissions with JavaScript, we need to:
 
@@ -148,9 +150,17 @@ To handle form submissions with JavaScript, we need to:
 3. **Use** the data (display it, send it to an API, etc.)
 4. **Reset** the form (optional)
 
-Let's see this in action with a simple contact form:
+Let's see this in action with a simple contact form found in `0-contact-forms`.
 
-**HTML:**
+{% hint style="info" %}
+Remember, we are using the Vite development server. To get the app running on the development server:
+* `cd` into the directory
+* `npm i` to install Vite dependencies (we did this earlier at the repo root)
+* `npm run dev` to start the server
+* `ctrl+c` to stop the server
+{% endhint %}
+
+**HTML: `index.html`**
 
 In the form HTML, the key details to pay attention to are the name attributes for each input element
 
@@ -181,7 +191,7 @@ In the form HTML, the key details to pay attention to are the name attributes fo
 </div>
 ```
 
-**JavaScript**:
+**JavaScript: `src/main.js`**
 
 Notice how this example:
 1. prevents the default behavior
@@ -282,7 +292,7 @@ loginForm.addEventListener('submit', (event) => {
   // Display welcome message
   welcomeMessage.textContent = `Welcome back, ${username}! Remember me: ${remember ? 'yes' : 'no'}`;
 
-  // In a real app, you would:
+  // In a real app, you could:
   // - Validate the password
   // - Send credentials to a server for authentication
   // - Store a session token if "remember me" is checked
