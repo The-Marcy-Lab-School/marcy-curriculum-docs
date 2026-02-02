@@ -106,12 +106,12 @@ Let's start by making a development server with Vite. Then, we'll look at how to
 
 According to the [Vite](https://vite.dev/guide/#getting-started) documentation:
 
-> Vite (French word for "quick", pronounced /vit/, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
->
-> * A **development server** that provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
-> * A **build command that bundles your code** with [Rollup](https://rollupjs.org/), pre-configured to output highly optimized static assets for production.
+> Vite (French word for "quick", pronounced /vit/, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. 
 
-In simpler terms, Vite provides a feature-rich developer server as well as a command line tool that will optimize our application when we are ready to deploy.
+Vite provides a few features that are of great use to us when building web applications:
+* A **development server** to serve local files over HTTP. It also comes with "hot reloading" (you don't have to refresh to see your changes).
+* A **project starter template** for quickly getting a project started, organized with ES modules.
+* A **build command that bundles your code**, pre-configured to output highly optimized static assets for production. We'll learn more about this when we are deploying projects.
 
 Once we learn how Vite works, it can dramatically improve our development and deployment experience. It will be slow at first to use a new development tool, however the long-term benefits often outweigh the short-term frustrations so be patient!
 
@@ -121,9 +121,7 @@ The best way to learn is by doing. Let's make a project using Vite!
 
 To start a new project using Vite, do the following:
 
-1. Start by creating a new repository on GitHub. Make sure it has a `README.md` file
-2. Clone down the repo
-3.  Inside the repo, create a [Vite](https://vitejs.dev/guide/) project using the `npm create vite@latest` command:
+1. Create a new [Vite](https://vitejs.dev/guide/) project using the `npm create vite@latest` command:
 
     ```sh
     npm create vite@latest
@@ -132,8 +130,8 @@ To start a new project using Vite, do the following:
     # > Select a variant: JavaScript
     ```
 
-    This will create a folder in your repo called `app` that will serve as the "development" version of the application (later, when you are ready to deploy, you will also create a "production" version).
-4. Open up the `app` directory and look around. Vite will have created the following files and directories for you to get started:
+    This will create a folder called `app` that will serve as the "development" version of the application (later, when you are ready to deploy, you will also create a "production" version).
+2. Open up the `app` directory and look around. Vite will have created the following files and directories for you to get started:
    * `package.json`: defines the scripts and dependencies of your project. Notably, when you run `npm i` in your `app` directory, it will install the `vite` command-line tool. It's the first place to look when working on a new project.
      * `package-lock.json`: Read more about package lock files [here](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
    * `index.html`: the "entry point" of your application. It contains only a `div#app` element and loads the `src/main.js` file. This must remain in the root of your `app` directory.
@@ -144,19 +142,19 @@ To start a new project using Vite, do the following:
      * `style.css`: contains the CSS and is imported into `main.js` (yes, you can import CSS in JavaScript with Vite!).
      * `counter.js`: defines the counter logic and **exports** a function that `main.js` uses.
      * `javascript.svg`: a logo used in the starter UI.
-5.  `cd` into the `app` directory and install the `vite` command line tool and other dependencies for the project
+3.  `cd` into the `app` directory and install the `vite` command line tool and other dependencies for the project
 
     ```sh
     cd app
     npm i
     ```
-6.  Start the Vite development server:
+4.  Start the Vite development server:
 
     ```sh
     # according to package.json, this runs the vite command
     npm run dev 
     ```
-7. Open up [http://localhost:5173](http://localhost:5173) to view the starter application. As you can see, Vite provides you with a simple counter application to get started.
+5. Open up [http://localhost:5173](http://localhost:5173) to view the starter application. As you can see, Vite provides you with a simple counter application to get started.
 
 ![The Vite starter project is a simple counter application.](../.gitbook/assets/vite-starter-project.png)
 
