@@ -7,6 +7,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 **Table of Contents**
 
 - [Key Concepts](#key-concepts)
+- [Why Promises?](#why-promises)
 - [Synchronous vs. Asynchronous Functions and `setTimeout`](#synchronous-vs-asynchronous-functions-and-settimeout)
   - [Executing Asynchronous Code With Callbacks](#executing-asynchronous-code-with-callbacks)
   - [Sequential Asynchronous Callbacks Leads to Callback Hell](#sequential-asynchronous-callbacks-leads-to-callback-hell)
@@ -33,6 +34,23 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
   * **`.then()`** — schedules a callback to run when a Promise resolves; Returning a value (or Promise) from `.then()` passes it to the next `.then()`.
   * **`.catch()`** — schedules a callback to run when a Promise rejects; used to handle errors in a chain.
 * **`Promise.all(arrayOfPromises)`** — returns a Promise that resolves when all given Promises resolve, with an array of their values; rejects if any of them reject.
+
+## Why Promises?
+
+In the last two lessons we focused on the **DOM**: 
+* selecting elements with `querySelector`
+* responding to clicks and other events with `addEventListener`
+* creating and appending elements to build dynamic lists and interfaces. 
+
+With these skills, you can build quite a lot! 
+
+However, the final piece to building interactive frontend web applications is **fetching data from web APIs**. When our app requests data from a weather API, a list of products, or a user profile, the response comes back later—maybe in 100ms, maybe in a few seconds. 
+
+The timing depends on internet speed and how many requests the API is receiving. We can't freeze the page until it arrives. We need a way to say "start this request" and then "when the response is here, run this code." That's exactly what **Promises** are for: they represent work that isn't done yet and let us schedule what to do when it succeeds or fails. So, before we can fetch data from an API, we need to learn how to use Promises. 
+
+We'll also need to move on from using the `file://` protocol and start using development servers to build and test our applications. That's what we'll cover next.
+
+Once we've learned these two skills, we can start fetching from APIs!
 
 ## Synchronous vs. Asynchronous Functions and `setTimeout`
 
