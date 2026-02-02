@@ -150,11 +150,9 @@ To handle form submissions with JavaScript, we need to:
 
 Let's see this in action with a simple contact form:
 
-{% tabs %}
+**HTML:**
 
-{% tab title="HTML" %} 
-
-In the form HTML, the key details to pay attention to are the `name` attributes for each `<input>` element
+In the form HTML, the key details to pay attention to are the name attributes for each input element
 
 ```html
 <form id="contact-form">
@@ -183,9 +181,7 @@ In the form HTML, the key details to pay attention to are the `name` attributes 
 </div>
 ```
 
-{% endtab %}
-
-{% tab title="JavaScript" %} 
+**JavaScript**:
 
 Notice how this example:
 1. prevents the default behavior
@@ -215,10 +211,6 @@ form.addEventListener('submit', (event) => {
   form.reset();
 });
 ```
-
-{% endtab %}
-
-{% endtabs %} 
 
 Let's break down the key parts of the JavaScript:
 
@@ -484,9 +476,7 @@ Forms become really powerful when combined with dynamic content. We can use form
 
 Let's build a simple contact list. When the user submits the form, we'll add a new contact card to the page.
 
-{% tabs %}
-
-{% tab title="HTML" %} 
+**HTML:**
 
 ```html
 <form id="contact-form">
@@ -513,9 +503,7 @@ Let's build a simple contact list. When the user submits the form, we'll add a n
 </ul>
 ```
 
-{% endtab %}
-
-{% tab title="JavaScript" %} 
+**JavaScript:**
 
 ```js
 const contactForm = document.querySelector('#contact-form');
@@ -546,11 +534,6 @@ const handleSubmit = (event) => {
 
 contactForm.addEventListener('submit', handleSubmit);
 ```
-
-{% endtab %}
-
-{% endtabs %} 
-
 
 Notice how we:
 1. Extract the form data
@@ -644,11 +627,7 @@ HTML validation attributes (`required`, `min`, `max`, etc.) are great, but somet
 
 Let's build a registration form with custom validation:
 
-{% tabs %}
-
-{% tab title="HTML" %} 
-
-In the HTML, pay attention to the `<span class="error" id="input-name-error"></span>` elements that have been added for each input. 
+**HTML:** In the HTML, pay attention to the `<span class="error" id="input-name-error"></span>` elements that have been added for each input. 
 
 ```html
 <form id="registration-form">
@@ -685,11 +664,7 @@ In the HTML, pay attention to the `<span class="error" id="input-name-error"></s
 </div>
 ```
 
-{% endtab %}
-
-{% tab title="CSS" %}
-
-Here, we've created a class to make errors stand out.
+**CSS:** Here, we've created a class to make errors stand out.
 
 ```css
 .error {
@@ -702,9 +677,7 @@ Here, we've created a class to make errors stand out.
 }
 ```
 
-{% endtab %}
-
-{% tab title="JavaScript" %}
+**JavaScript:**
 
 In the JavaScript, pay attention to how the helper functions work within the form submission event handler.
 
@@ -781,11 +754,6 @@ registrationForm.addEventListener('submit', (event) => {
   form.reset();
 });
 ```
-
-{% endtab %}
-
-{% endtabs %} 
-
 
 This example demonstrates:
 * Custom validation logic (username length, password requirements, matching passwords)
