@@ -26,7 +26,6 @@ Clone down the repo, `cd` into it and run `npm i` to install dependencies.
 - [Additional Reading](#additional-reading)
   - [Resetting Forms](#resetting-forms)
   - [Other Form Events](#other-form-events)
-- [Looking Ahead: Sending Form Data to APIs](#looking-ahead-sending-form-data-to-apis)
 
 ## Key Concepts
 
@@ -240,7 +239,7 @@ Let's break down the key parts of the JavaScript:
 
 ### Challenge: Login Form Handler
 
-Build a login form handler that displays a personalized welcome message.
+In the `1-login-form-challenge` directory, implement a login form handler that displays a personalized welcome message.
 
 **HTML (provided):**
 ```html
@@ -552,7 +551,7 @@ Notice how we:
 
 ### Challenge: Todo List with Form
 
-Build a todo list application where users can add and remove todos.
+In the `3-todo-list-challenge` directory, build a todo list application where users can add and remove todos.
 
 **HTML (provided):**
 ```html
@@ -564,17 +563,23 @@ Build a todo list application where users can add and remove todos.
   <button type="submit">Add Todo</button>
 </form>
 
-<ul id="todo-list"></ul>
+<ul id="todo-list">
+  <!-- Add todo list items dynamically -->
+</ul>
 ```
 
 **Requirements:**
 1. When the form is submitted:
    - Prevent the default behavior
    - Extract the todo text from the input
-   - Create a new `<li>` element
-   - The `<li>` should contain:
-     - The todo text
-     - A "Delete" button
+   - Create a new `<li>` element. The `<li>` should contain:
+      
+      ```html
+      <li>
+        <p>Take out the trash</p>
+        <button>Delete</button>
+      </li>
+      ```
    - Append the `<li>` to the `#todo-list`
    - Reset the form
 2. When a Delete button is clicked:
@@ -597,13 +602,13 @@ const handleSubmit = (event) => {
 
   // Create, Modify, Append
   const li = document.createElement('li');
+  const textP = document.createElement('p');
   const deleteBtn = document.createElement('button');
 
-  li.textContent = todoText;
+  textP.textContent = todoText;
   deleteBtn.textContent = 'Delete';
-  deleteBtn.type = 'button'; // Prevent form submission if button is inside a form
 
-  li.append(deleteBtn);
+  li.append(textP, deleteBtn);
   todoList.append(li);
 
   // Reset form
@@ -1014,62 +1019,3 @@ normalButton.addEventListener('click', () => {
 ```
 
 This is useful for buttons that manipulate form data without submitting!
-
-## Looking Ahead: Sending Form Data to APIs
-
-So far, we've been displaying form data on the page or storing it in arrays. But in real applications, we typically want to:
-
-* **Save the data permanently** — store it in a database
-* **Share the data across devices** — access it from different computers/phones
-* **Sync the data** — keep it updated across multiple users
-
-To do this, we need to send our form data to a **server** using an **API**.
-
-Here's a preview of what's coming in the next lessons:
-
-```js
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  const form = event.target;
-
-  // Extract form data
-  const formData = Object.fromEntries(new FormData(form));
-
-  try {
-    // Send data to a server (we'll learn this next!)
-    const response = await fetch('https://api.example.com/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create user');
-    }
-
-    const newUser = await response.json();
-    console.log('User created:', newUser);
-
-    form.reset();
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-```
-
-Don't worry if this looks confusing! We'll learn about:
-* **Promises** (lesson 4) — handling asynchronous operations
-* **fetch()** (lesson 5) — sending HTTP requests to APIs
-* **async/await** (lesson 6) — cleaner syntax for working with promises
-
-For now, focus on mastering form handling with JavaScript. Once you're comfortable extracting and validating form data, you'll be ready to send it anywhere!
-
----
-
-**Key Takeaways:**
-* Use `event.preventDefault()` to stop page reloads
-* Extract data with `form.elements` or FormData API
-* Combine forms with dynamic content to build interactive features
-* Validate user input before processing
-* Reset forms after successful submission
-* Form handling is the foundation for sending data to APIs
