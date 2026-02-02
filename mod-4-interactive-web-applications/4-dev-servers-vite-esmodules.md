@@ -338,7 +338,7 @@ The HTML and CSS code below is starter code to build a photography application c
 
 {% tab title="HTML" %} 
 
-Copy the HTML below into the `<body>` of the `index.html`. 
+Copy the HTML below into the <code>body</code> of the <code>index.html</code> file
 
 Notice the `#total-posts` and `#posts-container` elements. We'll target those using JavaScript and fill them dynamically.
 
