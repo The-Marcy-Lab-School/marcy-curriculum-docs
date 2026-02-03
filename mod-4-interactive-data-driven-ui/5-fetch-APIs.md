@@ -6,7 +6,11 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 
 **Table of Contents:**
 - [Key Concepts](#key-concepts)
-- [What is a Web API?](#what-is-a-web-api)
+- [APIs](#apis)
+- [Web APIs and The HTTP Request and Response Cycle](#web-apis-and-the-http-request-and-response-cycle)
+  - [Endpoints and Request Verbs](#endpoints-and-request-verbs)
+  - [Message Body and Status Codes](#message-body-and-status-codes)
+  - [APIs Pop Quiz!](#apis-pop-quiz)
 - [The `fetch()` function](#the-fetch-function)
   - [Steps 1 and 2: Getting A Response Object](#steps-1-and-2-getting-a-response-object)
   - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
@@ -20,7 +24,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 
 ## Key Concepts
 
-* **Web API** — an API exposed over the internet via URLs. You send HTTP requests to **endpoints** (URLs) to get or change data.
+* **Interface** — a "shared boundary" where two or more components of a system can interact and exchange information. Interfaces do not expose the inner details of the tool/machine/program that the user is operating — they instead provide well-defined and controlled access points for the user to operate it.
+* **API (Application Programming Interface)** is an interface that enables software applications to communicate, exchange data, and share functionality.
+* **Web API** — an API exposed over the internet via URLs. You send HTTP requests to **endpoints** (URLs) to create, read, update, or delete data.
 * **HTTP methods** — verbs that describe the nature of the HTTP request to the API: 
   * **GET** (read / request data)
   * **POST** (create new data)
@@ -37,37 +43,55 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 * **`response.status`**, and **`response.json()`** to check and read the body.
 * **`response.json()`** — starts reading the response body as JSON and returns a Promise that resolves to the parsed data. Must be used (or returned) before using the data in a following `.then()`.
 
-## What is a Web API?
+## APIs
 
-In the last lesson, we learned about how to handle asynchronous functions with Promises. Today we will learn perhaps the most important asynchronous function, `fetch`. The `fetch` function lets us request data from a **web API**
+Recall this definition of an **interface** from Object-Oriented programming unit:
 
-Remember, API stands for "Application Programming Interface". An interface can be thought of as a set of tools or resources. So an API is a set of tools that an application can interact with to create a program. Very generic, right?
+> An **interface** is a "shared boundary" where two or more components of a system can interact and exchange information. Interfaces do not expose the inner details of the tool/machine/program that the user is operating — they instead provide well-defined and controlled access points for the user to operate it.
 
-The DOM API is one type of API that provides an interface made up of objects and methods that our browser applications can use to dynamically manipulate a web page.
+An **API (Application Programming Interface)** is an interface that enables different software applications to communicate, exchange data, and share functionality.
+
+The `document` object and its methods like `document.querySelector()` is an example of an API (a.k.a. "The DOM API"). It provides an interface that allows us to communicate to the browser how we want it to dynamically update the DOM. We can't see the inner details of how it works, we just use it! 
 
 ```js
 document.querySelector("h1").textContent = "Hello World!";
 ```
 
-A **web API** is another type of API whose interface is made up of URLs that each provide access to a different piece of data. To use a web API, instead of calling a function, we send an HTTP(S) request to one of the API's **endpoints**.
+## Web APIs and The HTTP Request and Response Cycle
 
-An API endpoint is a URL that provides access to one of the API's resources. Each of the following URLs provides a different set of data (paste them into your browser's URL bar):
+A **web API** is a type of API that enables the exchange of data and functionality over the internet.
 
-* https://dog.ceo/api/breeds/list/all
-* https://dog.ceo/api/breeds/image/random
+Programs can interact with a web API by sending **HTTP requests** to one of the API's public URLs. In response to the request, the API will send back an **HTTP response**. This is called the **HTTP Request and Response cycle**:
 
-When we use the HTTPS protocol, we are sending a request over the internet to the dog.ceo servers. Those servers are set up to listen for incoming requests, perform the requested actions according to the endpoint that was targeted, and then send back a response.
+![The HTTP request and response cycle](../.gitbook/assets/http-request-response-cycle.png)
 
-![The HTTP request and response cycl](../.gitbook/assets/http-request-response-cycle.png)
+Web APIs make it possible for applications to utilize data from other sources and combine them in interesting ways. For example, we can build an application that uses the Google Maps API to get directions from point A to point B and then use a weather API to display the weather along the route.
 
-The request includes the URL and a CRUD-related verb indicating what you want to do with the requested data:
+### Endpoints and Request Verbs
 
-* "POST" - Create
-* "GET" - Read
-* "PATCH" - Update
-* "DELETE" - Delete
+The specific URL that you send a request to is called an **endpoint**. A web API may have many endpoints that each provide access to a specific resource. Try visiting these endpoints from the https://dog.ceo API:
 
-Status codes are the three-digit codes that provide information about the response:
+* https://dog.ceo/api/breeds/list/all (all breeds endpoint)
+* https://dog.ceo/api/breeds/image/random (random breed image endpoint)
+
+By default, the request will be a `GET` request meaning you are requesting data from the API. However, you can also send requests by changing this **request verb**:
+
+* `"GET"` - Request to get data from the API's dataset (the default)
+* `"POST"` - Request to create data to be added to the API's dataset
+* `"PATCH"` - Request to update existing data in the API's dataset
+* `"DELETE"` - Request to delete data in the API's dataset
+
+Understandably, most APIs will only allow you to send `GET` requests to protect their data. However, it is possible for specific users or programs to be authorized to perform these other types of requests.
+
+### Message Body and Status Codes
+
+When sending a `GET` request, the API will send back a **message body** which contains the requested data. For `POST`, `PATCH`, and `DELETE` requests the message body may contain a simple message confirming the completion of the requested action.
+
+{% hint style="info" %}
+The most common data format for data transferred via HTTP requests/responses is **JSON (JavaScript Object Notation)**
+{% endhint %}
+
+In addition to the message body, the request will contain a three-digit **status code** that describes the status of the response. Here are a few commonly found status codes:
 
 * `200` OK: The request was successful
 * `400` Bad Request: The server received the request but was unable to process it due to malformed syntax
@@ -75,13 +99,53 @@ Status codes are the three-digit codes that provide information about the respon
 * `404` Not Found: The server could not find the requested resource
 * `500` Internal Server Error: The server experienced something unexpected that prevented it from fulfilling the request
 
-{% hint style="info" %}
-Web APIs make it possible for applications to utilize data from other sources and combine them in interesting ways. For example, we can build an application that uses the Google Maps API to get directions from point A to point B and then use a weather API to display the weather along the route.
-{% endhint %}
+### APIs Pop Quiz!
+
+**<details><summary>Q1: A Web API is an interface for exchanging ____ via _____</summary>**
+
+A Web API is an interface for exchanging data via the internet (HTTP)
+
+</details>
+
+**<details><summary>Q2: What do we call the cycle that describes how we get det data from a Web API?</summary>**
+
+The HTTP Request and Response cycle
+
+</details>
+
+**<details><summary>Q3: What do we call the specific URL that we send a requst to?</summary>**
+
+The endpoint
+
+</details>
+
+**<details><summary>Q4: What are the four HTTP request verbs and what do they each mean?</summary>**
+
+* `"GET"` - Request to get data from the API's dataset (the default)
+* `"POST"` - Request to create data to be added to the API's dataset
+* `"PATCH"` - Request to update existing data in the API's dataset
+* `"DELETE"` - Request to delete data in the API's dataset
+
+</details>
+
+**<details><summary>Q5: How is data typically formatted when sent via HTTP?</summary>**
+
+Using JSON (JavaScript Object Notation)
+
+</details>
 
 ## The `fetch()` function
 
-The `fetch` function is used to send HTTP requests from within our programs. It returns a `Promise` object.
+Now that we know all about the HTTP Request and Response cycle, let's learn how to actually send requests from our programs using `fetch`
+
+The `fetch(url, config)` function can be invoked to send an HTTP request to the given `url`. 
+* The `config` parameter is optional and is used to specify the type of request (`GET`, `POST`, etc.) but we can omit it when sending a `GET` request. 
+* A `Promise` object is returned that will resolve to the `Response` object.
+
+```js
+const fetchPromise = fetch('API_ENDPOINT_GOES_HERE'); 
+// no config needed for GET requests
+```
 
 When, using the `fetch` function, we will follow these 6 steps:
 
