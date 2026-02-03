@@ -45,7 +45,7 @@ The core curriculum is delivered over the course of 9 months with a final 3-mont
 * [Module 1: JavaScript Fundamentals](mod-1-javascript-fundamentals/)
 * [Module 2: Object-Oriented Programming (OOP)](mod-2-oop/)
 * [Module 3: HTML & CSS](mod-3-html-css/)
-* [Module 4: Interactive Web Applications](mod-4-interactive-web-applications/)
+* [Module 4: Interactive Web Applications](mod-4-interactive-data-driven-ui/)
 * [Module 5: Backend Servers & Databases](mod-5-backend/)
 * [Module 6: React & Fullstack Applications](mod-6-react/)
 * [Civic Tech Hackathon](mod-9-civic-tech-hackathon/)
