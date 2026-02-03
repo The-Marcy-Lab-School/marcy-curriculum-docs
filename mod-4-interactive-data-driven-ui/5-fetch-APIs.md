@@ -7,10 +7,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 **Table of Contents:**
 - [Key Concepts](#key-concepts)
 - [What is a Web API?](#what-is-a-web-api)
-- [ESModules and Live Server](#esmodules-and-live-server)
-  - [Turning Scripts Into Modules](#turning-scripts-into-modules)
-  - [CORS](#cors)
-  - [Live Server](#live-server)
 - [The `fetch()` function](#the-fetch-function)
   - [Steps 1 and 2: Getting A Response Object](#steps-1-and-2-getting-a-response-object)
   - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
@@ -82,54 +78,6 @@ Status codes are the three-digit codes that provide information about the respon
 {% hint style="info" %}
 Web APIs make it possible for applications to utilize data from other sources and combine them in interesting ways. For example, we can build an application that uses the Google Maps API to get directions from point A to point B and then use a weather API to display the weather along the route.
 {% endhint %}
-
-But before we get ahead of ourselves, we need to set up our project so that `fetch` (and ES modules) work in the browser. Then we'll look at how to use the `fetch` function.
-
-## ESModules and Live Server
-
-From this lesson on we'll use **ES modules** so we can organize our code—for example, putting fetch logic in separate files and using `import`/`export` to share values between files. 
-
-We'll also need to run our page from a **local development server** instead of opening the HTML file directly. Here's why and how.
-
-### Turning Scripts Into Modules
-
-To use ES module syntax (`import` and `export`), add the `type="module"` attribute to your script tag. 
-
-One immediate benefit of this is that module scripts always wait for the DOM to load before running, so you don't need the script at the end of the body. Instead it can go in the `<head>` alongside other meta-tags.
-
-```html
-<head>
-  <!-- We only need to load the "entry point". Other files are loaded via their imports. -->
-  <script type="module" src="./index.js"></script>
-</head>
-```
-
-You also only need to load your main entry file (e.g. `index.js`). Any file it imports will be loaded automatically.
-
-If you try to open the page by double-clicking the HTML file (using the `file://` protocol), you'll run into an error.
-
-### CORS
-
-The **Cross-Origin Resource Sharing (CORS)** policy is a security feature implemented by web browsers. It restricts webpages from making requests to a different origin than the one that served the page.
-
-When you open a file using the `file://` protocol (your local file system), the browser treats it as origin `null`. Loading other local files (including your own `.js` modules) or calling `fetch()` to an API is then restricted (because it is impossible for any origin to match `null`). 
-
-So, **we need to serve our HTML (and thus our scripts) over the `http://` protocol from a server**, not from the file system. That way the browser sees a proper origin and both module loading and `fetch` work.
-
-(Learn more about CORS [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).)
-
-### Live Server
-
-A **development server** lets your computer act as both client and server so you can run your app over `http://` locally. You can use the **Live Server** extension in VS Code:
-
-1. Open the VS Code Extension library, search for **Live Server**, and install it.
-2. Open your `index.html` file and click the **Go Live** button in the bottom right corner of the editor.
-
-![Install live server](../.gitbook/assets/live-server.png)
-
-Running your app through Live Server serves it with the `http://` protocol and avoids CORS issues so that ES modules and `fetch()` work as expected.
-
-**Summary:** For the rest of this module, use `type="module"` on your main script, load it from the `<head>`, and run the page via Live Server (or another local server) instead of opening the HTML file directly. If you'd like more detail on ES modules and CORS, see the [ES Modules](9-esmodules.md) lesson.
 
 ## The `fetch()` function
 

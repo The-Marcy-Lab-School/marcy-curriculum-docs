@@ -487,6 +487,11 @@ You must serve the page over `http://` so modules work. That's why we use a deve
 
 Another popular option for serving a page over HTTP is the **Live Server** extension. It is quick and easy to setup although it lacks the build tool that Vite comes with and doesn't work with React projects. As such, we only recommend it for simple testing and prefer Vite for building projects from the ground up.
 
+Here's how you can install the Live Server extension:
+1. Open the VS Code Extension library, search for **Live Server**, and install it.
+2. Open your `index.html` file and click the **Go Live** button in the bottom right corner of the editor.
+
+![Install live server](../.gitbook/assets/live-server.png)
 
 ### Vite's Build Tool and Deployment
 
