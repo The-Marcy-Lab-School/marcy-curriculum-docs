@@ -290,19 +290,7 @@ Formspree receives your form submissions and forwards them to your email. Here's
 - Give it a name like "Job Application Tracker"
 - Formspree will generate a unique form **endpoint URL** (the web address where the form data will be sent)
 
-**3. Update your HTML form**
-
-Add two attributes to your `<form>` element:
-- `action` — the Formspree endpoint URL where data gets sent
-- `method="POST"` — tells the browser to send data (rather than request it)
-
-```html
-<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-  <!-- your labels and inputs -->
-</form>
-```
-
-**4. Add `name` attributes to your inputs**
+**3. Add `name` attributes to your inputs**
 
 Formspree needs to know what to call each piece of data. The `name` attribute provides this label (use camelCase):
 
@@ -324,7 +312,21 @@ When Formspree receives this data, it will show up labeled as "companyName" and 
 **Every input needs a `name` attribute for the data to be submitted.** Without it, that input's data won't be included in the submission.
 {% endhint %}
 
-**TODO:** Update your form with the `action` and `method` attributes, and add `name` attributes to each input. Then test it by submitting some data and checking your email!
+**TODO:** Update your form `name` attributes for each input. Use camelCase.
+
+**4. Update your HTML form**
+
+And finally, we need to direct our form to submit the data to Formspree. Add two attributes to your `<form>` element:
+- `action` — the Formspree endpoint URL where data gets sent
+- `method="POST"` — tells the browser to send data (rather than request it)
+
+```html
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <!-- your labels and inputs -->
+</form>
+```
+
+**TODO:** Update your form with the `action` and `method` attributes. Then test it by submitting some data and checking your email!
 
 ## Input Deep Dive
 

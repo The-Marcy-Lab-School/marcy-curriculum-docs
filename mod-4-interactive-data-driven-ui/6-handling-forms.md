@@ -10,22 +10,17 @@ Clone down the repo, `cd` into it and run `npm i` to install dependencies.
 - [Key Concepts](#key-concepts)
 - [Forms Review: What We Learned in Module 3](#forms-review-what-we-learned-in-module-3)
 - [Why Handle Forms with JavaScript?](#why-handle-forms-with-javascript)
-- [Handling Form Submissions](#handling-form-submissions)
-  - [HTML Form Submissions: `action` and `method`](#html-form-submissions-action-and-method)
-  - [JavaScript Form Submissions: Preventing Default and Extracting Data](#javascript-form-submissions-preventing-default-and-extracting-data)
-  - [Challenge: Login Form Handler](#challenge-login-form-handler)
-- [Two Ways to Extract Form Data](#two-ways-to-extract-form-data)
-  - [Method 1: form.elements](#method-1-formelements)
-  - [Method 2: FormData API](#method-2-formdata-api)
-  - [One annoying gotcha: checkboxes](#one-annoying-gotcha-checkboxes)
-  - [Which Method Should You Use?](#which-method-should-you-use)
-- [Combining Forms with Dynamic Content](#combining-forms-with-dynamic-content)
-  - [Challenge: Todo List with Form](#challenge-todo-list-with-form)
-- [Form Validation with JavaScript](#form-validation-with-javascript)
-  - [Challenge: Registration Form with Validation](#challenge-registration-form-with-validation)
+- [Handling Forms With JavaScript](#handling-forms-with-javascript)
+  - [Challenge: Adding A New Input](#challenge-adding-a-new-input)
+  - [Handling Checkbox Inputs](#handling-checkbox-inputs)
+- [FormData API](#formdata-api)
+  - [FormData Checkboxes](#formdata-checkboxes)
+  - [Sending FormData to APIs](#sending-formdata-to-apis)
+- [Challenge: Build Your Own Form with Formspree!](#challenge-build-your-own-form-with-formspree)
 - [Additional Reading](#additional-reading)
-  - [Resetting Forms](#resetting-forms)
   - [Other Form Events](#other-form-events)
+  - [Form Validation with JavaScript](#form-validation-with-javascript)
+    - [Challenge: Registration Form with Validation](#challenge-registration-form-with-validation)
 
 ## Key Concepts
 
@@ -51,9 +46,8 @@ In Module 3, we learned how to build forms using HTML and CSS:
 * Connecting labels to inputs using `for` and `id` attributes for accessibility
 * The `name` attribute on inputs (which we'll use extensively in this lesson!)
 * HTML validation attributes: `required`, `min`, `max`, `minlength`, `maxlength`, `pattern`
-* Sending form data to Formspree using the `action` and `method` attributes
 
-Here's a quick example of what we learned:
+We also learned how to capture the form data and send it to Formspree using the `action` and `method` attributes:
 
 ```html
 <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
@@ -71,10 +65,10 @@ Here's a quick example of what we learned:
 </form>
 ```
 
-When submitted, this form would send the data to Formspree, which would then email it to you. The page would also redirect you to the Formspree confirmation page after submission.
+Recall that after submitting the form you would be redirected to the Formspree.
 
 ## Why Handle Forms with JavaScript?
-
+    
 Using services like Formspree is great for simple contact forms, but it has limitations:
 
 * ❌ **You lose control** — the data is sent away and you can't do anything with it in your app
@@ -89,92 +83,10 @@ Modern web applications handle forms with JavaScript instead, which allows us to
 * ✅ **Provide instant feedback** — show success messages, validation errors, loading states
 * ✅ **Create dynamic experiences** — add items to a todo list, submit reviews, create posts
 
-Think about apps you use every day:
-- Twitter: typing a tweet and clicking "Post" doesn't reload the page
-- Gmail: sending an email doesn't take you to a new page
-- Instagram: posting a comment happens instantly without page refresh
-
-All of these use JavaScript to handle form submissions!
-
-## Handling Form Submissions
-
-### HTML Form Submissions: `action` and `method`
-
-Before we learn the modern way, let's understand what forms do by default.
-
-Originally (and still with some frameworks), form submissions actually _change the page_. When you submit a form, the browser:
-
-1. Collects all the form data
-2. Navigates to the URL specified in the `action` attribute
-3. Sends the data as query parameters (if `method="GET"`) or in the request body (if `method="POST"`)
-
-Here's an example:
-
-```html
-<form action="./results-page.html" method="GET">
-  <div>
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username">
-  </div>
-
-  <div>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password">
-  </div>
-
-  <button type="submit">Log In</button>
-</form>
-```
-
-If you fill out this form with username "ben" and password "123", the browser will navigate to:
-
-```
-results-page.html?username=ben&password=123
-```
-
-Notice how the form data appears in the URL! This is because we used `method="GET"`.
-
-**Key attributes:**
-* `action` — the URL to navigate to when the form is submitted
-* `method` — `"GET"` (default, data in URL) or `"POST"` (data in request body)
-
-This default behavior is **NOT what we want** for modern web applications. We want to stay on the same page and handle the data with JavaScript!
-
-### JavaScript Form Submissions: Preventing Default and Extracting Data
-
-To handle form submissions with JavaScript, we need to:
-
-1. **Prevent** the default page reload/redirect behavior
-2. **Extract** the form data from the inputs
-3. **Use** the data (display it, send it to an API, etc.)
-4. **Reset** the form (optional)
-
-Let's see this in action with a simple contact form found in `0-contact-forms`.
-
-{% hint style="info" %}
-Remember, we are using the Vite development server. To get the app running on the development server:
-* `cd` into the directory
-* `npm i` to install Vite dependencies (we did this earlier at the repo root)
-* `npm run dev` to start the server
-* `ctrl+c` to stop the server
-{% endhint %}
-
-**HTML: `index.html`**
-
-In the form HTML, the key details to pay attention to are the name attributes for each input element
+Let's start with a simple form with a single field and a button. Take a look at `0-contact-form/index.html`:
 
 ```html
 <form id="contact-form">
-  <div>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
-  </div>
-
-  <div>
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-  </div>
-
   <div>
     <label for="message">Message</label>
     <textarea id="message" name="message" rows="4" required></textarea>
@@ -183,200 +95,218 @@ In the form HTML, the key details to pay attention to are the name attributes fo
   <button type="submit">Send Message</button>
 </form>
 
-<div id="output">
-  <h3 id="output-status"></h3>
-  <p>From: <span id="output-from"></span></p>
-  <p>Message: <span id="output-message"></span></p>
+<!-- Display the form results here -->
+<div class="output">
+  <h3 id="contact-output-status"></h3>
+  <p>Message: <span id="contact-output-message"></span></p>
 </div>
 ```
 
-**JavaScript: `src/main.js`**
+**<details><summary>Q: Take a look at the textarea element. What is the difference between `id` and `name`?</summary>**
 
-Notice how this example:
-1. prevents the default behavior
-2. extracts the form data
-3. uses the data (displays it)
-4. resets the form
-
-```js
-const form = document.querySelector('#contact-form');
-const output = document.querySelector('#output');
-
-form.addEventListener('submit', (event) => {
-  // 1. Prevent the default form submission (page reload)
-  event.preventDefault();
-
-  // 2. Extract the form data
-  const name = form.elements.name.value;
-  const email = form.elements.email.value;
-  const message = form.elements.message.value;
-
-  // 3. Use the data (here we're just displaying it)
-  document.querySelector("#output-status").textContent = "Message Received!";
-  document.querySelector("#output-from").textContent = `${name} (${email})`;
-  document.querySelector("#output-message").textContent = `${message}`;
-  
-  // 4. Reset the form (clear the inputs)
-  form.reset();
-});
-```
-
-Let's break down the key parts of the JavaScript:
-
-**`event.preventDefault()`**
-* Stops the browser from doing its default action (reload/redirect)
-* MUST be called at the start of the handler
-* Without this, the page will reload and your JavaScript won't run!
-
-**`form.elements.fieldName.value`**
-* `form.elements` is an object containing all inputs in the form
-* Access inputs by their `name` attribute (e.g., `form.elements.name`)
-* Use `.value` to get the current value of the input (e.g. `form.elements.name.value`)
-
-**`form.reset()`**
-* Clears all inputs back to their default values
-* Useful after successful submission
-
-### Challenge: Login Form Handler
-
-In the `1-login-form-challenge` directory, implement a login form handler that displays a personalized welcome message.
-
-**HTML (provided):**
-```html
-<form id="login-form">
-  <div>
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" required>
-  </div>
-
-  <div>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required minlength="8">
-  </div>
-
-  <div>
-    <input type="checkbox" id="remember" name="remember">
-    <label for="remember">Remember me</label>
-  </div>
-
-  <button type="submit">Log In</button>
-</form>
-
-<div id="welcome-message"></div>
-```
-
-**Your task:**
-1. Add a submit event listener to the form
-2. Prevent the default form submission
-3. Extract the username, password, and "Remember me" checkbox values
-4. Display a welcome message: `"Welcome back, [username]! Remember me: [yes/no]"`
-5. Reset the form after submission
-
-**Hint:** Use `.checked` instead of `.value` for checkboxes (returns `true` or `false`)
-
-**<details><summary>Solution</summary>**
-
-```js
-const loginForm = document.querySelector('#login-form');
-const welcomeMessage = document.querySelector('#welcome-message');
-
-loginForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  // Extract form data
-  const username = loginForm.elements.username.value;
-  const password = loginForm.elements.password.value;
-  const remember = loginForm.elements.remember.checked; // checkboxes use .checked!
-
-  // Display welcome message
-  welcomeMessage.textContent = `Welcome back, ${username}! Remember me: ${remember ? 'yes' : 'no'}`;
-
-  // In a real app, you could:
-  // - Validate the password
-  // - Send credentials to a server for authentication
-  // - Store a session token if "remember me" is checked
-
-  // Reset the form
-  loginForm.reset();
-});
-```
+* The `id` attribute labels the field so that it can be connected to the `<label>` element
+* The `name` attribute gives the form value a name when it is submitted. Remember this!
 
 </details>
 
-## Two Ways to Extract Form Data
+{% hint style="info" %}
+    
+Remember, we are using the Vite development server. To get the app running on the development server:
+* `cd` into the directory
+* `npm i` to install Vite dependencies (we did this earlier at the repo root)
+* `npm run dev` to start the server
+* `ctrl+c` to stop the server
+{% endhint %}
 
-There are two main approaches to extracting data from forms. Both are valid and you'll see both in the wild!
+## Handling Forms With JavaScript
 
-### Method 1: form.elements
+Instead of sending the data to another source like Formspree, let's capture the form submission and handle it ourselves. 
 
-This is the approach we've been using. It gives you fine-grained control over each input.
+We'll display a brief status message like "Message Received!" in the empty `h3` element and the message in the empty `span` element
+
+![The form's submission is displayed along with a status.](./img/handling-forms/basic-form.png)
+
+To do this, we'll need to:
+
+1. **Prevent** the default page reload/redirect behavior
+2. **Extract** the form data from the inputs using the `name` attribute
+3. **Use** the data (display it, send it to an API, etc.)
+4. **Reset** the form
 
 ```js
-const loginForm = document.querySelector('#login-form');
-const welcomeMessage = document.querySelector('#welcome-message');
+// Step 1: Grab the form and the output elements
+const contactForm = document.querySelector('#contact-form');
+const contactOutputStatus = document.querySelector("#contact-output-status")
+const contactOutputMessage = document.querySelector("#contact-output-message")
 
-loginForm.addEventListener('submit', (event) => {
+// Step 2: Add a "submit" event listener to the form (don't forget event!)
+contactForm.addEventListener('submit', (event) => {
+  // Step 3: event.preventDefault()
   event.preventDefault();
 
-  // Access each input individually by its name
-  const username = loginForm.elements.username.value;
-  const password = loginForm.elements.password.value;
-  const remember = loginForm.elements.remember.checked; // remember, checkboxes use .checked
+  // Step 4: Get the form data
+  const message = contactForm.elements.message.value;
 
-  welcomeMessage.textContent = `Welcome back, ${username}! Remember me: ${remember ? 'yes' : 'no'}`;
-  loginForm.reset();
+  // Step 5: Use the form data (display it)
+  contactOutputStatus.textContent = "Message Received!";
+  contactOutputMessage.textContent = `${message}`;
+
+  // Step 6: Reset the form
+  contactForm.reset();
 });
 ```
 
-**Pros:**
-* ✅ Explicit — you see exactly which fields you're accessing
-* ✅ Easy to handle checkboxes (just use `.checked`)
-* ✅ Easy to access individual inputs for validation
+Let's look closer at the key parts of the JavaScript:
 
-**Cons:**
-* ❌ Repetitive — lots of `form.elements.fieldName.value`
-* ❌ Verbose — you have to list every field
+**<details><summary>`contactForm.addEventListener('submit', (event) => {})`</summary>**
+* The `"submit"` event is fired when the user presses the submit button.
+* The event handler should use the `event` parameter for preventing the default behavior.
 
-**Tip:** You can reduce repetition by destructuring:
+</details>
+
+**<details><summary>`event.preventDefault()`</summary>**
+
+* `event.preventDefault()` stops the browser from doing its default action (reload/redirect)
+* It *must* be called at the start of the handler. Otherwise the page will reload and your JavaScript won't run!
+* Try removing it to see for yourself!
+
+</details>
+
+**<details><summary>`contactForm.elements.message.value`</summary>**
+
+* `contactForm.elements` is an object containing all inputs in the form. 
+* Inside of it, you can access inputs by their `name` attribute (e.g., `form.elements.message`).
+* Then, use `.value` to get the current value of the input (e.g. `form.elements.message.value`)
+
+</details>
+
+**<details><summary>Status Message</summary>**
+* When handling form submissions, it is a good practice to let your user know if the form submission worked!
+* In this example we always display a success message but you can also show error messages if things like API calls fail
+
+</details>
+
+**<details><summary>`form.reset()`</summary>**
+* Clears all inputs back to their default values
+* Useful after successful submission
+</details>
+
+### Challenge: Adding A New Input
+
+Let's add name and email inputs to this contact form and display them alongside the message, like this:
+
+![A name and email are displayed alongside the message.](./img/handling-forms/basic-forms-solution.png)
+
+**HTML**
+* Add two form inputs to the html, one for the name and one for the email 
+  * make sure to give them `name` attributes!
+* add an output element in the `div` to display the message (use a `<p>` with a `<span>` inside).
+  * The format should be `"From: Ada Lovelace (ada@mail.com)"`.
+
+**JavaScript**
+* Grab the output element.
+* In the event handler, extract the values for the `name` and the `email`.
+* Display the formatted message in the output element.
+
+> A solution can be found in the `0-contact-forms-solution/` folder.
+
+
+### Handling Checkbox Inputs
+
+Let's add a checkbox to our contact form. Suppose we want to give users the option to send the message anonymously.
+
+**HTML:**
+
+```html
+<form id="contact-form">
+  <!-- Other form elements... -->
+
+  <div class="checkbox-field">
+    <label for="anonymous">Send anonymously</label>
+    <input type="checkbox" id="anonymous" name="anonymous">
+  </div>
+
+  <button type="submit">Send Message</button>
+</form>
+```
+
+Checkboxes work differently from text inputs. Every form input has a `.value` property, but for checkboxes:
+* The `.value` is always the string `"on"` whether or not the box is actually checked.
+* The `.checked` property returns `true` if the box is checked or `false` if not.
+
+So, here is the full JavaScript that uses the checkbox to display the user as "Anonymous" if they so choose: 
 
 ```js
-const loginForm = document.querySelector('#login-form');
-const welcomeMessage = document.querySelector('#welcome-message');
+const contactForm = document.querySelector('#contact-form');
 
-loginForm.addEventListener('submit', (event) => {
+contactForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  // destructure the elements to get each form input
-  const { username, password, remember } = loginForm.elements;
+  // For text inputs, use .value
+  const name = contactForm.elements.name.value;         // "Ada Lovelace"
+  const email = contactForm.elements.email.value;       // "ada@mail.com"
+  const message = contactForm.elements.message.value;   // "Hello!"
 
-  welcomeMessage.textContent = `Welcome back, ${username.value}! Remember me: ${remember.checked ? 'yes' : 'no'}`;
-  loginForm.reset();
+  // For checkboxes, use .checked (not .value!)
+  const isAnonymous = contactForm.elements.anonymous.checked;  // true or false
+
+  // Now we can use the boolean to conditionally display the sender
+  const sender = isAnonymous ? "Anonymous" : `${name} (${email})`;
+  console.log(`From: ${sender}`);
+  console.log(`Message: ${message}`);
 });
 ```
 
-### Method 2: FormData API
-
-The `FormData` API is a more modern approach that automatically extracts ALL form values into an object.
+**Tip:** You can reduce repetition of `formElement.elements` by destructuring:
 
 ```js
-const loginForm = document.querySelector('#login-form');
-const welcomeMessage = document.querySelector('#welcome-message');
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-loginForm.addEventListener('submit', (event) => {
+  // Destructure the elements to get each form input
+  const { name, email, message, anonymous } = contactForm.elements;
+
+  // remember to use .checked
+  const sender = anonymous.checked ? "Anonymous" : `${name.value} (${email.value})`;
+
+  contactOutputStatus.textContent = "Message Received!";
+  contactOutputFrom.textContent = sender;
+  contactOutputMessage.textContent = message.value;
+
+  contactForm.reset();
+});
+```
+
+## FormData API
+
+The `FormData` API is a more modern approach to extracting data from a form. It automatically extracts ALL form values into a single `FormData` object. Since it is not an ordinary object, we need to convert it first using `Object.fromEntries()`:
+
+```js
+const contactForm = document.querySelector('#contact-form');
+
+contactForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   // 1. Create a FormData object from the form
-  const formData = new FormData(form);
+  const formData = new FormData(contactForm);
 
   // 2. Convert FormData to a plain JavaScript object
   const formValues = Object.fromEntries(formData);
-  
+
   // Form inputs are stored in name:value pairs
   console.log(formValues);
-  // { username: 'ben', password: 'c0d3r4lyfe!?', remember: 'on' }
+  // { name: 'Ada', email: 'ada@mail.com', message: 'Hello!', anonymous: 'on' }
 
-  welcomeMessage.textContent = `Welcome back, ${formValues.username}! Remember me: ${formValues.remember ? 'yes' : 'no'}`;
-  loginForm.reset();
+  // So we can extract the values directly
+  const { anonymous, name, email, message } = formValues;
+
+  const sender = anonymous ? "Anonymous" : `${name} (${email})`;
+
+  contactOutputStatus.textContent = "Message Received!";
+  contactOutputFrom.textContent = sender;
+  contactOutputMessage.textContent = message;
+
+  contactForm.reset();
 });
 ```
 
@@ -385,12 +315,33 @@ Let's break this down:
 **`new FormData(form)`**
 * Creates a `FormData` object containing all the form's input values
 * Automatically finds all inputs with a `name` attribute
-* The `FormData` object is iterable but not directly usable as a normal object
+* The `FormData` object is iterable but not directly usable as a normal object. Instead, it has "entries".
 
 **`Object.fromEntries(formData)`**
 * Converts the FormData object into a plain JavaScript object
 * Each input's `name` becomes a property
 * Each input's `value` becomes the property value
+
+Often, the `FormData` and `Object.fromEntries` calls are combined into one.
+
+```js
+const contactForm = document.querySelector('#contact-form');
+
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const formValues = Object.fromEntries(new FormData(contactForm));
+  const { anonymous, name, email, message } = formValues;
+
+  const sender = anonymous ? "Anonymous" : `${name} (${email})`;
+
+  contactOutputStatus.textContent = "Message Received!";
+  contactOutputFrom.textContent = sender;
+  contactOutputMessage.textContent = message;
+
+  contactForm.reset();
+});
+```
 
 **Pros:**
 * ✅ Concise — just two lines to get all form data
@@ -401,246 +352,245 @@ Let's break this down:
 * ❌ Less explicit — harder to see which fields exist
 * ❌ Checkbox gotcha (see below)
 
-### One annoying gotcha: checkboxes
+### FormData Checkboxes
 
-When using the FormData API with checkboxes, you'll notice something unexpected:
+Remember how we said checkbox `.value` is always `"on"`? That's exactly what FormData gives you:
 
 ```js
-const formData = new FormData(form);
-const formValues = Object.fromEntries(formData);
+const formValues = Object.fromEntries(new FormData(contactForm));
 console.log(formValues);
 /*
 {
-  username: 'ben',
-  password: 'c0d3r4lyfe!?',
-  remember: 'on',        // <-- Checked checkbox gives "on"
+  name: 'Ada',
+  email: 'ada@mail.com',
+  message: 'Hello!',
+  anonymous: 'on',        // <-- Checked checkbox gives "on", not true!
 }
 */
 ```
 
-Checkboxes don't give you `true`/`false` like you'd expect. Instead:
-* **Checked** checkboxes have a value of `"on"`
-* **Unchecked** checkboxes have a value of `undefined`
-
-**For basic conditionals, this works fine** because of JavaScript's truthiness:
+And if the checkbox is **unchecked**, it won't be included at all:
 
 ```js
-const formValues = Object.fromEntries(new FormData(loginForm));
-
-// This works! "on" is truthy, undefined is falsy
-if (formValues.remember) {
-  console.log("User wants to be remembered!");
+// If anonymous checkbox is NOT checked:
+console.log(formValues);
+/*
+{
+  name: 'Ada',
+  email: 'ada@mail.com',
+  message: 'Hello!',
+  // anonymous is undefined — not even in the object!
 }
+*/
 ```
 
-**However, when sending data to APIs or storing it, you should convert to proper booleans:**
+**For basic conditionals and ternary operations, this works fine** because of JavaScript's truthiness:
 
 ```js
-const formValues = Object.fromEntries(new FormData(loginForm));
+const formValues = Object.fromEntries(new FormData(contactForm));
+const { anonymous, name, email, message } = formValues;
+
+// This works because "on" is truthy, undefined is falsy
+const sender = anonymous ? "Anonymous" : `${name} (${email})`;
+```
+
+However, the most common use case for the `FormData` is when packaging the entire object to be sent to an API (which we'll see shortly). 
+
+Most APIs will prefer receiving a booleans rather than a value that could either be `"on"`/`undefined`. So, we often will reassign a checkbox value after extracting it with `FormData`:
+
+```js
+const formValues = Object.fromEntries(new FormData(contactForm));
+const { anonymous, name, email, message } = formValues;
 
 // Convert checkbox to boolean for cleaner data
-formValues.remember = Boolean(formValues.remember);
+formValues.anonymous = Boolean(anonymous);
 
 console.log(formValues);
-// { username: 'ben', password: 'c0d3r4lyfe!?', remember: true }
+// { name: 'Ada', email: 'ada@mail.com', message: 'Hello!', anonymous: true }
 ```
 
-**Why convert to boolean?**
-* APIs expect `true`/`false`, not `"on"`/`undefined`
-* It's more semantically clear: `remember: true` vs `remember: "on"`
-* Easier to work with: `data.remember === true` vs `data.remember === "on"`
-
-**How does `Boolean()` work?**
-* If checked: `formValues.remember` is `"on"` → `Boolean("on")` is `true`
-* If unchecked: `formValues.remember` is `undefined` → `Boolean(undefined)` is `false`
-
-If you have multiple checkboxes, convert each one:
+If you have multiple checkboxes, we need to convert each one:
 
 ```js
-const formValues = Object.fromEntries(new FormData(form));
-formValues.isHungry = Boolean(formValues.isHungry);
+const formValues = Object.fromEntries(new FormData(contactForm));
+
+formValues.anonymous = Boolean(formValues.anonymous);
+formValues.subscribe = Boolean(formValues.subscribe);
 formValues.acceptTerms = Boolean(formValues.acceptTerms);
-formValues.subscribeNewsletter = Boolean(formValues.subscribeNewsletter);
 ```
 
-### Which Method Should You Use?
+### Sending FormData to APIs
 
-**Use `form.elements`** when:
-* You have a small form with just a few inputs
-* You need fine control over individual fields
-* You want explicit, readable code
-* You're still learning form handling
+Now let's combine what we learned about forms with what we learned about `fetch`!
 
-**Use `FormData API`** when:
-* You have a large form with many inputs
-* You want concise code
-* You're sending the data to an API (we'll learn this soon!)
-* You don't mind converting checkboxes manually
+Remember, in Module 3 we used Formspree to handle our form submissions. We set the `action` attribute to the Formspree URL and the form data was sent automatically when submitted. But this caused the page to redirect.
 
-Both are valid! Choose what makes sense for your use case.
-
-## Combining Forms with Dynamic Content
-
-Forms become really powerful when combined with dynamic content. We can use form submissions to create, update, or delete items on the page!
-
-Let's build a simple contact list. When the user submits the form, we'll add a new contact card to the page.
-
-**HTML:**
-
-```html
-<form id="contact-form">
-  <div>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
-  </div>
-
-  <div>
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" required>
-  </div>
-
-  <button type="submit">Add Contact</button>
-</form>
-
-<ul id="contacts-list">
-  <!-- Add contact cards here. For example:
-   <li>
-    <strong>Ada Lovelace:</strong>
-    <a href="tel:1234567890">1234567890</a>
-   </li>
-   -->
-</ul>
-```
-
-**JavaScript:**
+Now, we can use JavaScript to send the data ourselves using `fetch` with a POST request — keeping the user on the same page:
 
 ```js
-const contactForm = document.querySelector('#contact-form');
-const contactsList = document.querySelector('#contacts-list');
+const FORMSPREE_URL = "https://formspree.io/f/FORMSPREE_URL";
 
-const handleSubmit = (event) => {
+contactForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  // Extract form data using FormData API
-  const formData = Object.fromEntries(new FormData(contactForm));
-  const { name, phone } = formData;
-
-  // Create, Modify, Append pattern!
-  const li = document.createElement('li');
-  const strong = document.createElement('strong');
-  const phoneLink = document.createElement('a');
-
-  strong.textContent = `${name}: `;
-  phoneLink.href = `tel:${phone}`;
-  phoneLink.textContent = phone;
-
-  li.append(strong, phoneLink);
-  contactsList.append(li);
-
-  // Reset form for next entry
-  contactForm.reset();
-};
-
-contactForm.addEventListener('submit', handleSubmit);
-```
-
-Notice how we:
-1. Extract the form data
-2. Use the Create, Modify, Append pattern to add new content
-3. Reset the form so it's ready for the next contact
-
-### Challenge: Todo List with Form
-
-In the `3-todo-list-challenge` directory, build a todo list application where users can add and remove todos.
-
-**HTML (provided):**
-```html
-<form id="todo-form">
-  <div>
-    <label for="todo-text">New Todo</label>
-    <input type="text" id="todo-text" name="todoText" required>
-  </div>
-  <button type="submit">Add Todo</button>
-</form>
-
-<ul id="todo-list">
-  <!-- Add todo list items dynamically -->
-</ul>
-```
-
-**Requirements:**
-1. When the form is submitted:
-   - Prevent the default behavior
-   - Extract the todo text from the input
-   - Create a new `<li>` element. The `<li>` should contain:
-      
-      ```html
-      <li>
-        <p>Take out the trash</p>
-        <button>Delete</button>
-      </li>
-      ```
-   - Append the `<li>` to the `#todo-list`
-   - Reset the form
-2. When a Delete button is clicked:
-   - Remove its parent `<li>` from the list
-   - HINT: Use event delegation on the `<ul>`
-
-**<details><summary>Solution</summary>**
-
-```js
-const todoForm = document.querySelector('#todo-form');
-const todoList = document.querySelector('#todo-list');
-
-// Handle form submission
-const handleSubmit = (event) => {
-  event.preventDefault();
-  const form = event.target;
-
-  // Extract the todo text
-  const todoText = form.elements.todoText.value;
-
-  // Create, Modify, Append
-  const li = document.createElement('li');
-  const textP = document.createElement('p');
-  const deleteBtn = document.createElement('button');
-
-  textP.textContent = todoText;
-  deleteBtn.textContent = 'Delete';
-
-  li.append(textP, deleteBtn);
-  todoList.append(li);
-
-  // Reset form
-  form.reset();
-};
-
-// Handle delete button clicks using event delegation
-const handleDelete = (event) => {
-  // Check if a button was clicked
-  if (event.target.matches('button')) {
-    // Remove the parent li
-    event.target.closest('li').remove();
+  const formValues = Object.fromEntries(new FormData(contactForm));
+  const { anonymous, name, email, message } = formValues;
+  
+  // Make changes to the formValues before sending
+  formValues.anonymous = Boolean(formValues.anonymous);
+  if (formValues.anonymous) {
+    delete formValues.name;
+    delete formValues.email;
   }
-};
 
-todoForm.addEventListener('submit', handleSubmit);
-todoList.addEventListener('click', handleDelete);
+  // Set up the POST request config
+  const config = {
+    method: 'POST',
+    body: JSON.stringify(formValues),
+    headers: {
+      'Content-Type': 'application/json',
+      'accept': 'application/json'
+    }
+  };
+
+  // Send the fetch
+  fetch(FORMSPREE_URL, config)
+    .then((response) => {
+      // 3. Check if the response was successful
+      if (!response.ok) {
+        throw Error(`Failed to submit. ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // 4. Handle success — update the UI
+      console.log('Success:', data);
+      
+      const sender = Boolean(anonymous) ? "Anonymous" : `${name} (${email})`;
+      contactOutputStatus.textContent = "Message Sent to Formspree!";
+      contactOutputFrom.textContent = sender;
+      contactOutputMessage.textContent = message;
+      contactForm.reset();
+    })
+    .catch((error) => {
+      // 5. Handle errors — show error message
+      console.error('Error:', error);
+      contactOutputStatus.textContent = 'Failed to send message. Please try again.';
+    });
+  contactForm.reset();
+});
 ```
 
-**Bonus improvements:**
-- Add a counter showing the number of todos
-- Add a "Clear All" button
-- Store todos in an array and use a `renderTodos()` function
-- Add the ability to mark todos as complete
+Let's break down the key parts:
 
-</details>
+**The `fetch` configuration object:**
+* `method: 'POST'` — tells the server we're creating/sending new data
+* `body: JSON.stringify(formValues)` — converts our JavaScript object to a JSON string
+* `headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }` — tells the server we're sending JSON data and are accepting JSON in response
 
-## Form Validation with JavaScript
+**Why use `JSON.stringify()`?**
+
+The `body` of a fetch request must be a string, not a JavaScript object. `JSON.stringify()` converts our object into a JSON-formatted string that can be sent over the network:
+
+```js
+const formValues = { name: 'Ada', email: 'ada@mail.com', message: 'Hello!' };
+
+console.log(JSON.stringify(formValues));
+// '{"name":"Ada","email":"ada@mail.com","message":"Hello!"}'
+```
+
+**Handling the response:**
+
+Even though we're sending data (not requesting it), the API still sends back a response. We check `response.ok` to see if it succeeded, then update the UI accordingly.
+
+## Challenge: Build Your Own Form with Formspree!
+
+Test your skills by building your own form with Formspree from scratch! We've given you some code to start with in `1-form-challenge/` but it will be up to you to:
+1. Create a new Formspree form
+   1. Go to [formspree.io](https://formspree.io) and create a free account
+   2. Create a new form and copy the endpoint URL (looks like `https://formspree.io/f/xyzabc123`)
+2. Create a form with inputs. It is up to you what data you want to collect but your form should have:
+   * At least one text input field
+   * At least one checkbox field
+   * A submit button
+   * A `name` attribute for every input
+   * A `label` for every input
+3. Use the `FormData` approach to extract the form values. Remember to update the checkbox inputs!
+4. Submit the form data to the Formspree URL using a POST request and `fetch()`
+5. Render a success or an error message
+6. Don't worry about styling. Just aim for functionality!
+
+Use the example in `0-contact-form-solution-with-post` as a guide for what this looks like when completed!
+
+## Additional Reading
+
+### Other Form Events
+
+Besides the `submit` event, there are several other useful form events:
+
+**`input` event** — fires every time an input's value changes (as you type)
+
+```js
+const nameInput = document.querySelector('#name');
+
+nameInput.addEventListener('input', (event) => {
+  console.log('Current value:', event.target.value);
+  // Great for: live character counters, search-as-you-type, instant validation
+});
+```
+
+**`change` event** — fires when an input's value changes AND the input loses focus
+
+```js
+const selectMenu = document.querySelector('#country');
+
+selectMenu.addEventListener('change', (event) => {
+  console.log('Selected:', event.target.value);
+  // Great for: dropdowns, radio buttons, checkboxes
+});
+```
+
+**`focus` and `blur` events** — fires when an input gains or loses focus
+
+```js
+const emailInput = document.querySelector('#email');
+
+emailInput.addEventListener('focus', () => {
+  console.log('Email input focused');
+  // Great for: showing help text, highlighting the field
+});
+
+emailInput.addEventListener('blur', () => {
+  console.log('Email input lost focus');
+  // Great for: validating after user finishes typing
+});
+```
+
+**Non-submit buttons** — buttons with `type="button"` don't submit the form
+
+```html
+<button type="button" id="normal-button">Capitalize Name</button>
+```
+
+```js
+const normalButton = document.querySelector('#normal-button');
+
+normalButton.addEventListener('click', () => {
+  const form = document.querySelector('form');
+  const nameInput = form.elements.name;
+  nameInput.value = nameInput.value.toUpperCase();
+});
+```
+
+This is useful for buttons that manipulate form data without submitting!
+
+### Form Validation with JavaScript
 
 HTML validation attributes (`required`, `min`, `max`, etc.) are great, but sometimes we need custom validation logic. JavaScript gives us complete control!
 
 Let's build a registration form with custom validation:
+
+Check out this example in `2-registration-form`:
 
 **HTML:** In the HTML, pay attention to the `<span class="error" id="input-name-error"></span>` elements that have been added for each input. 
 
@@ -776,7 +726,7 @@ This example demonstrates:
 * Preventing submission if validation fails
 * Clearing errors when validation passes
 
-### Challenge: Registration Form with Validation
+#### Challenge: Registration Form with Validation
 
 Enhance the registration form above by adding these validation rules:
 
@@ -920,102 +870,3 @@ input.valid {
 ```
 
 </details>
-
-## Additional Reading
-
-### Resetting Forms
-
-After successfully processing a form, it's common to clear the inputs so the form is ready for the next entry.
-
-**Method 1: `form.reset()` in JavaScript**
-
-```js
-const handleSubmit = (event) => {
-  event.preventDefault();
-  const form = event.target;
-
-  // ... process the form data ...
-
-  // Reset all inputs to their default values
-  form.reset();
-};
-```
-
-**Method 2: Add a Reset button in HTML**
-
-```html
-<form>
-  <!-- form inputs -->
-
-  <button type="submit">Submit</button>
-  <button type="reset">Clear Form</button>
-</form>
-```
-
-A reset button automatically clears the form without any JavaScript needed!
-
-**When to reset:**
-* ✅ After successfully adding an item to a list
-* ✅ After successfully sending data to a server
-* ❌ When validation fails (keep the data so users can fix errors)
-* ❌ When editing existing data (you want to keep the current values)
-
-### Other Form Events
-
-Besides the `submit` event, there are several other useful form events:
-
-**`input` event** — fires every time an input's value changes (as you type)
-
-```js
-const nameInput = document.querySelector('#name');
-
-nameInput.addEventListener('input', (event) => {
-  console.log('Current value:', event.target.value);
-  // Great for: live character counters, search-as-you-type, instant validation
-});
-```
-
-**`change` event** — fires when an input's value changes AND the input loses focus
-
-```js
-const selectMenu = document.querySelector('#country');
-
-selectMenu.addEventListener('change', (event) => {
-  console.log('Selected:', event.target.value);
-  // Great for: dropdowns, radio buttons, checkboxes
-});
-```
-
-**`focus` and `blur` events** — fires when an input gains or loses focus
-
-```js
-const emailInput = document.querySelector('#email');
-
-emailInput.addEventListener('focus', () => {
-  console.log('Email input focused');
-  // Great for: showing help text, highlighting the field
-});
-
-emailInput.addEventListener('blur', () => {
-  console.log('Email input lost focus');
-  // Great for: validating after user finishes typing
-});
-```
-
-**Non-submit buttons** — buttons with `type="button"` don't submit the form
-
-```html
-<button type="button" id="normal-button">Capitalize Name</button>
-```
-
-```js
-const normalButton = document.querySelector('#normal-button');
-
-normalButton.addEventListener('click', () => {
-  const form = document.querySelector('form');
-  const nameInput = form.elements.name;
-  nameInput.value = nameInput.value.toUpperCase();
-});
-```
-
-This is useful for buttons that manipulate form data without submitting!
