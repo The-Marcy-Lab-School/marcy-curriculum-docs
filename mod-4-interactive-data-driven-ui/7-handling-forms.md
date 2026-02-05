@@ -1,7 +1,7 @@
 # Handling Forms
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-6-handling-forms)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-7-handling-forms)!
 
 Clone down the repo, `cd` into it and run `npm i` to install dependencies.
 {% endhint %}
