@@ -12,7 +12,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
   - [Executing Asynchronous Code With Callbacks](#executing-asynchronous-code-with-callbacks)
   - [Sequential Asynchronous Callbacks Leads to Callback Hell](#sequential-asynchronous-callbacks-leads-to-callback-hell)
 - [Promises!](#promises)
-  - [Sequential Asynchronous Functions With Promises](#sequential-asynchronous-functions-with-promises)
+  - [Promises and `.then()`](#promises-and-then)
   - [Promise.all()](#promiseall)
 - [Making Promises](#making-promises)
   - [A Function that Makes and Returns a Promise](#a-function-that-makes-and-returns-a-promise)
@@ -306,41 +306,13 @@ A **Promise** is a type of object (a "class" of object) that represents a pendin
 * The `Promise.catch()` method schedules a callback to be executed when the promise rejects.
 * `Promise.then()` returns a Promise allowing it to be chained.
 
-### Sequential Asynchronous Functions With Promises
+### Promises and `.then()`
 
 At this point, the code isn't dramatically different. However, Promises start to shine when we want to perform multiple asynchronous functions sequentially.
 
 Compare and contrast these two approaches for reading the `booksHuge.csv` file first followed by the `books.csv` file second:
 
 {% tabs %}
-{% tab title="Callbacks" %}
-As you can see in the callbacks version of the code, we very quickly get to four levels of indentation, causing the readability of our code suffer.
-
-```js
-const fs = require('node:fs');
-
-console.log("Reading the booksHuge.csv file");
-
-fs.readFile('../data/booksHuge.csv', 'utf-8', (err, data) => {
-  if (err) {
-    console.error(err);
-  } else {
-    const lines = data.split('\n').length;
-    console.log(`Done reading the booksHuge.csv file. There were ${lines - 1} books.`);
-
-    console.log("Reading the books.csv file");
-    fs.readFile('../data/books.csv', 'utf-8', (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        const lines = data.split('\n').length;
-        console.log(`Done reading the books.csv file. There were ${lines - 1} books.`);
-      }
-    });
-  }
-});
-```
-{% endtab %}
 
 {% tab title="Promises" %}
 With promises, since `.then` calls can be chained together, we limit the indentation to two levels. This is only possible because the first `.then` returns a promise that can be handled by the second `.then`. Additionally, we only need to write one error handler with `.catch` which can handle errors that occur at any point in the chain of promises.
@@ -373,6 +345,36 @@ fs.readFile('../data/booksHuge.csv', 'utf-8')
   });
 ```
 {% endtab %}
+
+{% tab title="Callbacks" %}
+As you can see in the callbacks version of the code, we very quickly get to four levels of indentation, causing the readability of our code suffer.
+
+```js
+const fs = require('node:fs');
+
+console.log("Reading the booksHuge.csv file");
+
+fs.readFile('../data/booksHuge.csv', 'utf-8', (err, data) => {
+  if (err) {
+    console.error(err);
+  } else {
+    const lines = data.split('\n').length;
+    console.log(`Done reading the booksHuge.csv file. There were ${lines - 1} books.`);
+
+    console.log("Reading the books.csv file");
+    fs.readFile('../data/books.csv', 'utf-8', (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const lines = data.split('\n').length;
+        console.log(`Done reading the books.csv file. There were ${lines - 1} books.`);
+      }
+    });
+  }
+});
+```
+{% endtab %}
+
 {% endtabs %}
 
 ### Promise.all()
