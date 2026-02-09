@@ -299,13 +299,13 @@ export const fetchData = (url, config) => {
       throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
     }
     // Since response.json() also returns a Promise, we can await it too.
-    const users = await response.json();
-    console.log("here is the data: ", users);
+    const data = await response.json();
+    console.log("here is the data: ", data);
     
-    return users;
+    return { data, error: null };
   } catch (error) {
     console.log("Error caught! " + error.message);
-    return null;
+    return { data: null, error };
   }
 }
 ```
