@@ -112,7 +112,7 @@ According to the [Vite](https://vite.dev/guide/#getting-started) documentation:
 
 Vite provides a few features that are of great use to us when building web applications:
 
-* A **development server** to serve local files over HTTP. It also comes with "hot reloading" (you don't have to refresh to see your changes).
+* A **development server** to serve local files over HTTP and avoid CORS errors. It also comes with "hot reloading" (you don't have to refresh to see your changes).
 * A **project starter template** for quickly getting a project started, organized with ES modules.
 * A **build command that bundles your code**, pre-configured to output highly optimized static assets for production. We'll learn more about this when we are deploying projects.
 
