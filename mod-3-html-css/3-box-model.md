@@ -1,33 +1,32 @@
-# The Box Model
+# 3. The Box Model
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-3-box-model)!
 {% endhint %}
 
-
 **Table of Contents**:
 
-- [Key Concepts](#key-concepts)
-- [Intro to The Box Model](#intro-to-the-box-model)
-  - [Web Design 101: Every Element is a Box](#web-design-101-every-element-is-a-box)
-- [Box Model](#box-model)
-  - [Content, Width, and Height](#content-width-and-height)
-  - [Padding: Space Inside the Box](#padding-space-inside-the-box)
-  - [Border: The Edge of the Box](#border-the-edge-of-the-box)
-    - [Adding Borders to One Side](#adding-borders-to-one-side)
-    - [Border Radius](#border-radius)
-  - [Margin: Space Between Elements](#margin-space-between-elements)
-    - [Margin Collapse](#margin-collapse)
-    - [Centering with Margin](#centering-with-margin)
-  - [Box Shadow](#box-shadow)
-- [Display](#display)
-  - [Display Challenge](#display-challenge)
-- [The Box-Sizing Problem](#the-box-sizing-problem)
-  - [The Solution: border-box reset](#the-solution-border-box-reset)
-  - [General CSS Reset](#general-css-reset)
-- [Organizing Your CSS](#organizing-your-css)
-- [Test your Skills!](#test-your-skills)
-- [Complete HTML \& CSS](#complete-html--css)
+* [Key Concepts](3-box-model.md#key-concepts)
+* [Intro to The Box Model](3-box-model.md#intro-to-the-box-model)
+  * [Web Design 101: Every Element is a Box](3-box-model.md#web-design-101-every-element-is-a-box)
+* [Box Model](3-box-model.md#box-model)
+  * [Content, Width, and Height](3-box-model.md#content-width-and-height)
+  * [Padding: Space Inside the Box](3-box-model.md#padding-space-inside-the-box)
+  * [Border: The Edge of the Box](3-box-model.md#border-the-edge-of-the-box)
+    * [Adding Borders to One Side](3-box-model.md#adding-borders-to-one-side)
+    * [Border Radius](3-box-model.md#border-radius)
+  * [Margin: Space Between Elements](3-box-model.md#margin-space-between-elements)
+    * [Margin Collapse](3-box-model.md#margin-collapse)
+    * [Centering with Margin](3-box-model.md#centering-with-margin)
+  * [Box Shadow](3-box-model.md#box-shadow)
+* [Display](3-box-model.md#display)
+  * [Display Challenge](3-box-model.md#display-challenge)
+* [The Box-Sizing Problem](3-box-model.md#the-box-sizing-problem)
+  * [The Solution: border-box reset](3-box-model.md#the-solution-border-box-reset)
+  * [General CSS Reset](3-box-model.md#general-css-reset)
+* [Organizing Your CSS](3-box-model.md#organizing-your-css)
+* [Test your Skills!](3-box-model.md#test-your-skills)
+* [Complete HTML & CSS](3-box-model.md#complete-html--css)
 
 ## Key Concepts
 
@@ -67,11 +66,11 @@ The first rule to understanding CSS and web design is that **every HTML element 
 Even elements that don't look like boxes (paragraphs, headings, links, images, buttons) are all boxes. Understanding how these boxes work is essential for controlling layout and spacing.
 
 Open up your `index.html` file from the last lesson in the browser. Then do the following:
-1. Right click on your website and select "Inspect". This will open your browser's **Developer Tools** where you can see the HTML structure of your elements and the CSS styles applied to them. **In the bottom-right corner is the Box Model diagram.**
 
-    ![We can see the box of the profile picture when we inspect it.](./img/box-model-inspect-profile-page.png)
+1.  Right click on your website and select "Inspect". This will open your browser's **Developer Tools** where you can see the HTML structure of your elements and the CSS styles applied to them. **In the bottom-right corner is the Box Model diagram.**
 
-2. Choose the **element selector tool** (look at the developer tools and it is the arrow icon in the top-left corner). 
+    ![We can see the box of the profile picture when we inspect it.](../.gitbook/assets/box-model-inspect-profile-page.png)
+2. Choose the **element selector tool** (look at the developer tools and it is the arrow icon in the top-left corner).
 3. Then, hover over different elements to see each element's box.
 
 You can see clearly how every element is a box if you add this CSS declaration to your webpage:
@@ -117,8 +116,9 @@ figure {
 ```
 
 This is a really common pattern for handling image sizing:
-* The `img` selector sets all images to fill 100% of their container's width. 
-* The `figure` selector uses `max-width: 300px` to constrain the figure (and therefore the image inside it) to a maximum of 300 pixels wide. 
+
+* The `img` selector sets all images to fill 100% of their container's width.
+* The `figure` selector uses `max-width: 300px` to constrain the figure (and therefore the image inside it) to a maximum of 300 pixels wide.
 * If the screen is smaller than 300px, the figure will shrink to fit.
 
 **TODO:** Set a width on our navigation links and a max-width on our sections:
@@ -225,6 +225,7 @@ To make a perfectly circular border, use `border-radius: 50%`. This works great 
 First, add an `id` to your profile picture so we can style it later:
 
 **HTML:**
+
 ```html
 <figure>
   <img
@@ -357,16 +358,18 @@ section:hover {
 ```
 
 The `box-shadow` property effectively draws a "shadow box" behind the element. It takes these values:
-- **Left/Right offset**: `0` (no shift left/right)
-- **Top/Bottom offset**: `0.25rem` (slight shift down)
-- **Blur radius**: `1.5rem` (how blurry the shadow is)
-- **Color**: `var(--color-shadow)` (our semi-transparent purple)
+
+* **Left/Right offset**: `0` (no shift left/right)
+* **Top/Bottom offset**: `0.25rem` (slight shift down)
+* **Blur radius**: `1.5rem` (how blurry the shadow is)
+* **Color**: `var(--color-shadow)` (our semi-transparent purple)
 
 Try hovering over your sections to see the effect!
 
 ## Display
 
 HTML elements have default `display` behaviors that affect
+
 1. how an element's width and height can be modified.
 2. how they interact with other elements.
 
@@ -379,7 +382,7 @@ nav>a {
 }
 ```
 
-Also, notice how pretty much all of the elements are stacked on top of each other but the hyperlink `<a>` elements are next to each other. 
+Also, notice how pretty much all of the elements are stacked on top of each other but the hyperlink `<a>` elements are next to each other.
 
 This is all impacted by the `display` property:
 
@@ -392,7 +395,9 @@ This is all impacted by the `display` property:
 
 Since `<a>` elements have `display:inline`, they appear next to each other AND we can't set their `height` or `width` properties.
 
-**<details><summary>Q: We want our nav links (`<a>` tags) to be 10rem wide AND keep them on the same line. Which display should we use?</summary>**
+<details>
+
+<summary><strong>Q: We want our nav links (<code>&#x3C;a></code> tags) to be 10rem wide AND keep them on the same line. Which display should we use?</strong></summary>
 
 If we wanted to keep the `<a>` elements on the same line but also have control over their dimensions, we can change them to have `display:inline-block`:
 
@@ -419,11 +424,14 @@ We want them to appear next to each other and have control over their width/heig
 
 Try it out, then look at the solution below.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 By default, list items have `display:block` which stacks them on top of each other. To have them listed next to each other, we can give them `display: inline-block`.
 
 **CSS:**
+
 ```css
 .programming-skill {
   padding: 0.5rem;
@@ -455,16 +463,18 @@ nav>a {
 }
 ```
 
-**<details><summary>Q: What is the actual width of a nav link?</summary>**
+<details>
+
+<summary><strong>Q: What is the actual width of a nav link?</strong></summary>
 
 You might expect each link to be 10rem (160px) wide. But the **actual width** is:
-- Content: 160px
-- Padding: 16px left + 16px right = 32px
-- Border: 2px left + 2px right = 4px
-- **Total width: 196px**
+
+* Content: 160px
+* Padding: 16px left + 16px right = 32px
+* Border: 2px left + 2px right = 4px
+* **Total width: 196px**
 
 </details>
-
 
 This is confusing and makes layout calculations difficult.
 
@@ -483,10 +493,11 @@ Add this to the **top** of your CSS file:
 The `*` selector targets all elements. This rule changes how `width` and `height` are calculated.
 
 With `box-sizing: border-box`, `width` includes content, padding, AND border. Now your nav links are **exactly 10rem wide**:
-- Padding: 32px
-- Border: 4px
-- Content: 124px (automatically calculated as 160-32-4)
-- **Total: 160px (10rem)**
+
+* Padding: 32px
+* Border: 4px
+* Content: 124px (automatically calculated as 160-32-4)
+* **Total: 160px (10rem)**
 
 **Always include `box-sizing: border-box` at the top of your CSS. It makes layout predictable and matches how you naturally think about sizing.**
 
@@ -513,11 +524,12 @@ ul, ol {
 ```
 
 This reset:
-- Removes all default margins and paddings
-- Makes `width` and `height` include padding and border
-- Makes images fill their container width by default
-- Removes bullet points from lists (we'll add our own styling)
-- Ensures consistent behavior across all browsers
+
+* Removes all default margins and paddings
+* Makes `width` and `height` include padding and border
+* Makes images fill their container width by default
+* Removes bullet points from lists (we'll add our own styling)
+* Ensures consistent behavior across all browsers
 
 You'll then add spacing intentionally where you need it, giving you full control over your layout.
 
@@ -575,10 +587,11 @@ section {
 ```
 
 This organization makes it easy to:
-- Find specific styles quickly
-- Understand the structure of your CSS
-- Add new styles in the right place
-- Debug issues faster
+
+* Find specific styles quickly
+* Understand the structure of your CSS
+* Add new styles in the right place
+* Debug issues faster
 
 **TODO:** Take a moment to organize your CSS file using comment sections, then make adjustments to the padding and margins of the elements of your page until you are satisfied with the overall spacing.
 

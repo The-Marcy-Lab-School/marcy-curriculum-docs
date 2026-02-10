@@ -1,4 +1,4 @@
-# Forms
+# 6. Forms
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-6-forms)!
@@ -6,36 +6,36 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 **Table of Contents**:
 
-- [Key Concepts](#key-concepts)
-- [What is a Form?](#what-is-a-form)
-  - [When to Use a Form](#when-to-use-a-form)
-  - [Form Basic Structure](#form-basic-structure)
-  - [Input Basics](#input-basics)
-  - [Labels](#labels)
-  - [Submit button](#submit-button)
-- [Form Submissions](#form-submissions)
-  - [Setting Up Formspree](#setting-up-formspree)
-- [Input Deep Dive](#input-deep-dive)
-  - [Textarea](#textarea)
-  - [Checkboxes](#checkboxes)
-  - [Select](#select)
-  - [Radios, Fieldset, and Legend](#radios-fieldset-and-legend)
-  - [When To Use Each Input Type](#when-to-use-each-input-type)
-- [Form Best Practices](#form-best-practices)
-  - [HTML Form Validation](#html-form-validation)
-  - [Styling Forms](#styling-forms)
-- [Key Takeaways](#key-takeaways)
+* [Key Concepts](6-forms.md#key-concepts)
+* [What is a Form?](6-forms.md#what-is-a-form)
+  * [When to Use a Form](6-forms.md#when-to-use-a-form)
+  * [Form Basic Structure](6-forms.md#form-basic-structure)
+  * [Input Basics](6-forms.md#input-basics)
+  * [Labels](6-forms.md#labels)
+  * [Submit button](6-forms.md#submit-button)
+* [Form Submissions](6-forms.md#form-submissions)
+  * [Setting Up Formspree](6-forms.md#setting-up-formspree)
+* [Input Deep Dive](6-forms.md#input-deep-dive)
+  * [Textarea](6-forms.md#textarea)
+  * [Checkboxes](6-forms.md#checkboxes)
+  * [Select](6-forms.md#select)
+  * [Radios, Fieldset, and Legend](6-forms.md#radios-fieldset-and-legend)
+  * [When To Use Each Input Type](6-forms.md#when-to-use-each-input-type)
+* [Form Best Practices](6-forms.md#form-best-practices)
+  * [HTML Form Validation](6-forms.md#html-form-validation)
+  * [Styling Forms](6-forms.md#styling-forms)
+* [Key Takeaways](6-forms.md#key-takeaways)
 
 ## Key Concepts
 
-- A **form** is a collection of inputs that can be filled out by a user to submit a collection of data.
-- **Key form elements** include `<form>`, `<label>`, `<input>`, `<textarea>`, `<select>`, `<fieldset>`, and `<button>`.
-- The `<input>` element's **`type` attribute** determines what kind of data the input accepts (e.g., `text`, `number`, `date`, `checkbox`, `radio`, `email`, `url`).
-- **Labels and inputs connect** using the `for` attribute on `<label>` and a matching `id` attribute on `<input>`. This connection is essential for accessibility.
-- The **`name` attribute** on inputs labels the data when the form is submitted.
-- The **`action` attribute** on `<form>` specifies the URL where form data gets sent.
-- The **`method` attribute** on `<form>` specifies how data is sent (typically `"POST"`).
-- **HTML validation attributes** like `required`, `min`/`max`, `minlength`/`maxlength`, and `pattern` can validate form data before submission.
+* A **form** is a collection of inputs that can be filled out by a user to submit a collection of data.
+* **Key form elements** include `<form>`, `<label>`, `<input>`, `<textarea>`, `<select>`, `<fieldset>`, and `<button>`.
+* The `<input>` element's **`type` attribute** determines what kind of data the input accepts (e.g., `text`, `number`, `date`, `checkbox`, `radio`, `email`, `url`).
+* **Labels and inputs connect** using the `for` attribute on `<label>` and a matching `id` attribute on `<input>`. This connection is essential for accessibility.
+* The **`name` attribute** on inputs labels the data when the form is submitted.
+* The **`action` attribute** on `<form>` specifies the URL where form data gets sent.
+* The **`method` attribute** on `<form>` specifies how data is sent (typically `"POST"`).
+* **HTML validation attributes** like `required`, `min`/`max`, `minlength`/`maxlength`, and `pattern` can validate form data before submission.
 
 ## What is a Form?
 
@@ -43,39 +43,46 @@ A form is a collection of inputs that can be filled out by a user to submit a co
 
 **Q: What are some forms you've filled out recently? What data did they collect?**
 
-**<details><summary>Click Here To See Some Examples</summary>**
+<details>
+
+<summary><strong>Click Here To See Some Examples</strong></summary>
 
 Examples you might see:
-- Signing up for a website (username, email, password)
-- Applying for a job (name, resume, cover letter)
-- Making a purchase (shipping address, payment info)
-- Booking an event (date, number of attendees)
-- Leaving a review (rating, written feedback)
+
+* Signing up for a website (username, email, password)
+* Applying for a job (name, resume, cover letter)
+* Making a purchase (shipping address, payment info)
+* Booking an event (date, number of attendees)
+* Leaving a review (rating, written feedback)
 
 </details>
 
 Today we'll build a **Job Application Tracker** — a form that helps you stay organized when applying to multiple companies. This is a tool you'll actually use during your job search.
 
-![A job application tracker form collecting company, position, and application details](./img/form-job-application-tracker.png)
+![A job application tracker form collecting company, position, and application details](../.gitbook/assets/form-job-application-tracker.png)
 
 ### When to Use a Form
 
 Not every user interaction needs a form. Use a form when you're **collecting multiple pieces of related data that will be submitted together**.
 
 **Use a form when:**
-- ✅ Registering a new user (name, email, password, preferences)
-- ✅ Recording a job application (company, position, date, status)
-- ✅ Paying for something by credit card (cardholder name, credit card number, expiration, zip code)
+
+* ✅ Registering a new user (name, email, password, preferences)
+* ✅ Recording a job application (company, position, date, status)
+* ✅ Paying for something by credit card (cardholder name, credit card number, expiration, zip code)
 
 **A form isn't necessary for:**
-- ❌ A single search input that filters results as you type
-- ❌ A button that opens/closes a menu
-- ❌ A link that navigates to a new page
-- ❌ A single checkbox that toggles dark mode
+
+* ❌ A single search input that filters results as you type
+* ❌ A button that opens/closes a menu
+* ❌ A link that navigates to a new page
+* ❌ A single checkbox that toggles dark mode
 
 Can you think of other examples?
 
-**<details><summary>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership. </summary>**
+<details>
+
+<summary><strong>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership.</strong></summary>
 
 (A) Clicking on a like button would not require a form since there is just one input to interact with: the button
 
@@ -85,7 +92,8 @@ Can you think of other examples?
 
 ### Form Basic Structure
 
-Every form follows a similar pattern: 
+Every form follows a similar pattern:
+
 1. A `form` to contain the form elements
 2. A heading to describe the form
 3. Pairs of `<label>` and `<input>` elements for user input
@@ -115,11 +123,12 @@ Every form follows a similar pattern:
 ```
 
 **Key parts:**
-- `<form>`: Container for all inputs
-- `<h2>`: Heading that describes the form's purpose
-- `<label>`: Describes what each input is for
-- `<input>`: Where users enter data
-- `<button>`: Submits the form
+
+* `<form>`: Container for all inputs
+* `<h2>`: Heading that describes the form's purpose
+* `<label>`: Describes what each input is for
+* `<input>`: Where users enter data
+* `<button>`: Submits the form
 
 **TODO:** Take 5 minutes to recreate this form structure in the `body` of your `index.html` file below the `h1` element.
 
@@ -128,7 +137,6 @@ Every form follows a similar pattern:
 
 `<label>` and `<input>` elements are both inline elements by default which can make the form look like one long line. By wrapping each pair in a `<div>`, we get each form input on a new line. It also makes it easier to style the pair as a unit.
 {% endhint %}
-
 
 ### Input Basics
 
@@ -149,7 +157,9 @@ Each input type behaves differently — `text` accepts any characters, `number` 
 
 **TODO:** Inside your form, add in three more `<input>` elements: (1) application date, (2) expected salary, (3) a job posting URL. For each, add a `<label>` describing the form input and surround the label/input pair with a `<div>`.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 We'll use a "date" type input for the application date, a "number" type input for the salary, and a "url" type input for the job posting url. Make sure to add a `<label>` for each `<input>` and wrap them in a `<div>`:
 
@@ -195,24 +205,32 @@ To improve our form's accessibility we need to connect each `<input>` to its `<l
 ```
 
 **How labels and inputs connect:**
-- Give each `<input>` a unique `id` attribute   
-  - e.g. `id="company-name"`
-- Give each `<label>` a `for` attribute that matches the input's `id`
-  - e.g. `for="company-name"`
-- The `for` and `id` values must match *exactly*.
+
+* Give each `<input>` a unique `id` attribute
+  * e.g. `id="company-name"`
+* Give each `<label>` a `for` attribute that matches the input's `id`
+  * e.g. `for="company-name"`
+* The `for` and `id` values must match _exactly_.
 
 **Why this connection matters:**
-- **Screen readers announce the label** when the input is focused, so users know what to enter
-- **Clicking the label focuses its input** — try it! This is especially helpful for small checkboxes since it makes the clickable area much larger.
-- The connection is semantic, not just visual — assistive technologies understand the relationship
 
-**<details><summary>Q: What happens when you click a label without the `for` attribute?</summary>**
+* **Screen readers announce the label** when the input is focused, so users know what to enter
+* **Clicking the label focuses its input** — try it! This is especially helpful for small checkboxes since it makes the clickable area much larger.
+* The connection is semantic, not just visual — assistive technologies understand the relationship
+
+<details>
+
+<summary><strong>Q: What happens when you click a label without the <code>for</code> attribute?</strong></summary>
+
 Nothing. The label is just text. The `for` attribute is what creates the connection to the input.
+
 </details>
 
 **TODO:** Add a `for` and matching `id` attribute to each pair of labels and inputs.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 At this point, your form should look like this:
 
@@ -270,11 +288,12 @@ When a user clicks the submit button (or presses Enter), the browser collects al
 ## Form Submissions
 
 In professional web applications, form data is typically sent to a **server** — a computer that receives the data and does something with it:
-- Store it in a database
-- Send an email notification
-- Process a payment
-- Create a user account
-- Update a record
+
+* Store it in a database
+* Send an email notification
+* Process a payment
+* Create a user account
+* Update a record
 
 Building your own server to handle form submissions requires learning backend technologies like APIs and databases like Postgres. We'll get there eventually! But for now, we can use a free service called **Formspree** that handles the server part for us.
 
@@ -283,12 +302,14 @@ Building your own server to handle form submissions requires learning backend te
 Formspree receives your form submissions and forwards them to your email. Here's how to set it up for our Job Application Tracker:
 
 **1. Create a Formspree account**
-- Go to [formspree.io](https://formspree.io) and sign up with your email (it's free)
+
+* Go to [formspree.io](https://formspree.io) and sign up with your email (it's free)
 
 **2. Create a new form**
-- From your dashboard, click "New Form"
-- Give it a name like "Job Application Tracker"
-- Formspree will generate a unique form **endpoint URL** (the web address where the form data will be sent)
+
+* From your dashboard, click "New Form"
+* Give it a name like "Job Application Tracker"
+* Formspree will generate a unique form **endpoint URL** (the web address where the form data will be sent)
 
 **3. Add `name` attributes to your inputs**
 
@@ -317,8 +338,9 @@ When Formspree receives this data, it will show up labeled as "companyName" and 
 **4. Update your HTML form**
 
 And finally, we need to direct our form to submit the data to Formspree. Add two attributes to your `<form>` element:
-- `action` — the Formspree endpoint URL where data gets sent
-- `method="POST"` — tells the browser to send data (rather than request it)
+
+* `action` — the Formspree endpoint URL where data gets sent
+* `method="POST"` — tells the browser to send data (rather than request it)
 
 ```html
 <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
@@ -366,7 +388,7 @@ Checkboxes are useful when you need a yes/no answer to something.
 </div>
 ```
 
-It is common to see the label placed *after* the checkbox.
+It is common to see the label placed _after_ the checkbox.
 
 **TODO:** Add the checkbox input to your form.
 
@@ -421,27 +443,32 @@ The `<fieldset>` and `<legend>` elements are used to group together a set of rel
 **TODO:** Add the fieldset and radio inputs to your form.
 
 ### When To Use Each Input Type
-- `type="text"` — Any short, open-ended text
-- `type="number"` — Numeric data (can add `min`, `max`, `step` constraints)
-- `type="date"` — Dates (gives you a calendar picker)
-- `type="email"` / `type="url"` — Validates format automatically
-- `<textarea>` — Long, multi-line text
-- `type="checkbox"` — Yes/no, on/off (can select multiple if you have several)
-- `type="radio"` — Pick ONE from a few options (same `name`, different `value`)
-- `<select>` — Pick ONE from MANY options (use when you have 5+ choices)
+
+* `type="text"` — Any short, open-ended text
+* `type="number"` — Numeric data (can add `min`, `max`, `step` constraints)
+* `type="date"` — Dates (gives you a calendar picker)
+* `type="email"` / `type="url"` — Validates format automatically
+* `<textarea>` — Long, multi-line text
+* `type="checkbox"` — Yes/no, on/off (can select multiple if you have several)
+* `type="radio"` — Pick ONE from a few options (same `name`, different `value`)
+* `<select>` — Pick ONE from MANY options (use when you have 5+ choices)
 
 **Q: When would you use radio buttons vs. a select dropdown?**
 
 <details>
+
 <summary>Answer</summary>
+
 Radio buttons when you have 2-5 options and want them all visible. Select dropdowns when you have many options (6+) and want to save space.
+
 </details>
 
 **Note about radio buttons:**
-- All radio buttons in a group must have the **same `name`** attribute
-- Each needs a **different `value`** attribute
-- The `value` is what gets submitted, not the label text
-- Use `<fieldset>` and `<legend>` to group related radio buttons (accessibility best practice)
+
+* All radio buttons in a group must have the **same `name`** attribute
+* Each needs a **different `value`** attribute
+* The `value` is what gets submitted, not the label text
+* Use `<fieldset>` and `<legend>` to group related radio buttons (accessibility best practice)
 
 ## Form Best Practices
 
@@ -468,22 +495,23 @@ You can validate form data before it's submitted using HTML attributes:
 ```
 
 **Common validation attributes:**
-- `required` — Field must be filled out
-- `min` / `max` — For numbers and dates
-- `step` — Specifies the interval between allowed values for numbers and dates
-- `minlength` / `maxlength` — For text
-- `pattern` — Must match a regex pattern
+
+* `required` — Field must be filled out
+* `min` / `max` — For numbers and dates
+* `step` — Specifies the interval between allowed values for numbers and dates
+* `minlength` / `maxlength` — For text
+* `pattern` — Must match a regex pattern
 
 When validation fails, the browser shows an error message and prevents submission.
 
 **Q: Why is HTML validation helpful even though we'll add JavaScript validation later?**
 
 <details>
+
 <summary>Answer</summary>
-- Provides instant feedback before JavaScript loads
-- Works even if JavaScript fails or is disabled
-- Accessible to screen readers
-- Less code to write (browser does the work)
+
+\- Provides instant feedback before JavaScript loads - Works even if JavaScript fails or is disabled - Accessible to screen readers - Less code to write (browser does the work)
+
 </details>
 
 ### Styling Forms
@@ -602,7 +630,7 @@ Wrap two form fields in a `div.form-row` element to create a row with two column
 
 **Checkbox and radio layouts:**
 
-Checkboxes and radios look better with the label *beside* the input. Use flexbox with `align-items: center`:
+Checkboxes and radios look better with the label _beside_ the input. Use flexbox with `align-items: center`:
 
 ```css
 .checkbox-field {
@@ -666,18 +694,19 @@ Use a media query to stack columns on small screens:
 ```
 
 **Key styling considerations:**
-- `box-sizing: border-box` on all elements makes width calculations predictable
-- `margin-inline: auto` centers the form horizontally
-- `gap` in flexbox containers provides consistent spacing without margin hacks
-- `flex: 1` distributes space equally among siblings
-- `flex-direction: column` in media queries converts rows to stacked layouts
+
+* `box-sizing: border-box` on all elements makes width calculations predictable
+* `margin-inline: auto` centers the form horizontally
+* `gap` in flexbox containers provides consistent spacing without margin hacks
+* `flex: 1` distributes space equally among siblings
+* `flex-direction: column` in media queries converts rows to stacked layouts
 
 ## Key Takeaways
 
-- **Forms collect multiple related pieces of data** that are submitted together
-- **Always use labels** for accessibility and usability
-- **Different input types** serve different purposes (text, number, date, select, etc.)
-- **HTML validation** provides instant feedback before JavaScript runs
-- **Vertical layouts** with full-width inputs work well for most forms
+* **Forms collect multiple related pieces of data** that are submitted together
+* **Always use labels** for accessibility and usability
+* **Different input types** serve different purposes (text, number, date, select, etc.)
+* **HTML validation** provides instant feedback before JavaScript runs
+* **Vertical layouts** with full-width inputs work well for most forms
 
 Next lesson, we'll use JavaScript to handle form submissions, extract data, and build interactive applications with that data.

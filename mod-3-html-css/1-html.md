@@ -1,4 +1,4 @@
-# HTML
+# 1. HTML
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-1-html)!
@@ -6,40 +6,39 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 **Table of Contents**:
 
-- [Key Concepts](#key-concepts)
-- [Why HTML Matters for JavaScript Developers](#why-html-matters-for-javascript-developers)
-- [HTML is a Markup Language](#html-is-a-markup-language)
-  - [HTML Syntax: Tags and HTML Elements](#html-syntax-tags-and-html-elements)
-  - [Viewing HTML Files In Your Browser](#viewing-html-files-in-your-browser)
-  - [A Quick Note On Headings](#a-quick-note-on-headings)
-- [Attributes](#attributes)
-  - [Hyperlinks](#hyperlinks)
-  - [Images](#images)
-- [Structural Elements: Nesting](#structural-elements-nesting)
-  - [Inspecting the HTML Structure: HTML Boilerplate](#inspecting-the-html-structure-html-boilerplate)
-- [Accessible Web Design](#accessible-web-design)
-  - [Semantic Page Structure](#semantic-page-structure)
-  - [Header Navigation](#header-navigation)
-  - [Footer](#footer)
-  - [Main Sections](#main-sections)
-  - [Challenge: Main Sections](#challenge-main-sections)
-  - [Figure and Figcaption](#figure-and-figcaption)
-- [Deep Dive: The `file://` protocol vs the `https://` protocol](#deep-dive-the-file-protocol-vs-the-https-protocol)
-- [Quiz](#quiz)
-- [Complete HTML](#complete-html)
-
+* [Key Concepts](1-html.md#key-concepts)
+* [Why HTML Matters for JavaScript Developers](1-html.md#why-html-matters-for-javascript-developers)
+* [HTML is a Markup Language](1-html.md#html-is-a-markup-language)
+  * [HTML Syntax: Tags and HTML Elements](1-html.md#html-syntax-tags-and-html-elements)
+  * [Viewing HTML Files In Your Browser](1-html.md#viewing-html-files-in-your-browser)
+  * [A Quick Note On Headings](1-html.md#a-quick-note-on-headings)
+* [Attributes](1-html.md#attributes)
+  * [Hyperlinks](1-html.md#hyperlinks)
+  * [Images](1-html.md#images)
+* [Structural Elements: Nesting](1-html.md#structural-elements-nesting)
+  * [Inspecting the HTML Structure: HTML Boilerplate](1-html.md#inspecting-the-html-structure-html-boilerplate)
+* [Accessible Web Design](1-html.md#accessible-web-design)
+  * [Semantic Page Structure](1-html.md#semantic-page-structure)
+  * [Header Navigation](1-html.md#header-navigation)
+  * [Footer](1-html.md#footer)
+  * [Main Sections](1-html.md#main-sections)
+  * [Challenge: Main Sections](1-html.md#challenge-main-sections)
+  * [Figure and Figcaption](1-html.md#figure-and-figcaption)
+* [Deep Dive: The `file://` protocol vs the `https://` protocol](1-html.md#deep-dive-the-file-protocol-vs-the-https-protocol)
+* [Quiz](1-html.md#quiz)
+* [Complete HTML](1-html.md#complete-html)
 
 ## Key Concepts
 
-- **HTML (Hypertext Markup Language)** is a markup language that describes the **content** and **structure** of a webpage.
-- **HTML elements** are created using **opening and closing tags** (e.g., `<p>content</p>`).
-- **Self-closing tags (void tags)** like `<img />` do not require a closing tag.
-- **Attributes** provide additional information and are included in the opening tag (e.g., `href`, `src`, `alt`).
-- Elements can be **nested** inside other elements to create structure (e.g., `<li>` elements must be inside `<ul>` or `<ol>`).
-- A properly formatted HTML document includes `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>` tags.
-- **Semantic elements** have names that describe their function (e.g., `header`, `main`, `footer`, `nav`, `section`, `figure`).
-- A **Browser** is a program that interprets and renders HTML.
-- Browsers use the **`file://` protocol** when opening HTML files locally; the **`https://` protocol** is used when accessing files from a server over the internet.
+* **HTML (Hypertext Markup Language)** is a markup language that describes the **content** and **structure** of a webpage.
+* **HTML elements** are created using **opening and closing tags** (e.g., `<p>content</p>`).
+* **Self-closing tags (void tags)** like `<img />` do not require a closing tag.
+* **Attributes** provide additional information and are included in the opening tag (e.g., `href`, `src`, `alt`).
+* Elements can be **nested** inside other elements to create structure (e.g., `<li>` elements must be inside `<ul>` or `<ol>`).
+* A properly formatted HTML document includes `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>` tags.
+* **Semantic elements** have names that describe their function (e.g., `header`, `main`, `footer`, `nav`, `section`, `figure`).
+* A **Browser** is a program that interprets and renders HTML.
+* Browsers use the **`file://` protocol** when opening HTML files locally; the **`https://` protocol** is used when accessing files from a server over the internet.
 
 ## Why HTML Matters for JavaScript Developers
 
@@ -55,12 +54,12 @@ HTML gives you a new environment to apply these skills: **the browser**. Instead
 
 **The Browser vs. Node**
 
-| Node.js | Browser (HTML + CSS + JavaScript) |
-| ---- | ------ |
-| Text-based interface     |   Visual interface     |
-|  Input via prompt-sync    |  Input via forms, buttons, clicks      |
-| Output via console.log()     |  Output via updating HTML elements      |
-|  Runs on your computer in the Terminal    |   Runs in user's browser     |
+| Node.js                               | Browser (HTML + CSS + JavaScript) |
+| ------------------------------------- | --------------------------------- |
+| Text-based interface                  | Visual interface                  |
+| Input via prompt-sync                 | Input via forms, buttons, clicks  |
+| Output via console.log()              | Output via updating HTML elements |
+| Runs on your computer in the Terminal | Runs in user's browser            |
 
 ## HTML is a Markup Language
 
@@ -104,16 +103,18 @@ And a bullet list:
 Every pair of **opening tag** and **closing tag** (e.g. `<h1></h1>`) create an **HTML element**—the most basic building block of a webpage.
 
 Here are some key details to note about HTML elements:
+
 * The tag name (e.g. `h1`, `h2`, `p` `strong`, `ul`, `li`) determine how the content of that element will be rendered by the browser.
 * Only the content between the tags is displayed to the user.
 * Comments are written like so: `<!-- comment -->`
 * HTML elements are presented in order from top to bottom.
 
 **TODO: Delete the contents of the HTML file and create the following:**
+
 * A `h1` element with your name
 * A `p` element with a brief statement of who you are ("Student at The Marcy Lab School")
 * A `h2` element with the text content "Programming Skills"
-* A `ul` with list items (`li`) for each module we've covered: 
+* A `ul` with list items (`li`) for each module we've covered:
   * Command Line & Git
   * JavaScript Fundamentals
   * Object-Oriented Programming
@@ -126,7 +127,7 @@ Here are some key details to note about HTML elements:
 
 To view an HTML file in your browser, all you have to do is drag and drop the `index.html` file from VS Code into your browser's tab bar. Your browser will automatically interpret the HTML syntax and "render" (display) the elements.
 
-![HTML (left) vs. Markdown (right) in a browser](./img/markdown-vs-html-browser.png)
+![HTML (left) vs. Markdown (right) in a browser](../.gitbook/assets/markdown-vs-html-browser.png)
 
 If you try doing this with the `index.md` file, you'll see that your browser will not be able to render other kinds of markup files.
 
@@ -134,7 +135,8 @@ At the end of the day, your browser is just a program for interpreting and rende
 
 ### A Quick Note On Headings
 
-The heading elements `h1` through `h6` are used to indicate the start of a new section. When choosing which heading size to use, think of it like a book: 
+The heading elements `h1` through `h6` are used to indicate the start of a new section. When choosing which heading size to use, think of it like a book:
+
 1. `h1` is the book title. There should only be one and it should be the first heading you see.
 2. `h2` elements are chapter titles and come at the top of each new section of content.
 3. `h3` elements are like subsection titles within chapters.
@@ -168,15 +170,19 @@ Consider this example:
 </ul>
 ```
 
-**<details><summary>Q: How do the different heading sizes indicate the relationships in this content?</summary>**
+<details>
 
-- The `h1` title tells us that the information is all about Ada Lovelace.
-- The `h2` tells us that the next set of content is about Ada's programming skills.
-- Each `h3` below tells us the sub-category of programming skill that is about to be listed.
+<summary><strong>Q: How do the different heading sizes indicate the relationships in this content?</strong></summary>
+
+* The `h1` title tells us that the information is all about Ada Lovelace.
+* The `h2` tells us that the next set of content is about Ada's programming skills.
+* Each `h3` below tells us the sub-category of programming skill that is about to be listed.
 
 </details>
 
-**<details><summary>Q: If you were to add a list of Ada's favorite quotes to the bottom of the page, which type of heading would you add?</summary>**
+<details>
+
+<summary><strong>Q: If you were to add a list of Ada's favorite quotes to the bottom of the page, which type of heading would you add?</strong></summary>
 
 A `h2` heading would be most appropriate since the content is still related to Ada Lovelace but is a different category of content from the lists of programming skills.
 
@@ -198,7 +204,7 @@ A **hyperlink** is an element that lets the user navigate from one page to anoth
 
 In this example, `href` ("hyperlink reference") is the **attribute** which defines where the link will take the user. The text `Home`, `Projects`, and `Contact Me` is what the user sees and can click on to navigate.
 
-Remember, attributes like `href` are always added to the opening tag of an HTML element. 
+Remember, attributes like `href` are always added to the opening tag of an HTML element.
 
 **TODO:** Add the hyperlink elements above to your `index.html` file. Then, add them in the `projects.html` and `contact.html` files as well.
 
@@ -215,6 +221,7 @@ Paragraphs and hyperlinks are both considered "inline" elements. This means that
 ### Images
 
 Images use the `<img>` tag with two important attributes:
+
 * `src` — the source URL or file path of the image
 * `alt` — describes the image for screen readers and when images fail to load
 
@@ -234,7 +241,7 @@ If you don't have a GitHub profile picture, make sure to upload one!
 
 ## Structural Elements: Nesting
 
-This use of container elements is a key concept in HTML: elements are often *nested* inside one another to build the hierarchy and organization of your web page.
+This use of container elements is a key concept in HTML: elements are often _nested_ inside one another to build the hierarchy and organization of your web page.
 
 For example, when building lists in HTML, it's important to remember that `<li>` elements (list items) must always be placed inside a container element—either an unordered list (`<ul>`) or an ordered list (`<ol>`).
 
@@ -262,14 +269,15 @@ You can nest many types of elements within others. For instance, in the previous
 
 If you ever want to see the underlying HTML structure of a rendered webpage, you can right click on the page and select **Inspect**. This will open the **Chrome Developer Tools** which looks like this:
 
-![Right click and select Inspect to see the Chrome Developer Tools](./img/inspect-page-chrome-devtools.png)
+![Right click and select Inspect to see the Chrome Developer Tools](../.gitbook/assets/inspect-page-chrome-devtools.png)
 
 With the Chrome Developer Tools, you can look closely at each element and see how it is rendered. When we learn more about CSS, the Chrome Developer tools will become very important.
 
 For now, notice that a few additional structural elements have been added to the document that we did not create:
-- `html`
-- `head`
-- `body`
+
+* `html`
+* `head`
+* `body`
 
 These elements are structural elements that the browser will add to create a properly formatted HTML document. While they are technically optional, they should be included in every HTML document that we create.
 
@@ -293,7 +301,7 @@ Let's break this down:
 
 * `<!DOCTYPE html>` immediately tells the browser that it is rendering an HTML document
 * `<html>` acts as the top-level container for all HTML elements. We also specify the language is english (which you can change!)
-* `<head>` contains "meta data" (information *about* the website) that won't show up in the webpage itself
+* `<head>` contains "meta data" (information _about_ the website) that won't show up in the webpage itself
   * `<meta>` elements define specific configurations for the website
   * `<title>` determines what shows up in the browser tab as well as what appears in search results
 * `<body>` contains all of the elements that the user will see on the webpage. All of the content you've created should go inside of the `body`
@@ -301,8 +309,7 @@ Let's break this down:
 {% hint style="info" %}
 **Pro Tip!** Don't try to memorize this. In VS Code, when you create an empty `.html` document, just type `html` and then from the popup, select `html:5` and hit Enter. This boilerplate will be inserted into your page!
 
-![Use the html:5 emmet abbreviation to insert the boilerplate code.](./img/html5-emmet-abbreviation.png)
-
+<img src="../.gitbook/assets/html5-emmet-abbreviation.png" alt="Use the html:5 emmet abbreviation to insert the boilerplate code." data-size="original">
 {% endhint %}
 
 **TODO**: In the `index.html` file, use the emmet abbreviation `html:5` trick to insert the boilerplate code. Then, copy-paste all of the content you've already created into the `body`. Finally, update the `title` inside of the `head` to your name. Do the same for the projects and contact pages
@@ -314,13 +321,14 @@ Let's break this down:
 How we structure our HTML does more than just keep our code organized—it has a tangible impact on users with disabilities who rely on tools like screen readers to navigate a webpage.
 
 We've already done a good job at this by:
+
 1. Using headings (`h1`, `h2`, etc.) in the proper order.
 2. Using descriptive link names in our anchor tags `<a>`.
 3. Adding the `alt` attribute to our image.
 
 But there are a few more ways we can improve our HTML structure. Let's see how by building a profile page like this:
 
-![The website you will build in this lesson.](./img/html-lesson-final-build.png)
+![The website you will build in this lesson.](../.gitbook/assets/html-lesson-final-build.png)
 
 ### Semantic Page Structure
 
@@ -346,7 +354,7 @@ In HTML, there are **semantic elements** made specifically for these areas of co
 </body>
 ```
 
-Rather than adding visible content to the page, these elements provide *structure* that will keep our page organized.
+Rather than adding visible content to the page, these elements provide _structure_ that will keep our page organized.
 
 **TODO:** Start by adding in these sections to your body.
 
@@ -376,7 +384,9 @@ The footer typically contains copyright information or other contact information
 
 See if you can figure out the HTML for yourself before checking the solution below
 
-**<details><summary>Solution: Footer HTML</summary>**
+<details>
+
+<summary><strong>Solution: Footer HTML</strong></summary>
 
 ```html
 <footer>
@@ -393,9 +403,12 @@ Using the appropriate sized headings (`h1`, `h2`, etc.) helps to make our main c
 
 In between our navigation links in the `header` and the information in the `footer`, try to identify the different sections within the `main` content of the page before checking the answer below (hint: look at the headings)
 
-**<details><summary>Solution: Main Sections</summary>**
+<details>
+
+<summary><strong>Solution: Main Sections</strong></summary>
 
 In our website, we have three clear sections:
+
 1. The section that introduces us (a.k.a. the "hero" section)
 2. The section with our programming skills
 3. The section with our favorite quotes
@@ -406,7 +419,9 @@ While we could argue that each programming skill is its own subsection, we want 
 
 Now that we've identified the sections, inside of the `main` element, create a `section` element for each section of content.
 
-**<details><summary>Solution: Main Sections HTML</summary>**
+<details>
+
+<summary><strong>Solution: Main Sections HTML</strong></summary>
 
 ```html
 <main>
@@ -428,7 +443,7 @@ Now that we've identified the sections, inside of the `main` element, create a `
 
 ### Challenge: Main Sections
 
-Before moving on, use the HTML skills that you have learned in this lesson to fill out each of our main sections. Use the [screenshot](#accessible-web-design) above to see what you're trying to build.
+Before moving on, use the HTML skills that you have learned in this lesson to fill out each of our main sections. Use the [screenshot](1-html.md#accessible-web-design) above to see what you're trying to build.
 
 ### Figure and Figcaption
 
@@ -464,13 +479,13 @@ You're probably familiar with seeing `https://` at the start of your URL bar, bu
 
 When using your browser on the internet, the **`https://` protocol** (hypertext transfer protocol) is used to load HTML files from a **server**.
 
-![The http protocol loads files over the internet](./img/http-protocol.png)
+![The http protocol loads files over the internet](../.gitbook/assets/http-protocol.png)
 
 A **server** is any computer that provides a resource to another computer.
 
 Your browser uses the `file://` **protocol** to retrieve HTML files that come from your file system on your own computer. It all happens on the same computer:
 
-![The file protocol loads files directly from your own computer](./img/file-protocol.png)
+![The file protocol loads files directly from your own computer](../.gitbook/assets/file-protocol.png)
 
 Whether you're loading a file locally or from a server, your browser is doing the same thing—receiving and rendering HTML. Later, we'll learn to build servers so others can access our content via `https://`. For now, we'll use `file://` to view files on our own computer.
 
@@ -479,6 +494,7 @@ Whether you're loading a file locally or from a server, your browser is doing th
 **Q1: What is the difference between a markup language and a plain text file?**
 
 <details>
+
 <summary>Answer</summary>
 
 A plain text file (`.txt`) stores characters that are interpreted literally. A markup language (like HTML or Markdown) contains symbols that influence how the text is displayed when rendered. For example, `<strong>bold</strong>` in HTML will display as **bold** text rather than showing the angle brackets.
@@ -488,10 +504,11 @@ A plain text file (`.txt`) stores characters that are interpreted literally. A m
 **Q2: What is the difference between the `file://` protocol and the `https://` protocol?**
 
 <details>
+
 <summary>Answer</summary>
 
-- The `file://` protocol retrieves HTML files directly from your local file system (your computer).
-- The `https://` protocol retrieves HTML files from a server over the internet.
+* The `file://` protocol retrieves HTML files directly from your local file system (your computer).
+* The `https://` protocol retrieves HTML files from a server over the internet.
 
 </details>
 
@@ -507,6 +524,7 @@ A plain text file (`.txt`) stores characters that are interpreted literally. A m
 ```
 
 <details>
+
 <summary>Answer</summary>
 
 1. The `<h1>` tag is not properly closed—it should be `</h1>`, not `<h1>`.
@@ -523,9 +541,11 @@ A plain text file (`.txt`) stores characters that are interpreted literally. A m
 ```
 
 <details>
+
 <summary>Answer</summary>
 
 Two issues:
+
 1. `<img>` is a **void (self-closing) tag**—it should not have content between opening and closing tags.
 2. The image source should be specified using the `src` attribute, and an `alt` attribute should describe the image.
 
@@ -540,6 +560,7 @@ Two issues:
 **Q5: Create an anchor tag that links to `https://google.com` with the visible text "Search on Google".**
 
 <details>
+
 <summary>Answer</summary>
 
 ```html
@@ -551,6 +572,7 @@ Two issues:
 **Q6: What are the three semantic elements that structure the main parts of a webpage, and what does each contain?**
 
 <details>
+
 <summary>Answer</summary>
 
 1. `<header>` — Contains navigation, logo, or introductory content
@@ -576,6 +598,7 @@ Two issues:
 ```
 
 <details>
+
 <summary>Answer</summary>
 
 ```html
@@ -599,6 +622,7 @@ Semantic elements like `<header>`, `<main>`, and `<footer>` describe the purpose
 Here's the complete HTML with all the elements we've built. Use this as a reference to check your work or catch up if you fell behind.
 
 **index.html**
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -667,6 +691,7 @@ Here's the complete HTML with all the elements we've built. Use this as a refere
 The projects file and the contacts file have been updated with the proper boilerplate structure and semantic elements.
 
 **projects.html**
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -695,6 +720,7 @@ The projects file and the contacts file have been updated with the proper boiler
 ```
 
 **contact.html**
+
 ```html
 <!DOCTYPE html>
 <html lang="en">

@@ -1,4 +1,4 @@
-# Accessibility (a11y)
+# 7. Accessibility (a11y)
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2-0-3-accessibility-html-best-practices)!
@@ -8,19 +8,19 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/2
 
 **Table of Contents**
 
-* [A11y Commands you'll need](accessibility.md#a11y-commands-youll-need)
-  * [Voiceover on Mac](accessibility.md#voiceover-on-mac)
-  * [Chrome Accessibility Inspector](accessibility.md#chrome-accessibility-inspector)
-  * [Chrome Color Blindness and Font Size](accessibility.md#chrome-color-blindness-and-font-size)
-* [Part 0: Why A11y?](accessibility.md#part-0-why-a11y)
-* [Part 1: Semantic elements](accessibility.md#part-1-semantic-elements)
-* [Part 2: A11y tree](accessibility.md#part-2-a11y-tree)
-* [Part 3: Voice over](accessibility.md#part-3-voice-over)
-* [Part 4: Visual Impairments](accessibility.md#part-4-visual-impairments)
-* [Part 5: images](accessibility.md#part-5-images)
-* [Part 6: How to fix it](accessibility.md#part-6-how-to-fix-it)
-* [Part 7: ARIA and Landmarks](accessibility.md#part-7-aria-and-landmarks)
-* [Part 8: Rem vs px](accessibility.md#part-8-rem-vs-px)
+* [A11y Commands you'll need](../mod-3-html-css-dom/accessibility.md#a11y-commands-youll-need)
+  * [Voiceover on Mac](../mod-3-html-css-dom/accessibility.md#voiceover-on-mac)
+  * [Chrome Accessibility Inspector](../mod-3-html-css-dom/accessibility.md#chrome-accessibility-inspector)
+  * [Chrome Color Blindness and Font Size](../mod-3-html-css-dom/accessibility.md#chrome-color-blindness-and-font-size)
+* [Part 0: Why A11y?](../mod-3-html-css-dom/accessibility.md#part-0-why-a11y)
+* [Part 1: Semantic elements](../mod-3-html-css-dom/accessibility.md#part-1-semantic-elements)
+* [Part 2: A11y tree](../mod-3-html-css-dom/accessibility.md#part-2-a11y-tree)
+* [Part 3: Voice over](../mod-3-html-css-dom/accessibility.md#part-3-voice-over)
+* [Part 4: Visual Impairments](../mod-3-html-css-dom/accessibility.md#part-4-visual-impairments)
+* [Part 5: images](../mod-3-html-css-dom/accessibility.md#part-5-images)
+* [Part 6: How to fix it](../mod-3-html-css-dom/accessibility.md#part-6-how-to-fix-it)
+* [Part 7: ARIA and Landmarks](../mod-3-html-css-dom/accessibility.md#part-7-aria-and-landmarks)
+* [Part 8: Rem vs px](../mod-3-html-css-dom/accessibility.md#part-8-rem-vs-px)
 
 ## A11y Commands you'll need
 

@@ -1,4 +1,4 @@
-# CSS
+# 2. CSS
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3-2-css)!
@@ -6,44 +6,44 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
 
 **Table of Contents**:
 
-- [Key Concepts](#key-concepts)
-- [Intro to CSS](#intro-to-css)
-  - [CSS Syntax](#css-syntax)
-- [Linking/Loading CSS Files](#linkingloading-css-files)
-  - [External Stylesheets (Best Practice)](#external-stylesheets-best-practice)
-  - [Internal Stylesheets With Style Tags (Fine If You Only Want 1 File)](#internal-stylesheets-with-style-tags-fine-if-you-only-want-1-file)
-  - [Inline Styling (Practically Never Do This)](#inline-styling-practically-never-do-this)
-    - [Inspecting CSS With Chrome Developer Tools](#inspecting-css-with-chrome-developer-tools)
-- [Common CSS Properties](#common-css-properties)
-  - [Color Properties](#color-properties)
-  - [Typography Properties](#typography-properties)
-- [Selectors](#selectors)
-  - [Element Selector](#element-selector)
-  - [Class Selector](#class-selector)
-  - [ID Selector](#id-selector)
-  - [Special Selectors](#special-selectors)
-    - [Multi-Selectors](#multi-selectors)
-    - [Child Selectors](#child-selectors)
-    - [Pseudo-Class Selectors](#pseudo-class-selectors)
-  - [Selector Specificity](#selector-specificity)
-- [Choosing a Color Palette and Custom Variables](#choosing-a-color-palette-and-custom-variables)
-- [Deep Dive On Units: `px` vs `%` vs `rems`](#deep-dive-on-units-px-vs--vs-rems)
-- [Quiz!](#quiz)
-- [Complete CSS](#complete-css)
+* [Key Concepts](2-css.md#key-concepts)
+* [Intro to CSS](2-css.md#intro-to-css)
+  * [CSS Syntax](2-css.md#css-syntax)
+* [Linking/Loading CSS Files](2-css.md#linkingloading-css-files)
+  * [External Stylesheets (Best Practice)](2-css.md#external-stylesheets-best-practice)
+  * [Internal Stylesheets With Style Tags (Fine If You Only Want 1 File)](2-css.md#internal-stylesheets-with-style-tags-fine-if-you-only-want-1-file)
+  * [Inline Styling (Practically Never Do This)](2-css.md#inline-styling-practically-never-do-this)
+    * [Inspecting CSS With Chrome Developer Tools](2-css.md#inspecting-css-with-chrome-developer-tools)
+* [Common CSS Properties](2-css.md#common-css-properties)
+  * [Color Properties](2-css.md#color-properties)
+  * [Typography Properties](2-css.md#typography-properties)
+* [Selectors](2-css.md#selectors)
+  * [Element Selector](2-css.md#element-selector)
+  * [Class Selector](2-css.md#class-selector)
+  * [ID Selector](2-css.md#id-selector)
+  * [Special Selectors](2-css.md#special-selectors)
+    * [Multi-Selectors](2-css.md#multi-selectors)
+    * [Child Selectors](2-css.md#child-selectors)
+    * [Pseudo-Class Selectors](2-css.md#pseudo-class-selectors)
+  * [Selector Specificity](2-css.md#selector-specificity)
+* [Choosing a Color Palette and Custom Variables](2-css.md#choosing-a-color-palette-and-custom-variables)
+* [Deep Dive On Units: `px` vs `%` vs `rems`](2-css.md#deep-dive-on-units-px-vs--vs-rems)
+* [Quiz!](2-css.md#quiz)
+* [Complete CSS](2-css.md#complete-css)
 
 ## Key Concepts
 
-- **CSS (Cascading Style Sheets)** defines the appearance of HTML documents: colors, typography, spacing, and layout.
-- CSS syntax consists of **selectors**, **properties**, and **values**. Each `property: value;` pair is called a **declaration**.
-- CSS can be added via internal `<style>` tags, inline `style` attributes, or external `.css` files. **External stylesheets are the best practice** as they promote reusability and separation of concerns.
-- **Selectors** target elements to style:
-  - Element selector: `p { }` — targets all `<p>` elements
-  - Class selector: `.intro { }` — targets elements with `class="intro"`
-  - ID selector: `#main { }` — targets the element with `id="main"`
-  - Multi-selector: `h1, h2, h3 { }` — targets multiple element types
-  - Pseudo-class selector: `a:hover { }` — targets elements in a specific state
-- **Specificity** determines which styles win when multiple rules apply: ID > Class > Element. If specificity is equal, the last rule wins.
-- **Units**: Use `rem` for font sizes (accessible, scales with user settings), `%` for relative sizing, and avoid `px` for font sizes.
+* **CSS (Cascading Style Sheets)** defines the appearance of HTML documents: colors, typography, spacing, and layout.
+* CSS syntax consists of **selectors**, **properties**, and **values**. Each `property: value;` pair is called a **declaration**.
+* CSS can be added via internal `<style>` tags, inline `style` attributes, or external `.css` files. **External stylesheets are the best practice** as they promote reusability and separation of concerns.
+* **Selectors** target elements to style:
+  * Element selector: `p { }` — targets all `<p>` elements
+  * Class selector: `.intro { }` — targets elements with `class="intro"`
+  * ID selector: `#main { }` — targets the element with `id="main"`
+  * Multi-selector: `h1, h2, h3 { }` — targets multiple element types
+  * Pseudo-class selector: `a:hover { }` — targets elements in a specific state
+* **Specificity** determines which styles win when multiple rules apply: ID > Class > Element. If specificity is equal, the last rule wins.
+* **Units**: Use `rem` for font sizes (accessible, scales with user settings), `%` for relative sizing, and avoid `px` for font sizes.
 
 ## Intro to CSS
 
@@ -55,7 +55,7 @@ When the world wide web was born, it was just a means of communicating informati
 
 As you can see, the browser already has some default styles applied to elements of different types. Headings are bigger and bolder than paragraphs. Hyperlinks ("anchors") are blue and underlined.
 
-But with CSS, we can override those defaults and dramatically transform the page. 
+But with CSS, we can override those defaults and dramatically transform the page.
 
 ![The same page with CSS.](../.gitbook/assets/css-zen-garden.png)
 
@@ -65,12 +65,12 @@ You can see this page at [https://csszengarden.com/](https://csszengarden.com/),
 
 Which website would you rather use? Which one feels more trustworthy and professional? **CSS bridges the gap between content and experience.** As a developer, understanding CSS allows you to:
 
-| Skill | Why It Matters |
-| ----- | -------------- |
-| Control visual hierarchy | Guide users' attention to what's important |
+| Skill                     | Why It Matters                                        |
+| ------------------------- | ----------------------------------------------------- |
+| Control visual hierarchy  | Guide users' attention to what's important            |
 | Create responsive layouts | Make your app usable on phones, tablets, and desktops |
-| Implement design systems | Build consistent, professional interfaces |
-| Debug styling issues | Fix layout problems that break user experience |
+| Implement design systems  | Build consistent, professional interfaces             |
+| Debug styling issues      | Fix layout problems that break user experience        |
 
 Later, when you learn DOM manipulation with JavaScript, you'll be able to dynamically change CSS in response to user actions—highlighting selected items, showing/hiding elements, animating transitions, and more. A solid CSS foundation makes that JavaScript work much more powerful.
 
@@ -97,19 +97,20 @@ img {
 * **Properties** (like `background`, `color`, `max-width`, etc.) tell our browser which aspect of the element to change.
 * Each property has a set of valid **values** that can be assigned to them (like `azure` or `midnightblue` for colors, `center` for alignment, and `300px` or `100%` for sizing and spacing.)
 
-Each `property: value;` pair is called a **declaration** that *must* be followed by a semicolon.
+Each `property: value;` pair is called a **declaration** that _must_ be followed by a semicolon.
 
 Now, let's see where we can put this CSS code.
 
 ## Linking/Loading CSS Files
 
 There are three ways to add CSS to an HTML document:
+
 1. Inside a separate `.css` file, loaded via a `<link>` tag (best practice)
 2. Inside `<style></style>` tags (okay for small projects)
 3. As attributes of individual elements (don't do this)
 
 {% hint style="info" %}
-Clone down the repo at the top of the lesson if you haven't already. It contains the completed HTML code from the last lesson. 
+Clone down the repo at the top of the lesson if you haven't already. It contains the completed HTML code from the last lesson.
 {% endhint %}
 
 ### External Stylesheets (Best Practice)
@@ -155,7 +156,9 @@ figure {
 
 **TODO:** Add the CSS above into `style.css` and load it into your HTML file using the `link` tag. Then, copy that `link` tag into your `contact.html` and `portfolio.html` pages.
 
-**<details><summary>Q: What are the benefits of having CSS in an external file?</summary>**
+<details>
+
+<summary><strong>Q: What are the benefits of having CSS in an external file?</strong></summary>
 
 Just like modules in a JavaScript program, external stylesheets can be reused by multiple pages that want to have the same styling. When you decide to make a change to the overall style of the website, all pages that use that stylesheet will be updated without the need to update pages individually.
 
@@ -190,9 +193,10 @@ In the `index.html` file and add these `<style>` tags and CSS within the `<head>
 </html>
 ```
 
-Note that the order of our external/internal stylesheets matters. See what happens if you put the external stylesheet *after* the internal one. The stylesheet that we add last will always "win out". This is what the "cascading" part of "Cascading Style Sheets" refers to.
+Note that the order of our external/internal stylesheets matters. See what happens if you put the external stylesheet _after_ the internal one. The stylesheet that we add last will always "win out". This is what the "cascading" part of "Cascading Style Sheets" refers to.
 
 This approach is appropriate under two circumstances:
+
 1. if you want to have styles for a particular page override the external stylesheet
 2. if you want to keep all of your code inside of one file and not use an external stylesheet at all
 
@@ -206,7 +210,7 @@ You can also add a `style` attribute directly to an individual element but this 
 </body>
 ```
 
-Inline styles are not a viable option for large scale styling. However, inline styles will always override both internal and external stylesheets. Therefore, it might be useful if you need to quickly test a CSS property and ensure that it will be applied to an element. 
+Inline styles are not a viable option for large scale styling. However, inline styles will always override both internal and external stylesheets. Therefore, it might be useful if you need to quickly test a CSS property and ensure that it will be applied to an element.
 
 But generally you should avoid this approach.
 
@@ -214,18 +218,20 @@ But generally you should avoid this approach.
 
 You can see how competing styles override each other if you open the Chrome Developer Tools and look at the styles applied to the `body` element
 
-![](./img/css-overriding-devtools.png)
+![](../.gitbook/assets/css-overriding-devtools.png)
 
 Notice how the styles "cascade" in the following manner:
+
 * The inline `element.style` properties appear at the top and override all other styles
 * Next are the internal stylesheet styles from `index.html`
 * Third are the external stylesheet styles from `style.css`
 * Last are the **user agent stylesheet** styles. These are the default styles applied by the browser.
 
 The Chrome Developer Tools are incredibly useful for testing out your CSS styling. For example:
-- Try disabling the inline `background` applied to the body and notice how the page will update immediately to use the next background color in the "cascade".
-- Click on the named color `red` and type in `green` to see the color change
-- Click on the color box and play around with the sliders to find a color that you like for the background.
+
+* Try disabling the inline `background` applied to the body and notice how the page will update immediately to use the next background color in the "cascade".
+* Click on the named color `red` and type in `green` to see the color change
+* Click on the color box and play around with the sliders to find a color that you like for the background.
 
 **TODO:** Remove all inline styles and the internal stylesheet. We'll use the external stylesheet `style.css` moving forward.
 
@@ -256,17 +262,20 @@ a {
 ```
 
 Color values can be written in a variety of ways. For example, these are all equivalent ways to use the color blue:
-- **Named color**: `blue`
-- **Red/Green/Blue (RGB)**: `rgb(0, 0, 255)`
-  - Each value ranges from 0 to 255
-- **Hex code**: `#0000ff`
-  - Each pair of base-16 values range from `00` (0) to `ff` (255) and represent red/green/blue.
 
-**<details><summary>Q: How would you make green using RGB and Hex? What about black and white?</summary>**
+* **Named color**: `blue`
+* **Red/Green/Blue (RGB)**: `rgb(0, 0, 255)`
+  * Each value ranges from 0 to 255
+* **Hex code**: `#0000ff`
+  * Each pair of base-16 values range from `00` (0) to `ff` (255) and represent red/green/blue.
 
-- Green: `rgb(0, 255, 0)` or `#00ff00`
-- Black: `rgb(0, 0, 0)` or `#000000`
-- White: `rgb(255, 255, 255)` or `#ffffff`
+<details>
+
+<summary><strong>Q: How would you make green using RGB and Hex? What about black and white?</strong></summary>
+
+* Green: `rgb(0, 255, 0)` or `#00ff00`
+* Black: `rgb(0, 0, 0)` or `#000000`
+* White: `rgb(255, 255, 255)` or `#ffffff`
 
 </details>
 
@@ -292,9 +301,10 @@ h1 {
 }
 ```
 
-Again, we can set these properties in the `body` and they will be inherited by all descendent elements. 
+Again, we can set these properties in the `body` and they will be inherited by all descendent elements.
 
 Here are a few notes to consider for each of these properties
+
 * **`font-family`**: List multiple fonts separated by commas. The browser uses the first available font. Always end with a generic family like `sans-serif` or `serif` as a fallback.
 * **`line-height`**: A line height between `1.4` and `1.6` improves readability. Use unitless numbers (e.g., `1.5`) so the line height scales with the font size.
 * **`text-align`**: Use `left` for natural reading flow in most languages, but `center` can help for headings or to create visual emphasis. Avoid centering long paragraphs for readability.
@@ -304,9 +314,10 @@ Here are a few notes to consider for each of these properties
 
 ## Selectors
 
-There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css_selectors.php)). 
+There are TONS of ways to select elements with CSS rules ([list of all the selectors](https://www.w3schools.com/cssref/css_selectors.php)).
 
 The most common selectors are:
+
 * By element (select all `li` elements)
 * By class name (select all elements with `class="blue"`)
 * By id name (select the element with `id="email-form"`)
@@ -335,6 +346,7 @@ section {
 A `class` attribute can be added to elements in order to style them as a group.
 
 **HTML:**
+
 ```html
 <section>
   <h2>Programming Skills</h2>
@@ -362,6 +374,7 @@ A `class` attribute can be added to elements in order to style them as a group.
 To target those elements, use a dot (`.`) followed by the class name:
 
 **CSS:**
+
 ```css
 .programming-skill {
   background-color: royalblue;
@@ -370,6 +383,7 @@ To target those elements, use a dot (`.`) followed by the class name:
 ```
 
 **Rules for classes:**
+
 * Multiple elements can share the same class.
 * Names are case-sensitive
 * Cannot start with numbers
@@ -381,7 +395,6 @@ To target those elements, use a dot (`.`) followed by the class name:
 ### ID Selector
 
 When we want to target a single element, we can add an `id` attribute in the HTML to label it
-
 
 **HTML:**
 
@@ -452,13 +465,13 @@ Add this style just below the `nav>a` selector.
 When multiple CSS rules apply to the same element, the browser follows these rules to determine which styles win:
 
 1. **Specificity**: More specific selectors override less specific ones
-   - ID selectors (`#main-title`) are most specific
-   - Class selectors (`.intro`) are less specific
-   - Element selectors (`p`) are least specific
-
+   * ID selectors (`#main-title`) are most specific
+   * Class selectors (`.intro`) are less specific
+   * Element selectors (`p`) are least specific
 2. **Source order**: If specificity is equal, the rule that appears last wins
 
 **Example:**
+
 ```css
 p {
   color: yellow;
@@ -487,14 +500,15 @@ p {
 ## Choosing a Color Palette and Custom Variables
 
 When designing a website, it is best to decide on a color palette with just a few colors to stick to. Here is a useful strategy to create a simple palette:
-  - Choose one primary color to define your entire palette (e.g. `powderblue`) 
-  - Choose a second color that has high-contrast with the first (e.g. `midnightblue`)
-  - Choose a third "accent" color that you can use for call-to-action elements like buttons and forms (e.g. `royalblue`)
-  - Don't shy away from using white and black when needed!
-  
-  {% hint style="info" %}
-  You can use a website like [https://mycolor.space](https://mycolor.space/?hex=%236F66CE&sub=1) to help come up with your color palettes!
-  {% endhint %}
+
+* Choose one primary color to define your entire palette (e.g. `powderblue`)
+* Choose a second color that has high-contrast with the first (e.g. `midnightblue`)
+* Choose a third "accent" color that you can use for call-to-action elements like buttons and forms (e.g. `royalblue`)
+* Don't shy away from using white and black when needed!
+
+{% hint style="info" %}
+You can use a website like [https://mycolor.space](https://mycolor.space/?hex=%236F66CE\&sub=1) to help come up with your color palettes!
+{% endhint %}
 
 To make it easier to stick to a particular palette, it can be incredibly useful to define **CSS Variables** for your colors.
 
@@ -508,7 +522,7 @@ To make it easier to stick to a particular palette, it can be incredibly useful 
 }
 ```
 
-These variables, which *must* begin with `--`, can be defined within any selector. However, those variables will only be available within the "scope" of that element. 
+These variables, which _must_ begin with `--`, can be defined within any selector. However, those variables will only be available within the "scope" of that element.
 
 So, it is most common to define them in `:root` which is a special selector that grabs the top-most element of a document (the `html` element). As a result, the variables are globally available.
 
@@ -634,11 +648,13 @@ p {
 **Q: For the HTML and CSS below, what will be the color of paragraph? (pay close attention)**
 
 HTML:
+
 ```html
 <p class='fun'>Hello World</p> 
 ```
 
 CSS:
+
 ```css
 .fun {
   color: orange;

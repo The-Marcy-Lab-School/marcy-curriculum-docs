@@ -1,4 +1,4 @@
-# Intro to Interactive Pages
+# 1. The DOM & Event Handling
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-1-interactive-pages)!
@@ -6,26 +6,26 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 
 **Table of Contents**
 
-- [Key Concepts](#key-concepts)
-- [What Can JavaScript Do?](#what-can-javascript-do)
-- [The Document Object Model (DOM)](#the-document-object-model-dom)
-  - [Selecting Elements with querySelector](#selecting-elements-with-queryselector)
-- [Linking JavaScript to HTML](#linking-javascript-to-html)
-- [Events](#events)
-  - [addEventListener: Listen and Handle](#addeventlistener-listen-and-handle)
-  - [Event Types and Handling Multiple Events](#event-types-and-handling-multiple-events)
-  - [The Event Object](#the-event-object)
-  - [Event Bubbling (Propagation) and `currentTarget`](#event-bubbling-propagation-and-currenttarget)
-- [Challenge: Put It All Together](#challenge-put-it-all-together)
+* [Key Concepts](1-intro-to-interactive-pages.md#key-concepts)
+* [What Can JavaScript Do?](1-intro-to-interactive-pages.md#what-can-javascript-do)
+* [The Document Object Model (DOM)](1-intro-to-interactive-pages.md#the-document-object-model-dom)
+  * [Selecting Elements with querySelector](1-intro-to-interactive-pages.md#selecting-elements-with-queryselector)
+* [Linking JavaScript to HTML](1-intro-to-interactive-pages.md#linking-javascript-to-html)
+* [Events](1-intro-to-interactive-pages.md#events)
+  * [addEventListener: Listen and Handle](1-intro-to-interactive-pages.md#addeventlistener-listen-and-handle)
+  * [Event Types and Handling Multiple Events](1-intro-to-interactive-pages.md#event-types-and-handling-multiple-events)
+  * [The Event Object](1-intro-to-interactive-pages.md#the-event-object)
+  * [Event Bubbling (Propagation) and `currentTarget`](1-intro-to-interactive-pages.md#event-bubbling-propagation-and-currenttarget)
+* [Challenge: Put It All Together](1-intro-to-interactive-pages.md#challenge-put-it-all-together)
 
 ## Key Concepts
 
 * **DOM (Document Object Model)** — the tree-like structure of JavaScript objects that the browser creates when it loads an HTML page. It maps the hierarchical relationships between elements.
 * **`<script src="file.js">`** — links a JavaScript file to an HTML page. It should be placed at the end of the `<body>` to ensure all elements exist before the script runs.
-* **Event** — a user interaction that the browser can detect, such as a click, mouse movement, key press, or form submission.
-**Event Bubbling (Propagaion)** — an event that occurs on an element can heard by all ancestors of that element.
+* **Event** — a user interaction that the browser can detect, such as a click, mouse movement, key press, or form submission. **Event Bubbling (Propagaion)** — an event that occurs on an element can heard by all ancestors of that element.
 
 **Key Syntax**
+
 * **`document` object** — the root object at the top of the DOM tree; our entry point for accessing and manipulating elements.
 * **`document.querySelector(selector)`** — returns the first element matching the CSS selector (or `null` if none).
 * **`document.body`** — a shortcut reference to the `<body>` element.
@@ -45,15 +45,16 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 
 ## What Can JavaScript Do?
 
-You've spent the last few weeks building beautiful, well-structured websites with HTML and CSS. But so far, your pages have been **static**—they look great, but they don't *do* anything when users interact with them.
+You've spent the last few weeks building beautiful, well-structured websites with HTML and CSS. But so far, your pages have been **static**—they look great, but they don't _do_ anything when users interact with them.
 
 **JavaScript changes everything.**
 
 With JavaScript, you can make your pages respond to user actions:
-- Click a button → something happens
-- Type in a search box → results filter in real-time
-- Hover over an image → it zooms in
-- Submit a form → data gets saved
+
+* Click a button → something happens
+* Type in a search box → results filter in real-time
+* Hover over an image → it zooms in
+* Submit a form → data gets saved
 
 This is what we mean by **interactive web applications**. Let's see how it works.
 
@@ -80,7 +81,7 @@ Consider this HTML structure:
 
 When a browser loads an HTML page, it converts every single HTML element into a JavaScript object and organizes them into a structure called the **Document Object Model (DOM)**. The DOM is a "tree-like" structure which maps the hierarchical relationship between elements.
 
-![The DOM turns your HTML elements into a tree-like structure of JavaScript objects](./img/intro-to-interactive-pages/the-dom.png)
+![The DOM turns your HTML elements into a tree-like structure of JavaScript objects](../.gitbook/assets/the-dom.png)
 
 The key insight: **if elements are objects, we can modify and interact with them using JavaScript!** We can change their text, their styles, their classes—anything.
 
@@ -132,7 +133,7 @@ Try these modifications one line at a time in your DevTools console!
 
 ## Linking JavaScript to HTML
 
-Using JavaScript in the DevTools console is great for testing. But every time we refresh the page, all of our work is lost and we have to write it again. 
+Using JavaScript in the DevTools console is great for testing. But every time we refresh the page, all of our work is lost and we have to write it again.
 
 Instead, we can make a JavaScript file and have our HTML pages automatically run that file when the page loads.
 
@@ -165,7 +166,9 @@ To run this file when our HTML page loads, add a `<script src="index.js">` tag a
 
 Now, when your browser loads this HTML page, it will automatically run the JavaScript file after the body content has loaded.
 
-**<details><summary>Q: Why does the `<script>` tag need to go at the end of the body?</summary>**
+<details>
+
+<summary><strong>Q: Why does the <code>&#x3C;script></code> tag need to go at the end of the body?</strong></summary>
 
 JavaScript runs as soon as it loads. If your script tries to select an element that hasn't been added to the page yet, `querySelector` will return `null` and your code will break.
 
@@ -178,6 +181,7 @@ By placing the `<script>` tag at the end of the body, you ensure all HTML elemen
 ## Events
 
 The most exciting part of making web applications is when we start adding interactivity by responding to **events**. An event is something that the user does on the page:
+
 1. clicking on a button
 2. hovering over an element
 3. scrolling on the page
@@ -189,6 +193,7 @@ Using JavaScript, we can decide how the page will react in response to these eve
 ### addEventListener: Listen and Handle
 
 Adding interactivity requires telling our browser three things:
+
 1. The **element** we want to be interactive
 2. The event it will **"listen"** for
 3. What to do to **"handle"** that event
@@ -207,14 +212,18 @@ button.addEventListener('click', () => {
 ```
 
 Let's break the `addEventListener` method down:
+
 ```js
 element.addEventListener(eventType, handlerFunction);
 ```
+
 1. **`element`** — The HTML element that we want to be interactive
 2. **`eventType`** — A string like `'click'`, `'mouseover'`, `'keydown'`
 3. **`handlerFunction`** — A callback that runs when the event "fires" (when it occurs)
 
-**<details><summary>Challenge 1: How can we double the font size every time we click the button?</summary>**
+<details>
+
+<summary><strong>Challenge 1: How can we double the font size every time we click the button?</strong></summary>
 
 ```js
 const button = document.querySelector('#blow-btn');
@@ -229,7 +238,9 @@ button.addEventListener('click', () => {
 
 </details>
 
-**<details><summary>Challenge 2: How can make the balloon "pop" 💥 when the font size gets above 750px?</summary>**
+<details>
+
+<summary><strong>Challenge 2: How can make the balloon "pop" 💥 when the font size gets above 750px?</strong></summary>
 
 ```js
 const button = document.querySelector('#blow-btn');
@@ -252,17 +263,17 @@ button.addEventListener('click', () => {
 
 There are many event types you can listen for:
 
-| Event Type | Triggered When... |
-|------------|-------------------|
-| `click` | Element is clicked |
-| `dblclick` | Element is double-clicked |
-| `mouseover` | Mouse moves onto element |
-| `mouseout` | Mouse leaves element |
+| Event Type  | Triggered When...              |
+| ----------- | ------------------------------ |
+| `click`     | Element is clicked             |
+| `dblclick`  | Element is double-clicked      |
+| `mouseover` | Mouse moves onto element       |
+| `mouseout`  | Mouse leaves element           |
 | `mousemove` | Mouse moves while over element |
-| `keydown` | A key is pressed |
-| `keyup` | A key is released |
-| `submit` | A form is submitted |
-| `input` | An input's value changes |
+| `keydown`   | A key is pressed               |
+| `keyup`     | A key is released              |
+| `submit`    | A form is submitted            |
+| `input`     | An input's value changes       |
 
 You can find a complete list of events on [MDN](https://developer.mozilla.org/en-US/docs/Web/Events).
 
@@ -281,7 +292,9 @@ document.body.addEventListener('keydown', () => {
 
 **Challenge: Add an event listener to the body that reacts whenever the mouse moves**
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 document.body.addEventListener('mousemove', () => {
@@ -306,8 +319,8 @@ document.body.addEventListener('click', (event) => {
 
 The two most important properties are:
 
-- **`event.type`** — The type of event that occurred (`'click'`, `'keydown'`, etc.)
-- **`event.target`** — The element that triggered the event.
+* **`event.type`** — The type of event that occurred (`'click'`, `'keydown'`, etc.)
+* **`event.target`** — The element that triggered the event.
 
 The `event` object has a ton of information that is specific to each type of event. It can be useful to print out the entire `event` object to see what is available.
 
@@ -320,7 +333,9 @@ document.body.addEventListener('keydown', (event) => {
 });
 ```
 
-**<details><summary>Answer</summary>**
+<details>
+
+<summary><strong>Answer</strong></summary>
 
 ```js
 document.body.addEventListener('keydown', (event) => {
@@ -351,7 +366,7 @@ document.body.addEventListener('click', (event) => {
 });
 ```
 
-The `body` is the element that is listening for click events, right? Did you notice that you can click on elements *inside* the body rather than the body itself and the event handler will still fire. The value of `event.target` will tell us exactly which element you clicked on.
+The `body` is the element that is listening for click events, right? Did you notice that you can click on elements _inside_ the body rather than the body itself and the event handler will still fire. The value of `event.target` will tell us exactly which element you clicked on.
 
 This is called **event bubbling** (a.k.a. **event propagation**) and it is a feature of the DOM whereby an event that occurs on an element can heard by all ancestors of that element.
 
@@ -427,11 +442,14 @@ document.body.style.backgroundColor = generateRandomColor();
 {% endcode %}
 
 Your task is to do the following:
+
 1. Add an event listener that changes the background color of the body whenever the "space" key is pressed
 2. Add an event listener to the `+` button that increases the font size of the `"#instructions"` section by `1px`.
 3. Add an event listener to the `-` button that decreases the font size of the `"#instructions"` section by `1px`.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 {% code title="1-random-colors/index.js" %}
 ```javascript
@@ -464,4 +482,5 @@ decreaseButton.addEventListener('click', () => {
 })
 ```
 {% endcode %}
+
 </details>

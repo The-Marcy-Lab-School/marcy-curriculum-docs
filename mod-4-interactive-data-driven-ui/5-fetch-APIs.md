@@ -1,37 +1,37 @@
-# 2. Fetch
+# 5. Fetching & APIs
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4-5-fetch)!
 {% endhint %}
 
 **Table of Contents:**
-- [Key Concepts](#key-concepts)
-- [APIs](#apis)
-- [Web APIs and The HTTP Request and Response Cycle](#web-apis-and-the-http-request-and-response-cycle)
-  - [Request: Endpoints and Verbs](#request-endpoints-and-verbs)
-  - [Response: Message Body and Status Codes](#response-message-body-and-status-codes)
-  - [APIs Pop Quiz!](#apis-pop-quiz)
-- [The `fetch()` function](#the-fetch-function)
-  - [Fetch Demo Walkthrough](#fetch-demo-walkthrough)
-  - [Steps 1 and 2: Getting A Response Object](#steps-1-and-2-getting-a-response-object)
-  - [Steps 3 and 4: Reading Data From the Response Object](#steps-3-and-4-reading-data-from-the-response-object)
-    - [Reading the ReadableStream from `response.body`](#reading-the-readablestream-from-responsebody)
-    - [`response.ok`](#responseok)
-  - [Step 5 Do Something With the Data](#step-5-do-something-with-the-data)
-  - [Step 6: Handle Errors](#step-6-handle-errors)
-- [Challenge: Joke API](#challenge-joke-api)
-- [Sending POST, PATCH, and DELETE Requests](#sending-post-patch-and-delete-requests)
-- [More Information About Requests and Responses](#more-information-about-requests-and-responses)
-  - [HTTP Status Codes](#http-status-codes)
-  - [URL Structure](#url-structure)
 
+* [Key Concepts](5-fetch-APIs.md#key-concepts)
+* [APIs](5-fetch-APIs.md#apis)
+* [Web APIs and The HTTP Request and Response Cycle](5-fetch-APIs.md#web-apis-and-the-http-request-and-response-cycle)
+  * [Request: Endpoints and Verbs](5-fetch-APIs.md#request-endpoints-and-verbs)
+  * [Response: Message Body and Status Codes](5-fetch-APIs.md#response-message-body-and-status-codes)
+  * [APIs Pop Quiz!](5-fetch-APIs.md#apis-pop-quiz)
+* [The `fetch()` function](5-fetch-APIs.md#the-fetch-function)
+  * [Fetch Demo Walkthrough](5-fetch-APIs.md#fetch-demo-walkthrough)
+  * [Steps 1 and 2: Getting A Response Object](5-fetch-APIs.md#steps-1-and-2-getting-a-response-object)
+  * [Steps 3 and 4: Reading Data From the Response Object](5-fetch-APIs.md#steps-3-and-4-reading-data-from-the-response-object)
+    * [Reading the ReadableStream from `response.body`](5-fetch-APIs.md#reading-the-readablestream-from-responsebody)
+    * [`response.ok`](5-fetch-APIs.md#responseok)
+  * [Step 5 Do Something With the Data](5-fetch-APIs.md#step-5-do-something-with-the-data)
+  * [Step 6: Handle Errors](5-fetch-APIs.md#step-6-handle-errors)
+* [Challenge: Joke API](5-fetch-APIs.md#challenge-joke-api)
+* [Sending POST, PATCH, and DELETE Requests](5-fetch-APIs.md#sending-post-patch-and-delete-requests)
+* [More Information About Requests and Responses](5-fetch-APIs.md#more-information-about-requests-and-responses)
+  * [HTTP Status Codes](5-fetch-APIs.md#http-status-codes)
+  * [URL Structure](5-fetch-APIs.md#url-structure)
 
 ## Key Concepts
 
 * **Interface** — a "shared boundary" where two or more components of a system can interact and exchange information. Interfaces do not expose the inner details of the tool/machine/program that the user is operating — they instead provide well-defined and controlled access points for the user to operate it.
 * **API (Application Programming Interface)** is an interface that enables software applications to communicate, exchange data, and share functionality.
 * **Web API** — an API exposed over the internet via URLs. You send HTTP requests to **endpoints** (URLs) to create, read, update, or delete data.
-* **HTTP methods** — verbs that describe the nature of the HTTP request to the API: 
+* **HTTP methods** — verbs that describe the nature of the HTTP request to the API:
   * **GET** (read / request data)
   * **POST** (create new data)
   * **PATCH** (update existing data)
@@ -40,8 +40,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/4
 * **Status Code** — a three-digit number returned by the server that indicates the result of an HTTP request (for example, 200 for success, 404 for not found, 500 for server error).
 
 **Key Syntax**
+
 * **`fetch(url)`** — GET request by default; returns a Promise that resolves to a `Response`.
-* **`fetch(url, { method, body, headers })`** — send POST, PATCH, DELETE, etc. 
+* **`fetch(url, { method, body, headers })`** — send POST, PATCH, DELETE, etc.
   * Use `body: JSON.stringify(data)` and `headers: { "Content-Type": "application/json" }` to send JSON.
 * **`response.ok`** — `true` when status is 2xx, `false` otherwise. Check this before calling `response.json()`.
 * **`response.status`**, and **`response.json()`** to check and read the body.
@@ -59,7 +60,7 @@ An **API (Application Programming Interface)** is an interface that enables diff
 document.querySelector("h1").textContent = "Hello World!";
 ```
 
-The `document` object and its methods like `document.querySelector()` is an example of an API (a.k.a. "The DOM API"). It provides an interface that allows us to communicate to the browser how we want it to dynamically update the DOM. We can't see the inner details of how it works, we just use it! 
+The `document` object and its methods like `document.querySelector()` is an example of an API (a.k.a. "The DOM API"). It provides an interface that allows us to communicate to the browser how we want it to dynamically update the DOM. We can't see the inner details of how it works, we just use it!
 
 ## Web APIs and The HTTP Request and Response Cycle
 
@@ -102,9 +103,9 @@ The most common data format for data transferred via HTTP requests/responses is 
 ```
 
 JSON is structured almost exactly like JavaScript objects with a few notable differences:
-* Keys *must* be surrounded by double quotes (single quotes won't work)
-* You can't have any trailing commas
 
+* Keys _must_ be surrounded by double quotes (single quotes won't work)
+* You can't have any trailing commas
 {% endhint %}
 
 In addition to the message body, the response will contain a three-digit **status code** that describes the status of the response. Here are a few commonly found status codes:
@@ -117,25 +118,33 @@ In addition to the message body, the response will contain a three-digit **statu
 
 ### APIs Pop Quiz!
 
-**<details><summary>Q1: A Web API is an interface for exchanging ____ via _____</summary>**
+<details>
+
+<summary><strong>Q1: A Web API is an interface for exchanging ____ via _____</strong></summary>
 
 A Web API is an interface for exchanging data via the internet (HTTP)
 
 </details>
 
-**<details><summary>Q2: What do we call the cycle that describes how we get det data from a Web API?</summary>**
+<details>
+
+<summary><strong>Q2: What do we call the cycle that describes how we get det data from a Web API?</strong></summary>
 
 The HTTP Request and Response cycle
 
 </details>
 
-**<details><summary>Q3: What do we call the specific URL that we send a requst to?</summary>**
+<details>
+
+<summary><strong>Q3: What do we call the specific URL that we send a requst to?</strong></summary>
 
 The endpoint
 
 </details>
 
-**<details><summary>Q4: What are the four HTTP request verbs and what do they each mean?</summary>**
+<details>
+
+<summary><strong>Q4: What are the four HTTP request verbs and what do they each mean?</strong></summary>
 
 * `"GET"` - Request to get data from the API's dataset (the default)
 * `"POST"` - Request to create data to be added to the API's dataset
@@ -144,7 +153,9 @@ The endpoint
 
 </details>
 
-**<details><summary>Q5: How is data typically formatted when sent via HTTP?</summary>**
+<details>
+
+<summary><strong>Q5: How is data typically formatted when sent via HTTP?</strong></summary>
 
 Using JSON (JavaScript Object Notation)
 
@@ -160,22 +171,24 @@ Open up your browser's DevTools and paste this into the console:
 fetch('https://dog.ceo/api/breeds/image/random'); 
 ```
 
-![Fetch returns a promise.](./img/fetch/fetch-console.png)
+![Fetch returns a promise.](../.gitbook/assets/fetch-console.png)
 
-The `fetch(url, config)` sends an HTTP request to the API endpoint specified by `url`. 
-* The `config` parameter is optional and is used to specify the type of request (`GET`, `POST`, etc.) but we can omit it when sending a `GET` request. 
+The `fetch(url, config)` sends an HTTP request to the API endpoint specified by `url`.
+
+* The `config` parameter is optional and is used to specify the type of request (`GET`, `POST`, etc.) but we can omit it when sending a `GET` request.
 * A `Promise` object is returned. It will resolve to the `Response` object (or an error)
 
-**<details><summary>Q: How can we handle the promise from fetch once it resolves or rejects?</summary>**
+<details>
+
+<summary><strong>Q: How can we handle the promise from fetch once it resolves or rejects?</strong></summary>
 
 Using `.then()` and `.catch()`!
 
 </details>
 
-
 ### Fetch Demo Walkthrough
 
-Handling a `fetch` Promise requires us to follow a 6-step process that we will nearly always follow. 
+Handling a `fetch` Promise requires us to follow a 6-step process that we will nearly always follow.
 
 Open up `1-fetching-demo/src/main.js` to see this process in action when we click on the `#new-dog-image-button` element:
 
@@ -310,18 +323,21 @@ return readingPromise
 
 #### `response.ok`
 
-When we send a request, it is entirely possible that the request fails. 
+When we send a request, it is entirely possible that the request fails.
 
-**<details><summary>Q: Can you think of a reason for a request failing?</summary>**
+<details>
+
+<summary><strong>Q: Can you think of a reason for a request failing?</strong></summary>
 
 Here are some common reasons:
+
 * The internet is down
 * The API is no longer available or is broken
 * The URL you entered is invalid
 
 </details>
 
-If it did fail, then there won't be any data to read in. We don't want to start an asynchronous process unnecessarily if we don't have to. 
+If it did fail, then there won't be any data to read in. We don't want to start an asynchronous process unnecessarily if we don't have to.
 
 The `response.ok` property will be `true` if the request succeeded and `false` otherwise. If the response fails, we want to throw an error that we can catch and handle.
 
@@ -361,6 +377,7 @@ The ONLY thing that is uinque to this particular use case is the API endpoint th
 ### Step 5 Do Something With the Data
 
 Remember, we can chain together `.then()` calls to handle a series of asynchronous promises. In our case, we have two promises:
+
 1. The promise generated by invoking `fetch()`
 2. The promise generated by reading the response body with `response.json()`
 
@@ -394,15 +411,16 @@ fetchPromise
 ```
 
 The structure of the contents of `responseBody` will vary greatly between APIs so it is a good practice to print that value to the console to understand the structure.
+
 * For example, the dog.ceo API puts the image source URL in the `responseBody.message` property.
 * Every web API should include documentation that outlines the structure of the `responseBody` data.
 
 Replace the `fetch(url)` URL with the API endpoints below and open the Developer Console to see how other APIs structure their data:
 
-- [https://api.thecatapi.com/v1/images/search](https://api.thecatapi.com/v1/images/search)
-- [https://pokeapi.co/api/v2/pokemon/pikachu](https://pokeapi.co/api/v2/pokemon/pikachu)
-- [https://v2.jokeapi.dev/joke/Programming](https://v2.jokeapi.dev/joke/Programming)
-- [https://api.sunrise-sunset.org/json?lat=40.7128&lng=-74.0060&tzid=America/New_York](https://api.sunrise-sunset.org/json?lat=40.7128&lng=-74.0060&tzid=America/New_York)
+* [https://api.thecatapi.com/v1/images/search](https://api.thecatapi.com/v1/images/search)
+* [https://pokeapi.co/api/v2/pokemon/pikachu](https://pokeapi.co/api/v2/pokemon/pikachu)
+* [https://v2.jokeapi.dev/joke/Programming](https://v2.jokeapi.dev/joke/Programming)
+* [https://api.sunrise-sunset.org/json?lat=40.7128\&lng=-74.0060\&tzid=America/New\_York](https://api.sunrise-sunset.org/json?lat=40.7128\&lng=-74.0060\&tzid=America/New_York)
 
 ### Step 6: Handle Errors
 
@@ -414,7 +432,7 @@ Test this out by messing with the fetch URL:
 const fetchPromise = fetch('https://dog.ceo/api/breeds/image/randomOOPS');
 ```
 
-![An error message is shown when an error occurs](./img/fetch/fetch-error.png)
+![An error message is shown when an error occurs](../.gitbook/assets/fetch-error.png)
 
 There are two likely causes of errors / rejected Promises:
 
@@ -425,11 +443,13 @@ There are two likely causes of errors / rejected Promises:
 ## Challenge: Joke API
 
 Open up `2-fetching-challenge/src/main` where we've provided an API endpoint to use:
+
 ```js
 const API_ENDPOINT = https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart
 ```
 
 Can you build an application that fetches this data and then displays it? Here are some tips to get started:
+
 * `npm i` and `npm run dev` to start the app
 * Check out the `index.html` to see where to display the fetched data
 * Complete the click handler in `main.js` to fetch the data

@@ -2,18 +2,17 @@
 
 **Table of Contents**:
 
-- [Background](#background)
-  - [What is a Server?](#what-is-a-server)
-  - [Development Servers and Deployment](#development-servers-and-deployment)
-- [What is Vite?](#what-is-vite)
-  - [Vite Quick Starter](#vite-quick-starter)
-  - [Make the Project Your Own!](#make-the-project-your-own)
-- [Play Around with Vite Features](#play-around-with-vite-features)
-  - [Importing CSS](#importing-css)
-  - [Importing JSON and other Files](#importing-json-and-other-files)
-  - [Importing Node Modules](#importing-node-modules)
-- [Vite's Build Tool and Deployment](#vites-build-tool-and-deployment)
-
+* [Background](3-vite.md#background)
+  * [What is a Server?](3-vite.md#what-is-a-server)
+  * [Development Servers and Deployment](3-vite.md#development-servers-and-deployment)
+* [What is Vite?](3-vite.md#what-is-vite)
+  * [Vite Quick Starter](3-vite.md#vite-quick-starter)
+  * [Make the Project Your Own!](3-vite.md#make-the-project-your-own)
+* [Play Around with Vite Features](3-vite.md#play-around-with-vite-features)
+  * [Importing CSS](3-vite.md#importing-css)
+  * [Importing JSON and other Files](3-vite.md#importing-json-and-other-files)
+  * [Importing Node Modules](3-vite.md#importing-node-modules)
+* [Vite's Build Tool and Deployment](3-vite.md#vites-build-tool-and-deployment)
 
 {% embed url="https://www.youtube.com/watch?v=UnsukVi6hJY&ab_channel=TheMarcyLabSchool" %}
 
@@ -40,8 +39,6 @@ Until now, you've been using the `file://` protocol to open up projects on your 
 Well, Google is "hosted" on a server that lets you access it over the internet.
 
 A **server** is any computer that stores, manages, and shares resources over the internet.
-
-![The client server interaction](img/client-server-interaction.png)
 
 A user's computer acts as the **"client"** and sends an **HTTP request** (**h**yper**t**ext transfer protocol) to get resources from the server using the `https://` protocol (the hypertext transfer protocol).
 
