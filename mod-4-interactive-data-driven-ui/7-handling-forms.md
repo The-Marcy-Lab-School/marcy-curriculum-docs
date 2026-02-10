@@ -9,7 +9,6 @@ Clone down the repo, `cd` into it and run `npm i` to install dependencies.
 **Table of Contents:**
 - [Key Concepts](#key-concepts)
 - [Forms Review: What We Learned in Module 3](#forms-review-what-we-learned-in-module-3)
-- [Why Handle Forms with JavaScript?](#why-handle-forms-with-javascript)
 - [Handling Forms With JavaScript](#handling-forms-with-javascript)
   - [Challenge: Adding A New Input](#challenge-adding-a-new-input)
   - [Handling Checkbox Inputs](#handling-checkbox-inputs)
@@ -67,8 +66,20 @@ We also learned how to capture the form data and send it to Formspree using the 
 
 Recall that after submitting the form you would be redirected to the Formspree.
 
-## Why Handle Forms with JavaScript?
-    
+
+**<details><summary>Q: Take a look at the input elements. What is the difference between the `id` and `name` attributes?</summary>**
+
+* The `id` attribute labels the field so that it can be connected to the `<label>` element
+* The `name` attribute gives the form value a name when it is submitted. Remember this!
+
+</details>
+
+**<details><summary>Q: What does the `method="POST"` attribute mean?</summary>**
+
+A POST request means that we are sending data to a server as opposed to requesting data from it.
+
+</details>
+
 Using services like Formspree is great for simple contact forms, but it has limitations:
 
 * ❌ **You lose control** — the data is sent away and you can't do anything with it in your app
@@ -83,10 +94,22 @@ Modern web applications handle forms with JavaScript instead, which allows us to
 * ✅ **Provide instant feedback** — show success messages, validation errors, loading states
 * ✅ **Create dynamic experiences** — add items to a todo list, submit reviews, create posts
 
-Let's start with a simple form with a single field and a button. Take a look at `0-contact-form/index.html`:
+## Handling Forms With JavaScript
+
+Let's start with a simple form with a single field and a button. Take a look at `0-contact-form/index.html`
+
+{% hint style="info" %}
+    
+Remember, we are using the Vite development server. To get the app running on the development server:
+* `cd` into the directory
+* `npm i` to install Vite dependencies (we did this earlier at the repo root)
+* `npm run dev` to start the server
+* `ctrl+c` to stop the server
+
+{% endhint %}
 
 ```html
-<form id="contact-form">
+<form id="contact-form" action="https://formspree.io/f/xojnjqkp" method="POST">
   <div>
     <label for="message">Message</label>
     <textarea id="message" name="message" rows="4" required></textarea>
@@ -102,27 +125,9 @@ Let's start with a simple form with a single field and a button. Take a look at 
 </div>
 ```
 
-**<details><summary>Q: Take a look at the textarea element. What is the difference between `id` and `name`?</summary>**
+Try filling out the form. Confirm the behavior—the data is set to Formspree and you are redirected to another page.
 
-* The `id` attribute labels the field so that it can be connected to the `<label>` element
-* The `name` attribute gives the form value a name when it is submitted. Remember this!
-
-</details>
-
-{% hint style="info" %}
-    
-Remember, we are using the Vite development server. To get the app running on the development server:
-* `cd` into the directory
-* `npm i` to install Vite dependencies (we did this earlier at the repo root)
-* `npm run dev` to start the server
-* `ctrl+c` to stop the server
-{% endhint %}
-
-## Handling Forms With JavaScript
-
-Instead of sending the data to another source like Formspree, let's capture the form submission and handle it ourselves. 
-
-We'll display a brief status message like "Message Received!" in the empty `h3` element and the message in the empty `span` element
+Instead, let's prevent this default behavior and handle the form submission ourselves. We'll display a brief status message like "Message Received!" in the empty `h3` element and the message in the empty `span` element:
 
 ![The form's submission is displayed along with a status.](./img/handling-forms/basic-form.png)
 
