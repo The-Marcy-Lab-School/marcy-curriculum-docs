@@ -11,15 +11,16 @@ Clone down the repo, `cd` into it and run `npm i` to install dependencies.
 - [Forms Review: What We Learned in Module 3](#forms-review-what-we-learned-in-module-3)
 - [Handling Forms With JavaScript](#handling-forms-with-javascript)
   - [Challenge: Adding A New Input](#challenge-adding-a-new-input)
-  - [Handling Checkbox Inputs](#handling-checkbox-inputs)
-- [FormData API](#formdata-api)
-  - [FormData Checkboxes](#formdata-checkboxes)
-  - [Sending FormData to APIs](#sending-formdata-to-apis)
-- [Challenge: Build Your Own Form with Formspree!](#challenge-build-your-own-form-with-formspree)
+- [Sending Form Data to APIs](#sending-form-data-to-apis)
+  - [Handling The Response](#handling-the-response)
 - [Additional Reading](#additional-reading)
+  - [Handling Checkbox Inputs](#handling-checkbox-inputs)
+  - [FormData API](#formdata-api)
+    - [FormData Checkboxes](#formdata-checkboxes)
+  - [Challenge: Build Your Own Form with Formspree!](#challenge-build-your-own-form-with-formspree)
   - [Other Form Events](#other-form-events)
   - [Form Validation with JavaScript](#form-validation-with-javascript)
-    - [Challenge: Registration Form with Validation](#challenge-registration-form-with-validation)
+  - [Challenge: Registration Form with Validation](#challenge-registration-form-with-validation)
 
 ## Key Concepts
 
@@ -154,7 +155,7 @@ contactForm.addEventListener('submit', (event) => {
 
   // Step 5: Use the form data (display it)
   contactOutputStatus.textContent = "Message Received!";
-  contactOutputMessage.textContent = `${message}`;
+  contactOutputMessage.textContent = message;
 
   // Step 6: Reset the form
   contactForm.reset();
@@ -198,9 +199,7 @@ Let's look closer at the key parts of the JavaScript:
 
 ### Challenge: Adding A New Input
 
-Let's add name and email inputs to this contact form and display them alongside the message, like this:
-
-![A name and email are displayed alongside the message.](./img/handling-forms/basic-forms-solution.png)
+Let's add name and email inputs to this contact form and display them alongside the message.
 
 **HTML**
 * Add two form inputs to the html, one for the name and one for the email 
@@ -213,8 +212,177 @@ Let's add name and email inputs to this contact form and display them alongside 
 * In the event handler, extract the values for the `name` and the `email`.
 * Display the formatted message in the output element.
 
-> A solution can be found in the `0-contact-forms-solution/` folder.
+It should look like this:
 
+![A name and email are displayed alongside the message.](./img/handling-forms/basic-forms-solution.png)
+
+**<details><summary>Solution</summary>**
+
+**HTML:**
+
+```html
+<form id="contact-form" action="https://formspree.io/f/xojnjqkp" method="POST">
+  <div>
+    <label for="name">Name</label>
+    <input id="name" name="name" required></input>
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input id="email" name="email" required></input>
+  </div>
+  <div>
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+  </div>
+  <button type="submit">Send Message</button>
+</form>
+```
+
+**JavaScript:**
+
+```js
+// Step 1: Grab the form and the output elements
+const contactForm = document.querySelector('#contact-form');
+const contactOutputStatus = document.querySelector("#contact-output-status")
+const contactOutputMessage = document.querySelector("#contact-output-message")
+const contactOutputFrom = document.querySelector("#contact-output-from")
+
+// Step 2: Add a "submit" event listener to the form(don't forget event!)
+contactForm.addEventListener('submit', (event) => {
+  // Step 3: event.preventDefault()
+  event.preventDefault();
+
+  // Step 4: Get the form data
+  const message = contactForm.elements.message.value;
+  const name = contactForm.elements.name.value;
+  const email = contactForm.elements.email.value;
+
+  // Step 5: Use the form data (display it)
+  contactOutputMessage.textContent = message;
+  contactOutputFrom.textContent = `${name} (${email})`;
+  contactOutputStatus.textContent = "Message Received!";
+
+  // Step 6: Reset the form
+  contactForm.reset();
+});
+```
+
+</details>
+
+## Sending Form Data to APIs
+
+You'll notice that we aren't sending the data to Formspree anymore. Now, we can use JavaScript to send the data ourselves using `fetch` with a POST request — keeping the user on the same page:
+
+```js
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  
+  const message = contactForm.elements.message.value;
+  const name = contactForm.elements.name.value;
+  const email = contactForm.elements.email.value;
+
+  // Gather the data in an object before sending
+  const formValues = { message, name, email };
+
+  // Set up the POST request config
+  const config = {
+    method: 'POST',
+    body: JSON.stringify(formValues),
+    headers: {
+      'content-type': 'application/json', // <-- the data format we're sending
+      'accept': 'application/json'        // <-- the data format we can receive
+    }
+  };
+
+  // Send the fetch
+  fetch("https://formspree.io/f/FORMSPREE_URL", config)
+    
+  // Update the UI
+  contactOutputMessage.textContent = message;
+  contactOutputFrom.textContent = `${name} (${email})`;
+  contactOutputStatus.textContent = "Message Received!";
+
+  // Step 6: Reset the form
+  contactForm.reset();
+});
+```
+
+Let's break down the key parts:
+
+**The `fetch` configuration object:**
+* `method: 'POST'` — tells the server we're creating/sending new data
+* `body: JSON.stringify(formValues)` — converts our JavaScript object to a JSON string
+* `headers: { 'content-type': 'application/json', 'accept': 'application/json' }` — tells the server we're sending JSON data and are accepting JSON in response
+
+**Why use `JSON.stringify()`?**
+
+The `body` of a fetch request must be a string, not a JavaScript object. `JSON.stringify()` converts our object into a JSON-formatted string that can be sent over the network:
+
+```js
+const formValues = { name: 'Ada', email: 'ada@mail.com', message: 'Hello!' };
+
+console.log(JSON.stringify(formValues));
+// '{"name":"Ada","email":"ada@mail.com","message":"Hello!"}'
+```
+
+### Handling The Response
+
+Even though we're sending data (not requesting it), the API still sends back a response. We check `response.ok` to see if it succeeded, then update the UI accordingly.
+
+```js
+fetch("https://formspree.io/f/FORMSPREE_URL", config)
+  .then((response) => {
+      if (!response.ok) {
+        throw Error(`Failed to submit. ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('Success:', data);
+      
+      // Move the UI updates here
+      contactOutputMessage.textContent = message;
+      contactOutputFrom.textContent = `${name} (${email})`;
+      contactOutputStatus.textContent = "Message Received!";
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      
+      // Show the user an error message
+      contactOutputStatus.textContent = 'Failed to send message. Please try again later.';
+    });
+```
+
+Here is the same logic using the `async`/`await` and `try`/`catch` syntax
+
+```js
+// remember to make the event handler async!
+contactForm.addEventListener('submit', async (event) => {
+  
+  // preventing default, extracting data, configuration...
+
+  try {
+    const response = await fetch("https://formspree.io/f/FORMSPREE_URL", config);
+    if (!response.ok) {
+      throw Error(`Failed to submit. ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Success:', data);
+    contactOutputMessage.textContent = message;
+    contactOutputFrom.textContent = `${name} (${email})`;
+    contactOutputStatus.textContent = "Message Received!";
+  }
+  catch (error) {
+    console.error('Error:', error);
+    contactOutputStatus.textContent = 'Failed to send message. Please try again later.';
+  }
+
+  contactForm.reset();
+});
+```
+
+## Additional Reading
 
 ### Handling Checkbox Inputs
 
@@ -282,7 +450,7 @@ contactForm.addEventListener('submit', (event) => {
 });
 ```
 
-## FormData API
+### FormData API
 
 The `FormData` API is a more modern approach to extracting data from a form. It automatically extracts ALL form values into a single `FormData` object. Since it is not an ordinary object, we need to convert it first using `Object.fromEntries()`:
 
@@ -357,7 +525,7 @@ contactForm.addEventListener('submit', (event) => {
 * ❌ Less explicit — harder to see which fields exist
 * ❌ Checkbox gotcha (see below)
 
-### FormData Checkboxes
+#### FormData Checkboxes
 
 Remember how we said checkbox `.value` is always `"on"`? That's exactly what FormData gives you:
 
@@ -424,91 +592,7 @@ formValues.subscribe = Boolean(formValues.subscribe);
 formValues.acceptTerms = Boolean(formValues.acceptTerms);
 ```
 
-### Sending FormData to APIs
-
-Now let's combine what we learned about forms with what we learned about `fetch`!
-
-Remember, in Module 3 we used Formspree to handle our form submissions. We set the `action` attribute to the Formspree URL and the form data was sent automatically when submitted. But this caused the page to redirect.
-
-Now, we can use JavaScript to send the data ourselves using `fetch` with a POST request — keeping the user on the same page:
-
-```js
-const FORMSPREE_URL = "https://formspree.io/f/FORMSPREE_URL";
-
-contactForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  const formValues = Object.fromEntries(new FormData(contactForm));
-  const { anonymous, name, email, message } = formValues;
-  
-  // Make changes to the formValues before sending
-  formValues.anonymous = Boolean(formValues.anonymous);
-  if (formValues.anonymous) {
-    delete formValues.name;
-    delete formValues.email;
-  }
-
-  // Set up the POST request config
-  const config = {
-    method: 'POST',
-    body: JSON.stringify(formValues),
-    headers: {
-      'Content-Type': 'application/json',
-      'accept': 'application/json'
-    }
-  };
-
-  // Send the fetch
-  fetch(FORMSPREE_URL, config)
-    .then((response) => {
-      // 3. Check if the response was successful
-      if (!response.ok) {
-        throw Error(`Failed to submit. ${response.status} ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // 4. Handle success — update the UI
-      console.log('Success:', data);
-      
-      const sender = Boolean(anonymous) ? "Anonymous" : `${name} (${email})`;
-      contactOutputStatus.textContent = "Message Sent to Formspree!";
-      contactOutputFrom.textContent = sender;
-      contactOutputMessage.textContent = message;
-      contactForm.reset();
-    })
-    .catch((error) => {
-      // 5. Handle errors — show error message
-      console.error('Error:', error);
-      contactOutputStatus.textContent = 'Failed to send message. Please try again.';
-    });
-  contactForm.reset();
-});
-```
-
-Let's break down the key parts:
-
-**The `fetch` configuration object:**
-* `method: 'POST'` — tells the server we're creating/sending new data
-* `body: JSON.stringify(formValues)` — converts our JavaScript object to a JSON string
-* `headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }` — tells the server we're sending JSON data and are accepting JSON in response
-
-**Why use `JSON.stringify()`?**
-
-The `body` of a fetch request must be a string, not a JavaScript object. `JSON.stringify()` converts our object into a JSON-formatted string that can be sent over the network:
-
-```js
-const formValues = { name: 'Ada', email: 'ada@mail.com', message: 'Hello!' };
-
-console.log(JSON.stringify(formValues));
-// '{"name":"Ada","email":"ada@mail.com","message":"Hello!"}'
-```
-
-**Handling the response:**
-
-Even though we're sending data (not requesting it), the API still sends back a response. We check `response.ok` to see if it succeeded, then update the UI accordingly.
-
-## Challenge: Build Your Own Form with Formspree!
+### Challenge: Build Your Own Form with Formspree!
 
 Test your skills by building your own form with Formspree from scratch! We've given you some code to start with in `1-form-challenge/` but it will be up to you to:
 1. Create a new Formspree form
@@ -525,9 +609,7 @@ Test your skills by building your own form with Formspree from scratch! We've gi
 5. Render a success or an error message
 6. Don't worry about styling. Just aim for functionality!
 
-Use the example in `0-contact-form-solution-with-post` as a guide for what this looks like when completed!
-
-## Additional Reading
+Use the example in `0-contact-form-complete` as a guide for what this looks like when completed!
 
 ### Other Form Events
 
@@ -731,7 +813,7 @@ This example demonstrates:
 * Preventing submission if validation fails
 * Clearing errors when validation passes
 
-#### Challenge: Registration Form with Validation
+### Challenge: Registration Form with Validation
 
 Enhance the registration form above by adding these validation rules:
 
@@ -875,3 +957,5 @@ input.valid {
 ```
 
 </details>
+
+
