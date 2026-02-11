@@ -74,6 +74,7 @@
   * [6. Async/Await](mod-4-interactive-data-driven-ui/6-best-practices-async-await.md)
   * [7. Handling Forms](mod-4-interactive-data-driven-ui/7-handling-forms.md)
   * [Interactive & Data-Driven User Interfaces Project](mod-4-interactive-data-driven-ui/8-project-week-overview.md)
+  * [Case Study: Recipe Browser](mod-4-interactive-data-driven-ui/case-study.md)
   * [Cheatsheet](mod-4-interactive-data-driven-ui/cheatsheet.md)
 * [Mod 5 - Backend Servers & Databases](mod-5-backend/README.md)
   * [Overview](mod-5-backend/Overview.md)
