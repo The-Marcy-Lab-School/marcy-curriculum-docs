@@ -480,7 +480,7 @@ The default behavior of using `fetch` is to make a `GET` request, but we can als
 When sending a POST request, we often will need to send a **request body**. Before sending, we `JSON.stringify` that data and tell the API that we're sending `"application/json"` data.
 
 ```js
-const url = 'https://reqres.in/api/users';
+const url = 'https://dummyjson.com/users';
 const newUser = { name: "morpheus", job: "junior developer" };
 
 const options = {
@@ -500,7 +500,7 @@ fetch(url, options);
 When sending a PATCH request, we are often updating a single resource. So, notice how the `url` now ends with `/users/2` to indicate that we want to update the user with id 2. The request body will include our desired changes. Again, we `JSON.stringify` that data and tell the API that we're sending `"application/json"` data.
 
 ```js
-const url = 'https://reqres.in/api/users/2';
+const url = 'https://dummyjson.com/users/2';
 const updatedUser = { name: "morpheus", job: "senior developer" };
 
 const options = {
@@ -520,7 +520,7 @@ fetch(url, options);
 When sending a DELETE request, we are often deleting a single resource. So, notice how the `url` now ends with `/users/2` to indicate that we want to delete the user with id 2. No data needs to be sent with the request so we leave out `body` and `headers`.
 
 ```js
-const url = 'https://reqres.in/api/users/2';
+const url = 'https://dummyjson.com/users/2';
 
 const options = {
   method: "DELETE",       
