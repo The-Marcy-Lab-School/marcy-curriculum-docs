@@ -8,7 +8,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/s
 - [Overview](#overview)
 - [Explore the Solution](#explore-the-solution)
   - [Trace the Flow](#trace-the-flow)
+    - [Scenario 1: The page loads and recipes are rendered on the screen](#scenario-1-the-page-loads-and-recipes-are-rendered-on-the-screen)
+    - [Scenario 2: A user clicks a recipe card and the recipe details appear](#scenario-2-a-user-clicks-a-recipe-card-and-the-recipe-details-appear)
+    - [Scenario 3: A user submits the search form and matching recipes are listed](#scenario-3-a-user-submits-the-search-form-and-matching-recipes-are-listed)
+    - [Scenario 4: Search fails and an error message is shown](#scenario-4-search-fails-and-an-error-message-is-shown)
   - [Guided Reading Questions](#guided-reading-questions)
+    - [`index.html`](#indexhtml)
+    - [`src-solution/fetch-helpers.js`](#src-solutionfetch-helpersjs)
+    - [`src-solution/dom-helpers.js`](#src-solutiondom-helpersjs)
+    - [`src-solution/main.js`](#src-solutionmainjs)
 - [Building from Scratch](#building-from-scratch)
   - [Step 0: Tour the starter and solution code](#step-0-tour-the-starter-and-solution-code)
   - [Step 1: Create `src/fetch-helpers.js` - fetch a list of recipes](#step-1-create-srcfetch-helpersjs---fetch-a-list-of-recipes)
@@ -45,29 +53,69 @@ The completed solution is in `src-solution/`. Use the exercises below to investi
 
 ### Trace the Flow
 
-For each scenario, trace the path through the code across files. Write each function call and what it does, in order.
+For each user experience, trace the path through the code across files to explain how it works. In order of execution, write down the sequence of function calls:
+* where it was called
+* a brief description of what it does
+* what was returned. 
 
-**Scenario 1: The page loads**
+Assume there are no errors unless specified. A "sequence diagram" may be drawn to better illustrate the flow.
 
-Start at `main.js` line 5. Follow `getRecipes()` into `fetch-helpers.js`, then back into `renderRecipes()` in `dom-helpers.js`.
+An example is provided for the first scenario.
 
-**Scenario 2: A user clicks a recipe card**
+#### Scenario 1: The page loads and recipes are rendered on the screen
 
-Start at the click handler in `main.js`. Track `event.target.closest('li')`, `li.dataset.recipeId`, `getRecipeById(...)`, and `renderRecipeDetails(...)`.
+![Sequence Diagram](./img/casestudy/sequence-diagram.png)
 
-**Scenario 3: A user submits the search form**
+Sequence Flow:
 
-Start at the submit handler in `main.js`. Track form value extraction, `getRecipeBySearchTerm(...)`, error/no-results/success branches, optional quick filtering, and final rendering.
+1. **`main.js`**: On page load, `getRecipes()` is called.
+2. **`fetch-helpers.js`**: `getRecipes()` calls `fetch(...)`, checks `response.ok`, extracts JSON data, and returns a promise resolving to `recipes`.
+3. **`main.js`**: `.then((recipes) => ...)` receives the resolved value and calls `hideError()` and `renderRecipes(recipes)`.
+4. **`dom-helpers.js`**: `renderRecipes()` clears the old list, updates the count, creates recipe `<li>` cards, and appends them to `#recipes-list`.
 
-**Scenario 4: Search fails**
+#### Scenario 2: A user clicks a recipe card and the recipe details appear
 
-Assume `/recipes/search` fails. Follow the `error` path returned by `getRecipeBySearchTerm(...)` and explain what is rendered and why the message remains visible until a later success branch calls `hideError()`.
+**<details><summary>Answer</summary>**
+
+1. **`main.js`**: The click handler on `#recipes-list` runs. `event.target.closest('li')` finds the clicked card and gives us `li`.
+2. **`main.js`**: `getRecipeById(li.dataset.recipeId)` is called with the card’s stored id.
+3. **`fetch-helpers.js`**: `getRecipeById()` calls `fetch(...)`, checks `response.ok`, extracts JSON data, and returns a promise resolving to `recipe`.
+4. **`main.js`**: `.then((recipe) => ...)` receives the recipe updates the DOM with `hideError()` and `renderRecipeDetails(recipe)`.
+5. **`dom-helpers.js`**: `renderRecipeDetails()` shows `#recipe-details`, clears old content, builds the new details elements, and appends them.
+
+</details>
+
+#### Scenario 3: A user submits the search form and matching recipes are listed
+
+**<details><summary>Answer</summary>**
+
+1. **`main.js`**: The form submit handler runs, calls `event.preventDefault()`, and reads `searchTerm` plus `isQuick` (`.checked`).
+2. **`main.js`**: `await getRecipeBySearchTerm(searchTerm)` is called with the search term.
+3. **`fetch-helpers.js`**: `getRecipeBySearchTerm()` calls `fetch(...)`, checks `response.ok`, extracts JSON data, and returns a promise resolving to a `{ data, error }` object.
+4. **`main.js`**: After `await`, if there is no error and results exist, it optionally filters recipes to <= 20 minutes when `isQuick` is true.
+5. **`main.js`**: It then calls `hideError()` and `renderRecipes(recipes)`.
+6. **`dom-helpers.js`**: `renderRecipes()` clears old cards, updates the count, and appends the new search results.
+
+</details>
+
+#### Scenario 4: Search fails and an error message is shown
+
+**<details><summary>Answer</summary>**
+
+1. **`main.js`**: The submit handler calls `await getRecipeBySearchTerm(searchTerm)`.
+2. **`fetch-helpers.js`**: The fetch fails (network failure or `!response.ok`), so the `catch` block returns `{ data: null, error }`.
+3. **`main.js`**: The resolved value is `{ data: null, error }`, so `if (error)` is true and `renderError(...)` is called. `renderRecipes(...)` is not called.
+4. **`dom-helpers.js`**: `renderError()` removes `hidden` and sets error text, so the error message appears.
+5. The message stays visible because there is no timeout-based hide. It is only cleared later when a success branch explicitly calls `hideError()`.
+
+</details>
 
 ### Guided Reading Questions
 
 Open each file and answer the questions.
 
-**`index.html`**
+#### `index.html`
+
 1. What does `type="module"` on the `<script>` tag enable?
 2. Find the fallback recipe card in the `ul`. What will happen to it once JavaScript loads successfully?
 3. Which elements start with `class="hidden"`? Why would we hide them by default?
@@ -82,7 +130,8 @@ Open each file and answer the questions.
 
 </details>
 
-**`src-solution/fetch-helpers.js`**
+#### `src-solution/fetch-helpers.js`
+
 1. What does `getRecipes` resolve to if the fetch succeeds? What does it resolve to if the fetch fails?
 2. What kind of errors does checking `response.ok` handle that `.catch()` does not handle on its own?
 3. The API returns an object like `{ recipes: [...], total: 50, ... }`. In `getRecipes`, where is just the recipe array extracted, and what would break if we returned the full object instead?
@@ -99,7 +148,8 @@ Open each file and answer the questions.
 
 </details>
 
-**`src-solution/dom-helpers.js`**
+#### `src-solution/dom-helpers.js`
+
 1. Why does `renderRecipes` clear `#recipes-list` before rendering?
 2. Why does `renderRecipeDetails` remove the `hidden` class?
 3. What is the difference between `renderError` and `hideError`?
@@ -114,7 +164,8 @@ Open each file and answer the questions.
 
 </details>
 
-**`src-solution/main.js`**
+#### `src-solution/main.js`
+
 1. What are the three actions that can trigger a fetch in this file?
 2. Where is event delegation used, and why?
 3. Where is the search form handled, and why is the handler `async`?
