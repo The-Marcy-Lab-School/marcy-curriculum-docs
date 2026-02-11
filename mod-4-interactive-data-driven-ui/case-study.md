@@ -35,6 +35,8 @@ npm run dev
 
 This case study application displays recipes from the [https://dummyjson.com/recipes](https://dummyjson.com/recipes) API, allowing users to click on a recipe card to see more details about it. They can also search for recipes using the provided form.
 
+![A recipe browser application.](./img/casestudy/screenshot.png)
+
 This case study application demonstrates DOM manipulation, fetching with `.then()`/`.catch()`, fetching with `async`/`await`, ES Modules, event delegation, `dataset`, and form handling. The completed solution is in `src-solution/`.
 
 ## Explore the Solution
