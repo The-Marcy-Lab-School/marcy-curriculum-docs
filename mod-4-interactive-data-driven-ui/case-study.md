@@ -18,17 +18,9 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/s
     - [`src-solution/dom-helpers.js`](#src-solutiondom-helpersjs)
     - [`src-solution/main.js`](#src-solutionmainjs)
 - [Building from Scratch](#building-from-scratch)
-  - [Step 0: Tour the starter and solution code](#step-0-tour-the-starter-and-solution-code)
-  - [Step 1: Create `src/fetch-helpers.js` - fetch a list of recipes](#step-1-create-srcfetch-helpersjs---fetch-a-list-of-recipes)
-  - [Step 2: Import and test in `main.js`](#step-2-import-and-test-in-mainjs)
-  - [Step 3: Create `src/dom-helpers.js` - render the recipe list](#step-3-create-srcdom-helpersjs---render-the-recipe-list)
-  - [Step 4: Wire up rendering in `main.js`](#step-4-wire-up-rendering-in-mainjs)
-  - [Step 5: Add `getRecipeById` to `fetch-helpers.js`](#step-5-add-getrecipebyid-to-fetch-helpersjs)
-  - [Step 6: Add the click handler with event delegation](#step-6-add-the-click-handler-with-event-delegation)
-  - [Step 7: Add `renderRecipeDetails` to `dom-helpers.js`](#step-7-add-renderrecipedetails-to-dom-helpersjs)
-  - [Step 8: Add `getRecipeBySearchTerm` with `async`/`await`](#step-8-add-getrecipebysearchterm-with-asyncawait)
-  - [Step 9: Add the search form handler in `main.js`](#step-9-add-the-search-form-handler-in-mainjs)
-  - [Step 10 (Bonus): Add error rendering](#step-10-bonus-add-error-rendering)
+  - [Feature 1: Fetch and Render Recipes](#feature-1-fetch-and-render-recipes)
+  - [Feature 2: Event Delegation to Render Recipe Details](#feature-2-event-delegation-to-render-recipe-details)
+  - [Feature 3: Search](#feature-3-search)
 - [Concepts Checklist](#concepts-checklist)
 
 
@@ -195,24 +187,25 @@ The process for creating an interactive and data-driven user interface typically
    - User click -> fetch -> render
    - Form submit -> extract form data -> fetch -> render
 
-### Step 0: Tour the starter and solution code
+For each feature below, you'll see this pattern repeating itself!
 
-We've taken care of the first step for you. Walk through the provided files before writing JavaScript. Pay attention to the empty containers and the elements with `id`s that we use in our JavaScript.
+### Feature 1: Fetch and Render Recipes
+
+<!-- omit from toc -->
+#### Step 0: Tour the HTML {.unlisted .unnumbered}
+
+We've taken care of the HTML for you. Walk through the provided files before writing JavaScript. Pay attention to the empty containers and the elements with `id`s that we use in our JavaScript.
 
 - **`index.html`** - Take note of:
-  - `<script type="module" src="./src-solution/main.js">` at the bottom.
-  - The app currently loads the solution by default so students can inspect working behavior first.
-  - To build from scratch, switch that line to `./src/main.js`.
   - The hardcoded fallback recipe card in the `ul` (what users see before JS loads or if fetch fails).
   - The `#recipe-details` section with `class="hidden"` (hidden by default, shown on click).
   - The `#error-message` paragraph with `class="hidden"`.
   - The search form (`#search-form`) with `searchTerm` text input and `isQuick` checkbox.
 - **`styles.css`** - Take note of the class `.hidden { display: none !important; }`.
 - **`src/main.js`** - Starter file is empty.
-- **`src-solution/main.js`** - Full implementation including initial load, click-to-details, and search.
 
-
-### Step 1: Create `src/fetch-helpers.js` - fetch a list of recipes
+<!-- omit from toc -->
+#### Step 1: Create `src/fetch-helpers.js` - fetch a list of recipes {.unlisted .unnumbered}
 
 These next 4 steps walk through implementing the first feature: fetching and rendering a list of recipes.
 
@@ -246,7 +239,8 @@ export const getRecipes = () => {
 - We extract `data.recipes` from the API response object.
 - On failure, return `null` so callers can handle errors.
 
-### Step 2: Import and test in `main.js`
+<!-- omit from toc -->
+#### Step 2: Import and test in `main.js` {.unlisted .unnumbered}
 
 > **Skills:** named imports with `.js` extension, `.then()` on returned Promise
 
@@ -260,7 +254,8 @@ getRecipes().then((recipes) => {
 
 You should see an array of recipe objects in the console.
 
-### Step 3: Create `src/dom-helpers.js` - render the recipe list
+<!-- omit from toc -->
+#### Step 3: Create `src/dom-helpers.js` - render the recipe list {.unlisted .unnumbered}
 
 > **Skills:** `document.createElement`, `append`, `dataset`, `innerHTML = ''`, named exports
 
@@ -292,7 +287,8 @@ export const renderRecipes = (recipes) => {
 };
 ```
 
-### Step 4: Wire up rendering in `main.js`
+<!-- omit from toc -->
+#### Step 4: Wire up rendering in `main.js` {.unlisted .unnumbered}
 
 > **Skills:** module imports, null checking
 
@@ -311,7 +307,63 @@ getRecipes().then((recipes) => {
 
 We've now completely implemented the first feature: fetching and rendering all recipes!
 
-### Step 5: Add `getRecipeById` to `fetch-helpers.js`
+<!-- omit from toc -->
+#### Step 6: Add Error Rendering {.unlisted .unnumbered}
+
+This last step adds useful feedback for the user when errors occur.
+
+> **Skills:** error state rendering, explicit UI state management
+
+Add to `dom-helpers.js`:
+
+```js
+const errorMessage = document.querySelector('#error-message');
+
+export const renderError = (msg) => {
+  errorMessage.classList.remove('hidden');
+  errorMessage.textContent = msg;
+};
+
+export const hideError = () => {
+  errorMessage.textContent = '';
+  errorMessage.classList.add('hidden');
+};
+```
+
+Then use these in `main.js`:
+- Call `renderError(...)` when fetch or search fails.
+- Call `hideError()` in success branches (after successful page-load fetch, recipe-details fetch, and successful search) so errors are dismissed manually when the app recovers.
+
+For example:
+
+```js
+import { getRecipes } from './fetch-helpers.js';
+import { renderRecipes } from './dom-helpers.js';
+
+getRecipes().then((recipes) => {
+  if (recipes === null) {
+    renderError('Failed to load recipes.');
+    return;
+  }
+  hideError();
+  renderRecipes(recipes);
+});
+```
+
+### Feature 2: Event Delegation to Render Recipe Details
+
+<!-- omit from toc -->
+#### Step 0: Tour the HTML {.unlisted .unnumbered}
+
+We've taken care of the HTML for you. Walk through the provided files before writing JavaScript. Pay attention to the empty containers and the elements with `id`s that we use in our JavaScript.
+
+- **`index.html`** - Take note of:
+  - The `#recipe-details` section with `class="hidden"` (hidden by default, shown on click).
+  - The `data-recipe-id` attribute on the fallback list item
+- **`styles.css`** - Take note of the class `.hidden { display: none !important; }`.
+
+<!-- omit from toc -->
+#### Step 1: Add `getRecipeById` to `fetch-helpers.js` {.unlisted .unnumbered}
 
 These next three steps walk through implementing the second feature: fetching recipe details when we click on a specific recipe.
 
@@ -333,7 +385,8 @@ export const getRecipeById = (id) => {
 };
 ```
 
-### Step 6: Add the click handler with event delegation
+<!-- omit from toc -->
+#### Step 2: Add the click handler with event delegation {.unlisted .unnumbered}
 
 > **Skills:** event delegation, `closest()`, `dataset`, second fetch + render
 
@@ -358,7 +411,8 @@ recipesList.addEventListener('click', (event) => {
 });
 ```
 
-### Step 7: Add `renderRecipeDetails` to `dom-helpers.js`
+<!-- omit from toc -->
+#### Step 3: Add `renderRecipeDetails` to `dom-helpers.js` {.unlisted .unnumbered}
 
 > **Skills:** showing hidden content, nested list rendering
 
@@ -394,7 +448,18 @@ export const renderRecipeDetails = (recipe) => {
 
 This completes the second feature: clicking on a list item to fetch its details.
 
-### Step 8: Add `getRecipeBySearchTerm` with `async`/`await`
+### Feature 3: Search 
+
+<!-- omit from toc -->
+#### Step 0: Tour the HTML {.unlisted .unnumbered}
+
+We've taken care of the HTML for you. Walk through the provided files before writing JavaScript. Pay attention to the empty containers and the elements with `id`s that we use in our JavaScript.
+
+- **`index.html`** - Take note of:
+  - The search form (`#search-form`) with `searchTerm` text input and `isQuick` checkbox.
+
+<!-- omit from toc -->
+#### Step 1: Add `getRecipeBySearchTerm` with `async`/`await` {.unlisted .unnumbered}
 
 These next two steps walk through implementing the final feature: searching for recipes.
 
@@ -418,11 +483,12 @@ export const getRecipeBySearchTerm = async (searchTerm) => {
 };
 ```
 
-**Why this differs from the other fetch helpers:**
+Why this differs from the other fetch helpers:
 - It demonstrates the `async`/`await` + `try`/`catch` style.
 - It returns an object with `{ data, error }` so callers can consistently inspect both success and failure fields (`data` and `error`).
 
-### Step 9: Add the search form handler in `main.js`
+<!-- omit from toc -->
+#### Step 2: Add the search form handler in `main.js` {.unlisted .unnumbered}
 
 > **Skills:** form submit handling, `.checked` for checkboxes, async event handlers, conditional filtering
 
@@ -454,52 +520,6 @@ form.addEventListener('submit', async (event) => {
     renderRecipes(recipes);
   }
 });
-```
-
-### Step 10 (Bonus): Add error rendering
-
-This last step adds useful feedback for the user when errors occur.
-
-> **Skills:** error state rendering, explicit UI state management
-
-Add to `dom-helpers.js`:
-
-```js
-const errorMessage = document.querySelector('#error-message');
-
-export const renderError = (msg) => {
-  errorMessage.classList.remove('hidden');
-  errorMessage.textContent = msg;
-};
-
-export const hideError = () => {
-  errorMessage.textContent = '';
-  errorMessage.classList.add('hidden');
-};
-```
-
-Then use these in `main.js`:
-- Call `renderError(...)` when fetch or search fails.
-- Call `hideError()` in success branches (after successful page-load fetch, recipe-details fetch, and successful search) so errors are dismissed manually when the app recovers.
-
-For example:
-
-```js
-const { data, error } = await getRecipeBySearchTerm(searchTerm);
-if (error) {
-  renderError(`Failed to find recipes. Try again later. Error: ${error.message}`);
-}
-else if (data.length === 0) {
-  renderError('Could not find recipes matching that search term.');
-}
-else {
-  let recipes = data;
-  if (isQuick) {
-    recipes = data.filter((recipe) => (recipe.prepTimeMinutes + recipe.cookTimeMinutes) <= 20);
-  }
-  hideError();
-  renderRecipes(recipes);
-}
 ```
 
 ## Concepts Checklist
