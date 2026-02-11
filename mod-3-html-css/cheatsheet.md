@@ -1,6 +1,6 @@
 # Web Development Cheat Sheet
 
-Use this as a reference while working. **You don't need to memorize these!**
+Use this as a reference while working.
 
 **Table of Contents:**
 - [HTML](#html)
