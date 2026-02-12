@@ -4,15 +4,8 @@
 
 - [Overview](#overview)
   - [Deliverables](#deliverables)
-    - [1) A Deployed Project](#1-a-deployed-project)
-    - [2) A Project Spec Sheet](#2-a-project-spec-sheet)
-    - [3) A GitHub Organization and Scrum Board](#3-a-github-organization-and-scrum-board)
-    - [4) A Professional README](#4-a-professional-readme)
-    - [5) AI Usage Document (Required)](#5-ai-usage-document-required)
-    - [6) A Presentation + Walkthrough Demo Video](#6-a-presentation--walkthrough-demo-video)
-- [Stretch Features](#stretch-features)
-  - [Required Stretch: localStorage + AI](#required-stretch-localstorage--ai)
-- [Milestones](#milestones)
+  - [Stretch Features: localStorage + AI](#stretch-features-localstorage--ai)
+  - [Milestones](#milestones)
 - [Project Grading](#project-grading)
   - [Fetching Requirements (8 points)](#fetching-requirements-8-points)
   - [User Interface: Structure and Accessibility (12 points)](#user-interface-structure-and-accessibility-12-points)
@@ -60,7 +53,9 @@ Unlike your solo projects where the project itself was the main deliverable, for
 * [Read here to learn about creating a scrum board](../projects/2-how-to-create-scrumboard.md)!
 * [Presentation Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing) — make sure to hit all of the talking points in the template but feel free to modify the design!
 
-#### 1) A Deployed Project
+Expand each below to see details and examples.
+
+**<details><summary>A Deployed Project</summary>**
 
 * Your project must meet all of the grading requirements listed below. 
 * Each project is deployed on GitHub using an Organization
@@ -71,13 +66,17 @@ Unlike your solo projects where the project itself was the main deliverable, for
   - [Pokedex (PokeAPI)](https://phoenix-pokedex.github.io/Phoenix-Pokedex/)
   - [Buldak (Jikan Anime/Manga API)](https://bul-dak.github.io/anime-web/)
 
-#### 2) A Project Spec Sheet
+</details>
+
+**<details><summary>A Project Spec Sheet</summary>**
 
 * A project spec sheet is a document that provides key details about the project including the API being used, the intended features/user stories, and wireframes.
 * Examples:
  * [Art Viewer Product Spec Sheet](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/edit)
 
-#### 3) A GitHub Organization and Scrum Board
+</details>
+
+**<details><summary>A GitHub Organization and Scrum Board</summary>**
 
 * A GitHub Organization is a shared account on GitHub where you and your teammates can collaborate on repositories. Having a GitHub organization will make deployment straight forward.
   * [We Cooked Organization](https://github.com/we-cooked)
@@ -85,7 +84,9 @@ Unlike your solo projects where the project itself was the main deliverable, for
   * [Sample "In Progress" Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
   * [We Cooked Scrum Board](https://github.com/orgs/we-cooked/projects/1/views/1)* Examples:
 
-#### 4) A Professional README
+</details>
+
+**<details><summary>A Professional README</summary>**
 
 Your `README.md` should be polished enough that a new engineer can understand and run your project without asking questions.
 
@@ -115,7 +116,9 @@ Use the same professional writing standards we expect in all artifacts:
 Example:
   * [We Cooked Repository README](https://github.com/we-cooked/cooked)
 
-#### 5) AI Usage Document (Required)
+</details>
+
+**<details><summary>AI Usage Document (Required)</summary>**
 
 Generative AI tools are a required part of this project workflow, but you must be able to explain every line of code you submit.
 
@@ -134,18 +137,18 @@ Add a link to your AI Usage Document in your `README.md`, for example:
 This project provided us an opportunity to build with AI assistance. Check out our [AI Usage Document](PASTE_LINK_HERE) to see how we used AI on this project.
 ```
 
-#### 6) A Presentation + Walkthrough Demo Video
+</details>
+
+**<details><summary>A Presentation + Walkthrough Demo Video</summary>**
 
 * The presentation is your "elevator pitch" to tell your audience about the project, how you built it, and what you learned through the process.
 * Examples:
   * [We Cooked Presentation](https://docs.google.com/presentation/d/1fm1dWFZofhChPFYlG4CcbOKGoE5ziJWtFNuzhKytm7k/edit?slide=id.g327ab0f0e7e_0_559#slide=id.g327ab0f0e7e_0_559) — This example does an excellent job with their demo recording, walking the audience through the features of the application.
   * [Pickle Productions Presentation](https://docs.google.com/presentation/d/1Jbn9q0Pc8iUsJGCY93X3RoSkMVg0zSzHz7xFzVUuON4/edit) — This example does an excellent job at explaining their technical challenge and teamwork learnings.
 
-## Stretch Features
+</details>
 
-Your project must include at least one stretch feature. For this project, the recommended stretch focus is `localStorage`.
-
-### Required Stretch: localStorage + AI
+### Stretch Features: localStorage + AI
 
 Use AI to help you learn and implement `localStorage` for a real user-facing feature in your app.
 
@@ -181,7 +184,7 @@ Quality bar for this stretch:
 * UI still works when `localStorage` is empty
 * The feature is demonstrated in your walkthrough video
 
-## Milestones
+### Milestones
 
 As you work on this project, don't set your sights on the fully completed project from the jump. Give yourself smaller goals that you can reach each day and focus on one goal at a time. As long as your goals build on each other, you will eventually reach your final destination.
 
