@@ -41,14 +41,13 @@ These offer a more limited range of data, but still a lot to go through! Especia
 
 Get creative and have fun!
 
-https://anapioficeandfire.com/api/characters/583
-
-| api site                                     | API example Link                                                           | description                                        |
+| API site                                     | API example Link                                                           | description                                        |
 | -------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------- |
 | http://api.artic.edu/docs/#quick-start       | https://api.artic.edu/api/v1/artworks                                      | Chicago Museum of Art                              |
 | https://docs.api.jikan.moe/                  | https://api.jikan.moe/v4/anime/32/full                                     | Anime Data                                         |
 | https://thronesapi.com                       | https://thronesapi.com/api/v2/Characters                                   | Game of Thrones                                    |
 | https://www.tvmaze.com/api                   | https://api.tvmaze.com/search/shows?q=girls                                | TV Shows                                           |
+| https://opentdb.com/                         | https://opentdb.com/api.php?amount=10&category=10&type=multiple            | Trivai                                             |
 | https://anapioficeandfire.com                | https://anapioficeandfire.com/api/characters/583                           | Game of Thrones                                    |
 | https://datausa.io/about/api/                | https://datausa.io/api/data?drilldowns=State&measures=Population&year=2016 | Cool and simple population data                    |
 | https://github.com/15Dkatz/official_joke_api | https://official-joke-api.appspot.com/random_joke                          | Random Jokes                                       |
