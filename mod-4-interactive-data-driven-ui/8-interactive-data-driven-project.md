@@ -214,7 +214,7 @@ Eventually, you will need to develop the skill of planning out your objectives. 
 * **Ideal:**
   * [ ] The HTML structure is complete
   * [ ] You have functions to fetch from your two (minimum) endpoints and have tested them / logged data to the console
-**Stretch:**
+* **Stretch:**
   * [ ] You have functions to render fetched data to the page on page load
 {% endtab %}
 
@@ -224,7 +224,7 @@ Eventually, you will need to develop the skill of planning out your objectives. 
   * [ ] You can fetch AND render data for your two endpoints
 * **Ideal:**
   * [ ] You have an event handler that triggers one of the fetches and renders.
-**Stretch:**
+* **Stretch:**
   * [ ] Layout (flexbox / grid) and basic styling is added with responsive design.
 {% endtab %}
 
