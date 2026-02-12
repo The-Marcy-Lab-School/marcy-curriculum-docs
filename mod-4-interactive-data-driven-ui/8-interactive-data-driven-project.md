@@ -50,7 +50,7 @@ Unlike your solo projects where the project itself was the main deliverable, for
 
 **Deliverable Resources**
 * [Project Spec Sheet Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit)
-* [Read here to learn about creating a scrum board](../projects/2-how-to-create-scrumboard.md)!
+* [How to Create a Scrum Board](../projects/2-how-to-create-scrumboard.md)!
 * [Presentation Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing) — make sure to hit all of the talking points in the template but feel free to modify the design!
 
 Expand each below to see details and examples.
@@ -90,6 +90,8 @@ Expand each below to see details and examples.
 
 Your `README.md` should be polished enough that a new engineer can understand and run your project without asking questions.
 
+Example: [We Cooked Repository README](https://github.com/we-cooked/cooked)
+
 At minimum, include:
 
 * Project title and one-paragraph summary
@@ -112,9 +114,6 @@ Use the same professional writing standards we expect in all artifacts:
 * Correct spelling/grammar
 * Consistent formatting
 * No placeholder text
-
-Example:
-  * [We Cooked Repository README](https://github.com/we-cooked/cooked)
 
 </details>
 
