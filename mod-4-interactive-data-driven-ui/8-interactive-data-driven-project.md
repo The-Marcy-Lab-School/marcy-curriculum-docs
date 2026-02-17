@@ -6,14 +6,18 @@
   - [Deliverables](#deliverables)
   - [Stretch Features: localStorage + AI](#stretch-features-localstorage--ai)
   - [Milestones](#milestones)
-  - [Git Workflow for Paired Projects](#git-workflow-for-paired-projects)
-    - [The Golden Rule](#the-golden-rule)
-    - [Branch Strategy](#branch-strategy)
-    - [The Workflow (Repeat for Every Ticket)](#the-workflow-repeat-for-every-ticket)
-    - [Dividing the Work into Tickets](#dividing-the-work-into-tickets)
-    - [Handling Merge Conflicts](#handling-merge-conflicts)
-    - [Daily Routine](#daily-routine)
-    - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+- [Setup Steps](#setup-steps)
+  - [GitHub Organization \& Scrum Board](#github-organization--scrum-board)
+  - [Vite Project + Project Repo](#vite-project--project-repo)
+  - [Product Spec Sheet](#product-spec-sheet)
+- [Git Workflow for Paired Projects](#git-workflow-for-paired-projects)
+  - [The Golden Rule](#the-golden-rule)
+  - [Branch Strategy](#branch-strategy)
+  - [The Workflow (Repeat for Every Ticket)](#the-workflow-repeat-for-every-ticket)
+  - [Dividing the Work into Tickets](#dividing-the-work-into-tickets)
+  - [Handling Merge Conflicts](#handling-merge-conflicts)
+  - [Daily Routine](#daily-routine)
+  - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
 - [Project Grading](#project-grading)
   - [Fetching Requirements (8 points)](#fetching-requirements-8-points)
   - [User Interface: Structure and Accessibility (12 points)](#user-interface-structure-and-accessibility-12-points)
@@ -267,15 +271,70 @@ Eventually, you will need to develop the skill of planning out your objectives. 
 {% endtab %}
 {% endtabs %}
 
-### Git Workflow for Paired Projects
+## Setup Steps
+
+### GitHub Organization & Scrum Board
+
+First, we will create the GitHub organization and Scrum Board that will enable you and your partner to collaborate on the project.
+
+1. Create a new GitHub organization for your team. Only one person needs to do this. They will provide their email for verification and then invite their partner as a collaborator.
+
+2. Copy the [Scrum Board template](https://github.com/users/benspector-mls/projects/7/views/1). 
+   1. Make your organization the Owner
+   2. Make sure to check the box that says "Draft issues will be copied if selected". 
+   3. Remove "[COPY]" from the project name.
+
+    ![Make a copy of the scrum board](./img/project/scrum-board-copy.gif)
+
+3. Then, you can get started assigning tickets! We recommend completing the **Project Setup** and **Assign Tasks** tickets as a team before assigning individual tickets.  When a ticket is assigned, move it to the "In progress" column.
+
+    ![Assigning tickets](./img/project/scrum-board-assign.gif)
+
+### Vite Project + Project Repo
+
+Next, we will create the Vite Project that will serve as the starting point for your project.
+
+1. Both partners should open VS Code and `cd` into the directory where they plan on working.
+2. One person in your group should run `npm create vite@latest` to create the project starter code
+   - Remove any unnecessary code provided by Vite, but keep the `index.html`, `styles.css`, and `main.js` files.
+   - Create additional module files such as `src/dom-helpers.js` and `src/fetch-helpers.js`.
+3. Make a new repository owned by your GitHub organization. It should have NOTHING in it. The name should be `mod-4-project` (you can change it later)
+
+4. It will then provide instructions to turn your existing Vite project into a repo and push to your newly created repo. It will tell you to run these commands:
+
+    ```bash
+    git init
+    git add -A
+    git commit -m "init"
+    git branch -M main
+
+    # update the url below (after "origin") with your own blank repo from step 1
+
+    git remote add origin git@github.com:{organization-name}/{repo-name}.git
+    git push -u origin main
+    ```
+
+### Product Spec Sheet
+
+Lastly, before you begin coding, you must align as a team on your project vision by making a Product Spec Sheet.
+
+1. Make a copy of the [Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit)
+2. Update your Share settings to "Anyone with the link > Commenter"
+3. Post your team's Product Spec Sheet on Canvas.
+
+Here is an example of the [Art Viewer Product Spec Sheet](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/)
+
+Completing this is your first deliverable!
+
+## Git Workflow for Paired Projects
 
 This is likely your first time collaborating on code with another person using Git. The workflow below is intentionally simple. Follow it closely and you'll avoid most of the headaches that come from working in the same codebase.
 
-#### The Golden Rule
+### The Golden Rule
 
 **Never push directly to `main`.** All work happens on branches. Code gets into `main` through Pull Requests (PRs) that your partner reviews.
 
-#### Branch Strategy
+### Branch Strategy
 
 Use **feature branches** — short-lived branches where each branch corresponds to one ticket on your scrum board.
 
@@ -288,7 +347,7 @@ Examples:
 - `feature/form-html`
 - `feature/responsive-layout`
 
-#### The Workflow (Repeat for Every Ticket)
+### The Workflow (Repeat for Every Ticket)
 
 ```
 1. Pull the latest main
@@ -320,7 +379,7 @@ Examples:
 
 Then start the next ticket from step 1.
 
-#### Dividing the Work into Tickets
+### Dividing the Work into Tickets
 
 The key to working in parallel is to **split work by feature, not by file**. Each ticket should be a vertical slice — the HTML, CSS, JS, and fetch logic needed for one piece of functionality.
 
@@ -331,24 +390,27 @@ Here is a suggested way to break the project into tickets. The ticket numbers su
 2. **Assign Tickets** — Assign tickets in the backlog to each team member.
 
 **Partner A: Fetch & Render All Items:**
+
 3. **Collection section HTML & CSS** — Create a `<section>` for displaying the collection of data with a `h2` and a `ul` to be filled using JavaScript
 4. **Fetch all items** — Write a fetch function that GETs the collection endpoint and logs the data. Include `async/await`, `try/catch`, `response.ok` check.
 5. **Render item list** — Write a function that takes the fetched array and renders `<li>` elements inside the `<ul>` in the collection `<section>`. Use `createElement`
 6. **Responsive grid layout** — Style the item list using CSS Flexbox or Grid. Add a media query so items stack on mobile and sit side-by-side on desktop.
 
 **Partner B: Fetch & Render One Item:**
+
 7. **Single item section HTML + CSS** — Create the `<section>` for displaying a single fetched item with its `<h2>` and placeholder content.
 8. **Fetch single item** — Write a fetch function that GETs the "single item" endpoint and logs the data. Include `async/await`, `try/catch`, `response.ok` check.
 9. **Fetch on Click** — Add an event listener (using event delegation on the `<ul>`) that fetches details for one item and renders them in the single-item section.
 
 **Either partner (after earlier tickets merge):**
+
 10. **Build the form HTML** — Create the `<form>` with labels, inputs, and `name` attributes for each input.
 11. **Form event handling** — Add a submit event listener that prevents default, reads input values, clears the form, and triggers a fetch (or filters results).
 12.  **Connect form to fetch** — Wire up the form so submitting it triggers the collection fetch with the form's input value (e.g. a search query or filter).
 13.  **Polish and accessibility pass** — Confirm semantic HTML, single `<h1>`, single `<main>`, `<title>` in head, no divs replacing semantic elements.
 14.  **README and deployment** — Write the professional README, link AI Usage Doc, final deploy.
 
-#### Handling Merge Conflicts
+### Handling Merge Conflicts
 
 Merge conflicts happen when both partners edit the same lines in the same file. To minimize them:
 
@@ -364,7 +426,7 @@ When a conflict does happen:
 5. `git add .` and `git commit` to complete the merge.
 6. Push your branch and continue with the PR.
 
-#### Daily Routine
+### Daily Routine
 
 | Time               | Activity                                                                                             |
 | ------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -372,7 +434,7 @@ When a conflict does happen:
 | **During the day** | Work on your ticket. Commit often. Push and open a PR when done. Review your partner's PRs promptly. |
 | **End of day**     | Stand-down: What got done? What's next? Make sure all open PRs are merged so tomorrow starts clean.  |
 
-#### Common Mistakes to Avoid
+### Common Mistakes to Avoid
 
 - **Working on `main` directly.** You'll overwrite each other's work.
 - **Giant branches that touch every file.** Keep tickets small and focused.
