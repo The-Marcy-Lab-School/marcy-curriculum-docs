@@ -6,6 +6,14 @@
   - [Deliverables](#deliverables)
   - [Stretch Features: localStorage + AI](#stretch-features-localstorage--ai)
   - [Milestones](#milestones)
+  - [Git Workflow for Paired Projects](#git-workflow-for-paired-projects)
+    - [The Golden Rule](#the-golden-rule)
+    - [Branch Strategy](#branch-strategy)
+    - [The Workflow (Repeat for Every Ticket)](#the-workflow-repeat-for-every-ticket)
+    - [Dividing the Work into Tickets](#dividing-the-work-into-tickets)
+    - [Handling Merge Conflicts](#handling-merge-conflicts)
+    - [Daily Routine](#daily-routine)
+    - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
 - [Project Grading](#project-grading)
   - [Fetching Requirements (8 points)](#fetching-requirements-8-points)
   - [User Interface: Structure and Accessibility (12 points)](#user-interface-structure-and-accessibility-12-points)
@@ -51,6 +59,7 @@ Unlike your solo projects where the project itself was the main deliverable, for
 **Deliverable Resources**
 * [Project Spec Sheet Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit)
 * [How to Create a Scrum Board](../projects/2-how-to-create-scrumboard.md)!
+* [Template Scrum Board](https://github.com/users/benspector-mls/projects/7/views/1)
 * [Presentation Template](https://docs.google.com/presentation/d/1NvzL4yUaVSNFlmNtG3shNdK4j0oW3Ll2zbq8gK2vrzQ/edit?usp=sharing) — make sure to hit all of the talking points in the template but feel free to modify the design!
 
 Expand each below to see details and examples.
@@ -80,9 +89,11 @@ Expand each below to see details and examples.
 
 * A GitHub Organization is a shared account on GitHub where you and your teammates can collaborate on repositories. Having a GitHub organization will make deployment straight forward.
   * [We Cooked Organization](https://github.com/we-cooked)
-* A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into three columns: _Backlog_ (tasks waiting to be assigned), _In Progress_ (assigned tasks that are being worked on), and _Done_ (completed tasks).
+* A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into these columns: _Backlog_ (tasks waiting to be assigned), _In Progress_ (assigned tasks that are being worked on), _In Review_ (tasks to be reviewed), and _Done_ (completed tasks).
+* Examples:
+  * [We Cooked Completed Scrum Board](https://github.com/orgs/we-cooked/projects/1/views/1)*
   * [Sample "In Progress" Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
-  * [We Cooked Scrum Board](https://github.com/orgs/we-cooked/projects/1/views/1)* Examples:
+  * [Starting Template To Copy](https://github.com/users/benspector-mls/projects/7/views/1)
 
 </details>
 
@@ -195,64 +206,179 @@ For this Art Viewer project, you can see the progress made on each day.
 
 _Note: no need to create a new repo for each day - this is just done this way for demonstration purposes._
 
-Eventually, you will need to develop the skill of planning out your objectives. However, for this project we've laid out some daily milestones that you can strive for with bare minimum requirements, ideal progress, and stretch goals:
+Eventually, you will need to develop the skill of planning out your objectives. However, for this project we've laid out some daily milestones that you can strive for with bare minimum requirements, ideal progress, and stretch goals. Remember: a feature isn't "done" until it's been reviewed and merged to `main` via a PR.
 
 {% tabs %}
-{% tab title="Day 1" %}
-* **Bare Minimum:** 
+{% tab title="Day 1 — Planning + Setup" %}
+* **Bare Minimum:**
   * [ ] Product Spec Sheet is complete with API endpoints, user stories, and a wireframe that shows thoughtful idea about what data is displayed.
-* **Ideal:** 
-  * [ ] GitHub Organization and Repo is created
-* **Stretch:** 
-  * [ ] Get started putting together your scrum board with tickets
+  * [ ] Scrum board is populated with tickets (use the ticket breakdown above as a starting point). Partners have assigned themselves tickets.
+* **Ideal:**
+  * [ ] GitHub Organization and Repo is created.
+  * [ ] Vite project skeleton is set up pushed — both partners do this together on `main`. This is the one time you push directly to `main`.
+* **Stretch:**
+  * [ ] Partners each create their first feature branch and start working.
 * Note: If you have not submitted your proposal and are undecided about your API by this deadline, you will be assigned an API and product spec sheet by your Engineering Manager.
 {% endtab %}
 
-{% tab title="Day 2" %}
-* **Bare Minimum:** 
-  * [ ] All day 1 goals are completed.
-  * [ ] Scrum board is populated with tasks. Individuals have assigned tasks.
-  * [ ] The basic HTML, CSS, and JavaScript files for your project are created (the "skeleton"). 
+{% tab title="Day 2 — First Branches + First PRs" %}
+* **Bare Minimum:**
+  * [ ] All Day 1 goals are completed.
+  * [ ] Each partner has opened and merged at least one PR (e.g., Partner A: fetch function, Partner B: form HTML).
 * **Ideal:**
-  * [ ] The HTML structure is complete
-  * [ ] You have functions to fetch from your two (minimum) endpoints and have tested them / logged data to the console
+  * [ ] Fetch functions for both endpoints are written, tested in the console, and merged to `main`.
+  * [ ] HTML structure is complete.
 * **Stretch:**
-  * [ ] You have functions to render fetched data to the page on page load
+  * [ ] Render functions are written and merged. Fetched data appears on the page.
 {% endtab %}
 
-{% tab title="Day 3" %}
-* **Bare Minimum:** 
-  * [ ] All day 1 and day 2 goals are completed.
-  * [ ] You can fetch AND render data for your two endpoints
+{% tab title="Day 3 — Core Features Merged" %}
+* **Bare Minimum:**
+  * [ ] All Day 1–2 goals are completed.
+  * [ ] Both fetches render data to the page (merged to `main`).
 * **Ideal:**
-  * [ ] You have an event handler that triggers one of the fetches and renders.
+  * [ ] Event handling is wired up — clicking an item fetches and displays details, or submitting the form triggers a fetch. These are merged via PRs.
 * **Stretch:**
-  * [ ] Layout (flexbox / grid) and basic styling is added with responsive design.
+  * [ ] Layout (flexbox / grid) and basic responsive styling is added.
 {% endtab %}
 
-{% tab title="Day 4" %}
+{% tab title="Day 4 — Polish + Deploy" %}
 * **Bare minimum:**
-  * [ ] All day 1, 2, and 3 goals are completed.
-  * [ ] Layout (flexbox / grid) and basic styling is added with responsive design.
+  * [ ] All Day 1–3 goals are completed.
+  * [ ] Responsive layout is merged.
+  * [ ] All open branches are merged or closed — `main` represents your working app.
 * **Ideal:**
-  * [ ] Project is deployed (build the Vite project and push to main)
-  * [ ] Presentation slides are created and posted on Canvas
-  * [ ] Begin implementing localStorage stretch feature
-* **Stretch:** 
-  * [ ] A stretch feature is completed
+  * [ ] Project is deployed (build the Vite project and push to `main`).
+  * [ ] Presentation slides are created and posted on Canvas.
+  * [ ] Begin implementing localStorage stretch feature (on a new branch!).
+* **Stretch:**
+  * [ ] localStorage feature is merged.
 {% endtab %}
 
-{% tab title="Day 5" %}
+{% tab title="Day 5 — Final Stretch + Presentation" %}
 * **Bare minimum:**
-  * [ ] All day 1, 2, 3, and 4 goals are completed.
-  * [ ] The localStorage stretch feature is completed
+  * [ ] All Day 1–4 goals are completed.
+  * [ ] The localStorage stretch feature is merged. No open branches remain.
 * **Ideal:**
-  * [ ] Presentation slides are complete with a recorded demo video
-  * [ ] GitHub Repo README is polished
-* **Stretch:** 
-  * [ ] Additional stretch features
+  * [ ] Presentation slides are complete with a recorded demo video.
+  * [ ] GitHub Repo README is polished with screenshots, live link, and AI Usage Doc link.
+* **Stretch:**
+  * [ ] Additional stretch features.
 {% endtab %}
 {% endtabs %}
+
+### Git Workflow for Paired Projects
+
+This is likely your first time collaborating on code with another person using Git. The workflow below is intentionally simple. Follow it closely and you'll avoid most of the headaches that come from working in the same codebase.
+
+#### The Golden Rule
+
+**Never push directly to `main`.** All work happens on branches. Code gets into `main` through Pull Requests (PRs) that your partner reviews.
+
+#### Branch Strategy
+
+Use **feature branches** — short-lived branches where each branch corresponds to one ticket on your scrum board.
+
+Branch naming convention: `feature/short-description`
+
+Examples:
+- `feature/fetch-all-items`
+- `feature/render-item-list`
+- `feature/single-item-section`
+- `feature/form-html`
+- `feature/responsive-layout`
+
+#### The Workflow (Repeat for Every Ticket)
+
+```
+1. Pull the latest main
+   git checkout main
+   git pull origin main
+
+2. Create a new branch for your ticket
+   git checkout -b feature/your-ticket-name
+
+3. Do your work, committing as you go
+   git add .
+   git commit -m "Add fetch function for all artworks"
+
+4. Push your branch to GitHub
+   git push origin feature/your-ticket-name
+
+5. Open a Pull Request on GitHub
+   - Base: main ← Compare: feature/your-ticket-name
+   - Assign your partner as a reviewer
+
+6. Your partner reviews the PR
+   - Look it over, leave comments or approve
+   - The reviewer merges the PR on GitHub
+
+7. Both partners pull the updated main
+   git checkout main
+   git pull origin main
+```
+
+Then start the next ticket from step 1.
+
+#### Dividing the Work into Tickets
+
+The key to working in parallel is to **split work by feature, not by file**. Each ticket should be a vertical slice — the HTML, CSS, JS, and fetch logic needed for one piece of functionality.
+
+Here is a suggested way to break the project into tickets. The ticket numbers suggest a rough order, but tickets at the same level can be worked on in parallel by different partners.
+
+**Setup (do together, Day 1) — this is the one time you push directly to `main`**
+1. **Project Setup** — Create GitHub Organization, repo, and clone locally. Set up Vite project with initial file structure (`index.html`, `styles.css`, `app.js`)
+2. **Assign Tickets** — Assign tickets in the backlog to each team member.
+
+**Partner A: Fetch & Render All Items:**
+3. **Collection section HTML & CSS** — Create a `<section>` for displaying the collection of data with a `h2` and a `ul` to be filled using JavaScript
+4. **Fetch all items** — Write a fetch function that GETs the collection endpoint and logs the data. Include `async/await`, `try/catch`, `response.ok` check.
+5. **Render item list** — Write a function that takes the fetched array and renders `<li>` elements inside the `<ul>` in the collection `<section>`. Use `createElement`
+6. **Responsive grid layout** — Style the item list using CSS Flexbox or Grid. Add a media query so items stack on mobile and sit side-by-side on desktop.
+
+**Partner B: Fetch & Render One Item:**
+7. **Single item section HTML + CSS** — Create the `<section>` for displaying a single fetched item with its `<h2>` and placeholder content.
+8. **Fetch single item** — Write a fetch function that GETs the "single item" endpoint and logs the data. Include `async/await`, `try/catch`, `response.ok` check.
+9. **Fetch on Click** — Add an event listener (using event delegation on the `<ul>`) that fetches details for one item and renders them in the single-item section.
+
+**Either partner (after earlier tickets merge):**
+10. **Build the form HTML** — Create the `<form>` with labels, inputs, and `name` attributes for each input.
+11. **Form event handling** — Add a submit event listener that prevents default, reads input values, clears the form, and triggers a fetch (or filters results).
+12.  **Connect form to fetch** — Wire up the form so submitting it triggers the collection fetch with the form's input value (e.g. a search query or filter).
+13.  **Polish and accessibility pass** — Confirm semantic HTML, single `<h1>`, single `<main>`, `<title>` in head, no divs replacing semantic elements.
+14.  **README and deployment** — Write the professional README, link AI Usage Doc, final deploy.
+
+#### Handling Merge Conflicts
+
+Merge conflicts happen when both partners edit the same lines in the same file. To minimize them:
+
+- **Communicate constantly.** Tell your partner what file you're working in.
+- **Keep branches short-lived.** Merge PRs quickly (within hours, not days). The longer a branch lives, the more likely it conflicts with `main`.
+- **Pull `main` before starting a new branch.** This ensures you're always building on the latest code.
+
+When a conflict does happen:
+1. Pull `main` into your feature branch: `git merge main`
+2. Git will mark the conflicting lines in the file. Open the file and look for the `<<<<<<<`, `=======`, `>>>>>>>` markers.
+3. **Talk to your partner** about which version to keep (or how to combine them).
+4. Edit the file to resolve the conflict, removing the markers.
+5. `git add .` and `git commit` to complete the merge.
+6. Push your branch and continue with the PR.
+
+#### Daily Routine
+
+| Time               | Activity                                                                                             |
+| ------------------ | ---------------------------------------------------------------------------------------------------- |
+| **Start of day**   | Stand-up: What did you do yesterday? What are you doing today? Any blockers?                         |
+| **During the day** | Work on your ticket. Commit often. Push and open a PR when done. Review your partner's PRs promptly. |
+| **End of day**     | Stand-down: What got done? What's next? Make sure all open PRs are merged so tomorrow starts clean.  |
+
+#### Common Mistakes to Avoid
+
+- **Working on `main` directly.** You'll overwrite each other's work.
+- **Giant branches that touch every file.** Keep tickets small and focused.
+- **Not pulling before branching.** You'll end up working on stale code.
+- **Ignoring your partner's PR.** Review quickly — your partner is blocked until you do.
+- **Both editing `index.html` at the same time.** Coordinate who's touching shared files, or accept that you'll need to resolve a merge conflict.
 
 ## Project Grading
 
