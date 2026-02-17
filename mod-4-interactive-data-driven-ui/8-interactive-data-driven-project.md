@@ -209,7 +209,7 @@ _Note: no need to create a new repo for each day - this is just done this way fo
 Eventually, you will need to develop the skill of planning out your objectives. However, for this project we've laid out some daily milestones that you can strive for with bare minimum requirements, ideal progress, and stretch goals. Remember: a feature isn't "done" until it's been reviewed and merged to `main` via a PR.
 
 {% tabs %}
-{% tab title="Day 1 — Planning + Setup" %}
+{% tab title="Day 1 %}
 * **Bare Minimum:**
   * [ ] Product Spec Sheet is complete with API endpoints, user stories, and a wireframe that shows thoughtful idea about what data is displayed.
   * [ ] Scrum board is populated with tickets (use the ticket breakdown above as a starting point). Partners have assigned themselves tickets.
@@ -221,7 +221,7 @@ Eventually, you will need to develop the skill of planning out your objectives. 
 * Note: If you have not submitted your proposal and are undecided about your API by this deadline, you will be assigned an API and product spec sheet by your Engineering Manager.
 {% endtab %}
 
-{% tab title="Day 2 — First Branches + First PRs" %}
+{% tab title="Day 2 %}
 * **Bare Minimum:**
   * [ ] All Day 1 goals are completed.
   * [ ] Each partner has opened and merged at least one PR (e.g., Partner A: fetch function, Partner B: form HTML).
@@ -232,7 +232,7 @@ Eventually, you will need to develop the skill of planning out your objectives. 
   * [ ] Render functions are written and merged. Fetched data appears on the page.
 {% endtab %}
 
-{% tab title="Day 3 — Core Features Merged" %}
+{% tab title="Day 3 %}
 * **Bare Minimum:**
   * [ ] All Day 1–2 goals are completed.
   * [ ] Both fetches render data to the page (merged to `main`).
@@ -242,7 +242,7 @@ Eventually, you will need to develop the skill of planning out your objectives. 
   * [ ] Layout (flexbox / grid) and basic responsive styling is added.
 {% endtab %}
 
-{% tab title="Day 4 — Polish + Deploy" %}
+{% tab title="Day 4 %}
 * **Bare minimum:**
   * [ ] All Day 1–3 goals are completed.
   * [ ] Responsive layout is merged.
@@ -255,7 +255,7 @@ Eventually, you will need to develop the skill of planning out your objectives. 
   * [ ] localStorage feature is merged.
 {% endtab %}
 
-{% tab title="Day 5 — Final Stretch + Presentation" %}
+{% tab title="Day 5 %}
 * **Bare minimum:**
   * [ ] All Day 1–4 goals are completed.
   * [ ] The localStorage stretch feature is merged. No open branches remain.
