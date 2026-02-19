@@ -93,7 +93,7 @@ Server-side (backend) code on the other hand is much more secure. A client can s
 
 So, to securely use an API key, we must use it in our server-side code. This means building a server to make requests on behalf of the client, acting as a sort of middleman. As long as the server has the API key, the client doesn't need it!
 
-![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](<../.gitbook/assets/express-api-middleman (1).svg>)
+![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](./img/express-api-middleman-2.png)
 
 In other words, the client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.
 
