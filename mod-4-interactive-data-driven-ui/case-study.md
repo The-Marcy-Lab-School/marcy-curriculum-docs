@@ -1,4 +1,4 @@
-# Review Session: Recipe Browser
+# Case Study: Recipe Browser
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/swe-casestudy-4-interactive-data-driven-uis)!
