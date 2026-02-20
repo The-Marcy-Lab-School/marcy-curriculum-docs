@@ -10,6 +10,7 @@
   - [GitHub Organization \& Scrum Board](#github-organization--scrum-board)
   - [Vite Project + Project Repo](#vite-project--project-repo)
   - [Product Spec Sheet](#product-spec-sheet)
+  - [Deployment with gh-pages](#deployment-with-gh-pages)
 - [Git Workflow for Paired Projects](#git-workflow-for-paired-projects)
   - [The Golden Rule](#the-golden-rule)
   - [Branch Strategy](#branch-strategy)
@@ -316,7 +317,7 @@ Next, we will create the Vite Project that will serve as the starting point for 
 
 ### Product Spec Sheet
 
-Lastly, before you begin coding, you must align as a team on your project vision by making a Product Spec Sheet.
+Before you begin coding, you must align as a team on your project vision by making a Product Spec Sheet.
 
 1. Make a copy of the [Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit)
 2. Update your Share settings to "Anyone with the link > Commenter"
@@ -325,6 +326,109 @@ Lastly, before you begin coding, you must align as a team on your project vision
 Here is an example of the [Art Viewer Product Spec Sheet](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/)
 
 Completing this is your first deliverable!
+
+### Deployment with gh-pages
+
+As you write your code, your project is considered "in development". When we are ready to share the project with the world, we will **deploy** it. The main differences between a project in development and a deployed project are **file storage**, **access**, and **uptime**. 
+
+In development you use a development server (like Vite) that runs on `localhost`: 
+- *File Storage*: The files are stored on your computer.
+- *Access*: Only you can see it. If you send the link `http://localhost:5173` to a friend, it won't work for them.
+- *Uptime*: When your computer turns off, the server stops running as well.
+
+**Deployment** is the act of moving your finished work to a publicly accessible server which is just a computer whose resources you can access over a network. We'll be deploying our code onto GitHub's servers:
+- *File Storage*: The files are stored on one of GitHub's servers.
+- *Access*: Anyone with the URL can see the project and access the files.
+- *Uptime*: GitHub keeps the servers running. Even if you turn your computer off, your website stays online because its living on their hardware, not yours.
+
+{% hint style="info" %}
+A deployment server often refers to both the *computer hardware* that is "hosting" our files and the *server-side application* running on it is programmed to wait for incoming requests and sends those files to the user requesting them ("the client").
+
+GitHub Pages is known as a **static web server** which means that it just stores our HTML, CSS, and JS files and serves them directly to the user. Every user will get the exact same website and user experience.
+
+In the upcoming Backend unit, you will learn how to create your own **dynamic server-side applications**, enabling you customize what the client receives based on who they are, what resources they've requested, etc. In other words, you will be able to create your own APIs.
+{% endhint %}
+
+To deploy your project with GitHub pages, follow these steps:
+
+**Step 1: Create and Update `vite.config.js`**
+
+Create a file called `vite.config.js` at the root of your repository and add the code below. If you've changed the name of your repository from `mod-4-project` to something else, make sure to update this file.
+
+```js
+import { defineConfig } from 'vite'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  base: "/mod-4-project/"
+})
+```
+
+**Step 2: Install gh-pages**
+
+Install the `gh-pages` package as a dev dependency. It makes it incredibly easy to deploy.
+
+```sh
+npm install gh-pages --save-dev
+```
+
+
+**Step 3: Add predeploy and deploy scripts to package.json**
+
+Add the following `"predeploy"` and `"deploy"` scripts to your `package.json` file:
+
+```json
+"scripts": {
+    // other scripts...
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d dist"
+}
+```
+
+**Step 4: Add the homepage to package.json**
+
+GitHub pages will serve your website at `https://{github-organization}.github.io/{repo-name}/`.
+
+Add the complete website URL by adding a `"homepage"` to your package.json. Make sure to update the organization name (keep `.github.io`) and the repo name
+
+```json
+{
+  "name": "mod-4-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "vite": "^7.3.1"
+  },
+  "homepage": "https://marcy-example-organization.github.io/mod-4-project/"
+}
+```
+
+**Step 5: Run Deploy**
+
+Now, deploy your project! Run the command:
+
+```sh
+npm run deploy
+```
+
+And you’re done!
+
+**Step 6: GitHub Configuration**
+
+Lastly, Go to your GitHub repository and navigate to Settings -> Pages (left sidebar). Select source as “Deploy from branch” and branch as “gh-pages”.
+
+![GitHub Pages Settings](./img/project/gh-pages-settings.png)
+
+Wait for a few minutes and soon, your site will be live!
 
 ## Git Workflow for Paired Projects
 
