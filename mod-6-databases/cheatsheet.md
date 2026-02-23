@@ -1,23 +1,24 @@
-# Cheat Sheet Backend
+# Cheat Sheet — Databases
 
 - [SQL + Postgres](#sql--postgres)
   - [SQL + Postgres Basics](#sql--postgres-basics)
   - [One-To-Many Table](#one-to-many-table)
   - [Many To Many Table](#many-to-many-table)
-- [Knex](#knex)
-  - [Knex Basics](#knex-basics)
-  - [Configuring Knex](#configuring-knex)
-  - [Using `Knex.raw` to execute SQL](#using-knexraw-to-execute-sql)
-  - [SQL INSERT](#sql-insert)
-  - [SQL UPDATE](#sql-update)
-  - [SQL DELETE](#sql-delete)
-  - [A Model Example Using Knex](#a-model-example-using-knex)
-  - [Migrations](#migrations)
-  - [Seeds](#seeds)
+- [`pg`](#pg)
+  - [`pg` Basics](#pg-basics)
+  - [Setting Up `pool.js`](#setting-up-pooljs)
+  - [Running Queries with `pool.query()`](#running-queries-with-poolquery)
+  - [Parameterized Queries](#parameterized-queries)
+  - [CRUD Operations with `pg`](#crud-operations-with-pg)
+  - [Async Model Methods](#async-model-methods)
+  - [Async Controllers & Error Handling Middleware](#async-controllers--error-handling-middleware)
 - [Authentication and Authorization](#authentication-and-authorization)
   - [Authentication and Authorization Basics](#authentication-and-authorization-basics)
   - [Bcrypt](#bcrypt)
-  - [Authorization with Cookies](#authorization-with-cookies)
+  - [Sessions with `cookie-session`](#sessions-with-cookie-session)
+  - [Auth Endpoints](#auth-endpoints)
+  - [Authorization Middleware](#authorization-middleware)
+  - [Ownership-Based Authorization](#ownership-based-authorization)
 
 ![](./img/cheatsheet/client-server-database.svg)
 
@@ -49,8 +50,8 @@ CREATE TABLE people (
 );
 CREATE TABLE pets (
 	id SERIAL PRIMARY KEY, -- primary key
-	name TEXT NOT NULL, 
-	type TEXT NOT NULL, 
+	name TEXT NOT NULL,
+	type TEXT NOT NULL,
 	owner_id INTEGER REFERENCES people --foreign key
 );
 ```
@@ -78,7 +79,7 @@ What are the names and ids of all the pets owned by Ann?
 
 ```sql
 SELECT pets.id, pets.name
-FROM pets 
+FROM pets
 JOIN people ON pets.owner_id = people.id
 WHERE people.name = 'Ann Duong';
 ```
@@ -101,286 +102,242 @@ WHERE people.name = 'Ann Duong';
 Q: Give me the names and ids of the customers that ordered product #2
 
 ```sql
-SELECT customers.name, customers.id 
+SELECT customers.name, customers.id
 FROM customers
 JOIN orders ON customers.id=orders.customer_id
 JOIN products ON products.id=orders.product_id
 WHERE products.id = 2;
 ```
 
-## Knex
+## `pg`
 
 ![](./img/cheatsheet/client-server-database.svg)
 
-### Knex Basics
+### `pg` Basics
 
-* **Knex** - a library that allows a Node project to connect to a databases and execute SQL queries.
-* **Deployment Environment** - where an application is deployed. The two main ones are:
-  * Development Environment (your own computer) and 
-  * Production Environment (a hosting service like Render)
-* **`knexfile.js`** - a file that holds configuration data for connecting to a database
-* **`knex.js`** - a file that exports a `knex` object which has been configured to execute SQL commands to a database.
-* **`knex.raw(query)`** - a method used to execute a given SQL query.
+* **`pg`** — the official Node.js client library for PostgreSQL. It lets JavaScript code send SQL queries to and receive results from a Postgres database.
+* **Connection Pool** — a cache of database connections reused across queries, rather than opening and closing a new connection for each query.
+* **`pool.query()`** — the primary method for sending a SQL query to the database. Returns a Promise that resolves to a result object.
+* **Result Object** — the object resolved by `pool.query()`. Its `.rows` property is an array of matching records, each as a plain JavaScript object.
+* **Parameterized Query** — a query where user-supplied values are passed separately from the SQL string using `$1`, `$2`, etc. placeholders, preventing SQL injection.
+* **SQL Injection** — a security attack where malicious SQL is embedded in user input and executed by the database. Parameterized queries prevent this.
+* **`.env` file** — a file that stores environment variables (like database credentials) that should not be committed to version control.
 
-### Configuring Knex
+### Setting Up `pool.js`
 
-0. Install `knex` and `pg`
-1. Run `npx knex init` to create a `knexfile.js` 
-2. Enter your database configuration details:
+0. Install `pg` and `dotenv`:
 
-    ```js
-    development: {
-      client: 'pg',
-      connection: {
-        user: 'postgres', // unless you want to use a different user
-        password: 'postgres', // unless you changed your password
-        database: 'playground', 
-        // the database name ^
-      }
-    },
+    ```sh
+    npm install pg dotenv
     ```
 
-3. Create a `knex.js` file that exports a `knex` object
+1. Create a `.env` file in your project root:
 
-    ```js
-    const makeKnex = require('knex');
-    const knexConfigs = require('./knexfile.js'); // or wherever knexfile is
-    const env = process.env.NODE_ENV || 'development';
-    const knex = makeKnex(knexConfigs[env]);
-
-    module.exports = knex;
+    ```
+    PG_CONNECTION_STRING=postgres://localhost/your_database_name
     ```
 
-### Using `Knex.raw` to execute SQL
+    > Never commit `.env` to GitHub. Add it to `.gitignore`.
+
+2. Create `db/pool.js` that sets up the pool once and exports it:
+
+    ```js
+    // db/pool.js
+    require('dotenv').config();
+    const { Pool } = require('pg');
+
+    const pool = new Pool({ connectionString: process.env.PG_CONNECTION_STRING });
+
+    module.exports = pool;
+    ```
+
+### Running Queries with `pool.query()`
 
 ```js
-const knex = require('./knex'); // or wherever knex.js is
+const pool = require('../db/pool');
 
-const getPetsByOwnerNameAndType = async (ownerName, type) => {
-  const query = `
-    SELECT pets.name, pets.id
-    FROM pets
-      JOIN people ON pets.owner_id = people.id
-    WHERE people.name=? AND pets.type=?
-  `
-  const { rows } = await knex.raw(query, [ownerName, type]);
-  console.log(rows);
-  return rows;
-}
-```
-
-* `knex.raw` returns a promise so we use `async/await`
-* We use string templates to write multi-line SQL statements. NEVER interpolate values into your query string using `${}` as the query can become vulnerable to SQL Injection attacks.
-* Use `?` to indicate placeholders for dynamic values
-* Invoke `knex.raw` with a `query` and an array of values to replace the `?` in order
-* `knex.raw` returns an object with a `rows` array. 9 times out of 10, we are only interested in that `rows` array.
-
-### SQL INSERT
-
-```js
-const createPet = async(name, type, ownerId) => {
-  const query = `
-    INSERT INTO pets (name, type, owner_id)
-    VALUES (?, ?, ?)
-    RETURNING *
-  `
-  const { rows } = await knex.raw(query, [name, type, ownerId]);
-
-  return rows[0];
+const getAllUsers = async () => {
+  const result = await pool.query('SELECT * FROM users');
+  return result.rows; // an array of user objects
 };
 ```
 
-* `RETURNING *` returns the created record. Without this, `result.rows` will be an empty array.
-* `result.rows[0]` will be the one created value.
+* `pool.query()` returns a Promise — always `await` it inside an `async` function.
+* `result.rows` is an array of records. Each row is a plain JavaScript object.
+* `result.rowCount` is the number of rows returned or affected.
+* When no row matches, `result.rows` is `[]` — not an error.
 
-### SQL UPDATE
+### Parameterized Queries
+
+**Never** interpolate user input directly into a SQL string — it opens your app to SQL injection:
 
 ```js
-const updatePetNameByName = async(oldName, newName) => {
-  const query = `
-    UPDATE pets
-    SET name=?
-    WHERE name=?
-    RETURNING *
-  `
-  let { rows } = await knex.raw(query, [newName, oldName]);
-
-  console.log(rows[0]);
-}
+// NEVER DO THIS
+const result = await pool.query(`SELECT * FROM users WHERE id = ${id}`);
 ```
 
-### SQL DELETE
+Use `$1`, `$2`, etc. placeholders and pass values in a separate array:
 
 ```js
-const deletePetByName = async(name) => {
-  const query = `
-    DELETE FROM pets
-    WHERE name=?
-    RETURNING *
-  `
-  let { rows } = await knex.raw(query, [name]);
-
-  console.log(rows[0]);
+const getUserById = async (id) => {
+  const result = await pool.query(
+    'SELECT * FROM users WHERE id = $1',
+    [id]
+  );
+  return result.rows[0] || null;
 };
 ```
 
-### A Model Example Using Knex
+* `$1` maps to the first element of the values array, `$2` to the second, and so on.
+* Postgres treats the values as *data only*, never as SQL commands — even if they contain SQL syntax.
 
-This model has methods for CRUD operations for a `fellows` table. 
+### CRUD Operations with `pg`
 
 ```js
-const knex = require('./knex');
-const Post = require('./Post');
+// models/User.js
+const pool = require('../db/pool');
 
-class Fellow {
-
-  static async create(name) {
-    const query = `
-      INSERT INTO fellows (name)
-      VALUES (?)
-      RETURNING *;
-    `;
-    const { rows } = await knex.raw(query, [name]);
-    return rows[0];
+class User {
+  // READ all
+  static async list() {
+    const result = await pool.query('SELECT * FROM users ORDER BY id');
+    return result.rows;
   }
 
-  static async list() { // Get all
-    const query = `
-      SELECT * 
-      FROM fellows;
-    `;
-    const { rows } = await knex.raw(query);
-    return rows;
+  // READ one
+  static async find(id) {
+    const result = await pool.query(
+      'SELECT * FROM users WHERE id = $1',
+      [id]
+    );
+    return result.rows[0] || null;
   }
 
-  static async findById(id) { // Get one
-    const query = `
-      SELECT * 
-      FROM fellows
-      WHERE id=?
-    `;
-    const { rows } = await knex.raw(query, [id]);
-    return rows[0];
+  // CREATE
+  static async create(username, email) {
+    const result = await pool.query(
+      'INSERT INTO users (username, email) VALUES ($1, $2) RETURNING *',
+      [username, email]
+    );
+    return result.rows[0]; // the newly created row
   }
 
-  static async findByName(name) { // Get one
-    const query = `
-      SELECT * 
-      FROM fellows
-      WHERE name=?
-    `;
-    const { rows } = await knex.raw(query, [name]);
-    return rows[0];
+  // UPDATE
+  static async update(id, username, email) {
+    const result = await pool.query(
+      `UPDATE users
+       SET username = $1, email = $2
+       WHERE id = $3
+       RETURNING *`,
+      [username, email, id]
+    );
+    return result.rows[0] || null;
   }
 
-  static async editName(id, newName) { // Update
-    const query = `
-      UPDATE fellows
-      SET name=?
-      WHERE id=?
-      RETURNING *
-    `;
-    const { rows } = await knex.raw(query, [newName, id]);
-    return rows[0];
-  }
-
-  static async delete(id) { // Delete
-    // First delete all associated posts from that fellow
-    // using the Post model
-    await Post.deleteAllPostsForFellow(id);
-
-    const query = `
-      DELETE FROM fellows
-      WHERE id=?
-      RETURNING *
-    `
-    let { rows } = await knex.raw(query, [id]);
-    return rows;
+  // DELETE
+  static async destroy(id) {
+    const result = await pool.query(
+      'DELETE FROM users WHERE id = $1 RETURNING *',
+      [id]
+    );
+    return result.rows[0] || null;
   }
 }
 
-module.exports = Fellow;
+module.exports = User;
 ```
 
-### Migrations
+* `RETURNING *` makes `INSERT`, `UPDATE`, and `DELETE` return the affected row(s). Without it, `result.rows` is empty.
+* Use `result.rows[0]` when you expect exactly one result (find, create, update, delete).
+* Use `result.rows` when you expect multiple results (list).
 
-**Migrations**:
-* `npx knex migrate:make migration_name` - create an update to your schema
-* `npx knex migrate:down` - rewind/undo the last migration
-* `npx knex migrate:rollback` - rewind/undo all of your migrations
-* `npx knex migrate:latest` - run your migrations
+### Async Model Methods
+
+All `pg` queries are asynchronous. Every model method that calls `pool.query()` must be `async` and use `await`:
 
 ```js
-// return a `knex.schema` call that creates tables
-exports.up = function (knex) {
-  return knex.schema
-    .createTable('fellows', function (table) {
-      table.increments('id').primary();
-      table.string('name', 255).notNullable();
-    })
-    .createTable('posts', function (table) {
-      table.increments('id').primary();
-      table.string('content').notNullable();
-      table.integer('fellow_id').notNullable();
-      table.foreign('fellow_id').references('id').inTable('fellows');
-    });
+// Without async/await — WRONG
+static find(id) {
+  const result = pool.query('SELECT * FROM users WHERE id = $1', [id]);
+  return result.rows[0]; // result is a Promise, not the actual data!
+}
+
+// With async/await — CORRECT
+static async find(id) {
+  const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+  return result.rows[0] || null;
+}
+```
+
+Model methods can wrap queries in `try/catch` to provide context on failure:
+
+```js
+static async create(username, email) {
+  try {
+    const result = await pool.query(
+      'INSERT INTO users (username, email) VALUES ($1, $2) RETURNING *',
+      [username, email]
+    );
+    return result.rows[0];
+  } catch (err) {
+    throw new Error(`Failed to create user: ${err.message}`);
+  }
+}
+```
+
+### Async Controllers & Error Handling Middleware
+
+Controllers that call async model methods must also be `async`. Use `try/catch` and pass errors to `next(err)`:
+
+```js
+const getUser = async (req, res, next) => {
+  try {
+    const user = await User.find(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    next(err); // passes to error handling middleware
+  }
 };
 
-// this should reverse the changes above
-exports.down = function (knex) {
-  return knex.schema.dropTable('posts').dropTable('fellows');
+const createUser = async (req, res, next) => {
+  try {
+    const { username, email } = req.body;
+    const user = await User.create(username, email);
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
 };
 ```
 
-### Seeds
-
-**Commands**:
-- `npx knex seed:make seed_name` - create a new seed file
-- `npx knex seed:run` - run all seed files
-
-This seed file will reset each of the posts and fellows tables before inserting data into both
+Add an **error handling middleware** after all routes in `index.js`. Express identifies it by its four-parameter signature:
 
 ```js
-exports.seed = async function (knex) {
-  // Deletes ALL existing entries
-  // Delete posts first since it references fellows
-  await knex('posts').del()
-  await knex('fellows').del()
-
-  // Reset the auto increment so ids start back at 1
-  await knex.raw('ALTER SEQUENCE posts_id_seq RESTART WITH 1')
-  await knex.raw('ALTER SEQUENCE fellows_id_seq RESTART WITH 1')
-
-  // Use the knex query builder methods to insert fellow data
-  await knex('fellows').insert([
-    { name: 'maya' },
-    { name: 'reuben' },
-    { name: 'ann' }
-  ]);
-
-  // insert the array of post data
-  // await knex('posts').insert(postData);
-  await knex('posts').insert([
-    { post_content: `hello world i am maya`, fellow_id: 1 },
-    { post_content: `hello world i am reuben`, fellow_id: 2 },
-    { post_content: `hello world i am ann`, fellow_id: 3 },
-  ])
+// index.js — AFTER all routes
+const handleError = (err, req, res, next) => {
+  console.error(err);
+  const status = err.status ?? 500;
+  const message = err.message ?? 'Internal Server Error';
+  res.status(status).json({ error: message });
 };
+
+app.use(handleError);
 ```
 
 ## Authentication and Authorization
 
 ### Authentication and Authorization Basics
 
-* **Hashing** - a mathematical algorithm that transforms a string of characters into a fixed-length string of characters. 
+* **Hashing** - a mathematical algorithm that transforms a string of characters into a fixed-length string of characters.
 * **Password Salt** - A salt is a random string of data that is added to the input data before the hash function is applied. This changes the hash value that is produced, even for the same input data.
 * **Salt Rounds** - the number of times a password has been salted before being hashed
 * **Plaintext password** - the password as it was entered by the user, before it is hashed.
 * **Bcrypt** - a Node module that provides functions for hashing strings and verifying hashed strings.
-* **Authentication** - confirming that a request is coming from a verified user. For example, only logged in users can see the other users in this app.
-* **Authorization** - confirming that a request is coming from a verified user that is allowed to make the given request. For example, users are only authorized to edit their OWN profile (they can't change someone else's profile)
-* **Cookie** - a small text file that is sent by a website to your web browser and stored on your computer or mobile device.
-
+* **Authentication** - confirming *who you are* — verifying identity through login. Failure returns `401 Unauthorized`.
+* **Authorization** - confirming *what you're allowed to do* — checking permissions after identity is established. Failure returns `403 Forbidden`.
+* **Session** - a way for the server to persist information (like a logged-in user's ID) across multiple requests from the same client.
+* **Cookie** - a small piece of data set by a server and automatically sent by the browser with every subsequent request to that domain.
 
 ### Bcrypt
 
@@ -421,17 +378,177 @@ const testSignUpAndLogin = async () => {
   console.log(await isValidPassword('flubear', hashedPW)); // => false
   console.log(await isValidPassword('foobar', hashedPW)); // => true
 }
-
-test();
 ```
 
-### Authorization with Cookies
+### Sessions with `cookie-session`
+
+HTTP is **stateless** — the server has no memory of previous requests. Sessions solve this by storing data (like the logged-in user's ID) that persists across requests.
+
+**`cookie-session`** stores session data directly in an encrypted, signed cookie sent to the browser.
+
+Install and configure it before your routes:
+
+```sh
+npm install cookie-session
+```
+
+```js
+// index.js
+const cookieSession = require('cookie-session');
+
+app.use(cookieSession({
+  name: 'session',
+  secret: process.env.SESSION_SECRET, // from your .env file
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+}));
+```
+
+Add `SESSION_SECRET` to your `.env` file:
+
+```
+SESSION_SECRET=some-long-random-secret-string
+```
+
+Once the middleware is in place, `req.session` is available in every controller:
+
+```js
+// Writing to the session (e.g., after login)
+req.session.userId = user.id;
+
+// Reading from the session
+const userId = req.session.userId;
+
+// Clearing the session (logout)
+req.session = null;
+```
 
 ![](./img/cheatsheet/cookies.png)
 
-* When a client sends an initial request to the server, it doesn't have a cookie
-* The server sends a response along with a cookie.
-* The client can save that cookie and store it on the user's computer (many client-side applications will ask you if you want to save it or not)
-* On all future client requests to the server, the cookie will be sent with the request. Because the cookie is saved locally, even if the user closes the application and re-opens it later, the cookie will be sent along with all requests.
+### Auth Endpoints
 
-For our user authentication and authorization, our serves can make a cookie that saves the `id` of the user that is logged in. Whenever the user returns to the site, the cookie can immediately tell us who they are. This can be used to authenticate and to authorize the user.
+A complete authentication system has four endpoints:
+
+| Method   | Endpoint        | What it does                                   |
+| -------- | --------------- | ---------------------------------------------- |
+| `POST`   | `/api/register` | Create a new user (hash password, store in DB) |
+| `POST`   | `/api/login`    | Verify credentials, set session cookie         |
+| `GET`    | `/api/me`       | Return current user from session (or 401)      |
+| `DELETE` | `/api/logout`   | Clear the session cookie                       |
+
+**Login controller** — find user, verify password, set session:
+
+```js
+const login = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.findByUsername(username);
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
+    if (!passwordMatch) return res.status(401).json({ error: 'Invalid credentials' });
+
+    req.session.userId = user.id;
+    res.json({ id: user.id, username: user.username });
+  } catch (err) {
+    next(err);
+  }
+};
+```
+
+> Use the same generic message for both "user not found" and "wrong password" — telling an attacker which one is true gives them information.
+
+**`/api/me` controller** — return the current user from the session:
+
+```js
+const getMe = async (req, res, next) => {
+  try {
+    const { userId } = req.session;
+    if (!userId) return res.status(401).json(null);
+
+    const user = await User.find(userId);
+    res.json({ id: user.id, username: user.username });
+  } catch (err) {
+    next(err);
+  }
+};
+```
+
+**Logout controller** — clear the session:
+
+```js
+const logout = (req, res) => {
+  req.session = null;
+  res.json({ message: 'Logged out' });
+};
+```
+
+### Authorization Middleware
+
+**`checkAuthentication`** middleware protects routes that require login. It checks for a valid session and either continues the request or returns a `401`:
+
+```js
+// middleware/checkAuthentication.js
+const checkAuthentication = (req, res, next) => {
+  const { userId } = req.session;
+
+  if (!userId) {
+    return res.status(401).json({ error: 'You must be logged in to do that.' });
+  }
+
+  next(); // session is valid — continue to the controller
+};
+
+module.exports = checkAuthentication;
+```
+
+Apply it to individual routes:
+
+```js
+// Public — no middleware
+router.get('/posts', getAllPosts);
+
+// Protected — must be logged in
+router.post('/posts', checkAuthentication, createPost);
+router.patch('/posts/:id', checkAuthentication, updatePost);
+router.delete('/posts/:id', checkAuthentication, deletePost);
+```
+
+Or apply it to an entire router with `router.use()`:
+
+```js
+const router = express.Router();
+
+router.use(checkAuthentication); // every route on this router requires login
+
+router.get('/', getAllPosts);
+router.post('/', createPost);
+router.patch('/:id', updatePost);
+router.delete('/:id', deletePost);
+```
+
+### Ownership-Based Authorization
+
+Being logged in is the first check. Some actions also require that the logged-in user *owns* the resource. Compare `req.session.userId` against the resource's owner field, returning `403 Forbidden` if they don't match:
+
+```js
+const updatePost = async (req, res, next) => {
+  try {
+    const post = await Post.find(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+
+    // Must own the post to edit it
+    if (post.user_id !== req.session.userId) {
+      return res.status(403).json({ error: 'You do not have permission to edit this post.' });
+    }
+
+    const updated = await Post.update(req.params.id, req.body);
+    res.json(updated);
+  } catch (err) {
+    next(err);
+  }
+};
+```
+
+* `401 Unauthorized` — "I don't know who you are. Log in."
+* `403 Forbidden` — "I know who you are, but you can't do this."
