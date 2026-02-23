@@ -4,6 +4,8 @@
 Watch this video before lecture: [HTTP and the Web Explained](https://www.youtube.com/watch?v=0QI6I6APomE)
 {% endhint %}
 
+{% embed url="https://www.youtube.com/watch?v=0QI6I6APomE" %}
+
 In Part 1, we learned that the internet is physical infrastructure and that HTTP is the protocol clients and servers use to communicate. Now we'll go deeper: how does a URL like `https://www.google.com` actually resolve to a specific server? How does data find its way across the world to the right machine?
 
 **Table of Contents:**
