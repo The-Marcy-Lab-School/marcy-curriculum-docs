@@ -1,7 +1,7 @@
 # 1. How the Internet Works, Part 1
 
 {% hint style="info" %}
-Watch this video before lecture: [How does the Internet Work? (6 min)](https://www.youtube.com/watch?v=wW2A5SZ3GkI)
+Watch this video before lecture: [How does the Internet Work?](https://www.youtube.com/watch?v=wW2A5SZ3GkI)
 {% endhint %}
 
 Before we write a single line of server code, we need to understand the environment our servers live in. The internet is the infrastructure that makes everything we'll build possible. This lesson traces how data physically travels around the world and how the rules governing that travel—HTTP—shape the applications we build.
