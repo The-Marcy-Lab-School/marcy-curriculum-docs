@@ -1,7 +1,7 @@
 # 3. Server Basics with `node:http`
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-0-2-server-basics)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-server-basics-node-http)!
 {% endhint %}
 
 Now that you know how the internet works, it's time to run your own server. Before jumping into Express, we'll build one using Node's built-in `node:http` module — no npm packages required. This forces you to confront what a server actually *is*: code that listens for incoming requests, inspects them, and constructs responses manually.

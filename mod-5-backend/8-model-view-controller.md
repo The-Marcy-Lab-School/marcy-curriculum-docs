@@ -1,7 +1,7 @@
 # 5. Model-View-Controller Architecture
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-5-rest-api-model)!
 {% endhint %}
 
 As your application grows in scale and scope, it is important to have a consistent approach for organizing its many components.

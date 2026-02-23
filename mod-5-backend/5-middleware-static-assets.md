@@ -1,7 +1,7 @@
 # 2. Building a Static Web Server with Middleware
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-1-express-middleware)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-3-express-middleware)!
 {% endhint %}
 
 In the last lecture, we learned about the basics of Express: endpoints and controllers. Today, we'll learn about a new kind of controller that will expand our server's capabilities: middleware.

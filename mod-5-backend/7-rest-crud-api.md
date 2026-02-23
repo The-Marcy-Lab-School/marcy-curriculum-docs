@@ -1,7 +1,7 @@
 # 4. RESTful CRUD API
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-5-rest-api-model)!
 {% endhint %}
 
 You now have the skills to build a simple server application. But it can only perform one of the four CRUD capabilities.

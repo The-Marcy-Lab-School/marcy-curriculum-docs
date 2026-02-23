@@ -1,7 +1,7 @@
 # 1. Intro to Express
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-0-0-intro-to-express)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-2-intro-to-express)!
 {% endhint %}
 
 In this first lesson, we're going to learn the basics of Express and build and deploy a simple server application.
