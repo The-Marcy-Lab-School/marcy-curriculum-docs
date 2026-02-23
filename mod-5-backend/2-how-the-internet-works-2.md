@@ -10,19 +10,19 @@ In Part 1, we learned that the internet is physical infrastructure and that HTTP
 
 **Table of Contents:**
 
-* [Essential Questions](2-how-the-internet-works-2.md#essential-questions)
-* [Terms](2-how-the-internet-works-2.md#terms)
-* [IP Addresses](2-how-the-internet-works-2.md#ip-addresses)
-  * [IPv4](2-how-the-internet-works-2.md#ipv4)
-  * [IPv6](2-how-the-internet-works-2.md#ipv6)
-* [Domain Names](2-how-the-internet-works-2.md#domain-names)
-  * [Anatomy of a Domain Name](2-how-the-internet-works-2.md#anatomy-of-a-domain-name)
-  * [Types of Top-Level Domains](2-how-the-internet-works-2.md#types-of-top-level-domains)
-* [DNS: The Internet's Phone Book](2-how-the-internet-works-2.md#dns-the-internets-phone-book)
-  * [The Full HTTP Cycle with DNS](2-how-the-internet-works-2.md#the-full-http-cycle-with-dns)
-* [How Data Finds Its Way: Routing](2-how-the-internet-works-2.md#how-data-finds-its-way-routing)
-  * [Hierarchical Addressing](2-how-the-internet-works-2.md#hierarchical-addressing)
-  * [Putting It All Together: The Letter Analogy](2-how-the-internet-works-2.md#putting-it-all-together-the-letter-analogy)
+- [Essential Questions](#essential-questions)
+- [Terms](#terms)
+- [IP Addresses](#ip-addresses)
+  - [IPv4](#ipv4)
+  - [IPv6](#ipv6)
+- [Domain Names](#domain-names)
+  - [Anatomy of a Domain Name](#anatomy-of-a-domain-name)
+  - [Types of Top-Level Domains](#types-of-top-level-domains)
+- [DNS: The Internet's Phone Book](#dns-the-internets-phone-book)
+  - [The Full HTTP Cycle with DNS](#the-full-http-cycle-with-dns)
+- [How Data Finds Its Way: Routing](#how-data-finds-its-way-routing)
+  - [Hierarchical Addressing](#hierarchical-addressing)
+  - [Putting It All Together: The Letter Analogy](#putting-it-all-together-the-letter-analogy)
 
 ## Essential Questions
 

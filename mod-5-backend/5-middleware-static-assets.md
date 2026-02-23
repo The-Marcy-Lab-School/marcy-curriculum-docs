@@ -8,13 +8,13 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 **Table of Contents:**
 
-* [Terms](2-building-a-static-web-server-with-middleware.md#terms)
-* [Express Review](2-building-a-static-web-server-with-middleware.md#express-review)
-* [Middleware and `next()`](2-building-a-static-web-server-with-middleware.md#middleware-and-next)
-* [Static Web Servers](2-building-a-static-web-server-with-middleware.md#static-web-servers)
-  * [Serving React Static Assets](2-building-a-static-web-server-with-middleware.md#serving-react-static-assets)
-  * [`express.static()` Middleware](2-building-a-static-web-server-with-middleware.md#expressstatic-middleware)
-* [Summary](2-building-a-static-web-server-with-middleware.md#summary)
+- [Terms](#terms)
+- [Express Review](#express-review)
+- [Middleware and `next()`](#middleware-and-next)
+- [Static Web Servers](#static-web-servers)
+  - [Serving React Static Assets](#serving-react-static-assets)
+  - [`express.static()` Middleware](#expressstatic-middleware)
+- [Summary](#summary)
 
 ## Terms
 

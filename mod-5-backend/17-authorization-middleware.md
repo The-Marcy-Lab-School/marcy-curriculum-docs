@@ -8,17 +8,17 @@ Authentication answers "who are you?" Authorization answers "what are you allowe
 
 **Table of Contents:**
 
-* [Essential Questions](17-authorization-middleware.md#essential-questions)
-* [Terms](17-authorization-middleware.md#terms)
-* [Authentication vs. Authorization](17-authorization-middleware.md#authentication-vs-authorization)
-* [The Problem: Unprotected Endpoints](17-authorization-middleware.md#the-problem-unprotected-endpoints)
-* [Writing Authorization Middleware](17-authorization-middleware.md#writing-authorization-middleware)
-  * [The `checkAuthentication` Middleware](17-authorization-middleware.md#the-checkauthentication-middleware)
-  * [Applying It to Routes](17-authorization-middleware.md#applying-it-to-routes)
-  * [Applying It to an Entire Router](17-authorization-middleware.md#applying-it-to-an-entire-router)
-* [Ownership-Based Authorization](17-authorization-middleware.md#ownership-based-authorization)
-* [Testing Protected Routes with Postman](17-authorization-middleware.md#testing-protected-routes-with-postman)
-* [The Complete Auth Picture](17-authorization-middleware.md#the-complete-auth-picture)
+- [Essential Questions](#essential-questions)
+- [Terms](#terms)
+- [Authentication vs. Authorization](#authentication-vs-authorization)
+- [The Problem: Unprotected Endpoints](#the-problem-unprotected-endpoints)
+- [Writing Authorization Middleware](#writing-authorization-middleware)
+  - [The `checkAuthentication` Middleware](#the-checkauthentication-middleware)
+  - [Applying It to Routes](#applying-it-to-routes)
+  - [Applying It to an Entire Router](#applying-it-to-an-entire-router)
+- [Ownership-Based Authorization](#ownership-based-authorization)
+- [Testing Protected Routes with Postman](#testing-protected-routes-with-postman)
+- [The Complete Auth Picture](#the-complete-auth-picture)
 
 ## Essential Questions
 
@@ -42,13 +42,13 @@ By the end of this lesson, you should be able to answer these questions:
 
 These two terms are related but distinct — and it's important to understand the difference:
 
-| | Authentication | Authorization |
-|---|---|---|
-| **Question** | Who are you? | What are you allowed to do? |
-| **How** | Login (username + password) | Session check + permission check |
-| **Status on failure** | 401 Unauthorized | 403 Forbidden |
-| **Comes first?** | Yes | After authentication |
-| **Example** | Logging into Instagram | Editing *your own* post, not someone else's |
+|                       | Authentication              | Authorization                               |
+| --------------------- | --------------------------- | ------------------------------------------- |
+| **Question**          | Who are you?                | What are you allowed to do?                 |
+| **How**               | Login (username + password) | Session check + permission check            |
+| **Status on failure** | 401 Unauthorized            | 403 Forbidden                               |
+| **Comes first?**      | Yes                         | After authentication                        |
+| **Example**           | Logging into Instagram      | Editing *your own* post, not someone else's |
 
 Authentication always comes first. You can't authorize someone whose identity you haven't verified.
 

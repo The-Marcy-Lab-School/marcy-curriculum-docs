@@ -10,18 +10,19 @@ This lesson is the payoff of MVC.
 
 **Table of Contents:**
 
-* [Essential Questions](12-async-patterns-pg.md#essential-questions)
-* [Terms](12-async-patterns-pg.md#terms)
-* [Why Database Calls Are Async](12-async-patterns-pg.md#why-database-calls-are-async)
-* [Async Model Methods](12-async-patterns-pg.md#async-model-methods)
-  * [Every Method Becomes async](12-async-patterns-pg.md#every-method-becomes-async)
-  * [Error Handling with try/catch](12-async-patterns-pg.md#error-handling-with-trycatch)
-* [Async Controllers](12-async-patterns-pg.md#async-controllers)
-* [The Model Swap: MVC's Biggest Payoff](12-async-patterns-pg.md#the-model-swap-mvcs-biggest-payoff)
-  * [The In-Memory Model](12-async-patterns-pg.md#the-in-memory-model)
-  * [The Postgres Model](12-async-patterns-pg.md#the-postgres-model)
-  * [What Doesn't Change](12-async-patterns-pg.md#what-doesnt-change)
-* [Express Error Handling Middleware](12-async-patterns-pg.md#express-error-handling-middleware)
+- [Essential Questions](#essential-questions)
+- [Terms](#terms)
+- [Why Database Calls Are Async](#why-database-calls-are-async)
+- [Async Model Methods](#async-model-methods)
+  - [Every Method Becomes `async`](#every-method-becomes-async)
+  - [Error Handling with `try/catch`](#error-handling-with-trycatch)
+- [Async Controllers](#async-controllers)
+- [The Model Swap: MVC's Biggest Payoff](#the-model-swap-mvcs-biggest-payoff)
+  - [The In-Memory Model](#the-in-memory-model)
+  - [The Postgres Model](#the-postgres-model)
+  - [What Doesn't Change](#what-doesnt-change)
+- [Express Error Handling Middleware](#express-error-handling-middleware)
+
 
 ## Essential Questions
 

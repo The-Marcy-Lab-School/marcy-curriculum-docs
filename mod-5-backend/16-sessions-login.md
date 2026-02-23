@@ -8,18 +8,19 @@ In the previous lesson, you built a registration endpoint that hashes passwords 
 
 **Table of Contents:**
 
-* [Essential Questions](16-sessions-login.md#essential-questions)
-* [Terms](16-sessions-login.md#terms)
-* [The Problem: HTTP is Stateless](16-sessions-login.md#the-problem-http-is-stateless)
-* [The Solution: Sessions and Cookies](16-sessions-login.md#the-solution-sessions-and-cookies)
-  * [How Cookie-Based Sessions Work](16-sessions-login.md#how-cookie-based-sessions-work)
-* [Setting Up `cookie-session`](16-sessions-login.md#setting-up-cookie-session)
-* [Building the Login Endpoint](16-sessions-login.md#building-the-login-endpoint)
-  * [The Login Flow](16-sessions-login.md#the-login-flow)
-  * [The Login Controller](16-sessions-login.md#the-login-controller)
-* [The `/api/me` Auto-Login Pattern](16-sessions-login.md#the-apime-auto-login-pattern)
-* [Logout](16-sessions-login.md#logout)
-* [Putting It Together: Auth Endpoints](16-sessions-login.md#putting-it-together-auth-endpoints)
+- [Essential Questions](#essential-questions)
+- [Terms](#terms)
+- [The Problem: HTTP is Stateless](#the-problem-http-is-stateless)
+- [The Solution: Sessions and Cookies](#the-solution-sessions-and-cookies)
+  - [How Cookie-Based Sessions Work](#how-cookie-based-sessions-work)
+- [Setting Up `cookie-session`](#setting-up-cookie-session)
+- [Building the Login Endpoint](#building-the-login-endpoint)
+  - [The Login Flow](#the-login-flow)
+  - [The Login Controller](#the-login-controller)
+- [The `/api/me` Auto-Login Pattern](#the-apime-auto-login-pattern)
+- [Logout](#logout)
+- [Putting It Together: Auth Endpoints](#putting-it-together-auth-endpoints)
+
 
 ## Essential Questions
 
@@ -327,12 +328,12 @@ For learning purposes and most small apps, `cookie-session` is fine. For product
 
 Here's a summary of the four auth endpoints:
 
-| Method | Endpoint | What it does |
-|---|---|---|
-| `POST` | `/api/register` | Create a new user (hash password, store in DB) |
-| `POST` | `/api/login` | Verify credentials, set session cookie |
-| `GET` | `/api/me` | Return current user from session (or 401) |
-| `DELETE` | `/api/logout` | Clear the session cookie |
+| Method   | Endpoint        | What it does                                   |
+| -------- | --------------- | ---------------------------------------------- |
+| `POST`   | `/api/register` | Create a new user (hash password, store in DB) |
+| `POST`   | `/api/login`    | Verify credentials, set session cookie         |
+| `GET`    | `/api/me`       | Return current user from session (or 401)      |
+| `DELETE` | `/api/logout`   | Clear the session cookie                       |
 
 With these four endpoints, your application has a complete authentication system. The next lesson adds **authorization** — checking whether a logged-in user has permission to access specific resources.
 

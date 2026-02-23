@@ -4,6 +4,11 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
 {% endhint %}
 
+**Table of Contents:**
+- [Part 1 - Adding a DB for the fellows](#part-1---adding-a-db-for-the-fellows)
+- [Part 2 — Refactor!](#part-2--refactor)
+- [Part 3 - Adding posts](#part-3---adding-posts)
+
 Remember, the **model** is the layer of the application that directly manipulates the data. It provides methods that the controllers can use to execute those changes whenever the frontend makes the appropriate request.
 
 ![Thus far, our server application used an in-memory array as a "database".](<../.gitbook/assets/express-middleware-model (1) (1).svg>)

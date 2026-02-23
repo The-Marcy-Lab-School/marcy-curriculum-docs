@@ -8,17 +8,18 @@ In this first lesson, we're going to learn the basics of Express and build and d
 
 **Table of Contents:**
 
-* [Terms](1-intro-to-express.md#terms)
-* [What is an HTTP Server Application?](1-intro-to-express.md#what-is-an-http-server-application)
-  * [Client Server Interactions Review](1-intro-to-express.md#client-server-interactions-review)
-* [Express](1-intro-to-express.md#express)
-  * [Connecting to your Server](1-intro-to-express.md#connecting-to-your-server)
-* [Endpoints and Controllers](1-intro-to-express.md#endpoints-and-controllers)
-  * [Controllers](1-intro-to-express.md#controllers)
-  * [Query Parameters](1-intro-to-express.md#query-parameters)
-  * [Using `req.query`](1-intro-to-express.md#using-reqquery)
-  * [Query Parameter Challenge](1-intro-to-express.md#query-parameter-challenge)
-* [Listening: Host and Ports](1-intro-to-express.md#listening-host-and-ports)
+- [Terms](#terms)
+- [What is an HTTP Server Application?](#what-is-an-http-server-application)
+  - [Client Server Interactions Review](#client-server-interactions-review)
+- [Express](#express)
+  - [Connecting to your Server](#connecting-to-your-server)
+- [Endpoints and Controllers](#endpoints-and-controllers)
+  - [Controllers](#controllers)
+  - [Query Parameters](#query-parameters)
+  - [Using `req.query`](#using-reqquery)
+  - [Query Parameter Challenge](#query-parameter-challenge)
+- [Listening: Host and Ports](#listening-host-and-ports)
+
 
 ## Terms
 

@@ -6,16 +6,17 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 
 **Table of Contents:**
 
-* [Terms](12-hashing-passwords-with-bcrypt.md#terms)
-* [Pre-Learning](12-hashing-passwords-with-bcrypt.md#pre-learning)
-* [Hashing](12-hashing-passwords-with-bcrypt.md#hashing)
-  * [Authenticating Users](12-hashing-passwords-with-bcrypt.md#authenticating-users)
-  * [A Simple Example](12-hashing-passwords-with-bcrypt.md#a-simple-example)
-* [The Importance of Secure Hash Functions](12-hashing-passwords-with-bcrypt.md#the-importance-of-secure-hash-functions)
-  * [Hashing with Bcrypt](12-hashing-passwords-with-bcrypt.md#hashing-with-bcrypt)
-  * [Salting](12-hashing-passwords-with-bcrypt.md#salting)
-* [Bcrypt Helpers](12-hashing-passwords-with-bcrypt.md#bcrypt-helpers)
-* [Summary — The Password Validation Workflow](12-hashing-passwords-with-bcrypt.md#summary--the-password-validation-workflow)
+- [Terms](#terms)
+- [Pre-Learning](#pre-learning)
+- [Hashing](#hashing)
+  - [Authenticating Users](#authenticating-users)
+  - [A Simple Example](#a-simple-example)
+- [The Importance of Secure Hash Functions](#the-importance-of-secure-hash-functions)
+  - [Hashing with Bcrypt](#hashing-with-bcrypt)
+  - [Salting](#salting)
+- [Bcrypt Helpers](#bcrypt-helpers)
+- [Summary — The Password Validation Workflow](#summary--the-password-validation-workflow)
+
 
 ## Terms
 

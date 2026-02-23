@@ -10,18 +10,18 @@ Before we write a single line of server code, we need to understand the environm
 
 **Table of Contents:**
 
-* [Essential Questions](1-how-the-internet-works-1.md#essential-questions)
-* [Terms](1-how-the-internet-works-1.md#terms)
-* [The Physical Internet](1-how-the-internet-works-1.md#the-physical-internet)
-  * [Routers and Networks](1-how-the-internet-works-1.md#routers-and-networks)
-  * [Local Area Networks (LANs)](1-how-the-internet-works-1.md#local-area-networks-lans)
-  * [The World Wide Web](1-how-the-internet-works-1.md#the-world-wide-web)
-  * [Submarine Cables and the Internet Backbone](1-how-the-internet-works-1.md#submarine-cables-and-the-internet-backbone)
-* [HTTP: The Language of the Web](1-how-the-internet-works-1.md#http-the-language-of-the-web)
-  * [The Client-Server Model](1-how-the-internet-works-1.md#the-client-server-model)
-  * [The Request-Response Cycle](1-how-the-internet-works-1.md#the-request-response-cycle)
-  * [HTTP Status Codes](1-how-the-internet-works-1.md#http-status-codes)
-  * [HTTP Headers](1-how-the-internet-works-1.md#http-headers)
+- [Essential Questions](#essential-questions)
+- [Terms](#terms)
+- [The Physical Internet](#the-physical-internet)
+  - [Routers and Networks](#routers-and-networks)
+  - [Local Area Networks (LANs)](#local-area-networks-lans)
+  - [The World Wide Web](#the-world-wide-web)
+  - [Submarine Cables and the Internet Backbone](#submarine-cables-and-the-internet-backbone)
+- [HTTP: The Language of the Web](#http-the-language-of-the-web)
+  - [The Client-Server Model](#the-client-server-model)
+  - [The Request-Response Cycle](#the-request-response-cycle)
+  - [HTTP Status Codes](#http-status-codes)
+  - [HTTP Headers](#http-headers)
 
 ## Essential Questions
 

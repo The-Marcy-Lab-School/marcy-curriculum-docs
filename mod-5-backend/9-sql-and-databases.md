@@ -14,13 +14,14 @@ Let's dive in!
 
 **Table of Contents**
 
-* [Terms](6-sql-and-databases.md#terms)
-* [What even is a database?](6-sql-and-databases.md#what-even-is-a-database)
-  * [Relational Database Management Systems](6-sql-and-databases.md#relational-database-management-systems)
-  * [How does a database fit into an application?](6-sql-and-databases.md#how-does-a-database-fit-into-an-application)
-* [What is SQL?](6-sql-and-databases.md#what-is-sql)
-  * [Tips to avoid SQL errors](6-sql-and-databases.md#tips-to-avoid-sql-errors)
-* [Summary](6-sql-and-databases.md#summary)
+- [Terms](#terms)
+- [What even is a database?](#what-even-is-a-database)
+  - [Relational Database Management Systems](#relational-database-management-systems)
+  - [How does a database fit into an application?](#how-does-a-database-fit-into-an-application)
+- [What is SQL?](#what-is-sql)
+  - [Tips to avoid SQL errors](#tips-to-avoid-sql-errors)
+- [Summary](#summary)
+
 
 ## Terms
 

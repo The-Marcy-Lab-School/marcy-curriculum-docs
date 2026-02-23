@@ -10,12 +10,13 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
 
 **Table of Contents:**
 
-* [Organization and Separation of Concerns](5-model-view-controller.md#organization-and-separation-of-concerns)
-  * [The Model-View-Controller (MVC) Architecture](5-model-view-controller.md#the-model-view-controller-mvc-architecture)
-* [Implementing a Model for MVC](5-model-view-controller.md#implementing-a-model-for-mvc)
-  * [Server Organization](5-model-view-controller.md#server-organization)
-  * [Build a Model](5-model-view-controller.md#build-a-model)
-* [Challenge](5-model-view-controller.md#challenge)
+- [Organization and Separation of Concerns](#organization-and-separation-of-concerns)
+  - [The Model-View-Controller (MVC) Architecture](#the-model-view-controller-mvc-architecture)
+- [Implementing a Model for MVC](#implementing-a-model-for-mvc)
+  - [Server Organization](#server-organization)
+  - [Build a Model](#build-a-model)
+- [Challenge](#challenge)
+
 
 ## Organization and Separation of Concerns
 

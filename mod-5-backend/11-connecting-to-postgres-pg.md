@@ -10,19 +10,20 @@ We'll run the same SQL queries you wrote last week, but now from JavaScript.
 
 **Table of Contents:**
 
-* [Essential Questions](11-connecting-to-postgres-pg.md#essential-questions)
-* [Terms](11-connecting-to-postgres-pg.md#terms)
-* [Why `pg`?](11-connecting-to-postgres-pg.md#why-pg)
-* [Setting Up the Connection](11-connecting-to-postgres-pg.md#setting-up-the-connection)
-  * [Installing `pg`](11-connecting-to-postgres-pg.md#installing-pg)
-  * [Connection Pools](11-connecting-to-postgres-pg.md#connection-pools)
-  * [The `pool.js` Module](11-connecting-to-postgres-pg.md#the-pooljs-module)
-* [Running Queries with `pool.query()`](11-connecting-to-postgres-pg.md#running-queries-with-poolquery)
-  * [Reading the Result Object](11-connecting-to-postgres-pg.md#reading-the-result-object)
-* [Parameterized Queries](11-connecting-to-postgres-pg.md#parameterized-queries)
-  * [Why Never Interpolate User Input Directly](11-connecting-to-postgres-pg.md#why-never-interpolate-user-input-directly)
-  * [The Safe Way: `$1` Placeholders](11-connecting-to-postgres-pg.md#the-safe-way-1-placeholders)
-* [CRUD Operations with `pg`](11-connecting-to-postgres-pg.md#crud-operations-with-pg)
+- [Essential Questions](#essential-questions)
+- [Terms](#terms)
+- [Why `pg`?](#why-pg)
+- [Setting Up the Connection](#setting-up-the-connection)
+  - [Installing `pg`](#installing-pg)
+  - [Connection Pools](#connection-pools)
+  - [The `pool.js` Module](#the-pooljs-module)
+- [Running Queries with `pool.query()`](#running-queries-with-poolquery)
+  - [Reading the Result Object](#reading-the-result-object)
+- [Parameterized Queries](#parameterized-queries)
+  - [Why Never Interpolate User Input Directly](#why-never-interpolate-user-input-directly)
+  - [The Safe Way: `$1` Placeholders](#the-safe-way-1-placeholders)
+- [CRUD Operations with `pg`](#crud-operations-with-pg)
+
 
 ## Essential Questions
 

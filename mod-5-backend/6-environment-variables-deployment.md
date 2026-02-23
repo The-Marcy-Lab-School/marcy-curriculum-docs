@@ -8,16 +8,17 @@ Thus far, we have not been able to deploy a project that uses an API key without
 
 **Table of Contents:**
 
-* [Terms](3-securing-api-keys-and-environment-variables.md#terms)
-* [Setup](3-securing-api-keys-and-environment-variables.md#setup)
-* [Never Use API Keys In The Frontend](3-securing-api-keys-and-environment-variables.md#never-use-api-keys-in-the-frontend)
-  * [Create a Server Application To Make API Key Requests For You](3-securing-api-keys-and-environment-variables.md#create-a-server-application-to-make-api-key-requests-for-you)
-* [API Requests From The Server](3-securing-api-keys-and-environment-variables.md#api-requests-from-the-server)
-  * [Environment Variables and Dotenv](3-securing-api-keys-and-environment-variables.md#environment-variables-and-dotenv)
-  * [Deploying with Environment Variables](3-securing-api-keys-and-environment-variables.md#deploying-with-environment-variables)
-* [Same Origin Requests from the Frontend](3-securing-api-keys-and-environment-variables.md#same-origin-requests-from-the-frontend)
-* [Development Frontend Request Proxy](3-securing-api-keys-and-environment-variables.md#development-frontend-request-proxy)
-  * [Enable Proxy Requests In Development](3-securing-api-keys-and-environment-variables.md#enable-proxy-requests-in-development)
+- [Terms](#terms)
+- [Setup](#setup)
+- [Never Use API Keys In The Frontend](#never-use-api-keys-in-the-frontend)
+  - [Create a Server Application To Make API Key Requests For You](#create-a-server-application-to-make-api-key-requests-for-you)
+- [API Requests From The Server](#api-requests-from-the-server)
+  - [Environment Variables and Dotenv](#environment-variables-and-dotenv)
+  - [Deploying with Environment Variables](#deploying-with-environment-variables)
+- [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
+- [Development Frontend Request Proxy](#development-frontend-request-proxy)
+  - [Enable Proxy Requests In Development](#enable-proxy-requests-in-development)
+
 
 ## Terms
 

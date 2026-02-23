@@ -10,14 +10,15 @@ In this lesson, you will learn how to add crate, update, and delete endpoints an
 
 **Table of Contents:**
 
-* [Terms](4-rest-crud-api.md#terms)
-* [Introduction: Client → Server → Client → Server](4-rest-crud-api.md#introduction-client--server--client--server)
-* [CRUD Applications](4-rest-crud-api.md#crud-applications)
-  * [Creating Data with POST Requests and Endpoints](4-rest-crud-api.md#creating-data-with-post-requests-and-endpoints)
-* [Making A RESTful API](4-rest-crud-api.md#making-a-restful-api)
-  * [Core Principles of REST](4-rest-crud-api.md#core-principles-of-rest)
-* [Route Parameters](4-rest-crud-api.md#route-parameters)
-  * [Find By, Update, and Delete](4-rest-crud-api.md#find-by-update-and-delete)
+- [Terms](#terms)
+- [Introduction: Client → Server → Client → Server](#introduction-client--server--client--server)
+- [CRUD Applications](#crud-applications)
+  - [Creating Data with POST Requests and Endpoints](#creating-data-with-post-requests-and-endpoints)
+- [Making A RESTful API](#making-a-restful-api)
+  - [Core Principles of REST](#core-principles-of-rest)
+- [Route Parameters](#route-parameters)
+  - [Find By, Update, and Delete](#find-by-update-and-delete)
+
 
 ## Terms
 
