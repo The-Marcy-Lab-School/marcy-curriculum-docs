@@ -58,14 +58,14 @@ Postgres is a type of **database management system** (DBMS), a program that make
 
 If a database is like a library, then a database management system is like a librarian with a catalog system. The librarian organizes the books and manages how visitors take and return books.
 
-<img src="../.gitbook/assets/library.png" alt="If a database is like a library, then a database management system is the librarian, keeping it all organized" data-size="original">
+<img src="./img/9-sql-and-databases/library.png" alt="If a database is like a library, then a database management system is the librarian, keeping it all organized" data-size="original">
 {% endhint %}
 
 ### Relational Database Management Systems
 
 Specifically, Postgres is a **Relational DBMS (RDBMS)**, which just refers to the particular way that Postgres organizes its databases.
 
-![A film table showing data about films](../.gitbook/assets/film-table.png)
+![A film table showing data about films](./img/9-sql-and-databases/film-table.png)
 
 In a relational DBMS:
 
@@ -85,7 +85,7 @@ Popular non-relational database management systems include [MongoDB](https://www
 
 Relational database management systems like Postgres are quite similar to our Express servers! When we run the Postgres software, it provides access to the database via a server port (`localhost:5432`).
 
-![The Postgres database receives SQL queries from the Express server and sends back data.](<../.gitbook/assets/client-server-database-diagram (1).svg>)
+![The Postgres database receives SQL queries from the Express server and sends back data.](./img/9-sql-and-databases/client-server-database.svg)
 
 However, while our Express servers take in HTTP requests, Postgres accepts **Structured Query Language (SQL)** queries. For example, to insert data into a table of users we might send the following SQL query to Postgres:
 
@@ -165,7 +165,7 @@ In the next lesson we'll learn more about writing SQL queries but for now, here 
 * **Database** - a structured collection of data that is organized in a manner for easy retrieval (like a library)
 * **Database Management System (DBMS)** - a piece of software used to organize and manage access to a database (like a librarian)
 
-![client server database diagram](<../.gitbook/assets/client-server-database-diagram (1).svg>)
+![client server database diagram](./img/9-sql-and-databases/client-server-database.svg)
 
 * **Postgres** - a popular "relational" database management system that stores data in a table-like manner
 * **Table** - a collection of related data organized in rows and columns.
@@ -173,7 +173,7 @@ In the next lesson we'll learn more about writing SQL queries but for now, here 
   * A **column** represents a property/attribute/field of that object. Columns have data types such as integer, string, date, boolean, etc...
   * A **primary key** serves as the unique identifier for a row in a table
 
-![A film table showing data about films](../.gitbook/assets/film-table.png)
+![A film table showing data about films](./img/9-sql-and-databases/film-table.png)
 
 * **SQL (Structured Query Language)** - a language used by relational database management systems to create, read, update, or delete data from a database.
 

@@ -37,7 +37,7 @@ In this lesson, you will learn how to add crate, update, and delete endpoints an
 
 Clone down the provided repository and `cd` into the starter folder. There, you will see a `frontend` and `server` provided for you. Run both applications and you'll see it is a simple application that shows a list of fellows and their unique IDs.
 
-![An application that renders a list of fellows fetched from the server](../.gitbook/assets/4-fellow-app-start.png)
+![An application that renders a list of fellows fetched from the server](./img/7-rest-crud-api/fellow-app.png)
 
 This application represents an essential pattern that we've seen a few times now:
 
@@ -89,7 +89,7 @@ app.get('/api/fellows', serveFellows);
 
 But think about an application like Google Calendar where you can create an account, create new events, edit events, and delete them too! Applications like these perform all of the CRUD operations.
 
-![In Google Calendar, the application provides a button for the user to press that sends a PATCH request to the server.](../.gitbook/assets/4-google-calendar-edit-event.png)
+![In Google Calendar, the application provides a button for the user to press that sends a PATCH request to the server.](./img/7-rest-crud-api/google-calendar-edit.png)
 
 That is, both their server and frontend are set up in such a way that enable users to create, read, update, and delete data via HTTP requests:
 

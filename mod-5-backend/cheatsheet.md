@@ -41,11 +41,11 @@ Welcome to the world of backend! In this unit, we'll learn about:
 
 By the end of this unit you will be able to build an application using the [React + Express + Auth Template](https://github.com/The-Marcy-Lab-School/react-express-auth).
 
-![](./img/client-server-database-diagram.svg)
+![](./img/cheatsheet/client-server-database.svg)
 
 ## Express
 
-![](./img/express-middleware-model.svg)
+![](./img/cheatsheet/express-middleware-model.svg)
 
 ### Express Basics
 
@@ -108,7 +108,7 @@ If we want to avoid making our API keys public, we need to be careful with how w
 
 **So, we have to make the requests using the API keys in our backend.** 
 
-![](./img/express-api-middleman.svg)
+![](./img/cheatsheet/express-api-middleman.svg)
 
 ### Sending frontend to backend requests (Vite Config)
 
@@ -174,7 +174,7 @@ app.post('/api/fellows', createFellow)
 * **Postgres** - a popular "relational" database management system that stores data in a table-like manner
 * **SQL (Structured Query Language)** - a language used by relational database management systems to create, read, update, or delete data from a database.
 
-![](./img/labeled-erd.png)
+![](./img/cheatsheet/labeled-erd.png)
 
 ### One-To-Many Table
 
@@ -236,7 +236,7 @@ WHERE people.name = 'Ann Duong';
 * **Many-to-Many** - a relationship between two tables in which the instances of each table can be referenced by many instances in the other table.
 * **Association/Junction Table** - a table used to create a many-to-many relationship using two foreign keys to reference two tables.
 
-![](./img/labeled-erd.png)
+![](./img/cheatsheet/labeled-erd.png)
 
 > *created using https://dbdiagram.io/*
 
@@ -252,7 +252,7 @@ WHERE products.id = 2;
 
 ## Knex
 
-![](./img/client-server-database-diagram.svg)
+![](./img/cheatsheet/client-server-database.svg)
 
 ### Knex Basics
 
@@ -569,7 +569,7 @@ test();
 
 ### Authorization with Cookies
 
-![](./img/cookies.png)
+![](./img/cheatsheet/cookies.png)
 
 * When a client sends an initial request to the server, it doesn't have a cookie
 * The server sends a response along with a cookie.

@@ -36,7 +36,7 @@ Check out this video to learn about hashing, salting, and various attacks used b
 
 **Hashing** is a process of transforming a string of characters into a fixed-length string of characters called a **hash**.
 
-![Hashing is a process of transforming a string of characters into a fixed-length string of characters called a hash.](../.gitbook/assets/hashing.png)
+![Hashing is a process of transforming a string of characters into a fixed-length string of characters called a hash.](./img/15-hashing-passwords-bcrypt/hashing.png)
 
 A **hashing function** is a function that performs a hashing algorithm.
 
@@ -47,7 +47,7 @@ Hashing functions have two key properties:
 
 As a result, hashing is commonly used for password storage: when a user creates an account, the username will be stored in the database alongside the hashed password.
 
-![Usernames are stored in a database alongside the hashed password.](<../.gitbook/assets/hashed-password-stored-in-db (1).png>)
+![Usernames are stored in a database alongside the hashed password.](./img/15-hashing-passwords-bcrypt/hashed-password-stored.png)
 
 <details>
 
@@ -63,7 +63,7 @@ With password hashing, the passwords are stored as hash values, and an attacker 
 
 By storing the hashed password, the database itself never "knows" your actual password. Despite this, when a user returns to sign in, the server can still validate a given username and password combination through some clever logic.
 
-![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](<../.gitbook/assets/hashed-password-lookup-diagram (1).png>)
+![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](./img/15-hashing-passwords-bcrypt/hashed-password-lookup.png)
 
 This process is called **authentication:**
 
@@ -167,11 +167,11 @@ const hashedPassword = await bcrypt.hash('secret', saltRounds);
 
 To understand what this does, we should break down the structure of a bcrypt hash string:
 
-![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](../.gitbook/assets/hash-value-breakdown.png)
+![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](./img/15-hashing-passwords-bcrypt/hash-value-breakdown.png)
 
 A **salt** is a random string of data that is added to the input data before the hash function is applied. This ensures that even if two users have the same password, they will have unique password hashes.
 
-![A salt is added to a string before hashing to produce different results.](../.gitbook/assets/salting.png)
+![A salt is added to a string before hashing to produce different results.](./img/15-hashing-passwords-bcrypt/salting.png)
 
 When you invoke `bcrypt.hash`, it will automatically generate a salt value and add it to your input string before hashing. You can test this by invoking `bcrypt.hash` twice with the same input:
 
@@ -199,7 +199,7 @@ This repeated process of salting and hashing increases the computational cost of
 
 The hash string has all of the information needed to re-compute the stored hash value _as long as the matching password is given_.
 
-![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](../.gitbook/assets/hash-value-breakdown.png)
+![The salt and number of salt rounds (a.k.a. "cost") is included in the hash string.](./img/15-hashing-passwords-bcrypt/hash-value-breakdown.png)
 
 When authenticating a password, the `bcrypt.compare` function will extract the cost and the salt value from the stored hash value and apply them to the given password.
 
@@ -249,8 +249,8 @@ So, to recap:
 
 We should always hash passwords before storing them in a database
 
-![Usernames are stored in a database alongside the hashed password.](<../.gitbook/assets/hashed-password-stored-in-db (1).png>)
+![Usernames are stored in a database alongside the hashed password.](./img/15-hashing-passwords-bcrypt/hashed-password-stored.png)
 
 Authentication is possible by hashing a given password and comparing it against the stored hash:
 
-![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](<../.gitbook/assets/hashed-password-lookup-diagram (1).png>)
+![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated!](./img/15-hashing-passwords-bcrypt/hashed-password-lookup.png)

@@ -60,7 +60,7 @@ In the previous two lessons, we learned that servers receive requests and send r
 
 Think of it this way: your computer has thousands of ports, like doors into an apartment building. Each door can be used by a different application to receive requests. When a server application starts listening on port `8080`, it's like opening that specific door and saying: "I'm here. Send requests to this door."
 
-![Each port is like a door for an application to accept requests](./img/server-basics-http-server/ports.png)
+![Each port is like a door for an application to accept requests](./img/3-server-basics-http-server/ports.png)
 
 When your server is running locally, the **host** is `localhost` (your own computer) and the **port** is whatever number you chose. Together, `localhost:8080` uniquely identifies each server application on your machine.
 

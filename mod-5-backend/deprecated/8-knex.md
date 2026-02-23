@@ -65,7 +65,7 @@ When we move the data of our server application out of the server's memory and i
 
 **Knex** is a library that allows a Node project to connect to a database and execute SQL queries using that database.
 
-![client server database diagram](<../.gitbook/assets/client-server-database-diagram (1).svg>)
+![client server database diagram](../.gitbook/assets/client-server-database-diagram (1).svg)
 
 Assuming we already have a database, in order to use Knex in a server application, we must:
 
@@ -230,15 +230,15 @@ const createPet = async (name, type, owner_id) => {
 
 Consider the `pets` table below.
 
-| id | name       | type | owner\_id |
-| -- | ---------- | ---- | --------- |
-| 1  | Khalo      | dog  | 3         |
-| 2  | Juan Pablo | dog  | 2         |
-| 3  | Bora       | bird | 1         |
-| 4  | Tora       | dog  | 1         |
-| 5  | Frida      | cat  | 3         |
-| 6  | Pon Juablo | cat  | 2         |
-| 7  | Kora       | dog  | 1         |
+| id  | name       | type | owner\_id |
+| --- | ---------- | ---- | --------- |
+| 1   | Khalo      | dog  | 3         |
+| 2   | Juan Pablo | dog  | 2         |
+| 3   | Bora       | bird | 1         |
+| 4   | Tora       | dog  | 1         |
+| 5   | Frida      | cat  | 3         |
+| 6   | Pon Juablo | cat  | 2         |
+| 7   | Kora       | dog  | 1         |
 
 **Q: What is the SQL query to find the name and id of the dogs owned by Ann Duong?**
 
@@ -334,7 +334,7 @@ const deletePetByName = async(name) => {
 
 These challenges illustrate many-to-many relationships:
 
-![erd with one to many and many to many relationships](<../.gitbook/assets/labeled-erd (1).png>)
+![erd with one to many and many to many relationships](../.gitbook/assets/labeled-erd (1).png)
 
 **`authors`, `books`, and `author_book`**
 
