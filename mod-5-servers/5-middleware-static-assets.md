@@ -12,8 +12,9 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 - [Express Review](#express-review)
 - [Middleware and `next()`](#middleware-and-next)
 - [Static Web Servers](#static-web-servers)
-  - [Serving React Static Assets](#serving-react-static-assets)
+  - [Serving Vite Static Assets](#serving-vite-static-assets)
   - [`express.static()` Middleware](#expressstatic-middleware)
+  - [Best Practice — Build Vite Project](#best-practice--build-vite-project)
 - [Summary](#summary)
 
 ## Terms
@@ -21,7 +22,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 * **Middleware** - a function in express that intercepts and processes incoming HTTP requests. It can perform server-side actions such as parsing the request, modifying the response, or executing additional logic before passing control to the next middleware in the chain."
 * **`path` module** - a module for creating absolute paths to static assets
 * **`__dirname`** — an environment variable that returns the path to the parent directory of the current file.
-* **Static Assets** - unchanging files delivered to the client exactly as they are stored on a server. These include HTML, CSS, JavaScript files, images, videos, fonts, and documents. For React projects, we need to "build" our project to generate static assets (convert `.jsx` files to `.js` files).
+* **Static Assets** - unchanging files delivered to the client exactly as they are stored on a server. These include HTML, CSS, JavaScript files, images, videos, fonts, and documents. Vite projects can be "built" to bundle and minify source files into an optimized `dist` folder — this is not strictly required for Vanilla JS (browsers support ES modules natively) but is recommended for performance. It is required for React projects.
 
 ## Express Review
 
@@ -176,11 +177,11 @@ When you visit a website, like [https://google.com](https://google.com), you are
 
 ![Google's Homepage](./img/5-middleware-static-assets/google-homepage.png)
 
-Now, imagine that the website is just the "static assets" of a React project deployed on GitHub pages! But instead of using GitHub pages, Google has its own servers to store those files and serve them to visiting users.
+Now, imagine that the website is just the "static assets" of a Vite project deployed on GitHub pages! But instead of using GitHub pages, Google has its own servers to store those files and serve them to visiting users.
 
 We call these **static web servers** because they store **static assets** (HTML, CSS, and JS files) and then provide a server application that serves those assets when requested.
 
-Let's look at how we can serve the static assets of a React project from our server.
+Let's look at how we can serve the static assets of a Vite project from our server.
 
 {% hint style="info" %}
 HTML, CSS, and JavaScript files are considered "static" because their content remains unchanged when being transferred from server to client.
@@ -188,17 +189,7 @@ HTML, CSS, and JavaScript files are considered "static" because their content re
 APIs on the other hand serve dynamic content that changes depending on parameters of the request.
 {% endhint %}
 
-### Serving React Static Assets
-
-As we've learned, a React project's static assets are built into a folder called `dist`. In the provided repo, build the `dist` folder and note the file structure:
-
-```
-dist/
-  - index.html
-  - assets/
-      - index-ABC123.js
-      - index-ABC123.css
-```
+### Serving Vite Static Assets
 
 When a user visits the server's homepage `/`, we want to send the `index.html` file.
 
@@ -211,42 +202,39 @@ const path = require('path');
 const serveIndexHTML = (req, res, next) => {
   // `path.join()` constructs an absolute file from the arguments
   // `__dirname` provides the absolute path of the current module's parent directory.
-  const filepath = path.join(__dirname, '../vite-project/dist/index.html');
+  const filepath = path.join(__dirname, '../vite-project/index.html');
   res.sendFile(filepath);
 };
 
 app.get('/', serveIndexHTML);
 ```
 
-If the frontend that we wanted to serve only consisted of a single `index.html` file, then this code above would suffice!
-
-But the `index.html` file needs access to `/assets/index-ABC123.js` and `/assets/index-ABC123.css`. So we need two more controllers:
+This code works does the job of serving the `index.html` file, but it needs access to `/src/main.js` and `/src/style.css`. So we need two more controllers:
 
 {% hint style="danger" %}
 ```js
 const serveIndexHTML = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/dist/index.html');
+  const filepath = path.join(__dirname, '../vite-project/index.html');
   res.sendFile(filepath);
 }
 
 const serveJS = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/dist/assets/index-ABC123.js');
+  const filepath = path.join(__dirname, '../vite-project/src/main.js');
   res.sendFile(filepath)
 };
 
 const serveCSS = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/dist/assets/index-ABC123.css');
+  const filepath = path.join(__dirname, '../vite-project/src/style.css');
   res.sendFile(filepath)
 };
 
-// Keep in mind, your js and css file names will change each time the dist folder is re-built
 app.get('/', serveIndexHTML);
-app.get('/assets/index-ABC123.js', serveJS);
-app.get('/assets/index-ABC123.css', serveCSS);
+app.get('/src/main.js', serveJS);
+app.get('/src/style.css', serveCSS);
 ```
 {% endhint %}
 
-Seems repetitive, no? Now, imagine that your application has hundreds of static assets!
+Seems like a lot of code, right? Now, imagine that your application has hundreds of static assets! You would need an endpoint and controller for every file you'd want to serve.
 
 ### `express.static()` Middleware
 
@@ -259,8 +247,8 @@ Rather than defining endpoints for every single static asset that you wish to se
 // The path module is useful for constructing relative filepaths
 const path = require('path');
 
-// the filepath is to the entire assets folder
-const filepath = path.join(__dirname, '../vite-project/dist');
+// the filepath is to the entire folder
+const filepath = path.join(__dirname, '../vite-project');
 
 // generate middleware using the filepath
 const serveStatic = express.static(filepath);
@@ -280,11 +268,32 @@ Explanation:
 
 Like `logRoutes`, this middleware intercepts incoming requests before they reach the controllers. Unlike `logRoutes`, the middleware generated by `express.static()` can send a response to the client if a matching file is found. If not, it will pass the request to the controllers.
 
+### Best Practice — Build Vite Project
+
+For Vite projects, running `npm run build` bundles and minifies the static asset files into an optimized `dist` folder. All JavaScript and CSS is condensed into one file each. This means fewer requests, smaller files, and [hashed filenames for cache-busting](https://www.keycdn.com/support/what-is-cache-busting). 
+
+In the provided repo, build the `dist` folder and note the file structure:
+
+```
+dist/
+  - index.html
+  - vite.svg
+  - assets/
+      - index-ABC123.js
+      - index-ABC123.css
+```
+
+Now, we just update the filepath to reference the `dist` folder!
+
+```js
+const filepath = path.join(__dirname, '../vite-project/dist');
+```
+
 ## Summary
 
 * **Controllers:** Callback functions that handle requests by parsing them and sending responses.
 * **Middleware Functions**: Functions similar to controllers but pass requests to the next middleware without sending a response. They can also be executed for all requests while controllers typically handle a single endpoint.
-* **Static Assets:** Unchanging files (e.g., HTML, CSS, JS) served by a web server. For React projects, we need to "build" the project to convert "dynamic" `.jsx` files to "static" `.js` files
+* **Static Assets:** Unchanging files (e.g., HTML, CSS, JS) served by a web server. For Vanilla JS Vite projects, building is optional but recommended — it bundles, minifies, and adds cache-busting hashes to the output files.
 * **Serving Static Assets**:
   1. Construct an absolute file path to the static assets folder using `path.join()` and `__dirname`.
   2. Use `express.static(filepath)` middleware to make static assets publicly available.

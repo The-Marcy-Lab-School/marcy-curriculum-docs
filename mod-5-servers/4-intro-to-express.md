@@ -47,7 +47,7 @@ To handle incoming requests, web servers run a **HTTP server application** — a
 * Send a request to [https://www.google.com/](https://www.google.com/) and there is an HTTP server application running on Google's servers that sends back the HTML, CSS, and JavaScript that make Google run on your browser.
 * Log in to your account on Instagram and the frontend application sends a request on your behalf to the Instagram's servers to confirm your login information.
 
-You too can build HTTP server applications that can do all of this and today, we'll begin learning about **Express**, the most popular Node framework for building HTTP server applications.
+**Server-Side Development** is the part of software engineering that involves building server applications. Today, we'll begin learning about **Express**, the most popular Node framework for building HTTP server applications.
 
 ### Client Server Interactions Review
 
