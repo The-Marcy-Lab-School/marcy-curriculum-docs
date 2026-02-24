@@ -10,14 +10,13 @@ Thus far, we have not been able to deploy a project that uses an API key without
 
 - [Terms](#terms)
 - [Setup](#setup)
-- [Never Use API Keys In The Frontend](#never-use-api-keys-in-the-frontend)
-  - [Create a Server Application To Make API Key Requests For You](#create-a-server-application-to-make-api-key-requests-for-you)
-- [API Requests From The Server](#api-requests-from-the-server)
-  - [Environment Variables and Dotenv](#environment-variables-and-dotenv)
+- [What is an API Key?](#what-is-an-api-key)
+- [API Keys in Client-Side Code](#api-keys-in-client-side-code)
+- [The Proxy Server Strategy](#the-proxy-server-strategy)
+  - [Fetch In the Server-Side Controller](#fetch-in-the-server-side-controller)
+  - [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
+  - [Environment Variables, Dotenv, and gitignore](#environment-variables-dotenv-and-gitignore)
   - [Deploying with Environment Variables](#deploying-with-environment-variables)
-- [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
-- [Development Frontend Request Proxy](#development-frontend-request-proxy)
-  - [Enable Proxy Requests In Development](#enable-proxy-requests-in-development)
 
 
 ## Terms
@@ -43,81 +42,118 @@ https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=yourkey
 
 Once you have an API key, clone the practice repository linked above and do the following:
 
-* `cd` into the `frontend` application and install dependencies.
-*   Then, create a file inside of `frontend/` called `secrets.js` and paste the following code:
-
-    ```js
-    export const API_KEY = "paste-api-key-here"
+* Install dependencies for the `frontend/` Vite project
+    ```sh
+    cd frontend
+    npm i
     ```
 
-    This value is imported and used by the `frontend/src/adapters/nytAdapters.js` file to send a request to the NYT API. The file is already added to `.gitignore`.
-* Finally, run the program with `npm run dev`. You should see the application below:
+* Then, inside of `frontend/fetch-helpers`, paste your API key string in the provided variable:
+
+    ```js
+    const API_KEY = "paste-api-key-here";
+    ```
+
+* Then, go to the `server/`, install dependencies and start it:
+  
+    ```sh
+    cd ../server
+    npm i
+    npm run dev
+    ```
+
+
+You should see the application below served at [http://localhost:8080](http://localhost:8080):
 
 ![An app using the NYT API to show top stories in the Arts section](./img/6-environment-variables-deployment/nyt-app.png)
 
-## Never Use API Keys In The Frontend
 
-Working with API keys presents a tricky problem. We need the API key to exist in our program to access the API's resources, but we need to avoid putting it in a place that can be viewed by the public.
+## What is an API Key?
 
-<details>
+An **API key** is a unique, secret code used by API servers to identify and authenticate a client sending a request. It acts as a digital ID or passcode that allows the API provider to verify that the request for data or services is coming from an authorized source.
 
-<summary><strong>Q: Why is it not a good idea to share your API key? What really could go wrong?</strong></summary>
+Since API keys are unique to each user, we want to be careful about exposing them to the public. There are two common places that we can accidentally do this:
+1. In client-side code
+2. In public GitHub repositories
+
+**<details><summary>Q: Why is it not a good idea to share your API key? What really could go wrong?</summary>**
 
 The API key is a way to verify your identity as a developer. Some APIs will charge you for each request that you make using your API key and if someone else gets a hold of your API key, they could steal your request resources.
 
 </details>
 
-There are two common places that we can mistakenly expose our API keys to the public.
+## API Keys in Client-Side Code
 
-1. In a public remote repository (on GitHub)
-2. In the HTTP requests sent by the client (the browser) to the API
+Client-side/frontend code is inherently insecure because we just give the code to the user to run on their browser! If we're not careful, we may accidentally give away sensitive data.
 
-To avoid the first mistake, we should always store API keys and other sensitive information in a git-ignored file (e.g. `secrets.js` or `.env`).
+Open [http://localhost:8080](http://localhost:8080) in your browser and open the developer tools. Click on the *Sources* tab, choose *Page* sources, and select the `src/fetch-helpers.js` file. You should see your API key:
 
-To avoid the second mistake, _we must NEVER send requests with API keys from client-side (frontend) applications_.
+![The client-side code can be viewed in the Sources tab of the developer tools](./img/6-environment-variables-deployment/sources-api-key-exposed.png)
+
+It will also be plain to see if you view the *Networks* tab in the developer tools. Refresh the page and look through the *requests* sent by the application. 
+
+Can you find the API key?
+
+![The Network tab can expose API Keys used by the client-side (frontend) application.](./img/6-environment-variables-deployment/nyt-api-key-exposed.png)
+
+All requests sent by the client will appear in this Network tab. As long as our `frontend` application is sending the fetch request, and that request includes the API key, there will be no way to hide it from this Networks tab.
+
+So, what do we do?
 
 {% hint style="danger" %}
 NEVER send requests with API keys from client-side (frontend) applications!
 {% endhint %}
 
-To understand why, run the `frontend` application from the provided repo, view the Networks tab and refresh the page. Then, look through the requests sent by the application and see if you can find the exposed API key!
+**<details><summary>Q: Can we make a `dist/` version of the frontend to hide the API key?</summary>**
 
-![The Network tab can expose API Keys used by the client-side (frontend) application.](./img/6-environment-variables-deployment/nyt-api-key-exposed.png)
+TLDR: No. Here's why:
 
-All requests sent by the client will appear in this Network tab. Even if the API key is hidden in a gitignored file or stored in an environment variable (more on that soon), the client-side (frontend) application still needs to embed that value into the HTTP request URL. There is simply no way to hide it from this Networks tab.
+Recall that we can use the Vite build command to compress and minify our code making it much more difficult to read.
 
-### Create a Server Application To Make API Key Requests For You
+To do this we can return to the `frontend` app and run `npm run build`. Then, update our server code to serve assets from the `dist/` folder:
 
-Generally, client-side (frontend) code is inherently insecure because, well, we just give the code to the user to run on their browser! If we're not careful, we may accidentally give away sensitive data.
+**server/index.js:**
+```js
+const pathToFrontend = path.join(__dirname, '../frontend/dist');
+```
 
-Server-side (backend) code on the other hand is much more secure. A client can send HTTP requests to a server's endpoints to request the server to execute code, but the client has no visibility into the inner-workings of the server.
+If you look at the code now in the *Sources* tab, it will be much harder to find the API key (though not impossible). However, it will *still* be visible in the Networks tab. There is no escaping this!
 
-So, to securely use an API key, we must use it in our server-side code. This means building a server to make requests on behalf of the client, acting as a sort of middleman. As long as the server has the API key, the client doesn't need it!
+</details>
+
+## The Proxy Server Strategy
+
+Server-side/backend code is inherently more secure since the client has no visibility into what the server is doing. A server can freely send requests with API keys and the client will not be able to see anything!
+
+We can use this to our advantage by setting up our server as a middleman (a.k.a. a **proxy** or **proxy server**):
+1. The client can send the server a simple request such as `GET /api/stories` without the API key
+2. The server will send the request to the API *with* the API key
+3. When the server gets the response, it will send the data along to the client!
 
 ![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](./img/6-environment-variables-deployment/express-api-middleman.png)
-
-In other words, the client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.
 
 In order to implement this, we need to build a server application that:
 
 * Has its own API endpoint that the client can use without the client needing to know the API key.
 * Securely stores the API key (we'll use environment variables for this)
 
-## API Requests From The Server
+### Fetch In the Server-Side Controller
 
-Let's start by making a server endpoint that fetches from the API using the API key.
+The server-side code to fetch from the API is almost exactly the same code as the `getTopStories()` function in the `frontend/src/fetch-helpers.js` file. 
+
+First, create a controller for a `GET /api/stories` endpoint
 
 ```js
-// We'll secure this value soon!
-const API_KEY = 'paste-your-api-key-here';
-
-// First, we make a controller
+// First, we make a controller for GET /api/stories
 const serveTopArtStories = async (req, res, next) => {
-  const url = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${API_KEY}`;
-
   try {
-    // This is pretty standard fetching logic
+    // We'll secure this value soon!
+    const API_KEY = 'paste-your-api-key-here';
+    const url = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${API_KEY}`;
     const response = await fetch(url);
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
+    }
     const data = await response.json();
     const storiesWithTitle = data.results.filter(story => story.title);
 
@@ -128,20 +164,71 @@ const serveTopArtStories = async (req, res, next) => {
     res.status(503).send(error);
   }
 }
+```
 
-// Then, we make that controller available with an endpoint
+Then, we make that controller available with an endpoint
+
+```js
 app.get('/api/stories', serveTopArtStories)
 ```
 
-Start your server and visit [http://localhost:8080/api/stories](http://localhost:8080/api/stories) to see the fetched data! Note that the client (your browser) doesn't need an API key anymore to access this data!
+In your terminal, navigate to the `server/`, install dependencies and run it:
 
-There is one thing we need to clean up first — we need to secure the API key.
+```sh
+npm i
+npm run dev
+```
 
-### Environment Variables and Dotenv
+Now, visit [http://localhost:8080/api/stories](http://localhost:8080/api/stories) to see the fetched data! Open the *Network* tab again and you'll see that the API key is now hidden!
+
+### Same Origin Requests from the Frontend
+
+![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](./img/6-environment-variables-deployment/express-api-middleman.png)
+
+Now that our server has this `GET /api/stories` endpoint, our frontend doesn't need to fetch directly from the API anymore. 
+
+Let's update the frontend application to use our server as a proxy instead of directly accessing the NYT API:
+
+```js
+// We no longer need the API key
+
+export const getTopStories = async () => {
+  try {
+    // The URL is a relative path to the same-origin server
+    const url = `/api/stories`; 
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+
+    // The server filters the data for us, so we just return the data as is
+    return { data, error: null }
+  }
+  catch (error) {
+    console.log("Error caught! " + error.message);
+    return { data: null, error: error };
+  }
+};
+```
+
+To test this out you may need to restart the server. Then visit the server [http://localhost:8080](http://localhost:8080) to see the updated frontend. Check out the *Networks* tab. Can you see the API key anymore?
+
+{% hint style="info" %}
+Why is the API url just `/api/stories` and not `http://localhost:8080/api/stories`?
+
+When we send requests to servers that we don't control, we include the full URL (e.g. [https://dog.ceo/api/breeds/image/random](https://dog.ceo/api/breeds/image/random)). These kinds of requests are **cross-origin** because the origin of the request and the destination are not the same.
+
+In this case, the client-side code comes from the same origin as the server we are fetching from: `http://localhost:8080`. So, we can use a relative path instead and our browser assumes we are making a **same-origin request**.
+{% endhint %}
+
+### Environment Variables, Dotenv, and gitignore
+There is one thing we need to clean up first — if we publish this code on GitHub, it will include our API key!
 
 The most common way to store sensitive server-side data like API keys is with a `.env` file ("dot E-N-V file").
 
-`.env` files have a really simple format.
+`.env` files have a really simple format. They are just listed in `key="value"` pairs
 
 ```
 secretValue1="abc123"
@@ -150,7 +237,7 @@ API_KEY="xyz"
 ```
 
 {% hint style="warning" %}
-Remember to add `.env` to your `.gitignore` file!
+To hide this file from our GitHub repository, we must add `.env` to our `.gitignore` file. Any other developer who wishes to work on this project must provide their own `.env` file with their own API keys.
 {% endhint %}
 
 To use the environment variables in our server code, we'll use the `dotenv` module from npm.
@@ -173,17 +260,9 @@ With our `API_KEY` variable moved to the `.env` file, we can modify our controll
 
 ```js
 const serveTopArtStories = async (req, res, next) => {
-  const url = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${process.env.API_KEY}`;
-
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    const storiesWithTitle = data.results.filter(story => story.title);
-    res.send(storiesWithTitle);
-  } catch (error) {
-    console.error("Error while fetching:", error);
-    res.status(503).send(error);
-  }
+    const url = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${process.env.API_KEY}`;
+    // ...
 }
 ```
 
@@ -195,78 +274,3 @@ For example, on Render, you can add environment variables when configuring your 
 
 ![Add environment variables when configuring render web servces](./img/6-environment-variables-deployment/render-env-config.png)
 
-## Same Origin Requests from the Frontend
-
-Now our server can perform an API request using a protected API key.
-
-Let's update the frontend React application to use our server instead of directly accessing the NYT API.
-
-![The client sends a request to the server without any API key. The server then sends a request using the API key and sends the fetched data back to the client.](./img/6-environment-variables-deployment/express-api-middleman.svg)
-
-Let's update the `url` that our adapter function uses and remove the filter code which is now handled server-side:
-
-```js
-import { handleFetch } from './handleFetch';
-
-export const getTopStories = async () => {
-  const url = `/api/stories`;
-
-  return await handleFetch(url);
-}
-```
-
-To test this out we should:
-
-* Re-run `npm run build` to re-build our frontend application's static assets in the `dist/` folder.
-* Re-run the server which will serve our updated frontend static assets.
-* Visit the server [http://localhost:8080](http://localhost:8080) to see the updated frontend!
-
-{% hint style="info" %}
-Why is the API url just `/api/stories` and not `http://localhost:8080/api/stories`?
-
-When we send requests to servers that we don't control, we include the full URL (e.g. [https://dog.ceo/api/breeds/image/random](https://dog.ceo/api/breeds/image/random)). These kinds of requests are **cross-origin** because the origin of the request and the destination are not the same.
-
-In this case, we visit `http://localhost:8080` to access both the client-side (frontend) code and the API endpoint `http://localhost:8080/api/stories`. In this case, the client-side code is coming from the same origin as the destination of its API request. When we leave out the host (`http://localhost:8080`), our browser assumes we are making a **same-origin request**.
-{% endhint %}
-
-## Development Frontend Request Proxy
-
-In that last step, we tested the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at [http://localhost:8080](http://localhost:8080).
-
-Re-building the frontend application each time we make a change is tedious. And remember, we have a frontend development server that will automatically re-load the application each time we save a file! However, when we try running the frontend with `npm run dev`, the app breaks!
-
-When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the browser assumes it is a same-origin request and sends the request to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs).
-
-But remember, the API lives at port `8080`. Now that we're viewing the frontend from port `5173`, we've changed the origin of the request!
-
-### Enable Proxy Requests In Development
-
-To enable the development version of our frontend to send requests to `http://localhost:8080`, we need to redirect the "same-origin" requests from [http://localhost:5173](http://localhost:5173) to [http://localhost:8080](http://localhost:8080). This is called "proxying".
-
-{% hint style="info" %}
-The word "proxy" is synonymous with the word "substitute".
-{% endhint %}
-
-To set up proxying, replace your `frontend/vite.config.js` file's contents with the code below:
-
-```js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-const SERVER_PORT = 8080;
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: `http://localhost:${SERVER_PORT}`,
-        changeOrigin: true,
-      },
-    },
-  },
-});
-```
-
-Now, when we run our development server, all requests starting with `/api` will be sent to the defined `target` which we set to `http://localhost:8080`.

@@ -15,6 +15,9 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
   - [Serving Vite Static Assets](#serving-vite-static-assets)
   - [`express.static()` Middleware](#expressstatic-middleware)
   - [Best Practice — Build Vite Project](#best-practice--build-vite-project)
+- [Deploying to Render](#deploying-to-render)
+  - [Create a new Web Service](#create-a-new-web-service)
+  - [What Do the Build and Start Commands Do?](#what-do-the-build-and-start-commands-do)
 - [Summary](#summary)
 
 ## Terms
@@ -288,6 +291,84 @@ Now, we just update the filepath to reference the `dist` folder!
 ```js
 const filepath = path.join(__dirname, '../vite-project/dist');
 ```
+
+## Deploying to Render
+
+Github Pages provides **static site hosting**.
+  * This means that the server that Github Pages runs on your behalf can only send static files to the client (HTML, CSS, and JS files).
+  * Github Pages static sites are not capable of receiving or sending messages via HTTP.
+
+Render provides **web service and database hosting** (it can also host static sites).
+  * This means that the server that Render runs on your behalf can send static assets, receive and send messages via HTTP, and interact with a database.
+  * Render also can host your database giving you a one-stop-shop for running your fullstack application.
+
+Start by creating an account using your **GitHub** account. This will let you easily deploy straight from a GitHub repository.
+
+![create an account using GitHub](../.gitbook/assets/create-account.png)
+
+This will take you to your Dashboard where you can see existing deployments.
+
+![The Render Dashboard](../.gitbook/assets/dashboard.png)
+
+### Create a new Web Service
+
+1. Make sure you are signed in using your GitHub account
+2. https://dashboard.render.com/ and click on **New +**
+3. Select **Web Service**
+4. Choose **Git Provider** to find a repository on your account. It may take some time for your repositories to load.
+   * If your repository is public, you can provide a link to the repository but it will not be able to auto-deploy on future commits. As such, this is NOT the preferred method.
+5. Fill out the information for your Server
+   * Name - the name of your app (it will appear in the URL that render gives you. For example: `app-name-here.onrender.com`)
+   * Language - Node
+   * Branch - `draft` for assignments, `main` for portfolio projects
+   * Region - select US East (Ohio)
+   * Root Directory - Leave blank (will default to the root of your repo)
+   * Build Command:
+     * If your application has a database, see the next section
+     *   If your application has a Vite frontend:
+
+         ```sh
+         cd [vite_folder_name] && npm i && npm run build && cd ../server && npm i
+         ```
+     *   If neither:
+
+         ```sh
+         cd server && npm i
+         ```
+   *   Start Command (assuming your `index.js` file is in `server/`):
+
+       ```sh
+       cd server && node index.js
+       ```
+   * Instance Type - select **Free**
+6.  Add Any environment variables your application may need:
+
+    ![Add environment variables individually or paste multiple values at a time from a .env file.](../.gitbook/assets/environment-variables-configuration-render.png)
+7. Select **Deploy Web Service**
+
+This should take you to your web service's dashboard where you can see the latest build information and the URL. In a few minutes your server will be up and running!
+
+Any time that you want to make an update to your deployed server, just commit and push the change to your repo! The deployment process will automatically run your "Build" and "Start" commands (unless you used a public git URL to setup your server in which cause auto-deployments are disabled).
+
+![alt text](../.gitbook/assets/web-service-dashboard.png)
+
+### What Do the Build and Start Commands Do?
+
+The "Build" and "Start" commands are executed before every new deploy as a part of the "Auto Deploy" process. The server will re-deploy your application on every new commit.
+
+Projects built using Vite cannot be served as they are stored in the repository. They need to have static assets created via the `npm run build` command. Those static assets are then stored in the `dist/` folder and served by our server. In the event that we change the frontend in a new commit, we want to rebuild those assets before restarting the server. Therefore, the "Build" command above is executed every time the server is deployed for a new commit (even when the frontend doesn't change).
+
+After the "Build" command runs, the "Start" command runs to start the server. To ensure that our server works properly, we just need to make sure the server dependencies are installed and then run the `index.js` file with `node`:
+
+![If your project had a vite-project folder for the frontend, and a server folder for the backend, your configuration would look like this](../.gitbook/assets/render-deploying-static-build-start.png)
+
+As a result, the "continuous deployment" process would look like this:
+
+1. A commit is made with changes to the project
+2. Render detects the commit and begins a new deployment
+3. The "build" command is executed, generating updated static assets
+4. The "start" command is executed, starting the server
+5. The deployment completes and the server is live!
 
 ## Summary
 

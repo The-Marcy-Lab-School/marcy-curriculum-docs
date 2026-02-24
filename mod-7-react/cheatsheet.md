@@ -7,6 +7,8 @@ React is a library for building reusable, composable, and scalable user-interfac
 - [State, Event Handlers and Lifting State](#state-event-handlers-and-lifting-state)
 - [Controlled Form](#controlled-form)
 - [Fetching with useEffect](#fetching-with-useeffect)
+- [Development Frontend Request Proxy](#development-frontend-request-proxy)
+  - [Enable Proxy Requests In Development](#enable-proxy-requests-in-development)
 
 ## Components, JSX, Props
 
@@ -201,3 +203,45 @@ const DataComponent = () => {
   * `[]` - An empty array means the effect will run only on the first render
   * `[a, b, c]` - Adding variables to the array will trigger the effect to run when those variables change
   * No array provided will trigger the effect to run EVERY time the component re-renders
+
+## Development Frontend Request Proxy
+
+Often, we test the frontend changes by running `npm run build` to update our frontend `dist` folder, and by opening the static frontend application served by our backend at [http://localhost:8080](http://localhost:8080).
+
+Re-building the frontend application each time we make a change is tedious. And remember, we have a frontend development server that will automatically re-load the application each time we save a file! However, when we try running the frontend with `npm run dev`, the app breaks!
+
+When the frontend makes a request to `/api/gifs` from [http://localhost:5173/](http://localhost:5173/), the browser assumes it is a same-origin request and sends the request to [http://localhost:5173/api/gifs](http://localhost:5173/api/gifs).
+
+But remember, the API lives at port `8080`. Now that we're viewing the frontend from port `5173`, we've changed the origin of the request!
+
+### Enable Proxy Requests In Development
+
+To enable the development version of our frontend to send requests to `http://localhost:8080`, we need to redirect the "same-origin" requests from [http://localhost:5173](http://localhost:5173) to [http://localhost:8080](http://localhost:8080). This is called "proxying".
+
+{% hint style="info" %}
+The word "proxy" is synonymous with the word "substitute".
+{% endhint %}
+
+To set up proxying, replace your `frontend/vite.config.js` file's contents with the code below:
+
+```js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+const SERVER_PORT = 8080;
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: `http://localhost:${SERVER_PORT}`,
+        changeOrigin: true,
+      },
+    },
+  },
+});
+```
+
+Now, when we run our development server, all requests starting with `/api` will be sent to the defined `target` which we set to `http://localhost:8080`.
