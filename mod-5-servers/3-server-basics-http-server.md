@@ -121,6 +121,8 @@ const server = http.createServer((req, res) => {
   console.log(req.method); // 'GET', 'POST', 'PATCH', 'DELETE', etc.
   console.log(req.url);    // '/api/users', '/api/posts/3', etc.
   console.log(req.headers); // { host: 'localhost:8080', accept: '*/*', ... }
+
+  //...
 });
 ```
 
@@ -140,7 +142,7 @@ console.log(pathname);               // '/api/users'
 console.log(searchParams.get('sort')); // 'asc'
 ```
 
-This is one of many things Express handles automatically for you.
+This is one of many things frameworks like Express can handle automatically for you.
 
 </details>
 
@@ -164,7 +166,9 @@ const server = http.createServer((req, res) => {
 ```
 
 {% hint style="warning" %}
-`res.end()` must be called for every request, on every code path. If you forget to call it, the client will hang indefinitely waiting for a response.
+`res.end()` must be called for every request, on every code path. Try removing it to see what happens!
+
+If you forget to call it, the client will hang indefinitely waiting for a response. 
 {% endhint %}
 
 <details>
