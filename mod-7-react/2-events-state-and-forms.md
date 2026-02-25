@@ -23,7 +23,7 @@ In this lesson, we will look at how to respond to events in React and use those 
   * [Controlled Forms](2-events-state-and-forms.md#controlled-forms)
 * [Discussion! Lifting State Up](2-events-state-and-forms.md#discussion-lifting-state-up)
 
-## Terms
+## Key Concepts
 
 * **State** — Data that is used by an application at a particular point in time. State is often mutable, meaning it can be changed over time, usually in response to user actions or other events
 * **Stateful Component** — A component that depends on state and is re-rendered whenever the state changes.

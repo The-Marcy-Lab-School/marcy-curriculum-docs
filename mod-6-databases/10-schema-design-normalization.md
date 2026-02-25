@@ -26,7 +26,7 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
   - [Second Normal Form (2NF)](#second-normal-form-2nf)
 
 
-## Terms
+## Key Concepts
 
 * **Schema Design** - the process of organizing and structuring how data is stored in a database so it can be efficiently stored, retrieved, and updated.
 * **ERD (Entity Relationship Diagram)** - a visual representation of the contents of each entity (a.k.a. "table") in your database as well as the relationships between entities.

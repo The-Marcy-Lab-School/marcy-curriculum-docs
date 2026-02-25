@@ -15,18 +15,23 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
   - [Serving Vite Static Assets](#serving-vite-static-assets)
   - [`express.static()` Middleware](#expressstatic-middleware)
 - [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
-  - [Best Practice — Build Vite Project](#best-practice--build-vite-project)
 - [Deploying to Render](#deploying-to-render)
   - [Create a new Web Service](#create-a-new-web-service)
-  - [What Do the Build and Start Commands Do?](#what-do-the-build-and-start-commands-do)
+  - [What Do the Build and Start Commands Do? Continuous Deployment](#what-do-the-build-and-start-commands-do-continuous-deployment)
 - [Summary](#summary)
 
-## Terms
+## Key Concepts
 
-* **Middleware** - a function in express that intercepts and processes incoming HTTP requests. It can perform server-side actions such as parsing the request, modifying the response, or executing additional logic before passing control to the next middleware in the chain."
-* **`path` module** - a module for creating absolute paths to static assets
-* **`__dirname`** — an environment variable that returns the path to the parent directory of the current file.
-* **Static Assets** - unchanging files delivered to the client exactly as they are stored on a server. These include HTML, CSS, JavaScript files, images, videos, fonts, and documents. Vite projects can be "built" to bundle and minify source files into an optimized `dist` folder — this is not strictly required for Vanilla JS (browsers support ES modules natively) but is recommended for performance. It is required for React projects.
+* **Middleware** - a function in Express that intercepts and processes incoming HTTP requests. It can perform server-side actions such as parsing the request, modifying the response, or executing additional logic before passing control to the next middleware in the chain.
+* **`next()`** — a function passed to every middleware and controller that, when called, passes the request to the next middleware or controller in the chain. Middleware must call `next()` (or send a response) to avoid leaving the request hanging.
+* **`path` module** - a built-in Node module for constructing absolute file paths in a cross-platform way.
+* **`__dirname`** — a Node variable that holds the absolute path of the directory containing the current file.
+* **Static Assets** - unchanging files delivered to the client exactly as they are stored on a server. These include HTML, CSS, JavaScript files, images, videos, fonts, and documents.
+  * Vite projects can be "built" to bundle and minify source files into an optimized `dist` folder — this is not strictly required for Vanilla JS (browsers support ES modules natively) but is recommended for performance. It is required for React projects.
+* **Static Web Server** - a server that stores static assets and serves them directly to visiting clients, without generating content programmatically.
+* **`express.static()`** - a built-in Express function that generates middleware for serving files from a specified directory. When a request matches a file in that directory, the file is sent as the response; otherwise, the request is passed to the next middleware or controller.
+* **Same-Origin Fetch** - when a frontend is served by the same host as the API, fetch requests can use relative paths (e.g., `/api/data`) instead of absolute URLs. The browser sends the request to the same host that served the page.
+* **Continuous Deployment** - a practice where every new code commit automatically triggers a redeploy of the application. On Render, this means the build and start commands run on every commit, keeping the live server in sync with the repository.
 
 ## Express Review
 
@@ -322,29 +327,6 @@ const response = await fetch('http://localhost:8080/api/data');
 
 By using `express.static()` to serve the frontend from the same Express server, the frontend and API share the same origin. Relative paths in fetch requests resolve correctly in both development and production — no hardcoded URLs needed.
 
-### Best Practice — Build Vite Project
-
-For Vite projects, running `npm run build` bundles and minifies the static asset files into an optimized `dist` folder. All JavaScript and CSS is condensed into one file each. When we deploy our project, this means fewer requests, smaller files, and [hashed filenames for cache-busting](https://www.keycdn.com/support/what-is-cache-busting) for our users.
-
-In the provided repo, build the `dist` folder and note the file structure:
-
-```
-dist/
-  - index.html
-  - vite.svg
-  - assets/
-      - index-ABC123.js
-      - index-ABC123.css
-```
-
-Now, we just update the filepath to reference the `dist` folder!
-
-```js
-const filepath = path.join(__dirname, '../frontend/dist');
-```
-
-You can view this "distribution" version of your `frontend/` application with `npm run preview`
-
 ## Deploying to Render
 
 Github Pages provides **static site hosting**.
@@ -401,17 +383,41 @@ Any time that you want to make an update to your deployed server, just commit an
 
 ![alt text](../.gitbook/assets/web-service-dashboard.png)
 
-### What Do the Build and Start Commands Do?
+### What Do the Build and Start Commands Do? Continuous Deployment
 
-The "Build" and "Start" commands are executed before every new deploy as a part of the "Auto Deploy" process. The server will re-deploy your application on every new commit.
+For Vite projects, running `npm run build` bundles and minifies the static asset files into an optimized `dist` folder. All JavaScript and CSS is condensed into one file each. When we deploy our project, this means fewer requests, smaller files, and [hashed filenames for cache-busting](https://www.keycdn.com/support/what-is-cache-busting) for our users.
 
-Projects built using Vite cannot be served as they are stored in the repository. They need to have static assets created via the `npm run build` command. Those static assets are then stored in the `dist/` folder and served by our server. In the event that we change the frontend in a new commit, we want to rebuild those assets before restarting the server. Therefore, the "Build" command above is executed every time the server is deployed for a new commit (even when the frontend doesn't change).
+In the provided repo, build the `dist` folder and note the file structure:
+
+```
+dist/
+  - index.html
+  - vite.svg
+  - assets/
+      - index-ABC123.js
+      - index-ABC123.css
+```
+
+To have our server use this `dist/` version of the frontend, update the static assets `filepath` to refer to the `dist/` directory — but only when running in production. Render automatically sets the [environment variable](./6-environment-variables-deployment.md) `process.env.NODE_ENV` to `'production'`, so we can use it to conditionally set the filepath:
+
+```js
+let filepath = path.join(__dirname, '../frontend');
+
+// In production, refer to the dist directory
+if (process.env.NODE_ENV === 'production') {
+  filepath = path.join(__dirname, '../frontend/dist');
+}
+const serveStatic = express.static(filepath);
+app.use(serveStatic);
+```
+
+In our deployment configuration, the "Build" and "Start" commands are executed before every new deploy as a part of the "Auto Deploy" process. Render will redeploy your application on every new commit. This means the `dist/` assets are always rebuilt before the server restarts, so any frontend changes are reflected in the new deployment.
 
 After the "Build" command runs, the "Start" command runs to start the server. To ensure that our server works properly, we just need to make sure the server dependencies are installed and then run the `index.js` file with `node`:
 
 ![If your project had a vite-project folder for the frontend, and a server folder for the backend, your configuration would look like this](../.gitbook/assets/render-deploying-static-build-start.png)
 
-As a result, the "continuous deployment" process would look like this:
+As a result, the **continuous deployment** process would look like this:
 
 1. A commit is made with changes to the project
 2. Render detects the commit and begins a new deployment
@@ -428,3 +434,4 @@ As a result, the "continuous deployment" process would look like this:
   1. Construct an absolute file path to the static assets folder using `path.join()` and `__dirname`.
   2. Use `express.static(filepath)` middleware to make static assets publicly available.
   3. Register the middleware with `app.use()`
+* **Same-Origin Fetch Requests**: When the frontend is served by the same Express server as the API, fetch requests can use relative paths (e.g., `fetch('/api/data')`). The browser sends the request to the same host that served the page, so the same code works in both development and production without hardcoded URLs.

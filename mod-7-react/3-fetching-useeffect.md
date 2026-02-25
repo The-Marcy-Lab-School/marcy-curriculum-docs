@@ -19,7 +19,7 @@ We've already learned about one hook, `useState`. Time for another one! In this 
 * [Fetching With a Form On Change](3-fetching-useeffect.md#fetching-with-a-form-on-change)
 * [Quiz](3-fetching-useeffect.md#quiz)
 
-## Terms
+## Key Concepts
 
 * **Side effect** — Anything that happens outside of React such sending a `fetch` request, starting an animation, or setting up a server connection.
   * Side effects can be triggered by user events like submitting a form or clicking a button.

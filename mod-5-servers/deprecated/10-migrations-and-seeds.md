@@ -27,7 +27,7 @@ Migration and seed files are used to automate the process of structuring a datab
   - [Creating Seed Files](#creating-seed-files)
 - [Migration Example Scenarios](#migration-example-scenarios)
 
-## Terms
+## Key Concepts
 
 * **Migration File** - a file defining a change to the structure of your database (creating, updating, deleting tables)
 * **Seed File** - a file for inserting an initial dataset into a database

@@ -23,7 +23,7 @@ Let's dive in!
 - [Summary](#summary)
 
 
-## Terms
+## Key Concepts
 
 * **Fullstack** - refers to the combination of frontend (client-side) and backend (server-side) technologies, including a database.
 * **PERN** - an acronym for a specific set of technologies used to build a fullstack web application: Postgres, Express, React, and Node. This acronym is useful when asked "what stack do you use?"

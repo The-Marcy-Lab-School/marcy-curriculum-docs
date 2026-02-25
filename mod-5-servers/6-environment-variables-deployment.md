@@ -19,7 +19,7 @@ Thus far, we have not been able to deploy a project that uses an API key without
   - [Deploying with Environment Variables](#deploying-with-environment-variables)
 
 
-## Terms
+## Key Concepts
 
 * **API Key** - a secret code that verifies your identity as a developer using an API's limited resources. Do not share these!
 * **Environment Variable** — a hidden variable stored on the host's machine (your laptop or Render.com) and accessible in Node through the `process.env` object

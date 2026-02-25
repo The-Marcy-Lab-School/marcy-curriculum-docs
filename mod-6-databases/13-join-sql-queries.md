@@ -18,7 +18,7 @@ In this lesson, we'll learn how we can establish relationships between tables us
 	- [Some Questions To Answer](#some-questions-to-answer)
 - [Entity Relation Diagrams and Many To Many Relationships](#entity-relation-diagrams-and-many-to-many-relationships)
 
-## Terms
+## Key Concepts
 
 * **Schema Design** - the process of planning the structure and relationships of the tables in a database.
 * **Primary Key** - a column in a table that uniquely identifies each row in the table.

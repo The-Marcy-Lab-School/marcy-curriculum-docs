@@ -35,7 +35,7 @@ By the end of this lesson, you should be able to answer these questions:
 5. How do routers know where to send data packets?
 6. If you had to explain the full journey of an HTTP request to someone using only a physical mail analogy, what would the analogy be?
 
-## Terms
+## Key Concepts
 
 * **IP Address** — a unique numerical label assigned to each device on a network, used to identify and locate it. Like a mailing address for your computer.
 * **IPv4** — the original version of IP addresses, using four numbers separated by dots (e.g., `192.168.1.1`). Limited to about 4.3 billion addresses.

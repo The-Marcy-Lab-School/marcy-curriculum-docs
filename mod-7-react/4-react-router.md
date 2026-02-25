@@ -24,7 +24,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
 
 [React docs](https://reactrouter.com/en/main/router-components/browser-router) [Full Example](https://github.com/benspector-mls/react-router-with-fetch-and-context)
 
-## Terms
+## Key Concepts
 
 * **React Router** - Enables navigation and routing in single-page applications (SPAs). It allows you to define routes and their corresponding components.
 * **React Router DOM** — Provides components like `BrowserRouter`, `Route`, and `Link` to manage routing and navigation.

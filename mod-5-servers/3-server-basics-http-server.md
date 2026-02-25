@@ -39,7 +39,7 @@ By the end of this lesson, you should be able to answer these questions:
 6. How do you manually construct and send an HTTP response with `node:http`?
 7. What does doing all of this by hand reveal about why a framework like Express is useful?
 
-## Terms
+## Key Concepts
 
 * **Listening** — a server is "listening" when it is actively waiting for incoming HTTP requests on a specified port.
 * **Host** — the network address of a machine. During development, we use `localhost` (which means "this computer").

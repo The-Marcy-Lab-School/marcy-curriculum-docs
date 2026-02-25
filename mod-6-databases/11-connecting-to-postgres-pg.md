@@ -35,7 +35,7 @@ By the end of this lesson, you should be able to answer these questions:
 4. What does `pool.query()` return? How do you get the rows out of the result?
 5. How do you write a `SELECT`, `INSERT`, `UPDATE`, and `DELETE` query using `pg`?
 
-## Terms
+## Key Concepts
 
 * **`pg`** — the official Node.js client library for PostgreSQL. It lets JavaScript code communicate with a Postgres database.
 * **Connection Pool** — a cache of database connections that are reused across multiple queries, rather than opening and closing a new connection for each query.

@@ -18,7 +18,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 - [Summary — The Password Validation Workflow](#summary--the-password-validation-workflow)
 
 
-## Terms
+## Key Concepts
 
 * **Hashing** - a mathematical algorithm that transforms a string of characters into a fixed-length string of characters.
 * **Password Salt** - A salt is a random string of data that is added to the input data before the hash function is applied. This changes the hash value that is produced, even for the same input data.

@@ -35,7 +35,7 @@ By the end of this lesson, you should be able to answer these questions:
 6. What are HTTP status codes and what do they communicate?
 7. What are HTTP headers? What kinds of information do they carry?
 
-## Terms
+## Key Concepts
 
 * **Internet** — a global network of interconnected computers that communicate using standardized protocols.
 * **Router** — a device that directs (routes) data packets from one network to another on their way to a destination.

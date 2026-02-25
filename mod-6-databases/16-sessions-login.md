@@ -33,7 +33,7 @@ By the end of this lesson, you should be able to answer these questions:
 5. What is the `/api/me` pattern? Why is it useful for frontends?
 6. How do you implement logout using `cookie-session`?
 
-## Terms
+## Key Concepts
 
 * **Stateless** — HTTP is stateless: every request is independent. The server does not remember previous requests from the same client.
 * **Session** — a way for the server to persist information across multiple requests from the same user, typically by storing it server-side and giving the client a token to identify the session.

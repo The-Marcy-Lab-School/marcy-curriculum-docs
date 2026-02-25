@@ -11,7 +11,7 @@ This lesson is the payoff of MVC.
 **Table of Contents:**
 
 - [Essential Questions](#essential-questions)
-- [Terms](#terms)
+- [Key Concepts](#key-concepts)
 - [Why Database Calls Are Async](#why-database-calls-are-async)
 - [Async Model Methods](#async-model-methods)
   - [Every Method Becomes `async`](#every-method-becomes-async)
@@ -34,7 +34,7 @@ By the end of this lesson, you should be able to answer these questions:
 4. When you swap an in-memory model for a Postgres model, what parts of the application change? What parts stay the same?
 5. What is error handling middleware in Express? How do you use `next(err)` to trigger it?
 
-## Terms
+## Key Concepts
 
 * **Asynchronous** — code that doesn't block execution while waiting for an operation to complete. Database queries are async because the database is a separate process and the response takes time.
 * **`async` function** — a function declared with the `async` keyword that always returns a Promise and allows use of `await` inside.

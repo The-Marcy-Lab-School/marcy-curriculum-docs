@@ -23,7 +23,7 @@ In this lesson, you will learn the basics of React.
   * [Rendering A List of Elements](1-intro-to-react.md#rendering-a-list-of-elements)
 * [Under the hood: JSX Code must be compiled](1-intro-to-react.md#under-the-hood-jsx-code-must-be-compiled)
 
-## Terms:
+## Key Concepts:
 
 * **React** — a library for building reusable, composable, and scalable user-interfaces made up of components.
 * **Component** — a piece of the UI (user interface) that has its own logic and appearance. Components are functions that return JSX.

@@ -21,7 +21,7 @@ In this first lesson, we're going to learn the basics of Express and build and d
 - [Listening: Host and Ports](#listening-host-and-ports)
 
 
-## Terms
+## Key Concepts
 
 * **Server / Client** — a server is a computer that provides a service to another computer and its user, called the client.
 * **HTTP Server Application** — a computer program that enables a computer to listen for and respond to HTTP requests.

@@ -30,7 +30,7 @@ By the end of this lesson, you should be able to answer these questions:
 4. How do you protect a single route vs. an entire router?
 5. What is ownership-based authorization? How do you check if a user owns a resource?
 
-## Terms
+## Key Concepts
 
 * **Authentication** — verifying *who you are* (proving your identity, typically through login).
 * **Authorization** — determining *what you're allowed to do* (checking permissions after identity is established).

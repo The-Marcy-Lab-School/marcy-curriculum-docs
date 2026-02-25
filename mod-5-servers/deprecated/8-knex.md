@@ -25,7 +25,7 @@ In this lesson, we will learn [Knex](https://knexjs.org/), a library that allows
   * [Create, Update, and Delete](8-knex.md#create-update-and-delete)
 * [Challenges](8-knex.md#challenges)
 
-## Terms
+## Key Concepts
 
 * **Knex** - a library that allows a Node project to connect to a databases and execute SQL queries.
 * **Deployment Environment** - where an application is deployed. The two main ones are:

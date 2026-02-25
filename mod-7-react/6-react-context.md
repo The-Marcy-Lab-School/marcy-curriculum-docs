@@ -15,7 +15,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
   * [3. Use the Context](6-react-context.md#3-use-the-context)
 * [Summary](6-react-context.md#summary)
 
-## Terms
+## Key Concepts
 
 * **Context (English Definition)** — The circumstances that form the setting for an event, statement, or idea, and in terms of which it can be fully understood and assessed.
 * **Props Drilling** - When we pass a piece of state through 2 or more child components before reaching the component that uses the state.

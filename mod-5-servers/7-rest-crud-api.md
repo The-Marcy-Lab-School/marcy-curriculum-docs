@@ -20,7 +20,7 @@ In this lesson, you will learn how to add crate, update, and delete endpoints an
   - [Find By, Update, and Delete](#find-by-update-and-delete)
 
 
-## Terms
+## Key Concepts
 
 * **RESTful API** — an API that conforms to the design principles of representational state transfer (REST).
 * **`express.json()` Middleware** — parses JSON data from the request and adds it to `req.body` in the controller.
