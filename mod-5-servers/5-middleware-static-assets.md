@@ -14,6 +14,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 - [Static Web Servers](#static-web-servers)
   - [Serving Vite Static Assets](#serving-vite-static-assets)
   - [`express.static()` Middleware](#expressstatic-middleware)
+- [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
   - [Best Practice — Build Vite Project](#best-practice--build-vite-project)
 - [Deploying to Render](#deploying-to-render)
   - [Create a new Web Service](#create-a-new-web-service)
@@ -46,10 +47,16 @@ const express = require('express');
 const app = express();
 
 // When the endpoint is requested, controllers will send a response
+// e.g. /api/hello?first=ada&last=lovelace
 const serveHello = (req, res, next) => {
-  const name = req.query.name || "stranger"
-  res.send(`hello ${name}`);
+  const { first, last} = req.query; 
+  if (!first || !last) {
+    return res.send({ message: `hello stranger!`});
+  }
+  res.send({ message: `hello ${first} ${last}!`});
 }
+
+// e.g. /api/data
 const serveData = (req, res, next) => {
   const data = [{ name: 'Carmen' }, { name: 'Maya' }, { name: 'Reuben' }];
   res.send(data)
@@ -102,10 +109,13 @@ const serveHello = (req, res, next) => {
   // print the current time and request information 
   const timeOfRequest = new Date().toLocaleString();
   console.log(`${req.method}: ${req.originalUrl} - ${timeOfRequest}`);
-  
-  // then send the response
-  const name = req.query.name || "stranger"
-  res.send(`hello ${name}`);
+
+  // Then construct the response
+  const { first, last} = req.query; 
+  if (!first || !last) {
+    return res.send({ message: `hello stranger!`});
+  }
+  res.send({ message: `hello ${first} ${last}!`});
 }
 ```
 {% endhint %}
@@ -194,40 +204,44 @@ APIs on the other hand serve dynamic content that changes depending on parameter
 
 ### Serving Vite Static Assets
 
-When a user visits the server's homepage `/`, we want to send the `index.html` file.
+Check out the `frontend/` directory in the repo for this lesson. It contains a Vite project whose files we want to serve to a client (browser) when they visit our server.
 
-Back in the server, we could add the following endpoint and controller:
+When a client (browser) visits our server address (in development, http://localhost) a `GET /` request is sent. Back in the server, we could add the following endpoint and controller:
 
 ```js
-// The path module is useful for constructing relative filepaths
+// The path module is useful for constructing filepaths
 const path = require('path');
 
 const serveIndexHTML = (req, res, next) => {
-  // `path.join()` constructs an absolute file from the arguments
-  // `__dirname` provides the absolute path of the current module's parent directory.
-  const filepath = path.join(__dirname, '../vite-project/index.html');
+  // path.join() constructs an absolute file from the arguments
+  // __dirname provides the absolute path of the current module's parent directory.
+  const filepath = path.join(__dirname, '../frontend/index.html');
+
+  // Note we are using res.sendFile(), not res.send()
   res.sendFile(filepath);
 };
 
 app.get('/', serveIndexHTML);
 ```
 
-This code works does the job of serving the `index.html` file, but it needs access to `/src/main.js` and `/src/style.css`. So we need two more controllers:
+This code serves the `index.html` file, but that file also needs access to `/src/main.js` and `/src/style.css`. Open the Console in your browser and you can see that those files are not being found. 
+
+So, we need two more controllers:
 
 {% hint style="danger" %}
 ```js
 const serveIndexHTML = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/index.html');
+  const filepath = path.join(__dirname, '../frontend/index.html');
   res.sendFile(filepath);
 }
 
 const serveJS = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/src/main.js');
+  const filepath = path.join(__dirname, '../frontend/src/main.js');
   res.sendFile(filepath)
 };
 
 const serveCSS = (req, res, next) => {
-  const filepath = path.join(__dirname, '../vite-project/src/style.css');
+  const filepath = path.join(__dirname, '../frontend/src/style.css');
   res.sendFile(filepath)
 };
 
@@ -237,7 +251,7 @@ app.get('/src/style.css', serveCSS);
 ```
 {% endhint %}
 
-Seems like a lot of code, right? Now, imagine that your application has hundreds of static assets! You would need an endpoint and controller for every file you'd want to serve.
+Now, imagine that your application has hundreds of static assets! You would need an endpoint and controller for every file you'd want to serve.
 
 ### `express.static()` Middleware
 
@@ -251,7 +265,7 @@ Rather than defining endpoints for every single static asset that you wish to se
 const path = require('path');
 
 // the filepath is to the entire folder
-const filepath = path.join(__dirname, '../vite-project');
+const filepath = path.join(__dirname, '../frontend');
 
 // generate middleware using the filepath
 const serveStatic = express.static(filepath);
@@ -265,15 +279,52 @@ app.use(serveStatic);
 
 Explanation:
 
-* Now, we just make a filepath to the entire dist folder and pass the filepath to `express.static()` which returns a middleware function which we call `serveStatic`
+* Now, we just make a filepath to the entire frontend folder and pass the filepath to `express.static()` which returns a middleware function which we call `serveStatic`
 * `app.use(serveStatic)` will checks all incoming requests to see if they match files in the provided folder. if they do, they will be sent to the client
 * Order matters! Remember to add this before the rest of your controllers.
 
 Like `logRoutes`, this middleware intercepts incoming requests before they reach the controllers. Unlike `logRoutes`, the middleware generated by `express.static()` can send a response to the client if a matching file is found. If not, it will pass the request to the controllers.
 
+## Fetch Requests to the Same Origin
+
+When the frontend is served by the same Express server that handles your API, fetch requests can use **relative paths**.
+
+In the `main.js` file of the demo frontend, notice how fetch requests are made:
+
+```js
+// A relative path fetches from the same host (we don't need http://localhost:8080)
+const response = await fetch('/api/data');
+```
+
+When a browser makes a fetch request with a relative path like `/api/data`, it sends the request to the same host that served the page.
+
+| If the page was served from...  | `/api/data` resolves to...               |
+| ------------------------------- | ---------------------------------------- |
+| `http://localhost:8080`         | `http://localhost:8080/api/data`         |
+| `https://your-app.onrender.com` | `https://your-app.onrender.com/api/data` |
+
+This means the same code works in development _and_ in production without any changes.
+
+**The problem with running the Vite dev server separately**
+
+When developing, you might be tempted to use Vite's dev server (`npm run dev`), which typically runs on `http://localhost:5173`. But if the page is served from port `5173` and the Express server is on port `8080`, a relative path like `/api/data` resolves to `http://localhost:5173/api/data` — pointing at Vite, not Express.
+
+To make it work, you'd have to write an absolute URL:
+
+{% hint style="danger" %}
+```js
+// Hardcoded absolute URL — works locally but breaks in production!
+const response = await fetch('http://localhost:8080/api/data');
+```
+{% endhint %}
+
+**The solution: serve the frontend from Express**
+
+By using `express.static()` to serve the frontend from the same Express server, the frontend and API share the same origin. Relative paths in fetch requests resolve correctly in both development and production — no hardcoded URLs needed.
+
 ### Best Practice — Build Vite Project
 
-For Vite projects, running `npm run build` bundles and minifies the static asset files into an optimized `dist` folder. All JavaScript and CSS is condensed into one file each. This means fewer requests, smaller files, and [hashed filenames for cache-busting](https://www.keycdn.com/support/what-is-cache-busting). 
+For Vite projects, running `npm run build` bundles and minifies the static asset files into an optimized `dist` folder. All JavaScript and CSS is condensed into one file each. When we deploy our project, this means fewer requests, smaller files, and [hashed filenames for cache-busting](https://www.keycdn.com/support/what-is-cache-busting) for our users.
 
 In the provided repo, build the `dist` folder and note the file structure:
 
@@ -289,8 +340,10 @@ dist/
 Now, we just update the filepath to reference the `dist` folder!
 
 ```js
-const filepath = path.join(__dirname, '../vite-project/dist');
+const filepath = path.join(__dirname, '../frontend/dist');
 ```
+
+You can view this "distribution" version of your `frontend/` application with `npm run preview`
 
 ## Deploying to Render
 
@@ -302,11 +355,7 @@ Render provides **web service and database hosting** (it can also host static si
   * This means that the server that Render runs on your behalf can send static assets, receive and send messages via HTTP, and interact with a database.
   * Render also can host your database giving you a one-stop-shop for running your fullstack application.
 
-Start by creating an account using your **GitHub** account. This will let you easily deploy straight from a GitHub repository.
-
-![create an account using GitHub](../.gitbook/assets/create-account.png)
-
-This will take you to your Dashboard where you can see existing deployments.
+Start by creating an account using your **GitHub** account. This will let you easily deploy straight from a GitHub repository. This will take you to your Dashboard where you can see existing deployments.
 
 ![The Render Dashboard](../.gitbook/assets/dashboard.png)
 

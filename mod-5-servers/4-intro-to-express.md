@@ -170,7 +170,7 @@ Every controller is provided with three values (`req`, `res`, and `next`) though
 
 ```js
 const serveHello = (req, res, next) => {
-  res.send('hello');
+  res.send({ message: 'hello'});
 }
 const serveData = (req, res, next) => {
   const data = [{ name: 'ben' }, { name: 'zo' }, { name: 'carmen' }];
@@ -219,10 +219,11 @@ const serveHello = (req, res, next) => {
   console.log(req.query); // { first: "ben", last: "spector" }
 
   const { first, last} = req.query;
+  
   if (!first || !last) {
-    return res.send(`hello stranger!`);
+    return res.send({ message: `hello stranger!`});
   }
-  res.send(`hello ${first} ${last}!`);
+  res.send({ message: `hello ${first} ${last}!`});
 }
 
 app.get('/api/hello', serveHello);
