@@ -299,7 +299,10 @@ Next, we will create the Vite Project that will serve as the starting point for 
 2. One person in your group should run `npm create vite@latest` to create the project starter code
    - Remove any unnecessary code provided by Vite, but keep the `index.html`, `styles.css`, and `main.js` files.
    - Create additional module files such as `src/dom-helpers.js` and `src/fetch-helpers.js`.
-3. Make a new repository owned by your GitHub organization. It should have NOTHING in it. The name should be `mod-4-project` (you can change it later)
+3. Make a new repository owned by your GitHub organization. 
+   - It should have NOTHING in it. 
+   - The name should be `mod-4-project` (you can change it later).
+   - Make sure it is **public**.
 
 4. It will then provide instructions to turn your existing Vite project into a repo and push to your newly created repo. It will tell you to run these commands:
 
