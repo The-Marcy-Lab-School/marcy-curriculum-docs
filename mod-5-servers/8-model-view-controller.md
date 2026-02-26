@@ -28,7 +28,7 @@ In the last lesson, we built a RESTful API that lets users manage a list of fell
 * (Update) Change the name of a fellow
 * (Delete) Remove a fellow from the list
 
-In that application, all of the logic was built into the `serer/index.js` file. While we have some organization within the file, separating the concerns of one file into multiple files will enable our application to scale without becoming a "monolith"
+In that application, all of the logic was built into the `server/index.js` file. While we have some organization within the file, separating the concerns of one file into multiple files will enable our application to scale without becoming a "monolith"
 
 {% hint style="info" %}
 In software development, a "code monolith" refers to a single, large, and typically tightly coupled codebase that contains all the application's components, often making it difficult to scale, maintain, and deploy
@@ -54,7 +54,7 @@ Often times, it can be hard to implement your application such that it strictly 
 
 <summary><strong>What separate components of this architecture does our application already have?</strong></summary>
 
-We have a React application acting as the view component.
+We have a Vanilla JS frontend application acting as the view component.
 
 We have the Express server application acting as the controllers AND as the model. We need to separate the controller from the model.
 
@@ -62,7 +62,7 @@ We have the Express server application acting as the controllers AND as the mode
 
 ## Implementing a Model for MVC
 
-With our current application structure, we already have clear separation between the views (our frontend React application) and the controllers (our Express endpoints/controllers).
+With our current application structure, we already have clear separation between the views (our frontend Vanilla JS application) and the controllers (our Express endpoints/controllers).
 
 However, our controllers and model are intertwined since our controllers directly interact with the database (the `fellows` array). That is, they both handle the logic of parsing request inputs AND handle the logic of managing the data.
 
@@ -79,7 +79,7 @@ const createFellow = (req, res) => {
   // Parse Inputs
   const { fellowName } = req.body;
 
-  // Send Response
+  // Send Error Response
   if (!fellowName) {
     return res.status(400).send({ message: "Invalid Name" });
   }
@@ -95,7 +95,7 @@ const createFellow = (req, res) => {
   res.status(201).send(newFellow);
 }
 
-const serveFellow = (req, res) => {
+const findFellow = (req, res) => {
   // Parse Inputs
   const { id } = req.params;
 
@@ -128,11 +128,9 @@ server/
 ├── index.js
 ├── controllers/
 │   └── fellowControllers.js
-├── models/
-│   └── Fellow.js
-└── utils/
-    ├── getId.js
-    └── handleFetch.js
+└── models/
+    └── Fellow.js
+ 
 ```
 
 * `index.js` builds the `app`, configures middleware, and sets the endpoints. However, the controllers are now imported.
@@ -154,7 +152,7 @@ Before we build a model, do the following:
 To build a separate model layer to handle only data management logic, we will:
 
 * Make a `models/Fellow.js` file.
-* Inside, export a `Fellow` with `static` methods for each action needed by the controllers.
+* Inside, export a `Fellow` class with `static` methods for each action needed by the controllers.
 * Move the `fellows` "database" inside so the only way to access its data is through the model's interface.
 
 {% hint style="info" %}
@@ -163,6 +161,9 @@ Note that there is no `constructor()` function here! This may seem odd at first,
 
 {% code title="server/models/Fellow.js" %}
 ```js
+// Auto-incrementing ID generator
+const getId = ((id = 0) => () => ++id)();
+
 // Restrict access to our mock "database" to just the Model
 const fellows = [
   { name: 'Carmen', id: getId() },
@@ -213,7 +214,7 @@ module.exports = Fellow;
 ```
 {% endcode %}
 
-With the `Fellow` model, we now leave managing the data to the model and let the control just focus on parsing the request and sending the response.
+We are now leaving it entirely to the `Fellow` model to manage the data and the controllers just focus on parsing the request and sending the response.
 
 {% code title="server/controllers/fellowControllers.js" %}
 ```js
@@ -230,7 +231,7 @@ const createFellow = (req, res) => {
 };
 
 // Use `Fellow.find` to get the desired fellow
-const serveFellow = (req, res) => {
+const findFellow = (req, res) => {
   const { id } = req.params;
   const fellow = Fellow.find(Number(id));
 
@@ -256,20 +257,16 @@ Build a `Song` model and a server application for maintaining a playlist. Each s
 
 Then, create an endpoint and a controller for each of these pieces of functionality. The endpoints should follow REST conventions and should all begin with `/api`
 
-Finally, build a frontend react application that can interact with the songs API that you've built. It should be able to:
+Finally, build a Vanilla JS frontend application that can interact with the songs API that you've built. It should be able to:
 
-* Create: Add a new song to the list.
+* Create: Add a new song to the list using a form.
 * Read: Display a list of all songs.
-* Read: Display a single song.
-* Update: Update a single songs's title or artist.
-* Delete: Delete a single song.
+* Update: Update a single song's title or artist using an inline edit form.
+* Delete: Delete a single song using a delete button.
 
-Here is a recommended React Router page structure for your React app:
+Structure your frontend using the same file organization as the fellow tracker:
 
-* `/`: The homepage which includes:
-  * Form for creating a new song
-  * List of all songs
-* `/songs/:id`: The details of a single song which includes
-  * The title, artist, and ID of the song
-  * A form to submit a new title or artist for the song
-  * A button to delete the song from the list
+* `index.html` — static shell with the form and list
+* `src/fetch-helpers.js` — one exported function per API endpoint
+* `src/dom-helpers.js` — `renderSongs()` and `renderError()`
+* `src/main.js` — event listeners and handlers that call fetch helpers and re-render

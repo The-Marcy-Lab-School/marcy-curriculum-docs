@@ -290,7 +290,7 @@ export default defineConfig({
 
 ```js
 // GET /api/fellows/3  →  req.params.id === '3'
-const serveFellow = (req, res) => {
+const findFellow = (req, res) => {
   const { id } = req.params; // route parameters are strings
   const fellow = Fellow.find(Number(id));
 
@@ -298,7 +298,7 @@ const serveFellow = (req, res) => {
   res.send(fellow);
 };
 
-app.get('/api/fellows/:id', serveFellow);
+app.get('/api/fellows/:id', findFellow);
 ```
 
 ```js
@@ -453,7 +453,7 @@ Controllers stay focused on HTTP concerns only:
 // controllers/fellowControllers.js
 const Fellow = require('../models/Fellow');
 
-const serveFellows = (req, res) => {
+const listFellows = (req, res) => {
   res.send(Fellow.list());
 };
 
@@ -463,5 +463,5 @@ const createFellow = (req, res) => {
   res.status(201).send(Fellow.create(fellowName));
 };
 
-module.exports = { serveFellows, createFellow };
+module.exports = { listFellows, createFellow };
 ```
