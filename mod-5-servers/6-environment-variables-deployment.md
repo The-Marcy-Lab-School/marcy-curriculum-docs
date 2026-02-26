@@ -8,7 +8,7 @@ Thus far, we have not been able to deploy a project that uses an API key without
 
 **Table of Contents:**
 
-- [Terms](#terms)
+- [Key Concepts](#key-concepts)
 - [Setup](#setup)
 - [What is an API Key?](#what-is-an-api-key)
 - [API Keys in Client-Side Code](#api-keys-in-client-side-code)
@@ -104,18 +104,25 @@ So, what do we do?
 NEVER send requests with API keys from client-side (frontend) applications!
 {% endhint %}
 
-**<details><summary>Q: Can we make a `dist/` version of the frontend to hide the API key?</summary>**
+**<details><summary>Q: Doesn't the `dist/` version of the frontend hide the API key?</summary>**
 
 TLDR: No. Here's why:
 
 Recall that we can use the Vite build command to compress and minify our code making it much more difficult to read.
 
-To do this we can return to the `frontend` app and run `npm run build`. Then, update our server code to serve assets from the `dist/` folder:
+Our code uses this `dist/` version when we deploy to a production environment. 
 
-**server/index.js:**
 ```js
-const pathToFrontend = path.join(__dirname, '../frontend/dist');
+let pathToFrontend = path.join(__dirname, '../frontend');
+
+if (process.env.NODE_ENV === 'production') {
+  pathToFrontend = path.join(__dirname, '../frontend/dist');
+}
 ```
+
+1. Update this code to use `dist` no matter what
+2. Return to the `frontend` app and run `npm run build`. 
+3. Restart the server. 
 
 If you look at the code now in the *Sources* tab, it will be much harder to find the API key (though not impossible). However, it will *still* be visible in the Networks tab. There is no escaping this!
 
@@ -265,6 +272,10 @@ const serveTopArtStories = async (req, res, next) => {
     // ...
 }
 ```
+
+{% hint style="info" %}
+In the previous lesson, we learned about the `process.env.NODE_ENV` value that is set by hosting services like Render. This is the exact same object that we are adding our API key to!
+{% endhint %}
 
 ### Deploying with Environment Variables
 
