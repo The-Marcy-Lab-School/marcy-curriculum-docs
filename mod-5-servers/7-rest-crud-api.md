@@ -10,6 +10,7 @@ In this lesson, you will learn how to add create, update, and delete endpoints a
 
 **Table of Contents:**
 
+- [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Introduction: Client → Server → Client → Server](#introduction-client--server--client--server)
 - [CRUD Applications](#crud-applications)
@@ -19,6 +20,16 @@ In this lesson, you will learn how to add create, update, and delete endpoints a
 - [Route Parameters and `req.params`](#route-parameters-and-reqparams)
   - [PATCH and DELETE Challenge](#patch-and-delete-challenge)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What does CRUD stand for? Which HTTP method corresponds to each operation?
+2. What is REST? What are the core principles of a RESTful API?
+3. What does `express.json()` middleware do? Why is it needed for POST and PATCH requests?
+4. What are route parameters? How do you define them in an endpoint URL and access them in a controller?
+5. What HTTP status codes should you use when a resource is successfully created? When a requested resource is not found?
 
 ## Key Concepts
 

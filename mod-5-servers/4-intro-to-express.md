@@ -4,12 +4,12 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-2-intro-to-express)!
 {% endhint %}
 
-In this first lesson, we're going to learn the basics of Express and build and deploy a simple server application.
+**Server-Side Development** is the part of software engineering that involves building server applications. Today, we'll begin learning about **Express**, the most popular Node framework for building HTTP server applications.
 
 **Table of Contents:**
 
-- [Terms](#terms)
-- [What is an HTTP Server Application?](#what-is-an-http-server-application)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
   - [Client Server Interactions Review](#client-server-interactions-review)
 - [Express](#express)
   - [Connecting to your Server](#connecting-to-your-server)
@@ -20,6 +20,16 @@ In this first lesson, we're going to learn the basics of Express and build and d
   - [Query Parameter Challenge](#query-parameter-challenge)
 - [Listening: Host and Ports](#listening-host-and-ports)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is Express and what problem does it solve compared to `node:http`?
+2. What is an endpoint? What is a controller?
+3. How do you define an endpoint and attach a controller using Express?
+4. What are query parameters? How do you access them inside a controller?
+5. What do `host` and `port` represent? What is `localhost`?
 
 ## Key Concepts
 
@@ -35,23 +45,11 @@ In this first lesson, we're going to learn the basics of Express and build and d
   * Query Parameters are appended to the end of a URL with a `?` and separated with `&`
   * e.g. `/api/clothing/search?category=tops&sort=ascending`
 
-## What is an HTTP Server Application?
-
-A **server** is a computer that provides a service to another computer and its user, called the **client**. Every website that you visit and every web API that you've used is powered by a server and your computer is the client!
-
-But how do they know what to do when a request comes in?
-
-To handle incoming requests, web servers run a **HTTP server application** — a computer program that enables the computer to listen for and respond to HTTP requests coming from clients.
-
-* Send a request to [https://dog.ceo/api/breeds/image/random](https://dog.ceo/api/breeds/image/random) and there is an HTTP server application running on the Dog API's servers that will send back a dog image.
-* Send a request to [https://www.google.com/](https://www.google.com/) and there is an HTTP server application running on Google's servers that sends back the HTML, CSS, and JavaScript that make Google run on your browser.
-* Log in to your account on Instagram and the frontend application sends a request on your behalf to the Instagram's servers to confirm your login information.
-
-**Server-Side Development** is the part of software engineering that involves building server applications. Today, we'll begin learning about **Express**, the most popular Node framework for building HTTP server applications.
-
 ### Client Server Interactions Review
 
-So how do the client and server interact?
+A **server** is a computer that provides a service to another computer and its user, called the **client**.
+
+**HTTP server applications** listen for and respond to HTTP requests coming from clients in the **client-server/request-response cycle:**
 
 1. A client sends a **request** to the server
 2. The server receives the request and determines what kind of **response** to send
@@ -82,7 +80,12 @@ So how do the client and server interact?
 
 ## Express
 
-To build our HTTP server application, we will use Express. Express is the most popular Node framework for building HTTP server applications.
+In the last lesson, we learned how to build a server using the built-in `node:http` module. While we are able to build a working server this way, there are aspects using it that can feel clunky such as:
+* Separating query parameters from paths
+* Writing headers
+* Routing
+
+**Express** is a framework package that makes these things much easier. It is the most popular Node framework for building HTTP server applications.
 
 To use express, we start by installing it as a dependency:
 

@@ -12,6 +12,7 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
 
 **Table of Contents**:
 
+- [Essential Questions](#essential-questions)
 - [Terms](#terms)
 - [What is a "Schema"?](#what-is-a-schema)
   - [Why is schema design important?](#why-is-schema-design-important)
@@ -25,6 +26,16 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
   - [First Normal Form (1NF)](#first-normal-form-1nf)
   - [Second Normal Form (2NF)](#second-normal-form-2nf)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is a database schema and why is it worth designing before writing any code?
+2. What is an Entity Relationship Diagram (ERD) and what information does it communicate?
+3. What are the four steps for designing a database schema?
+4. What is normalization and what problems does it prevent?
+5. What is the difference between a one-to-many and a many-to-many relationship? How is each represented in a relational database?
 
 ## Key Concepts
 

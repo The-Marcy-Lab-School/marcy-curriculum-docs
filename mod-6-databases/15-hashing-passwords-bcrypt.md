@@ -6,6 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 
 **Table of Contents:**
 
+- [Essential Questions](#essential-questions)
 - [Terms](#terms)
 - [Pre-Learning](#pre-learning)
 - [Hashing](#hashing)
@@ -17,6 +18,16 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 - [Bcrypt Helpers](#bcrypt-helpers)
 - [Summary — The Password Validation Workflow](#summary--the-password-validation-workflow)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is hashing? What are the two key properties a hashing function must have?
+2. Why should passwords never be stored in plaintext in a database?
+3. How can a server authenticate a user if it never stores their actual password?
+4. What is a salt and why does bcrypt add one before hashing a password?
+5. What is the tradeoff when choosing the number of salt rounds?
 
 ## Key Concepts
 

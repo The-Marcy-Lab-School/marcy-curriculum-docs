@@ -10,6 +10,7 @@ In this lesson, we'll learn how we can establish relationships between tables us
 
 **Table of Contents**
 
+- [Essential Questions](#essential-questions)
 - [Terms](#terms)
 - [How should I create my database?](#how-should-i-create-my-database)
 - [Two Tables and Foreign Keys](#two-tables-and-foreign-keys)
@@ -17,6 +18,16 @@ In this lesson, we'll learn how we can establish relationships between tables us
 	- [Setup](#setup)
 	- [Some Questions To Answer](#some-questions-to-answer)
 - [Entity Relation Diagrams and Many To Many Relationships](#entity-relation-diagrams-and-many-to-many-relationships)
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is a foreign key and how does it create a relationship between two tables?
+2. What is a one-to-many relationship? Give an example from a real application.
+3. What does a `JOIN` query do? What condition does it use to combine rows from two tables?
+4. What is a many-to-many relationship and how do you represent one in a relational database?
+5. What is an association table and what kinds of columns does it contain?
 
 ## Key Concepts
 

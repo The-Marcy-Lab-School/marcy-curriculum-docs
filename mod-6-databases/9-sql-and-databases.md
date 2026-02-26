@@ -14,6 +14,7 @@ Let's dive in!
 
 **Table of Contents**
 
+- [Essential Questions](#essential-questions)
 - [Terms](#terms)
 - [What even is a database?](#what-even-is-a-database)
   - [Relational Database Management Systems](#relational-database-management-systems)
@@ -22,6 +23,16 @@ Let's dive in!
   - [Tips to avoid SQL errors](#tips-to-avoid-sql-errors)
 - [Summary](#summary)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is the difference between a database and a database management system?
+2. What makes Postgres a "relational" database management system? How is data organized in one?
+3. What is a primary key and why does every table need one?
+4. How does a database fit into the fullstack architecture alongside the client and the server?
+5. What is SQL and what kinds of operations can it perform on a database?
 
 ## Key Concepts
 

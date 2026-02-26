@@ -5,9 +5,20 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8
 {% endhint %}
 
 **Table of Contents:**
+- [Essential Questions](#essential-questions)
 - [Part 1 - Adding a DB for the fellows](#part-1---adding-a-db-for-the-fellows)
 - [Part 2 — Refactor!](#part-2--refactor)
 - [Part 3 - Adding posts](#part-3---adding-posts)
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What problem does replacing the in-memory array with a real database solve?
+2. Which layer of the MVC architecture is responsible for executing SQL queries, and why?
+3. Why do model methods need to become `async` once you connect to a real database?
+4. What does `RETURNING *` do in a SQL `INSERT`, `UPDATE`, or `DELETE` query, and why is it useful?
+5. When a `fellow` is deleted, why do you need to also delete their associated `posts`, and how do you ensure it happens in the right order?
 
 Remember, the **model** is the layer of the application that directly manipulates the data. It provides methods that the controllers can use to execute those changes whenever the frontend makes the appropriate request.
 

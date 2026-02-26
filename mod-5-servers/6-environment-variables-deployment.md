@@ -8,6 +8,7 @@ Thus far, we have not been able to deploy a project that uses an API key without
 
 **Table of Contents:**
 
+- [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Setup](#setup)
 - [What is an API Key?](#what-is-an-api-key)
@@ -18,6 +19,16 @@ Thus far, we have not been able to deploy a project that uses an API key without
   - [Environment Variables, Dotenv, and gitignore](#environment-variables-dotenv-and-gitignore)
   - [Deploying with Environment Variables](#deploying-with-environment-variables)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is an API key? Why is it dangerous to include one in client-side code?
+2. What is the proxy server strategy? How does it keep an API key secure?
+3. What is an environment variable? How do you access environment variables in a Node application?
+4. What is a `.env` file and why must it be listed in `.gitignore`?
+5. What does the `dotenv` package do and how do you use it?
 
 ## Key Concepts
 

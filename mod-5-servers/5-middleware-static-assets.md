@@ -8,6 +8,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 **Table of Contents:**
 
+- [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Express Review](#express-review)
 - [Middleware and `next()`](#middleware-and-next)
@@ -16,10 +17,20 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
   - [`express.static()` Middleware](#expressstatic-middleware)
   - [Fallback Middleware](#fallback-middleware)
 - [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
-- [Deploying to Render](#deploying-to-render)
+- [Deploying Web Server to Render](#deploying-web-server-to-render)
   - [Create a New Web Service](#create-a-new-web-service)
   - [Best Practice — Serving the Dist Folder and Continuous Deployment](#best-practice--serving-the-dist-folder-and-continuous-deployment)
 - [Summary](#summary)
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is middleware? How does it differ from a regular controller?
+2. What is the role of `next()` in middleware? What happens if middleware never calls `next()` and never sends a response?
+3. What are static assets? What is a static web server?
+4. How do you serve static assets in an Express server?
+5. What is a same-origin request? Why can you use a relative path like `/api/data` when the frontend is served by the same Express server?
 
 ## Key Concepts
 
@@ -343,7 +354,7 @@ const response = await fetch('http://localhost:8080/api/data');
 
 By using `express.static()` to serve the frontend from the same Express server, the frontend and API share the same origin. Relative paths in fetch requests resolve correctly in both development and production — no hardcoded URLs needed.
 
-## Deploying to Render
+## Deploying Web Server to Render
 
 Github Pages provides **static site hosting**.
   * This means that the server that Github Pages runs on your behalf can only send static files to the client (HTML, CSS, and JS files).

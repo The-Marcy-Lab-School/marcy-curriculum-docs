@@ -10,6 +10,7 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
 
 **Table of Contents:**
 
+- [Essential Questions](#essential-questions)
 - [Organization and Separation of Concerns](#organization-and-separation-of-concerns)
   - [The Model-View-Controller (MVC) Architecture](#the-model-view-controller-mvc-architecture)
 - [Implementing a Model for MVC](#implementing-a-model-for-mvc)
@@ -17,6 +18,16 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
   - [Build a Model](#build-a-model)
 - [Challenge](#challenge)
 
+
+## Essential Questions
+
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is the MVC architecture? What is the responsibility of each layer (Model, View, Controller)?
+2. What is "separation of concerns" and why does it matter as an application grows?
+3. In the context of an Express server, what logic belongs in a model vs. a controller?
+4. How do you structure a server directory to implement MVC?
+5. Why does a Model use `static` methods instead of instance methods?
 
 ## Organization and Separation of Concerns
 
