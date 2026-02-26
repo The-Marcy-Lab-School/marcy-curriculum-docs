@@ -13,11 +13,12 @@ We'll also use `curl`, a command-line tool for sending HTTP requests, to see exa
 **Table of Contents:**
 
 - [Essential Questions](#essential-questions)
-- [Terms](#terms)
+- [Key Concepts](#key-concepts)
 - [What Does "Listening" Mean?](#what-does-listening-mean)
 - [Your First Server with `node:http`](#your-first-server-with-nodehttp)
   - [Creating the Server](#creating-the-server)
   - [The Request Object](#the-request-object)
+    - [Query Parameters](#query-parameters)
   - [The Response Object](#the-response-object)
 - [Routing Manually](#routing-manually)
 - [Sending Requests with `curl`](#sending-requests-with-curl)
@@ -134,7 +135,15 @@ const server = http.createServer((req, res) => {
 
 <summary><strong>Q: You visit <code>http://localhost:8080/api/users?sort=asc</code>. What is the value of <code>req.url</code>?</strong></summary>
 
-`'/api/users?sort=asc'` — `req.url` includes the pathname (`/api/users`) *and* the query string (`sort=asc`). If you want just the pathname, you need to parse it which can be done using the `new URL()` constructor:
+`'/api/users?sort=asc'`
+
+</details>
+
+#### Query Parameters
+
+`req.url` includes both the pathname (`/api/users`) *and* all **query parameters** (`sort=asc`). 
+
+You can get these URL parts separately using the `new URL()` constructor:
 
 ```js
 const { pathname, searchParams } = new URL(req.url, 'http://localhost:8080');
@@ -142,9 +151,9 @@ console.log(pathname);               // '/api/users'
 console.log(searchParams.get('sort')); // 'asc'
 ```
 
-This is one of many things frameworks like Express can handle automatically for you.
+Query parameters are really useful for the client to customize how they want their response to return.
 
-</details>
+This is one of many things frameworks like Express can handle automatically for you.
 
 ### The Response Object
 
