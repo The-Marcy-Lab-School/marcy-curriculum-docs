@@ -247,6 +247,8 @@ const serveIndexHTML = (req, res, next) => {
 app.get('/', serveIndexHTML);
 ```
 
+> **Why an absolute path?** `__dirname` is a Node variable that holds the absolute path of the directory containing the current file. A bare relative path like `'../frontend'` is resolved from the process's working directory, which can vary depending on which directory you start the server from. Using `__dirname` with `path.join()` produces a path that works no matter where the server is started from.
+
 This code serves the `index.html` file, but that file also needs access to `/src/main.js` and `/src/style.css`. Open the Console in your browser and you can see that those files are not being found. 
 
 So, we need two more controllers:
