@@ -211,7 +211,7 @@ Now, imagine that the website is just the "static assets" of a Vite project depl
 
 We call these **static web servers** because they store **static assets** (HTML, CSS, and JS files) and then provide a server application that serves those assets when requested.
 
-Let's look at how we can serve the static assets of a Vite project from our server.
+Let's look at how we can serve the static assets of frontend from our server.
 
 {% hint style="info" %}
 HTML, CSS, and JavaScript files are considered "static" because their content remains unchanged when being transferred from server to client.
@@ -221,9 +221,15 @@ APIs on the other hand serve dynamic content that changes depending on parameter
 
 ### Serving Vite Static Assets
 
-Check out the `frontend/` directory in the repo for this lesson. It contains a Vite project whose files we want to serve to a client (browser) when they visit our server.
+Check out the `frontend/` directory in the repo for this lesson. So far, we've used Vite's development server to get these frontend static assets at `http://localhost:5173`. 
 
-When a client (browser) visits our server address (in development, http://localhost) a `GET /` request is sent. Back in the server, we could add the following endpoint and controller:
+```sh
+cd frontend
+npm i
+npm run dev
+```
+
+Now, we can have our own server to provide access to those static assets! Back in the server, we could add the following endpoint and controller:
 
 ```js
 // The path module is useful for constructing file paths
