@@ -276,6 +276,8 @@ In these examples, can you tell what the query strings are doing to the results?
 
 In our server, let's make it so that our `/api/hello` endpoint can send accept query strings for a `first` and `last` name and send a custom message in response.
 
+Express parses query strings automatically and makes them available in the `req.query` object
+
 ```js
 // GET /api/hello?first=ada&last=lovelace
 const serveHello = (req, res) => {
@@ -283,19 +285,21 @@ const serveHello = (req, res) => {
 
   const { first, last } = req.query;
   if (!first || !last) {
-    return res.send({ message: 'hello, stranger!' });
+    return res.send({ message: 'hello, stranger' });
   }
-  res.send({ message: `hello, ${first} ${last}!` });
+  res.send({ message: `hello, ${first} ${last}` });
 };
 
 app.get('/api/hello', serveHello);
 ```
 
-```
-GET /api/hello?first=ada&last=lovelace
+Test it with `curl`!
+
+```sh
+curl http://localhost/api/hello?first=ada&last=lovelace
 ```
 
-With a `node:http` server, reading query strings required manually constructing a `URL` object. Express parses them automatically and makes them available on `req.query`
+With a `node:http` server, reading query strings required manually constructing a `URL` object. 
 
 --- 
 
