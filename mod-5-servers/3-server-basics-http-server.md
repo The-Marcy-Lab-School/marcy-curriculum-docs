@@ -18,7 +18,7 @@ We'll also use `curl`, a command-line tool for sending HTTP requests, to see exa
 - [Your First Server with `node:http`](#your-first-server-with-nodehttp)
   - [Creating the Server](#creating-the-server)
   - [The Request Object](#the-request-object)
-    - [Query Parameters](#query-parameters)
+    - [Query Strings](#query-strings)
   - [The Response Object](#the-response-object)
 - [Routing Manually](#routing-manually)
 - [Sending Requests with `curl`](#sending-requests-with-curl)
@@ -139,9 +139,9 @@ const server = http.createServer((req, res) => {
 
 </details>
 
-#### Query Parameters
+#### Query Strings
 
-`req.url` includes both the pathname (`/api/users`) *and* all **query parameters** (`sort=asc`). 
+`req.url` includes both the pathname (`/api/users`) *and* all **query strings** (`sort=asc`). 
 
 You can get these URL parts separately using the `new URL()` constructor:
 
@@ -151,7 +151,7 @@ console.log(pathname);               // '/api/users'
 console.log(searchParams.get('sort')); // 'asc'
 ```
 
-Query parameters are really useful for the client to customize how they want their response to return.
+Query strings are really useful for the client to customize how they want their response to return.
 
 This is one of many things frameworks like Express can handle automatically for you.
 
@@ -227,8 +227,8 @@ const server = http.createServer((req, res) => {
 
   // Route #2 — GET / → return a welcome message
   if (method === 'GET' && url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Welcome to the API');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h1>Welcome to the API</h1>');
     return;
   }
 
@@ -286,7 +286,7 @@ curl http://localhost:8080/
 Output:
 
 ```
-Welcome to the API
+<h1>Welcome to the API</h1>
 ```
 
 ```sh
