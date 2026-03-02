@@ -23,6 +23,7 @@ In the last lesson, you built an HTTP server from scratch using Node's built-in 
 - [The Request Object](#the-request-object)
   - [Query Strings](#query-strings)
   - [Route Parameters](#route-parameters)
+- [Complete Code](#complete-code)
 - [What's Next: Middleware](#whats-next-middleware)
 
 
@@ -246,11 +247,13 @@ A "health check" endpoint can be used to quickly check to see if a server is run
 **`res.status().send()`** sets the status code before sending the body. We can use this to write a "catch-all" fallback endpoint that sends a 404 when a request doesn't match any defined endpoints
 
 ```js
+const serve404 = (req, res, next) => {
+  res.status(404).send({ error: `Not found: ${req.originalUrl}` });
+}
+
 // `app.use()` captures ALL requests, not just get requests
 // Must come after all other routes
-app.use((req, res) => {
-  res.status(404).send({ error: `Not found: ${req.originalUrl}` });
-});
+app.use(serve404);
 ```
 
 Any request that doesn't match our defined endpoints will land here and get a clean JSON error.
@@ -378,6 +381,78 @@ if (!user) {
 }
 ```
 </details>
+
+## Complete Code
+
+```js
+const express = require('express');
+
+const users = [
+  { id: 1, name: 'Carmen' },
+  { id: 2, name: 'Maya' },
+  { id: 3, name: 'Reuben' },
+];
+
+const app = express();
+
+// controllers handle endpoint requests
+const serveHTML = (req, res, next) => {
+  res.send('<h1>Hello World</h1>');
+}
+
+// GET /api/hello?first=ben&last=spector
+const serveHello = (req, res, next) => {
+  console.log(req.query);
+  const { first, last } = req.query;
+
+  if (!first || !last) {
+    res.send({ message: 'hello stranger' })
+  }
+
+  res.send({ message: `hello ${first} ${last}!` });
+}
+
+const serveUsers = (req, res, next) => {
+  const { contains } = req.query;
+
+  if (contains) {
+    res.send(users.filter((user) => user.name.toLowerCase().includes(contains)))
+  } else {
+    res.send(users);
+  }
+};
+
+// GET /api/users/:id
+const findUser = (req, res, next) => {
+  const { id } = req.params;
+
+  const user = users.find((user) => user.id === id);
+
+  if (!user) {
+    res.status(404).send({ message: "User not found" });
+    return;
+  }
+
+  res.send(user);
+}
+
+const serve404 = (req, res, next) => {
+  res.status(404).send({ error: `Not found: ${req.originalUrl}` });
+}
+
+// define endpoints, hook them up to controllers
+app.get('/', serveHTML);
+app.get('/api/hello', serveHello);
+app.get('/api/users', serveUsers);
+app.get('/api/users/:id', findUser);
+
+// `app.use()` captures ALL requests, not just get requests
+// Must come after all other routes
+app.use(serve404);
+
+const port = 8080;
+app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+```
 
 ## What's Next: Middleware
 
