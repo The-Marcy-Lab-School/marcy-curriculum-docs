@@ -2,6 +2,8 @@
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-4-env-variables-deployment)!
+
+**Fork** this repository to practice deploying!
 {% endhint %}
 
 Thus far, we have not been able to deploy a project that uses an API key without likely exposing that API key to the public. Now that we have the power to build a server, we can finally do just that!
