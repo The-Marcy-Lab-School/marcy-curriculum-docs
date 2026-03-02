@@ -47,17 +47,17 @@ This will take you to your Dashboard where you can see existing deployments.
    * Root Directory - Leave blank (will default to the root of your repo)
    * Build Command:
      * If your application has a database, see the next section
-     *   If your application has a Vite frontend:
+     * If you need to build your frontend
 
          ```sh
          cd [vite_folder_name] && npm i && npm run build && cd ../server && npm i
          ```
-     *   If neither:
+     * If neither:
 
          ```sh
          cd server && npm i
          ```
-   *   Start Command (assuming your `index.js` file is in `server/`):
+   * Start Command (assuming your `index.js` file is in `server/`):
 
        ```sh
        cd server && node index.js
