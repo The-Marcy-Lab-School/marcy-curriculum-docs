@@ -7,7 +7,7 @@
   * [GitHub Setup](environment-setup/github-setup.md)
   * [Loom Setup](environment-setup/loom.md)
   * [Postgres Setup](environment-setup/postgres-setup.md)
-* [Coding Guides](how-tos/README.md)
+* [Assignment Guides](how-tos/README.md)
   * [Software Engineering Assignments Guide](how-tos/working-with-assignments.md)
   * [Code Style Guide](how-tos/style-guide.md)
   * [Debugging & Rubber Ducking Guide](how-tos/how-to-debug.md)
