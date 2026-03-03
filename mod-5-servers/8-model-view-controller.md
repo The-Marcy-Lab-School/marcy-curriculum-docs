@@ -11,6 +11,7 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
 **Table of Contents:**
 
 - [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
 - [Organization and Separation of Concerns](#organization-and-separation-of-concerns)
   - [The Model-View-Controller (MVC) Architecture](#the-model-view-controller-mvc-architecture)
 - [Implementing a Model for MVC](#implementing-a-model-for-mvc)
@@ -28,6 +29,16 @@ By the end of this lesson, you should be able to answer these questions:
 3. In the context of an Express server, what logic belongs in a model vs. a controller?
 4. How do you structure a server directory to implement MVC?
 5. Why does a Model use `static` methods instead of instance methods?
+
+## Key Concepts
+
+* **Separation of Concerns** — the principle of dividing a program into distinct sections, each responsible for a specific aspect of the application's functionality.
+* **Model-View-Controller (MVC)** — an architectural pattern that organizes application code into three distinct layers: Models, Views, and Controllers.
+  * **Model** — the layer responsible for storing and managing application data. It provides a set of methods (an interface) for interacting with that data in a predictable, controlled manner.
+  * **View** — the layer responsible for rendering data and providing user interfaces (buttons, forms, etc.) that allow users to see and request changes to the data.
+  * **Controller** — the layer responsible for managing interactions between Views and Models. It parses user inputs from requests, invokes the appropriate Model methods, and sends responses back to the View.
+* **Static Methods** — methods defined on a class itself rather than on instances. Used in Models so that a class acts as a namespace for data-management functions (like `Math.random()`) without needing to instantiate objects.
+* **Code Monolith** — a single, large, tightly coupled codebase that contains all application components, making it difficult to scale, maintain, and deploy.
 
 ## Organization and Separation of Concerns
 
