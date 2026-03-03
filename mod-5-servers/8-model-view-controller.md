@@ -16,7 +16,8 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
   - [The Model-View-Controller (MVC) Architecture](#the-model-view-controller-mvc-architecture)
 - [Implementing a Model for MVC](#implementing-a-model-for-mvc)
   - [Server Organization](#server-organization)
-  - [Build a Model](#build-a-model)
+  - [Separating our Controllers](#separating-our-controllers)
+  - [Separating our Model](#separating-our-model)
 - [Challenge](#challenge)
 
 
@@ -28,7 +29,6 @@ By the end of this lesson, you should be able to answer these questions:
 2. What is "separation of concerns" and why does it matter as an application grows?
 3. In the context of an Express server, what logic belongs in a model vs. a controller?
 4. How do you structure a server directory to implement MVC?
-5. Why does a Model use `static` methods instead of instance methods?
 
 ## Key Concepts
 
@@ -37,7 +37,6 @@ By the end of this lesson, you should be able to answer these questions:
   * **Model** — the layer responsible for storing and managing application data. It provides a set of methods (an interface) for interacting with that data in a predictable, controlled manner.
   * **View** — the layer responsible for rendering data and providing user interfaces (buttons, forms, etc.) that allow users to see and request changes to the data.
   * **Controller** — the layer responsible for managing interactions between Views and Models. It parses user inputs from requests, invokes the appropriate Model methods, and sends responses back to the View.
-* **Static Methods** — methods defined on a class itself rather than on instances. Used in Models so that a class acts as a namespace for data-management functions (like `Math.random()`) without needing to instantiate objects.
 * **Code Monolith** — a single, large, tightly coupled codebase that contains all application components, making it difficult to scale, maintain, and deploy.
 
 ## Organization and Separation of Concerns
@@ -53,7 +52,7 @@ In the last lesson, we built a RESTful API that lets users manage a list of fell
 In that application, all of the logic was built into the `server/index.js` file. While we have some organization within the file, separating the concerns of one file into multiple files will enable our application to scale without becoming a "monolith"
 
 {% hint style="info" %}
-In software development, a "code monolith" refers to a single, large, and typically tightly coupled codebase that contains all the application's components, often making it difficult to scale, maintain, and deploy
+In software development, a "**code monolith**" refers to a single, large, and typically tightly coupled codebase that contains all the application's components, often making it difficult to scale, maintain, and deploy
 {% endhint %}
 
 ### The Model-View-Controller (MVC) Architecture
@@ -62,11 +61,11 @@ While there are many approaches for organization and separation of concerns, one
 
 ![The view sends requests with user inputs to the controller with updates the model. New data is returned to the controller which sends that data in a response to the view.](./img/8-model-view-controller/mvc-diagram.png)
 
-This architecture pattern organizes our code into three distinct pieces:
+This architecture pattern organizes our code into three distinct "layers"":
 
-* The **Models** are responsible for storing and managing the data of an application. They provide an interface (a set of methods) for interacting with that data in a predictable manner.
-* The **Views** are responsible for rendering the data of an application. They provide user-interfaces with buttons, forms, and other components that allow the user to see and request changes to the data.
-* The **Controllers** are responsible for managing interactions between the views and models. They process user inputs from the views, invoke the appropriate methods of the models, and send response back to the views to be updated.
+* The **Model** layer is responsible for storing and managing the data of an application. They provide an interface (a set of methods) for interacting with that data in a predictable manner.
+* The **View** layer is responsible for rendering the data of an application. They provide user-interfaces with buttons, forms, and other components that allow the user to see and request changes to the data.
+* The **Controller** layer is responsible for managing interactions between the views and models. They process user inputs from the views, invoke the appropriate methods of the models, and send response back to the views to be updated.
 
 {% hint style="info" %}
 Often times, it can be hard to implement your application such that it strictly adheres to any one framework or architecture. Keep in mind that architectures like MVC present an ideal to strive for, not a strict pattern that must be followed at all times.
@@ -137,7 +136,13 @@ const findFellow = (req, res) => {
 // ... and more...
 ```
 
-We need to create a separate model that focuses solely on managing the `friends` database and provides methods for our controllers to use.
+**<details><summary>Q: Is it possible to test ONLY the code that interacts with the `fellows` array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</summary>**
+
+No! And this is the main issue with our current implementation. Because the concerns are not separated, we can't easily test the different aspects of our server. If we separate the logic that interacts with the `fellows` array from the logic that interacts with the `req` and `res` objects, testing becomes possible.
+
+</details>
+
+We need to create a separate model that focuses solely on managing the `fellows` database and provides methods for our controllers to use.
 
 ![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](./img/8-model-view-controller/express-middleware-model.svg)
 
@@ -151,114 +156,124 @@ server/
 ├── controllers/
 │   └── fellowControllers.js
 └── models/
-    └── Fellow.js
+    └── fellowModel.js
  
 ```
 
 * `index.js` builds the `app`, configures middleware, and sets the endpoints. However, the controllers are now imported.
 * `controllers/fellowControllers.js` defines all of the controllers for endpoints relating to fellow data. Each set of data should have its own controllers file.
-* `models/Fellow.js` defines a model for managing fellow data. This model is used exclusively by the fellow controllers. Each set of data managed by the server should have its own model.
+* `models/fellowModel.js` defines a model for managing fellow data. This model is used exclusively by the fellow controllers. Each set of data managed by the server should have its own model.
 
 By separating our code in this way, we show the separate "layers" of the application.
 
-{% hint style="success" %}
-Before we build a model, do the following:
+### Separating our Controllers
+
+Before we build a model, we'll isolate our controllers into their own file:
 
 * Move all of your controller functions into the `controllers/fellowControllers.js` file
-* Export them as an object using `module.exports = { /* list controller methods*/ }`
-* Import the collection of controllers into `server/index.js` using `require(./controllers/fellowControllers.js)`
-{% endhint %}
+* Write them as named exports using the syntax `module.exports.controllerName = () => {...}` like this:
 
-### Build a Model
+    ```js
+    // fellowControllers.js
+    module.exports.listFellows = (req, res) => {
+      res.send(fellows);
+    };
+    ```
+
+* Import the collection of controllers into `server/index.js`:
+
+    ```js
+    // Import the entire exports object
+    const fellowControllers = require('./controllers/fellowControllers');
+    ```
+
+* Update your endpoint code to use the imported controllers:
+
+    ```js
+    app.get('/api/fellows', fellowControllers.listFellows);
+    app.get('/api/fellows/:id', fellowControllers.findFellow);
+    app.post('/api/fellows', fellowControllers.createFellow);
+    app.patch('/api/fellows/:id', fellowControllers.updateFellow);
+    app.delete('/api/fellows/:id', fellowControllers.deleteFellow);
+    ```
+
+### Separating our Model
 
 To build a separate model layer to handle only data management logic, we will:
 
-* Make a `models/Fellow.js` file.
-* Inside, export a `Fellow` class with `static` methods for each action needed by the controllers.
-* Move the `fellows` "database" inside so the only way to access its data is through the model's interface.
+* Make a `models/fellowModel.js` file.
+* Inside, define the `fellows` "database" and a set of functions for interacting with it.
+* Export those functions as properties plain object so the only way to access the data is through the model's interface.
 
-{% hint style="info" %}
-Note that there is no `constructor()` function here! This may seem odd at first, but consider interfaces like `Math`. These interfaces just provide static methods and properties like `Math.random()` and `Math.PI`. You never invoke `new Math()` to generate an instance of `Math`
-{% endhint %}
-
-{% code title="server/models/Fellow.js" %}
+{% code title="server/models/fellowModel.js" %}
 ```js
-// Auto-incrementing ID generator
 const getId = ((id = 0) => () => ++id)();
 
-// Restrict access to our mock "database" to just the Model
+// Restrict access to our mock "database" to just this Model file
 const fellows = [
   { name: 'Carmen', id: getId() },
   { name: 'Reuben', id: getId() },
   { name: 'Maya', id: getId() },
 ];
 
-class Fellow {
-  // Create and add the new fellow to the "database" (the fellows array)
-  static create(name) {
-    const newFellow = {
-      name,
-      id: getId()
-    }
-    fellows.push(newFellow);
-    return newFellow;
+module.exports.create = (name) => {
+  const newFellow = { name, id: getId() };
+  fellows.push(newFellow);
+  return newFellow;
+};
+
+module.exports.list = () => {
+  return [...fellows];
+};
+
+module.exports.find = (id) => {
+  const fellow = fellows.find((fellow) => fellow.id === id);
+  if (!fellow) {
+    return null;
   }
+  return { ...fellow };
+};
 
-  // Get all values from the "database"
-  static getAll() {
-    return [...fellows];
+module.exports.editName = (id, newName) => {
+  const fellow = fellows.find((fellow) => fellow.id === id);
+  if (!fellow) return null;
+  fellow.name = newName;
+  return { ...fellow };
+};
+
+module.exports.delete = (id) => {
+  const fellowIndex = fellows.findIndex((fellow) => fellow.id === id);
+  if (fellowIndex < 0) {
+    return false;
   }
-
-  // Get one value from the "database"
-  static find(id) {
-    return fellows.find((fellow) => fellow.id === id);
-  }
-
-  // Update one value from the "database"
-  static editName(id, newName) {
-    const fellow = Fellow.find(id);
-    if (!fellow) return null;
-    fellow.name = newName;
-    return fellow;
-  }
-
-  // Delete one value from the "database"
-  static delete(id) {
-    const fellowIndex = fellows.findIndex((fellow) => fellow.id === id);
-    if (fellowIndex < 0) return false;
-
-    fellows.splice(fellowIndex, 1);
-    return true;
-  }
-}
-
-module.exports = Fellow;
+  fellows.splice(fellowIndex, 1);
+  return true;
+};
 ```
 {% endcode %}
 
-We are now leaving it entirely to the `Fellow` model to manage the data and the controllers just focus on parsing the request and sending the response.
+We are now leaving it entirely to the `fellowModel` file to manage the data while the controllers just focus on parsing the request and sending the response.
 
 {% code title="server/controllers/fellowControllers.js" %}
 ```js
-const Fellow = require('../models/Fellow.js');)
+const fellowModel = require('../models/fellowModel.js');
 
-const createFellow = (req, res) => {
+module.exports.createFellow = (req, res) => {
   const { fellowName } = req.body;
   if (!fellowName) {
     return res.status(400).send({ message: "Invalid Name" });
   }
 
-  const newFellow = Fellow.create(fellowName);
+  const newFellow = fellowModel.create(fellowName);
   res.send(newFellow);
 };
 
-// Use `Fellow.find` to get the desired fellow
-const findFellow = (req, res) => {
+module.exports.findFellow = (req, res) => {
   const { id } = req.params;
-  const fellow = Fellow.find(Number(id));
+  const fellow = fellowModel.find(Number(id));
 
   if (!fellow) {
-    return res.status(404).send({ 
+    return res.status(404).send({
       message: `No fellow with the id ${id}`
     });
   }

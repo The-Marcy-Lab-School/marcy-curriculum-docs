@@ -20,7 +20,7 @@
   - [Handling POST and PATCH Request Bodies](#handling-post-and-patch-request-bodies)
 - [Model-View-Controller (MVC)](#model-view-controller-mvc)
   - [MVC Architecture](#mvc-architecture)
-  - [Model Example](#model-example)
+  - [Example](#example)
 
 ![](./img/cheatsheet/client-server-database.svg)
 
@@ -69,17 +69,17 @@ An HTTP **response** contains:
 
 ### HTTP Status Codes
 
-| Code  | Name                  | When you'll use it                              |
-| ----- | --------------------- | ----------------------------------------------- |
-| `200` | OK                    | Successful `GET`, `PATCH`, or `DELETE`          |
-| `201` | Created               | Successful `POST` (resource was created)        |
-| `204` | No Content            | Success but no data to return                   |
-| `400` | Bad Request           | Client sent invalid or malformed data           |
-| `401` | Unauthorized          | Authentication required (not logged in)         |
-| `403` | Forbidden             | Authenticated but not permitted                 |
-| `404` | Not Found             | The requested resource doesn't exist            |
-| `500` | Internal Server Error | Something went wrong on the server              |
-| `503` | Service Unavailable   | A dependency (e.g., third-party API) is down    |
+| Code  | Name                  | When you'll use it                           |
+| ----- | --------------------- | -------------------------------------------- |
+| `200` | OK                    | Successful `GET`, `PATCH`, or `DELETE`       |
+| `201` | Created               | Successful `POST` (resource was created)     |
+| `204` | No Content            | Success but no data to return                |
+| `400` | Bad Request           | Client sent invalid or malformed data        |
+| `401` | Unauthorized          | Authentication required (not logged in)      |
+| `403` | Forbidden             | Authenticated but not permitted              |
+| `404` | Not Found             | The requested resource doesn't exist         |
+| `500` | Internal Server Error | Something went wrong on the server           |
+| `503` | Service Unavailable   | A dependency (e.g., third-party API) is down |
 
 ## Server Basics
 
@@ -276,13 +276,13 @@ export default defineConfig({
 
 ### CRUD and HTTP Methods
 
-| CRUD   | HTTP Method | Endpoint            | Status on success |
-| ------ | ----------- | ------------------- | ----------------- |
-| Create | `POST`      | `/api/fellows`      | `201 Created`     |
-| Read   | `GET`       | `/api/fellows`      | `200 OK`          |
-| Read   | `GET`       | `/api/fellows/:id`  | `200 OK`          |
-| Update | `PATCH`     | `/api/fellows/:id`  | `200 OK`          |
-| Delete | `DELETE`    | `/api/fellows/:id`  | `204 No Content`  |
+| CRUD   | HTTP Method | Endpoint           | Status on success |
+| ------ | ----------- | ------------------ | ----------------- |
+| Create | `POST`      | `/api/fellows`     | `201 Created`     |
+| Read   | `GET`       | `/api/fellows`     | `200 OK`          |
+| Read   | `GET`       | `/api/fellows/:id` | `200 OK`          |
+| Update | `PATCH`     | `/api/fellows/:id` | `200 OK`          |
+| Delete | `DELETE`    | `/api/fellows/:id` | `204 No Content`  |
 
 ### Route Parameters
 
@@ -292,7 +292,7 @@ export default defineConfig({
 // GET /api/fellows/3  →  req.params.id === '3'
 const findFellow = (req, res) => {
   const { id } = req.params; // route parameters are strings
-  const fellow = Fellow.find(Number(id));
+  const fellow = fellowModel.find(Number(id));
 
   if (!fellow) return res.status(404).send({ message: `No fellow with id ${id}` });
   res.send(fellow);
@@ -308,7 +308,7 @@ const updateFellow = (req, res) => {
   const { fellowName } = req.body;
   if (!fellowName) return res.status(400).send({ message: 'Invalid Name' });
 
-  const updated = Fellow.editName(Number(id), fellowName);
+  const updated = fellowModel.editName(Number(id), fellowName);
   if (!updated) return res.status(404).send({ message: `No fellow with id ${id}` });
   res.send(updated);
 };
@@ -320,7 +320,7 @@ app.patch('/api/fellows/:id', updateFellow);
 // DELETE /api/fellows/3
 const deleteFellow = (req, res) => {
   const { id } = req.params;
-  const deleted = Fellow.delete(Number(id));
+  const deleted = fellowModel.delete(Number(id));
   if (!deleted) return res.status(404).send({ message: `No fellow with id ${id}` });
   res.sendStatus(204);
 };
@@ -341,7 +341,7 @@ const createFellow = (req, res) => {
 
   if (!fellowName) return res.status(400).send({ message: 'Invalid Name' });
 
-  const newFellow = Fellow.create(fellowName);
+  const newFellow = fellowModel.create(fellowName);
   res.status(201).send(newFellow);
 };
 
@@ -399,69 +399,72 @@ server/
 ├── controllers/
 │   └── fellowControllers.js  ← parses req, calls model, sends res
 └── models/
-    └── Fellow.js             ← manages data, no req/res
+    └── fellowModel.js        ← manages data, no req/res
 ```
 
-### Model Example
+### Example
 
-A model uses a class with `static` methods. The data (the "database") lives inside the model — controllers never access it directly.
+A model encapsulates its data and exposes functions for controllers to use. The data (the "database") lives inside the model file — controllers never access it directly.
 
 ```js
-// models/Fellow.js
+// models/fellowModel.js
+const getId = ((id = 0) => () => ++id)();
+
+// Restrict access to our mock "database" to just this Model file
 const fellows = [
-  { name: 'Carmen', id: 1 },
-  { name: 'Reuben', id: 2 },
-  { name: 'Maya', id: 3 },
+  { name: 'Carmen', id: getId() },
+  { name: 'Reuben', id: getId() },
+  { name: 'Maya', id: getId() },
 ];
-let nextId = 4;
 
-class Fellow {
-  static create(name) {
-    const newFellow = { name, id: nextId++ };
-    fellows.push(newFellow);
-    return newFellow;
+module.exports.create = (name) => {
+  const newFellow = { name, id: getId() };
+  fellows.push(newFellow);
+  return newFellow;
+};
+
+module.exports.list = () => {
+  return [...fellows];
+};
+
+module.exports.find = (id) => {
+  const fellow = fellows.find((f) => f.id === id);
+  if (!fellow) {
+    return null;
   }
+  return { ...fellow };
+};
 
-  static list() {
-    return [...fellows];
+module.exports.editName = (id, newName) => {
+  const fellow = fellows.find((f) => f.id === id);
+  if (!fellow) return null;
+  fellow.name = newName;
+  return { ...fellow };
+};
+
+module.exports.delete = (id) => {
+  const idx = fellows.findIndex((f) => f.id === id);
+  if (idx < 0) {
+    return false;
   }
-
-  static find(id) {
-    return fellows.find((f) => f.id === id) || null;
-  }
-
-  static editName(id, newName) {
-    const fellow = Fellow.find(id);
-    if (!fellow) return null;
-    fellow.name = newName;
-    return fellow;
-  }
-
-  static delete(id) {
-    const idx = fellows.findIndex((f) => f.id === id);
-    if (idx < 0) return null;
-    return fellows.splice(idx, 1)[0];
-  }
-}
-
-module.exports = Fellow;
+  fellows.splice(idx, 1);
+  return true;
+};
 ```
 
 Controllers stay focused on HTTP concerns only:
 
 ```js
 // controllers/fellowControllers.js
-const Fellow = require('../models/Fellow');
+const fellowModel = require('../models/fellowModel');
 
-const listFellows = (req, res) => {
-  res.send(Fellow.list());
+module.exports.listFellows = (req, res) => {
+  res.send(fellowModel.list());
 };
 
-const createFellow = (req, res) => {
+module.exports.createFellow = (req, res) => {
   const { fellowName } = req.body;
   if (!fellowName) return res.status(400).send({ message: 'Invalid Name' });
-  res.status(201).send(Fellow.create(fellowName));
+  res.status(201).send(fellowModel.create(fellowName));
 };
-
-module.exports = { listFellows, createFellow };
 ```
