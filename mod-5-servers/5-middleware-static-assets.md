@@ -51,50 +51,65 @@ Remember how the Express app works?
 
 ![Express Diagram](./img/4-intro-to-express/express-diagram-simple.svg)
 
-1. A client sends a **request** to the server.
+1. A client sends a **request** to a particular **endpoint** provided by the server.
 2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
-3. The controller processes the request, interacts with any necessary data or services, and generates a **response**.
-4. The server sends the response back to the client.
-5. The client is now free to do what it likes with the response.
+3. The controller looks at the request and generates a **response** which is sent to the client.
+5. The client receives the response.
 
-And here is how we can create a server with two endpoints: `/api/hello` and `/api/data`
+A **controller** is a callback function that parses a request and sends a response. Controllers are connected to a particular endpoint using `app.get(endpoint, controller)`. The `app` will invoke the given controller when a request for the given endpoint is received. Every controller is invoked with three values:
+
+* A `req` object which holds data related to the request, including **query parameters**.
+* A `res` object which has methods to send a response.
+* A `next` function, typically only used by "Middleware".
+
+And here is how we can create a server with two endpoints (`/api/users` and `/api/hello`) and a fallback response.
 
 ```js
 const express = require('express');
 const app = express();
 
-// When the endpoint is requested, controllers will send a response
-// e.g. /api/hello?first=ada&last=lovelace
+const users = [
+  { name: "Carmen", id: 123 },
+  { name: "Reuben", id: 456 },
+  { name: "Maya", id: 789 },
+]
+
+// Controllers
+const serveUsers = (req, res, next) => {
+  res.send(users);
+}
+
 const serveHello = (req, res, next) => {
-  const { first, last} = req.query; 
-  if (!first || !last) {
-    return res.send({ message: `hello stranger!`});
-  }
-  res.send({ message: `hello ${first} ${last}!`});
+  const name = req.query.name || "stranger";
+  res.send({ message: `hello ${name}` });
 }
 
-// e.g. /api/data
-const serveData = (req, res, next) => {
-  const data = [{ name: 'Carmen' }, { name: 'Maya' }, { name: 'Reuben' }];
-  res.send(data)
+const serve404 = (req, res, next) => {
+  res.status(404).send({ error: `Not found: ${req.originalUrl}` });
 }
 
-// Define the method, endpoint URL, and controller
+// Endpoints
+app.get('/api/users', serveUsers);
 app.get('/api/hello', serveHello);
-app.get('/api/data', serveData);
 
-// Listen for requests on port 8080
+app.use(serve404); // captures ALL unhandled requests
+
+// Listen
 const port = 8080;
-app.listen(port, () => console.log(`listening at http://localhost:${port}`)); 
+app.listen(port, () => {
+  console.log(`Server is now running on http://localhost:${port}`);
+});
 ```
 
-A **controller** is a callback function that parses a request and sends a response. It will be invoked asynchronously when the associated endpoint is sent a request.
+In this example, we use `app.use()` to add a "fallback" controller to our `app`. Notice that we don't specify an endpoint or a method type: this means that the `serve404` controller can run for any request type and any URL. However, if any of the previous controllers send a response, then `serve404` won't run. Because of this, we *must* place this endpoint last (after the other calls to `app.get()`). 
 
-Every controller is invoked with three values:
+**<details><summary>Q: What would happen if we put `app.use(serve404)` before the other calls to `app.get()`?</summary>**
 
-* A `req` object which holds data related to the request, including **query parameters**.
-* A `res` object which has methods to send a response.
-* A `next` function, typically only used by "Middleware".
+The `serve404` controller would be invoked for any request method and URL preventing the other controllers from ever running.
+
+</details>
+
+In this lesson, we'll see how we can intentionally use `app.use()` BEFORE all of our endpoints to do something to each request before passing them along to the appropriate controller to send a response.
 
 Now its time to learn about that `next` method!
 
