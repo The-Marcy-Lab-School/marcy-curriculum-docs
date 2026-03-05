@@ -234,14 +234,14 @@ module.exports.find = (id) => {
   return { ...fellow };
 };
 
-module.exports.editName = (id, newName) => {
+module.exports.update = (id, fellowName) => {
   const fellow = fellows.find((fellow) => fellow.id === id);
   if (!fellow) return null;
-  fellow.name = newName;
+  fellow.name = fellowName;
   return { ...fellow };
 };
 
-module.exports.delete = (id) => {
+module.exports.destroy = (id) => {
   const fellowIndex = fellows.findIndex((fellow) => fellow.id === id);
   if (fellowIndex < 0) {
     return false;
@@ -278,6 +278,25 @@ module.exports.findFellow = (req, res) => {
     });
   }
   res.send(fellow);
+};
+
+module.exports.updateFellow = (req, res) => {
+  const { id } = req.params;
+  const { fellowName } = req.body;
+
+  if (!fellowName) {
+    return res.status(400).send({ message: "Invalid Name" });
+  }
+
+  const updatedFellow = fellowModel.update(Number(id), fellowName);
+
+  if (!updatedFellow) {
+    return res.status(404).send({
+      message: `No fellow with the id ${id}`
+    });
+  }
+
+  res.send(updatedFellow);
 };
 ```
 {% endcode %}
