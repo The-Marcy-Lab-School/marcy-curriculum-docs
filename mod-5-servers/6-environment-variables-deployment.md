@@ -134,7 +134,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 
-1. Update this code to use `dist` no matter what
+To test this out:
+1. Temporarily update this code to use `dist` no matter what.
 2. Return to the `frontend` app and run `npm run build`. 
 3. Restart the server. 
 
@@ -160,12 +161,9 @@ In order to implement this, we need to build a server application that:
 
 ### Fetch In the Server-Side Controller
 
-The server-side code to fetch from the API is almost exactly the same code as the `getTopStories()` function in the `frontend/src/fetch-helpers.js` file. 
-
-First, create a controller for a `GET /api/stories` endpoint
+The server-side code to fetch from the API is almost exactly the same code as the `getTopStories()` function in the `frontend/src/fetch-helpers.js` file. In the server, we'll put that logic inside of a controller that runs for `GET /api/stories` requests:
 
 ```js
-// First, we make a controller for GET /api/stories
 const serveTopArtStories = async (req, res, next) => {
   try {
     // We'll secure this value soon!
@@ -185,19 +183,8 @@ const serveTopArtStories = async (req, res, next) => {
     res.status(503).send(error);
   }
 }
-```
 
-Then, we make that controller available with an endpoint
-
-```js
-app.get('/api/stories', serveTopArtStories)
-```
-
-In your terminal, navigate to the `server/`, install dependencies and run it:
-
-```sh
-npm i
-npm run dev
+app.get('/api/stories', serveTopArtStories);
 ```
 
 Now, visit [http://localhost:8080/api/stories](http://localhost:8080/api/stories) to see the fetched data! Open the *Network* tab again and you'll see that the API key is now hidden!
@@ -309,6 +296,11 @@ For example, on Render, you can add environment variables when configuring your 
 const express = require('express');
 const path = require('path');
 
+// 💡 dotenv loads values from the .env file into process.env
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(process.env.API_KEY);
+
 //////////////////////////////////////////
 // Constant Variables
 //////////////////////////////////////////
@@ -329,7 +321,7 @@ const logRoutes = (req, res, next) => {
   next();
 };
 
-const serveStatic = express.static(pathToDistFolder);
+const serveStatic = express.static(pathToFrontend);
 app.use(logRoutes);
 app.use(serveStatic);
 
@@ -337,9 +329,11 @@ app.use(serveStatic);
 // Controllers
 //////////////////////////////////////////
 
-// First, we make a controller
+// 💡 Use async and await to send the fetch asynchronously
 const serveTopArtStories = async (req, res, next) => {
+  // 💡 Use try/catch to execute the fetch
   try {
+    // 💡 Use process.env to retrieve the API key environment variable
     const url = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${process.env.API_KEY}`;
     const response = await fetch(url);
     if (!response.ok) {
@@ -348,10 +342,10 @@ const serveTopArtStories = async (req, res, next) => {
     const data = await response.json();
     const storiesWithTitle = data.results.filter(story => story.title);
 
-    // send the fetched data to the client
+    // 💡 send the fetched data to the client
     res.send(storiesWithTitle);
   } catch (error) {
-    // or send an error. 503 means the service is unavailable
+    // 💡 or send an error. 503 means the service is unavailable
     res.status(503).send(error);
   }
 }
@@ -360,7 +354,6 @@ const serve404 = (req, res, next) => {
   res.status(404).send({ error: `Not found: ${req.originalUrl}` });
 }
 
-// GET /api/top-arts-stories
 app.get('/api/stories', serveTopArtStories);
 app.use(serve404); // captures ALL unhandled requests
 
