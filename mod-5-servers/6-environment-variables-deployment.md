@@ -20,6 +20,7 @@ Thus far, we have not been able to deploy a project that uses an API key without
   - [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
   - [Environment Variables, Dotenv, and gitignore](#environment-variables-dotenv-and-gitignore)
   - [Deploying with Environment Variables](#deploying-with-environment-variables)
+- [Complete Code](#complete-code)
 
 
 ## Essential Questions
@@ -298,3 +299,77 @@ For example, on Render, you can add environment variables when configuring your 
 
 ![Add environment variables when configuring render web servces](./img/6-environment-variables-deployment/render-env-config.png)
 
+## Complete Code
+
+```js
+//////////////////////////////////////////
+// Imports
+//////////////////////////////////////////
+
+const express = require('express');
+const path = require('path');
+
+//////////////////////////////////////////
+// Constant Variables
+//////////////////////////////////////////
+
+const app = express();
+let pathToFrontend = path.join(__dirname, '../frontend');
+if (process.env.NODE_ENV === 'production') {
+  pathToFrontend = path.join(__dirname, '../frontend/dist');
+}
+
+//////////////////////////////////////////
+// Middleware
+//////////////////////////////////////////
+
+const logRoutes = (req, res, next) => {
+  const time = (new Date()).toLocaleString();
+  console.log(`${req.method}: ${req.originalUrl} - ${time}`);
+  next();
+};
+
+const serveStatic = express.static(pathToDistFolder);
+app.use(logRoutes);
+app.use(serveStatic);
+
+//////////////////////////////////////////
+// Controllers
+//////////////////////////////////////////
+
+// First, we make a controller
+const serveTopArtStories = async (req, res, next) => {
+  try {
+    const url = `https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${process.env.API_KEY}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+    const storiesWithTitle = data.results.filter(story => story.title);
+
+    // send the fetched data to the client
+    res.send(storiesWithTitle);
+  } catch (error) {
+    // or send an error. 503 means the service is unavailable
+    res.status(503).send(error);
+  }
+}
+
+const serve404 = (req, res, next) => {
+  res.status(404).send({ error: `Not found: ${req.originalUrl}` });
+}
+
+// GET /api/top-arts-stories
+app.get('/api/stories', serveTopArtStories);
+app.use(serve404); // captures ALL unhandled requests
+
+//////////////////////////////////////////
+// Listen
+//////////////////////////////////////////
+
+const port = 8080;
+app.listen(port, () => {
+  console.log(`Server is now running on http://localhost:${port}`);
+});
+```

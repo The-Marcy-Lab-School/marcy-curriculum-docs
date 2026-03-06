@@ -19,7 +19,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 - [Deploying Web Server to Render](#deploying-web-server-to-render)
   - [Create a New Web Service](#create-a-new-web-service)
   - [Best Practice — Serving the Dist Folder and Continuous Deployment](#best-practice--serving-the-dist-folder-and-continuous-deployment)
-- [Summary](#summary)
+- [Complete Code](#complete-code)
 
 ## Essential Questions
 
@@ -461,13 +461,83 @@ As a result, the **continuous deployment** process would look like this:
 4. The "start" command is executed, starting the server
 5. The deployment completes and the server is live!
 
-## Summary
+## Complete Code
 
-* **Controllers:** Callback functions that handle requests by parsing them and sending responses.
-* **Middleware Functions**: Functions similar to controllers but pass requests to the next middleware without sending a response. They can also be executed for all requests while controllers typically handle a single endpoint.
-* **Static Assets:** Unchanging files (e.g., HTML, CSS, JS) served by a web server. For Vanilla JS Vite projects, building is optional but recommended — it bundles, minifies, and adds cache-busting hashes to the output files.
-* **Serving Static Assets**:
-  1. Construct an absolute file path to the static assets folder using `path.join()` and `__dirname`.
-  2. Use `express.static(pathToFrontend)` middleware to make static assets publicly available.
-  3. Register the middleware with `app.use()`
-* **Same-Origin Fetch Requests**: When the frontend is served by the same Express server as the API, fetch requests can use relative paths (e.g., `fetch('/api/data')`). The browser sends the request to the same host that served the page, so the same code works in both development and production without hardcoded URLs.
+```js
+//////////////////////////////////////////
+// Imports
+//////////////////////////////////////////
+
+const gifs = require('./gifs.json');
+const express = require('express');
+
+// The path module is useful for constructing relative pathToFrontends
+const path = require('path');
+
+//////////////////////////////////////////
+// Constants
+//////////////////////////////////////////
+
+const app = express();
+const users = [
+  { name: "Carmen", id: 123 },
+  { name: "Reuben", id: 456 },
+  { name: "Maya", id: 789 },
+];
+
+// the pathToFrontend is to the entire assets folder
+// the dist folder must be built with `npm run build`
+let pathToFrontend = path.join(__dirname, '../frontend');
+if (process.env.NODE_ENV === 'production') {
+  pathToFrontend = path.join(__dirname, '../frontend/dist');
+}
+
+//////////////////////////////////////////
+// Middleware
+//////////////////////////////////////////
+
+// Middleware function for logging route requests
+const logRoutes = (req, res, next) => {
+  const time = new Date().toLocaleString();
+  console.log(`${req.method}: ${req.originalUrl} - ${time}`);
+  next(); // Passes the request to the next middleware/controller
+};
+
+// generate middleware using the pathToFrontend
+const serveStatic = express.static(pathToFrontend);
+
+// Register the logRoutes middleware globally to log all requests
+app.use(logRoutes);
+// Register the serveStatic middleware before the remaining controllers
+app.use(serveStatic);
+
+//////////////////////////////////////////
+// Controllers
+//////////////////////////////////////////
+
+const serveData = (req, res, next) => res.send(gifs);
+const serveUsers = (req, res, next) => {
+  res.send(users);
+}
+const serveHello = (req, res, next) => {
+  const name = req.query.name || "stranger";
+  res.send({ message: `hello ${name}` });
+}
+const serve404 = (req, res, next) => {
+  res.status(404).send({ error: `Not found: ${req.originalUrl}` });
+}
+
+app.get('/api/users', serveUsers);
+app.get('/api/hello', serveHello);
+app.get('/api/data', serveData);
+app.use(serve404); // captures ALL unhandled requests
+
+//////////////////////////////////////////
+// Listen
+//////////////////////////////////////////
+
+const port = 8080;
+app.listen(port, () => {
+  console.log(`Server is now running on http://localhost:${port}`);
+});
+```

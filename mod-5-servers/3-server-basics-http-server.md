@@ -26,6 +26,7 @@ We'll also use `curl`, a command-line tool for sending HTTP requests, to see exa
   - [Viewing Headers](#viewing-headers)
   - [Sending a POST Request](#sending-a-post-request)
 - [Why Express?](#why-express)
+- [Complete Code](#complete-code)
 
 
 ## Essential Questions
@@ -410,3 +411,58 @@ You now understand what's happening underneath. Next lesson, we build with Expre
 Yes — Express doesn't add any new capabilities that `node:http` doesn't have. Everything Express does, you could write yourself with `node:http`. Express just removes the repetitive work. This is the point of a framework: it doesn't expand what's *possible*, it makes common patterns faster and less error-prone to implement. Understanding `node:http` first means you're never confused by what Express is "doing behind the scenes" — you've already seen the raw version.
 
 </details>
+
+## Complete Code
+
+```js
+const http = require('node:http');
+
+const todos = [
+  { id: 1, task: 'Learn Node' },
+  { id: 2, task: 'Build a server' },
+];
+
+const server = http.createServer((req, res) => {
+  const { method, url } = req;
+
+  // Route #1 — GET /api/todos → return all todos
+  if (method === 'GET' && url === '/api/todos') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(todos));
+    return;
+  }
+
+  // Route #2 — GET / → return a welcome message
+  if (method === 'GET' && url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h1>Welcome to the API</h1>');
+    return;
+  }
+
+  // Route #3 — POST /api/todos → add todo to list and return it
+  if (method === 'POST' && url === '/api/todos') {
+    // Read the request body (it comes in as a stream)
+    let body = '';
+    req.on('data', (chunk) => { body += chunk; });
+    
+    // Once the request body has finished reading...
+    req.on('end', () => {
+      // Parse the task from the request body and add it to the list
+      const { task } = JSON.parse(body);
+      const newTodo = { id: todos.length + 1, task };
+      todos.push(newTodo);
+
+      // Send a response
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: "Success: Todo Added", data: newTodo}));
+    });
+    return;
+  }
+
+  // Fallback Route — Anything else → 404
+  res.writeHead(404, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ error: 'Not found' }));
+});
+
+server.listen(8080, () => console.log('Listening on http://localhost:8080'));
+```
