@@ -1,4 +1,4 @@
-# 4. RESTful CRUD API
+# 7. RESTful CRUD API
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-5-rest-api-model)!

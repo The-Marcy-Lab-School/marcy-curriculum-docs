@@ -1,4 +1,4 @@
-# 3. API Keys, Proxy Server Strategy, and Environment Variables
+# 6. API Keys, Proxy Server Strategy, and Environment Variables
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-4-env-variables-deployment)!

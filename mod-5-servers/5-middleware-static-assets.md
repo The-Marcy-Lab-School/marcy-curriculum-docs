@@ -1,4 +1,4 @@
-# 2. Middleware, Serving Static Assets, and Deployment
+# 5. Middleware, Serving Static Assets, and Deployment
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-3-express-middleware)!

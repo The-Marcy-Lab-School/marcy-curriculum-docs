@@ -1,4 +1,4 @@
-# 5. Model-View-Controller Architecture
+# 8. Model-View-Controller Architecture
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-5-rest-api-model)!

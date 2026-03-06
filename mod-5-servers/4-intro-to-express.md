@@ -1,4 +1,4 @@
-# 1. Intro to Express
+# 4. Intro to Express
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-2-intro-to-express)!
