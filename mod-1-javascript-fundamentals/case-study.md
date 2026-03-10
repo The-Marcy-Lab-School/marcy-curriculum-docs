@@ -5,36 +5,37 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/s
 {% endhint %}
 
 **Table of Contents:**
-- [Key Features and Usage Example](#key-features-and-usage-example)
-- [Key Technologies and Packages](#key-technologies-and-packages)
-- [Setup](#setup)
-- [Investigation Questions](#investigation-questions)
-  - [User Interface Design](#user-interface-design)
-  - [Data Types](#data-types)
-  - [Variables and Scope](#variables-and-scope)
-  - [Functions](#functions)
-  - [Conditional Logic](#conditional-logic)
-  - [Modules](#modules)
-  - [Looping and Iteration](#looping-and-iteration)
-  - [Arrays and Objects](#arrays-and-objects)
-  - [Array Higher-Order Methods / Iterator Functions](#array-higher-order-methods--iterator-functions)
-  - [Error Handling and Debugging](#error-handling-and-debugging)
-  - [Code Style](#code-style)
-- [Extension Opportunities](#extension-opportunities)
-  - [Tips](#tips)
+
+* [Key Features and Usage Example](case-study.md#key-features-and-usage-example)
+* [Key Technologies and Packages](case-study.md#key-technologies-and-packages)
+* [Setup](case-study.md#setup)
+* [Investigation Questions](case-study.md#investigation-questions)
+  * [User Interface Design](case-study.md#user-interface-design)
+  * [Data Types](case-study.md#data-types)
+  * [Variables and Scope](case-study.md#variables-and-scope)
+  * [Functions](case-study.md#functions)
+  * [Conditional Logic](case-study.md#conditional-logic)
+  * [Modules](case-study.md#modules)
+  * [Looping and Iteration](case-study.md#looping-and-iteration)
+  * [Arrays and Objects](case-study.md#arrays-and-objects)
+  * [Array Higher-Order Methods / Iterator Functions](case-study.md#array-higher-order-methods--iterator-functions)
+  * [Error Handling and Debugging](case-study.md#error-handling-and-debugging)
+  * [Code Style](case-study.md#code-style)
+* [Extension Opportunities](case-study.md#extension-opportunities)
+  * [Tips](case-study.md#tips)
 
 This project is a simple command-line task manager where users can add, view, and complete tasks. The application stores tasks in an array of objects, gives users options through prompts, and uses array iteration and array methods to handle interactions with tasks.
 
 ## Key Features and Usage Example
+
 After running the application, the user is presented with a menu of options. They can:
+
 1. Add a new task to their list of tasks
 2. Mark a task as completed
 3. Delete all tasks from the list
 4. Exit the application.
 
 In the screenshot below, you can see a user selecting the "Add Task" option and entering a task description "Return online order".
-
-![A simple CLI task manager application.](img/task-manager-screenshot.png)
 
 ## Key Technologies and Packages
 
@@ -62,9 +63,11 @@ npm start
 # Or, run in developer mode using nodemon
 npm run dev
 ```
+
 ## Investigation Questions
 
 By answering these questions, you will be required to think critically about how the application is designed and understand WHY it is designed in this way. Your aim should be to:
+
 * learn as much as you can from this application so that you can build an application of your own that leverages these same skills
 * communicate clearly about the concepts you are using and the decisions you make for how you implement them.
 
@@ -76,14 +79,11 @@ The user interface is how humans interact with our programs. Even in a simple co
 
 Look at the menu display in `showMenu()`. The menu shows numbered options (1, 2, 3, 4) and asks the user to "Choose an option (1-4)". Why do you think the menu uses numbers for the options? What are the potential downsides of having the user type out in words what they would like to do? For example: "Choose an option: add an item, view tasks, complete a task, exit".
 
-**Question 2**
-In the `viewTasks()` function, tasks are displayed with checkboxes: `[x]` for completed tasks and `[ ]` for incomplete tasks. Do you think this visual representation is easy to understand? What alternative ways of displaying this information can you think of?
+**Question 2** In the `viewTasks()` function, tasks are displayed with checkboxes: `[x]` for completed tasks and `[ ]` for incomplete tasks. Do you think this visual representation is easy to understand? What alternative ways of displaying this information can you think of?
 
-**Question 3**
-Look at the `console.clear()` call at the end of the `while` loop in `showMenu()`. It occurs after a final `prompt()` for the user to press Enter. How would the user experience change if we didn't clear the console? How would it change if we removed the `prompt()` that comes right before it?
+**Question 3** Look at the `console.clear()` call at the end of the `while` loop in `showMenu()`. It occurs after a final `prompt()` for the user to press Enter. How would the user experience change if we didn't clear the console? How would it change if we removed the `prompt()` that comes right before it?
 
-**Question 4**
-When a user completes a task, the program shows a message like `Task "walk the dog" marked as completed!`. Why is it important that the user sees these messages? How would the user experience change without these messages?
+**Question 4** When a user completes a task, the program shows a message like `Task "walk the dog" marked as completed!`. Why is it important that the user sees these messages? How would the user experience change without these messages?
 
 ### Data Types
 
@@ -113,10 +113,12 @@ In the `showMenu()` function in `menu.js`, the variable `isRunning` is declared 
 
 In the `showMenu()` function in `menu.js`, take a look at the `taskChoice` and `taskIndex` variables. Consider that we could have also written the code without any variables and it would still work properly:
 
-    ```js
-    completeTask(Number(prompt('Enter task number to complete: ')) - 1);
-    ```
-  
+````
+```js
+completeTask(Number(prompt('Enter task number to complete: ')) - 1);
+```
+````
+
 What are the tradeoffs of these approaches?
 
 **Question 3**
@@ -133,14 +135,16 @@ In `menu.js`, take a look at how the `prompt()` function is being invoked. Based
 
 **Question 2**
 
-What if the programmer had written all the task logic directly in `menu.js` instead of creating separate functions? For example, look at the code inside `clearTasks()` — imagine copying all of that code and pasting it directly where `clearTasks()` is called. 
-    
-    ```js
-    else if (menuChoice === '3') {
-      tasks.length = 0;
-      console.log('All tasks cleared!');
-    }
-    ```
+What if the programmer had written all the task logic directly in `menu.js` instead of creating separate functions? For example, look at the code inside `clearTasks()` — imagine copying all of that code and pasting it directly where `clearTasks()` is called.
+
+````
+```js
+else if (menuChoice === '3') {
+  tasks.length = 0;
+  console.log('All tasks cleared!');
+}
+```
+````
 
 Would this code even work? Assuming you could get it to work, what are the downsides of doing this for potentially all of the tasks-related functions?
 
@@ -261,21 +265,15 @@ What do you think the reason is that some files are in the `src` sub-folder whil
 Now that the core Task Manager app is complete, it’s time to add new features! Pick at least one feature to implement. If you finish quickly, try more than one!
 
 * **Toggle Complete**: Right now, you can only mark a task as complete. Refactor the "Complete Task" menu option such that the user can toggle a task between complete and incomplete.
-
 * **Delete Task**: Add a menu option to remove a single task from the list.
-
 * **Show Completed Tasks**: Add a menu option to display only tasks that are completed.
-
 * **Show Incomplete Tasks**: Add a menu option to display only tasks that are not completed.
-
 * **Mark All as Completed**: Add a menu option that marks every task as completed.
-
 * **Show Task Stats**: Add a message to the the `viewTasks` function that shows the user how many tasks are complete vs. incomplete.
-  
 * **Data Persistence**: Look into the `JSON.stringify` and `JSON.parse()` functions as well as the `fs.writeFileSync()` function to figure out how to store the tasks in a `.json` file whenever the user exits and then retrieve those tasks when they start up again.
 
 ### Tips
 
-- Add a new menu option for each feature you implement.
-- Don’t delete old functionality — just extend your app.
-- Test your feature with at least 3–4 tasks to make sure it works.
+* Add a new menu option for each feature you implement.
+* Don’t delete old functionality — just extend your app.
+* Test your feature with at least 3–4 tasks to make sure it works.

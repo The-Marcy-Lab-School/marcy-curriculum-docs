@@ -1,10 +1,10 @@
-# 3. Server Basics with `node:http`
+# 3. Server Basics with node:http
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/5-1-server-basics-node-http)!
 {% endhint %}
 
-Now that you know how the internet works, it's time to run your own server. Before jumping into Express, we'll build one using Node's built-in `node:http` module — no npm packages required. This forces you to confront what a server actually *is*: code that listens for incoming requests, inspects them, and constructs responses manually.
+Now that you know how the internet works, it's time to run your own server. Before jumping into Express, we'll build one using Node's built-in `node:http` module — no npm packages required. This forces you to confront what a server actually _is_: code that listens for incoming requests, inspects them, and constructs responses manually.
 
 By the end, the complexity of doing this by hand will make the purpose of Express obvious.
 
@@ -12,22 +12,21 @@ We'll also use `curl`, a command-line tool for sending HTTP requests, to see exa
 
 **Table of Contents:**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [What Does "Listening" Mean?](#what-does-listening-mean)
-- [Your First Server with `node:http`](#your-first-server-with-nodehttp)
-  - [Creating the Server](#creating-the-server)
-  - [The Request Object](#the-request-object)
-    - [Query Strings](#query-strings)
-  - [The Response Object](#the-response-object)
-- [Routing Manually](#routing-manually)
-- [Sending Requests with `curl`](#sending-requests-with-curl)
-  - [Basic Requests](#basic-requests)
-  - [Viewing Headers](#viewing-headers)
-  - [Sending a POST Request](#sending-a-post-request)
-- [Why Express?](#why-express)
-- [Complete Code](#complete-code)
-
+* [Essential Questions](3-server-basics-http-server.md#essential-questions)
+* [Key Concepts](3-server-basics-http-server.md#key-concepts)
+* [What Does "Listening" Mean?](3-server-basics-http-server.md#what-does-listening-mean)
+* [Your First Server with `node:http`](3-server-basics-http-server.md#your-first-server-with-nodehttp)
+  * [Creating the Server](3-server-basics-http-server.md#creating-the-server)
+  * [The Request Object](3-server-basics-http-server.md#the-request-object)
+    * [Query Strings](3-server-basics-http-server.md#query-strings)
+  * [The Response Object](3-server-basics-http-server.md#the-response-object)
+* [Routing Manually](3-server-basics-http-server.md#routing-manually)
+* [Sending Requests with `curl`](3-server-basics-http-server.md#sending-requests-with-curl)
+  * [Basic Requests](3-server-basics-http-server.md#basic-requests)
+  * [Viewing Headers](3-server-basics-http-server.md#viewing-headers)
+  * [Sending a POST Request](3-server-basics-http-server.md#sending-a-post-request)
+* [Why Express?](3-server-basics-http-server.md#why-express)
+* [Complete Code](3-server-basics-http-server.md#complete-code)
 
 ## Essential Questions
 
@@ -58,11 +57,11 @@ By the end of this lesson, you should be able to answer these questions:
 
 ## What Does "Listening" Mean?
 
-In the previous two lessons, we learned that servers receive requests and send responses. But a server doesn't just passively wait — it actively *listens* for incoming connections on a specific **port**.
+In the previous two lessons, we learned that servers receive requests and send responses. But a server doesn't just passively wait — it actively _listens_ for incoming connections on a specific **port**.
 
 Think of it this way: your computer has thousands of ports, like doors into an apartment building. Each door can be used by a different application to receive requests. When a server application starts listening on port `8080`, it's like opening that specific door and saying: "I'm here. Send requests to this door."
 
-![Each port is like a door for an application to accept requests](./img/3-server-basics-http-server/ports.png)
+![Each port is like a door for an application to accept requests](../.gitbook/assets/ports.png)
 
 When your server is running locally, the **host** is `localhost` (your own computer) and the **port** is whatever number you chose. Together, `localhost:8080` uniquely identifies each server application on your machine.
 
@@ -142,7 +141,7 @@ const server = http.createServer((req, res) => {
 
 #### Query Strings
 
-`req.url` includes both the pathname (`/api/users`) *and* all **query strings** (`sort=asc`). 
+`req.url` includes both the pathname (`/api/users`) _and_ all **query strings** (`sort=asc`).
 
 You can get these URL parts separately using the `new URL()` constructor:
 
@@ -178,7 +177,7 @@ const server = http.createServer((req, res) => {
 {% hint style="warning" %}
 `res.end()` must be called for every request, on every code path. Try removing it to see what happens!
 
-If you forget to call it, the client will hang indefinitely waiting for a response. 
+If you forget to call it, the client will hang indefinitely waiting for a response.
 {% endhint %}
 
 <details>
@@ -331,6 +330,7 @@ Transfer-Encoding: chunked
 ```
 
 Notice:
+
 * The **status line**: `HTTP/1.1 200 OK`
 * **Response headers**: `Content-Type`, `Date`, `Connection`
 * A blank line separating headers from the **body**
@@ -367,7 +367,7 @@ Later, we'll use **Postman** — a GUI tool that gives you `curl`'s flexibility 
 
 <details>
 
-<summary><strong>Q: What does the <code>Content-Type: application/json</code> header in a <em>request</em> tell the server?</strong></summary>
+<summary><strong>Q: What does the <code>Content-Type: application/json</code> header in a </strong><em><strong>request</strong></em><strong> tell the server?</strong></summary>
 
 It tells the server that the request body is formatted as JSON and should be parsed accordingly. Without this header, the server doesn't know how to interpret the raw bytes it receives in the body. Express's `express.json()` middleware uses this header to decide whether to JSON-parse the request body automatically.
 
@@ -408,7 +408,7 @@ You now understand what's happening underneath. Next lesson, we build with Expre
 
 <summary><strong>Q: Since Express is built on top of <code>node:http</code>, does that mean you could build anything Express can build using just <code>node:http</code>?</strong></summary>
 
-Yes — Express doesn't add any new capabilities that `node:http` doesn't have. Everything Express does, you could write yourself with `node:http`. Express just removes the repetitive work. This is the point of a framework: it doesn't expand what's *possible*, it makes common patterns faster and less error-prone to implement. Understanding `node:http` first means you're never confused by what Express is "doing behind the scenes" — you've already seen the raw version.
+Yes — Express doesn't add any new capabilities that `node:http` doesn't have. Everything Express does, you could write yourself with `node:http`. Express just removes the repetitive work. This is the point of a framework: it doesn't expand what's _possible_, it makes common patterns faster and less error-prone to implement. Understanding `node:http` first means you're never confused by what Express is "doing behind the scenes" — you've already seen the raw version.
 
 </details>
 

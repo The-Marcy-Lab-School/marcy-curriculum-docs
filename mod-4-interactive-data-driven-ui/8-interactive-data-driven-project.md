@@ -1,36 +1,36 @@
-# Interactive & Data-Driven User Interfaces Project
+# Project: Interactive & Data-Driven User Interfaces
 
 **Table of Contents:**
 
-- [Overview](#overview)
-  - [Deliverables](#deliverables)
-  - [Stretch Features: localStorage + AI](#stretch-features-localstorage--ai)
-  - [Milestones](#milestones)
-- [Setup Steps](#setup-steps)
-  - [GitHub Organization \& Scrum Board](#github-organization--scrum-board)
-  - [Vite Project + Project Repo](#vite-project--project-repo)
-  - [Product Spec Sheet](#product-spec-sheet)
-  - [Deployment with gh-pages](#deployment-with-gh-pages)
-- [Git Workflow for Paired Projects](#git-workflow-for-paired-projects)
-  - [The Golden Rule](#the-golden-rule)
-  - [Branch Strategy](#branch-strategy)
-  - [The Workflow (Repeat for Every Ticket)](#the-workflow-repeat-for-every-ticket)
-  - [Dividing the Work into Tickets](#dividing-the-work-into-tickets)
-  - [Handling Merge Conflicts](#handling-merge-conflicts)
-  - [Daily Routine](#daily-routine)
-  - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
-- [Project Grading](#project-grading)
-  - [Fetching Requirements (8 points)](#fetching-requirements-8-points)
-  - [User Interface: Structure and Accessibility (12 points)](#user-interface-structure-and-accessibility-12-points)
-  - [General (9 points)](#general-9-points)
-  - [Form Requirements (9 points)](#form-requirements-9-points)
-- [Tips for Success](#tips-for-success)
-  - [Choosing an Easy API to Work With](#choosing-an-easy-api-to-work-with)
-  - [Focus on demonstrating your learning, not building something unique.](#focus-on-demonstrating-your-learning-not-building-something-unique)
-  - [Make Decisions Quickly](#make-decisions-quickly)
-  - [Plan and Delegate!!](#plan-and-delegate)
-  - [Meet on your own time](#meet-on-your-own-time)
-  - [Test your API!](#test-your-api)
+* [Overview](8-interactive-data-driven-project.md#overview)
+  * [Deliverables](8-interactive-data-driven-project.md#deliverables)
+  * [Stretch Features: localStorage + AI](8-interactive-data-driven-project.md#stretch-features-localstorage--ai)
+  * [Milestones](8-interactive-data-driven-project.md#milestones)
+* [Setup Steps](8-interactive-data-driven-project.md#setup-steps)
+  * [GitHub Organization & Scrum Board](8-interactive-data-driven-project.md#github-organization--scrum-board)
+  * [Vite Project + Project Repo](8-interactive-data-driven-project.md#vite-project--project-repo)
+  * [Product Spec Sheet](8-interactive-data-driven-project.md#product-spec-sheet)
+  * [Deployment with gh-pages](8-interactive-data-driven-project.md#deployment-with-gh-pages)
+* [Git Workflow for Paired Projects](8-interactive-data-driven-project.md#git-workflow-for-paired-projects)
+  * [The Golden Rule](8-interactive-data-driven-project.md#the-golden-rule)
+  * [Branch Strategy](8-interactive-data-driven-project.md#branch-strategy)
+  * [The Workflow (Repeat for Every Ticket)](8-interactive-data-driven-project.md#the-workflow-repeat-for-every-ticket)
+  * [Dividing the Work into Tickets](8-interactive-data-driven-project.md#dividing-the-work-into-tickets)
+  * [Handling Merge Conflicts](8-interactive-data-driven-project.md#handling-merge-conflicts)
+  * [Daily Routine](8-interactive-data-driven-project.md#daily-routine)
+  * [Common Mistakes to Avoid](8-interactive-data-driven-project.md#common-mistakes-to-avoid)
+* [Project Grading](8-interactive-data-driven-project.md#project-grading)
+  * [Fetching Requirements (8 points)](8-interactive-data-driven-project.md#fetching-requirements-8-points)
+  * [User Interface: Structure and Accessibility (12 points)](8-interactive-data-driven-project.md#user-interface-structure-and-accessibility-12-points)
+  * [General (9 points)](8-interactive-data-driven-project.md#general-9-points)
+  * [Form Requirements (9 points)](8-interactive-data-driven-project.md#form-requirements-9-points)
+* [Tips for Success](8-interactive-data-driven-project.md#tips-for-success)
+  * [Choosing an Easy API to Work With](8-interactive-data-driven-project.md#choosing-an-easy-api-to-work-with)
+  * [Focus on demonstrating your learning, not building something unique.](8-interactive-data-driven-project.md#focus-on-demonstrating-your-learning-not-building-something-unique)
+  * [Make Decisions Quickly](8-interactive-data-driven-project.md#make-decisions-quickly)
+  * [Plan and Delegate!!](8-interactive-data-driven-project.md#plan-and-delegate)
+  * [Meet on your own time](8-interactive-data-driven-project.md#meet-on-your-own-time)
+  * [Test your API!](8-interactive-data-driven-project.md#test-your-api)
 
 ## Overview
 
@@ -42,6 +42,7 @@ The main technical goal of your app is to **send two fetches** and render the fe
 2. Fetch more details about a single one of those resources (GET details about a single user, a single picture, a single author, etc…) when the user interacts with the page.
 
 By building this project, you will demonstrate the following technical skills:
+
 * Structuring HTML with semantic elements
 * CSS layout with Flexbox and Grid
 * Media Query Responsiveness
@@ -62,6 +63,7 @@ Additionally, you will:
 Unlike your solo projects where the project itself was the main deliverable, for a portfolio-level project, you will be required to do a bit more. The deliverables below will help keep you and your partner organized and will help keep your Engineering Manager (your instructor) informed on your progress. In the end, all of these deliverables will serve as valuable artifacts that document your work.
 
 **Deliverable Resources**
+
 * [Project Spec Sheet Template](https://docs.google.com/document/d/1gSM_RWRAP_EJGQ7pp58Pti6PXKQJ_YWx3uvC4iRQ1EI/edit)
 * [How to Create a Scrum Board](../projects/2-how-to-create-scrumboard.md)!
 * [Template Scrum Board](https://github.com/users/benspector-mls/projects/7/views/1)
@@ -69,40 +71,48 @@ Unlike your solo projects where the project itself was the main deliverable, for
 
 Expand each below to see details and examples.
 
-**<details><summary>A Deployed Project</summary>**
+<details>
 
-* Your project must meet all of the grading requirements listed below. 
+<summary><strong>A Deployed Project</strong></summary>
+
+* Your project must meet all of the grading requirements listed below.
 * Each project is deployed on GitHub using an Organization
 * Examples:
-  - [Art Viewer (Art Institute of Chicago API)](https://art-viewer-mike-example.github.io/art-viewer-day-4/)
-  - [Forecast It Already (Open Meteo Weather API)](https://forecast-it-already.github.io/Forecast-It-Already/)
-  - [We Cooked (TheMealDB)](https://we-cooked.github.io/cooked/)
-  - [Pokedex (PokeAPI)](https://phoenix-pokedex.github.io/Phoenix-Pokedex/)
-  - [Buldak (Jikan Anime/Manga API)](https://bul-dak.github.io/anime-web/)
+  * [Art Viewer (Art Institute of Chicago API)](https://art-viewer-mike-example.github.io/art-viewer-day-4/)
+  * [Forecast It Already (Open Meteo Weather API)](https://forecast-it-already.github.io/Forecast-It-Already/)
+  * [We Cooked (TheMealDB)](https://we-cooked.github.io/cooked/)
+  * [Pokedex (PokeAPI)](https://phoenix-pokedex.github.io/Phoenix-Pokedex/)
+  * [Buldak (Jikan Anime/Manga API)](https://bul-dak.github.io/anime-web/)
 
 </details>
 
-**<details><summary>A Project Spec Sheet</summary>**
+<details>
+
+<summary><strong>A Project Spec Sheet</strong></summary>
 
 * A project spec sheet is a document that provides key details about the project including the API being used, the intended features/user stories, and wireframes.
 * Examples:
- * [Art Viewer Product Spec Sheet](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/edit)
+* [Art Viewer Product Spec Sheet](https://docs.google.com/document/d/1ekNpWx_LKCFGPQ74qijXTMRJJoq4sHJIB1mv9Mg8HHk/edit)
 
 </details>
 
-**<details><summary>A GitHub Organization and Scrum Board</summary>**
+<details>
+
+<summary><strong>A GitHub Organization and Scrum Board</strong></summary>
 
 * A GitHub Organization is a shared account on GitHub where you and your teammates can collaborate on repositories. Having a GitHub organization will make deployment straight forward.
   * [We Cooked Organization](https://github.com/we-cooked)
 * A scrum board is a tool for creating and assigning tasks ("tickets") within a project. Typically, a scrum board will organize tasks into these columns: _Backlog_ (tasks waiting to be assigned), _In Progress_ (assigned tasks that are being worked on), _In Review_ (tasks to be reviewed), and _Done_ (completed tasks).
 * Examples:
-  * [We Cooked Completed Scrum Board](https://github.com/orgs/we-cooked/projects/1/views/1)*
+  * [We Cooked Completed Scrum Board](https://github.com/orgs/we-cooked/projects/1/views/1)\*
   * [Sample "In Progress" Example](https://github.com/users/benspector-mls/projects/3/views/1?layout=board)
   * [Starting Template To Copy](https://github.com/users/benspector-mls/projects/7/views/1)
 
 </details>
 
-**<details><summary>A Professional README</summary>**
+<details>
+
+<summary><strong>A Professional README</strong></summary>
 
 Your `README.md` should be polished enough that a new engineer can understand and run your project without asking questions.
 
@@ -133,7 +143,9 @@ Use the same professional writing standards we expect in all artifacts:
 
 </details>
 
-**<details><summary>AI Usage Document (Required)</summary>**
+<details>
+
+<summary><strong>AI Usage Document (Required)</strong></summary>
 
 Generative AI tools are a required part of this project workflow, but you must be able to explain every line of code you submit.
 
@@ -154,7 +166,9 @@ This project provided us an opportunity to build with AI assistance. Check out o
 
 </details>
 
-**<details><summary>A Presentation + Walkthrough Demo Video</summary>**
+<details>
+
+<summary><strong>A Presentation + Walkthrough Demo Video</strong></summary>
 
 * The presentation is your "elevator pitch" to tell your audience about the project, how you built it, and what you learned through the process.
 * Examples:
@@ -279,17 +293,16 @@ Eventually, you will need to develop the skill of planning out your objectives. 
 First, we will create the GitHub organization and Scrum Board that will enable you and your partner to collaborate on the project.
 
 1. Create a new GitHub organization for your team. Only one person needs to do this. They will provide their email for verification and then invite their partner as a collaborator.
+2.  Copy the [Scrum Board template](https://github.com/users/benspector-mls/projects/7/views/1).
 
-2. Copy the [Scrum Board template](https://github.com/users/benspector-mls/projects/7/views/1). 
-   1. Make your organization the Owner
-   2. Make sure to check the box that says "Draft issues will be copied if selected". 
-   3. Remove "[COPY]" from the project name.
+    1. Make your organization the Owner
+    2. Make sure to check the box that says "Draft issues will be copied if selected".
+    3. Remove "\[COPY]" from the project name.
 
-    ![Make a copy of the scrum board](./img/project/scrum-board-copy.gif)
+    ![Make a copy of the scrum board](../.gitbook/assets/scrum-board-copy.gif)
+3.  Then, you can get started assigning tickets! We recommend completing the **Project Setup** and **Assign Tasks** tickets as a team before assigning individual tickets. When a ticket is assigned, move it to the "In progress" column.
 
-3. Then, you can get started assigning tickets! We recommend completing the **Project Setup** and **Assign Tasks** tickets as a team before assigning individual tickets.  When a ticket is assigned, move it to the "In progress" column.
-
-    ![Assigning tickets](./img/project/scrum-board-assign.gif)
+    ![Assigning tickets](../.gitbook/assets/scrum-board-assign.gif)
 
 ### Vite Project + Project Repo
 
@@ -297,14 +310,13 @@ Next, we will create the Vite Project that will serve as the starting point for 
 
 1. Both partners should open VS Code and `cd` into the directory where they plan on working.
 2. One person in your group should run `npm create vite@latest` to create the project starter code
-   - Remove any unnecessary code provided by Vite, but keep the `index.html`, `styles.css`, and `main.js` files.
-   - Create additional module files such as `src/dom-helpers.js` and `src/fetch-helpers.js`.
-3. Make a new repository owned by your GitHub organization. 
-   - It should have NOTHING in it. 
-   - The name should be `mod-4-project` (you can change it later).
-   - Make sure it is **public**.
-
-4. It will then provide instructions to turn your existing Vite project into a repo and push to your newly created repo. It will tell you to run these commands:
+   * Remove any unnecessary code provided by Vite, but keep the `index.html`, `styles.css`, and `main.js` files.
+   * Create additional module files such as `src/dom-helpers.js` and `src/fetch-helpers.js`.
+3. Make a new repository owned by your GitHub organization.
+   * It should have NOTHING in it.
+   * The name should be `mod-4-project` (you can change it later).
+   * Make sure it is **public**.
+4.  It will then provide instructions to turn your existing Vite project into a repo and push to your newly created repo. It will tell you to run these commands:
 
     ```bash
     git init
@@ -332,20 +344,22 @@ Completing this is your first deliverable!
 
 ### Deployment with gh-pages
 
-As you write your code, your project is considered "in development". When we are ready to share the project with the world, we will **deploy** it. The main differences between a project in development and a deployed project are **file storage**, **access**, and **uptime**. 
+As you write your code, your project is considered "in development". When we are ready to share the project with the world, we will **deploy** it. The main differences between a project in development and a deployed project are **file storage**, **access**, and **uptime**.
 
-In development you use a development server (like Vite) that runs on `localhost`: 
-- *File Storage*: The files are stored on your computer.
-- *Access*: Only you can see it. If you send the link `http://localhost:5173` to a friend, it won't work for them.
-- *Uptime*: When your computer turns off, the server stops running as well.
+In development you use a development server (like Vite) that runs on `localhost`:
+
+* _File Storage_: The files are stored on your computer.
+* _Access_: Only you can see it. If you send the link `http://localhost:5173` to a friend, it won't work for them.
+* _Uptime_: When your computer turns off, the server stops running as well.
 
 **Deployment** is the act of moving your finished work to a publicly accessible server which is just a computer whose resources you can access over a network. We'll be deploying our code onto GitHub's servers:
-- *File Storage*: The files are stored on one of GitHub's servers.
-- *Access*: Anyone with the URL can see the project and access the files.
-- *Uptime*: GitHub keeps the servers running. Even if you turn your computer off, your website stays online because its living on their hardware, not yours.
+
+* _File Storage_: The files are stored on one of GitHub's servers.
+* _Access_: Anyone with the URL can see the project and access the files.
+* _Uptime_: GitHub keeps the servers running. Even if you turn your computer off, your website stays online because its living on their hardware, not yours.
 
 {% hint style="info" %}
-A deployment server often refers to both the *computer hardware* that is "hosting" our files and the *server-side application* running on it is programmed to wait for incoming requests and sends those files to the user requesting them ("the client").
+A deployment server often refers to both the _computer hardware_ that is "hosting" our files and the _server-side application_ running on it is programmed to wait for incoming requests and sends those files to the user requesting them ("the client").
 
 GitHub Pages is known as a **static web server** which means that it just stores our HTML, CSS, and JS files and serves them directly to the user. Every user will get the exact same website and user experience.
 
@@ -374,7 +388,6 @@ Install the `gh-pages` package as a dev dependency. It makes it incredibly easy 
 ```sh
 npm install gh-pages --save-dev
 ```
-
 
 **Step 3: Add predeploy and deploy scripts to package.json**
 
@@ -429,7 +442,7 @@ And you’re done!
 
 Lastly, Go to your GitHub repository and navigate to Settings -> Pages (left sidebar). Select source as “Deploy from branch” and branch as “gh-pages”.
 
-![GitHub Pages Settings](./img/project/gh-pages-settings.png)
+![GitHub Pages Settings](../.gitbook/assets/gh-pages-settings.png)
 
 Wait for a few minutes and soon, your site will be live!
 
@@ -448,11 +461,12 @@ Use **feature branches** — short-lived branches where each branch corresponds 
 Branch naming convention: `feature/short-description`
 
 Examples:
-- `feature/fetch-all-items`
-- `feature/render-item-list`
-- `feature/single-item-section`
-- `feature/form-html`
-- `feature/responsive-layout`
+
+* `feature/fetch-all-items`
+* `feature/render-item-list`
+* `feature/single-item-section`
+* `feature/form-html`
+* `feature/responsive-layout`
 
 ### The Workflow (Repeat for Every Ticket)
 
@@ -493,6 +507,7 @@ The key to working in parallel is to **split work by feature, not by file**. Eac
 Here is a suggested way to break the project into tickets. The ticket numbers suggest a rough order, but tickets at the same level can be worked on in parallel by different partners.
 
 **Setup (do together, Day 1) — this is the one time you push directly to `main`**
+
 1. **Project Setup** — Create GitHub Organization, repo, and clone locally. Set up Vite project with initial file structure (`index.html`, `styles.css`, `app.js`)
 2. **Assign Tickets** — Assign tickets in the backlog to each team member.
 
@@ -513,19 +528,20 @@ Here is a suggested way to break the project into tickets. The ticket numbers su
 
 10. **Build the form HTML** — Create the `<form>` with labels, inputs, and `name` attributes for each input.
 11. **Form event handling** — Add a submit event listener that prevents default, reads input values, clears the form, and triggers a fetch (or filters results).
-12.  **Connect form to fetch** — Wire up the form so submitting it triggers the collection fetch with the form's input value (e.g. a search query or filter).
-13.  **Polish and accessibility pass** — Confirm semantic HTML, single `<h1>`, single `<main>`, `<title>` in head, no divs replacing semantic elements.
-14.  **README and deployment** — Write the professional README, link AI Usage Doc, final deploy.
+12. **Connect form to fetch** — Wire up the form so submitting it triggers the collection fetch with the form's input value (e.g. a search query or filter).
+13. **Polish and accessibility pass** — Confirm semantic HTML, single `<h1>`, single `<main>`, `<title>` in head, no divs replacing semantic elements.
+14. **README and deployment** — Write the professional README, link AI Usage Doc, final deploy.
 
 ### Handling Merge Conflicts
 
 Merge conflicts happen when both partners edit the same lines in the same file. To minimize them:
 
-- **Communicate constantly.** Tell your partner what file you're working in.
-- **Keep branches short-lived.** Merge PRs quickly (within hours, not days). The longer a branch lives, the more likely it conflicts with `main`.
-- **Pull `main` before starting a new branch.** This ensures you're always building on the latest code.
+* **Communicate constantly.** Tell your partner what file you're working in.
+* **Keep branches short-lived.** Merge PRs quickly (within hours, not days). The longer a branch lives, the more likely it conflicts with `main`.
+* **Pull `main` before starting a new branch.** This ensures you're always building on the latest code.
 
 When a conflict does happen:
+
 1. Pull `main` into your feature branch: `git merge main`
 2. Git will mark the conflicting lines in the file. Open the file and look for the `<<<<<<<`, `=======`, `>>>>>>>` markers.
 3. **Talk to your partner** about which version to keep (or how to combine them).
@@ -543,11 +559,11 @@ When a conflict does happen:
 
 ### Common Mistakes to Avoid
 
-- **Working on `main` directly.** You'll overwrite each other's work.
-- **Giant branches that touch every file.** Keep tickets small and focused.
-- **Not pulling before branching.** You'll end up working on stale code.
-- **Ignoring your partner's PR.** Review quickly — your partner is blocked until you do.
-- **Both editing `index.html` at the same time.** Coordinate who's touching shared files, or accept that you'll need to resolve a merge conflict.
+* **Working on `main` directly.** You'll overwrite each other's work.
+* **Giant branches that touch every file.** Keep tickets small and focused.
+* **Not pulling before branching.** You'll end up working on stale code.
+* **Ignoring your partner's PR.** Review quickly — your partner is blocked until you do.
+* **Both editing `index.html` at the same time.** Coordinate who's touching shared files, or accept that you'll need to resolve a merge conflict.
 
 ## Project Grading
 
@@ -618,6 +634,7 @@ If you are able to find another API that is free and does not require an API key
 One of the easiest ways to get off track is by worrying about creating a unique project
 
 Remember:
+
 * **Student projects are meant for learning, demonstrating your learning, and practicing talking about your technical work**
 * Student projects are not meant to be unique.
 * You're not creating a new app that addresses a gap in the market.

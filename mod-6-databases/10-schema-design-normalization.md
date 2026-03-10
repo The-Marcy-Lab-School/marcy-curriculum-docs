@@ -1,4 +1,4 @@
-# 11. Schema Design & Normalization
+# 2. Schema Design & Normalization
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-3-3-schema-design)!
@@ -12,20 +12,19 @@ In this lesson, we'll practice designing a database and use dbdiagram.io to crea
 
 **Table of Contents**:
 
-- [Essential Questions](#essential-questions)
-- [Terms](#terms)
-- [What is a "Schema"?](#what-is-a-schema)
-  - [Why is schema design important?](#why-is-schema-design-important)
-  - [Steps For Designing A Database](#steps-for-designing-a-database)
-- [Database Markup Language](#database-markup-language)
-  - [Step 1 - Identify Tables](#step-1---identify-tables)
-  - [Step 2 - Define Columns](#step-2---define-columns)
-  - [Step 3 - Determine Relationships](#step-3---determine-relationships)
-- [Practice](#practice)
-- [Step 4 - Normalizing Tables](#step-4---normalizing-tables)
-  - [First Normal Form (1NF)](#first-normal-form-1nf)
-  - [Second Normal Form (2NF)](#second-normal-form-2nf)
-
+* [Essential Questions](10-schema-design-normalization.md#essential-questions)
+* [Terms](10-schema-design-normalization.md#terms)
+* [What is a "Schema"?](10-schema-design-normalization.md#what-is-a-schema)
+  * [Why is schema design important?](10-schema-design-normalization.md#why-is-schema-design-important)
+  * [Steps For Designing A Database](10-schema-design-normalization.md#steps-for-designing-a-database)
+* [Database Markup Language](10-schema-design-normalization.md#database-markup-language)
+  * [Step 1 - Identify Tables](10-schema-design-normalization.md#step-1---identify-tables)
+  * [Step 2 - Define Columns](10-schema-design-normalization.md#step-2---define-columns)
+  * [Step 3 - Determine Relationships](10-schema-design-normalization.md#step-3---determine-relationships)
+* [Practice](10-schema-design-normalization.md#practice)
+* [Step 4 - Normalizing Tables](10-schema-design-normalization.md#step-4---normalizing-tables)
+  * [First Normal Form (1NF)](10-schema-design-normalization.md#first-normal-form-1nf)
+  * [Second Normal Form (2NF)](10-schema-design-normalization.md#second-normal-form-2nf)
 
 ## Essential Questions
 
@@ -80,7 +79,7 @@ Before jumping into building out your database schema, it is essential to take t
 
 Database schema designs are most often communicated through an **Entity Relationship Diagram**
 
-![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](./img/10-schema-design-normalization/labeled-erd.png)
+![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](<../.gitbook/assets/labeled-erd (4).png>)
 
 <details>
 
@@ -147,7 +146,7 @@ This creates a table called `students` with a single `id` column.
 
 Below, you can see that I've also created tables for `teachers`, `classes` and `enrollments`
 
-![Using dbdiagram, we can create tables.](./img/10-schema-design-normalization/dbdiagram-step-1.png)
+![Using dbdiagram, we can create tables.](<../.gitbook/assets/dbdiagram-step-1 (2).png>)
 
 ### Step 2 - Define Columns
 
@@ -167,7 +166,7 @@ Table students {
 }
 ```
 
-![Every property of a table should include a name and type.](./img/10-schema-design-normalization/dbdiagram-step-2.png)
+![Every property of a table should include a name and type.](<../.gitbook/assets/dbdiagram-step-2 (2).png>)
 
 ### Step 3 - Determine Relationships
 
@@ -198,7 +197,7 @@ Ref: "classes"."id" < "enrollments"."class_id"
 
 Or, using the dbdiagram.io tool, we can click and drag to draw connections between the tables:
 
-![Tables can reference other tables to create one-to-many relationships.](./img/10-schema-design-normalization/dbdiagram-step-3.gif)
+![Tables can reference other tables to create one-to-many relationships.](<../.gitbook/assets/dbdiagram-step-3 (2).gif>)
 
 Notice the lines drawn between tables are also labeled:
 
@@ -327,12 +326,12 @@ Take a look at this table `order_details` which shows the relationships between 
 
 This is NOT compliant with the second normal form:
 
-| id  | order\_id | product\_id | product\_name | customer\_id | customer\_name |
-| --- | --------- | ----------- | ------------- | ------------ | -------------- |
-| 1   | 1         | 1           | Laptop        | 1            | Avery          |
-| 2   | 1         | 2           | Monitor       | 1            | Avery          |
-| 3   | 2         | 1           | Laptop        | 2            | Blake          |
-| 4   | 3         | 3           | Trackpad      | 3            | Charles        |
+| id | order\_id | product\_id | product\_name | customer\_id | customer\_name |
+| -- | --------- | ----------- | ------------- | ------------ | -------------- |
+| 1  | 1         | 1           | Laptop        | 1            | Avery          |
+| 2  | 1         | 2           | Monitor       | 1            | Avery          |
+| 3  | 2         | 1           | Laptop        | 2            | Blake          |
+| 4  | 3         | 3           | Trackpad      | 3            | Charles        |
 
 In this table, the following partial dependencies exist:
 
@@ -345,33 +344,33 @@ To reach 2NF, we must eliminate partial dependencies by removing these partial d
 
 1.  The `products` table ties each `product.id` to unique `product.name`
 
-    | id  | name     |
-    | --- | -------- |
-    | 1   | Laptop   |
-    | 2   | Monitor  |
-    | 3   | Trackpad |
+    | id | name     |
+    | -- | -------- |
+    | 1  | Laptop   |
+    | 2  | Monitor  |
+    | 3  | Trackpad |
 2.  The `customers` table ties each `customer.id` to a unique `customer.name`
 
-    | id  | name    |
-    | --- | ------- |
-    | 1   | Avery   |
-    | 2   | Blake   |
-    | 3   | Charles |
+    | id | name    |
+    | -- | ------- |
+    | 1  | Avery   |
+    | 2  | Blake   |
+    | 3  | Charles |
 3.  The `orders` table ties which `customer.id` placed which `order.id`
 
-    | id  | customer\_id |
-    | --- | ------------ |
-    | 1   | 1            |
-    | 2   | 2            |
-    | 3   | 3            |
+    | id | customer\_id |
+    | -- | ------------ |
+    | 1  | 1            |
+    | 2  | 2            |
+    | 3  | 3            |
 4.  The `order_items` "junction/association" table tracks which products are associated with each order:
 
-    | id  | order\_id | product\_id |
-    | --- | --------- | ----------- |
-    | 1   | 1         | 1           |
-    | 2   | 1         | 2           |
-    | 3   | 2         | 1           |
-    | 4   | 3         | 3           |
+    | id | order\_id | product\_id |
+    | -- | --------- | ----------- |
+    | 1  | 1         | 1           |
+    | 2  | 1         | 2           |
+    | 3  | 2         | 1           |
+    | 4  | 3         | 3           |
 
 **Q: How do you know that the table below is NOT in 2NF? How would you fix it?**
 
@@ -404,16 +403,16 @@ To remove this partial dependency, we can make separate tables:
     | 3           | Carol         |
 2.  The `enrollments` table:
 
-    | id  | student\_id | course      |
-    | --- | ----------- | ----------- |
-    | 1   | 1           | Math        |
-    | 2   | 1           | Science     |
-    | 3   | 1           | History     |
-    | 4   | 2           | Science     |
-    | 5   | 2           | English     |
-    | 6   | 2           | Mathematics |
-    | 7   | 3           | History     |
-    | 8   | 3           | Math        |
-    | 9   | 3           | English     |
+    | id | student\_id | course      |
+    | -- | ----------- | ----------- |
+    | 1  | 1           | Math        |
+    | 2  | 1           | Science     |
+    | 3  | 1           | History     |
+    | 4  | 2           | Science     |
+    | 5  | 2           | English     |
+    | 6  | 2           | Mathematics |
+    | 7  | 3           | History     |
+    | 8  | 3           | Math        |
+    | 9  | 3           | English     |
 
 </details>

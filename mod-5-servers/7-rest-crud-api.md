@@ -10,22 +10,21 @@ In this lesson, you will learn how to add create, update, and delete endpoints a
 
 **Table of Contents:**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Introduction: Client → Server → Client → Server](#introduction-client--server--client--server)
-- [What Makes an API RESTful?](#what-makes-an-api-restful)
-  - [Core Principles of REST](#core-principles-of-rest)
-  - [RESTful Principles Quiz](#restful-principles-quiz)
-- [API Contract](#api-contract)
-  - [Why Status Codes Matter](#why-status-codes-matter)
-  - [API Contract Challenge: Design Instagram](#api-contract-challenge-design-instagram)
-- [Implementing the Endpoints](#implementing-the-endpoints)
-  - [GET /api/fellows — Already Working](#get-apifellows--already-working)
-  - [POST /api/fellows — Creating a New Fellow](#post-apifellows--creating-a-new-fellow)
-  - [PATCH /api/fellows/:id — Updating a Fellow](#patch-apifellowsid--updating-a-fellow)
-  - [DELETE /api/fellows/:id — Removing a Fellow](#delete-apifellowsid--removing-a-fellow)
-  - [GET /api/fellows/:id — Completing the Contract](#get-apifellowsid--completing-the-contract)
-
+* [Essential Questions](7-rest-crud-api.md#essential-questions)
+* [Key Concepts](7-rest-crud-api.md#key-concepts)
+* [Introduction: Client → Server → Client → Server](7-rest-crud-api.md#introduction-client--server--client--server)
+* [What Makes an API RESTful?](7-rest-crud-api.md#what-makes-an-api-restful)
+  * [Core Principles of REST](7-rest-crud-api.md#core-principles-of-rest)
+  * [RESTful Principles Quiz](7-rest-crud-api.md#restful-principles-quiz)
+* [API Contract](7-rest-crud-api.md#api-contract)
+  * [Why Status Codes Matter](7-rest-crud-api.md#why-status-codes-matter)
+  * [API Contract Challenge: Design Instagram](7-rest-crud-api.md#api-contract-challenge-design-instagram)
+* [Implementing the Endpoints](7-rest-crud-api.md#implementing-the-endpoints)
+  * [GET /api/fellows — Already Working](7-rest-crud-api.md#get-apifellows--already-working)
+  * [POST /api/fellows — Creating a New Fellow](7-rest-crud-api.md#post-apifellows--creating-a-new-fellow)
+  * [PATCH /api/fellows/:id — Updating a Fellow](7-rest-crud-api.md#patch-apifellowsid--updating-a-fellow)
+  * [DELETE /api/fellows/:id — Removing a Fellow](7-rest-crud-api.md#delete-apifellowsid--removing-a-fellow)
+  * [GET /api/fellows/:id — Completing the Contract](7-rest-crud-api.md#get-apifellowsid--completing-the-contract)
 
 ## Essential Questions
 
@@ -54,11 +53,11 @@ By the end of this lesson, you should be able to answer these questions:
 
 Clone down the provided repository and `cd` into the starter folder. There, you will see a `frontend` and `server` provided for you. Run the server and you'll see it serves a simple application that shows a list of fellows and their unique IDs.
 
-![An application that renders a list of fellows fetched from the server](./img/7-rest-crud-api/fellow-app.png)
+![An application that renders a list of fellows fetched from the server](../.gitbook/assets/fellow-app.png)
 
 This application represents an essential pattern that we've seen a few times now:
 
-![A sequence diagram showing the back and forth between a client and a server](./img/7-rest-crud-api/client-server-back-and-forth.png)
+![A sequence diagram showing the back and forth between a client and a server](../.gitbook/assets/client-server-back-and-forth.png)
 
 This back and forth pattern between a server application and the frontend application (both from the same origin) underlies virtually every web application that you've ever used!
 
@@ -66,7 +65,7 @@ The starter code already has `listFellows` working on the server and `getFellows
 
 ## What Makes an API RESTful?
 
-Before writing any new endpoints, let's talk about how to *design* them well.
+Before writing any new endpoints, let's talk about how to _design_ them well.
 
 **Pop Quiz: Guess the action that each of these requests will perform!**
 
@@ -202,18 +201,13 @@ Before writing a single line of implementation code, it helps to define the full
 
 Here is the contract for our fellows tracker:
 
-| Method   | URL                | Request Body     | Success                   | Error               |
-| -------- | ------------------ | ---------------- | ------------------------- | ------------------- |
-| `GET`    | `/api/fellows`     | —                | 200, array of all fellows | —                   |
-| `GET`    | `/api/fellows/:id` | —                | 200, single fellow object | 404 if not found    |
-| `POST`   | `/api/fellows`     | `{ fellowName }` | 201, newly created fellow | 400 if name missing |
-| `PATCH`  | `/api/fellows/:id` | `{ fellowName }` | 200, updated fellow       | 404 if not found    |
-| `DELETE` | `/api/fellows/:id` | —                | 204, no content           | 404 if not found    |
+<table data-full-width="true"><thead><tr><th>Method</th><th>URL</th><th>Request Body</th><th>Success</th><th>Error</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/api/fellows</code></td><td>—</td><td>200, array of all fellows</td><td>—</td></tr><tr><td><code>GET</code></td><td><code>/api/fellows/:id</code></td><td>—</td><td>200, single fellow object</td><td>404 if not found</td></tr><tr><td><code>POST</code></td><td><code>/api/fellows</code></td><td><code>{ fellowName }</code></td><td>201, newly created fellow</td><td>400 if name missing</td></tr><tr><td><code>PATCH</code></td><td><code>/api/fellows/:id</code></td><td><code>{ fellowName }</code></td><td>200, updated fellow</td><td>404 if not found</td></tr><tr><td><code>DELETE</code></td><td><code>/api/fellows/:id</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr></tbody></table>
 
 {% hint style="info" %}
 Notice three REST conventions this table demonstrates:
-1. **Resource-based URLs** — every path describes a *thing* (`/api/fellows`), not an action (`/api/getFellows`).
-2. **HTTP methods as verbs** — `GET`, `POST`, `PATCH`, and `DELETE` express the *action* on that resource.
+
+1. **Resource-based URLs** — every path describes a _thing_ (`/api/fellows`), not an action (`/api/getFellows`).
+2. **HTTP methods as verbs** — `GET`, `POST`, `PATCH`, and `DELETE` express the _action_ on that resource.
 3. **Status codes as communication** — the response code tells the client exactly what happened, before they even parse the body.
 {% endhint %}
 
@@ -223,9 +217,9 @@ A status code is not just a number — it is a contract between your server and 
 
 * **`200 OK`** — The default success. Use it for `GET` and `PATCH` responses when there is a body to return.
 * **`201 Created`** — Use this instead of `200` for `POST` responses. It signals "a new resource was created." Some clients and tools (like automated tests) specifically check for `201` after a create operation.
-* **`204 No Content`** — Use this for `DELETE`. The operation succeeded but there is no body to send back. The `204` code signals to the client: *don't try to parse a body*.
+* **`204 No Content`** — Use this for `DELETE`. The operation succeeded but there is no body to send back. The `204` code signals to the client: _don't try to parse a body_.
 * **`400 Bad Request`** — The client sent something invalid (e.g., a missing required field). This is the client's fault.
-* **`404 Not Found`** — The requested resource doesn't exist. `400` and `404` communicate *different* problems: `400` means "your request was malformed," while `404` means "we understood the request but couldn't find what you asked for."
+* **`404 Not Found`** — The requested resource doesn't exist. `400` and `404` communicate _different_ problems: `400` means "your request was malformed," while `404` means "we understood the request but couldn't find what you asked for."
 
 ### API Contract Challenge: Design Instagram
 
@@ -233,19 +227,11 @@ Before implementing the API contract above, try designing an API contract for In
 
 Your API should have CRUD endpoints for posts and comments and it should follow the rules for making a RESTful API above.
 
-**<details><summary>Solution</summary>**
+<details>
 
-| Method   | URL                                      | Request Body       | Success & Response                    | Error & Response              |
-| -------- | ---------------------------------------- | ------------------ | ------------------------------------- | ----------------------------- |
-| `GET`    | `/api/posts`                             | —                  | 200, array of all posts               | —                             |
-| `GET`    | `/api/posts/:postId`                     | —                  | 200, single post object               | 404 if not found              |
-| `POST`   | `/api/posts`                             | `{ img, content }` | 201, newly created post               | 400 if img or content missing |
-| `PATCH`  | `/api/posts/:postId`                     | `{ img, content }` | 200, updated post                     | 404 if not found              |
-| `DELETE` | `/api/posts/:postId`                     | —                  | 204, no content                       | 404 if not found              |
-| `GET`    | `/api/posts/:postId/comments`            | —                  | 200, array of all comments for a post | —                             |
-| `POST`   | `/api/posts/:postId/comments`            | `{ content }`      | 201, newly created comment            | 400 if content missing        |
-| `PATCH`  | `/api/posts/:postId/comments/:commentId` | `{ content }`      | 200, updated comment                  | 404 if not found              |
-| `DELETE` | `/api/posts/:postId/comments/:commentId` | —                  | 204, no content                       | 404 if not found              |
+<summary><strong>Solution</strong></summary>
+
+<table data-full-width="true"><thead><tr><th>Method</th><th>URL</th><th>Request Body</th><th>Success &#x26; Response</th><th>Error &#x26; Response</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/api/posts</code></td><td>—</td><td>200, array of all posts</td><td>—</td></tr><tr><td><code>GET</code></td><td><code>/api/posts/:postId</code></td><td>—</td><td>200, single post object</td><td>404 if not found</td></tr><tr><td><code>POST</code></td><td><code>/api/posts</code></td><td><code>{ img, content }</code></td><td>201, newly created post</td><td>400 if img or content missing</td></tr><tr><td><code>PATCH</code></td><td><code>/api/posts/:postId</code></td><td><code>{ img, content }</code></td><td>200, updated post</td><td>404 if not found</td></tr><tr><td><code>DELETE</code></td><td><code>/api/posts/:postId</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr><tr><td><code>GET</code></td><td><code>/api/posts/:postId/comments</code></td><td>—</td><td>200, array of all comments for a post</td><td>—</td></tr><tr><td><code>POST</code></td><td><code>/api/posts/:postId/comments</code></td><td><code>{ content }</code></td><td>201, newly created comment</td><td>400 if content missing</td></tr><tr><td><code>PATCH</code></td><td><code>/api/posts/:postId/comments/:commentId</code></td><td><code>{ content }</code></td><td>200, updated comment</td><td>404 if not found</td></tr><tr><td><code>DELETE</code></td><td><code>/api/posts/:postId/comments/:commentId</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr></tbody></table>
 
 </details>
 
@@ -302,10 +288,11 @@ This pattern — a fetch helper on the frontend that mirrors a controller on the
 
 ### POST /api/fellows — Creating a New Fellow
 
-To enable our frontend application to *create* data, we will add a `POST` endpoint on our server and send a `POST` request from the frontend, triggered by a form.
+To enable our frontend application to _create_ data, we will add a `POST` endpoint on our server and send a `POST` request from the frontend, triggered by a form.
 
-**Server considerations:** 
-* On the server, we need to decide how we expect request bodies to be structured. Let's say we expect an object with the structure `{ fellowName: String }`. 
+**Server considerations:**
+
+* On the server, we need to decide how we expect request bodies to be structured. Let's say we expect an object with the structure `{ fellowName: String }`.
 * We will also need to parse this JSON data from incoming requests. With `node:http` we had to write the code to parse JSON manually but with the `express.json()` middleware, it only takes one line and the data is accessibly in `req.body` in the controller:
 
 {% tabs %}
@@ -335,8 +322,10 @@ const createFellow = (req, res) => {
 app.post('/api/fellows', createFellow);
 ```
 {% endtab %}
+
 {% tab title="node:http" %}
 With the built-in `node:http` package, we have to manually parse the incoming stream of data as chunks of strings and construct the `body` before parsing it as JSON:
+
 ```javascript
 if (method === 'POST' && url === '/api/fellows') {
   // Read the request body (it comes in as a stream)
@@ -368,8 +357,9 @@ if (method === 'POST' && url === '/api/fellows') {
 {% endtab %}
 {% endtabs %}
 
-**Frontend considerations:** 
-* Since `POST` requests are requests to create data, we need to send data in the `body` of the request. On the frontend, this means including a `config` object with our `fetch` call. 
+**Frontend considerations:**
+
+* Since `POST` requests are requests to create data, we need to send data in the `body` of the request. On the frontend, this means including a `config` object with our `fetch` call.
 * We must also ensure that the structure of our request body matches the structure expected by our server:
 
 ```javascript
@@ -432,68 +422,21 @@ Our frontend application shows an **Edit** button next to each fellow. The `upda
 **Your challenge:** implement PATCH on both sides.
 
 **Server task:** Add an `updateFellow` controller and register it with `app.patch('/api/fellows/:id', updateFellow)`.
-- Read `fellowName` from `req.body` — send `400` if it is missing.
-- Find the fellow by `req.params.id` — send `404` if not found.
-- Update `fellow.name` and send the updated fellow back with `200`.
+
+* Read `fellowName` from `req.body` — send `400` if it is missing.
+* Find the fellow by `req.params.id` — send `404` if not found.
+* Update `fellow.name` and send the updated fellow back with `200`.
 
 **Client task:** Fix the `updateFellow` stub in `fetch-helpers.js`.
-- Use method `'PATCH'`, set `Content-Type: application/json`, and put `{ fellowName }` in the body.
-- The URL should be `/api/fellows/${id}`.
+
+* Use method `'PATCH'`, set `Content-Type: application/json`, and put `{ fellowName }` in the body.
+* The URL should be `/api/fellows/${id}`.
 
 <details>
 
 <summary><strong>Solution</strong></summary>
 
-{% tabs %}
-{% tab title="Server" %}
-{% code title="server/index.js" %}
-```javascript
-// PATCH /api/fellows/:id
-const updateFellow = (req, res) => {
-  const { fellowName } = req.body;
-
-  if (!fellowName) {
-    return res.status(400).send({ message: 'Invalid Name' });
-  }
-
-  const { id } = req.params;
-  const fellow = fellows.find((fellow) => fellow.id === Number(id));
-
-  if (!fellow) {
-    return res.status(404).send({ message: `No fellow with the id ${id}` });
-  }
-
-  fellow.name = fellowName;
-  res.send(fellow);
-};
-
-app.patch('/api/fellows/:id', updateFellow);
-```
-{% endcode %}
-{% endtab %}
-
-{% tab title="Client" %}
-{% code title="frontend/src/fetch-helpers.js" %}
-```javascript
-export const updateFellow = async (id, fellowName) => {
-  try {
-    const config = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fellowName }),
-    };
-    const response = await fetch(`/api/fellows/${id}`, config);
-    if (!response.ok) throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
-    const data = await response.json();
-    return { data, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
-};
-```
-{% endcode %}
-{% endtab %}
-{% endtabs %}
+// PATCH /api/fellows/:idconst updateFellow = (req, res) => {  const { fellowName } = req.body;  if (!fellowName) {    return res.status(400).send({ message: 'Invalid Name' });  }  const { id } = req.params;  const fellow = fellows.find((fellow) => fellow.id === Number(id));  if (!fellow) {    return res.status(404).send({ message: \`No fellow with the id ${id}\` });  }  fellow.name = fellowName;  res.send(fellow);};app.patch('/api/fellows/:id', updateFellow);export const updateFellow = async (id, fellowName) => {  try {    const config = {      method: 'PATCH',      headers: { 'Content-Type': 'application/json' },      body: JSON.stringify({ fellowName }),    };    const response = await fetch(\`/api/fellows/${id}\`, config);    if (!response.ok) throw Error(\`Fetch failed. ${response.status} ${response.statusText}\`);    const data = await response.json();    return { data, error: null };  } catch (error) {    return { data: null, error };  \}};
 
 To wire `updateFellow` into the UI, we use **event delegation** — a single click listener on the `<ul>` that handles all button clicks. When the user clicks "Edit" the row switches to edit mode; when they click "Save" it calls `updateFellow`:
 
@@ -537,58 +480,21 @@ The frontend also shows a **Delete** button next to each fellow. The `deleteFell
 **Your challenge:** implement DELETE on both sides.
 
 **Server task:** Add a `deleteFellow` controller and register it with `app.delete('/api/fellows/:id', deleteFellow)`.
-- Find the fellow's index using `findIndex` — send `404` if the index is `-1`.
-- Remove the fellow with `splice` and respond with `res.sendStatus(204)` — no body.
+
+* Find the fellow's index using `findIndex` — send `404` if the index is `-1`.
+* Remove the fellow with `splice` and respond with `res.sendStatus(204)` — no body.
 
 **Client task:** Fix the `deleteFellow` stub in `fetch-helpers.js`.
-- Use method `'DELETE'`.
-- The URL should be `/api/fellows/${id}`.
-- There is no response body for a `204` — return `{ data: true, error: null }` on success.
+
+* Use method `'DELETE'`.
+* The URL should be `/api/fellows/${id}`.
+* There is no response body for a `204` — return `{ data: true, error: null }` on success.
 
 <details>
 
 <summary><strong>Solution</strong></summary>
 
-{% tabs %}
-{% tab title="Server" %}
-{% code title="server/index.js" %}
-```javascript
-// DELETE /api/fellows/:id
-const deleteFellow = (req, res) => {
-  const { id } = req.params;
-
-  const fellowIndex = fellows.findIndex((fellow) => fellow.id === Number(id));
-  if (fellowIndex < 0) {
-    return res.status(404).send({ message: `No fellow with the id ${id}` });
-  }
-
-  fellows.splice(fellowIndex, 1);
-  // 204 means "No Content" — success, but nothing to send back
-  res.sendStatus(204);
-};
-
-app.delete('/api/fellows/:id', deleteFellow);
-```
-{% endcode %}
-{% endtab %}
-
-{% tab title="Client" %}
-{% code title="frontend/src/fetch-helpers.js" %}
-```javascript
-export const deleteFellow = async (id) => {
-  try {
-    const config = { method: 'DELETE' };
-    const response = await fetch(`/api/fellows/${id}`, config);
-    if (!response.ok) throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
-    return { data: true, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
-};
-```
-{% endcode %}
-{% endtab %}
-{% endtabs %}
+// DELETE /api/fellows/:idconst deleteFellow = (req, res) => {  const { id } = req.params;  const fellowIndex = fellows.findIndex((fellow) => fellow.id === Number(id));  if (fellowIndex < 0) {    return res.status(404).send({ message: \`No fellow with the id ${id}\` });  }  fellows.splice(fellowIndex, 1);  // 204 means "No Content" — success, but nothing to send back  res.sendStatus(204);};app.delete('/api/fellows/:id', deleteFellow);export const deleteFellow = async (id) => {  try {    const config = { method: 'DELETE' };    const response = await fetch(\`/api/fellows/${id}\`, config);    if (!response.ok) throw Error(\`Fetch failed. ${response.status} ${response.statusText}\`);    return { data: true, error: null };  } catch (error) {    return { data: null, error };  \}};
 
 To wire `deleteFellow` into the UI, add a delete branch to the same `handleFellowsListClick` handler we used for update:
 

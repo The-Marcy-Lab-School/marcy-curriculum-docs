@@ -8,18 +8,18 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 **Table of Contents:**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Express Review](#express-review)
-- [Middleware and `next()`](#middleware-and-next)
-- [Static Web Servers](#static-web-servers)
-  - [Serving Vite Static Assets](#serving-vite-static-assets)
-  - [`express.static()` Middleware](#expressstatic-middleware)
-- [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
-- [Deploying Web Server to Render](#deploying-web-server-to-render)
-  - [Create a New Web Service](#create-a-new-web-service)
-  - [Best Practice — Serving the Dist Folder and Continuous Deployment](#best-practice--serving-the-dist-folder-and-continuous-deployment)
-- [Complete Code](#complete-code)
+* [Essential Questions](5-middleware-static-assets.md#essential-questions)
+* [Key Concepts](5-middleware-static-assets.md#key-concepts)
+* [Express Review](5-middleware-static-assets.md#express-review)
+* [Middleware and `next()`](5-middleware-static-assets.md#middleware-and-next)
+* [Static Web Servers](5-middleware-static-assets.md#static-web-servers)
+  * [Serving Vite Static Assets](5-middleware-static-assets.md#serving-vite-static-assets)
+  * [`express.static()` Middleware](5-middleware-static-assets.md#expressstatic-middleware)
+* [Fetch Requests to the Same Origin](5-middleware-static-assets.md#fetch-requests-to-the-same-origin)
+* [Deploying Web Server to Render](5-middleware-static-assets.md#deploying-web-server-to-render)
+  * [Create a New Web Service](5-middleware-static-assets.md#create-a-new-web-service)
+  * [Best Practice — Serving the Dist Folder and Continuous Deployment](5-middleware-static-assets.md#best-practice--serving-the-dist-folder-and-continuous-deployment)
+* [Complete Code](5-middleware-static-assets.md#complete-code)
 
 ## Essential Questions
 
@@ -48,12 +48,12 @@ By the end of this lesson, you should be able to answer these questions:
 
 Remember how the Express app works?
 
-![Express Diagram](./img/4-intro-to-express/express-diagram-simple.svg)
+![Express Diagram](../.gitbook/assets/express-diagram-simple.svg)
 
 1. A client sends a **request** to a particular **endpoint** provided by the server.
 2. The server receives the request and **routes** it to the proper **controller** based on the specific **endpoint**.
 3. The controller looks at the request and generates a **response** which is sent to the client.
-5. The client receives the response.
+4. The client receives the response.
 
 A **controller** is a callback function that parses a request and sends a response. Controllers are connected to a particular endpoint using `app.get(endpoint, controller)`. The `app` will invoke the given controller when a request for the given endpoint is received. Every controller is invoked with three values:
 
@@ -100,9 +100,11 @@ app.listen(port, () => {
 });
 ```
 
-In this example, we use `app.use()` to add a "fallback" controller to our `app`. Notice that we don't specify an endpoint or a method type: this means that the `serve404` controller can run for any request type and any URL. However, if any of the previous controllers send a response, then `serve404` won't run. Because of this, we *must* place this endpoint last (after the other calls to `app.get()`). 
+In this example, we use `app.use()` to add a "fallback" controller to our `app`. Notice that we don't specify an endpoint or a method type: this means that the `serve404` controller can run for any request type and any URL. However, if any of the previous controllers send a response, then `serve404` won't run. Because of this, we _must_ place this endpoint last (after the other calls to `app.get()`).
 
-**<details><summary>Q: What would happen if we put `app.use(serve404)` before the other calls to `app.get()`?</summary>**
+<details>
+
+<summary><strong>Q: What would happen if we put <code>app.use(serve404)</code> before the other calls to <code>app.get()</code>?</strong></summary>
 
 The `serve404` controller would be invoked for any request method and URL preventing the other controllers from ever running.
 
@@ -155,7 +157,7 @@ However, now we also need to add this code to `serveData`. If we had more contro
 
 Instead, we can use a **middleware**. Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.
 
-![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](./img/5-middleware-static-assets/express-middleware.svg)
+![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](<../.gitbook/assets/express-middleware (2).svg>)
 
 In many ways, middleware is like a controller. It receives the `req`, `res`, and `next` values. There are two key differences:
 
@@ -219,7 +221,7 @@ Middleware can be custom-made like this `logRoutes`. However, we can also utiliz
 
 When you visit a website, like [https://google.com](https://google.com), you are immediately presented with a rendered website. What's happening there?
 
-![Google's Homepage](./img/5-middleware-static-assets/google-homepage.png)
+![Google's Homepage](../.gitbook/assets/google-homepage.png)
 
 Now, imagine that the website is just the "static assets" of a Vite project deployed on GitHub pages! But instead of using GitHub pages, Google has its own servers to store those files and serve them to visiting users.
 
@@ -235,7 +237,7 @@ APIs on the other hand serve dynamic content that changes depending on parameter
 
 ### Serving Vite Static Assets
 
-Check out the `frontend/` directory in the repo for this lesson. So far, we've used Vite's development server to get these frontend static assets at `http://localhost:5173`. 
+Check out the `frontend/` directory in the repo for this lesson. So far, we've used Vite's development server to get these frontend static assets at `http://localhost:5173`.
 
 ```sh
 cd frontend
@@ -263,7 +265,7 @@ app.get('/', serveIndexHTML);
 
 > **Why an absolute path?** `__dirname` is a Node variable that holds the absolute path of the directory containing the current file. A bare relative path like `'../frontend'` is resolved from the process's working directory, which can vary depending on which directory you start the server from. Using `__dirname` with `path.join()` produces a path that works no matter where the server is started from.
 
-This code serves the `index.html` file, but that file also needs access to `/src/main.js` and `/src/style.css`. Open the Console in your browser and you can see that those files are not being found. 
+This code serves the `index.html` file, but that file also needs access to `/src/main.js` and `/src/style.css`. Open the Console in your browser and you can see that those files are not being found.
 
 So, we need two more controllers:
 
@@ -364,12 +366,14 @@ By using `express.static()` to serve the frontend from the same Express server, 
 ## Deploying Web Server to Render
 
 Github Pages provides **static site hosting**.
-  * This means that the server that Github Pages runs on your behalf can only send static files to the client (HTML, CSS, and JS files).
-  * Github Pages static sites are not capable of receiving or sending messages via HTTP.
+
+* This means that the server that Github Pages runs on your behalf can only send static files to the client (HTML, CSS, and JS files).
+* Github Pages static sites are not capable of receiving or sending messages via HTTP.
 
 Render provides **web service and database hosting** (it can also host static sites).
-  * This means that the server that Render runs on your behalf can send static assets, receive and send messages via HTTP, and interact with a database.
-  * Render also can host your database giving you a one-stop-shop for running your fullstack application.
+
+* This means that the server that Render runs on your behalf can send static assets, receive and send messages via HTTP, and interact with a database.
+* Render also can host your database giving you a one-stop-shop for running your fullstack application.
 
 Start by creating an account using your **GitHub** account. This will let you easily deploy straight from a GitHub repository. This will take you to your Dashboard where you can see existing deployments.
 
@@ -390,17 +394,17 @@ Start by creating an account using your **GitHub** account. This will let you ea
    * Root Directory - Leave blank (will default to the root of your repo)
    * Build Command:
      * If your application has a database, see the next section
-     * If you need to build your frontend
+     *   If you need to build your frontend
 
          ```sh
          cd [vite_folder_name] && npm i && npm run build && cd ../server && npm i
          ```
-     * If neither:
+     *   If neither:
 
          ```sh
          cd server && npm i
          ```
-   * Start Command (assuming your `index.js` file is in `server/`):
+   *   Start Command (assuming your `index.js` file is in `server/`):
 
        ```sh
        cd server && node index.js
@@ -432,7 +436,7 @@ dist/
       - index-ABC123.css
 ```
 
-To have our deployed server use this `dist/` version of the frontend, update the `pathToFrontend` variable to reference the `dist/` directory — but only when running in a "production environment" (when they are deployed). 
+To have our deployed server use this `dist/` version of the frontend, update the `pathToFrontend` variable to reference the `dist/` directory — but only when running in a "production environment" (when they are deployed).
 
 ```js
 let pathToFrontend = path.join(__dirname, '../frontend');
@@ -445,7 +449,7 @@ const serveStatic = express.static(pathToFrontend);
 app.use(serveStatic);
 ```
 
-* Render (and most hosting services) automatically sets the [environment variable](./6-environment-variables-deployment.md) `process.env.NODE_ENV` to `'production'`, which we use to conditionally set the file path.
+* Render (and most hosting services) automatically sets the [environment variable](6-environment-variables-deployment.md) `process.env.NODE_ENV` to `'production'`, which we use to conditionally set the file path.
 
 In our deployment configuration, the "Build" and "Start" commands are executed before every new deploy as a part of the "Auto Deploy" process. Render will redeploy your application on every new commit. This means the `dist/` assets are always rebuilt before the server restarts, so any frontend changes are reflected in the new deployment.
 
