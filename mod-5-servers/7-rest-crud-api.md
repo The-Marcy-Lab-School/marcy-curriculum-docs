@@ -235,6 +235,17 @@ Your API should have CRUD endpoints for posts and comments and it should follow 
 
 **<details><summary>Solution</summary>**
 
+| Method   | URL                                      | Request Body       | Success & Response                    | Error & Response              |
+| -------- | ---------------------------------------- | ------------------ | ------------------------------------- | ----------------------------- |
+| `GET`    | `/api/posts`                             | —                  | 200, array of all posts               | —                             |
+| `GET`    | `/api/posts/:postId`                     | —                  | 200, single post object               | 404 if not found              |
+| `POST`   | `/api/posts`                             | `{ img, content }` | 201, newly created post               | 400 if img or content missing |
+| `PATCH`  | `/api/posts/:postId`                     | `{ img, content }` | 200, updated post                     | 404 if not found              |
+| `DELETE` | `/api/posts/:postId`                     | —                  | 204, no content                       | 404 if not found              |
+| `GET`    | `/api/posts/:postId/comments`            | —                  | 200, array of all comments for a post | —                             |
+| `POST`   | `/api/posts/:postId/comments`            | `{ content }`      | 201, newly created comment            | 400 if content missing        |
+| `PATCH`  | `/api/posts/:postId/comments/:commentId` | `{ content }`      | 200, updated comment                  | 404 if not found              |
+| `DELETE` | `/api/posts/:postId/comments/:commentId` | —                  | 204, no content                       | 404 if not found              |
 
 </details>
 
