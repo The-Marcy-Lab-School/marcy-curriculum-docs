@@ -1,28 +1,28 @@
-# Cheat Sheet — Servers
+# Cheat Sheet
 
-- [How the Internet Works](#how-the-internet-works)
-  - [Internet Basics](#internet-basics)
-  - [HTTP: The Request-Response Cycle](#http-the-request-response-cycle)
-  - [HTTP Status Codes](#http-status-codes)
-- [Server Basics](#server-basics)
-  - [Host, Port, and Localhost](#host-port-and-localhost)
-  - [A `node:http` Server](#a-nodehttp-server)
-- [Express](#express)
-  - [Express Basics](#express-basics)
-  - [Middleware](#middleware)
-  - [Serving Static Assets](#serving-static-assets)
-  - [Environment Variables](#environment-variables)
-  - [Sending Frontend-to-Backend Requests (Vite Proxy)](#sending-frontend-to-backend-requests-vite-proxy)
-- [RESTful CRUD API](#restful-crud-api)
-  - [REST Principles](#rest-principles)
-  - [CRUD and HTTP Methods](#crud-and-http-methods)
-  - [Route Parameters](#route-parameters)
-  - [Handling POST and PATCH Request Bodies](#handling-post-and-patch-request-bodies)
-- [Model-View-Controller (MVC)](#model-view-controller-mvc)
-  - [MVC Architecture](#mvc-architecture)
-  - [Example](#example)
+* [How the Internet Works](cheatsheet.md#how-the-internet-works)
+  * [Internet Basics](cheatsheet.md#internet-basics)
+  * [HTTP: The Request-Response Cycle](cheatsheet.md#http-the-request-response-cycle)
+  * [HTTP Status Codes](cheatsheet.md#http-status-codes)
+* [Server Basics](cheatsheet.md#server-basics)
+  * [Host, Port, and Localhost](cheatsheet.md#host-port-and-localhost)
+  * [A `node:http` Server](cheatsheet.md#a-nodehttp-server)
+* [Express](cheatsheet.md#express)
+  * [Express Basics](cheatsheet.md#express-basics)
+  * [Middleware](cheatsheet.md#middleware)
+  * [Serving Static Assets](cheatsheet.md#serving-static-assets)
+  * [Environment Variables](cheatsheet.md#environment-variables)
+  * [Sending Frontend-to-Backend Requests (Vite Proxy)](cheatsheet.md#sending-frontend-to-backend-requests-vite-proxy)
+* [RESTful CRUD API](cheatsheet.md#restful-crud-api)
+  * [REST Principles](cheatsheet.md#rest-principles)
+  * [CRUD and HTTP Methods](cheatsheet.md#crud-and-http-methods)
+  * [Route Parameters](cheatsheet.md#route-parameters)
+  * [Handling POST and PATCH Request Bodies](cheatsheet.md#handling-post-and-patch-request-bodies)
+* [Model-View-Controller (MVC)](cheatsheet.md#model-view-controller-mvc)
+  * [MVC Architecture](cheatsheet.md#mvc-architecture)
+  * [Example](cheatsheet.md#example)
 
-![](./img/cheatsheet/client-server-database.svg)
+![](../.gitbook/assets/client-server-database.svg)
 
 ## How the Internet Works
 
@@ -57,15 +57,17 @@ CLIENT                          SERVER
 ```
 
 An HTTP **request** contains:
+
 * **Method** — the type of action (`GET`, `POST`, `PATCH`, `DELETE`)
 * **URL** — the address of the resource
 * **Headers** — metadata (e.g., `Content-Type: application/json`)
-* **Body** *(optional)* — data sent with `POST` and `PATCH` requests
+* **Body** _(optional)_ — data sent with `POST` and `PATCH` requests
 
 An HTTP **response** contains:
+
 * **Status Code** — a number indicating the result
 * **Headers** — metadata about the response
-* **Body** *(optional)* — the data being sent back (JSON, HTML, etc.)
+* **Body** _(optional)_ — the data being sent back (JSON, HTML, etc.)
 
 ### HTTP Status Codes
 
@@ -125,7 +127,7 @@ server.listen(8080, () => console.log('Listening on http://localhost:8080'));
 
 ## Express
 
-![](./img/cheatsheet/express-middleware-model.svg)
+![](<../.gitbook/assets/express-middleware-model (3).svg>)
 
 ### Express Basics
 
@@ -224,7 +226,7 @@ app.get('/api/stories', serveStories);
 
 **Why use the server as a middleman?** Client-side code is visible in the browser's Network tab — API keys embedded in frontend requests are publicly exposed. The server keeps the API key hidden.
 
-![](./img/cheatsheet/express-api-middleman.svg)
+![](<../.gitbook/assets/express-api-middleman (3).svg>)
 
 ### Sending Frontend-to-Backend Requests (Vite Proxy)
 
@@ -269,7 +271,7 @@ export default defineConfig({
 1. **Endpoints describe resources, not actions** — use plural nouns, not verbs:
    * `/api/fellows` ✓ vs. `/api/getFellows` ✗
 2. **HTTP methods communicate the action**:
-   * `GET` – Read  |  `POST` – Create  |  `PATCH`/`PUT` – Update  |  `DELETE` – Remove
+   * `GET` – Read | `POST` – Create | `PATCH`/`PUT` – Update | `DELETE` – Remove
 3. **Use IDs to target individual resources**: `GET /api/fellows/3`
 4. **Nest resources to indicate ownership**: `POST /api/fellows/3/posts`
 5. **Use proper status codes**: `201` for created, `404` for not found, etc.
@@ -389,7 +391,7 @@ const deleteFellow = async (id) => {
 * **View** — renders the UI. In a PERN app, this is the React frontend.
 * **Controller** — the middleman. Parses requests, calls model methods, and sends responses. Does not directly touch the data.
 
-![](./img/cheatsheet/express-middleware-model.svg)
+![](<../.gitbook/assets/express-middleware-model (3).svg>)
 
 **Recommended server folder structure:**
 

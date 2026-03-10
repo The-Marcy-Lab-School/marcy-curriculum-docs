@@ -1,14 +1,15 @@
-# 9. Your First Fullstack App!
+# 6. Building a Fullstack App
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/8-1-0-express-rest-api-model)!
 {% endhint %}
 
 **Table of Contents:**
-- [Essential Questions](#essential-questions)
-- [Part 1 - Adding a DB for the fellows](#part-1---adding-a-db-for-the-fellows)
-- [Part 2 — Refactor!](#part-2--refactor)
-- [Part 3 - Adding posts](#part-3---adding-posts)
+
+* [Essential Questions](14-fullstack-app.md#essential-questions)
+* [Part 1 - Adding a DB for the fellows](14-fullstack-app.md#part-1---adding-a-db-for-the-fellows)
+* [Part 2 — Refactor!](14-fullstack-app.md#part-2--refactor)
+* [Part 3 - Adding posts](14-fullstack-app.md#part-3---adding-posts)
 
 ## Essential Questions
 
@@ -21,8 +22,6 @@ By the end of this lesson, you should be able to answer these questions:
 5. When a `fellow` is deleted, why do you need to also delete their associated `posts`, and how do you ensure it happens in the right order?
 
 Remember, the **model** is the layer of the application that directly manipulates the data. It provides methods that the controllers can use to execute those changes whenever the frontend makes the appropriate request.
-
-![Thus far, our server application used an in-memory array as a "database".](./img/8-model-view-controller/express-middleware-model.svg)
 
 Thus far, our server application used an in-memory array as a "database". But this data is not persistent — each time we restart the server, all data created during that running session is lost.
 

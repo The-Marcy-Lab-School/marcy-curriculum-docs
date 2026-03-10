@@ -10,16 +10,15 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
 
 **Table of Contents:**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Organization and Separation of Concerns](#organization-and-separation-of-concerns)
-  - [The Model-View-Controller (MVC) Architecture](#the-model-view-controller-mvc-architecture)
-- [Implementing a Model for MVC](#implementing-a-model-for-mvc)
-  - [Server Organization](#server-organization)
-  - [Separating our Controllers](#separating-our-controllers)
-  - [Separating our Model](#separating-our-model)
-- [Challenge](#challenge)
-
+* [Essential Questions](8-model-view-controller.md#essential-questions)
+* [Key Concepts](8-model-view-controller.md#key-concepts)
+* [Organization and Separation of Concerns](8-model-view-controller.md#organization-and-separation-of-concerns)
+  * [The Model-View-Controller (MVC) Architecture](8-model-view-controller.md#the-model-view-controller-mvc-architecture)
+* [Implementing a Model for MVC](8-model-view-controller.md#implementing-a-model-for-mvc)
+  * [Server Organization](8-model-view-controller.md#server-organization)
+  * [Separating our Controllers](8-model-view-controller.md#separating-our-controllers)
+  * [Separating our Model](8-model-view-controller.md#separating-our-model)
+* [Challenge](8-model-view-controller.md#challenge)
 
 ## Essential Questions
 
@@ -59,7 +58,7 @@ In software development, a "**code monolith**" refers to a single, large, and ty
 
 While there are many approaches for organization and separation of concerns, one highly popular approach is called the **Model-View-Controller (MVC) Architecture**.
 
-![The view sends requests with user inputs to the controller with updates the model. New data is returned to the controller which sends that data in a response to the view.](./img/8-model-view-controller/mvc-diagram.png)
+![The view sends requests with user inputs to the controller with updates the model. New data is returned to the controller which sends that data in a response to the view.](../.gitbook/assets/mvc-diagram.png)
 
 This architecture pattern organizes our code into three distinct "layers"":
 
@@ -136,7 +135,9 @@ const findFellow = (req, res) => {
 // ... and more...
 ```
 
-**<details><summary>Q: Is it possible to test ONLY the code that interacts with the `fellows` array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</summary>**
+<details>
+
+<summary><strong>Q: Is it possible to test ONLY the code that interacts with the <code>fellows</code> array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</strong></summary>
 
 No! And this is the main issue with our current implementation. Because the concerns are not separated, we can't easily test the different aspects of our server. If we separate the logic that interacts with the `fellows` array from the logic that interacts with the `req` and `res` objects, testing becomes possible.
 
@@ -144,7 +145,7 @@ No! And this is the main issue with our current implementation. Because the conc
 
 We need to create a separate model that focuses solely on managing the `fellows` database and provides methods for our controllers to use.
 
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](./img/8-model-view-controller/express-middleware-model.svg)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<../.gitbook/assets/express-middleware-model (4).svg>)
 
 ### Server Organization
 
@@ -171,7 +172,7 @@ By separating our code in this way, we show the separate "layers" of the applica
 Before we build a model, we'll isolate our controllers into their own file:
 
 * Move all of your controller functions into the `controllers/fellowControllers.js` file
-* Write them as named exports using the syntax `module.exports.controllerName = () => {...}` like this:
+*   Write them as named exports using the syntax `module.exports.controllerName = () => {...}` like this:
 
     ```js
     // fellowControllers.js
@@ -179,15 +180,13 @@ Before we build a model, we'll isolate our controllers into their own file:
       res.send(fellows);
     };
     ```
-
-* Import the collection of controllers into `server/index.js`:
+*   Import the collection of controllers into `server/index.js`:
 
     ```js
     // Import the entire exports object
     const fellowControllers = require('./controllers/fellowControllers');
     ```
-
-* Update your endpoint code to use the imported controllers:
+*   Update your endpoint code to use the imported controllers:
 
     ```js
     app.get('/api/fellows', fellowControllers.listFellows);

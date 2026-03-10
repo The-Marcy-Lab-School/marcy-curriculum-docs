@@ -1,26 +1,26 @@
-# Cheat Sheet — Databases
+# Cheat Sheet
 
-- [SQL + Postgres](#sql--postgres)
-  - [SQL + Postgres Basics](#sql--postgres-basics)
-  - [One-To-Many Table](#one-to-many-table)
-  - [Many To Many Table](#many-to-many-table)
-- [`pg`](#pg)
-  - [`pg` Basics](#pg-basics)
-  - [Setting Up `pool.js`](#setting-up-pooljs)
-  - [Running Queries with `pool.query()`](#running-queries-with-poolquery)
-  - [Parameterized Queries](#parameterized-queries)
-  - [CRUD Operations with `pg`](#crud-operations-with-pg)
-  - [Async Model Methods](#async-model-methods)
-  - [Async Controllers & Error Handling Middleware](#async-controllers--error-handling-middleware)
-- [Authentication and Authorization](#authentication-and-authorization)
-  - [Authentication and Authorization Basics](#authentication-and-authorization-basics)
-  - [Bcrypt](#bcrypt)
-  - [Sessions with `cookie-session`](#sessions-with-cookie-session)
-  - [Auth Endpoints](#auth-endpoints)
-  - [Authorization Middleware](#authorization-middleware)
-  - [Ownership-Based Authorization](#ownership-based-authorization)
+* [SQL + Postgres](cheatsheet.md#sql--postgres)
+  * [SQL + Postgres Basics](cheatsheet.md#sql--postgres-basics)
+  * [One-To-Many Table](cheatsheet.md#one-to-many-table)
+  * [Many To Many Table](cheatsheet.md#many-to-many-table)
+* [`pg`](cheatsheet.md#pg)
+  * [`pg` Basics](cheatsheet.md#pg-basics)
+  * [Setting Up `pool.js`](cheatsheet.md#setting-up-pooljs)
+  * [Running Queries with `pool.query()`](cheatsheet.md#running-queries-with-poolquery)
+  * [Parameterized Queries](cheatsheet.md#parameterized-queries)
+  * [CRUD Operations with `pg`](cheatsheet.md#crud-operations-with-pg)
+  * [Async Model Methods](cheatsheet.md#async-model-methods)
+  * [Async Controllers & Error Handling Middleware](cheatsheet.md#async-controllers--error-handling-middleware)
+* [Authentication and Authorization](cheatsheet.md#authentication-and-authorization)
+  * [Authentication and Authorization Basics](cheatsheet.md#authentication-and-authorization-basics)
+  * [Bcrypt](cheatsheet.md#bcrypt)
+  * [Sessions with `cookie-session`](cheatsheet.md#sessions-with-cookie-session)
+  * [Auth Endpoints](cheatsheet.md#auth-endpoints)
+  * [Authorization Middleware](cheatsheet.md#authorization-middleware)
+  * [Ownership-Based Authorization](cheatsheet.md#ownership-based-authorization)
 
-![](./img/cheatsheet/client-server-database.svg)
+![](<../.gitbook/assets/client-server-database (1).svg>)
 
 ## SQL + Postgres
 
@@ -33,7 +33,7 @@
 * **Postgres** - a popular "relational" database management system that stores data in a table-like manner
 * **SQL (Structured Query Language)** - a language used by relational database management systems to create, read, update, or delete data from a database.
 
-![](./img/cheatsheet/labeled-erd.png)
+![](<../.gitbook/assets/labeled-erd (3).png>)
 
 ### One-To-Many Table
 
@@ -57,23 +57,25 @@ CREATE TABLE pets (
 ```
 
 **`people` Table:**
-| id  | name           |
-| --- | -------------- |
-| 1   | Ann Duong      |
-| 2   | Reuben Ogbonna |
-| 3   | Carmen Salas   |
-| 4   | Ben Spector    |
+
+| id | name           |
+| -- | -------------- |
+| 1  | Ann Duong      |
+| 2  | Reuben Ogbonna |
+| 3  | Carmen Salas   |
+| 4  | Ben Spector    |
 
 **`pets` Table:**
-| id  | name       | type | owner_id |
-| --- | ---------- | ---- | -------- |
-| 1   | Khalo      | dog  | 3        |
-| 2   | Juan Pablo | dog  | 2        |
-| 3   | Bora       | bird | 1        |
-| 4   | Frida      | cat  | 3        |
-| 5   | Tora       | dog  | 1        |
-| 6   | Pon Juablo | cat  | 2        |
-| 7   | Kora       | dog  | 1        |
+
+| id | name       | type | owner\_id |
+| -- | ---------- | ---- | --------- |
+| 1  | Khalo      | dog  | 3         |
+| 2  | Juan Pablo | dog  | 2         |
+| 3  | Bora       | bird | 1         |
+| 4  | Frida      | cat  | 3         |
+| 5  | Tora       | dog  | 1         |
+| 6  | Pon Juablo | cat  | 2         |
+| 7  | Kora       | dog  | 1         |
 
 What are the names and ids of all the pets owned by Ann?
 
@@ -87,7 +89,7 @@ WHERE people.name = 'Ann Duong';
 * The order that you select `FROM` and `JOIN` does not matter
 * The `ON` clause indicates the relationship between the two tables (the `pets.owner_id` column references the `people.id` column)
 * The `WHERE` clause filters down the result.
-* When dealing with multiple tables, *always* specify the table that a value comes from.
+* When dealing with multiple tables, _always_ specify the table that a value comes from.
 
 ### Many To Many Table
 
@@ -95,9 +97,9 @@ WHERE people.name = 'Ann Duong';
 * **Many-to-Many** - a relationship between two tables in which the instances of each table can be referenced by many instances in the other table.
 * **Association/Junction Table** - a table used to create a many-to-many relationship using two foreign keys to reference two tables.
 
-![](./img/cheatsheet/labeled-erd.png)
+![](<../.gitbook/assets/labeled-erd (3).png>)
 
-> *created using https://dbdiagram.io/*
+> _created using https://dbdiagram.io/_
 
 Q: Give me the names and ids of the customers that ordered product #2
 
@@ -111,7 +113,7 @@ WHERE products.id = 2;
 
 ## `pg`
 
-![](./img/cheatsheet/client-server-database.svg)
+![](<../.gitbook/assets/client-server-database (1).svg>)
 
 ### `pg` Basics
 
@@ -125,21 +127,19 @@ WHERE products.id = 2;
 
 ### Setting Up `pool.js`
 
-0. Install `pg` and `dotenv`:
+1.  Install `pg` and `dotenv`:
 
     ```sh
     npm install pg dotenv
     ```
-
-1. Create a `.env` file in your project root:
+2.  Create a `.env` file in your project root:
 
     ```
     PG_CONNECTION_STRING=postgres://localhost/your_database_name
     ```
 
     > Never commit `.env` to GitHub. Add it to `.gitignore`.
-
-2. Create `db/pool.js` that sets up the pool once and exports it:
+3.  Create `db/pool.js` that sets up the pool once and exports it:
 
     ```js
     // db/pool.js
@@ -189,7 +189,7 @@ const getUserById = async (id) => {
 ```
 
 * `$1` maps to the first element of the values array, `$2` to the second, and so on.
-* Postgres treats the values as *data only*, never as SQL commands — even if they contain SQL syntax.
+* Postgres treats the values as _data only_, never as SQL commands — even if they contain SQL syntax.
 
 ### CRUD Operations with `pg`
 
@@ -334,18 +334,20 @@ app.use(handleError);
 * **Salt Rounds** - the number of times a password has been salted before being hashed
 * **Plaintext password** - the password as it was entered by the user, before it is hashed.
 * **Bcrypt** - a Node module that provides functions for hashing strings and verifying hashed strings.
-* **Authentication** - confirming *who you are* — verifying identity through login. Failure returns `401 Unauthorized`.
-* **Authorization** - confirming *what you're allowed to do* — checking permissions after identity is established. Failure returns `403 Forbidden`.
+* **Authentication** - confirming _who you are_ — verifying identity through login. Failure returns `401 Unauthorized`.
+* **Authorization** - confirming _what you're allowed to do_ — checking permissions after identity is established. Failure returns `403 Forbidden`.
 * **Session** - a way for the server to persist information (like a logged-in user's ID) across multiple requests from the same client.
 * **Cookie** - a small piece of data set by a server and automatically sent by the browser with every subsequent request to that domain.
 
 ### Bcrypt
 
 The `bcrypt` module makes handling hashing, salting, and verification straightforward with two key methods:
+
 * `bcrypt.hash(password, saltRounds)`
 * `bcrypt.compare(password, hashedPassword)`
 
 We can create these helper functions to gracefully handle errors that can occur when using these asynchronous operations.
+
 ```js
 const hashPassword = async (password, saltRounds = 8) => {
   try {
@@ -422,7 +424,7 @@ const userId = req.session.userId;
 req.session = null;
 ```
 
-![](./img/cheatsheet/cookies.png)
+![](<../.gitbook/assets/cookies (3).png>)
 
 ### Auth Endpoints
 
@@ -529,7 +531,7 @@ router.delete('/:id', deletePost);
 
 ### Ownership-Based Authorization
 
-Being logged in is the first check. Some actions also require that the logged-in user *owns* the resource. Compare `req.session.userId` against the resource's owner field, returning `403 Forbidden` if they don't match:
+Being logged in is the first check. Some actions also require that the logged-in user _owns_ the resource. Compare `req.session.userId` against the resource's owner field, returning `403 Forbidden` if they don't match:
 
 ```js
 const updatePost = async (req, res, next) => {

@@ -10,22 +10,21 @@ In the last lesson, you built an HTTP server from scratch using Node's built-in 
 
 **Table of Contents:**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Review: The Client-Server Model](#review-the-client-server-model)
-- [From `node:http` to Express](#from-nodehttp-to-express)
-  - [What Express Handles For You](#what-express-handles-for-you)
-  - [Installing and Creating the App](#installing-and-creating-the-app)
-- [Endpoints and Controllers](#endpoints-and-controllers)
-  - [The Controller Signature](#the-controller-signature)
-  - [Sending Responses](#sending-responses)
-  - [Specifying Status](#specifying-status)
-- [The Request Object](#the-request-object)
-  - [Query Strings](#query-strings)
-  - [Route Parameters](#route-parameters)
-- [Complete Code](#complete-code)
-- [What's Next: Middleware](#whats-next-middleware)
-
+* [Essential Questions](4-intro-to-express.md#essential-questions)
+* [Key Concepts](4-intro-to-express.md#key-concepts)
+* [Review: The Client-Server Model](4-intro-to-express.md#review-the-client-server-model)
+* [From `node:http` to Express](4-intro-to-express.md#from-nodehttp-to-express)
+  * [What Express Handles For You](4-intro-to-express.md#what-express-handles-for-you)
+  * [Installing and Creating the App](4-intro-to-express.md#installing-and-creating-the-app)
+* [Endpoints and Controllers](4-intro-to-express.md#endpoints-and-controllers)
+  * [The Controller Signature](4-intro-to-express.md#the-controller-signature)
+  * [Sending Responses](4-intro-to-express.md#sending-responses)
+  * [Specifying Status](4-intro-to-express.md#specifying-status)
+* [The Request Object](4-intro-to-express.md#the-request-object)
+  * [Query Strings](4-intro-to-express.md#query-strings)
+  * [Route Parameters](4-intro-to-express.md#route-parameters)
+* [Complete Code](4-intro-to-express.md#complete-code)
+* [What's Next: Middleware](4-intro-to-express.md#whats-next-middleware)
 
 ## Essential Questions
 
@@ -55,7 +54,7 @@ You've already learned this pattern — but it's worth keeping in front of you a
 
 A **server** receives requests from a **client** and sends back responses. The server decides how to respond based on the URL and HTTP method of each request.
 
-![express diagram](./img/4-intro-to-express/express-diagram-simple.svg)
+![express diagram](../.gitbook/assets/express-diagram-simple.svg)
 
 The server we're building is the middle layer: it receives requests from the browser, does whatever work is needed (looking up data, calling an API, reading from a database), and sends a response back.
 
@@ -92,7 +91,7 @@ More broadly, Express handles everything you had to do manually with `node:http`
 | `new URL(req.url)` to parse query strings      | `req.query`                     |
 | Stream events to read the request body         | `express.json()` middleware     |
 
-Express doesn't add capabilities that `node:http` doesn't have — everything it does, you *could* write yourself. It just removes the repetition so you can focus on what your server actually does.
+Express doesn't add capabilities that `node:http` doesn't have — everything it does, you _could_ write yourself. It just removes the repetition so you can focus on what your server actually does.
 
 ### Installing and Creating the App
 
@@ -132,8 +131,9 @@ app.get('/api/hello', serveHello);
 ```
 
 When your server is running at `http://localhost:8080`, each endpoint becomes:
-- `http://localhost:8080/`
-- `http://localhost:8080/api/hello`
+
+* `http://localhost:8080/`
+* `http://localhost:8080/api/hello`
 
 {% hint style="info" %}
 It is a best practice to prefix data endpoints with `/api/` to distinguish them from endpoints that serve HTML and other static content.
@@ -141,7 +141,7 @@ It is a best practice to prefix data endpoints with `/api/` to distinguish them 
 
 ### The Controller Signature
 
-Controllers are invoked when the matching request arrives at the server. They are responsible for interpreting the incoming request and sending a response. 
+Controllers are invoked when the matching request arrives at the server. They are responsible for interpreting the incoming request and sending a response.
 
 To do this job, every controller receives three arguments called `req`, `res`, and `next`:
 
@@ -196,7 +196,7 @@ curl http://localhost:8080/ -i
 curl http://localhost:8080/api/hello -i
 ```
 
----
+***
 
 **Endpoint and Controller Challenge**: Add an endpoint to your server for `GET http://localhost:8080/api/users` requests that sends the `users` array below as a response:
 
@@ -208,7 +208,9 @@ const users = [
 ];
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 const users = [
@@ -265,6 +267,7 @@ In the next lesson, once you add a full frontend, this catch-all will change. In
 ## The Request Object
 
 The `req` parameter is an object containing information about the incoming request. It has a few key properties:
+
 * `req.query`: captures query strings—the `key=value` pairs after the `?` in a URL
 * `req.params`: captures route parameters—named segments of the URL defined in the route path
 
@@ -273,8 +276,9 @@ The `req` parameter is an object containing information about the incoming reque
 Query strings are the parts of a URL that come after a `?` and come in `key=value` pairs. They are often used by clients to filter or modify the data they are requesting.
 
 In these examples, can you tell what the query strings are doing to the results?
+
 * [https://www.google.com/search?q=express+js](https://www.google.com/search?q=express+js)
-* [https://www.youtube.com/results?search_query=http](https://www.youtube.com/results?search_query=http)
+* [https://www.youtube.com/results?search\_query=http](https://www.youtube.com/results?search_query=http)
 * [https://www.nike.com/w/?sortBy=priceDesc](https://www.nike.com/w/?sortBy=priceDesc)
 
 In our server, let's make it so that our `/api/hello` endpoint can send accept query strings for a `first` and `last` name and send a custom message in response.
@@ -302,15 +306,17 @@ Test it with `curl`!
 curl http://localhost/api/hello?first=ada&last=lovelace
 ```
 
-With a `node:http` server, reading query strings required manually constructing a `URL` object. 
+With a `node:http` server, reading query strings required manually constructing a `URL` object.
 
---- 
+***
 
 **Query String Challenge**: Modify `serveUsers` so that when a `contains` query string is provided, only users whose name matches are returned.
 
 For example: `/api/users?contains=a` would return Carmen and Maya
 
-<details><summary>Solution</summary>
+<details>
+
+<summary>Solution</summary>
 
 ```js
 const serveUsers = (req, res) => {
@@ -370,8 +376,10 @@ app.get('/api/users/:id', findUser);
 
 **Route Parameters Challenge:** It is possible that the client requests a user that doesn't exist. Add a guard clause to the `findUser` controller that sends a response with the body `{ message: No user with the given id }` and a 404 status.
 
+<details>
 
-**<details><summary>Solution</summary>**
+<summary><strong>Solution</strong></summary>
+
 ```js
 if (!user) {
   // 404 means "Resource Not Found"
@@ -380,6 +388,7 @@ if (!user) {
   });
 }
 ```
+
 </details>
 
 ## Complete Code
