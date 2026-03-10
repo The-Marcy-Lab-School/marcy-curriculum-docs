@@ -441,11 +441,8 @@ Our frontend application shows an **Edit** button next to each fellow. The `upda
 - The URL should be `/api/fellows/${id}`.
 
 <details>
-
 <summary><strong>Solution</strong></summary>
 
-{% tabs %}
-{% tab title="Server" %}
 {% code title="server/index.js" %}
 ```javascript
 // PATCH /api/fellows/:id
@@ -470,10 +467,10 @@ const updateFellow = (req, res) => {
 app.patch('/api/fellows/:id', updateFellow);
 ```
 {% endcode %}
-{% endtab %}
 
-{% tab title="Client" %}
+
 {% code title="frontend/src/fetch-helpers.js" %}
+
 ```javascript
 export const updateFellow = async (id, fellowName) => {
   try {
@@ -492,12 +489,11 @@ export const updateFellow = async (id, fellowName) => {
 };
 ```
 {% endcode %}
-{% endtab %}
-{% endtabs %}
 
 To wire `updateFellow` into the UI, we use **event delegation** — a single click listener on the `<ul>` that handles all button clicks. When the user clicks "Edit" the row switches to edit mode; when they click "Save" it calls `updateFellow`:
 
 {% code title="frontend/src/main.js" %}
+
 ```js
 const handleFellowsListClick = async (e) => {
   const clickedListItem = e.target.closest('li');
@@ -549,8 +545,6 @@ The frontend also shows a **Delete** button next to each fellow. The `deleteFell
 
 <summary><strong>Solution</strong></summary>
 
-{% tabs %}
-{% tab title="Server" %}
 {% code title="server/index.js" %}
 ```javascript
 // DELETE /api/fellows/:id
@@ -570,10 +564,9 @@ const deleteFellow = (req, res) => {
 app.delete('/api/fellows/:id', deleteFellow);
 ```
 {% endcode %}
-{% endtab %}
 
-{% tab title="Client" %}
 {% code title="frontend/src/fetch-helpers.js" %}
+
 ```javascript
 export const deleteFellow = async (id) => {
   try {
@@ -587,13 +580,11 @@ export const deleteFellow = async (id) => {
 };
 ```
 {% endcode %}
-{% endtab %}
-{% endtabs %}
 
 To wire `deleteFellow` into the UI, add a delete branch to the same `handleFellowsListClick` handler we used for update:
 
 {% code title="frontend/src/main.js" %}
-```js
+```javascript
 const handleFellowsListClick = async (e) => {
   const clickedListItem = e.target.closest('li');
   if (!clickedListItem) return;
@@ -628,7 +619,6 @@ const handleFellowsListClick = async (e) => {
 document.querySelector('#fellows-list').addEventListener('click', handleFellowsListClick);
 ```
 {% endcode %}
-
 </details>
 
 Finally, add a catch-all handler after all your routes to return a clean `404` JSON error for any unmatched `/api` requests:
