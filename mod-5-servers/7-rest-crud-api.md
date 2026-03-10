@@ -17,7 +17,8 @@ In this lesson, you will learn how to add create, update, and delete endpoints a
   - [Core Principles of REST](#core-principles-of-rest)
   - [RESTful Principles Quiz](#restful-principles-quiz)
 - [API Contract](#api-contract)
-- [Why Status Codes Matter](#why-status-codes-matter)
+  - [Why Status Codes Matter](#why-status-codes-matter)
+  - [API Contract Challenge: Design Instagram](#api-contract-challenge-design-instagram)
 - [Implementing the Endpoints](#implementing-the-endpoints)
   - [GET /api/fellows — Already Working](#get-apifellows--already-working)
   - [POST /api/fellows — Creating a New Fellow](#post-apifellows--creating-a-new-fellow)
@@ -216,7 +217,7 @@ Notice three REST conventions this table demonstrates:
 3. **Status codes as communication** — the response code tells the client exactly what happened, before they even parse the body.
 {% endhint %}
 
-## Why Status Codes Matter
+### Why Status Codes Matter
 
 A status code is not just a number — it is a contract between your server and every client that talks to it. Using the right code makes your API predictable and easier to debug.
 
@@ -225,6 +226,17 @@ A status code is not just a number — it is a contract between your server and 
 * **`204 No Content`** — Use this for `DELETE`. The operation succeeded but there is no body to send back. The `204` code signals to the client: *don't try to parse a body*.
 * **`400 Bad Request`** — The client sent something invalid (e.g., a missing required field). This is the client's fault.
 * **`404 Not Found`** — The requested resource doesn't exist. `400` and `404` communicate *different* problems: `400` means "your request was malformed," while `404` means "we understood the request but couldn't find what you asked for."
+
+### API Contract Challenge: Design Instagram
+
+Before implementing the API contract above, try designing an API contract for Instagram **posts** and **comments**. This planning step will provide a clear vision for how you will implement your API and can even serve as useful instructions when offloading your work to a teammate (or an agentic AI tool).
+
+Your API should have CRUD endpoints for posts and comments and it should follow the rules for making a RESTful API above.
+
+**<details><summary>Solution</summary>**
+
+
+</details>
 
 ## Implementing the Endpoints
 
@@ -281,47 +293,74 @@ This pattern — a fetch helper on the frontend that mirrors a controller on the
 
 To enable our frontend application to *create* data, we will add a `POST` endpoint on our server and send a `POST` request from the frontend, triggered by a form.
 
-Since `POST` requests are requests to create data, we need to send data in the `body` of the request. On the frontend, this means including a `config` object with our `fetch` call.
-
-On the server, we need the `express.json()` middleware to parse JSON data from incoming requests and store it in `req.body`. Add it before your route handlers:
-
-{% code title="server/index.js" %}
-```javascript
-// express.json() parses incoming request bodies and puts JSON data in req.body
-app.use(express.json());
-```
-{% endcode %}
-
-With that in place, here is the complete server + client pair for POST:
+**Server considerations:** 
+* On the server, we need to decide how we expect request bodies to be structured. Let's say we expect an object with the structure `{ fellowName: String }`. 
+* We will also need to parse this JSON data from incoming requests. With `node:http` we had to write the code to parse JSON manually but with the `express.json()` middleware, it only takes one line and the data is accessibly in `req.body` in the controller:
 
 {% tabs %}
-{% tab title="Server" %}
-{% code title="server/index.js" %}
+{% tab title="Express" %}
 ```javascript
+// Other middleware...
+
+app.use(express.json()); // parses JSON data in the request body → req.body
+
+// Other controllers...
+
 // POST /api/fellows
 const createFellow = (req, res) => {
-  // make sure this object matches the config.body on the frontend
-  const { fellowName } = req.body;
+  const { fellowName } = req.body; // We expect the client to send a { fellowName: String } request body
 
   if (!fellowName) {
-    // 400 means "invalid request" — the client sent bad data
-    return res.status(400).send({ message: 'Invalid Name' });
+    res.status(400).send({ message: 'Invalid Name' }); // 400 means "Invalid Request"
+    return;
   }
 
   const newFellow = { name: fellowName, id: getId() };
   fellows.push(newFellow);
 
-  // 201 means "Created" — use this instead of plain 200 for POST
-  res.status(201).send(newFellow);
+  res.status(201).send(newFellow); // 201 means "Success: Resource Created"
 };
 
 app.post('/api/fellows', createFellow);
 ```
-{% endcode %}
 {% endtab %}
+{% tab title="node:http" %}
+With the built-in `node:http` package, we have to manually parse the incoming stream of data as chunks of strings and construct the `body` before parsing it as JSON:
+```javascript
+if (method === 'POST' && url === '/api/fellows') {
+  // Read the request body (it comes in as a stream)
+  let body = '';
+  req.on('data', (chunk) => { body += chunk; });
+  
+  // Once the request body has finished reading...
+  req.on('end', () => {
+    // Parse the fellowName from the request body
+    const requestBody = JSON.parse(body);
+    const { fellowName } = requestBody;
 
-{% tab title="Client" %}
-{% code title="frontend/src/fetch-helpers.js" %}
+    if (!fellowName) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Invalid Name'}));
+      return;
+    }
+    
+    const newFellow = { id: fellows.length + 1, fellowName };
+    fellows.push(newFellow);
+
+    // Send a response
+    res.writeHead(201, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: "Success: Fellow Added", data: newFellow}));
+  });
+  return;
+}
+```
+{% endtab %}
+{% endtabs %}
+
+**Frontend considerations:** 
+* Since `POST` requests are requests to create data, we need to send data in the `body` of the request. On the frontend, this means including a `config` object with our `fetch` call. 
+* We must also ensure that the structure of our request body matches the structure expected by our server:
+
 ```javascript
 export const createFellow = async (fellowName) => {
   try {
@@ -339,11 +378,8 @@ export const createFellow = async (fellowName) => {
   }
 };
 ```
-{% endcode %}
-{% endtab %}
-{% endtabs %}
 
-With the server controller and the fetch helper both built, we can quickly test by hard-coding a call in `main.js`:
+With the server controller and the fetch helper both built, we can quickly test by importing the helper and hard-coding a call in `main.js`:
 
 {% code title="frontend/src/main.js" %}
 ```js
