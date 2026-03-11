@@ -10,21 +10,21 @@ In this lesson, you will learn how to add create, update, and delete endpoints a
 
 **Table of Contents:**
 
-* [Essential Questions](7-rest-crud-api.md#essential-questions)
-* [Key Concepts](7-rest-crud-api.md#key-concepts)
-* [Introduction: Client → Server → Client → Server](7-rest-crud-api.md#introduction-client--server--client--server)
-* [What Makes an API RESTful?](7-rest-crud-api.md#what-makes-an-api-restful)
-  * [Core Principles of REST](7-rest-crud-api.md#core-principles-of-rest)
-  * [RESTful Principles Quiz](7-rest-crud-api.md#restful-principles-quiz)
-* [API Contract](7-rest-crud-api.md#api-contract)
-  * [Why Status Codes Matter](7-rest-crud-api.md#why-status-codes-matter)
-  * [API Contract Challenge: Design Instagram](7-rest-crud-api.md#api-contract-challenge-design-instagram)
-* [Implementing the Endpoints](7-rest-crud-api.md#implementing-the-endpoints)
-  * [GET /api/fellows — Already Working](7-rest-crud-api.md#get-apifellows--already-working)
-  * [POST /api/fellows — Creating a New Fellow](7-rest-crud-api.md#post-apifellows--creating-a-new-fellow)
-  * [PATCH /api/fellows/:id — Updating a Fellow](7-rest-crud-api.md#patch-apifellowsid--updating-a-fellow)
-  * [DELETE /api/fellows/:id — Removing a Fellow](7-rest-crud-api.md#delete-apifellowsid--removing-a-fellow)
-  * [GET /api/fellows/:id — Completing the Contract](7-rest-crud-api.md#get-apifellowsid--completing-the-contract)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Introduction: Client → Server → Client → Server](#introduction-client--server--client--server)
+- [What Makes an API RESTful?](#what-makes-an-api-restful)
+  - [Core Principles of REST](#core-principles-of-rest)
+  - [RESTful Principles Quiz](#restful-principles-quiz)
+- [API Contract](#api-contract)
+  - [Why Status Codes Matter](#why-status-codes-matter)
+  - [API Contract Challenge: Design Instagram](#api-contract-challenge-design-instagram)
+- [Implementing the Endpoints](#implementing-the-endpoints)
+  - [GET /api/fellows — Already Working](#get-apifellows--already-working)
+  - [POST /api/fellows — Creating a New Fellow](#post-apifellows--creating-a-new-fellow)
+  - [PATCH /api/fellows/:id — Updating a Fellow](#patch-apifellowsid--updating-a-fellow)
+  - [DELETE /api/fellows/:id — Removing a Fellow](#delete-apifellowsid--removing-a-fellow)
+  - [GET /api/fellows/:id — Completing the Contract](#get-apifellowsid--completing-the-contract)
 
 ## Essential Questions
 
