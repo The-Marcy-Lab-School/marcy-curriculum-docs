@@ -115,25 +115,25 @@ If you guessed these correctly, there is a good reason why! The endpoints are in
 
 The guiding principles of REST can be found in detail on that website. Here, we've provided a few easy ways to ensure you are building a RESTful API:
 
-1. **Endpoints Describe Resources, Not Actions**: Use plural nouns (e.g., `/api/users`, `/api/posts`) instead of verbs (e.g., `/api/getUser`, `/api/createPost`) for endpoint URLs.
+1. **Endpoint URLs Describe Resources, Not Actions**: Use plural nouns (e.g., `/api/users`, `/api/posts`) instead of verbs (e.g., `/api/getUser`, `/api/createPost`) for endpoint URLs.
    * A common exception to this rule is `/api/login` and `/api/logout`
-2. **URLs Should Indicate a Clear Hierarchy of Resources:**
-   * Use IDs to get individual resources: `/api/users/:userId`
-   * Nest resources to indicate ownership: `/api/users/:userId/posts/:postId`
-   * Avoid deep nesting that becomes hard to manage.
-3. **HTTP Methods Matter**: The same endpoint URL (e.g. `/api/users`) can perform many different operations depending on the HTTP method provided
+2. **HTTP Methods Matter**: HTTP Methods indicate our desired action. This allows us to performan many different operations on the same endpoint URL (e.g. `GET /api/users` to retrieve users and `POST /api/users` to create a user)
    * `GET` – Retrieve data
    * `POST` – Create data
    * `PUT / PATCH` – Update data
    * `DELETE` – Remove data
-4. **Endpoints Should Use Proper Status Codes**: Here are the most common ones to use:
+3. **Endpoint URLs Should Indicate a Clear Hierarchy of Resources:**
+   * Use IDs to get individual resources: `/api/users/:userId`
+   * Nest resources to indicate ownership: `/api/users/:userId/posts/:postId`
+   * Avoid deep nesting that becomes hard to manage.
+4. **Requests Should be Contain All Information Needed To Complete the Request**: This is what we mean when we say that HTTP is a "stateless" protocol. The server doesn't store the current client state between requests. Each request must have all necessary information.
+   * For example, if a user selects a filter that is applied to a `GET` request, that filter must be provided with every request. The server should not be expected to remember the client's previous requests.
+5. **Responses Should Use Proper Status Codes**: Here are the most common ones to use:
    * 200 OK
    * 201 Created
    * 400 Bad Request (e.g. they sent a POST request with an empty body)
    * 404 Not Found
    * 500 Internal Server Error (e.g. the third-party API we are using is down)
-5. **Requests Should be Stateless**: Each request should contain all the information needed by the client for the current request. The server doesn't store the current client state.
-   * For example, if a user selects a filter that is applied to a `GET` request, that filter must be provided with every request. The server should not be expected to remember the client's previous requests.
 
 These principles help our API become "RESTful". But keep in mind that these are just guidelines that help make an API more intuitive and predictable for the client. Providing clear documentation will always be the best way to ensure your API is used properly.
 
@@ -201,7 +201,7 @@ Before writing a single line of implementation code, it helps to define the full
 
 Here is the contract for our fellows tracker:
 
-<table data-full-width="true"><thead><tr><th>Method</th><th>URL</th><th>Request Body</th><th>Success</th><th>Error</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/api/fellows</code></td><td>—</td><td>200, array of all fellows</td><td>—</td></tr><tr><td><code>GET</code></td><td><code>/api/fellows/:id</code></td><td>—</td><td>200, single fellow object</td><td>404 if not found</td></tr><tr><td><code>POST</code></td><td><code>/api/fellows</code></td><td><code>{ fellowName }</code></td><td>201, newly created fellow</td><td>400 if name missing</td></tr><tr><td><code>PATCH</code></td><td><code>/api/fellows/:id</code></td><td><code>{ fellowName }</code></td><td>200, updated fellow</td><td>404 if not found</td></tr><tr><td><code>DELETE</code></td><td><code>/api/fellows/:id</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr></tbody></table>
+<table data-full-width="true"><thead><tr><th width="229.640625">Method + URL</th><th width="171.4296875">Request Body</th><th width="238.875">Success Response</th><th width="212.6484375">Error Response</th></tr></thead><tbody><tr><td><code>GET /api/fellows</code></td><td>—</td><td>200, array of all fellows</td><td>—</td></tr><tr><td><code>GET /api/fellows/:id</code></td><td>—</td><td>200, single fellow object</td><td>404 if not found</td></tr><tr><td><code>POST /api/fellows</code></td><td><code>{ fellowName }</code></td><td>201, newly created fellow</td><td>400 if name missing</td></tr><tr><td><code>PATCH /api/fellows/:id</code></td><td><code>{ fellowName }</code></td><td>200, updated fellow</td><td>404 if not found</td></tr><tr><td><code>DELETE /api/fellows/:id</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr></tbody></table>
 
 {% hint style="info" %}
 Notice three REST conventions this table demonstrates:
@@ -231,7 +231,9 @@ Your API should have CRUD endpoints for posts and comments and it should follow 
 
 <summary><strong>Solution</strong></summary>
 
-<table data-full-width="true"><thead><tr><th>Method</th><th>URL</th><th>Request Body</th><th>Success &#x26; Response</th><th>Error &#x26; Response</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/api/posts</code></td><td>—</td><td>200, array of all posts</td><td>—</td></tr><tr><td><code>GET</code></td><td><code>/api/posts/:postId</code></td><td>—</td><td>200, single post object</td><td>404 if not found</td></tr><tr><td><code>POST</code></td><td><code>/api/posts</code></td><td><code>{ img, content }</code></td><td>201, newly created post</td><td>400 if img or content missing</td></tr><tr><td><code>PATCH</code></td><td><code>/api/posts/:postId</code></td><td><code>{ img, content }</code></td><td>200, updated post</td><td>404 if not found</td></tr><tr><td><code>DELETE</code></td><td><code>/api/posts/:postId</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr><tr><td><code>GET</code></td><td><code>/api/posts/:postId/comments</code></td><td>—</td><td>200, array of all comments for a post</td><td>—</td></tr><tr><td><code>POST</code></td><td><code>/api/posts/:postId/comments</code></td><td><code>{ content }</code></td><td>201, newly created comment</td><td>400 if content missing</td></tr><tr><td><code>PATCH</code></td><td><code>/api/posts/:postId/comments/:commentId</code></td><td><code>{ content }</code></td><td>200, updated comment</td><td>404 if not found</td></tr><tr><td><code>DELETE</code></td><td><code>/api/posts/:postId/comments/:commentId</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr></tbody></table>
+Notice that we can't use a URL for comments `/api/posts/:id/comments/:id` because we would have two route parameters called `:id`. To get around this, we provide more descriptive route parameter names: `:postId`  and `:commentId`
+
+<table data-full-width="true"><thead><tr><th width="414.328125">Method + URL</th><th width="184.9765625">Request Body</th><th width="321.5234375">Success Response</th><th width="261.51171875">Error  Response</th></tr></thead><tbody><tr><td><code>GET /api/posts</code></td><td>—</td><td>200, array of all posts</td><td>—</td></tr><tr><td><code>GET /api/posts/:postId</code></td><td>—</td><td>200, single post object</td><td>404 if not found</td></tr><tr><td><code>POST /api/posts</code></td><td><code>{ img, content }</code></td><td>201, newly created post</td><td>400 if img or content missing</td></tr><tr><td><code>PATCH /api/posts/:postId</code></td><td><code>{ img, content }</code></td><td>200, updated post</td><td>404 if not found</td></tr><tr><td><code>DELETE /api/posts/:postId</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr><tr><td><code>GET /api/posts/:postId/comments</code></td><td>—</td><td>200, array of all comments for a post</td><td>—</td></tr><tr><td><code>POST /api/posts/:postId/comments</code></td><td><code>{ content }</code></td><td>201, newly created comment</td><td>400 if content missing</td></tr><tr><td><code>PATCH /api/posts/:postId/comments/:commentId</code></td><td><code>{ content }</code></td><td>200, updated comment</td><td>404 if not found</td></tr><tr><td><code>DELETE /api/posts/:postId/comments/:commentId</code></td><td>—</td><td>204, no content</td><td>404 if not found</td></tr></tbody></table>
 
 </details>
 
@@ -433,6 +435,7 @@ Our frontend application shows an **Edit** button next to each fellow. The `upda
 * The URL should be `/api/fellows/${id}`.
 
 <details>
+
 <summary><strong>Solution</strong></summary>
 
 {% code title="server/index.js" %}
@@ -460,9 +463,7 @@ app.patch('/api/fellows/:id', updateFellow);
 ```
 {% endcode %}
 
-
 {% code title="frontend/src/fetch-helpers.js" %}
-
 ```javascript
 export const updateFellow = async (id, fellowName) => {
   try {
@@ -485,7 +486,6 @@ export const updateFellow = async (id, fellowName) => {
 To wire `updateFellow` into the UI, we use **event delegation** — a single click listener on the `<ul>` that handles all button clicks. When the user clicks "Edit" the row switches to edit mode; when they click "Save" it calls `updateFellow`:
 
 {% code title="frontend/src/main.js" %}
-
 ```js
 const handleFellowsListClick = async (e) => {
   const clickedListItem = e.target.closest('li');
@@ -560,7 +560,6 @@ app.delete('/api/fellows/:id', deleteFellow);
 {% endcode %}
 
 {% code title="frontend/src/fetch-helpers.js" %}
-
 ```javascript
 export const deleteFellow = async (id) => {
   try {
@@ -613,6 +612,7 @@ const handleFellowsListClick = async (e) => {
 document.querySelector('#fellows-list').addEventListener('click', handleFellowsListClick);
 ```
 {% endcode %}
+
 </details>
 
 Finally, add a catch-all handler after all your routes to return a clean `404` JSON error for any unmatched `/api` requests:
