@@ -91,6 +91,7 @@
   * [6. API Keys, Proxy Server Strategy, and Environment Variables](mod-5-servers/6-environment-variables-deployment.md)
   * [7. RESTful CRUD API](mod-5-servers/7-rest-crud-api.md)
   * [8. Model-View-Controller Architecture](mod-5-servers/8-model-view-controller.md)
+  * [Case Study: Bookmark Manager](mod-5-servers/case-study.md)
   * [Cheat Sheet](mod-5-servers/cheatsheet.md)
   * [How to Test your API with Postman](mod-5-servers/test-api-postman.md)
 * [Mod 6 - Databases](mod-6-databases/README.md)
