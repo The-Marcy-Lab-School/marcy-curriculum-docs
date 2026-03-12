@@ -145,7 +145,7 @@ No! And this is the main issue with our current implementation. Because the conc
 
 We need to create a separate model that focuses solely on managing the `fellows` database and provides methods for our controllers to use.
 
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](<../.gitbook/assets/express-middleware-model (4).svg>)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](./img/8-model-view-controller/express-middleware-model.jpg)
 
 ### Server Organization
 
