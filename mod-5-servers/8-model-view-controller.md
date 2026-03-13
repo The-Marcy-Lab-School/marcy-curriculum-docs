@@ -16,8 +16,9 @@ In this lesson, we'll learn how to implement one of the most popular patterns ca
   * [The Model-View-Controller (MVC) Architecture](8-model-view-controller.md#the-model-view-controller-mvc-architecture)
 * [Implementing a Model for MVC](8-model-view-controller.md#implementing-a-model-for-mvc)
   * [Server Organization](8-model-view-controller.md#server-organization)
-  * [Separating our Controllers](8-model-view-controller.md#separating-our-controllers)
   * [Separating our Model](8-model-view-controller.md#separating-our-model)
+  * [Separating our Controllers](8-model-view-controller.md#separating-our-controllers)
+  * [index.js as the Coordinator](8-model-view-controller.md#indexjs-as-the-coordinator)
 * [Challenge](8-model-view-controller.md#challenge)
 
 ## Essential Questions
@@ -84,9 +85,13 @@ We have the Express server application acting as the controllers AND as the mode
 
 With our current application structure, we already have clear separation between the views (our frontend Vanilla JS application) and the controllers (our Express endpoints/controllers).
 
-However, our controllers and model are intertwined since our controllers directly interact with the database (the `fellows` array). That is, they both handle the logic of parsing request inputs AND handle the logic of managing the data.
+However, our controller and model logic is intertwined:
 
-```js
+{% hint style="danger" %}
+
+Notice that the controllers handle both the logic of parsing request inputs AND the logic of managing the data.
+
+```javascript
 // Our "Database"
 const fellows = [
   { name: 'Carmen', id: getId() },
@@ -134,6 +139,7 @@ const findFellow = (req, res) => {
 
 // ... and more...
 ```
+{% endhint %}
 
 <details>
 
@@ -161,52 +167,26 @@ server/
  
 ```
 
-* `index.js` builds the `app`, configures middleware, and sets the endpoints. However, the controllers are now imported.
-* `controllers/fellowControllers.js` defines all of the controllers for endpoints relating to fellow data. Each set of data should have its own controllers file.
-* `models/fellowModel.js` defines a model for managing fellow data. This model is used exclusively by the fellow controllers. Each set of data managed by the server should have its own model.
+* `index.js` builds the `app`, configures middleware, and sets the endpoints. However, the controllers are now imported from the `fellowControllers.js` file.
+* `controllers/fellowControllers.js` defines all of the controllers for endpoints relating to the `fellows` resource. Methods for interacting with the data will be imported from the `fellowModel.js` file.
+* `models/fellowModel.js` defines methods for managing the `fellows` data and exports them.
 
 By separating our code in this way, we show the separate "layers" of the application.
 
-### Separating our Controllers
-
-Before we build a model, we'll isolate our controllers into their own file:
-
-* Move all of your controller functions into the `controllers/fellowControllers.js` file
-*   Write them as named exports using the syntax `module.exports.controllerName = () => {...}` like this:
-
-    ```js
-    // fellowControllers.js
-    module.exports.listFellows = (req, res) => {
-      res.send(fellows);
-    };
-    ```
-*   Import the collection of controllers into `server/index.js`:
-
-    ```js
-    // Import the entire exports object
-    const fellowControllers = require('./controllers/fellowControllers');
-    ```
-*   Update your endpoint code to use the imported controllers:
-
-    ```js
-    app.get('/api/fellows', fellowControllers.listFellows);
-    app.get('/api/fellows/:id', fellowControllers.findFellow);
-    app.post('/api/fellows', fellowControllers.createFellow);
-    app.patch('/api/fellows/:id', fellowControllers.updateFellow);
-    app.delete('/api/fellows/:id', fellowControllers.deleteFellow);
-    ```
-
 ### Separating our Model
+
+It is best to build backwards meaning we start with the data model, then build controllers that use the model, and finally wire them up in the `index.js` file.
 
 To build a separate model layer to handle only data management logic, we will:
 
 * Make a `models/fellowModel.js` file.
 * Inside, define the `fellows` "database" and a set of functions for interacting with it.
-* Export those functions as properties plain object so the only way to access the data is through the model's interface.
+* Export those functions as properties of a plain object so the only way to access the data is through the model's interface.
 
 {% code title="server/models/fellowModel.js" %}
 ```js
-const getId = ((id = 0) => () => ++id)();
+let id = 1;
+const getId = () => id++;
 
 // Restrict access to our mock "database" to just this Model file
 const fellows = [
@@ -251,7 +231,19 @@ module.exports.destroy = (id) => {
 ```
 {% endcode %}
 
-We are now leaving it entirely to the `fellowModel` file to manage the data while the controllers just focus on parsing the request and sending the response.
+The `fellows` array and all logic for interacting with it now live exclusively in this file. Nothing outside of `fellowModel.js` can touch the data directly — everything goes through the model's exported methods.
+
+### Separating our Controllers
+
+Now that we have a model, we can isolate our controllers into their own file. Each controller only needs to:
+
+1. Parse the request inputs (`req.params`, `req.body`)
+2. Call the appropriate model method
+3. Send the response
+
+* Move all of your controller functions into the `controllers/fellowControllers.js` file.
+* Import the model at the top and call its methods instead of manipulating the data directly.
+* Declare your controllers as properties of the `module.exports` object.
 
 {% code title="server/controllers/fellowControllers.js" %}
 ```js
@@ -299,6 +291,31 @@ module.exports.updateFellow = (req, res) => {
 };
 ```
 {% endcode %}
+
+Notice that the controllers no longer reference `fellows` directly — all data logic is delegated to `fellowModel`.
+
+### index.js as the Coordinator
+
+Finally, `index.js` acts as the coordinator / orchestrator. It builds the `app`, configures middleware, imports the controllers, and registers each endpoint. It does not contain any data logic or controller logic itself.
+
+* Import the collection of controllers (it is an object containing all of our controller methods):
+
+    ```js
+    // Import the entire exports object
+    const fellowControllers = require('./controllers/fellowControllers');
+    ```
+
+* Register each endpoint, passing the corresponding controller as the handler:
+
+    ```js
+    app.get('/api/fellows', fellowControllers.listFellows);
+    app.get('/api/fellows/:id', fellowControllers.findFellow);
+    app.post('/api/fellows', fellowControllers.createFellow);
+    app.patch('/api/fellows/:id', fellowControllers.updateFellow);
+    app.delete('/api/fellows/:id', fellowControllers.deleteFellow);
+    ```
+
+`index.js` knows *what* routes exist and *which controller* handles each one — nothing more. The three layers are now cleanly separated.
 
 ## Challenge
 
