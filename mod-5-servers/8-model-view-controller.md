@@ -329,6 +329,40 @@ Build a `Song` model and a server application for maintaining a playlist. Each s
 
 Then, create an endpoint and a controller for each of these pieces of functionality. The endpoints should follow REST conventions and should all begin with `/api`
 
+Test your endpoints using `curl` commands. Take note of the response headers and body:
+
+```sh
+# GET /api/songs
+curl http://localhost:8080/api/songs
+
+# POST /api/songs (with missing inputs)
+curl -X POST http://localhost:8080/api/songs -H "Content-Type: application/json" -d '{"title":"Money Trees"}'
+
+# POST /api/songs 
+curl -X POST http://localhost:8080/api/songs -H "Content-Type: application/json" -d '{"title":"Money Trees","artist":"Kendrick Lamar"}'
+curl http://localhost:8080/api/songs
+
+# GET /api/songs/100 (with invalid ID)
+curl http://localhost:8080/api/songs/100
+
+# GET /api/songs/1
+curl http://localhost:8080/api/songs/1
+
+# PATCH /api/songs/100 (with invalid ID)
+curl -X PATCH http://localhost:8080/api/songs/1 -H "Content-Type: application/json" -d '{"title":"Updated Title", "artist: "Updated Artist"}'
+
+# PATCH /api/songs/1 (with missing inputs)
+curl -X PATCH http://localhost:8080/api/songs/1 -H "Content-Type: application/json" -d '{"title":"Updated Title"}'
+
+# PATCH /api/songs/1
+curl -X PATCH http://localhost:8080/api/songs/1 -H "Content-Type: application/json" -d '{"title":"Updated Title", "artist: "Updated Artist"}'
+curl http://localhost:8080/api/songs
+
+# DELETE /api/songs/1
+curl -X DELETE http://localhost:8080/api/songs/1
+curl http://localhost:8080/api/songs
+```
+
 Finally, build a Vanilla JS frontend application that can interact with the songs API that you've built. It should be able to:
 
 * Create: Add a new song to the list using a form.
