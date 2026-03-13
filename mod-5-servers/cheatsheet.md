@@ -1,26 +1,27 @@
 # Cheat Sheet
+- [How the Internet Works](#how-the-internet-works)
+  - [Internet Basics](#internet-basics)
+  - [HTTP: The Request-Response Cycle](#http-the-request-response-cycle)
+  - [HTTP Status Codes](#http-status-codes)
+- [Server Basics](#server-basics)
+  - [Host, Port, and Localhost](#host-port-and-localhost)
+  - [A `node:http` Server](#a-nodehttp-server)
+- [Express](#express)
+  - [Express Basics](#express-basics)
+  - [Middleware](#middleware)
+  - [Serving Static Assets](#serving-static-assets)
+  - [Environment Variables](#environment-variables)
+  - [Sending Frontend-to-Backend Requests (Vite Proxy)](#sending-frontend-to-backend-requests-vite-proxy)
+- [RESTful CRUD API](#restful-crud-api)
+  - [REST Principles](#rest-principles)
+  - [CRUD and HTTP Methods](#crud-and-http-methods)
+  - [Route Parameters](#route-parameters)
+  - [Handling POST and PATCH Request Bodies](#handling-post-and-patch-request-bodies)
+- [Model-View-Controller (MVC)](#model-view-controller-mvc)
+  - [MVC Architecture](#mvc-architecture)
+  - [Example](#example)
+- [Use `curl` to Test Endpoints](#use-curl-to-test-endpoints)
 
-* [How the Internet Works](cheatsheet.md#how-the-internet-works)
-  * [Internet Basics](cheatsheet.md#internet-basics)
-  * [HTTP: The Request-Response Cycle](cheatsheet.md#http-the-request-response-cycle)
-  * [HTTP Status Codes](cheatsheet.md#http-status-codes)
-* [Server Basics](cheatsheet.md#server-basics)
-  * [Host, Port, and Localhost](cheatsheet.md#host-port-and-localhost)
-  * [A `node:http` Server](cheatsheet.md#a-nodehttp-server)
-* [Express](cheatsheet.md#express)
-  * [Express Basics](cheatsheet.md#express-basics)
-  * [Middleware](cheatsheet.md#middleware)
-  * [Serving Static Assets](cheatsheet.md#serving-static-assets)
-  * [Environment Variables](cheatsheet.md#environment-variables)
-  * [Sending Frontend-to-Backend Requests (Vite Proxy)](cheatsheet.md#sending-frontend-to-backend-requests-vite-proxy)
-* [RESTful CRUD API](cheatsheet.md#restful-crud-api)
-  * [REST Principles](cheatsheet.md#rest-principles)
-  * [CRUD and HTTP Methods](cheatsheet.md#crud-and-http-methods)
-  * [Route Parameters](cheatsheet.md#route-parameters)
-  * [Handling POST and PATCH Request Bodies](cheatsheet.md#handling-post-and-patch-request-bodies)
-* [Model-View-Controller (MVC)](cheatsheet.md#model-view-controller-mvc)
-  * [MVC Architecture](cheatsheet.md#mvc-architecture)
-  * [Example](cheatsheet.md#example)
 
 ![](../.gitbook/assets/client-server-database.svg)
 
@@ -469,4 +470,40 @@ module.exports.createFellow = (req, res) => {
   if (!fellowName) return res.status(400).send({ message: 'Invalid Name' });
   res.status(201).send(fellowModel.create(fellowName));
 };
+```
+
+## Use `curl` to Test Endpoints
+
+Test your endpoints using `curl` commands. Take note of the response headers and body:
+
+```sh
+# GET /api/songs
+curl http://localhost:8080/api/songs
+
+# POST /api/songs (with missing inputs)
+curl -X POST http://localhost:8080/api/songs -H "Content-Type: application/json" -d '{"title":"Money Trees"}'
+
+# POST /api/songs 
+curl -X POST http://localhost:8080/api/songs -H "Content-Type: application/json" -d '{"title":"Money Trees","artist":"Kendrick Lamar"}'
+curl http://localhost:8080/api/songs
+
+# GET /api/songs/100 (with invalid ID)
+curl http://localhost:8080/api/songs/100
+
+# GET /api/songs/1
+curl http://localhost:8080/api/songs/1
+
+# PATCH /api/songs/100 (with invalid ID)
+curl -X PATCH http://localhost:8080/api/songs/1 -H "Content-Type: application/json" -d '{"title":"Updated Title", "artist: "Updated Artist"}'
+
+# PATCH /api/songs/1 (with missing inputs)
+curl -X PATCH http://localhost:8080/api/songs/1 -H "Content-Type: application/json" -d '{"title":"Updated Title"}'
+
+# PATCH /api/songs/1
+curl -X PATCH http://localhost:8080/api/songs/1 -H "Content-Type: application/json" -d '{"title":"Updated Title", "artist: "Updated Artist"}'
+curl http://localhost:8080/api/songs
+
+# DELETE /api/songs/1
+curl -X DELETE http://localhost:8080/api/songs/1
+curl http://localhost:8080/api/songs
 ```
