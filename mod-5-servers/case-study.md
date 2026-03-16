@@ -34,6 +34,8 @@ This case study application is a full-stack **Bookmark Manager** built with Expr
 
 This case study demonstrates Express server setup, REST API design, the MVC (Model-View-Controller) architecture pattern, and connecting a frontend to a locally hosted backend via `fetch`.
 
+![Controllers use the Fellow Model interface to update the "database" before sending a response back to the client.](./img/8-model-view-controller/express-middleware-model.jpg)
+
 The completed solution files are:
 
 - `server/index.js` — Express server with middleware and routes
@@ -116,7 +118,7 @@ Open each file and answer the questions.
 1. What does `express.json()` middleware do, and why is it needed?
 2. What does `express.static(pathToFrontend)` do? What is the `__dirname` variable's value and how is it used to construct the final `pathToFrontend` value? (console log both `__dirname` and `pathToFrontend` to find out)
 3. What does the `logRoutes` middleware do, and what happens if you remove the `next()` call?
-4. Use `curl` to test each endpoint below. For each, record the **status code**, the **terminal log** printed by the server, and a **brief description** of the response:
+4. With the serving running, use `curl` to test each endpoint below. For each, record the **status code**, the **terminal log** printed by the server, and a **brief description** of the response:
     
 ```sh
 # GET /api/bookmarks
