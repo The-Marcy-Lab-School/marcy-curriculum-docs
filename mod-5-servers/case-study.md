@@ -60,15 +60,15 @@ An example is provided for the first scenario.
 
 #### Scenario 1: The page loads and bookmarks are rendered on the screen
 
-1. **`main.js`**: `main()` is called on page load.
-2. **`main.js`**: `await getBookmarks()` is called.
+1. **`frontend/src/main.js`**: `main()` is called on page load.
+2. **`frontend/src/main.js`**: `await getBookmarks()` is called.
 3. **`frontend/src/fetch-helpers.js`**: `getBookmarks()` sends a `GET /api/bookmarks` request to the server.
 4. **`server/index.js`**: The `logRoutes` middleware logs the request, then `app.get('/api/bookmarks', listBookmarks)` matches and calls `listBookmarks`.
 5. **`server/controllers/bookmarkControllers.js`**: `listBookmarks()` calls `bookmarkModel.list()`.
 6. **`server/models/bookmarkModel.js`**: `bookmarkModel.list()` returns a shallow copy of the in-memory bookmarks array.
 7. **`server/controllers/bookmarkControllers.js`**: `res.send(bookmarks)` sends the array as JSON to the client.
 8. **`frontend/src/fetch-helpers.js`**: `response.json()` parses the JSON and the array is returned.
-9. **`main.js`**: `renderBookmarks(bookmarks)` is called with the resolved array.
+9. **`frontend/src/main.js`**: `renderBookmarks(bookmarks)` is called with the resolved array.
 10. **`frontend/src/dom-helpers.js`**: `renderBookmarks()` clears the list, updates the count, creates `<li>` elements with links and delete buttons, and appends them to `#bookmarks-list`.
 
 #### Scenario 2: The user fills out the form and submits a new bookmark
@@ -77,15 +77,15 @@ An example is provided for the first scenario.
 
 <summary><strong>Answer</strong></summary>
 
-1. **`main.js`**: The `submit` event fires on `#bookmark-form`, calling `handleFormSubmit`.
-2. **`main.js`**: `event.preventDefault()` stops the page from reloading; `title` and `url` are read from `form.title.value` and `form.url.value`.
-3. **`main.js`**: `await createBookmark(title, url)` is called.
-4. **`frontend/src/fetch-helpers.js`**: `createBookmark()` sends a `POST /api/bookmarks` request with `Content-Type: application/json` and the bookmark data serialized in the request body.
+1. **`frontend/src/main.js`**: The `submit` event fires on `#bookmark-form`, calling `handleFormSubmit`.
+2. **`frontend/src/main.js`**: The `title` and `url` are read from `form.title.value` and `form.url.value` and `await createBookmark(title, url)` is called.
+4. **`frontend/src/fetch-helpers.js`**: `createBookmark()` sends a `POST /api/bookmarks` request with `Content-Type: application/json` and the bookmark data stringified in the request body.
 5. **`server/index.js`**: `express.json()` middleware parses the request body into `req.body`. `app.post('/api/bookmarks', createBookmark)` matches and calls the `createBookmark` controller.
-6. **`server/controllers/bookmarkControllers.js`**: The controller validates `title` and `url`, calls `bookmarkModel.create(title, url)`, adds a `createdAt` timestamp, and sends a `201` response with the new bookmark.
+6. **`server/controllers/bookmarkControllers.js`**: The controller validates `title` and `url`, calls `bookmarkModel.create(title, url)`.
 7. **`server/models/bookmarkModel.js`**: `bookmarkModel.create()` generates a new `id`, pushes the new bookmark into the array, and returns it.
-8. **`main.js`**: `await getBookmarks()` is called to retrieve the full updated list.
-9. **`main.js`**: `renderBookmarks(updated)` re-renders all bookmarks. `form.reset()` clears the form inputs.
+8. **`server/controllers/bookmarkControllers.js`**: The controller adds a `createdAt` timestamp to the new bookmark (which should happen in the model) and and sends a `201` response with the new bookmark.
+9. **`frontend/src/main.js`**: `await getBookmarks()` is called to retrieve the full updated list.
+10. **`frontend/src/main.js`**: `renderBookmarks(updated)` re-renders all bookmarks.
 
 </details>
 
@@ -95,15 +95,14 @@ An example is provided for the first scenario.
 
 <summary><strong>Answer</strong></summary>
 
-1. **`main.js`**: A click event fires on `#bookmarks-list`, calling `handleDeleteBookmarkClick`.
-2. **`main.js`**: `event.target.closest('.delete-btn')` finds the clicked button. If none is found, the handler returns early.
-3. **`main.js`**: `await deleteBookmark(clickedBtn.dataset.bookmarkId)` is called with the bookmark's id stored in the button's `data-bookmark-id` attribute.
-4. **`frontend/src/fetch-helpers.js`**: `deleteBookmark()` sends a `DELETE /api/bookmarks/:id` request to the server.
-5. **`server/index.js`**: `app.delete('/api/bookmarks/:id', deleteBookmark)` matches and calls the `deleteBookmark` controller.
-6. **`server/controllers/bookmarkControllers.js`**: The controller calls `bookmarkModel.destroy(Number(id))`.
-7. **`server/models/bookmarkModel.js`**: `bookmarkModel.destroy()` finds the bookmark by index, removes it with `splice`, and returns `true`. Returns `false` if not found.
-8. **`server/controllers/bookmarkControllers.js`**: `res.sendStatus(204)` sends an empty `204 No Content` response.
-9. **`main.js`**: `await getBookmarks()` re-fetches the updated list, then `renderBookmarks(updated)` re-renders.
+1. **`frontend/src/main.js`**: A click event fires on `#bookmarks-list`, calling `handleDeleteBookmarkClick`.
+2. **`frontend/src/main.js`**: `handleDeleteBookmarkClick` gets the bookmark's `id` from the clicked button's `data-bookmark-id` attribute and calls `await deleteBookmark(clickedBtn.dataset.bookmarkId)`.
+3. **`frontend/src/fetch-helpers.js`**: `deleteBookmark()` sends a `DELETE /api/bookmarks/:id` request to the server.
+4. **`server/index.js`**: `app.delete('/api/bookmarks/:id', deleteBookmark)` matches and calls the `deleteBookmark` controller.
+5. **`server/controllers/bookmarkControllers.js`**: The controller calls `bookmarkModel.destroy(Number(id))`.
+6. **`server/models/bookmarkModel.js`**: `bookmarkModel.destroy()` finds the bookmark by index, removes it with `splice`, and returns `true`. Returns `false` if not found.
+7. **`server/controllers/bookmarkControllers.js`**: `res.sendStatus(204)` sends an empty `204 No Content` response.
+8. **`frontend/src/main.js`**: `await getBookmarks()` re-fetches the updated list, then `renderBookmarks(updated)` re-renders.
 
 </details>
 
@@ -153,8 +152,8 @@ Files like these prevent you from needing to type out the entire command directl
 <summary><strong>Answers</strong></summary>
 
 1. `express.json()` parses incoming requests with a JSON body and attaches the result to `req.body`. Without it, `req.body` would be `undefined` when a client sends JSON (e.g., on `POST` or `PATCH` requests).
-2. `express.static()` serves all files in a given folder as static assets. `__dirname` is a Node.js variable that holds the absolute path to the directory of the current file — in this case, the `server/` folder. `path.join(__dirname, '../frontend')` navigates one level up and into `frontend/`, so `pathToFrontend` is the absolute path to the `frontend/` folder. Visiting `http://localhost:8080` then delivers `frontend/index.html` automatically.
-3. `logRoutes` logs the HTTP method, URL, and timestamp for every incoming request. If `next()` is removed, the request would hang — the middleware would never pass control to the next handler in the chain.
+2. `express.static()` serves all files in a given folder as static assets. `__dirname` is a Node.js variable that holds the absolute path to the directory of the current file — in this case, the `swe-casestudy-5/server/` folder. `path.join(__dirname, '../frontend')` navigates one level up and into `frontend/` to create the absolute path to the `frontend/` folder which is stored in `pathToFrontend`. Visiting `http://localhost:8080` then delivers `frontend/index.html` automatically.
+3. `logRoutes` logs the HTTP method, URL, and timestamp for every incoming request. If `next()` is removed the middleware would never pass control to the next handler in the chain and since `logRoutes` doesn't send a response itself, the request would "hang" (the client would be waiting forever).
 4. Sample curl commands and responses:
 
 ```sh
@@ -168,7 +167,7 @@ curl -X POST http://localhost:8080/api/bookmarks -H "Content-Type: application/j
 
 # GET /api/bookmarks/999
 curl http://localhost:8080/api/bookmarks/999
-# → 404, logs "GET: /api/bookmarks/999", returns { "message": "Bookmark with id 999 not found" }
+# → 404, logs "GET: /api/bookmarks/999", returns an error message saying the provided bookmark id couldn't be found
 
 # PATCH /api/bookmarks/1
 curl -X PATCH http://localhost:8080/api/bookmarks/1 -H "Content-Type: application/json" -d '{"title":"Updated Title"}'
@@ -185,17 +184,17 @@ curl http://localhost:8080/api/bookmarks
 
 #### `server/models/bookmarkModel.js`
 
-1. Where is the "database" stored, and what are its limitations compared to a real database? What happens to the bookmark data if you restart the server?
-2. Why does `bookmarkModel.list()` return `[...bookmarks]` instead of just `bookmarks`? Why do `find` and `update` return `{ ...bookmark }` instead of `bookmark`?
-3. What does `bookmarkModel.find()` return if no bookmark matches the `id`? What does `bookmarkModel.destroy()` return if no match is found?
+1. Where is the "database" stored? What are its limitations compared to a real database? What happens to the bookmark data if you restart the server?
+2. Why does `bookmarkModel.list()` return `[...bookmarks]` instead of just `bookmarks`? Why do `find` and `update` return `{ ...bookmark }` instead of `bookmark`? How does this relate to separation of concerns?
+3. What does `bookmarkModel.update()` return if no bookmark matches the `id`? What does `bookmarkModel.destroy()` return if no match is found? The data types of these two return values are different—what justification can you provide to explain this difference?
 
 <details>
 
 <summary><strong>Answers</strong></summary>
 
-1. The bookmarks are stored in an in-memory JavaScript array (`const bookmarks = [...]`). Limitations: data is lost on server restart, it cannot be queried with SQL, there is no persistence to disk, and it does not scale across multiple server instances. All bookmark data resets to the three hardcoded initial values each time the module is reloaded.
-2. `[...bookmarks]` returns a shallow copy of the array so callers can't accidentally mutate the internal store by modifying the returned reference. `{ ...bookmark }` does the same for individual objects — it returns a copy so callers cannot mutate the stored record directly.
-3. `bookmarkModel.find()` returns `null` explicitly when no bookmark matches. `bookmarkModel.destroy()` returns `false` when no matching bookmark is found.
+1. The bookmarks are stored in an in-memory JavaScript array (`const bookmarks = [...]`). Limitations: changes to the data are lost on server restart. All bookmark data resets to the three hardcoded initial values each time the module is reloaded.
+2. `[...bookmarks]` returns a shallow copy of the array so callers can't accidentally mutate the internal store by modifying the returned reference. `{ ...bookmark }` does the same for individual objects — it returns a copy so callers cannot mutate the stored record directly. This creates a safe interface that encapsulates the `bookmarks` data and creates clearer separation of concerns.
+3. `bookmarkModel.update()` returns `null` explicitly when no bookmark matches. `bookmarkModel.destroy()` returns `false` when no matching bookmark is found. Each of these return values complement the value returned when the operation is successful. `bookmarkModel.update()` returns an object when successful and `null` is the absence of a valid object. Meanwhile `bookmarkModel.destroy()` returns `true` and `false` is the opposite/absence of a `true` value.
 
 </details>
 
@@ -205,7 +204,7 @@ curl http://localhost:8080/api/bookmarks
 2. What HTTP status code does `createBookmark` send on success, and why is `201` more appropriate than `200`?
 3. There is an intentional design inconsistency in `createBookmark`. What is it, and how would you fix it?
 4. How do `updateBookmark` and `deleteBookmark` handle the case where the target bookmark does not exist?
-5. Look at the endpoints defined across `server/index.js` and the controllers. For each endpoint, identify the HTTP method, URL pattern, and which CRUD operation it performs. How do these endpoints follow REST conventions?
+5. Look at the endpoints defined across `server/index.js` and the controllers. For each endpoint, observe the HTTP method, URL pattern, and which CRUD operation it performs. How do these endpoints follow REST conventions?
 
 <details>
 
@@ -214,7 +213,7 @@ curl http://localhost:8080/api/bookmarks
 1. URL parameters are always strings. `bookmarkModel.find()` compares with `===`, so `"1" === 1` would be `false`. `Number(id)` converts the string to a number so the comparison works correctly.
 2. `201 Created` is more semantically accurate — it signals that a new resource was successfully created, not just that the request succeeded. `200 OK` typically means the request succeeded but no new resource was created.
 3. `createBookmark` adds `newBookmark.createdAt = new Date().toISOString()` in the controller. Adding fields to the data is a Model responsibility, not a Controller responsibility. To fix it, move the `createdAt` assignment into `bookmarkModel.create()`.
-4. `updateBookmark` checks if the model method returned `null` and responds with `404`. `deleteBookmark` checks if `bookmarkModel.destroy()` returned `false` and responds with `404`. Both use `return` to short-circuit so `res.send()` is not called a second time. On success, `deleteBookmark` sends `res.sendStatus(204)` — a `204 No Content` response with no body.
+4. `updateBookmark` and `deleteBookmark` both send `404` responses if the associated `bookmarkModel` method fails (if `bookmarkModel.update()` returns `null` and `bookmarkModel.destroy()` returns `false`). Both use `return` to short-circuit so `res.send()` is not called a second time.
 5. REST analysis:
 
 | Method   | URL                  | CRUD   | Notes                                     |
@@ -233,7 +232,7 @@ These follow REST conventions: resources are identified by URL (`/api/bookmarks`
 
 1. The mod-4 fetch helpers targeted external URLs like `https://dummyjson.com/recipes`. These target `/api/bookmarks`. What is the difference, and why does this work?
 2. All three helpers use `async`/`await` with `try`/`catch`. What does each helper return on failure?
-3. `createBookmark` includes a `headers` object and a `body`. Why are both needed when making a `POST` request?
+3. `createBookmark` includes a `headers` object and a `body`. Why are both needed when making a `POST` request? What other requests include `headers`? Why does a `DELETE` request NOT need `headers`?
 
 <details>
 
@@ -241,7 +240,7 @@ These follow REST conventions: resources are identified by URL (`/api/bookmarks`
 
 1. `/api/bookmarks` is a relative URL — it automatically prepends the current origin (`http://localhost:8080`). It works because the frontend is served by the same Express server as the API, so both share the same origin.
 2. `getBookmarks` returns `[]` on failure. `createBookmark` returns `null` on failure. `deleteBookmark` returns `false` on failure. Callers must check for these values before using the result.
-3. `headers: { 'Content-Type': 'application/json' }` tells the server the body is JSON-formatted text. `body: JSON.stringify(...)` converts the JavaScript object into a JSON string. Both are required — without the header, `express.json()` won't parse the body; without `JSON.stringify`, the body would be sent as `[object Object]`.
+3. `headers: { 'Content-Type': 'application/json' }` tells the server the body is JSON-formatted text. `body: JSON.stringify(...)` converts the JavaScript object into a JSON string. Both are required — without the header, `express.json()` won't parse the body; without `JSON.stringify`, the body would be sent as `[object Object]`. `PATCH` requests also need `headers` since they also include a request body. `DELETE` requests have no request body so they don't need `headers`.
 
 </details>
 
