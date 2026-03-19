@@ -10,21 +10,22 @@ In the last lesson, you built an HTTP server from scratch using Node's built-in 
 
 **Table of Contents:**
 
-* [Essential Questions](4-intro-to-express.md#essential-questions)
-* [Key Concepts](4-intro-to-express.md#key-concepts)
-* [Review: The Client-Server Model](4-intro-to-express.md#review-the-client-server-model)
-* [From `node:http` to Express](4-intro-to-express.md#from-nodehttp-to-express)
-  * [What Express Handles For You](4-intro-to-express.md#what-express-handles-for-you)
-  * [Installing and Creating the App](4-intro-to-express.md#installing-and-creating-the-app)
-* [Endpoints and Controllers](4-intro-to-express.md#endpoints-and-controllers)
-  * [The Controller Signature](4-intro-to-express.md#the-controller-signature)
-  * [Sending Responses](4-intro-to-express.md#sending-responses)
-  * [Specifying Status](4-intro-to-express.md#specifying-status)
-* [The Request Object](4-intro-to-express.md#the-request-object)
-  * [Query Strings](4-intro-to-express.md#query-strings)
-  * [Route Parameters](4-intro-to-express.md#route-parameters)
-* [Complete Code](4-intro-to-express.md#complete-code)
-* [What's Next: Middleware](4-intro-to-express.md#whats-next-middleware)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Review: The Client-Server Model](#review-the-client-server-model)
+- [From `node:http` to Express](#from-nodehttp-to-express)
+  - [What Express Handles For You](#what-express-handles-for-you)
+  - [Installing and Creating the App](#installing-and-creating-the-app)
+- [Endpoints and Controllers](#endpoints-and-controllers)
+  - [The Controller Signature](#the-controller-signature)
+  - [Sending Responses](#sending-responses)
+  - [Specifying Status](#specifying-status)
+- [The Request Object](#the-request-object)
+  - [Query Strings](#query-strings)
+  - [Route Parameters](#route-parameters)
+- [Complete Code](#complete-code)
+- [What's Next: Middleware](#whats-next-middleware)
+
 
 ## Essential Questions
 

@@ -10,17 +10,17 @@ Thus far, we have not been able to deploy a project that uses an API key without
 
 **Table of Contents:**
 
-* [Essential Questions](6-environment-variables-deployment.md#essential-questions)
-* [Key Concepts](6-environment-variables-deployment.md#key-concepts)
-* [Setup](6-environment-variables-deployment.md#setup)
-* [What is an API Key?](6-environment-variables-deployment.md#what-is-an-api-key)
-* [API Keys in Client-Side Code](6-environment-variables-deployment.md#api-keys-in-client-side-code)
-* [The Proxy Server Strategy](6-environment-variables-deployment.md#the-proxy-server-strategy)
-  * [Fetch In the Server-Side Controller](6-environment-variables-deployment.md#fetch-in-the-server-side-controller)
-  * [Same Origin Requests from the Frontend](6-environment-variables-deployment.md#same-origin-requests-from-the-frontend)
-  * [Environment Variables, Dotenv, and gitignore](6-environment-variables-deployment.md#environment-variables-dotenv-and-gitignore)
-  * [Deploying with Environment Variables](6-environment-variables-deployment.md#deploying-with-environment-variables)
-* [Complete Code](6-environment-variables-deployment.md#complete-code)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Setup](#setup)
+- [What is an API Key?](#what-is-an-api-key)
+- [API Keys in Client-Side Code](#api-keys-in-client-side-code)
+- [The Proxy Server Strategy](#the-proxy-server-strategy)
+  - [Fetch In the Server-Side Controller](#fetch-in-the-server-side-controller)
+  - [Same Origin Requests from the Frontend](#same-origin-requests-from-the-frontend)
+  - [Environment Variables, Dotenv, and gitignore](#environment-variables-dotenv-and-gitignore)
+  - [Deploying with Environment Variables](#deploying-with-environment-variables)
+- [Complete Code](#complete-code)
 
 ## Essential Questions
 

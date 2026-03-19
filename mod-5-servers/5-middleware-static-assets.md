@@ -8,18 +8,19 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 **Table of Contents:**
 
-* [Essential Questions](5-middleware-static-assets.md#essential-questions)
-* [Key Concepts](5-middleware-static-assets.md#key-concepts)
-* [Express Review](5-middleware-static-assets.md#express-review)
-* [Middleware and `next()`](5-middleware-static-assets.md#middleware-and-next)
-* [Static Web Servers](5-middleware-static-assets.md#static-web-servers)
-  * [Serving Vite Static Assets](5-middleware-static-assets.md#serving-vite-static-assets)
-  * [`express.static()` Middleware](5-middleware-static-assets.md#expressstatic-middleware)
-* [Fetch Requests to the Same Origin](5-middleware-static-assets.md#fetch-requests-to-the-same-origin)
-* [Deploying Web Server to Render](5-middleware-static-assets.md#deploying-web-server-to-render)
-  * [Create a New Web Service](5-middleware-static-assets.md#create-a-new-web-service)
-  * [Best Practice — Serving the Dist Folder and Continuous Deployment](5-middleware-static-assets.md#best-practice--serving-the-dist-folder-and-continuous-deployment)
-* [Complete Code](5-middleware-static-assets.md#complete-code)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Express Review](#express-review)
+- [Middleware and `next()`](#middleware-and-next)
+- [Static Web Servers](#static-web-servers)
+  - [Serving Vite Static Assets](#serving-vite-static-assets)
+  - [`express.static()` Middleware](#expressstatic-middleware)
+- [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
+- [Deploying Web Server to Render](#deploying-web-server-to-render)
+  - [Create a New Web Service](#create-a-new-web-service)
+  - [Best Practice — Serving the Dist Folder and Continuous Deployment](#best-practice--serving-the-dist-folder-and-continuous-deployment)
+- [Complete Code](#complete-code)
+
 
 ## Essential Questions
 

@@ -12,21 +12,21 @@ We'll also use `curl`, a command-line tool for sending HTTP requests, to see exa
 
 **Table of Contents:**
 
-* [Essential Questions](3-server-basics-http-server.md#essential-questions)
-* [Key Concepts](3-server-basics-http-server.md#key-concepts)
-* [What Does "Listening" Mean?](3-server-basics-http-server.md#what-does-listening-mean)
-* [Your First Server with `node:http`](3-server-basics-http-server.md#your-first-server-with-nodehttp)
-  * [Creating the Server](3-server-basics-http-server.md#creating-the-server)
-  * [The Request Object](3-server-basics-http-server.md#the-request-object)
-    * [Query Strings](3-server-basics-http-server.md#query-strings)
-  * [The Response Object](3-server-basics-http-server.md#the-response-object)
-* [Routing Manually](3-server-basics-http-server.md#routing-manually)
-* [Sending Requests with `curl`](3-server-basics-http-server.md#sending-requests-with-curl)
-  * [Basic Requests](3-server-basics-http-server.md#basic-requests)
-  * [Viewing Headers](3-server-basics-http-server.md#viewing-headers)
-  * [Sending a POST Request](3-server-basics-http-server.md#sending-a-post-request)
-* [Why Express?](3-server-basics-http-server.md#why-express)
-* [Complete Code](3-server-basics-http-server.md#complete-code)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [What Does "Listening" Mean?](#what-does-listening-mean)
+- [Your First Server with `node:http`](#your-first-server-with-nodehttp)
+  - [Creating the Server](#creating-the-server)
+  - [The Request Object](#the-request-object)
+    - [Query Strings](#query-strings)
+  - [The Response Object](#the-response-object)
+- [Routing Manually](#routing-manually)
+- [Sending Requests with `curl`](#sending-requests-with-curl)
+  - [Basic Requests](#basic-requests)
+  - [Viewing Headers](#viewing-headers)
+  - [Sending a POST Request](#sending-a-post-request)
+- [Why Express?](#why-express)
+- [Complete Code](#complete-code)
 
 ## Essential Questions
 
