@@ -105,6 +105,7 @@
   * [7. Hashing Passwords with Bcrypt](mod-6-databases/15-hashing-passwords-bcrypt.md)
   * [8. Sessions & Login](mod-6-databases/16-sessions-login.md)
   * [9. Authorization Middleware](mod-6-databases/17-authorization-middleware.md)
+  * [Case Study: Social Bookmark Manager](mod-6-databases/case-study.md)
   * [Cheat Sheet](mod-6-databases/cheatsheet.md)
 * [Mod 7 - React](mod-7-react/README.md)
   * [Overview](mod-7-react/Overview.md)
