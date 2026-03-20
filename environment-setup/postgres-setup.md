@@ -17,29 +17,6 @@ Welcome! This guide will help you set up **PostgreSQL** (often shorted to just P
   * [Tableplus Postgres Server Connection Configuration](postgres-setup.md#tableplus-postgres-server-connection-configuration)
 * [Troubleshooting](postgres-setup.md#troubleshooting)
 
-## What even is a database?
-
-A **database** is a structured collection of data that is organized and stored in a way that computers can efficiently retrieve, manage, and update the data.
-
-Postgres is a **relational database management system** (RDBMS), a program that makes it easier for users to find, update, and manage the data through the use of **SQL** queries.
-
-{% hint style="success" %}
-If a database is like a library, then a relational database management system is like a librarian with a particular catalog system.
-{% endhint %}
-
-Here's some quick info about Postgres and relational database management systems:
-
-* Data is separated into collections called **tables**, spreadsheet-like structures that represent a single type of value or "entity" (_e.g. users, posts, comments, likes, etc..._)
-  * Each **row** represents a single resource in the table. (_e.g. a single user in the users table_)
-  * Each **column** defines a property that all resources of a table share (_e.g. a users table has `id`, `username`, and `password` columns_).
-* Tables can be related to each other, typically by referencing the `id` of another table (_e.g. a posts table has a `user_id` column so that each post is related to the user in the users table that created it_)
-
-{% hint style="info" %}
-While there are many types of database management systems, each with their own approach to managing a database, [Postgres is the most popular](https://survey.stackoverflow.co/2024/technology/#1-databases). The next 3 most popular are also RDBMSs too!
-
-Popular non-relational database management systems include [MongoDB](https://www.mongodb.com/), [Redis](https://redis.io/), and [Firebase](https://firebase.google.com/).
-{% endhint %}
-
 ## Installation Instructions
 
 Follow the instructions below according to your operating system:
