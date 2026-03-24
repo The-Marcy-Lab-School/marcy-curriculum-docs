@@ -12,6 +12,8 @@ SQL is what you use to ask Postgres for data, add new data, change existing data
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
+- [Review: How does PostgreSQL Work?](#review-how-does-postgresql-work)
+- [What is SQL?](#what-is-sql)
 - [SQL Syntax Rules](#sql-syntax-rules)
   - [Rule 1: The Semicolon Terminator](#rule-1-the-semicolon-terminator)
   - [Rule 2: Capitalize Keywords](#rule-2-capitalize-keywords)
@@ -50,9 +52,73 @@ By the end of this lesson, you should be able to answer these questions:
 * **`ORDER BY`** — sorts results by one or more columns.
 * **`LIMIT`** — restricts the number of rows returned.
 
+## Review: How does PostgreSQL Work?
+
+Database management systems (DBMS) like PostgreSQL function similarly to web servers:
+
+* **Networking**: PostgreSQL runs on a specific host and port (defaulting to `5432`).
+* **Interpretation**: It listens for incoming connections and interprets the SQL commands sent by the client.
+* **Execution**: It processes the incoming commands and sends the resulting data back to the requester.
+
+![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
+
+The primary distinction lies in the type of request being handled: while an Express server is built to parse HTTP requests, PostgreSQL is built to parse and execute **Structured Query Language (SQL)**.
+
+## What is SQL?
+
+**SQL** is the universal language that relational database management systems are designed to parse and execute. The goal of SQL is to be easily readable by a human but structured to be consistently parsed by the DBMS.
+
+For example, consider these SQL statements. What do you think they do?
+
+```sql
+INSERT INTO users (name) VALUES ('Alice');
+
+SELECT * FROM users;
+
+SELECT name FROM users;
+
+SELECT name FROM users WHERE id = 1;
+
+UPDATE users SET name = 'Alex' WHERE id = 1;
+
+DELETE FROM users WHERE id = 2;
+```
+
+**<details><summary>Q: What do the SQL statements above do?</summary>**
+
+1. Create a new record in the `users` table
+2. Get the data in all columns from the `users` table
+3. Get only the `name` data for all records in the `users` table
+4. Get only the `name` data for the record with the id `1` in the `users` table
+5. Update `name` of the the user with the id `1` in the `users` table to `'Alex'`
+6. Delete the user with the id `2` from the `users` table. 
+
+</details>
+
+SQL statements are made up of **clauses** and **keywords**.
+
+* A **keyword** is a reserved word that has a fixed meaning in SQL (e.g. The keyword  `SELECT` tells PostgreSQL to retrieve data from the database)
+* A **clause** is the combination of keywords and data values that specify how the action should be carried out. Clauses can be combined to form complex SQL queries. (e.g. `SELECT name FROM users` and `WHERE id = 1` specifies that we want to see the data in the `name` column of the `users` table for the row where the user's id is 1.)
+
 ## SQL Syntax Rules
 
 SQL is highly structured. The database acts as a strict interpreter that expects instructions in a specific format. Keep these four rules in mind to avoid syntax errors.
+
+You can practice these rules using `psql` by connecting to the `films_db` database that you created in [the previous lesson](./1-intro-to-databases-postgres.md#the-psql-cli).
+
+{% tabs %}
+{% tab title="Mac" %}
+```sh
+psql films_db
+```
+{% endtab %}
+{% tab title="Windows + WSL" %}
+```sh
+sudo -u postgres psql films_db
+```
+{% endtab %}
+{% endtabs %}
+
 
 ### Rule 1: The Semicolon Terminator
 
@@ -62,7 +128,7 @@ Every SQL statement must end with a semicolon (`;`). It tells Postgres that a st
 -- ✅ Correct
 SELECT * FROM films;
 
--- ❌ Missing semicolon — psql waits for more input
+-- ❌ Missing semicolon — psql waits for more input (you have to enter ; on the next line)
 SELECT * FROM films
 ```
 
@@ -74,7 +140,7 @@ SQL is case-insensitive — `select` and `SELECT` do the same thing. But by conv
 -- ✅ Easy to read
 SELECT title, genre FROM films WHERE genre = 'sci-fi';
 
--- ❌ Harder to scan
+-- ❌ Works but harder to scan
 select title, genre from films where genre = 'sci-fi';
 ```
 
@@ -151,7 +217,7 @@ SELECT title, year, director FROM films;
 
 ### Filtering with WHERE
 
-`WHERE` filters rows by a condition. Only rows where the condition is true are returned:
+`WHERE` filters rows by a condition (conditions are sometimes called **"predicates"**). Only rows where the condition is true are returned:
 
 ```sql
 -- Films from a specific genre
@@ -166,12 +232,12 @@ SELECT * FROM films WHERE title = 'Parasite';
 
 **Common comparison operators:**
 
-| Operator | Meaning |
-| -------- | ------- |
-| `=` | Equal to |
-| `<>` or `!=` | Not equal to |
-| `>` / `<` | Greater / less than |
-| `>=` / `<=` | Greater / less than or equal |
+| Operator          | Meaning                           |
+| ----------------- | --------------------------------- |
+| `=`               | Equal to                          |
+| `<>` or `!=`      | Not equal to                      |
+| `>` / `<`         | Greater / less than               |
+| `>=` / `<=`       | Greater / less than or equal      |
 | `LIKE 'pattern%'` | Pattern match (`%` is a wildcard) |
 
 ```sql
@@ -318,12 +384,12 @@ DELETE FROM films;
 
 Here's the mapping between CRUD operations and SQL statements:
 
-| CRUD Operation | SQL Statement |
-| -------------- | ------------- |
-| **Create** | `INSERT INTO` |
-| **Read** | `SELECT` |
-| **Update** | `UPDATE ... SET` |
-| **Delete** | `DELETE FROM` |
+| CRUD Operation | SQL Statement    |
+| -------------- | ---------------- |
+| **Create**     | `INSERT INTO`    |
+| **Read**       | `SELECT`         |
+| **Update**     | `UPDATE ... SET` |
+| **Delete**     | `DELETE FROM`    |
 
 Try these practice queries against your `films_db` database in `psql` or TablePlus:
 
