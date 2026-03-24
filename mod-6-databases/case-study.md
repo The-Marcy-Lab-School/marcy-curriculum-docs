@@ -133,42 +133,13 @@ users >──< bookmarks  (through bookmark_likes)
 
 Below, you will find 5 scenarios that exist in this application. For each, draw a sequence diagram to illustrate the flow of data and functions that make each scenario possible.
 
-Scenario 1 is a fully worked example — study the diagram and detailed breakdown to understand the pattern. For Scenarios 2–5, draw your own sequence diagram first, then expand the answer to compare your diagram and check your breakdown.
+Scenario 1 and 2 are both fully worked examples — study the diagrams and detailed breakdown to understand the pattern. For Scenarios 3–5, draw your own sequence diagram first, then expand the answer to compare your diagram and check your breakdown.
 
 ---
 
 #### Scenario 1: The page loads and the public feed is rendered
 
-```mermaid
----
-config:
-  theme: redux-color
-  look: neo
----
-sequenceDiagram
-      autonumber
-      participant DD as dom-helpers.js
-      participant FE as main.js
-      participant FH as fetch-helpers.js
-      participant SV as server/index.js
-      participant AC as authControllers.js
-      participant BC as bookmarkControllers.js
-      participant BM as bookmarkModel.js
-      FE->>FH: getCurrentUser()
-      FH->>SV: GET /api/auth/me
-      SV->>AC: getMe()
-      AC-->>FH: 401 (no session)
-      FH-->>FE: { data: null, error: null }
-      FE->>DD: renderAuthView(null)
-      FE->>FH: refreshFeed()
-      FH->>SV: GET /api/bookmarks
-      SV->>BC: listBookmarks()
-      BC->>BM: list()
-      BM-->>BC: bookmarks[]
-      BC-->>FH: 200 bookmarks[]
-      FH-->>FE: { data: bookmarks, error: null }
-      FE->>DD: renderFeed(bookmarks, null, [])
-```
+![A sequence diagram for scenario 1](./img/case-study/sequence-1.png)
 
 <details>
 
@@ -197,43 +168,9 @@ sequenceDiagram
 
 #### Scenario 2: The user submits the registration form
 
-Draw a sequence diagram for this scenario, then expand to check your answer.
+Note: Observe how the diagram visualizes the two pathways: if the username was taken or if the username is available.
 
-<details>
-
-<summary><strong>Answer</strong></summary>
-
-```mermaid
----
-config:
-  theme: redux-color
-  look: neo
----
-sequenceDiagram
-      autonumber
-      participant DD as dom-helpers.js
-      participant FE as main.js
-      participant FH as fetch-helpers.js
-      participant SV as server/index.js
-      participant AC as authControllers.js
-      participant UM as userModel.js
-      FE->>FH: register(username, password)
-      FH->>SV: POST /api/auth/register
-      SV->>AC: register()
-      AC->>UM: findByUsername(username)
-      UM-->>AC: user | null
-      alt username taken
-            AC-->>FH: 400 { error }
-            FH-->>FE: { data: null, error }
-      else username available
-            AC->>AC: bcrypt.hash(password)
-            AC->>UM: create(username, passwordHash)
-            UM-->>AC: { user_id, username }
-            AC-->>FH: 201 { user_id, username }
-            FH-->>FE: { data: user, error: null }
-            FE->>DD: renderAuthView(user)
-      end
-```
+![A sequence diagram for scenario 2](./img/case-study/sequence-2.png)
 
 **Detailed Breakdown**
 
@@ -250,8 +187,6 @@ sequenceDiagram
 11. **`frontend/src/fetch-helpers.js`**: Parses the response and returns `{ data: user, error: null }`.
 12. **`frontend/src/main.js`**: Destructures `{ data: user }`. If `user` is `null` (registration failed), the handler returns early. Otherwise, `currentUser = user`, `renderAuthView(user)` is called — hides auth forms, shows "My Bookmarks" section, and re-renders the feed with like buttons enabled.
 
-</details>
-
 ---
 
 #### Scenario 3: A logged-in user submits the Add Bookmark form
@@ -262,34 +197,7 @@ Draw a sequence diagram for this scenario, then expand to check your answer.
 
 <summary><strong>Answer</strong></summary>
 
-```mermaid
----
-config:
-  theme: redux-color
-  look: neo
----
-sequenceDiagram
-      autonumber
-      participant DD as dom-helpers.js
-      participant FE as main.js
-      participant FH as fetch-helpers.js
-      participant SV as server/index.js
-      participant CA as checkAuthentication.js
-      participant BC as bookmarkControllers.js
-      participant BM as bookmarkModel.js
-      FE->>FH: createBookmark(title, url)
-      FH->>SV: POST /api/bookmarks
-      SV->>CA: checkAuthentication()
-      CA-->>SV: next()
-      SV->>BC: createBookmark()
-      BC->>BM: create(title, url, user_id)
-      BM-->>BC: bookmark
-      BC-->>FH: 201 bookmark
-      FH-->>FE: { data: bookmark, error: null }
-      Note over FE,FH: refreshFeed() and refreshMyBookmarks()
-      FE->>DD: renderFeed(bookmarks, user)
-      FE->>DD: renderMyBookmarks(bookmarks)
-```
+![A sequence diagram for scenario 3](./img/case-study/sequence-3.png)
 
 **Detailed Breakdown**
 
@@ -315,33 +223,7 @@ Draw a sequence diagram for this scenario, then expand to check your answer.
 
 <summary><strong>Answer</strong></summary>
 
-```mermaid
----
-config:
-  theme: redux-color
-  look: neo
----
-sequenceDiagram
-      autonumber
-      participant DD as dom-helpers.js
-      participant FE as main.js
-      participant FH as fetch-helpers.js
-      participant SV as server/index.js
-      participant CA as checkAuthentication.js
-      participant BC as bookmarkControllers.js
-      participant BM as bookmarkModel.js
-      FE->>FH: likeBookmark(bookmark_id)
-      FH->>SV: POST /api/bookmarks/:id/likes
-      SV->>CA: checkAuthentication()
-      CA-->>SV: next()
-      SV->>BC: likeBookmark()
-      BC->>BM: like(bookmark_id, user_id)
-      BM-->>BC: like | null (already liked)
-      BC-->>FH: 201 like (or 200 if already liked)
-      FH-->>FE: { data: true, error: null }
-      Note over FE,FH: refreshFeed()
-      FE->>DD: renderFeed(bookmarks, user)
-```
+![A sequence diagram for scenario 4](./img/case-study/sequence-4.png)
 
 **Detailed Breakdown**
 
@@ -362,51 +244,16 @@ sequenceDiagram
 
 #### Scenario 5: A logged-in user clicks Delete on their own bookmark
 
-Draw a sequence diagram for this scenario, then expand to check your answer.
+Draw a sequence diagram for this scenario, then expand to check your answer. Be sure to include separate sequences for these outcomes:
+1. The bookmark was not found
+2. The user sending the request is not the owner of the bookmark
+3. The user sending the request is the owner and is authorized to delete
 
 <details>
 
 <summary><strong>Answer</strong></summary>
 
-```mermaid
----
-config:
-  theme: redux-color
-  look: neo
----
-sequenceDiagram
-      autonumber
-      participant DD as dom-helpers.js
-      participant FE as main.js
-      participant FH as fetch-helpers.js
-      participant SV as server/index.js
-      participant CA as checkAuthentication.js
-      participant BC as bookmarkControllers.js
-      participant BM as bookmarkModel.js
-      FE->>FH: deleteBookmark(bookmark_id)
-      FH->>SV: DELETE /api/bookmarks/:id
-      SV->>CA: checkAuthentication()
-      CA-->>SV: next()
-      SV->>BC: deleteBookmark()
-      BC->>BM: find(bookmark_id)
-      BM-->>BC: bookmark | null
-      alt bookmark not found
-            BC-->>FH: 404 { error }
-            FH-->>FE: { data: null, error }
-      else not the owner
-            BC-->>FH: 403 { error }
-            FH-->>FE: { data: null, error }
-      else owner confirmed
-            BC->>BM: destroy(bookmark_id)
-            Note over BM: ON DELETE CASCADE removes likes
-            BM-->>BC: (void)
-            BC-->>FH: 204
-            FH-->>FE: { data: null, error: null }
-            Note over FE,FH: refreshFeed() and refreshMyBookmarks()
-            FE->>DD: renderFeed(bookmarks, user)
-            FE->>DD: renderMyBookmarks(bookmarks)
-      end
-```
+![A sequence diagram for scenario 5](./img/case-study/sequence-5.png)
 
 **Detailed Breakdown**
 
