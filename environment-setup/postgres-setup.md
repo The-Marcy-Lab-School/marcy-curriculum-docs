@@ -78,20 +78,20 @@ The `psql` terminal is a way to manage your Postgres databases using a command-l
   * Use the `\l` command again to see the updated list.
 * `\c test`
   * to connect to your new `test` database. You should see the command line prompt change to `test=#`
-* `CREATE TABLE friends ( id INT, name TEXT );`
+* `CREATE TABLE friends ( friend_id INT, name TEXT );`
   * Remember the semicolon!
-  * This will create a table called `friends` with 2 columns called `id` and `name`.
-  * `id` values must be integers and `name` values can be any text.
-* `INSERT INTO friends (id, name) VALUES (1, 'reuben');`
+  * This will create a table called `friends` with 2 columns called `friend_id` and `name`.
+  * `friend_id` values must be integers and `name` values can be any text.
+* `INSERT INTO friends (friend_id, name) VALUES (1, 'reuben');`
   * This will create a row in the `friends` table.
   * Try running this SQL query with different values to add more values to your table
-* `SELECT id FROM friends;`
-  * This will select all rows from the `friends` table, but only show the `id` column
-* `SELECT id, name FROM friends;`
+* `SELECT friend_id FROM friends;`
+  * This will select all rows from the `friends` table, but only show the `friend_id` column
+* `SELECT friend_id, name FROM friends;`
   * This will select the same row, but include the `name` column
 * `SELECT * FROM friends;`
   * This will select all rows and all columns (a different approach to get the same result as above)
-* `SELECT name FROM friends WHERE id=1;`
+* `SELECT name FROM friends WHERE friend_id=1;`
   * What do you think this one does?
 
 You can now exit your psql shell by typing in `\q` and hitting enter
@@ -125,20 +125,20 @@ Now, let's play around with TablePlus. Start by clicking on the Database Icon. T
 
 Next, click on the `SQL` button and write your own SQL queries.
 
-* `CREATE TABLE friends ( id INT, name TEXT );`
+* `CREATE TABLE friends ( friend_id INT, name TEXT );`
   * Remember the semicolon!
-  * This will create a table called `friends` with 2 columns called `id` and `name`.
-  * `id` values must be integers and `name` values can be any text.
-* `INSERT INTO friends (id, name) VALUES (1, 'reuben');`
+  * This will create a table called `friends` with 2 columns called `friend_id` and `name`.
+  * `friend_id` values must be integers and `name` values can be any text.
+* `INSERT INTO friends (friend_id, name) VALUES (1, 'reuben');`
   * This will create a row in the `friends` table.
   * Try running this SQL query with different values to add more values to your table
-* `SELECT id FROM friends;`
-  * This will select all rows from the `friends` table, but only show the `id` column
-* `SELECT id, name FROM friends;`
+* `SELECT friend_id FROM friends;`
+  * This will select all rows from the `friends` table, but only show the `friend_id` column
+* `SELECT friend_id, name FROM friends;`
   * This will select the same row, but include the `name` column
 * `SELECT * FROM friends;`
   * This will select all rows and all columns (a different approach to get the same result as above)
-* `SELECT name FROM friends WHERE id=1;`
+* `SELECT name FROM friends WHERE friend_id=1;`
   * What do you think this one does?
 
 ## Conclusion
