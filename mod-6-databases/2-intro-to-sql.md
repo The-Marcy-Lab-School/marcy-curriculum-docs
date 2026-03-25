@@ -19,15 +19,16 @@ SQL is what you use to ask Postgres for data, add new data, change existing data
   - [Rule 2: Capitalize Keywords](#rule-2-capitalize-keywords)
   - [Rule 3: Single Quotes for Strings](#rule-3-single-quotes-for-strings)
   - [Rule 4: Logical Clause Order](#rule-4-logical-clause-order)
-- [SELECT — Reading Data](#select--reading-data)
-  - [Selecting Specific Columns](#selecting-specific-columns)
-  - [Filtering with WHERE](#filtering-with-where)
-  - [Sorting with ORDER BY](#sorting-with-order-by)
-  - [Limiting Results with LIMIT](#limiting-results-with-limit)
-- [INSERT — Creating Data](#insert--creating-data)
-- [UPDATE — Modifying Data](#update--modifying-data)
-- [DELETE — Removing Data](#delete--removing-data)
-- [Putting It Together: CRUD in SQL](#putting-it-together-crud-in-sql)
+- [CRUD With SQL](#crud-with-sql)
+  - [SELECT — Reading Data](#select--reading-data)
+  - [Modifier Clauses](#modifier-clauses)
+    - [WHERE — Filter Results](#where--filter-results)
+    - [ORDER BY — Sort Results](#order-by--sort-results)
+    - [LIMIT — Top N Results](#limit--top-n-results)
+  - [INSERT — Creating Data](#insert--creating-data)
+  - [UPDATE — Modifying Data](#update--modifying-data)
+  - [DELETE — Removing Data](#delete--removing-data)
+- [Challenge: CRUD in SQL](#challenge-crud-in-sql)
 
 ## Essential Questions
 
@@ -89,16 +90,16 @@ DELETE FROM users WHERE id = 2;
 1. Create a new record in the `users` table
 2. Get the data in all columns from the `users` table
 3. Get only the `name` data for all records in the `users` table
-4. Get only the `name` data for the record with the id `1` in the `users` table
-5. Update `name` of the the user with the id `1` in the `users` table to `'Alex'`
-6. Delete the user with the id `2` from the `users` table. 
+4. Get only the `name` data for the record with the ID `1` in the `users` table
+5. Update `name` of the the user with the ID `1` in the `users` table to `'Alex'`
+6. Delete the user with the ID `2` from the `users` table. 
 
 </details>
 
 SQL statements are made up of **clauses** and **keywords**.
 
 * A **keyword** is a reserved word that has a fixed meaning in SQL (e.g. The keyword  `SELECT` tells PostgreSQL to retrieve data from the database)
-* A **clause** is the combination of keywords and data values that specify how the action should be carried out. Clauses can be combined to form complex SQL queries. (e.g. `SELECT name FROM users` and `WHERE id = 1` specifies that we want to see the data in the `name` column of the `users` table for the row where the user's id is 1.)
+* A **clause** is the combination of keywords and data values that specify how the action should be carried out. Clauses can be combined to form complex SQL queries. (e.g. `SELECT name FROM users` and `WHERE id = 1` specifies that we want to see the data in the `name` column of the `users` table for the row where the user's ID is 1.)
 
 ## SQL Syntax Rules
 
@@ -188,7 +189,9 @@ LIMIT 3;
 ```
 {% endhint %}
 
-## SELECT — Reading Data
+## CRUD With SQL
+
+### SELECT — Reading Data
 
 `SELECT` retrieves rows from a table. The `*` wildcard means "all columns":
 
@@ -198,9 +201,9 @@ SELECT * FROM films;
 
 This returns every row and every column in the `films` table.
 
-### Selecting Specific Columns
+**Selecting Specific Columns**:
 
-List only the columns you need instead of using `*`:
+You can also list only the columns you need instead of using `*`:
 
 ```sql
 SELECT title, genre FROM films;
@@ -215,7 +218,9 @@ SELECT title, year, director FROM films;
 
 </details>
 
-### Filtering with WHERE
+### Modifier Clauses
+
+#### WHERE — Filter Results
 
 `WHERE` filters rows by a condition (conditions are sometimes called **"predicates"**). Only rows where the condition is true are returned:
 
@@ -258,7 +263,7 @@ SELECT * FROM films WHERE genre = 'sci-fi' AND year > 2010;
 SELECT * FROM films WHERE genre = 'horror' OR genre = 'thriller';
 ```
 
-### Sorting with ORDER BY
+#### ORDER BY — Sort Results
 
 `ORDER BY` sorts the results by one or more columns. The default direction is ascending (`ASC`). Use `DESC` for descending:
 
@@ -273,7 +278,7 @@ SELECT * FROM films ORDER BY year DESC;
 SELECT * FROM films ORDER BY title ASC;
 ```
 
-### Limiting Results with LIMIT
+#### LIMIT — Top N Results
 
 `LIMIT` caps the number of rows returned. Useful for previewing large tables or showing "top N" results:
 
@@ -293,11 +298,12 @@ It returns the titles of the 2 most recently released sci-fi films, sorted from 
 
 </details>
 
-## INSERT — Creating Data
+### INSERT — Creating Data
 
 `INSERT INTO` adds a new row to a table. You specify which columns to fill and provide corresponding values:
 
 ```sql
+-- We often split insert statements across two lines for readability
 INSERT INTO films (title, director, year, genre)
 VALUES ('Dune: Part Two', 'Denis Villeneuve', 2024, 'sci-fi');
 ```
@@ -323,7 +329,7 @@ Postgres returns an error: `ERROR: null value in column "title" violates not-nul
 
 </details>
 
-## UPDATE — Modifying Data
+### UPDATE — Modifying Data
 
 `UPDATE` modifies existing rows. **Always use a `WHERE` clause** — without it, you update every row in the table.
 
@@ -358,7 +364,7 @@ UPDATE films SET genre = 'drama';
 Before running an `UPDATE`, run a `SELECT` with the same `WHERE` clause first to confirm you're targeting the right rows.
 {% endhint %}
 
-## DELETE — Removing Data
+### DELETE — Removing Data
 
 `DELETE` removes rows from a table. Like `UPDATE`, **always include a `WHERE` clause**.
 
@@ -380,7 +386,7 @@ DELETE FROM films;
 
 {% endhint %}
 
-## Putting It Together: CRUD in SQL
+## Challenge: CRUD in SQL
 
 Here's the mapping between CRUD operations and SQL statements:
 
@@ -391,8 +397,18 @@ Here's the mapping between CRUD operations and SQL statements:
 | **Update**     | `UPDATE ... SET` |
 | **Delete**     | `DELETE FROM`    |
 
-Try these practice queries against your `films_db` database in `psql` or TablePlus:
+Use your new SQL skills to get data from the `films_db` database using `psql` or TablePlus:
 
+1. Get all films
+2. Get only the title and director of all films
+3. Get all sci-fi films, newest first
+4. Get the 3 oldest films
+5. Add a new film: Dune, directed by Denis Villeneuve in 2021 (sci-fi)
+6. Update the genre for 'Moonlight' to 'drama'
+7. Delete the film with the ID of 1
+8. Get all films again to verify your changes
+
+**<details><summary>Solution</summary>**
 ```sql
 -- 1. Get all films
 SELECT * FROM films;
@@ -419,10 +435,11 @@ DELETE FROM films WHERE film_id = 1;
 -- 8. Verify your changes
 SELECT * FROM films;
 ```
+</details>
 
 <details>
 
-<summary><strong>Q: You delete a row with <code>film_id = 3</code> and then insert a new film. What <code>film_id</code> does the new film get?</strong></summary>
+<summary><strong>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with <code>film_id = 3</code> and then insert a new film. What <code>film_id</code> does the new film get?</strong></summary>
 
 The new film gets the next value in the `SERIAL` sequence — it does **not** reuse the deleted ID. If the sequence was at 7, the new film gets `film_id = 8`. Primary key values are never reused. This is intentional: reusing IDs could cause bugs if anything (a foreign key, a cached reference) still points to the old row.
 
