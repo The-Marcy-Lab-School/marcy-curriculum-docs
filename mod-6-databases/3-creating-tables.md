@@ -4,9 +4,13 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-3-creating-tables)!
 {% endhint %}
 
-So far you've been querying a database that was already set up for you. In this lesson, you'll create your own database and tables from scratch using `CREATE DATABASE` and `CREATE TABLE` — the SQL statements that define the structure of your data.
+So far you've been querying a database that was already set up for you. In this lesson, you'll create your own database and tables from scratch using `CREATE DATABASE` and `CREATE TABLE` and learn about the choices you can make when designing your database tables.
 
-By the end, you'll have designed and built a real database, inserted data into it, and queried it yourself.
+When you build an Express app with an in-memory model, the structure of your data is implied by your JavaScript objects — but nothing enforces it. If someone calls `User.create()` with a missing field, JavaScript might just create an object with `undefined` values and carry on. A database table is different: it's a **contract**. When you define a table, you're declaring that every record stored there will have exactly these fields, of exactly these types, following exactly these rules — and the database will reject anything that doesn't comply, no matter where it comes from.
+
+This matters because your database is shared. Multiple server instances, admin scripts, background jobs, and future developers will all read and write to it. You can't rely on all of them to validate data the same way in code. Defining the structure in the database itself is the only guarantee that holds across all of them.
+
+By the end of this lesson, you'll have designed and built a real database, inserted data into it, and queried it yourself.
 
 **Table of Contents**
 
@@ -60,12 +64,14 @@ You should see the prompt change to `pet_shelter=#`.
 {% hint style="info" %}
 You can also create a database from your terminal without opening `psql` first:
 
+**MacOS:**
 ```sh
-createdb pet_shelter      -- Mac
+createdb pet_shelter
 ```
 
+**Windows/WSL:**
 ```sh
-sudo -u postgres createdb pet_shelter   -- Windows/WSL
+sudo -u postgres createdb pet_shelter
 ```
 {% endhint %}
 
@@ -75,37 +81,43 @@ sudo -u postgres createdb pet_shelter   -- Windows/WSL
 
 ```sql
 CREATE TABLE pets (
-  pet_id    SERIAL        PRIMARY KEY,
-  name      TEXT          NOT NULL,
-  species   TEXT          NOT NULL,
-  age       INT,
-  is_adopted BOOLEAN      DEFAULT FALSE
+  pet_id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  species TEXT NOT NULL,
+  age INT,
+  is_adopted BOOLEAN DEFAULT FALSE
 );
 ```
 
 Breaking this down:
 - `pets` — the table name (plural noun, `lower_snake_case`)
 - Each line inside the parentheses defines one column: `column_name  data_type  constraints`
-- `pet_id SERIAL PRIMARY KEY` — the primary key, auto-assigned by Postgres
-- `NOT NULL` — this column must always have a value
+- `pet_id SERIAL PRIMARY KEY` — the **primary key**, auto-assigned a value by Postgres (1, 2, 3, etc...)
+- `NOT NULL` — this column cannot be blank
 - `DEFAULT FALSE` — if no value is provided for `is_adopted`, Postgres uses `FALSE`
+
+Let's look more closely at the decisions you can make when designing your database tables.
 
 ### Data Types
 
-Postgres has many data types. These are the ones you'll use most:
+Every column has a type, and the type determines what values Postgres will accept. Choosing the right type isn't just about storage — it affects correctness, sorting, and what operations you can perform on the data.
 
-| Type | Use for | Example values |
-| ---- | ------- | -------------- |
-| `TEXT` | Any length string | `'Alice'`, `'A long description...'` |
-| `VARCHAR(n)` | String with a max length | `'Alice'` (max 100 chars) |
-| `INT` | Whole numbers | `42`, `-7`, `0` |
-| `NUMERIC` | Decimal numbers | `9.99`, `3.14` |
-| `BOOLEAN` | True/false values | `TRUE`, `FALSE` |
-| `SERIAL` | Auto-incrementing integer (for PKs) | `1`, `2`, `3`, ... |
-| `TIMESTAMPTZ` | Date and time with timezone | `2024-03-15 10:30:00+00` |
+For example, if you store prices as `TEXT` instead of `NUMERIC`, Postgres will accept `'twelve dollars'` as a valid price, `SUM(price)` will throw an error, and sorting will be alphabetical (`'9'` comes after `'10'` because `1 < 9`). Conversely, if you store an age as `TEXT`, comparisons like `WHERE age > 18` won't work as expected. The type is part of the contract — it tells Postgres what the data means, not just what shape it is.
+
+These are the types you'll use most:
+
+| Type          | Use for                             | Example values                                |
+| ------------- | ----------------------------------- | --------------------------------------------- |
+| `TEXT`        | Any length string                   | `'Alice'`, `'A long description...'`          |
+| `VARCHAR(n)`  | String with a max length            | `'123-555-8910'` (phone number, max 12 chars) |
+| `INT`         | Whole numbers                       | `42`, `-7`, `0`                               |
+| `NUMERIC`     | Decimal numbers                     | `9.99`, `3.14`                                |
+| `BOOLEAN`     | True/false values                   | `TRUE`, `FALSE`                               |
+| `SERIAL`      | Auto-incrementing integer (for PKs) | `1`, `2`, `3`, ...                            |
+| `TIMESTAMPTZ` | Date and time with timezone         | `2024-03-15 10:30:00+00`                      |
 
 {% hint style="info" %}
-**`TEXT` vs `VARCHAR(n)`**: Use `TEXT` unless you have a specific reason to enforce a character limit. In Postgres, `TEXT` is just as efficient as `VARCHAR` and is simpler to work with.
+**`TEXT` vs `VARCHAR(n)`**: Use `TEXT` unless you have a specific reason to enforce a character limit (like for a phone number). In Postgres, `TEXT` is just as efficient as `VARCHAR` and is simpler to work with.
 {% endhint %}
 
 <details>
@@ -118,15 +130,21 @@ Postgres has many data types. These are the ones you'll use most:
 
 ### Constraints
 
-Constraints enforce rules on the data in a column. Postgres rejects any `INSERT` or `UPDATE` that would violate them.
+You might be thinking: "Can't I just validate data in my JavaScript before inserting it?" Yes — and you should. But JavaScript validation is your first line of defense, not your only one. It can have bugs. A future developer might add a new route and forget to add validation. Someone might run a script directly against the database to fix data. Constraints are the **last line of defense** — they live in the database itself and are enforced no matter how data gets in.
 
-| Constraint | What it enforces |
-| ---------- | --------------- |
-| `NOT NULL` | The column must always have a value — it cannot be empty |
-| `UNIQUE` | No two rows can have the same value in this column |
-| `DEFAULT value` | If no value is provided, use this default |
-| `PRIMARY KEY` | Combines `NOT NULL` and `UNIQUE` — uniquely identifies each row |
-| `REFERENCES other_table(col)` | Foreign key — value must exist in the referenced table |
+Consider a `users` table without a `UNIQUE` constraint on `email`. A bug in your registration endpoint — maybe a race condition, maybe a missed check — could create two accounts with the same email. Your app breaks. Support tickets pile up. With a `UNIQUE` constraint, that bug is impossible: Postgres rejects the duplicate before it ever lands in the table.
+
+Constraints also serve as **documentation**. A `NOT NULL` constraint tells every future developer reading your schema: this field is required, always. That's information that would otherwise have to live in a comment, a code review, or someone's memory.
+
+Postgres rejects any `INSERT` or `UPDATE` that would violate a constraint:
+
+| Constraint                    | What it enforces                                                |
+| ----------------------------- | --------------------------------------------------------------- |
+| `NOT NULL`                    | The column must always have a value — it cannot be empty        |
+| `UNIQUE`                      | No two rows can have the same value in this column              |
+| `DEFAULT value`               | If no value is provided, use this default                       |
+| `PRIMARY KEY`                 | Combines `NOT NULL` and `UNIQUE` — uniquely identifies each row |
+| `REFERENCES other_table(col)` | Foreign key — value must exist in the referenced table          |
 
 ```sql
 CREATE TABLE users (
@@ -149,15 +167,15 @@ Postgres returns an error: `ERROR: duplicate key value violates unique constrain
 
 ### The Primary Key Column
 
-Every table should have a primary key — a column that uniquely identifies each row. In Postgres, the standard pattern is:
+Every table should have a **primary key** — a column that uniquely identifies each row. In Postgres, the standard pattern is:
 
 ```sql
-table_name_id  SERIAL  PRIMARY KEY
+table_name_id SERIAL PRIMARY KEY
 ```
 
 - **`SERIAL`** tells Postgres to create a sequence and automatically assign the next integer value whenever a row is inserted. You never need to provide this value in your `INSERT` statements.
-- **`PRIMARY KEY`** enforces `NOT NULL` and `UNIQUE` on the column.
-- **Named after the table** (`pet_id`, `user_id`, `post_id`) — this makes queries much clearer when multiple tables are involved, and it's the convention used throughout this course.
+- **`PRIMARY KEY`** enforces `NOT NULL` and `UNIQUE` on the column automatically
+- **Named after the table** (`pet_id`, `user_id`, `post_id`) — this makes queries much clearer when multiple tables are involved, and it's the convention used here at Marcy.
 
 ```sql
 -- No need to provide pet_id — Postgres handles it
@@ -173,7 +191,9 @@ SELECT * FROM pets;
 
 ## Dropping and Recreating Tables
 
-During development, you'll often need to recreate a table after changing its structure. Use `DROP TABLE IF EXISTS` before `CREATE TABLE`:
+During development, you'll often need to recreate a table after changing its structure. For example, the `pets` table currently allows `NULL` values for the `age` column. We want to add in a `NOT NULL` constraint.
+
+Use `DROP TABLE IF EXISTS` before `CREATE TABLE`:
 
 ```sql
 DROP TABLE IF EXISTS pets;
@@ -182,7 +202,7 @@ CREATE TABLE pets (
   pet_id    SERIAL   PRIMARY KEY,
   name      TEXT     NOT NULL,
   species   TEXT     NOT NULL,
-  age       INT,
+  age       INT      NOT NULL,
   is_adopted BOOLEAN DEFAULT FALSE
 );
 ```
