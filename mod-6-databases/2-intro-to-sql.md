@@ -212,7 +212,7 @@ SELECT title, year, director FROM films;
 
 <details>
 
-<summary><strong>Q: Why would you choose specific columns over <code>SELECT *</code>?</strong></summary>
+**<summary>Q: Why would you choose specific columns over `SELECT *`?</summary>**
 
 `SELECT *` returns more data than you might need, which is slower on large tables and makes your code harder to understand. Specifying columns makes your intent clear and is more efficient. In production code, `SELECT *` is generally avoided.
 
@@ -237,17 +237,17 @@ SELECT * FROM films WHERE title = 'Parasite';
 
 **Common comparison operators:**
 
-| Operator          | Meaning                           |
-| ----------------- | --------------------------------- |
-| `=`               | Equal to                          |
-| `<>` or `!=`      | Not equal to                      |
-| `>` / `<`         | Greater / less than               |
-| `>=` / `<=`       | Greater / less than or equal      |
-| `LIKE 'pattern%'` | Pattern match (`%` is a wildcard) |
+| Operator           | Meaning                           |
+| ------------------ | --------------------------------- |
+| `=`                | Equal to                          |
+| `<>` or `!=`       | Not equal to                      |
+| `>` / `<`          | Greater / less than               |
+| `>=` / `<=`        | Greater / less than or equal      |
+| `LIKE '%pattern%'` | Pattern match (`%` is a wildcard) |
 
 ```sql
--- Films whose title starts with 'The'
-SELECT * FROM films WHERE title LIKE 'The%';
+-- Films whose director contains the character 'J'
+SELECT * FROM films WHERE director LIKE '%J%';
 
 -- Films that are NOT sci-fi
 SELECT * FROM films WHERE genre <> 'sci-fi';
@@ -262,6 +262,28 @@ SELECT * FROM films WHERE genre = 'sci-fi' AND year > 2010;
 -- Horror or thriller films
 SELECT * FROM films WHERE genre = 'horror' OR genre = 'thriller';
 ```
+
+**<details><summary>Q: Which films have titles that start with 'The'?</summary>**
+
+```sql
+-- Films whose title starts with 'The'
+SELECT * FROM films WHERE title LIKE 'The%';
+```
+
+Just 'The Matrix'!
+
+</details>
+
+**<details><summary>Q: Which film has the `film_id` 4?</summary>**
+
+```sql
+-- Films whose title starts with 'The'
+SELECT * FROM films WHERE film_id = 4;
+```
+
+Just 'The Matrix'!
+
+</details>
 
 #### ORDER BY — Sort Results
 
@@ -290,9 +312,7 @@ SELECT * FROM films LIMIT 3;
 SELECT * FROM films ORDER BY year DESC LIMIT 3;
 ```
 
-<details>
-
-<summary><strong>Q: What does this query do? <code>SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;</code></strong></summary>
+**<details><summary>Q: What does this query do? `SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;`</summary>**
 
 It returns the titles of the 2 most recently released sci-fi films, sorted from newest to oldest.
 
@@ -323,7 +343,7 @@ VALUES
 
 <details>
 
-<summary><strong>Q: You try to insert a film but forget to include the <code>title</code> column, which has a <code>NOT NULL</code> constraint. What happens?</strong></summary>
+**<summary>Q: You try to insert a film but forget to include the `title` column, which has a `NOT NULL` constraint. What happens?</summary>**
 
 Postgres returns an error: `ERROR: null value in column "title" violates not-null constraint`. The row is not inserted. Constraints are enforced at write time — the database rejects any data that violates the rules defined when the table was created.
 
@@ -439,7 +459,7 @@ SELECT * FROM films;
 
 <details>
 
-<summary><strong>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with <code>film_id = 3</code> and then insert a new film. What <code>film_id</code> does the new film get?</strong></summary>
+**<summary>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with `film_id = 3` and then insert a new film. What `film_id` does the new film get?</summary>**
 
 The new film gets the next value in the `SERIAL` sequence — it does **not** reuse the deleted ID. If the sequence was at 7, the new film gets `film_id = 8`. Primary key values are never reused. This is intentional: reusing IDs could cause bugs if anything (a foreign key, a cached reference) still points to the old row.
 

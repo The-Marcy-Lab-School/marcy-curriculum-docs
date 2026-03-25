@@ -122,7 +122,7 @@ These are the types you'll use most:
 
 <details>
 
-<summary><strong>Q: A table stores product prices. Should the column type be <code>INT</code> or <code>NUMERIC</code>?</strong></summary>
+**<summary>Q: A table stores product prices. Should the column type be `INT` or `NUMERIC`?</summary>**
 
 `NUMERIC` (or `NUMERIC(10, 2)` for exactly 2 decimal places). `INT` only stores whole numbers, so a price like `$9.99` would be truncated to `9`. `NUMERIC` stores exact decimal values, making it appropriate for prices, percentages, and any value where precision matters.
 
@@ -159,7 +159,7 @@ Here, `username` and `email` are both `NOT NULL` (required) and `UNIQUE` (no dup
 
 <details>
 
-<summary><strong>Q: You try to insert two users with the same email. What happens?</strong></summary>
+**<summary>Q: You try to insert two users with the same email. What happens?</summary>**
 
 Postgres returns an error: `ERROR: duplicate key value violates unique constraint "users_email_key"`. The second insert is rejected — the row is not added. Constraints are enforced at write time.
 
@@ -266,7 +266,7 @@ Choose a scenario from the list below (or propose your own). Design a single tab
 
 <details>
 
-<summary><strong>Example solution: a pet shelter</strong></summary>
+**<summary>Example solution: a pet shelter</summary>**
 
 ```sql
 DROP TABLE IF EXISTS pets;

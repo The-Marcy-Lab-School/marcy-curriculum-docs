@@ -17,10 +17,10 @@ In this lesson, you'll also learn about **seeding**: the practice of populating 
 - [Setting Up: Run the Seed File](#setting-up-run-the-seed-file)
 - [Aggregate Functions](#aggregate-functions)
   - [COUNT](#count)
-  - [SUM, AVG, MIN, MAX](#sum-avg-min-max)
+  - [SUM, AVG, MIN, MAX and AS](#sum-avg-min-max-and-as)
 - [GROUP BY](#group-by)
-  - [Postgres Smart GROUP BY](#postgres-smart-group-by)
-- [Filtering Groups with HAVING](#filtering-groups-with-having)
+  - [Filtering Groups with WHERE and HAVING](#filtering-groups-with-where-and-having)
+- [Aggregate Functions Challenge](#aggregate-functions-challenge)
 - [Seeding a Database](#seeding-a-database)
   - [Why Seeding Matters](#why-seeding-matters)
   - [Anatomy of a Seed File](#anatomy-of-a-seed-file)
@@ -69,43 +69,65 @@ CREATE DATABASE games_db;
 \c games_db
 
 CREATE TABLE games (
-  game_id       SERIAL        PRIMARY KEY,
-  title         TEXT          NOT NULL,
-  genre         TEXT          NOT NULL,
-  platform      TEXT          NOT NULL,
-  release_year  INT           NOT NULL,
-  rating        NUMERIC(3,1)  NOT NULL,
-  price         NUMERIC(5,2)  NOT NULL
+  game_id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  genre TEXT NOT NULL,
+  platform TEXT NOT NULL,
+  release_year INT NOT NULL,
+  rating NUMERIC(3,1) NOT NULL,
+  price NUMERIC(5,2) NOT NULL
 );
 
 INSERT INTO games (title, genre, platform, release_year, rating, price) VALUES
-  ('The Legend of Zelda: Breath of the Wild', 'action-adventure', 'Switch',      2017, 9.7, 59.99),
-  ('Elden Ring',                              'action-rpg',       'PC',          2022, 9.5, 59.99),
-  ('Hades',                                  'roguelike',        'PC',          2020, 9.3, 24.99),
-  ('Celeste',                                'platformer',       'PC',          2018, 9.4, 19.99),
-  ('The Witcher 3',                          'action-rpg',       'PC',          2015, 9.6, 39.99),
-  ('Hollow Knight',                          'platformer',       'PC',          2017, 9.1, 14.99),
-  ('God of War',                             'action-adventure', 'PS4',         2018, 9.8, 49.99),
-  ('Stardew Valley',                         'simulation',       'PC',          2016, 9.2, 14.99),
-  ('Disco Elysium',                          'rpg',              'PC',          2019, 9.5, 39.99),
-  ('Animal Crossing: New Horizons',          'simulation',       'Switch',      2020, 9.0, 59.99),
-  ('Metroid Dread',                          'action-adventure', 'Switch',      2021, 8.9, 59.99),
-  ('Return of the Obra Dinn',                'puzzle',           'PC',          2018, 9.1, 19.99),
-  ('Monster Hunter: World',                  'action-rpg',       'PC',          2018, 9.2, 29.99),
-  ('Dead Cells',                             'roguelike',        'PC',          2018, 9.0, 24.99),
-  ('Outer Wilds',                            'adventure',        'PC',          2019, 9.4, 24.99);
+  ('The Legend of Zelda: Breath of the Wild', 'action-adventure', 'Switch', 2017, 9.7, 59.99),
+  ('Elden Ring', 'action-rpg', 'PC', 2022, 9.5, 59.99),
+  ('Hades', 'roguelike', 'PC', 2020, 9.3, 24.99),
+  ('Celeste', 'platformer', 'PC', 2018, 9.4, 19.99),
+  ('The Witcher 3', 'action-rpg', 'PC', 2015, 9.6, 39.99),
+  ('Hollow Knight', 'platformer', 'PC', 2017, 9.1, 14.99),
+  ('God of War', 'action-adventure', 'PS4', 2018, 9.8, 49.99),
+  ('Stardew Valley', 'simulation', 'PC', 2016, 9.2, 14.99),
+  ('Disco Elysium', 'rpg', 'PC', 2019, 9.5, 39.99),
+  ('Animal Crossing: New Horizons', 'simulation', 'Switch', 2020, 9.0, 59.99),
+  ('Metroid Dread', 'action-adventure', 'Switch', 2021, 8.9, 59.99),
+  ('Return of the Obra Dinn', 'puzzle', 'PC', 2018, 9.1, 19.99),
+  ('Monster Hunter: World', 'action-rpg', 'PC', 2018, 9.2, 29.99),
+  ('Dead Cells', 'roguelike', 'PC', 2018, 9.0, 24.99),
+  ('Outer Wilds', 'adventure', 'PC', 2019, 9.4, 24.99);
 ```
 
 Once seeded, connect to it in `psql`:
 
+```sh
+psql -d games_db
+```
+
+And look at the data:
+
 ```sql
-\c games_db
 SELECT * FROM games;
 ```
 
 ## Aggregate Functions
 
-Aggregate functions compute a single value from a set of rows. Run these against the `games` table:
+In JavaScript, we have practiced using functions like `.reduce()` to calculate a single value from an array of data. For example, we might want to know the total price of items in a cart:
+
+```js
+const cart = [
+  { item: 'Apple', price: 1, quantity: 3},
+  { item: 'Banana', price: 0.5, quantity: 2},
+  { item: 'Corn', price: 1.5, quantity: 1},
+]
+
+const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+```
+
+This kind of data analysis is exactly what SQL was built to do. Rather than performing these calculations using JavaScript, we can perform use SQL's **aggregate functions**:
+* `COUNT`
+* `SUM`
+* `AVG`
+* `MIN`
+* `MAX`
 
 ### COUNT
 
@@ -121,7 +143,7 @@ SELECT COUNT(*) FROM games WHERE platform = 'PC';
 
 `COUNT(*)` counts all rows. `COUNT(column_name)` counts only rows where that column is not null.
 
-### SUM, AVG, MIN, MAX
+### SUM, AVG, MIN, MAX and AS
 
 ```sql
 -- Total value of all games (sum of all prices)
@@ -147,21 +169,23 @@ SELECT
 FROM games;
 ```
 
-<details>
-
-<summary><strong>Q: What's the difference between <code>COUNT(*)</code> and <code>COUNT(column_name)</code>?</strong></summary>
-
-`COUNT(*)` counts every row regardless of its values, including rows with `NULL` in any column.
-
-`COUNT(column_name)` counts only rows where that column is not `NULL`. If 3 out of 10 rows have a `NULL` rating, `COUNT(*) = 10` but `COUNT(rating) = 7`.
-
-In practice, `COUNT(*)` is the most common — use `COUNT(column_name)` only when you specifically want to count non-null values.
-
-</details>
-
 ## GROUP BY
 
-On its own, aggregate functions collapse all rows into a single result. `GROUP BY` lets you apply aggregate functions *per group* — one result per unique value in a column.
+On its own, an aggregate function collapses all rows into a single result. For example, we can count the number of games in our database like this:
+
+```sql
+SELECT COUNT(*) from games;
+```
+
+Result:
+
+```
+ count 
+-------
+    15
+```
+
+But we can also count the number of games broken down by genre using `GROUP BY` which applies aggregate functions *per group* — one result per unique value in a column.
 
 ```sql
 -- How many games are in each genre?
@@ -173,71 +197,64 @@ GROUP BY genre;
 Result:
 
 ```
-  genre            | game_count
--------------------+-----------
- action-adventure  |         3
- action-rpg        |         3
- roguelike         |         2
- platformer        |         2
- simulation        |         2
- rpg               |         1
- puzzle            |         1
- adventure         |         1
+      genre       | game_count 
+------------------+------------
+ roguelike        |          2
+ platformer       |          2
+ action-adventure |          3
+ action-rpg       |          3
+ rpg              |          1
+ adventure        |          1
+ puzzle           |          1
+ simulation       |          2
 ```
 
 More examples:
 
 ```sql
--- Average price per genre
-SELECT genre, AVG(price) AS avg_price
-FROM games
-GROUP BY genre;
-
 -- Most expensive game per platform
 SELECT platform, MAX(price) AS max_price
 FROM games
 GROUP BY platform;
 
--- Number of games released each year
+-- Number of games released each year, sorted by year
 SELECT release_year, COUNT(*) AS games_released
 FROM games
 GROUP BY release_year
 ORDER BY release_year ASC;
+
+-- Most expensive game per platform per year, sorted by year
+SELECT 
+    platform, 
+    release_year, 
+    MAX(price) AS max_price
+FROM games
+GROUP BY 
+    platform, 
+    release_year
+ORDER BY 
+    release_year DESC, 
+    platform;
 ```
 
-**The rule**: any column in your `SELECT` that is not inside an aggregate function must appear in your `GROUP BY` clause — unless Postgres can infer the value from the group. The next section explains when you can skip that.
+**The rule**: any column in your `SELECT` that is not inside an aggregate function must appear in your `GROUP BY` clause. 
+* In the final example, you can see that we use the `MAX` aggregate function on the `price` column and are selecting the `platform` and `release_year` columns. Those two columns must be included in the GROUP BY` clause.
 
-### Postgres Smart GROUP BY
+**Why does this rule exist?** Because `GROUP BY` collapses many rows into one — if you `SELECT title` while grouping by `genre`, a genre might have 5 different titles. SQL doesn't know which one to show.
 
-In standard SQL, every non-aggregate column in `SELECT` must be listed in `GROUP BY`. **Postgres relaxes this rule when you group by a primary key.**
+### Filtering Groups with WHERE and HAVING
 
-When you group by a table's primary key, Postgres knows that every other column in that table is *uniquely determined* by that key. There's only one `title`, one `genre`, one `price` per `game_id` — so you don't need to list them all in `GROUP BY`.
+`WHERE` filters individual rows *before* grouping:
 
 ```sql
--- Standard SQL would require: GROUP BY game_id, title, genre, platform
--- Postgres only needs the primary key:
-SELECT game_id, title, genre, platform, rating
+-- Count the genres for games released before 2020 (games after 2020 aren't included in the count)
+SELECT genre, COUNT(*) AS game_count_before_2020
 FROM games
-GROUP BY game_id;
+WHERE release_year <= 2020
+GROUP BY genre;
 ```
 
-This becomes especially useful when doing `JOIN` queries (covered in the next lesson) where you're counting or aggregating related records per row in a parent table.
-
-{% hint style="info" %}
-This behavior applies specifically to grouping by the **primary key** of a table. If you group by a non-PK column (like `genre`), you still need to list every other selected non-aggregate column in `GROUP BY`.
-{% endhint %}
-
-<details>
-
-<summary><strong>Q: Why does grouping by the primary key let you skip other columns in GROUP BY?</strong></summary>
-
-A primary key uniquely identifies each row. If you group by `game_id`, there's only one possible row per group — Postgres knows that every other column (`title`, `genre`, `price`) can only have one value for that group. Since there's no ambiguity about which value to use, Postgres doesn't require you to explicitly list them. This is called **functional dependency**: other columns are *functionally dependent* on the primary key.
-
-</details>
-
-## Filtering Groups with HAVING
-
-`WHERE` filters individual rows *before* grouping. `HAVING` filters groups *after* aggregation.
+`HAVING` filters groups *after* aggregation.
 
 ```sql
 -- Only show genres with more than 2 games
@@ -246,11 +263,18 @@ FROM games
 GROUP BY genre
 HAVING COUNT(*) > 2;
 
--- Only show platforms where the average price is over $30
+-- Only show platforms with an average price of over $30
 SELECT platform, AVG(price) AS avg_price
 FROM games
 GROUP BY platform
 HAVING AVG(price) > 30;
+
+-- Among PC games only, show genres with avg rating above 9.0
+SELECT genre, AVG(rating) AS avg_rating
+FROM games
+WHERE platform = 'PC'       -- filter rows first: only PC games
+GROUP BY genre
+HAVING AVG(rating) > 9.0;   -- then filter groups: only high-rated genres
 ```
 
 The clause order for a full aggregate query is:
@@ -267,21 +291,128 @@ LIMIT    n;
 
 <details>
 
-<summary><strong>Q: What's the difference between <code>WHERE</code> and <code>HAVING</code>?</strong></summary>
+**<summary>Q: What's the difference between `WHERE` and `HAVING`?</summary>**
 
 `WHERE` runs before grouping — it filters which rows are included in the calculation at all.
 
 `HAVING` runs after grouping — it filters which groups appear in the final result based on the aggregate result.
 
-You can use both in the same query:
+You can use both in the same query
+
+</details>
+
+## Aggregate Functions Challenge
+
+**<details><summary>Q: How many games have a rating above 9.5?</summary>**
+
+Query:
 
 ```sql
--- Among PC games only, show genres with avg rating above 9.0
-SELECT genre, AVG(rating) AS avg_rating
+SELECT COUNT(*) FROM games WHERE rating >= 9.5;
+```
+
+Results: 5 games!
+
+</details>
+
+**<details><summary>Q: How many PC games have a rating above 9.5?</summary>**
+
+Query:
+
+```sql
+SELECT COUNT(*) FROM games WHERE rating >= 9.5 AND platform = 'PC';
+```
+
+Results: 3 games!
+
+</details>
+
+**<details><summary>Q: What is the average rating and average price of PC games?</summary>**
+
+Query:
+
+```sql
+SELECT
+  AVG(rating) AS avg_rating,
+  AVG(price) AS avg_price
+FROM games 
+WHERE platform = 'PC';
+```
+
+Results:
+
+```
+     avg_rating     |      avg_price      
+--------------------+---------------------
+ 9.3000000000000000 | 28.6263636363636364
+```
+
+</details>
+
+**<details><summary>Q: What is the total price of Switch Games?</summary>**
+
+Query:
+
+```sql
+SELECT SUM(price) FROM games WHERE platform = 'Switch';
+```
+
+Results:
+
+```
+     avg_rating     |      avg_price      
+--------------------+---------------------
+ 9.3000000000000000 | 28.6263636363636364
+```
+
+</details>
+
+**<details><summary>Q: What is the average price of games in each genre?</summary>**
+
+Query:
+
+```sql
+SELECT genre, AVG(price) AS avg_price
+FROM games
+GROUP BY genre;
+```
+
+Result:
+
+```
+      genre       |      avg_price      
+------------------+---------------------
+ roguelike        | 24.9900000000000000
+ platformer       | 17.4900000000000000
+ action-adventure | 56.6566666666666667
+ action-rpg       | 43.3233333333333333
+ rpg              | 39.9900000000000000
+ adventure        | 24.9900000000000000
+ puzzle           | 19.9900000000000000
+ simulation       | 37.4900000000000000
+```
+
+</details>
+
+**<details><summary>Q: Among PC games, which genres have an average price of more than $30?</summary>**
+
+Query:
+
+```sql
+SELECT genre, AVG(price) AS avg_price
 FROM games
 WHERE platform = 'PC'       -- filter rows first: only PC games
 GROUP BY genre
-HAVING AVG(rating) > 9.0;   -- then filter groups: only high-rated genres
+HAVING AVG(price) > 30;   -- then filter groups: only genres with average price over $30
+```
+
+Result:
+
+```
+   genre    |      avg_price      
+------------+---------------------
+ action-rpg | 43.3233333333333333
+ rpg        | 39.9900000000000000
 ```
 
 </details>
@@ -347,7 +478,7 @@ The `DROP ... IF EXISTS` at the top ensures that re-running the file always star
 
 <details>
 
-<summary><strong>Q: Why use <code>DROP DATABASE IF EXISTS</code> at the top of a seed file rather than just <code>DROP TABLE IF EXISTS</code>?</strong></summary>
+**<summary>Q: Why use `DROP DATABASE IF EXISTS` at the top of a seed file rather than just `DROP TABLE IF EXISTS`?</summary>**
 
 `DROP TABLE IF EXISTS` only removes one table at a time. If your schema has multiple tables (which it will once you learn about relationships), you'd need to drop them in the right order to avoid foreign key constraint errors.
 

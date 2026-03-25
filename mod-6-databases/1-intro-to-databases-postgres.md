@@ -349,7 +349,7 @@ SELECT * FROM films;
 
 <details>
 
-<summary><strong>Q: What's the difference between a <code>psql</code> backslash command and a SQL statement?</strong></summary>
+**<summary>Q: What's the difference between a `psql` backslash command and a SQL statement?</summary>**
 
 Backslash commands (like `\l`, `\dt`, `\q`) are built into the `psql` application itself — they don't get sent to Postgres. They control the `psql` tool (list databases, switch connections, quit).
 
@@ -403,7 +403,7 @@ Think of it this way: `psql` in your terminal uses a Unix socket (no password ne
 
 <details>
 
-<summary><strong>Q: When should you use <code>psql</code> vs. TablePlus?</strong></summary>
+**<summary>Q: When should you use `psql` vs. TablePlus?</summary>**
 
 Both tools connect to the same PostgreSQL database — the choice is about workflow preference.
 
