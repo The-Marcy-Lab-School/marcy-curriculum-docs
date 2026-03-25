@@ -144,7 +144,7 @@ How would you trigger it to be invoked whenever a key was pressed anywhere on th
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 document.querySelector("#mouse-area").addEventListener('mousemove', changeToRandomColor)

@@ -149,7 +149,7 @@ The `this` keyword allows the methods `addFriend` and `printFriends` to avoid ne
 
 <details>
 
-<summary><strong>Q: How would you add a <code>friendsManager.removeLast()</code> method that removes the last friend that was added?</strong></summary>
+**<summary>Q: How would you add a `friendsManager.removeLast()` method that removes the last friend that was added?</summary>**
 
 ```js
 const friendsManager = {

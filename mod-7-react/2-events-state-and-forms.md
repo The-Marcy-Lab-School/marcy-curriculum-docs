@@ -79,7 +79,7 @@ A stateful component is one that renders state — data values that may change.
 
 <details>
 
-<summary><strong>Q: What data values does this component render? Is any of that considered "state"?</strong></summary>
+**<summary>Q: What data values does this component render? Is any of that considered "state"?</summary>**
 
 `likes` and `picture` These values are not considered state because they are hard-coded! They will not change.
 
@@ -316,7 +316,7 @@ const [pictures, setPictures] = useState(initialPictures);
 
 <details>
 
-<summary><strong>Q: Where should I put this? Why?</strong></summary>
+**<summary>Q: Where should I put this? Why?</summary>**
 
 The state should be defined in the `App` which is the closest shared ancestor of the `NewPetForm` and the `PicturesList`. The `App` can then pass those values down to its children as props. This is called **"lifting state up"**. Check out the `1-instapets-final/` to see how this is done:
 

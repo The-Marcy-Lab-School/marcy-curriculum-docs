@@ -76,7 +76,7 @@ There are also three **reference data types**: Objects, Arrays, and Functions.
 
 <details>
 
-<summary><strong>Q: Open up YouTube.com. What examples can you come up with for each of the primitive and reference data types listed above?</strong></summary>
+**<summary>Q: Open up YouTube.com. What examples can you come up with for each of the primitive and reference data types listed above?</summary>**
 
 Here are some examples of each of the primitive data types:
 
@@ -195,7 +195,7 @@ const result = Math.random() > 0.5 ? "Heads" : "Tails";
 
 <details>
 
-<summary><strong>Q: So, what is the order of operations? What is the value stored in result?</strong></summary>
+**<summary>Q: So, what is the order of operations? What is the value stored in result?</summary>**
 
 The order of operations is as follows:
 
@@ -229,7 +229,7 @@ console.log(Math.ceil(Math.random() * 6))
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 ```js
 // Arithmetic
@@ -284,7 +284,7 @@ console.log("1" + 1);
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 `"1" + 1;` produces the string `11` because the number `1` is coerced into a string.
 
@@ -323,7 +323,7 @@ console.log(message);
 
 <details>
 
-<summary><strong>Tradeoffs of each approach</strong></summary>
+**<summary>Tradeoffs of each approach</summary>**
 
 The first approach can be written in one line, however, it is very long. This makes it more difficult to read and predict the output. Additionally the `4 + 3 + 2 + 1` expression must be calculated twice since that calculation is not saved anywhere.
 
@@ -375,7 +375,7 @@ console.log(`count is now ${count}`); // Output: count is now 6
 
 <details>
 
-<summary><strong>Q: Can you declare a <code>const</code> variable without an initial value? Why or why not?</strong></summary>
+**<summary>Q: Can you declare a `const` variable without an initial value? Why or why not?</summary>**
 
 You cannot! Since a `const` variable cannot be assigned a new value, it must be given a value immediately when declared otherwise it will forever be `undefined` which isn't very useful. Doing so will throw a `SyntaxError`:
 
@@ -471,7 +471,7 @@ const greetFriend = (friend) => {
 
 <details>
 
-<summary><strong>Q: Why is it even possible to have two variables called <code>message</code> within the <code>greetFriend</code> function?</strong></summary>
+**<summary>Q: Why is it even possible to have two variables called `message` within the `greetFriend` function?</summary>**
 
 We can have two variables with the same name as long as they are in different scopes. This is the entire point of scope! It limits name collision errors like `Uncaught SyntaxError: Identifier 'x' has already been declared`
 

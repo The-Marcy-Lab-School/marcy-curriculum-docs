@@ -105,7 +105,7 @@ In this example, we use `app.use()` to add a "fallback" controller to our `app`.
 
 <details>
 
-<summary><strong>Q: What would happen if we put <code>app.use(serve404)</code> before the other calls to <code>app.get()</code>?</strong></summary>
+**<summary>Q: What would happen if we put `app.use(serve404)` before the other calls to `app.get()`?</summary>**
 
 The `serve404` controller would be invoked for any request method and URL preventing the other controllers from ever running.
 
@@ -127,7 +127,7 @@ For example, suppose that you wanted the server to keep track of every request t
 
 <details>
 
-<summary><strong>Q: Why would it be helpful to log information about every incoming request?</strong></summary>
+**<summary>Q: Why would it be helpful to log information about every incoming request?</summary>**
 
 Logging incoming HTTP requests can be incredibly helpful for debugging purposes.
 
@@ -200,7 +200,7 @@ Examples of this include:
 
 <details>
 
-<summary><strong>Q: So, if a user sends a request to <code>http://localhost:8080/api/hello</code>, which functions are invoked and in what order?</strong></summary>
+**<summary>Q: So, if a user sends a request to `http://localhost:8080/api/hello`, which functions are invoked and in what order?</summary>**
 
 First the `logRoutes` middleware is invoked. The `next()` function is called which passes the request to the next controller, `serveHello`.
 
@@ -208,7 +208,7 @@ First the `logRoutes` middleware is invoked. The `next()` function is called whi
 
 <details>
 
-<summary><strong>Q: What would happen if the <code>logRoutes</code> controller DID send a response to the client? What would happen if it didn't invoke <code>next()</code>?</strong></summary>
+**<summary>Q: What would happen if the `logRoutes` controller DID send a response to the client? What would happen if it didn't invoke `next()`?</summary>**
 
 If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent.
 

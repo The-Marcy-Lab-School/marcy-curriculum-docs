@@ -59,20 +59,20 @@ CREATE TABLE all_data (
 
 **`all_data` Table:**
 
-| id | owner\_name    | pet\_name  | type |
-| -- | -------------- | ---------- | ---- |
-| 1  | Ann Duong      | Bora       | bird |
-| 2  | Ann Duong      | Tora       | dog  |
-| 3  | Ann Duong      | Kora       | dog  |
-| 4  | Ben Spector    |            |      |
-| 5  | Reuben Ogbonna | Juan Pablo | dog  |
-| 6  | Reuben Ogbonna | Pon Juablo | cat  |
-| 7  | Carmen Salas   | Khalo      | dog  |
-| 8  | Carmen Salas   | Frida      | cat  |
+| id  | owner\_name    | pet\_name  | type |
+| --- | -------------- | ---------- | ---- |
+| 1   | Ann Duong      | Bora       | bird |
+| 2   | Ann Duong      | Tora       | dog  |
+| 3   | Ann Duong      | Kora       | dog  |
+| 4   | Ben Spector    |            |      |
+| 5   | Reuben Ogbonna | Juan Pablo | dog  |
+| 6   | Reuben Ogbonna | Pon Juablo | cat  |
+| 7   | Carmen Salas   | Khalo      | dog  |
+| 8   | Carmen Salas   | Frida      | cat  |
 
 <details>
 
-<summary><strong>Q: What are the issues with storing the data in this way?</strong></summary>
+**<summary>Q: What are the issues with storing the data in this way?</summary>**
 
 * There is a lot of duplicate data in the `owner_name` column
 
@@ -102,28 +102,28 @@ CREATE TABLE pets (
 
 **`people` Table:**
 
-| id | name           |
-| -- | -------------- |
-| 1  | Ann Duong      |
-| 2  | Reuben Ogbonna |
-| 3  | Carmen Salas   |
-| 4  | Ben Spector    |
+| id  | name           |
+| --- | -------------- |
+| 1   | Ann Duong      |
+| 2   | Reuben Ogbonna |
+| 3   | Carmen Salas   |
+| 4   | Ben Spector    |
 
 **`pets` Table:**
 
-| id | name       | type | owner\_id |
-| -- | ---------- | ---- | --------- |
-| 1  | Khalo      | dog  | 3         |
-| 2  | Juan Pablo | dog  | 2         |
-| 3  | Bora       | bird | 1         |
-| 4  | Frida      | cat  | 3         |
-| 5  | Tora       | dog  | 1         |
-| 6  | Pon Juablo | cat  | 2         |
-| 7  | Kora       | dog  | 1         |
+| id  | name       | type | owner\_id |
+| --- | ---------- | ---- | --------- |
+| 1   | Khalo      | dog  | 3         |
+| 2   | Juan Pablo | dog  | 2         |
+| 3   | Bora       | bird | 1         |
+| 4   | Frida      | cat  | 3         |
+| 5   | Tora       | dog  | 1         |
+| 6   | Pon Juablo | cat  | 2         |
+| 7   | Kora       | dog  | 1         |
 
 <details>
 
-<summary><strong>Q: What are the tradeoffs of this schema design?</strong></summary>
+**<summary>Q: What are the tradeoffs of this schema design?</summary>**
 
 We no longer have duplicate data It is not exactly clear anymore the name of the person who owns each pet
 
@@ -188,7 +188,7 @@ We'll start with a few simple ones. What SQL statements could we write to find o
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 ```sql
 SELECT COUNT(*)
@@ -242,7 +242,7 @@ WHERE people.name = 'Ann Duong';
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 ```sql
 SELECT people.name

@@ -71,7 +71,7 @@ This is where the **private fields** comes in.
 
 <details>
 
-<summary><strong>Q: What are the downside of making the friends field directly accessible?</strong></summary>
+**<summary>Q: What are the downside of making the friends field directly accessible?</summary>**
 
 It is possible to improperly modify the `friends` array and produce unexpected results.
 

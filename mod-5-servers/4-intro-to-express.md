@@ -211,7 +211,7 @@ const users = [
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 const users = [
@@ -379,7 +379,7 @@ app.get('/api/users/:id', findUser);
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 if (!user) {

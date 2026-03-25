@@ -90,7 +90,7 @@ We refer to each folder in the file tree as a **directory**. The **root director
 
 <details>
 
-<summary><strong>Q: What are the ways that the file tree is tree-like?</strong></summary>
+**<summary>Q: What are the ways that the file tree is tree-like?</summary>**
 
 The root is like the trunk of the tree and each sub-directory is a branch that can have more branches.
 
@@ -135,7 +135,7 @@ Note that some commands like `pwd` can be entered on their own. Other commands l
 
 <details>
 
-<summary><strong>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</strong></summary>
+**<summary>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</summary>**
 
 For this particular task it might be faster to use a GUI file manager like Finder, however there are many tasks where a CLI like the Terminal can outpace a GUI like Finder.
 
@@ -225,7 +225,7 @@ cd ../..
 
 <details>
 
-<summary><strong>Suppose I were located in the <code>/Users/smith/Documents</code> directory, how could I navigate to the <code>/Users/jones/Desktop</code> directory in one <code>cd</code> command?</strong></summary>
+**<summary>Suppose I were located in the `/Users/smith/Documents` directory, how could I navigate to the `/Users/jones/Desktop` directory in one `cd` command?</summary>**
 
 ```
 cd ../../jones/Desktop

@@ -146,7 +146,7 @@ console.log(schoolLib.hasBook(book1)); // true - still in school library
 
 <details>
 
-<summary><strong>Q: What is the relationship between a <code>Library</code> and a <code>Book</code> class?</strong></summary>
+**<summary>Q: What is the relationship between a `Library` and a `Book` class?</summary>**
 
 A library has many books. A book belongs to a Library
 
@@ -159,7 +159,7 @@ Later this week, we'll learn how to implement an "Is A" relationship with the `e
 
 <details>
 
-<summary><strong>Example: Library and Books ERD</strong></summary>
+**<summary>Example: Library and Books ERD</summary>**
 
 <img src="img/book-library-erd.png" alt="The library and book classes are connected with a one-to-many line. A library has many books (a book belongs to a library)" data-size="original">
 

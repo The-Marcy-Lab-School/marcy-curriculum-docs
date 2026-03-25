@@ -75,7 +75,7 @@ Imagine you're working on a paper. You've got all of your drafts saved in a fold
 
 <details>
 
-<summary><strong>Q: Even though it is messy, what are the benefits of doing this versus just keeping one version of the file?</strong></summary>
+**<summary>Q: Even though it is messy, what are the benefits of doing this versus just keeping one version of the file?</summary>**
 
 It is easier to see how the file has changed over time and to revert to an older version of the file if necessary.
 
@@ -93,7 +93,7 @@ Git maintains a history of changes through **"commits"** — snapshots of our co
 
 <details>
 
-<summary><strong>Q: What are the benefits of maintaining a "commit history" like this?</strong></summary>
+**<summary>Q: What are the benefits of maintaining a "commit history" like this?</summary>**
 
 Developers can revert to previous versions of their project if they need to (for example, if a feature is not working as expected).
 
@@ -138,7 +138,7 @@ Using git in a project involves moving our code between three phases:
 
 <details>
 
-<summary><strong>Q: What is the point of temporarily storing changes before committing them?</strong></summary>
+**<summary>Q: What is the point of temporarily storing changes before committing them?</summary>**
 
 Check out [this StackOverflow post which does a great job of explaining!](https://stackoverflow.com/questions/49228209/whats-the-use-of-the-staging-area-in-git)
 

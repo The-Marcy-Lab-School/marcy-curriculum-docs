@@ -158,7 +158,7 @@ figure {
 
 <details>
 
-<summary><strong>Q: What are the benefits of having CSS in an external file?</strong></summary>
+**<summary>Q: What are the benefits of having CSS in an external file?</summary>**
 
 Just like modules in a JavaScript program, external stylesheets can be reused by multiple pages that want to have the same styling. When you decide to make a change to the overall style of the website, all pages that use that stylesheet will be updated without the need to update pages individually.
 
@@ -271,7 +271,7 @@ Color values can be written in a variety of ways. For example, these are all equ
 
 <details>
 
-<summary><strong>Q: How would you make green using RGB and Hex? What about black and white?</strong></summary>
+**<summary>Q: How would you make green using RGB and Hex? What about black and white?</summary>**
 
 * Green: `rgb(0, 255, 0)` or `#00ff00`
 * Black: `rgb(0, 0, 0)` or `#000000`

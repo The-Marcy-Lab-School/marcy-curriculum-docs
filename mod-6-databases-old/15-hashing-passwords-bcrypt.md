@@ -61,7 +61,7 @@ As a result, hashing is commonly used for password storage: when a user creates 
 
 <details>
 
-<summary><strong>Q: Why is it important that hashing functions are "one way" when it comes to password storage?</strong></summary>
+**<summary>Q: Why is it important that hashing functions are "one way" when it comes to password storage?</summary>**
 
 Without password hashing, a hacker who obtains a user database can simply read the passwords in plain text.
 
@@ -121,7 +121,7 @@ Remember, a hashing function should have the following properties:
 
 <details>
 
-<summary><strong>Q: For the algorithm above, given the hashed string <code>999897</code>, what is the plain-text string that would generate that hashed string?</strong></summary>
+**<summary>Q: For the algorithm above, given the hashed string `999897`, what is the plain-text string that would generate that hashed string?</summary>**
 
 ```js
 simpleHash("cba") //-> "999897"

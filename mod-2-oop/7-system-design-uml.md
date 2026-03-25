@@ -67,7 +67,7 @@ console.log(myLibrary.getBooks()); // [ Book { title: "Beloved", author: "Toni M
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 class Book {
@@ -125,7 +125,7 @@ System design is a very broad term but in the context of Object-Oriented Program
 
 <details>
 
-<summary><strong>Discussion Question: What are the components, responsibilities (properties/methods), and relationships for the Pet Adoption Center application?</strong></summary>
+**<summary>Discussion Question: What are the components, responsibilities (properties/methods), and relationships for the Pet Adoption Center application?</summary>**
 
 Components could include shelters, owners, pets, adopters/applicants, applications, release forms, etc...
 
@@ -155,7 +155,7 @@ A UML diagram for the Pet Shelter might look like this:
 
 <details>
 
-<summary><strong>Q: Without looking too closely, what are the visual components that show the entities in the system? What </strong><em><strong>responsibilities</strong></em><strong> and </strong><em><strong>relationships</strong></em><strong> do you see?</strong></summary>
+**<summary>Q: Without looking too closely, what are the visual components that show the entities in the system? What </strong><em><strong>responsibilities</strong></em><strong> and </strong><em><strong>relationships</strong></em><strong> do you see?</summary>**
 
 * Boxes represent classes with properties and methods inside
 * Arrows show relationships with labels and numbers
@@ -172,7 +172,7 @@ UML Diagrams are like a draft of a system before it is implemented in code.
 
 <details>
 
-<summary><strong>Q: Why is it useful to create a UML diagram as a "first draft" of a system before implementing the system in code?</strong></summary>
+**<summary>Q: Why is it useful to create a UML diagram as a "first draft" of a system before implementing the system in code?</summary>**
 
 UML diagrams allow engineers to think through the design and iterate on it until they are absolutely certain about what they are building. It would be a massive waste of time and resources to build a system only to have to rebuild it due to a poor design.
 
@@ -224,7 +224,7 @@ class Library {
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 Here is a text-based UML Diagram for Book and Library
 
@@ -264,7 +264,7 @@ To illustrate relationships between classes in a system, we use a combination of
 
 <details>
 
-<summary><strong>Q: For each relationship, identify which are uni-directional and which are bi-directional</strong></summary>
+**<summary>Q: For each relationship, identify which are uni-directional and which are bi-directional</summary>**
 
 * Shelter --> Pet (one-way)
 * Shelter --> Application (one-way)
@@ -287,7 +287,7 @@ More examples of multiplicity notation include:
 
 <details>
 
-<summary><strong>Q: Can an Adopter submit zero applications?</strong></summary>
+**<summary>Q: Can an Adopter submit zero applications?</summary>**
 
 Yes
 
@@ -295,7 +295,7 @@ Yes
 
 <details>
 
-<summary><strong>Q: Can an Application exist without an Adopter?</strong></summary>
+**<summary>Q: Can an Application exist without an Adopter?</summary>**
 
 No
 
@@ -303,7 +303,7 @@ No
 
 <details>
 
-<summary><strong>Q: Can one Pet have multiple applications?</strong></summary>
+**<summary>Q: Can one Pet have multiple applications?</summary>**
 
 Yes
 
@@ -311,7 +311,7 @@ Yes
 
 <details>
 
-<summary><strong>Q: Can an Application be for multiple pets?</strong></summary>
+**<summary>Q: Can an Application be for multiple pets?</summary>**
 
 No
 
@@ -355,7 +355,7 @@ Analyze the UML diagram for the pet adoption system and, for each feature, desig
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 **Adopters need some way to apply for pet adoption**:
 

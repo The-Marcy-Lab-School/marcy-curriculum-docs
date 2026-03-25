@@ -45,7 +45,7 @@ A form is a collection of inputs that can be filled out by a user to submit a co
 
 <details>
 
-<summary><strong>Click Here To See Some Examples</strong></summary>
+**<summary>Click Here To See Some Examples</summary>**
 
 Examples you might see:
 
@@ -82,7 +82,7 @@ Can you think of other examples?
 
 <details>
 
-<summary><strong>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership.</strong></summary>
+**<summary>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership.</summary>**
 
 (A) Clicking on a like button would not require a form since there is just one input to interact with: the button
 
@@ -159,7 +159,7 @@ Each input type behaves differently — `text` accepts any characters, `number` 
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 We'll use a "date" type input for the application date, a "number" type input for the salary, and a "url" type input for the job posting url. Make sure to add a `<label>` for each `<input>` and wrap them in a `<div>`:
 
@@ -220,7 +220,7 @@ To improve our form's accessibility we need to connect each `<input>` to its `<l
 
 <details>
 
-<summary><strong>Q: What happens when you click a label without the <code>for</code> attribute?</strong></summary>
+**<summary>Q: What happens when you click a label without the `for` attribute?</summary>**
 
 Nothing. The label is just text. The `for` attribute is what creates the connection to the input.
 
@@ -230,7 +230,7 @@ Nothing. The label is just text. The `for` attribute is what creates the connect
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 At this point, your form should look like this:
 

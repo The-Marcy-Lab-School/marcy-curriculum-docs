@@ -69,7 +69,7 @@ Sequence Flow:
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 1. **`main.js`**: The click handler on `#recipes-list` runs. `event.target.closest('li')` finds the clicked card and gives us `li`.
 2. **`main.js`**: `getRecipeById(li.dataset.recipeId)` is called with the card’s stored id.
@@ -83,7 +83,7 @@ Sequence Flow:
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 1. **`main.js`**: The form submit handler runs, calls `event.preventDefault()`, and reads `searchTerm` plus `isQuick` (`.checked`).
 2. **`main.js`**: `await getRecipeBySearchTerm(searchTerm)` is called with the search term.
@@ -98,7 +98,7 @@ Sequence Flow:
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 1. **`main.js`**: The submit handler calls `await getRecipeBySearchTerm(searchTerm)`.
 2. **`fetch-helpers.js`**: The fetch fails (network failure or `!response.ok`), so the `catch` block returns `{ data: null, error }`.
@@ -121,7 +121,7 @@ Open each file and answer the questions.
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. It enables ES modules in the browser, so we can use `import` / `export` in JavaScript files.
 2. It gets removed when `renderRecipes` runs, because `recipesList.innerHTML = ''` clears the list before new cards are appended.
@@ -140,7 +140,7 @@ Open each file and answer the questions.
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. It resolves to `data.recipes` (an array) on success, and resolves to `null` on failure.
 2. It handles HTTP failure responses (like 404/500) that do not reject `fetch` by default. `.catch()` alone only handles rejected Promises (network/throw errors).
@@ -159,7 +159,7 @@ Open each file and answer the questions.
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. To remove old/fallback content before rendering new results and avoid duplicate cards.
 2. The details section is hidden by default, so removing `hidden` makes the selected recipe details visible.
@@ -178,7 +178,7 @@ Open each file and answer the questions.
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. Initial page load (`getRecipes`), clicking a recipe card (`getRecipeById`), and submitting the search form (`getRecipeBySearchTerm`).
 2. On `#recipes-list` click. One parent listener handles clicks on dynamically rendered cards, including clicks on child elements via `closest('li')`.

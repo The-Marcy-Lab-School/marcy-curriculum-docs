@@ -287,7 +287,7 @@ const App = () => {
 
 <details>
 
-<summary><strong>Q: What will this render?</strong></summary>
+**<summary>Q: What will this render?</summary>**
 
 <img src="../.gitbook/assets/message-example.png" alt="" data-size="original">
 
@@ -301,7 +301,7 @@ The `for` attribute for `<label>` elements is another example of this. Instead, 
 
 <details>
 
-<summary><strong>Q: How can I add a <code>class="insta-pic"</code> attribute to the <code>img</code> in my <code>InstagramPost</code> component?</strong></summary>
+**<summary>Q: How can I add a `class="insta-pic"` attribute to the `img` in my `InstagramPost` component?</summary>**
 
 ```jsx
 const InstagramPost = () => {

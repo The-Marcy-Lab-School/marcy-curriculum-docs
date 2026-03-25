@@ -65,7 +65,7 @@ console.log(hasValue(letters, 'e')); // Prints false
 
 <details>
 
-<summary><strong>Check out this example</strong></summary>
+**<summary>Check out this example</summary>**
 
 ```js
 const hasValue = (arr, value) => {
@@ -113,7 +113,7 @@ console.log(endLetters); // []
 
 <details>
 
-<summary><strong>Question: How are we allowed to modify the array if it is stored in a <code>const</code> variable?</strong></summary>
+**<summary>Question: How are we allowed to modify the array if it is stored in a `const` variable?</summary>**
 
 `const` prevents us from reassigning the variable. Notice that we never reassign `endLetters`! The variable still references the same array, we're just changing the contents of the array.
 

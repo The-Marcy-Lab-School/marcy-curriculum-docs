@@ -93,7 +93,7 @@ Without `await`, `result` would be a Promise object, not the query result. `resu
 
 <details>
 
-<summary><strong>Q: What would happen if you forgot the <code>await</code> keyword before <code>pool.query()</code>?</strong></summary>
+**<summary>Q: What would happen if you forgot the `await` keyword before `pool.query()`?</summary>**
 
 `pool.query()` would still run — the database query would still be sent — but the function would not wait for it to finish. `result` would be a Promise object, not the resolved result. When you then access `result.rows`, you'd get `undefined` because Promise objects don't have a `.rows` property. Your controller would likely receive `undefined` from the model and send an unexpected response to the client.
 
@@ -161,7 +161,7 @@ The pattern is consistent:
 
 <details>
 
-<summary><strong>Q: Why do controllers call <code>next(err)</code> instead of sending an error response directly?</strong></summary>
+**<summary>Q: Why do controllers call `next(err)` instead of sending an error response directly?</summary>**
 
 Centralizing error handling in middleware keeps controllers lean. If every controller had to format error responses itself, you'd repeat that logic everywhere and your error format might be inconsistent. By calling `next(err)`, you delegate to a single error handling middleware that formats all error responses the same way. It also makes it easy to log errors in one place, distinguish between different error types (database errors vs validation errors), and change your error response format without touching every controller.
 
@@ -300,7 +300,7 @@ This is the entire point of MVC's separation of concerns. The controller doesn't
 
 <details>
 
-<summary><strong>Q: The controllers now need to <code>await</code> the model methods. Did you have to change the controller code when swapping models?</strong></summary>
+**<summary>Q: The controllers now need to `await` the model methods. Did you have to change the controller code when swapping models?</summary>**
 
 If you wrote your controllers with `async/await` from the start (anticipating that the model might become async), then the controllers already had `await` before each model call — even when the model was synchronous. Calling `await` on a non-Promise just returns the value immediately, so it's harmless. This means your controllers didn't need to change at all during the swap.
 
@@ -310,7 +310,7 @@ If your original controllers weren't async (because the in-memory model was sync
 
 <details>
 
-<summary><strong>Q: After the swap, you restart the server, add some pets, restart again — and the pets are still there. What's different about where the data lives?</strong></summary>
+**<summary>Q: After the swap, you restart the server, add some pets, restart again — and the pets are still there. What's different about where the data lives?</summary>**
 
 With the in-memory model, data lived in a JavaScript array inside your Node process. When the process stopped, the array was destroyed.
 
@@ -340,7 +340,7 @@ This one function handles all errors from all controllers. When a database query
 
 <details>
 
-<summary><strong>Q: Why must error handling middleware have exactly four parameters <code>(err, req, res, next)</code>? What happens if you only write three?</strong></summary>
+**<summary>Q: Why must error handling middleware have exactly four parameters `(err, req, res, next)`? What happens if you only write three?</summary>**
 
 Express identifies error handling middleware by its signature — specifically, by the presence of exactly four parameters. If you write a function with three parameters, Express treats it as a normal middleware function, not an error handler. When `next(err)` is called, Express would skip it entirely and the error would not be caught. Always include all four parameters, even if you don't use `next` in the body.
 

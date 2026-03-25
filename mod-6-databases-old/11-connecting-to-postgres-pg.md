@@ -130,7 +130,7 @@ postgres://localhost/my_app_db
 
 <details>
 
-<summary><strong>Q: Why do we export the pool from a separate file rather than creating it inside every model file?</strong></summary>
+**<summary>Q: Why do we export the pool from a separate file rather than creating it inside every model file?</summary>**
 
 The pool should be a singleton — one shared pool for the entire application. If you created a new `Pool` in every model file, you'd end up with multiple pools competing for connections and consuming more resources than necessary. Exporting from `db/pool.js` ensures the pool is created once and every model shares the same instance.
 
@@ -170,7 +170,7 @@ Each row in `result.rows` is a plain JavaScript object. Column names become prop
 
 <details>
 
-<summary><strong>Q: You run <code>SELECT * FROM users WHERE id = 99</code> and no user has that ID. What does <code>result.rows</code> look like?</strong></summary>
+**<summary>Q: You run `SELECT * FROM users WHERE id = 99` and no user has that ID. What does `result.rows` look like?</summary>**
 
 It will be an empty array: `[]`. `pool.query()` does not throw an error when a `SELECT` finds nothing — it just returns zero rows. Your model method should handle this and return `null` or throw a meaningful error rather than passing an empty array to the controller.
 
@@ -236,7 +236,7 @@ Even if a user passes `1; DROP TABLE users; --` as `id`, Postgres will treat the
 
 <details>
 
-<summary><strong>Q: A query needs to filter by both username and email. How do you write it with parameterized placeholders?</strong></summary>
+**<summary>Q: A query needs to filter by both username and email. How do you write it with parameterized placeholders?</summary>**
 
 ```js
 const getUserByCredentials = async (username, email) => {
@@ -316,7 +316,7 @@ module.exports = User;
 
 <details>
 
-<summary><strong>Q: What's the difference between <code>result.rows[0]</code> and <code>result.rows</code>? When do you use each?</strong></summary>
+**<summary>Q: What's the difference between `result.rows[0]` and `result.rows`? When do you use each?</summary>**
 
 * `result.rows` — the full array of all matching rows. Use this when you expect multiple results (e.g., `list()` — all users).
 * `result.rows[0]` — just the first row. Use this when you expect exactly one result (e.g., `find(id)` — one user, `create()` — the newly created row).
@@ -327,7 +327,7 @@ If you use `result.rows[0]` when no row exists, you'll get `undefined`. That's w
 
 <details>
 
-<summary><strong>Q: Your <code>User.create()</code> method returns the newly created user. Your controller needs to send a <code>201 Created</code> status with that user as JSON. What should the controller look like?</strong></summary>
+**<summary>Q: Your `User.create()` method returns the newly created user. Your controller needs to send a `201 Created` status with that user as JSON. What should the controller look like?</summary>**
 
 ```js
 const createUser = async (req, res, next) => {

@@ -294,7 +294,7 @@ Back in the day, this was a useful feature as it let us keep our files separate 
 
 <details>
 
-<summary><strong>Q: What are the risks of adding variables to the global namespace?</strong></summary>
+**<summary>Q: What are the risks of adding variables to the global namespace?</summary>**
 
 Adding variables to the global namespace is not ideal as it limits our ability to keep our files modular, leads to unexpected behavior, and makes debugging incredibly difficult.
 

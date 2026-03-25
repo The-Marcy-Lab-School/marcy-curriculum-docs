@@ -54,7 +54,7 @@ Authentication always comes first. You can't authorize someone whose identity yo
 
 <details>
 
-<summary><strong>Q: A logged-in user tries to delete another user's post. Is this an authentication failure or an authorization failure?</strong></summary>
+**<summary>Q: A logged-in user tries to delete another user's post. Is this an authentication failure or an authorization failure?</summary>**
 
 **Authorization failure.** The user is authenticated (we know who they are — they have a valid session), but they don't have *permission* to delete someone else's post. The server should return `403 Forbidden`, not `401 Unauthorized`.
 
@@ -116,7 +116,7 @@ That's it. The middleware either stops the request by sending a response, or let
 
 <details>
 
-<summary><strong>Q: What happens if you forget to call <code>next()</code> in middleware when the session is valid?</strong></summary>
+**<summary>Q: What happens if you forget to call `next()` in middleware when the session is valid?</summary>**
 
 The request hangs. The middleware function returns without sending a response or calling `next()`, so Express doesn't know what to do next. The client's request will eventually time out. Always make sure every code path through a middleware either calls `next()`, calls `next(err)`, or sends a response.
 
@@ -147,7 +147,7 @@ The controller never even runs if the user isn't logged in.
 
 <details>
 
-<summary><strong>Q: You have a blog app where anyone can read posts, but only logged-in users can create, edit, or delete. Which routes get the middleware and which don't?</strong></summary>
+**<summary>Q: You have a blog app where anyone can read posts, but only logged-in users can create, edit, or delete. Which routes get the middleware and which don't?</summary>**
 
 ```js
 // Public
@@ -227,7 +227,7 @@ You could also extract ownership checking into its own middleware, but keeping i
 
 <details>
 
-<summary><strong>Q: Why does ownership authorization return <code>403</code> instead of <code>401</code>?</strong></summary>
+**<summary>Q: Why does ownership authorization return `403` instead of `401`?</summary>**
 
 Because the user *is* authenticated — we know who they are. The `401` ("Unauthorized") response specifically means "I don't know who you are, please authenticate." Since we do know who they are, and we're denying them based on permissions, the correct code is `403 Forbidden`: "I know who you are, but you're not allowed to do this."
 
@@ -235,7 +235,7 @@ Because the user *is* authenticated — we know who they are. The `401` ("Unauth
 
 <details>
 
-<summary><strong>Q: Could you write a reusable middleware for ownership checking? What would it look like?</strong></summary>
+**<summary>Q: Could you write a reusable middleware for ownership checking? What would it look like?</summary>**
 
 You could, but it's tricky because ownership middleware needs to know which model to look up and which field represents the owner. A common pattern is a factory function that generates middleware:
 
@@ -320,7 +320,7 @@ checkAuthentication middleware
 
 <details>
 
-<summary><strong>Q: You're building a notes app. Every user can only see and edit their own notes — no note is public. Design the middleware strategy for the <code>/api/notes</code> router.</strong></summary>
+**<summary>Q: You're building a notes app. Every user can only see and edit their own notes — no note is public. Design the middleware strategy for the `/api/notes` router.</summary>**
 
 Since no route on this router is public, apply `checkAuthentication` to the entire router:
 

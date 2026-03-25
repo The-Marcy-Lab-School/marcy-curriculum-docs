@@ -132,7 +132,7 @@ if (error) return <p>{error.message}</p>
 
 <details>
 
-<summary><strong>Potential Solution</strong></summary>
+**<summary>Potential Solution</summary>**
 
 ```jsx
 import { useState } from 'react'
@@ -276,7 +276,7 @@ Add to your dog API app by having it render a dog image on the first render (and
 
 <details>
 
-<summary><strong>Potential Solution</strong></summary>
+**<summary>Potential Solution</summary>**
 
 ```jsx
 import { useState, useEffect } from 'react'
@@ -374,7 +374,7 @@ function App() {
 
 <details>
 
-<summary><strong>Q: When / how many times will this effect run?</strong></summary>
+**<summary>Q: When / how many times will this effect run?</summary>**
 
 Each time the `onChange` event fires (every input change)
 

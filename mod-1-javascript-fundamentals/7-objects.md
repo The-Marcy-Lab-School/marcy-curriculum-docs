@@ -139,7 +139,7 @@ while (true) {
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 To complete this program, add the line `dictionary[newWord] = definition;` to the end
 

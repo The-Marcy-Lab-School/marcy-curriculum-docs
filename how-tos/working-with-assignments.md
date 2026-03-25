@@ -308,7 +308,7 @@ First, let's look at an example of a response that is technically accurate and c
 
 <details>
 
-<summary><strong>See how this response is rendered in Markdown!</strong></summary>
+**<summary>See how this response is rendered in Markdown!</summary>**
 
 They are used if you want to like do one thing or another in your code. Here is an example.
 
@@ -330,7 +330,7 @@ Below is a great example of a short response answer. As you read, what do you no
 
 <details>
 
-<summary><strong>See how this response is rendered in Markdown!</strong></summary>
+**<summary>See how this response is rendered in Markdown!</summary>**
 
 In JavaScript, `if` statements are used by programmers to decide whether or not to perform an action in their program. This decision is based on a **boolean expression** (a bit of code that evaluates to `true` or `false`).
 

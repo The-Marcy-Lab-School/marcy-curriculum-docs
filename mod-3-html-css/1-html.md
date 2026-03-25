@@ -172,7 +172,7 @@ Consider this example:
 
 <details>
 
-<summary><strong>Q: How do the different heading sizes indicate the relationships in this content?</strong></summary>
+**<summary>Q: How do the different heading sizes indicate the relationships in this content?</summary>**
 
 * The `h1` title tells us that the information is all about Ada Lovelace.
 * The `h2` tells us that the next set of content is about Ada's programming skills.
@@ -182,7 +182,7 @@ Consider this example:
 
 <details>
 
-<summary><strong>Q: If you were to add a list of Ada's favorite quotes to the bottom of the page, which type of heading would you add?</strong></summary>
+**<summary>Q: If you were to add a list of Ada's favorite quotes to the bottom of the page, which type of heading would you add?</summary>**
 
 A `h2` heading would be most appropriate since the content is still related to Ada Lovelace but is a different category of content from the lists of programming skills.
 
@@ -386,7 +386,7 @@ See if you can figure out the HTML for yourself before checking the solution bel
 
 <details>
 
-<summary><strong>Solution: Footer HTML</strong></summary>
+**<summary>Solution: Footer HTML</summary>**
 
 ```html
 <footer>
@@ -405,7 +405,7 @@ In between our navigation links in the `header` and the information in the `foot
 
 <details>
 
-<summary><strong>Solution: Main Sections</strong></summary>
+**<summary>Solution: Main Sections</summary>**
 
 In our website, we have three clear sections:
 
@@ -421,7 +421,7 @@ Now that we've identified the sections, inside of the `main` element, create a `
 
 <details>
 
-<summary><strong>Solution: Main Sections HTML</strong></summary>
+**<summary>Solution: Main Sections HTML</summary>**
 
 ```html
 <main>

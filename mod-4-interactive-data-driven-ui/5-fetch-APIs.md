@@ -120,7 +120,7 @@ In addition to the message body, the response will contain a three-digit **statu
 
 <details>
 
-<summary><strong>Q1: A Web API is an interface for exchanging ____ via _____</strong></summary>
+**<summary>Q1: A Web API is an interface for exchanging ____ via _____</summary>**
 
 A Web API is an interface for exchanging data via the internet (HTTP)
 
@@ -128,7 +128,7 @@ A Web API is an interface for exchanging data via the internet (HTTP)
 
 <details>
 
-<summary><strong>Q2: What do we call the cycle that describes how we get det data from a Web API?</strong></summary>
+**<summary>Q2: What do we call the cycle that describes how we get det data from a Web API?</summary>**
 
 The HTTP Request and Response cycle
 
@@ -136,7 +136,7 @@ The HTTP Request and Response cycle
 
 <details>
 
-<summary><strong>Q3: What do we call the specific URL that we send a requst to?</strong></summary>
+**<summary>Q3: What do we call the specific URL that we send a requst to?</summary>**
 
 The endpoint
 
@@ -144,7 +144,7 @@ The endpoint
 
 <details>
 
-<summary><strong>Q4: What are the four HTTP request verbs and what do they each mean?</strong></summary>
+**<summary>Q4: What are the four HTTP request verbs and what do they each mean?</summary>**
 
 * `"GET"` - Request to get data from the API's dataset (the default)
 * `"POST"` - Request to create data to be added to the API's dataset
@@ -155,7 +155,7 @@ The endpoint
 
 <details>
 
-<summary><strong>Q5: How is data typically formatted when sent via HTTP?</strong></summary>
+**<summary>Q5: How is data typically formatted when sent via HTTP?</summary>**
 
 Using JSON (JavaScript Object Notation)
 
@@ -180,7 +180,7 @@ The `fetch(url, config)` sends an HTTP request to the API endpoint specified by 
 
 <details>
 
-<summary><strong>Q: How can we handle the promise from fetch once it resolves or rejects?</strong></summary>
+**<summary>Q: How can we handle the promise from fetch once it resolves or rejects?</summary>**
 
 Using `.then()` and `.catch()`!
 
@@ -299,7 +299,7 @@ When an HTTP request is sent to a web API, the response data isn't sent back all
 
 <details>
 
-<summary><strong>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</strong></summary>
+**<summary>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</summary>**
 
 Getting data from another source requires two steps: first downloading the data and then reading it. If the data is really large, downloading the data can become a blocking task.
 
@@ -327,7 +327,7 @@ When we send a request, it is entirely possible that the request fails.
 
 <details>
 
-<summary><strong>Q: Can you think of a reason for a request failing?</strong></summary>
+**<summary>Q: Can you think of a reason for a request failing?</summary>**
 
 Here are some common reasons:
 

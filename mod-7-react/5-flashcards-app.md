@@ -137,7 +137,7 @@ In this example, `"flashcards"` is the top-level property which makes http://loc
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 http://localhost:4000/friends and http://localhost:4000/messages
 
@@ -147,7 +147,7 @@ http://localhost:4000/friends and http://localhost:4000/messages
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 ```json
 {

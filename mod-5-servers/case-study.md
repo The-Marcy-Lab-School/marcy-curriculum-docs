@@ -75,7 +75,7 @@ An example is provided for the first scenario.
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 1. **`frontend/src/main.js`**: The `submit` event fires on `#bookmark-form`, calling `handleFormSubmit`.
 2. **`frontend/src/main.js`**: The `title` and `url` are read from `form.title.value` and `form.url.value` and `await createBookmark(title, url)` is called.
@@ -93,7 +93,7 @@ An example is provided for the first scenario.
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 1. **`frontend/src/main.js`**: A click event fires on `#bookmarks-list`, calling `handleDeleteBookmarkClick`.
 2. **`frontend/src/main.js`**: `handleDeleteBookmarkClick` gets the bookmark's `id` from the clicked button's `data-bookmark-id` attribute and calls `await deleteBookmark(clickedBtn.dataset.bookmarkId)`.
@@ -149,7 +149,7 @@ Files like these prevent you from needing to type out the entire command directl
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. `express.json()` parses incoming requests with a JSON body and attaches the result to `req.body`. Without it, `req.body` would be `undefined` when a client sends JSON (e.g., on `POST` or `PATCH` requests).
 2. `express.static()` serves all files in a given folder as static assets. `__dirname` is a Node.js variable that holds the absolute path to the directory of the current file — in this case, the `swe-casestudy-5/server/` folder. `path.join(__dirname, '../frontend')` navigates one level up and into `frontend/` to create the absolute path to the `frontend/` folder which is stored in `pathToFrontend`. Visiting `http://localhost:8080` then delivers `frontend/index.html` automatically.
@@ -190,7 +190,7 @@ curl http://localhost:8080/api/bookmarks
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. The bookmarks are stored in an in-memory JavaScript array (`const bookmarks = [...]`). Limitations: changes to the data are lost on server restart. All bookmark data resets to the three hardcoded initial values each time the module is reloaded.
 2. `[...bookmarks]` returns a shallow copy of the array so callers can't accidentally mutate the internal store by modifying the returned reference. `{ ...bookmark }` does the same for individual objects — it returns a copy so callers cannot mutate the stored record directly. This creates a safe interface that encapsulates the `bookmarks` data and creates clearer separation of concerns.
@@ -208,7 +208,7 @@ curl http://localhost:8080/api/bookmarks
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. URL parameters are always strings. `bookmarkModel.find()` compares with `===`, so `"1" === 1` would be `false`. `Number(id)` converts the string to a number so the comparison works correctly.
 2. `201 Created` is more semantically accurate — it signals that a new resource was successfully created, not just that the request succeeded. `200 OK` typically means the request succeeded but no new resource was created.
@@ -236,7 +236,7 @@ These follow REST conventions: resources are identified by URL (`/api/bookmarks`
 
 <details>
 
-<summary><strong>Answers</strong></summary>
+**<summary>Answers</summary>**
 
 1. `/api/bookmarks` is a relative URL — it automatically prepends the current origin (`http://localhost:8080`). It works because the frontend is served by the same Express server as the API, so both share the same origin.
 2. `getBookmarks` returns `[]` on failure. `createBookmark` returns `null` on failure. `deleteBookmark` returns `false` on failure. Callers must check for these values before using the result.

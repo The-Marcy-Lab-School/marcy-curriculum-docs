@@ -168,7 +168,7 @@ Now, when your browser loads this HTML page, it will automatically run the JavaS
 
 <details>
 
-<summary><strong>Q: Why does the <code>&#x3C;script></code> tag need to go at the end of the body?</strong></summary>
+**<summary>Q: Why does the `<script>` tag need to go at the end of the body?</summary>**
 
 JavaScript runs as soon as it loads. If your script tries to select an element that hasn't been added to the page yet, `querySelector` will return `null` and your code will break.
 
@@ -223,7 +223,7 @@ element.addEventListener(eventType, handlerFunction);
 
 <details>
 
-<summary><strong>Challenge 1: How can we double the font size every time we click the button?</strong></summary>
+**<summary>Challenge 1: How can we double the font size every time we click the button?</summary>**
 
 ```js
 const button = document.querySelector('#blow-btn');
@@ -240,7 +240,7 @@ button.addEventListener('click', () => {
 
 <details>
 
-<summary><strong>Challenge 2: How can make the balloon "pop" 💥 when the font size gets above 750px?</strong></summary>
+**<summary>Challenge 2: How can make the balloon "pop" 💥 when the font size gets above 750px?</summary>**
 
 ```js
 const button = document.querySelector('#blow-btn');
@@ -294,7 +294,7 @@ document.body.addEventListener('keydown', () => {
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 document.body.addEventListener('mousemove', () => {
@@ -335,7 +335,7 @@ document.body.addEventListener('keydown', (event) => {
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 ```js
 document.body.addEventListener('keydown', (event) => {
@@ -449,7 +449,7 @@ Your task is to do the following:
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 {% code title="1-random-colors/index.js" %}
 ```javascript

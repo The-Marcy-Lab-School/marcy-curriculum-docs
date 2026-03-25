@@ -71,7 +71,7 @@ Before writing any new endpoints, let's talk about how to _design_ them well.
 
 <details>
 
-<summary><strong><code>GET /api/fellows/3</code></strong></summary>
+**<summary>`GET /api/fellows/3`</summary>**
 
 Get the fellow with the id `3`
 
@@ -79,7 +79,7 @@ Get the fellow with the id `3`
 
 <details>
 
-<summary><strong><code>PATCH /api/fellows/1</code></strong></summary>
+**<summary>`PATCH /api/fellows/1`</summary>**
 
 Update the fellow with the id `1`
 
@@ -87,7 +87,7 @@ Update the fellow with the id `1`
 
 <details>
 
-<summary><strong><code>DELETE /api/fellows/2</code></strong></summary>
+**<summary>`DELETE /api/fellows/2`</summary>**
 
 Delete the fellow with the id `2`
 
@@ -95,7 +95,7 @@ Delete the fellow with the id `2`
 
 <details>
 
-<summary><strong><code>POST /api/fellows/2/bio</code></strong></summary>
+**<summary>`POST /api/fellows/2/bio`</summary>**
 
 Create a bio for the fellow with the id `2`
 
@@ -143,7 +143,7 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 <details>
 
-<summary><strong><code>GET /api/fellows</code></strong></summary>
+**<summary>`GET /api/fellows`</summary>**
 
 ✅ RESTful — The URL identifies a resource (the collection of fellows) using a plural noun. `GET` correctly expresses "retrieve." No verb in the URL, no state stored on the server.
 
@@ -151,7 +151,7 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 <details>
 
-<summary><strong><code>GET /api/getAllFellows</code></strong></summary>
+**<summary>`GET /api/getAllFellows`</summary>**
 
 ❌ Not RESTful — **Verb in the URL** (breaks "Endpoints Describe Resources, Not Actions"). The path should describe a resource, not an action. The HTTP method `GET` already communicates "retrieve" — repeating it in the URL is redundant and non-standard.
 
@@ -161,7 +161,7 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 <details>
 
-<summary><strong><code>POST /api/fellows</code></strong></summary>
+**<summary>`POST /api/fellows`</summary>**
 
 ✅ RESTful — `POST` correctly signals "create a new resource," and `/api/fellows` identifies the collection that will own it. The URL is a noun, the method is the verb.
 
@@ -169,7 +169,7 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 <details>
 
-<summary><strong><code>POST /api/fellows/3/update</code></strong></summary>
+**<summary>`POST /api/fellows/3/update`</summary>**
 
 ❌ Not RESTful — breaks two rules at once. First, **verb in the URL** ("update" should not appear in the path). Second, **wrong HTTP method** — updating an existing resource is the job of `PATCH` or `PUT`, not `POST`.
 
@@ -179,7 +179,7 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 <details>
 
-<summary><strong><code>DELETE /api/fellows/7</code></strong></summary>
+**<summary>`DELETE /api/fellows/7`</summary>**
 
 ✅ RESTful — `DELETE` expresses "remove this resource," and `/api/fellows/7` clearly identifies the specific fellow by id. The URL hierarchy (`/fellows/:id`) follows the REST convention for addressing a single resource within a collection.
 
@@ -187,7 +187,7 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 <details>
 
-<summary><strong><code>GET /api/fellows/delete/5</code></strong></summary>
+**<summary>`GET /api/fellows/delete/5`</summary>**
 
 ❌ Not RESTful — breaks two rules. First, **verb in the URL** ("delete" belongs in the HTTP method, not the path). Second, **wrong HTTP method** — `GET` requests are expected to be safe (read-only, no side effects). Using `GET` to delete data is unpredictable and dangerous; web crawlers and prefetch tools could accidentally trigger deletions.
 
@@ -229,7 +229,7 @@ Your API should have CRUD endpoints for posts and comments and it should follow 
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 Notice that we can't use a URL for comments `/api/posts/:id/comments/:id` because we would have two route parameters called `:id`. To get around this, we provide more descriptive route parameter names: `:postId`  and `:commentId`
 
@@ -394,7 +394,7 @@ With this code fully tested, we can now wire it up to our form! See if you can f
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 When handling the form submission, we use the input value to call `createFellow`. Then, to update the list with the new data, we call `loadFellows()` again to re-fetch and re-render.
 
@@ -436,7 +436,7 @@ Our frontend application shows an **Edit** button next to each fellow. The `upda
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 {% code title="server/index.js" %}
 ```javascript
@@ -537,7 +537,7 @@ The frontend also shows a **Delete** button next to each fellow. The `deleteFell
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 {% code title="server/index.js" %}
 ```javascript

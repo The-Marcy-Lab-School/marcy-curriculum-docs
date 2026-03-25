@@ -38,7 +38,7 @@ To encourage the competitive spirit of gaming, a key feature that we want to imp
 
 <details>
 
-<summary><strong>Q: Look at <code>main.js</code> and see how the <code>leaderboard</code> is stored "in memory". What are the issues with storing a leaderboard in memory?</strong></summary>
+**<summary>Q: Look at `main.js` and see how the `leaderboard` is stored "in memory". What are the issues with storing a leaderboard in memory?</summary>**
 
 When the user refreshes the page or closes their browser, the program will end and all "in memory" variables will be thrown away. When we return to the page, a new `leaderboard` will be created.
 
@@ -83,7 +83,7 @@ leaderboard.push(40);
 
 <details>
 
-<summary><strong>Q: Why did we get a TypeError?</strong></summary>
+**<summary>Q: Why did we get a TypeError?</summary>**
 
 Because `localStorage.setItem` converted the given array into a string. When we try to retrieve that array, it is no longer an array!
 

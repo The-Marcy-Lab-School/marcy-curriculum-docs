@@ -160,7 +160,7 @@ module.exports = {
 
 <details>
 
-<summary><strong>Q: Why do we use an Object to export many values instead of an Array?</strong></summary>
+**<summary>Q: Why do we use an Object to export many values instead of an Array?</summary>**
 
 If the `module.exports` were an array...
 
@@ -204,7 +204,7 @@ main();
 
 <details>
 
-<summary><strong>Q: How does this file structure demonstrate separation of concerns? What is the concern of each file?</strong></summary>
+**<summary>Q: How does this file structure demonstrate separation of concerns? What is the concern of each file?</summary>**
 
 Each file is concerned with only one aspect of the functionality of the entire program.
 
@@ -357,7 +357,7 @@ nodemon index.js
 
 <details>
 
-<summary><strong>Q: Why is <code>nodemon</code> installed as a developer dependency and not a required dependency of the project?</strong></summary>
+**<summary>Q: Why is `nodemon` installed as a developer dependency and not a required dependency of the project?</summary>**
 
 `nodemon` makes it easier to test your code, but the functionality of the program is not changed by it. It is just a convenience for developers.
 
@@ -561,7 +561,7 @@ If you get stuck, you can view the solution below:
 
 <details>
 
-<summary><strong>Q: Solution</strong></summary>
+**<summary>Q: Solution</summary>**
 
 {% code title="index.js" overflow="wrap" lineNumbers="true" %}
 ```javascript

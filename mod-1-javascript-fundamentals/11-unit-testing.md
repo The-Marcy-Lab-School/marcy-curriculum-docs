@@ -55,7 +55,7 @@ const doubleArrayPurely = (arr) => {
 
 <details>
 
-<summary><strong>Q: Imagine you were given this function and asked to verify that it works. How would you test it? What do you expect to happen when testing?</strong></summary>
+**<summary>Q: Imagine you were given this function and asked to verify that it works. How would you test it? What do you expect to happen when testing?</summary>**
 
 To test this manually, you could invoke the function with some sample data and see if the _output_ matches what you _expect_.
 
@@ -161,7 +161,7 @@ In the `tests/sum.test.js` file, add a new test with the message `"adds negative
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 test('addsNegatives', () => {
@@ -214,7 +214,7 @@ Now that we have passing tests, we can change _how_ the code works — as long a
 
 <details>
 
-<summary><strong>Challenge: Refactor <code>doubleArrayPurely</code> to use the higher-order method <code>map</code></strong></summary>
+**<summary>Challenge: Refactor `doubleArrayPurely` to use the higher-order method `map`</summary>**
 
 ```js
 const doubleArrayPurely = (arr) => {
@@ -258,7 +258,7 @@ Let's try it out. We'll follow 4 steps:
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 test('can double strings and numbers', () => {
@@ -272,7 +272,7 @@ test('can double strings and numbers', () => {
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 const doubleArrayPurely = (arr) => {
@@ -387,7 +387,7 @@ Now that we have passing tests, we can change _how_ the code works — as long a
 
 <details>
 
-<summary><strong>Challenge: Refactor <code>deposit</code> to use the higher-order method <code>map</code></strong></summary>
+**<summary>Challenge: Refactor `deposit` to use the higher-order method `map`</summary>**
 
 ```js
 const deposit = (accounts, transaction) => {
@@ -422,7 +422,7 @@ Requirements:
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 // bank.test.js
@@ -466,7 +466,7 @@ describe('withdraw', () => {
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 const withdraw = (owner, amount) => {

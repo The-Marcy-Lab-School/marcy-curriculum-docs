@@ -59,7 +59,7 @@ This creates a fundamental problem for applications that require login. After a 
 
 <details>
 
-<summary><strong>Q: Why doesn't the server just save the user ID in a JavaScript variable after login?</strong></summary>
+**<summary>Q: Why doesn't the server just save the user ID in a JavaScript variable after login?</summary>**
 
 A JavaScript variable in your server code is shared across *all* users. If you did `let currentUser = user` after login, you'd overwrite the previous user's session every time anyone logged in. There's no way to associate a server-side variable with a specific browser connection — HTTP doesn't maintain persistent connections between requests.
 
@@ -97,7 +97,7 @@ The cookie is sent automatically by the browser with every subsequent request to
 
 <details>
 
-<summary><strong>Q: What's the difference between a session stored in a cookie and a session stored in a database?</strong></summary>
+**<summary>Q: What's the difference between a session stored in a cookie and a session stored in a database?</summary>**
 
 * **Cookie-based sessions** (what `cookie-session` does): session data is encrypted and stored in the cookie itself. No server-side database needed. Simpler to set up, but there's a size limit on how much data you can store, and invalidating sessions (e.g., forcing a logout) requires extra work since the server doesn't track them.
 
@@ -288,7 +288,7 @@ checkLoginStatus();
 
 <details>
 
-<summary><strong>Q: Why is <code>/api/me</code> useful even after the user just logged in?</strong></summary>
+**<summary>Q: Why is `/api/me` useful even after the user just logged in?</summary>**
 
 When a user logs in on a login page, your app often redirects them to a dashboard or home page. That new page loads fresh — it doesn't "remember" that the login just happened. By calling `/api/me` on every page load, the app can always determine the current user state from the session, regardless of how the user got to the page.
 
@@ -311,7 +311,7 @@ Setting `req.session = null` tells `cookie-session` to delete the cookie from th
 
 <details>
 
-<summary><strong>Q: A user logs out, but if they copy their session cookie from before logout and manually paste it back into their browser, can they log back in?</strong></summary>
+**<summary>Q: A user logs out, but if they copy their session cookie from before logout and manually paste it back into their browser, can they log back in?</summary>**
 
 With `cookie-session` (client-side sessions), yes — in theory. `cookie-session` doesn't maintain a server-side session store, so it can't invalidate old cookies. Setting `req.session = null` clears the cookie from the browser, but if someone saved the old cookie value, they could manually restore it.
 
@@ -339,7 +339,7 @@ With these four endpoints, your application has a complete authentication system
 
 <details>
 
-<summary><strong>Q: A user visits your app for the first time. Walk through exactly which auth endpoints get called and when.</strong></summary>
+**<summary>Q: A user visits your app for the first time. Walk through exactly which auth endpoints get called and when.</summary>**
 
 1. **App loads** → frontend calls `GET /api/me`
    - No session cookie exists yet

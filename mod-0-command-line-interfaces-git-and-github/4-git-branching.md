@@ -58,7 +58,7 @@ Up until now, we've been pushing our commits directly to the main branch. But as
 
 <details>
 
-<summary><strong>Q: Why might pushing to main be a bad idea?</strong></summary>
+**<summary>Q: Why might pushing to main be a bad idea?</summary>**
 
 As mentioned above, whenever someone views the repository or clones it down, they will see the main branch. If we were to push changes to the main branch and those changes included mistakes (bugs), other developers would see those mistakes! And, well, that just wouldn't look very good.
 
@@ -78,7 +78,7 @@ Branching ensures that the main branch is always a "stable" version. That is, if
 
 <details>
 
-<summary><strong>Q: How is branching similar to cloning?</strong></summary>
+**<summary>Q: How is branching similar to cloning?</summary>**
 
 When the repository is cloned, the local clone can be edited without affecting the remote repository, just like a feature branch can be edited without affecting the main branch.
 
@@ -175,7 +175,7 @@ Check out the process here:
 
 <details>
 
-<summary><strong>Q: Why does Developer 2 first merge the <code>main</code> branch into the <code>feature-y</code>?</strong></summary>
+**<summary>Q: Why does Developer 2 first merge the `main` branch into the `feature-y`?</summary>**
 
 This is all for the sake of ensuring our managers approve our PR! A PR with merge conflicts is unlikely to be approved.
 

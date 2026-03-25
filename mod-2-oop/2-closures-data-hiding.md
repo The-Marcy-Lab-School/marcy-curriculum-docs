@@ -138,7 +138,7 @@ bensFriends.printFriends(); // What is printed here?
 
 <details>
 
-<summary><strong>Q: What about this example is NOT consistent or predictable? What is printed by the last statement?</strong></summary>
+**<summary>Q: What about this example is NOT consistent or predictable? What is printed by the last statement?</summary>**
 
 You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
 
@@ -270,7 +270,7 @@ console.log(gonzalosFriendsManager.getFriends()) // ['carmen']
 
 <details>
 
-<summary><strong>Q: In the example above, identify the "outer" function and the inner function involved in creating a closure</strong></summary>
+**<summary>Q: In the example above, identify the "outer" function and the inner function involved in creating a closure</summary>**
 
 `makeFriendsManager` is the outer function and both `addFriend` and `getFriends` form a closure around the variable `friends`.
 
@@ -278,7 +278,7 @@ console.log(gonzalosFriendsManager.getFriends()) // ['carmen']
 
 <details>
 
-<summary><strong>Q: How can we modify the example above to be able to create a new friend manager with a starting set of <code>friends</code> as an argument?</strong></summary>
+**<summary>Q: How can we modify the example above to be able to create a new friend manager with a starting set of `friends` as an argument?</summary>**
 
 ```js
 const makeFriendsManager = (...initialFriends) => {
@@ -332,7 +332,7 @@ const getId = ((id = 1) => () => id++)();
 
 <details>
 
-<summary><strong>Answer</strong></summary>
+**<summary>Answer</summary>**
 
 * The first function DOES NOT create a closure. Even though there is an inner arrow function defined, that function doesn't reference variables in the scope outside of it
 * The second function DOES create a closure because the inner arrow function passed to `nums.map` references the `randomNum` variable in the scope outside of it.
@@ -371,7 +371,7 @@ counter.value = 10; // BAD
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+**<summary>Solution</summary>**
 
 ```js
 const makeCounter = (startingValue = 0) => {

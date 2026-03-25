@@ -66,7 +66,7 @@ Data doesn't travel directly from one computer to another in a single hop. Inste
 
 <details>
 
-<summary><strong>Q: Why break data into packets instead of sending it all at once?</strong></summary>
+**<summary>Q: Why break data into packets instead of sending it all at once?</summary>**
 
 Packets let the network be more efficient and resilient. If one path is congested or broken, individual packets can be rerouted. Multiple packets can travel different paths simultaneously and be reassembled in order when they arrive. Sending one giant message would be fragile—if anything went wrong, you'd have to resend everything.
 
@@ -89,7 +89,7 @@ Your phone
 
 <details>
 
-<summary><strong>Q: What is the difference between your home router and the internet?</strong></summary>
+**<summary>Q: What is the difference between your home router and the internet?</summary>**
 
 Your home router creates your local network (LAN). It connects your devices to each other and to your Internet Service Provider (ISP). The ISP then connects you to the broader internet. Your router is the gateway between your private local network and the public internet.
 
@@ -106,7 +106,7 @@ Think of it this way: the internet is like the road network. The Web is like one
 
 <details>
 
-<summary><strong>Q: Name two services that use the internet but are not the Web.</strong></summary>
+**<summary>Q: Name two services that use the internet but are not the Web.</summary>**
 
 * **Email** — uses protocols like SMTP and IMAP, not HTTP
 * **Video calls** (Zoom, FaceTime) — use protocols like WebRTC or SIP
@@ -129,7 +129,7 @@ You can see a live map of submarine cables at [submarinecablemap.com](https://ww
 
 <details>
 
-<summary><strong>Q: What would happen to global internet traffic if a major submarine cable were cut?</strong></summary>
+**<summary>Q: What would happen to global internet traffic if a major submarine cable were cut?</summary>**
 
 Traffic would be rerouted through other cables, but speeds to and from the affected regions would slow significantly. This has happened in real life—in 2022, the Tonga volcanic eruption severed the island nation's only submarine cable, cutting off internet access for weeks.
 
@@ -164,7 +164,7 @@ Think of it like a restaurant:
 
 <details>
 
-<summary><strong>Q: Can a server also be a client?</strong></summary>
+**<summary>Q: Can a server also be a client?</summary>**
 
 Yes! When your server makes a fetch request to a third-party API (like a weather API or the OpenAI API), your server is acting as a *client* to that other server. This is exactly what we'll do when we learn about securing API keys—your server receives a request from the browser and then makes its own request to a third-party API on behalf of the user.
 
@@ -208,7 +208,7 @@ An HTTP **response** contains:
 
 <details>
 
-<summary><strong>Q: Which HTTP method would you use to retrieve a list of all posts from an API? Which would you use to create a new post?</strong></summary>
+**<summary>Q: Which HTTP method would you use to retrieve a list of all posts from an API? Which would you use to create a new post?</summary>**
 
 * **GET** — to retrieve data without modifying anything
 * **POST** — to submit new data to be created on the server
@@ -247,7 +247,7 @@ The most common ones you'll encounter:
 
 <details>
 
-<summary><strong>Q: What's the difference between a 401 and a 403 response?</strong></summary>
+**<summary>Q: What's the difference between a 401 and a 403 response?</summary>**
 
 * **401 Unauthorized** — the server doesn't know *who you are*. You need to log in (authenticate) before accessing this resource.
 * **403 Forbidden** — the server knows who you are, but you don't have *permission* to access this resource. For example, a logged-in user trying to edit someone else's private data.
@@ -256,7 +256,7 @@ The most common ones you'll encounter:
 
 <details>
 
-<summary><strong>Q: A user reports that clicking a button in your app gives them a spinning loader that never resolves. What status code range is most likely responsible, and what does that tell you about where the bug is?</strong></summary>
+**<summary>Q: A user reports that clicking a button in your app gives them a spinning loader that never resolves. What status code range is most likely responsible, and what does that tell you about where the bug is?</summary>**
 
 A `5xx` server error is most likely. The request reached the server but the server crashed or threw an error while trying to process it. This tells you the bug is in the *server code*, not in the client's request. You'd look at server logs to find the error.
 
@@ -288,7 +288,7 @@ You can inspect HTTP headers for any request using your browser's DevTools. Open
 
 <details>
 
-<summary><strong>Q: When your JavaScript code calls <code>fetch('/api/posts', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } })</code>, why is the Content-Type header necessary?</strong></summary>
+**<summary>Q: When your JavaScript code calls `fetch('/api/posts', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } })`, why is the Content-Type header necessary?</summary>**
 
 The `Content-Type: application/json` header tells the server that the request body is formatted as JSON. Without it, the server doesn't know how to parse the incoming data—it might receive the raw string and not know it should be deserialized as JSON. Express uses this header to decide whether to apply its JSON-parsing middleware to the request body.
 
