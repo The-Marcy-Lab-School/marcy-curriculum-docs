@@ -31,9 +31,8 @@ By the end of this lesson, you should be able to answer these questions:
 
 1. What is an aggregate function? What does each of `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` do?
 2. What does `GROUP BY` do? When do you use it with aggregate functions?
-3. In Postgres, if you `GROUP BY` a primary key, why don't you need to list every other column in the `GROUP BY` clause?
-4. What is the difference between `WHERE` and `HAVING`?
-5. What is a seed file? Why is seeding important for development?
+3. What is the difference between `WHERE` and `HAVING`?
+4. What is a seed file? Why is seeding important for development?
 
 ## Key Concepts
 
@@ -303,7 +302,9 @@ You can use both in the same query
 
 ## Aggregate Functions Challenge
 
-**<details><summary>Q: How many games have a rating above 9.5?</summary>**
+<details>
+
+**<summary>Q: How many games have a rating above 9.5?</summary>**
 
 Query:
 
@@ -315,7 +316,9 @@ Results: 5 games!
 
 </details>
 
-**<details><summary>Q: How many PC games have a rating above 9.5?</summary>**
+<details>
+
+**<summary>Q: How many PC games have a rating above 9.5?</summary>**
 
 Query:
 
@@ -327,7 +330,9 @@ Results: 3 games!
 
 </details>
 
-**<details><summary>Q: What is the average rating and average price of PC games?</summary>**
+<details>
+
+**<summary>Q: What is the average rating and average price of PC games?</summary>**
 
 Query:
 
@@ -349,7 +354,9 @@ Results:
 
 </details>
 
-**<details><summary>Q: What is the total price of Switch Games?</summary>**
+<details>
+
+**<summary>Q: What is the total price of Switch Games?</summary>**
 
 Query:
 
@@ -360,14 +367,16 @@ SELECT SUM(price) FROM games WHERE platform = 'Switch';
 Results:
 
 ```
-     avg_rating     |      avg_price      
---------------------+---------------------
- 9.3000000000000000 | 28.6263636363636364
+  sum
+--------
+ 179.97
 ```
 
 </details>
 
-**<details><summary>Q: What is the average price of games in each genre?</summary>**
+<details>
+
+**<summary>Q: What is the average price of games in each genre?</summary>**
 
 Query:
 
@@ -394,7 +403,9 @@ Result:
 
 </details>
 
-**<details><summary>Q: Among PC games, which genres have an average price of more than $30?</summary>**
+<details>
+
+**<summary>Q: Among PC games, which genres have an average price of more than $30?</summary>**
 
 Query:
 

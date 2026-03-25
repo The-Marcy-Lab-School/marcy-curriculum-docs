@@ -312,7 +312,9 @@ SELECT * FROM films LIMIT 3;
 SELECT * FROM films ORDER BY year DESC LIMIT 3;
 ```
 
-**<details><summary>Q: What does this query do? `SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;`</summary>**
+<details>
+
+**<summary>Q: What does this query do? `SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;`</summary>**
 
 It returns the titles of the 2 most recently released sci-fi films, sorted from newest to oldest.
 
