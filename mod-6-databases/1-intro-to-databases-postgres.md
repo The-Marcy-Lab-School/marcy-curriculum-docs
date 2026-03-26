@@ -74,25 +74,23 @@ Databases are often **persistent**, meaning their data is written to durable sto
 
 ### What is a Database Management System?
 
-A database on its own is just data in a file not being used.
+A database on its own is just structured data in a file. The software that we use to interact with that structured data is called a **database management system (DBMS)**. A DBMS acts as a layer between the data and whoever wants to use it, making it easier to find, update, and manage the data in a database.
 
-A **database management system** (DBMS) is a piece of software that acts as a layer between the data and whoever wants to use it. It makes it easier for its users to find, update, and manage the data in a database.
+For example, Google Sheets is the DBMS that lets you manipulate a Google Sheets spreadsheet. It provides a GUI with buttons, dropdowns, and functions for interacting with the data.
 
-With Google Sheets, the spreadsheets are the databases and the Google Sheets software is the database management system. It provides a GUI with buttons, dropdowns, and functions for interacting with the data.
-
-**<details><summary>Q: Can you think of any real world analogies to a database and a database management system? Think about disorganized collections and the person or thing that makes it easier to find what you need.</summary>**
+**<details><summary>Q: Can you think of any real world analogies to a database and a database management system? Think about collections of things and the person, tool, or system that makes it easier to use that collection.</summary>**
 
 <img src="../.gitbook/assets/library (2).png" alt="If a database is like a library, then a database management system is the librarian, keeping it all organized" data-size="original">
 
-One analogy is a library is like a database and a librarian is like a database management system.
+A library is like a database and a librarian is like a database management system.
 
-The books are inside of the library but without a librarian, the books may be disorganized and finding the right book might be difficult. The librarian organizes the books and manages how visitors take and return books, ensuring that no books are lost in the process.
+The books are inside of the library, however, without a librarian the books may be disorganized and finding the right book might be difficult. The librarian organizes the books and manages how visitors take and return books, ensuring that no books are lost in the process.
 
 </details>
 
 ## PostgreSQL and Relational Database Management Systems
 
-**PostgreSQL** is one of the most popular database management systems in the world for a number of reasons:
+**PostgreSQL** (often shortened to "Postgres") is one of the most popular database management systems in the world for a number of reasons:
 * It is free and open-source
 * It has a strong reputation for reliability
 * It has a long history of updates and maintenance (since 1986!)
@@ -108,15 +106,15 @@ Popular non-relational database management systems include [MongoDB](https://www
 
 ### Tables (Entities), Rows (Records), and Columns
 
-**Tables** look a lot like spreadsheets:
-
-![Tables in a relational database are connected through primary and foreign keys.](./img/1-intro-to-databases-postgres/google-sheets-relationships.png)
+A **table** represents a single type of resource (a.k.a. an **"entity"**) in the database (_e.g. customers, products, orders, users, posts, likes etc..._). They look a lot like spreadsheets:
 
 > View this database on [Google Sheets](https://docs.google.com/spreadsheets/d/1Ca8yKI8SwsQht-ZgPE569_2BBS8iAuad9LdgB3nJhUY/view)
 
-A table represents a single type of resource (**"entity"**) in the database (_e.g. customers, products, orders, users, posts, likes etc..._)
-* **Rows** represent individual resources (a.k.a. **"records"**) in the table (_e.g. a single customer in the customers table_)
-* **Columns** define the properties that all records of a table share (_e.g. a customers table has `customer_id`, `name`, `address` and `phone_number` columns_).
+![Tables in a relational database are connected through primary and foreign keys.](./img/1-intro-to-databases-postgres/google-sheets-relationships.png)
+
+**Rows** represent individual resources (a.k.a. **"records"**) in the table (_e.g. a single customer record in the customers table_)
+
+**Columns** define the properties that all records of a table share (_e.g. a customers table has `customer_id`, `name`, `address` and `phone_number` columns_).
 
 {% hint style="info" %}
 Tables in SQL-based DBMSs like PostgreSQL exclusively use lowercase table and column names. Because of this, **lower_snake_case** is the standard naming convention used.
@@ -134,18 +132,28 @@ Relationships between tables are accomplished using **primary and foreign keys**
 
 ![Tables in a relational database are connected through primary and foreign keys.](./img/1-intro-to-databases-postgres/primary-foreign-keys.png)
 
-* A **primary key** is a column that uniquely identifies each record in the table. Primary keys are named after their table: `customer_id`, `product_id`, `order_id`. This naming convention avoids ambiguity when looking at many tables.
-* A **foreign key** is a column in a table that points to the primary key of another table, thus creating a relationship between the tables. In the example above, every order has a reference to a particular `customer_id` (the customer who placed the order) and a `product_id` (the product they purchased). Foreign keys use the same name as the primary key they reference.
+A **primary key** is a column that uniquely identifies each record in the table. 
+* Primary keys are named after their table: `customer_id`, `product_id`, `order_id`. This naming convention avoids ambiguity when looking at many tables. 
+* Primary key values are often sequential numbers and are often generated by the DBMS so that the developer doesn't need to. This avoids human error and ensures unique primary keys are used.
+
+A **foreign key** is a column in a table that points to the primary key of another table, thus creating a relationship between the tables. 
+* Foreign key columns use the same name as the primary key they reference.
+* In the example above, every order has a reference to a particular `customer_id` (the customer who placed the order) and a `product_id` (the product they purchased). 
 
 A table that connects data from two other tables is often called a **bridge table** or **association table**.
 
 ## How Does PostgreSQL Work?
 
-Database management systems like PostgreSQL function similarly to web servers:
+Tables and databases managed by a DBMS like PostgreSQL are stored as files directly on your computer. However, these files are not human-readable plain text files; they are stored in a specific binary format optimized for performance and consistency.
 
-* **Server-Hosted**: PostgreSQL runs on a specific host and port (defaulting to `5432`).
-* **Listening and Interpreting**: PostgreSQL listens for incoming connections and interprets the SQL queries sent by the client.
-* **Execution**: PostgreSQL processes the incoming commands and sends the resulting data back to the requester.
+While you might be able to find some recognizable strings in the raw data files, the database management system acts as the necessary interface to read and interpret the data correctly.
+
+In many ways, DBMSs like PostgreSQL function similarly to web servers:
+
+* **Server-Hosted Process**: PostgreSQL is a program (a process) that runs on a specific host and port (defaulting to `5432`)
+* **Listens** Client applications can connect to that host and port. PostgreSQL listens for incoming connections.
+* **Provides an Interface**: While servers provide endpoints for HTTP requests (GET `/api/customers`), PostgreSQL can interpret SQL queries (`SELECT * FROM customers`).
+* **Executes**: PostgreSQL executes the requested action on the database and sends the resulting data back to the requester.
 
 ![PostgreSQL runs on a server and listens for SQL queries](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
 
@@ -155,9 +163,11 @@ For now, the key thing to understand is that PostgreSQL is a **separate process*
 
 ## Installing Postgres
 
+Now that we know what a database is and how PostgreSQL fits into your overall software architecture, let's install it and start playing around with databases!
+
 {% tabs %}
 {% tab title="Mac Instructions" %}
-1. Go to [https://postgresapp.com/](https://postgresapp.com/) and download the version for your Mac.
+1. Go to [https://postgresapp.com/](https://postgresapp.com/) and download the Latest Release version for your Mac.
 2. Open the downloaded file, drag Postgres.app to your Applications folder, and run it.
 3. Click **Initialize** to create your first database cluster. The app should now show **Running**.
 4. Add the Postgres CLI tools to your PATH so you can use `psql` from any terminal window:
