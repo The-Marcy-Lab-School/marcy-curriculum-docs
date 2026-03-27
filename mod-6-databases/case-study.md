@@ -141,9 +141,7 @@ Scenario 1 and 2 are both fully worked examples — study the diagrams and detai
 
 ![A sequence diagram for scenario 1](./img/case-study/sequence-1.png)
 
-<details>
-
-**<summary>Detailed Breakdown</summary>**
+**<details><summary>Detailed Breakdown</summary>**
 
 1. **`frontend/src/main.js`**: `main()` is called on page load.
 2. **`frontend/src/main.js`**: `await getCurrentUser()` is called to check whether a session already exists.
@@ -193,9 +191,7 @@ Note: Observe how the diagram visualizes the two pathways: if the username was t
 
 Draw a sequence diagram for this scenario, then expand to check your answer.
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 ![A sequence diagram for scenario 3](./img/case-study/sequence-3.png)
 
@@ -219,9 +215,7 @@ Draw a sequence diagram for this scenario, then expand to check your answer.
 
 Draw a sequence diagram for this scenario, then expand to check your answer.
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 ![A sequence diagram for scenario 4](./img/case-study/sequence-4.png)
 
@@ -249,9 +243,7 @@ Draw a sequence diagram for this scenario, then expand to check your answer. Be 
 2. The user sending the request is not the owner of the bookmark
 3. The user sending the request is the owner and is authorized to delete
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 ![A sequence diagram for scenario 5](./img/case-study/sequence-5.png)
 
@@ -286,9 +278,7 @@ Open each file and answer the questions.
 3. Both `bookmarks` and `bookmark_likes` reference `users` with `ON DELETE CASCADE`. What does `ON DELETE CASCADE` mean? What happens to a user's bookmarks and likes when their account is deleted?
 4. The `bookmark_likes` table has no `like_id SERIAL` column. Instead it uses `PRIMARY KEY (user_id, bookmark_id)`. What is a composite primary key? What constraint does this enforce, and why is it more appropriate here than a serial ID?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. Setting up the database table structure can involve many steps so keeping the SQL logic in a separate file dramatically improves readability and creates clear separation of concerns. Additionally, VS Code has syntax highlighting for `.sql` files making it easier to read, write, and edit SQL code. SQL written as a string in JavaScript is simply more prone to typos. Lastly, you can run a SQL file using the `psql` CLI which can makes the approach more flexible in terms of where you can use that code. The only constraint is that the SQL is hard-coded so data generated at runtime cannot be used.
 2. `CREATE TABLE IF NOT EXISTS` only creates the table if it doesn't already exist. Without it, running `npm run db:init` a second time would throw an error because the table already exists and Postgres won't overwrite it.
@@ -304,9 +294,7 @@ Open each file and answer the questions.
 1. Why does the application use a connection pool instead of creating a new database connection for each request?
 2. `pool.js` checks for `process.env.PG_CONNECTION_STRING` first and falls back to individual variables (`PG_HOST`, `PG_PORT`, etc.) if it isn't set. Why might a deployed application use a connection string while a local development environment uses individual variables?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. Opening a new database connection on every request is slow and resource-intensive. A connection pool creates a fixed set of connections that are reused across requests, making the application significantly faster and preventing the database from being overwhelmed by too many simultaneous connections.
 2. Hosting providers like Render provide a single `DATABASE_URL` connection string for deployed databases. Individual variables (`PG_HOST`, `PG_PORT`, etc.) are more convenient when configuring a local database by hand. Supporting both means the same `pool.js` works in both environments without modification.
@@ -322,9 +310,7 @@ Open each file and answer the questions.
 3. The seed function deletes from all three tables before inserting, in the order `bookmark_likes` → `bookmarks` → `users`. Why does this specific order matter? What error would occur if you tried `DELETE FROM users` first?
 4. Both `INSERT` queries use a `RETURNING` clause allowing us to capture the newly created data into variables. What problem would arise if you hardcoded IDs like `1`, `2`, `3` when inserting likes instead of using the data returned by the previous inserts?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. The seed data includes passwords that must be hashed with `bcrypt` before being stored — plain-text passwords can never go into the database. `bcrypt.hash()` is a JavaScript function; there is no equivalent in SQL. A `.sql` file is just static text with no way to call external libraries. Any seed data that requires runtime computation must live in JavaScript.
 2. `Promise.all()` runs all three `bcrypt.hash()` calls concurrently — all three start at the same time and the code waits for all of them to finish together. Awaiting each call in sequence runs them one at a time. Since bcrypt is intentionally slow (~300ms per hash at 12 rounds), sequential hashing would take ~900ms total. `Promise.all()` cuts that to ~300ms regardless of how many passwords there are.
@@ -341,9 +327,7 @@ Open each file and answer the questions.
 2. `validatePassword` returns `null` on failure. What does it return on success, and why is that a security problem? Why return `null` instead of throwing an error, and how does the controller use this return value?
 3. `validatePassword` needs to look up a user by username, but it does not call `findByUsername` internally. Why not? What would break if it did?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `validatePassword` is the only function that selects `password_hash` (it does so through `SELECT *`). It needs the password hash to call `bcrypt.compare(password, user.password_hash)` — comparing the plain-text password from the login request against the stored hash. After the comparison it returns the full database row, which includes `password_hash`. This is an intentional flaw that the `authControllers.js` questions ask you to find.
 2. On success, `validatePassword` returns all the matched user's data which includes `password_hash`. That hash should never leave the server — if `login` controller sends this object directly to the client, the hashed password is exposed in the response. It should instead return only `{ user_id, username }`. Returning `null` on failure signals "this operation produced no result" without crashing the program. The controller can check `if (!user) return res.status(401).json(...)` and handle it gracefully. Throwing an error would require a `try/catch` in the controller and is semantically more appropriate for unexpected failures, not an expected case like "wrong password."
@@ -359,9 +343,7 @@ Open each file and answer the questions.
 2. The query uses `GROUP BY bookmarks.bookmark_id, users.username`. Why is `GROUP BY` required here? What would happen without it?
 3. Compare `bookmarkModel.list()` here to the mod-5 version (`return [...bookmarks]`). What changed in the model? What stayed exactly the same from the controller's perspective?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. We use `LEFT JOIN` for `bookmark_likes` because it's permissive — bookmarks with zero likes still appear in the results. `INNER JOIN users` excludes any bookmarks without a matching user—but that's okay because the schema guarantees via foreign key that every bookmark has a matching user, so no rows would be dropped anyway.
 2. `GROUP BY` is required whenever you use an aggregate function like `COUNT`. Without it, Postgres doesn't know how to collapse the multiple rows produced by the join (one row per like) into a single row per bookmark. `GROUP BY bookmarks.bookmark_id, users.user_id` tells Postgres to group all rows with the same `bookmark_id` together so `COUNT` can total the likes for each bookmark.
@@ -377,9 +359,7 @@ Open each file and answer the questions.
 2. `checkAuthentication` returns `401` when the session is missing. What is the difference between `401 Unauthorized` and `403 Forbidden`? Which should the `deleteBookmark` controller use if a logged-in user tries to delete someone else's bookmark?
 3. `checkAuthentication` is applied directly to individual routes that need protection (`POST /api/bookmarks`, `DELETE /api/bookmarks/:bookmark_id`, etc.) rather than to the entire router through `app.use(checkAuthentication)`. What would be the benefit of applying it to a whole router instead? What problem would that create for this application?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `req.session.user_id` is set in the `register` and `login` controllers after successful authentication. The `cookie-session` middleware serializes the session data into a signed cookie and sends it to the browser. On every subsequent request, the browser automatically includes this cookie, and `cookie-session` deserializes it back into `req.session` — so the server can read `req.session.user_id` on any request where the user is logged in.
 2. `401 Unauthorized` means "you are not authenticated — I don't know who you are." `403 Forbidden` means "I know who you are, but you don't have permission to do this." `deleteBookmark` should use `403` when a logged-in user tries to delete another user's bookmark — the server knows their identity (they passed `checkAuthentication`), but they are not authorized to perform this specific action.
@@ -395,9 +375,7 @@ Open each file and answer the questions.
 2. After a successful registration and login, the controller sets `req.session.user_id = user.user_id`. Where does `req.session` come from and why are we storing only `user.user_id` in it as opposed to the entire `user` object? 
 3. There is an intentional security issue somewhere in this file. Can you find it? What data is being exposed that shouldn't be, and how would you fix it?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `400 Bad Request` — the request itself was understood but cannot be fulfilled because the input is invalid (a duplicate username). `409 Conflict` is also a valid choice for duplicate resource errors. `401` would be wrong here because this isn't an authentication failure.
 2. `req.session` represents the cookie created by the `cookie-session` middleware (see `index.js`). Storing only `user_id` keeps the session small and avoids stale data. If you stored the full user object and the user later changed their username, the session would contain the old value. Storing just `user_id` means the server always fetches fresh user data from the database when needed (e.g., in the `GET /api/auth/me` endpoint).
@@ -413,9 +391,7 @@ Open each file and answer the questions.
 2. `likeBookmark` and `unlikeBookmark` are two separate controllers rather than a single `toggleLike` controller. What would a `toggleLike` controller need to do differently? What are the tradeoffs between the two approaches?
 3. When `destroy()` deletes a bookmark, its associated rows in `bookmark_likes` are deleted automatically. Where exactly in the codebase is this behavior defined? What would happen to the `bookmark_likes` rows if that behavior weren't in place?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `404 Not Found` if the bookmark doesn't exist — the requested resource is absent. `403 Forbidden` if it exists but belongs to another user — the resource exists but the requester doesn't have permission to modify it. These are different because they communicate different problems to the client: "that thing doesn't exist" versus "that thing exists but it's not yours."
 2. A single `toggleLike` controller would first query the `bookmark_likes` table to check if the like exists, then either insert or delete based on the result. The two-controller approach is simpler and more RESTful — `POST` to create a resource, `DELETE` to remove it — which is consistent with how the rest of the API is designed. The tradeoff is that the client must track like state and choose the right method, whereas a toggle endpoint offloads that logic to the server.
@@ -431,9 +407,7 @@ Open each file and answer the questions.
 2. `getCurrentUser()` is called on every page load. What does it return when no one is logged in? How does `main.js` use this return value to decide which UI sections to show and hide?
 3. Every fetch function in this file returns `{ data, error }` instead of returning the data or `null` directly. Why is this pattern useful? How does `main.js` use the destructured result from `login()` and `getCurrentUser()`?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `handleFetch` solves the problem of repeated try/catch boilerplate — without it, every fetch function would need its own error handling and would have to manually construct the `{ data, error }` return shape. The `baseUrl` variables solve the problem of duplicated strings: if the API path changes, there is one variable to update instead of every fetch call that uses that prefix.
 2. When no session exists, the server sends `res.sendStatus(401)` from the `getMe` controller. `getCurrentUser()` receives the 401 response and, because a 401 here is expected rather than an error, returns `{ data: null, error: null }`. `main()` sets `currentUser = data` (null) and calls `renderAuthView(null)` — auth forms are shown and the "My Bookmarks" section is hidden. The same `currentUser` value is passed to `renderFeed()` so like buttons can be enabled or disabled based on login state.

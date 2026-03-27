@@ -88,9 +88,7 @@ ada.enrollInCourse('Technical Interview Prep');
 console.log(ada.courses); // [ 'Leadership & Development', 'Technical Interview Prep' ]
 ```
 
-<details>
-
-**<summary>Question: What similarities and differences do you see between these two classes? What coding style rule is this breaking?</summary>**
+**<details><summary>Question: What similarities and differences do you see between these two classes? What coding style rule is this breaking?</summary>**
 
 A `Student` has every property and method that a `Person` has but it also has the public field `courses` as well as the properties `subject` and `sschool`. The `introduce()` method is implemented slightly differently and the `enrollInCourse` method is new.
 
@@ -222,9 +220,7 @@ Then, create class called `MarcyStudent` that is a subclass of `Student`.
 * It should have a static `validCourses` array: `['Leadership & Development', 'Technical Interview Prep', 'Technical Lecture']`
 * `enrollInCourse` should be overridden to first check if the provided course is in the `validCourses` array before adding the course to the `courses` array.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 **Professor**
 
@@ -361,9 +357,7 @@ Consider the `ada` instance of the `Student` class below.
 const ada = new Student('Ada', 'Lovelace', 30, 'Computer Science', 'Marcy Lab School');
 ```
 
-<details>
-
-**<summary>Q: Using arrows, draw out the prototype chain for `ada`.</summary>**
+**<details><summary>Q: Using arrows, draw out the prototype chain for `ada`.</summary>**
 
 `ada` → `Student.prototype` → `Person.prototype` → `Object.prototype` → `null`
 
@@ -379,9 +373,7 @@ ada.introduce()
 ada.blah()
 ```
 
-<details>
-
-**<summary>Q: For each line of code, describe how JavaScript walks up the prototype chain and where it finds the definition.</summary>**
+**<details><summary>Q: For each line of code, describe how JavaScript walks up the prototype chain and where it finds the definition.</summary>**
 
 `.fullName()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype` where it finds the definition. `.toString()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype` where it finds the definition. `.fullName()` is found in `ada` so JavaScript doesn't do anything. `.introduce()` is not in `ada` so JavaScript looks at `Student.prototype` where it finds the definition. It ignores the definition in `Person.prototype` because it has found a "closer" definition. `.blah()` is not in `ada` so JavaScript looks at `Student.prototype`, then `Person.prototype`, then `Object.prototype`. It doesn't find it there so JavaScript throws a `TypeError`.
 
@@ -397,25 +389,19 @@ If you run the Node debugger, you can see the prototype chain by looking at the 
 
 Then, with a partner, discuss these questions:
 
-<details>
-
-**<summary>Question 1: What does `extends` do?</summary>**
+**<details><summary>Question 1: What does `extends` do?</summary>**
 
 `extends` makes the `WebDeveloper` inherit methods from `Programmer`. It sets `Programmer.prototype` as the prototype for `WebDeveloper`
 
 </details>
 
-<details>
-
-**<summary>Question 2: What does `super` do?</summary>**
+**<details><summary>Question 2: What does `super` do?</summary>**
 
 `super()` invokes the `Programmer` constructor function using its own value of `this`. Any properties that the `Programmer` constructor sets on `this` will be set on `WebDeveloper`.
 
 </details>
 
-<details>
-
-**<summary>Question 3: What do we know about the relationship between a `Programmer` and a `Person`?</summary>**
+**<details><summary>Question 3: What do we know about the relationship between a `Programmer` and a `Person`?</summary>**
 
 * `WebDeveloper` is said to be a **subclass** of `Programmer`.
 * `Programmer` is said to be a **superclass** of `WebDeveloper`.
@@ -424,9 +410,7 @@ Then, with a partner, discuss these questions:
 
 </details>
 
-<details>
-
-**<summary>Question 4: How does the `code` method work?</summary>**
+**<details><summary>Question 4: How does the `code` method work?</summary>**
 
 `code` invokes the `doActivity` method inherited from `Person.prototype`
 

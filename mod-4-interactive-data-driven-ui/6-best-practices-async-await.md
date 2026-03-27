@@ -421,9 +421,7 @@ const main = async () => {
 }
 ```
 
-<details>
-
-**<summary>Q: Why can't we simply return the `users` if the fetch succeeds and the `error` if it fails?</summary>**
+**<details><summary>Q: Why can't we simply return the `users` if the fetch succeeds and the `error` if it fails?</summary>**
 
 There won't be an easy way to differentiate the two if `result` can be either a `users` array or an `error` object.
 

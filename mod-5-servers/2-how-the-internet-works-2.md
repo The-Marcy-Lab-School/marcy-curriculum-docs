@@ -80,17 +80,13 @@ Leading zeros can be omitted and consecutive groups of zeros can be shortened to
 
 IPv6 supports approximately **340 undecillion** addresses (3.4 × 10³⁸). That's enough to give every grain of sand on Earth its own IP address — many times over.
 
-<details>
-
-**<summary>Q: Why can't we just add more IPv4 addresses?</summary>**
+**<details><summary>Q: Why can't we just add more IPv4 addresses?</summary>**
 
 IPv4 uses 32 bits to represent an address (4 numbers × 8 bits each). The format is fixed—you can't just "add more" without changing the protocol itself. IPv6 uses 128 bits, which is an incomprehensibly larger address space. The internet has been slowly migrating to IPv6 for years, though many systems still run IPv4 internally and use workarounds like NAT (Network Address Translation) to share a single public IP across many devices.
 
 </details>
 
-<details>
-
-**<summary>Q: Try it: What is your computer's IP address?</summary>**
+**<details><summary>Q: Try it: What is your computer's IP address?</summary>**
 
 Run the following in your terminal:
 
@@ -144,9 +140,7 @@ The **Top-Level Domain (TLD)** is the last segment of a domain name. There are t
 **New TLDs** — introduced more recently as the original TLDs filled up:
 * `.app`, `.dev`, `.tech`, `.school`
 
-<details>
-
-**<summary>Q: Why do many tech startups choose `.io` as their TLD even though it's technically assigned to a British territory?</summary>**
+**<details><summary>Q: Why do many tech startups choose `.io` as their TLD even though it's technically assigned to a British territory?</summary>**
 
 `.io` was originally the ccTLD for the British Indian Ocean Territory, but the tech community adopted it because "IO" can be interpreted as "input/output" — a fundamental computing concept. It became fashionable in the startup world, and many companies use it even though they have no connection to the British Indian Ocean Territory. Domain registration doesn't require you to be from the country a ccTLD is assigned to.
 
@@ -202,17 +196,13 @@ Here's what actually happens when you type `https://www.github.com` into your br
 Steps 3–6 (the DNS resolution) typically happen in milliseconds. Results are cached at multiple levels so that future requests for the same domain are nearly instant.
 {% endhint %}
 
-<details>
-
-**<summary>Q: What would happen if all DNS servers went offline?</summary>**
+**<details><summary>Q: What would happen if all DNS servers went offline?</summary>**
 
 You could still access websites by typing their IP address directly (e.g., `http://140.82.114.3` for GitHub). But since most people don't know IP addresses off the top of their head, the web would effectively become inaccessible for most users. This is why DNS infrastructure is considered critical internet infrastructure—major DNS outages (like the Dyn DDoS attack in 2016) have taken down large portions of the web.
 
 </details>
 
-<details>
-
-**<summary>Q: What does it mean for a DNS result to be "cached"? Why does caching DNS matter?</summary>**
+**<details><summary>Q: What does it mean for a DNS result to be "cached"? Why does caching DNS matter?</summary>**
 
 Caching means storing the result of a lookup so you don't have to repeat it. Once your browser has resolved `github.com → 140.82.114.3`, it saves that result for a period of time (defined by the TTL — "time to live" — in the DNS record). Future requests for `github.com` skip the DNS lookup entirely and go straight to the IP. This makes browsing much faster. When companies update their server's IP address, they must wait for DNS caches around the world to expire before all users reach the new server—this delay is called "DNS propagation."
 
@@ -246,9 +236,7 @@ Destination ISP
 Destination server
 ```
 
-<details>
-
-**<summary>Q: Your data might travel through 10–20 routers between you and a server. Why doesn't this take a very long time?</summary>**
+**<details><summary>Q: Your data might travel through 10–20 routers between you and a server. Why doesn't this take a very long time?</summary>**
 
 Each router hop takes microseconds — millionths of a second. The actual data travels through fiber optic cables at nearly the speed of light. Even a request that crosses multiple continents typically takes under 200 milliseconds. The part that takes time isn't the routing — it's the time for the server to process the request and generate a response, and the time to transfer large amounts of data.
 
@@ -282,17 +270,13 @@ When you send a letter:
 6. The recipient writes back and mails a reply (server sends response)
 7. The reply travels back through the postal system and arrives at your door (response reaches your browser)
 
-<details>
-
-**<summary>Q: In the letter analogy, what does the "return address" represent in an HTTP request, and why is it necessary?</summary>**
+**<details><summary>Q: In the letter analogy, what does the "return address" represent in an HTTP request, and why is it necessary?</summary>**
 
 The return address represents your IP address. It's included in every packet so the server knows *where to send the response*. Without it, the server could receive your request but have no way to send data back. IP packets always include a source address and a destination address for exactly this reason.
 
 </details>
 
-<details>
-
-**<summary>Q: Trace the full journey from typing `https://api.github.com/users/octocat` in your browser to receiving a response. Include DNS, routing, HTTP, and the response.</summary>**
+**<details><summary>Q: Trace the full journey from typing `https://api.github.com/users/octocat` in your browser to receiving a response. Include DNS, routing, HTTP, and the response.</summary>**
 
 1. Browser parses the URL: protocol = `https`, domain = `api.github.com`, path = `/users/octocat`
 2. Browser checks DNS cache for `api.github.com` — if not cached, queries DNS resolver

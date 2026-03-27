@@ -288,9 +288,7 @@ ORDER BY column
 LIMIT    n;
 ```
 
-<details>
-
-**<summary>Q: What's the difference between `WHERE` and `HAVING`?</summary>**
+**<details><summary>Q: What's the difference between `WHERE` and `HAVING`?</summary>**
 
 `WHERE` runs before grouping — it filters which rows are included in the calculation at all.
 
@@ -302,9 +300,7 @@ You can use both in the same query
 
 ## Aggregate Functions Challenge
 
-<details>
-
-**<summary>Q: How many games have a rating above 9.5?</summary>**
+**<details><summary>Q: How many games have a rating above 9.5?</summary>**
 
 Query:
 
@@ -316,9 +312,7 @@ Results: 5 games!
 
 </details>
 
-<details>
-
-**<summary>Q: How many PC games have a rating above 9.5?</summary>**
+**<details><summary>Q: How many PC games have a rating above 9.5?</summary>**
 
 Query:
 
@@ -330,9 +324,7 @@ Results: 3 games!
 
 </details>
 
-<details>
-
-**<summary>Q: What is the average rating and average price of PC games?</summary>**
+**<details><summary>Q: What is the average rating and average price of PC games?</summary>**
 
 Query:
 
@@ -354,9 +346,7 @@ Results:
 
 </details>
 
-<details>
-
-**<summary>Q: What is the total price of Switch Games?</summary>**
+**<details><summary>Q: What is the total price of Switch Games?</summary>**
 
 Query:
 
@@ -374,9 +364,7 @@ Results:
 
 </details>
 
-<details>
-
-**<summary>Q: What is the average price of games in each genre?</summary>**
+**<details><summary>Q: What is the average price of games in each genre?</summary>**
 
 Query:
 
@@ -403,9 +391,7 @@ Result:
 
 </details>
 
-<details>
-
-**<summary>Q: Among PC games, which genres have an average price of more than $30?</summary>**
+**<details><summary>Q: Among PC games, which genres have an average price of more than $30?</summary>**
 
 Query:
 
@@ -487,9 +473,7 @@ sudo -u postgres psql -f seed.sql
 
 The `DROP ... IF EXISTS` at the top ensures that re-running the file always starts from a clean state. This is the pattern you'll use throughout the rest of the module — every project will have a seed file.
 
-<details>
-
-**<summary>Q: Why use `DROP DATABASE IF EXISTS` at the top of a seed file rather than just `DROP TABLE IF EXISTS`?</summary>**
+**<details><summary>Q: Why use `DROP DATABASE IF EXISTS` at the top of a seed file rather than just `DROP TABLE IF EXISTS`?</summary>**
 
 `DROP TABLE IF EXISTS` only removes one table at a time. If your schema has multiple tables (which it will once you learn about relationships), you'd need to drop them in the right order to avoid foreign key constraint errors.
 

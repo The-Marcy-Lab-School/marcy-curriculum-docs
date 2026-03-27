@@ -166,9 +166,7 @@ To run this file when our HTML page loads, add a `<script src="index.js">` tag a
 
 Now, when your browser loads this HTML page, it will automatically run the JavaScript file after the body content has loaded.
 
-<details>
-
-**<summary>Q: Why does the `<script>` tag need to go at the end of the body?</summary>**
+**<details><summary>Q: Why does the `<script>` tag need to go at the end of the body?</summary>**
 
 JavaScript runs as soon as it loads. If your script tries to select an element that hasn't been added to the page yet, `querySelector` will return `null` and your code will break.
 
@@ -221,9 +219,7 @@ element.addEventListener(eventType, handlerFunction);
 2. **`eventType`** — A string like `'click'`, `'mouseover'`, `'keydown'`
 3. **`handlerFunction`** — A callback that runs when the event "fires" (when it occurs)
 
-<details>
-
-**<summary>Challenge 1: How can we double the font size every time we click the button?</summary>**
+**<details><summary>Challenge 1: How can we double the font size every time we click the button?</summary>**
 
 ```js
 const button = document.querySelector('#blow-btn');
@@ -238,9 +234,7 @@ button.addEventListener('click', () => {
 
 </details>
 
-<details>
-
-**<summary>Challenge 2: How can make the balloon "pop" 💥 when the font size gets above 750px?</summary>**
+**<details><summary>Challenge 2: How can make the balloon "pop" 💥 when the font size gets above 750px?</summary>**
 
 ```js
 const button = document.querySelector('#blow-btn');
@@ -292,9 +286,7 @@ document.body.addEventListener('keydown', () => {
 
 **Challenge: Add an event listener to the body that reacts whenever the mouse moves**
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 document.body.addEventListener('mousemove', () => {
@@ -333,9 +325,7 @@ document.body.addEventListener('keydown', (event) => {
 });
 ```
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 ```js
 document.body.addEventListener('keydown', (event) => {
@@ -447,9 +437,7 @@ Your task is to do the following:
 2. Add an event listener to the `+` button that increases the font size of the `"#instructions"` section by `1px`.
 3. Add an event listener to the `-` button that decreases the font size of the `"#instructions"` section by `1px`.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 {% code title="1-random-colors/index.js" %}
 ```javascript

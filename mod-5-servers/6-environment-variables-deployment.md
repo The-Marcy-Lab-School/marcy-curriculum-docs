@@ -87,9 +87,7 @@ Since API keys are unique to each user, we want to be careful about exposing the
 1. In client-side code
 2. In public GitHub repositories
 
-<details>
-
-**<summary>Q: Why is it not a good idea to share your API key? What really could go wrong?</summary>**
+**<details><summary>Q: Why is it not a good idea to share your API key? What really could go wrong?</summary>**
 
 The API key is a way to verify your identity as a developer. Some APIs will charge you for each request that you make using your API key and if someone else gets a hold of your API key, they could steal your request resources.
 
@@ -117,9 +115,7 @@ So, what do we do?
 NEVER send requests with API keys from client-side (frontend) applications!
 {% endhint %}
 
-<details>
-
-**<summary>Q: Doesn't the `dist/` version of the frontend hide the API key?</summary>**
+**<details><summary>Q: Doesn't the `dist/` version of the frontend hide the API key?</summary>**
 
 TLDR: No. Here's why:
 

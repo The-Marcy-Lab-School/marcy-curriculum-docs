@@ -170,9 +170,7 @@ Consider this example:
 </ul>
 ```
 
-<details>
-
-**<summary>Q: How do the different heading sizes indicate the relationships in this content?</summary>**
+**<details><summary>Q: How do the different heading sizes indicate the relationships in this content?</summary>**
 
 * The `h1` title tells us that the information is all about Ada Lovelace.
 * The `h2` tells us that the next set of content is about Ada's programming skills.
@@ -180,9 +178,7 @@ Consider this example:
 
 </details>
 
-<details>
-
-**<summary>Q: If you were to add a list of Ada's favorite quotes to the bottom of the page, which type of heading would you add?</summary>**
+**<details><summary>Q: If you were to add a list of Ada's favorite quotes to the bottom of the page, which type of heading would you add?</summary>**
 
 A `h2` heading would be most appropriate since the content is still related to Ada Lovelace but is a different category of content from the lists of programming skills.
 
@@ -384,9 +380,7 @@ The footer typically contains copyright information or other contact information
 
 See if you can figure out the HTML for yourself before checking the solution below
 
-<details>
-
-**<summary>Solution: Footer HTML</summary>**
+**<details><summary>Solution: Footer HTML</summary>**
 
 ```html
 <footer>
@@ -403,9 +397,7 @@ Using the appropriate sized headings (`h1`, `h2`, etc.) helps to make our main c
 
 In between our navigation links in the `header` and the information in the `footer`, try to identify the different sections within the `main` content of the page before checking the answer below (hint: look at the headings)
 
-<details>
-
-**<summary>Solution: Main Sections</summary>**
+**<details><summary>Solution: Main Sections</summary>**
 
 In our website, we have three clear sections:
 
@@ -419,9 +411,7 @@ While we could argue that each programming skill is its own subsection, we want 
 
 Now that we've identified the sections, inside of the `main` element, create a `section` element for each section of content.
 
-<details>
-
-**<summary>Solution: Main Sections HTML</summary>**
+**<details><summary>Solution: Main Sections HTML</summary>**
 
 ```html
 <main>

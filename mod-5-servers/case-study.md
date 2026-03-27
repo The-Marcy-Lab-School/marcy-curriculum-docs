@@ -73,9 +73,7 @@ An example is provided for the first scenario.
 
 #### Scenario 2: The user fills out the form and submits a new bookmark
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 1. **`frontend/src/main.js`**: The `submit` event fires on `#bookmark-form`, calling `handleFormSubmit`.
 2. **`frontend/src/main.js`**: The `title` and `url` are read from `form.title.value` and `form.url.value` and `await createBookmark(title, url)` is called.
@@ -91,9 +89,7 @@ An example is provided for the first scenario.
 
 #### Scenario 3: The user clicks the Delete button on a bookmark
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 1. **`frontend/src/main.js`**: A click event fires on `#bookmarks-list`, calling `handleDeleteBookmarkClick`.
 2. **`frontend/src/main.js`**: `handleDeleteBookmarkClick` gets the bookmark's `id` from the clicked button's `data-bookmark-id` attribute and calls `await deleteBookmark(clickedBtn.dataset.bookmarkId)`.
@@ -147,9 +143,7 @@ sh test-requests.sh
 Files like these prevent you from needing to type out the entire command directly in the terminal!
 {% endhint %}
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `express.json()` parses incoming requests with a JSON body and attaches the result to `req.body`. Without it, `req.body` would be `undefined` when a client sends JSON (e.g., on `POST` or `PATCH` requests).
 2. `express.static()` serves all files in a given folder as static assets. `__dirname` is a Node.js variable that holds the absolute path to the directory of the current file — in this case, the `swe-casestudy-5/server/` folder. `path.join(__dirname, '../frontend')` navigates one level up and into `frontend/` to create the absolute path to the `frontend/` folder which is stored in `pathToFrontend`. Visiting `http://localhost:8080` then delivers `frontend/index.html` automatically.
@@ -188,9 +182,7 @@ curl http://localhost:8080/api/bookmarks
 2. Why does `bookmarkModel.list()` return `[...bookmarks]` instead of just `bookmarks`? Why do `find` and `update` return `{ ...bookmark }` instead of `bookmark`? How does this relate to separation of concerns?
 3. What does `bookmarkModel.update()` return if no bookmark matches the `id`? What does `bookmarkModel.destroy()` return if no match is found? The data types of these two return values are different—what justification can you provide to explain this difference?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. The bookmarks are stored in an in-memory JavaScript array (`const bookmarks = [...]`). Limitations: changes to the data are lost on server restart. All bookmark data resets to the three hardcoded initial values each time the module is reloaded.
 2. `[...bookmarks]` returns a shallow copy of the array so callers can't accidentally mutate the internal store by modifying the returned reference. `{ ...bookmark }` does the same for individual objects — it returns a copy so callers cannot mutate the stored record directly. This creates a safe interface that encapsulates the `bookmarks` data and creates clearer separation of concerns.
@@ -206,9 +198,7 @@ curl http://localhost:8080/api/bookmarks
 4. How do `updateBookmark` and `deleteBookmark` handle the case where the target bookmark does not exist?
 5. Look at the endpoints defined across `server/index.js` and the controllers. For each endpoint, observe the HTTP method, URL pattern, and which CRUD operation it performs. How do these endpoints follow REST conventions?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. URL parameters are always strings. `bookmarkModel.find()` compares with `===`, so `"1" === 1` would be `false`. `Number(id)` converts the string to a number so the comparison works correctly.
 2. `201 Created` is more semantically accurate — it signals that a new resource was successfully created, not just that the request succeeded. `200 OK` typically means the request succeeded but no new resource was created.
@@ -234,9 +224,7 @@ These follow REST conventions: resources are identified by URL (`/api/bookmarks`
 2. All three helpers use `async`/`await` with `try`/`catch`. What does each helper return on failure?
 3. `createBookmark` includes a `headers` object and a `body`. Why are both needed when making a `POST` request? What other requests include `headers`? Why does a `DELETE` request NOT need `headers`?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. `/api/bookmarks` is a relative URL — it automatically prepends the current origin (`http://localhost:8080`). It works because the frontend is served by the same Express server as the API, so both share the same origin.
 2. `getBookmarks` returns `[]` on failure. `createBookmark` returns `null` on failure. `deleteBookmark` returns `false` on failure. Callers must check for these values before using the result.

@@ -136,9 +136,7 @@ bensFriends.friends.push(42);
 bensFriends.printFriends(); // What is printed here?
 ```
 
-<details>
-
-**<summary>Q: What about this example is NOT consistent or predictable? What is printed by the last statement?</summary>**
+**<details><summary>Q: What about this example is NOT consistent or predictable? What is printed by the last statement?</summary>**
 
 You can modify the `friendsManager.friends` array either through the `addFriend()` method or by directly mutating the `friends` array. When modifying the array directly, there are no safeguards.
 
@@ -268,17 +266,13 @@ console.log(bensFriendsManager.getFriends()) // ['zo', 'motun']
 console.log(gonzalosFriendsManager.getFriends()) // ['carmen']
 ```
 
-<details>
-
-**<summary>Q: In the example above, identify the "outer" function and the inner function involved in creating a closure</summary>**
+**<details><summary>Q: In the example above, identify the "outer" function and the inner function involved in creating a closure</summary>**
 
 `makeFriendsManager` is the outer function and both `addFriend` and `getFriends` form a closure around the variable `friends`.
 
 </details>
 
-<details>
-
-**<summary>Q: How can we modify the example above to be able to create a new friend manager with a starting set of `friends` as an argument?</summary>**
+**<details><summary>Q: How can we modify the example above to be able to create a new friend manager with a starting set of `friends` as an argument?</summary>**
 
 ```js
 const makeFriendsManager = (...initialFriends) => {
@@ -330,9 +324,7 @@ const addAmountToNumbers = (nums, amount) => {
 const getId = ((id = 1) => () => id++)();
 ```
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 * The first function DOES NOT create a closure. Even though there is an inner arrow function defined, that function doesn't reference variables in the scope outside of it
 * The second function DOES create a closure because the inner arrow function passed to `nums.map` references the `randomNum` variable in the scope outside of it.
@@ -369,9 +361,7 @@ console.log(counter.value); // 1
 counter.value = 10; // BAD
 ```
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 const makeCounter = (startingValue = 0) => {

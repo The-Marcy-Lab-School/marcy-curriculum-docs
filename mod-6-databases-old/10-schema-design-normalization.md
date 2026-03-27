@@ -81,9 +81,7 @@ Database schema designs are most often communicated through an **Entity Relation
 
 ![An entity relationship diagram communicates the contents of a table and its relationship to other tables.](<../.gitbook/assets/labeled-erd (4).png>)
 
-<details>
-
-**<summary>Q: Why is having a diagram like this helpful for building software?</summary>**
+**<details><summary>Q: Why is having a diagram like this helpful for building software?</summary>**
 
 A diagram allows all engineers working on a project to have a clear picture of the data required by the project and the relationships between that data. Even if you are working on a solo project, making this kind of plan before starting coding can help you avoid making mistakes along the way! And remember, you can always change things around later.
 
@@ -126,9 +124,7 @@ Okay, let's recall that we're designing a database for a school that tracks:
 * which students are taking which courses
 * which teachers teach which courses
 
-<details>
-
-**<summary>Q: What tables should we use?</summary>**
+**<details><summary>Q: What tables should we use?</summary>**
 
 I think we could use the following tables: `students`, `classes`, `enrollments` and `teachers`
 

@@ -69,18 +69,14 @@ We also learned how to capture the form data and send it to Formspree using the 
 
 Recall that after submitting the form you would be redirected to the Formspree.
 
-<details>
-
-**<summary>Q: Take a look at the input elements. What is the difference between the `id` and `name` attributes?</summary>**
+**<details><summary>Q: Take a look at the input elements. What is the difference between the `id` and `name` attributes?</summary>**
 
 * The `id` attribute labels the field so that it can be connected to the `<label>` element
 * The `name` attribute gives the form value a name when it is submitted. Remember this!
 
 </details>
 
-<details>
-
-**<summary>Q: What does the `method="POST"` attribute mean?</summary>**
+**<details><summary>Q: What does the `method="POST"` attribute mean?</summary>**
 
 A POST request means that we are sending data to a server as opposed to requesting data from it.
 
@@ -168,18 +164,14 @@ contactForm.addEventListener('submit', (event) => {
 
 Let's look closer at the key parts of the JavaScript:
 
-<details>
-
-**<summary>`contactForm.addEventListener('submit', (event) => {})`</summary>**
+**<details><summary>`contactForm.addEventListener('submit', (event) => {})`</summary>**
 
 * The `"submit"` event is fired when the user presses the submit button.
 * The event handler should use the `event` parameter for preventing the default behavior.
 
 </details>
 
-<details>
-
-**<summary>`event.preventDefault()`</summary>**
+**<details><summary>`event.preventDefault()`</summary>**
 
 * `event.preventDefault()` stops the browser from doing its default action (reload/redirect)
 * It _must_ be called at the start of the handler. Otherwise the page will reload and your JavaScript won't run!
@@ -187,9 +179,7 @@ Let's look closer at the key parts of the JavaScript:
 
 </details>
 
-<details>
-
-**<summary>`contactForm.elements.message.value`</summary>**
+**<details><summary>`contactForm.elements.message.value`</summary>**
 
 * `contactForm.elements` is an object containing all inputs in the form.
 * Inside of it, you can access inputs by their `name` attribute (e.g., `form.elements.message`).
@@ -197,18 +187,14 @@ Let's look closer at the key parts of the JavaScript:
 
 </details>
 
-<details>
-
-**<summary>Status Message</summary>**
+**<details><summary>Status Message</summary>**
 
 * When handling form submissions, it is a good practice to let your user know if the form submission worked!
 * In this example we always display a success message but you can also show error messages if things like API calls fail
 
 </details>
 
-<details>
-
-**<summary>`form.reset()`</summary>**
+**<details><summary>`form.reset()`</summary>**
 
 * Clears all inputs back to their default values
 * Useful after successful submission
@@ -236,9 +222,7 @@ It should look like this:
 
 ![A name and email are displayed alongside the message.](../.gitbook/assets/basic-forms-solution.png)
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 **HTML:**
 
@@ -861,9 +845,7 @@ Enhance the registration form above by adding these validation rules:
    * Input borders turn green when valid
    * Add CSS classes `.error` and `.valid` to inputs
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 const registrationForm = document.querySelector('#registration-form');

@@ -57,9 +57,7 @@ Server → ??? Who is this person? I've never seen them before.
 
 This creates a fundamental problem for applications that require login. After a user logs in, how does the server know who they are on the next request?
 
-<details>
-
-**<summary>Q: Why doesn't the server just save the user ID in a JavaScript variable after login?</summary>**
+**<details><summary>Q: Why doesn't the server just save the user ID in a JavaScript variable after login?</summary>**
 
 A JavaScript variable in your server code is shared across *all* users. If you did `let currentUser = user` after login, you'd overwrite the previous user's session every time anyone logged in. There's no way to associate a server-side variable with a specific browser connection — HTTP doesn't maintain persistent connections between requests.
 
@@ -95,9 +93,7 @@ The solution is **sessions**: the server stores data about the logged-in user an
 
 The cookie is sent automatically by the browser with every subsequent request to the same domain — no extra frontend code needed. The server reads the cookie, decrypts it, and knows who the user is.
 
-<details>
-
-**<summary>Q: What's the difference between a session stored in a cookie and a session stored in a database?</summary>**
+**<details><summary>Q: What's the difference between a session stored in a cookie and a session stored in a database?</summary>**
 
 * **Cookie-based sessions** (what `cookie-session` does): session data is encrypted and stored in the cookie itself. No server-side database needed. Simpler to set up, but there's a size limit on how much data you can store, and invalidating sessions (e.g., forcing a logout) requires extra work since the server doesn't track them.
 
@@ -286,9 +282,7 @@ const checkLoginStatus = async () => {
 checkLoginStatus();
 ```
 
-<details>
-
-**<summary>Q: Why is `/api/me` useful even after the user just logged in?</summary>**
+**<details><summary>Q: Why is `/api/me` useful even after the user just logged in?</summary>**
 
 When a user logs in on a login page, your app often redirects them to a dashboard or home page. That new page loads fresh — it doesn't "remember" that the login just happened. By calling `/api/me` on every page load, the app can always determine the current user state from the session, regardless of how the user got to the page.
 
@@ -309,9 +303,7 @@ router.delete('/logout', logout);
 
 Setting `req.session = null` tells `cookie-session` to delete the cookie from the browser. On the next request, `req.session.userId` will be `undefined`.
 
-<details>
-
-**<summary>Q: A user logs out, but if they copy their session cookie from before logout and manually paste it back into their browser, can they log back in?</summary>**
+**<details><summary>Q: A user logs out, but if they copy their session cookie from before logout and manually paste it back into their browser, can they log back in?</summary>**
 
 With `cookie-session` (client-side sessions), yes — in theory. `cookie-session` doesn't maintain a server-side session store, so it can't invalidate old cookies. Setting `req.session = null` clears the cookie from the browser, but if someone saved the old cookie value, they could manually restore it.
 
@@ -337,9 +329,7 @@ Here's a summary of the four auth endpoints:
 
 With these four endpoints, your application has a complete authentication system. The next lesson adds **authorization** — checking whether a logged-in user has permission to access specific resources.
 
-<details>
-
-**<summary>Q: A user visits your app for the first time. Walk through exactly which auth endpoints get called and when.</summary>**
+**<details><summary>Q: A user visits your app for the first time. Walk through exactly which auth endpoints get called and when.</summary>**
 
 1. **App loads** → frontend calls `GET /api/me`
    - No session cookie exists yet

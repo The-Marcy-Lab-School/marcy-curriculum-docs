@@ -65,9 +65,7 @@ Think of it this way: your computer has thousands of ports, like doors into an a
 
 When your server is running locally, the **host** is `localhost` (your own computer) and the **port** is whatever number you chose. Together, `localhost:8080` uniquely identifies each server application on your machine.
 
-<details>
-
-**<summary>Q: Why can't two applications listen on the same port at the same time?</summary>**
+**<details><summary>Q: Why can't two applications listen on the same port at the same time?</summary>**
 
 Because the operating system uses the port number to decide which application receives incoming data. If two applications tried to listen on the same port, the system wouldn't know which one to send the data to. This is why you get an error like "address already in use" if you try to start a server on a port that's already taken. The fix is either to stop the other process or use a different port number.
 
@@ -131,9 +129,7 @@ const server = http.createServer((req, res) => {
 * **`req.url`** — the path portion of the URL (everything after the host and port)
 * **`req.headers`** — an object of all request headers
 
-<details>
-
-**<summary>Q: You visit `http://localhost:8080/api/users?sort=asc`. What is the value of `req.url`?</summary>**
+**<details><summary>Q: You visit `http://localhost:8080/api/users?sort=asc`. What is the value of `req.url`?</summary>**
 
 `'/api/users?sort=asc'`
 
@@ -180,9 +176,7 @@ const server = http.createServer((req, res) => {
 If you forget to call it, the client will hang indefinitely waiting for a response.
 {% endhint %}
 
-<details>
-
-**<summary>Q: What happens if you call `res.end()` twice for the same request?</summary>**
+**<details><summary>Q: What happens if you call `res.end()` twice for the same request?</summary>**
 
 Node will throw an error: `Error: write after end`. Once you've called `res.end()`, the response is closed — you can't write to it again. This is a common mistake in branching code where multiple code paths could reach a `res.end()` call. Use early `return` statements to prevent it:
 
@@ -240,9 +234,7 @@ const server = http.createServer((req, res) => {
 server.listen(8080, () => console.log('Listening on http://localhost:8080'));
 ```
 
-<details>
-
-**<summary>Q: How would you add a route that only responds to `POST /api/todos`?</summary>**
+**<details><summary>Q: How would you add a route that only responds to `POST /api/todos`?</summary>**
 
 Add another `if` block before the catch-all 404. This assumes that the POST body is a JSON object in the format `{ "task": "description" }`:
 
@@ -354,9 +346,7 @@ Output:
 { "message": "Success: Todo Added", "data": {"id":3,"task":"Master Express"}}
 ```
 
-<details>
-
-**<summary>Q: What is the difference between using `curl` and opening the URL in a browser to test your server?</summary>**
+**<details><summary>Q: What is the difference between using `curl` and opening the URL in a browser to test your server?</summary>**
 
 * A **browser** always sends `GET` requests when you type a URL. It can't easily send `POST`, `PATCH`, or `DELETE` without JavaScript. It also automatically processes and renders the response.
 * **`curl`** gives you full control over the method, headers, and body. It shows you the raw response — headers and all — with no processing. It's essential for testing non-GET endpoints and seeing exactly what the server sends.
@@ -365,9 +355,7 @@ Later, we'll use **Postman** — a GUI tool that gives you `curl`'s flexibility 
 
 </details>
 
-<details>
-
-**<summary>Q: What does the `Content-Type: application/json` header in a </strong><em><strong>request</strong></em><strong> tell the server?</summary>**
+**<details><summary>Q: What does the `Content-Type: application/json` header in a </strong><em><strong>request</strong></em><strong> tell the server?</summary>**
 
 It tells the server that the request body is formatted as JSON and should be parsed accordingly. Without this header, the server doesn't know how to interpret the raw bytes it receives in the body. Express's `express.json()` middleware uses this header to decide whether to JSON-parse the request body automatically.
 
@@ -404,9 +392,7 @@ app.get('/api/todos', (req, res) => {
 
 You now understand what's happening underneath. Next lesson, we build with Express.
 
-<details>
-
-**<summary>Q: Since Express is built on top of `node:http`, does that mean you could build anything Express can build using just `node:http`?</summary>**
+**<details><summary>Q: Since Express is built on top of `node:http`, does that mean you could build anything Express can build using just `node:http`?</summary>**
 
 Yes — Express doesn't add any new capabilities that `node:http` doesn't have. Everything Express does, you could write yourself with `node:http`. Express just removes the repetitive work. This is the point of a framework: it doesn't expand what's _possible_, it makes common patterns faster and less error-prone to implement. Understanding `node:http` first means you're never confused by what Express is "doing behind the scenes" — you've already seen the raw version.
 

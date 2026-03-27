@@ -128,9 +128,7 @@ For local development without a password, it's often as simple as:
 postgres://localhost/my_app_db
 ```
 
-<details>
-
-**<summary>Q: Why do we export the pool from a separate file rather than creating it inside every model file?</summary>**
+**<details><summary>Q: Why do we export the pool from a separate file rather than creating it inside every model file?</summary>**
 
 The pool should be a singleton — one shared pool for the entire application. If you created a new `Pool` in every model file, you'd end up with multiple pools competing for connections and consuming more resources than necessary. Exporting from `db/pool.js` ensures the pool is created once and every model shares the same instance.
 
@@ -168,9 +166,7 @@ console.log(result.rowCount); // 2 — how many rows were returned/affected
 
 Each row in `result.rows` is a plain JavaScript object. Column names become property keys.
 
-<details>
-
-**<summary>Q: You run `SELECT * FROM users WHERE id = 99` and no user has that ID. What does `result.rows` look like?</summary>**
+**<details><summary>Q: You run `SELECT * FROM users WHERE id = 99` and no user has that ID. What does `result.rows` look like?</summary>**
 
 It will be an empty array: `[]`. `pool.query()` does not throw an error when a `SELECT` finds nothing — it just returns zero rows. Your model method should handle this and return `null` or throw a meaningful error rather than passing an empty array to the controller.
 
@@ -234,9 +230,7 @@ const getUserById = async (id) => {
 
 Even if a user passes `1; DROP TABLE users; --` as `id`, Postgres will treat the entire string as a data value being compared to the `id` column — not as a command to execute. It will simply find no matching row.
 
-<details>
-
-**<summary>Q: A query needs to filter by both username and email. How do you write it with parameterized placeholders?</summary>**
+**<details><summary>Q: A query needs to filter by both username and email. How do you write it with parameterized placeholders?</summary>**
 
 ```js
 const getUserByCredentials = async (username, email) => {
@@ -314,9 +308,7 @@ module.exports = User;
 `RETURNING *` is a PostgreSQL extension that makes an `INSERT`, `UPDATE`, or `DELETE` return the affected row(s) as if it were a `SELECT`. Without it, those operations return `rowCount` but no rows. Always use `RETURNING *` in your model methods so you can return the created/updated/deleted record to the controller.
 {% endhint %}
 
-<details>
-
-**<summary>Q: What's the difference between `result.rows[0]` and `result.rows`? When do you use each?</summary>**
+**<details><summary>Q: What's the difference between `result.rows[0]` and `result.rows`? When do you use each?</summary>**
 
 * `result.rows` — the full array of all matching rows. Use this when you expect multiple results (e.g., `list()` — all users).
 * `result.rows[0]` — just the first row. Use this when you expect exactly one result (e.g., `find(id)` — one user, `create()` — the newly created row).
@@ -325,9 +317,7 @@ If you use `result.rows[0]` when no row exists, you'll get `undefined`. That's w
 
 </details>
 
-<details>
-
-**<summary>Q: Your `User.create()` method returns the newly created user. Your controller needs to send a `201 Created` status with that user as JSON. What should the controller look like?</summary>**
+**<details><summary>Q: Your `User.create()` method returns the newly created user. Your controller needs to send a `201 Created` status with that user as JSON. What should the controller look like?</summary>**
 
 ```js
 const createUser = async (req, res, next) => {

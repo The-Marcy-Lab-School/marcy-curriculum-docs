@@ -395,9 +395,7 @@ This is all impacted by the `display` property:
 
 Since `<a>` elements have `display:inline`, they appear next to each other AND we can't set their `height` or `width` properties.
 
-<details>
-
-**<summary>Q: We want our nav links (`<a>` tags) to be 10rem wide AND keep them on the same line. Which display should we use?</summary>**
+**<details><summary>Q: We want our nav links (`<a>` tags) to be 10rem wide AND keep them on the same line. Which display should we use?</summary>**
 
 If we wanted to keep the `<a>` elements on the same line but also have control over their dimensions, we can change them to have `display:inline-block`:
 
@@ -424,9 +422,7 @@ We want them to appear next to each other and have control over their width/heig
 
 Try it out, then look at the solution below.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 By default, list items have `display:block` which stacks them on top of each other. To have them listed next to each other, we can give them `display: inline-block`.
 
@@ -463,9 +459,7 @@ nav>a {
 }
 ```
 
-<details>
-
-**<summary>Q: What is the actual width of a nav link?</summary>**
+**<details><summary>Q: What is the actual width of a nav link?</summary>**
 
 You might expect each link to be 10rem (160px) wide. But the **actual width** is:
 

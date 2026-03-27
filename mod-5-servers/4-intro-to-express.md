@@ -209,9 +209,7 @@ const users = [
 ];
 ```
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 const users = [
@@ -377,9 +375,7 @@ app.get('/api/users/:id', findUser);
 
 **Route Parameters Challenge:** It is possible that the client requests a user that doesn't exist. Add a guard clause to the `findUser` controller that sends a response with the body `{ message: No user with the given id }` and a 404 status.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 if (!user) {

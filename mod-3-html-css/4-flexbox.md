@@ -51,9 +51,7 @@ Open https://www.youtube.com/ and see how elements shift in size as you resize t
 
 ![Three youtube videos in a row](../.gitbook/assets/youtube.png)
 
-<details>
-
-**<summary>Q: Look at a row of video "cards". Are they `display:inline`, `display:block` or something else? Guess, then inspect the page!</summary>**
+**<details><summary>Q: Look at a row of video "cards". Are they `display:inline`, `display:block` or something else? Guess, then inspect the page!</summary>**
 
 They are `display: flex;` elements!
 
@@ -95,9 +93,7 @@ They are styled with background colors and some padding but are otherwise using 
 
 ![block elements will stack on top of each other](../.gitbook/assets/before-flexbox.png)
 
-<details>
-
-**<summary>Q: Why are they stacked on top of each other rather than side by side?</summary>**
+**<details><summary>Q: Why are they stacked on top of each other rather than side by side?</summary>**
 
 By default, `p` elements will be block elements. Block elements always stack on top of each other and take up the full width available to them.
 
@@ -169,9 +165,7 @@ Note that the gap will only be applied to the space between the elements, not be
 
 ![](../.gitbook/assets/flex-gap.png)
 
-<details>
-
-**<summary>Q: Why can't we just use margin to do this?</summary>**
+**<details><summary>Q: Why can't we just use margin to do this?</summary>**
 
 Thus far, if we've wanted to put space between elements, we've had to rely on adding a `margin`. However, margins have a few behaviors that can be annoying to deal with:
 
@@ -275,9 +269,7 @@ Below, you can see what the header currently looks like (left) and what we want 
 
 **Q: How do we fix this?**
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 * Most elements are `display: block` which means they are stacked on top of each other.
 * We can apply `display: flex` to a parent element to put its children in a row horizontally

@@ -127,9 +127,7 @@ These are the types you'll use most:
 **`TEXT` vs `VARCHAR(n)`**: Use `TEXT` unless you have a specific reason to enforce a character limit (like for a phone number). In Postgres, `TEXT` is just as efficient as `VARCHAR` and is simpler to work with.
 {% endhint %}
 
-<details>
-
-**<summary>Q: A table stores product prices. Should the column type be `INT` or `NUMERIC`?</summary>**
+**<details><summary>Q: A table stores product prices. Should the column type be `INT` or `NUMERIC`?</summary>**
 
 `NUMERIC` (or `NUMERIC(10, 2)` for exactly 2 decimal places). `INT` only stores whole numbers, so a price like `$9.99` would be truncated to `9`. `NUMERIC` stores exact decimal values, making it appropriate for prices, percentages, and any value where precision matters.
 
@@ -158,9 +156,7 @@ CREATE TABLE users (
 
 Here, `username` and `email` are both `NOT NULL` (required) and `UNIQUE` (no duplicates). `is_active` defaults to `TRUE` if not provided. We'll discuss `SERIAL PRIMARY KEY` in the next section.
 
-<details>
-
-**<summary>Q: You try to insert two users with the same email. What happens?</summary>**
+**<details><summary>Q: You try to insert two users with the same email. What happens?</summary>**
 
 Postgres returns an error: `ERROR: duplicate key value violates unique constraint "users_email_key"`. The second insert is rejected — the row is not added. Constraints are enforced at write time.
 
@@ -272,9 +268,7 @@ Choose a scenario from the list below (or propose your own). Design a single tab
 
 6. **Try updating and deleting a row**, then verify with `SELECT`.
 
-<details>
-
-**<summary>Example solution: a pet shelter</summary>**
+**<details><summary>Example solution: a pet shelter</summary>**
 
 ```sql
 DROP TABLE IF EXISTS pets;

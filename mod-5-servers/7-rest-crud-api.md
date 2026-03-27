@@ -69,33 +69,25 @@ Before writing any new endpoints, let's talk about how to _design_ them well.
 
 **Pop Quiz: Guess the action that each of these requests will perform!**
 
-<details>
-
-**<summary>`GET /api/fellows/3`</summary>**
+**<details><summary>`GET /api/fellows/3`</summary>**
 
 Get the fellow with the id `3`
 
 </details>
 
-<details>
-
-**<summary>`PATCH /api/fellows/1`</summary>**
+**<details><summary>`PATCH /api/fellows/1`</summary>**
 
 Update the fellow with the id `1`
 
 </details>
 
-<details>
-
-**<summary>`DELETE /api/fellows/2`</summary>**
+**<details><summary>`DELETE /api/fellows/2`</summary>**
 
 Delete the fellow with the id `2`
 
 </details>
 
-<details>
-
-**<summary>`POST /api/fellows/2/bio`</summary>**
+**<details><summary>`POST /api/fellows/2/bio`</summary>**
 
 Create a bio for the fellow with the id `2`
 
@@ -141,17 +133,13 @@ These principles help our API become "RESTful". But keep in mind that these are 
 
 Which of these endpoints below are RESTful? For those that are not, what rule do they break?
 
-<details>
-
-**<summary>`GET /api/fellows`</summary>**
+**<details><summary>`GET /api/fellows`</summary>**
 
 ✅ RESTful — The URL identifies a resource (the collection of fellows) using a plural noun. `GET` correctly expresses "retrieve." No verb in the URL, no state stored on the server.
 
 </details>
 
-<details>
-
-**<summary>`GET /api/getAllFellows`</summary>**
+**<details><summary>`GET /api/getAllFellows`</summary>**
 
 ❌ Not RESTful — **Verb in the URL** (breaks "Endpoints Describe Resources, Not Actions"). The path should describe a resource, not an action. The HTTP method `GET` already communicates "retrieve" — repeating it in the URL is redundant and non-standard.
 
@@ -159,17 +147,13 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 </details>
 
-<details>
-
-**<summary>`POST /api/fellows`</summary>**
+**<details><summary>`POST /api/fellows`</summary>**
 
 ✅ RESTful — `POST` correctly signals "create a new resource," and `/api/fellows` identifies the collection that will own it. The URL is a noun, the method is the verb.
 
 </details>
 
-<details>
-
-**<summary>`POST /api/fellows/3/update`</summary>**
+**<details><summary>`POST /api/fellows/3/update`</summary>**
 
 ❌ Not RESTful — breaks two rules at once. First, **verb in the URL** ("update" should not appear in the path). Second, **wrong HTTP method** — updating an existing resource is the job of `PATCH` or `PUT`, not `POST`.
 
@@ -177,17 +161,13 @@ Which of these endpoints below are RESTful? For those that are not, what rule do
 
 </details>
 
-<details>
-
-**<summary>`DELETE /api/fellows/7`</summary>**
+**<details><summary>`DELETE /api/fellows/7`</summary>**
 
 ✅ RESTful — `DELETE` expresses "remove this resource," and `/api/fellows/7` clearly identifies the specific fellow by id. The URL hierarchy (`/fellows/:id`) follows the REST convention for addressing a single resource within a collection.
 
 </details>
 
-<details>
-
-**<summary>`GET /api/fellows/delete/5`</summary>**
+**<details><summary>`GET /api/fellows/delete/5`</summary>**
 
 ❌ Not RESTful — breaks two rules. First, **verb in the URL** ("delete" belongs in the HTTP method, not the path). Second, **wrong HTTP method** — `GET` requests are expected to be safe (read-only, no side effects). Using `GET` to delete data is unpredictable and dangerous; web crawlers and prefetch tools could accidentally trigger deletions.
 
@@ -227,9 +207,7 @@ Before implementing the API contract above, try designing an API contract for In
 
 Your API should have CRUD endpoints for posts and comments and it should follow the rules for making a RESTful API above.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 Notice that we can't use a URL for comments `/api/posts/:id/comments/:id` because we would have two route parameters called `:id`. To get around this, we provide more descriptive route parameter names: `:postId`  and `:commentId`
 
@@ -392,9 +370,7 @@ createFellow('Winnie the Pooh');
 
 With this code fully tested, we can now wire it up to our form! See if you can figure out how to trigger the `createFellow` fetch helper inside the `handleAddFellow` function.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 When handling the form submission, we use the input value to call `createFellow`. Then, to update the list with the new data, we call `loadFellows()` again to re-fetch and re-render.
 
@@ -434,9 +410,7 @@ Our frontend application shows an **Edit** button next to each fellow. The `upda
 * Use method `'PATCH'`, set `Content-Type: application/json`, and put `{ fellowName }` in the body.
 * The URL should be `/api/fellows/${id}`.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 {% code title="server/index.js" %}
 ```javascript
@@ -535,9 +509,7 @@ The frontend also shows a **Delete** button next to each fellow. The `deleteFell
 * The URL should be `/api/fellows/${id}`.
 * There is no response body for a `204` — return `{ data: true, error: null }` on success.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 {% code title="server/index.js" %}
 ```javascript

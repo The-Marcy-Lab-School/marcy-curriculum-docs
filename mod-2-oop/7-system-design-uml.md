@@ -65,9 +65,7 @@ myLibrary.addBook({ description: "I'm a book!" });
 console.log(myLibrary.getBooks()); // [ Book { title: "Beloved", author: "Toni Morrison", genre: "Historical Fiction"} ]
 ```
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 class Book {
@@ -123,9 +121,7 @@ System design is a very broad term but in the context of Object-Oriented Program
 * **Relationships**: Inheritance or references between classes
   * Example: a Library references Books, or perhaps a Biography extends a Book
 
-<details>
-
-**<summary>Discussion Question: What are the components, responsibilities (properties/methods), and relationships for the Pet Adoption Center application?</summary>**
+**<details><summary>Discussion Question: What are the components, responsibilities (properties/methods), and relationships for the Pet Adoption Center application?</summary>**
 
 Components could include shelters, owners, pets, adopters/applicants, applications, release forms, etc...
 
@@ -153,9 +149,7 @@ A UML diagram for the Pet Shelter might look like this:
 
 **Take a few minutes to scan over the diagram.**
 
-<details>
-
-**<summary>Q: Without looking too closely, what are the visual components that show the entities in the system? What </strong><em><strong>responsibilities</strong></em><strong> and </strong><em><strong>relationships</strong></em><strong> do you see?</summary>**
+**<details><summary>Q: Without looking too closely, what are the visual components that show the entities in the system? What </strong><em><strong>responsibilities</strong></em><strong> and </strong><em><strong>relationships</strong></em><strong> do you see?</summary>**
 
 * Boxes represent classes with properties and methods inside
 * Arrows show relationships with labels and numbers
@@ -170,9 +164,7 @@ UML Diagrams provide engineers a way to _iterate_ on and _communicate_ about a s
 UML Diagrams are like a draft of a system before it is implemented in code.
 {% endhint %}
 
-<details>
-
-**<summary>Q: Why is it useful to create a UML diagram as a "first draft" of a system before implementing the system in code?</summary>**
+**<details><summary>Q: Why is it useful to create a UML diagram as a "first draft" of a system before implementing the system in code?</summary>**
 
 UML diagrams allow engineers to think through the design and iterate on it until they are absolutely certain about what they are building. It would be a massive waste of time and resources to build a system only to have to rebuild it due to a poor design.
 
@@ -222,9 +214,7 @@ class Library {
 }
 ```
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 Here is a text-based UML Diagram for Book and Library
 
@@ -262,9 +252,7 @@ To illustrate relationships between classes in a system, we use a combination of
 
 * Arrows indicate that one class reference another. References can either be **uni-directional** (one-way) or **bi-directional** (two-way)
 
-<details>
-
-**<summary>Q: For each relationship, identify which are uni-directional and which are bi-directional</summary>**
+**<details><summary>Q: For each relationship, identify which are uni-directional and which are bi-directional</summary>**
 
 * Shelter --> Pet (one-way)
 * Shelter --> Application (one-way)
@@ -285,33 +273,25 @@ More examples of multiplicity notation include:
 * Zero or more: `0..*`
 * One or more: `1..*`
 
-<details>
-
-**<summary>Q: Can an Adopter submit zero applications?</summary>**
+**<details><summary>Q: Can an Adopter submit zero applications?</summary>**
 
 Yes
 
 </details>
 
-<details>
-
-**<summary>Q: Can an Application exist without an Adopter?</summary>**
+**<details><summary>Q: Can an Application exist without an Adopter?</summary>**
 
 No
 
 </details>
 
-<details>
-
-**<summary>Q: Can one Pet have multiple applications?</summary>**
+**<details><summary>Q: Can one Pet have multiple applications?</summary>**
 
 Yes
 
 </details>
 
-<details>
-
-**<summary>Q: Can an Application be for multiple pets?</summary>**
+**<details><summary>Q: Can an Application be for multiple pets?</summary>**
 
 No
 
@@ -353,9 +333,7 @@ Analyze the UML diagram for the pet adoption system and, for each feature, desig
 * Which properties are used from each class to make the feature work?
 * Which methods are invoked, and in what order, to make the feature work?
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 **Adopters need some way to apply for pet adoption**:
 

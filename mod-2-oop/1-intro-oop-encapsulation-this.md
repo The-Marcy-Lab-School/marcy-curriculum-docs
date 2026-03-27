@@ -147,9 +147,7 @@ friendsManager.printFriends();
 
 The `this` keyword allows the methods `addFriend` and `printFriends` to avoid needing to have the `friends` array explicitly passed into them — they just refer to `this.friends`!
 
-<details>
-
-**<summary>Q: How would you add a `friendsManager.removeLast()` method that removes the last friend that was added?</summary>**
+**<details><summary>Q: How would you add a `friendsManager.removeLast()` method that removes the last friend that was added?</summary>**
 
 ```js
 const friendsManager = {

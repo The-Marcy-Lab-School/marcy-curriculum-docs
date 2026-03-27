@@ -118,33 +118,25 @@ In addition to the message body, the response will contain a three-digit **statu
 
 ### APIs Pop Quiz!
 
-<details>
-
-**<summary>Q1: A Web API is an interface for exchanging ____ via _____</summary>**
+**<details><summary>Q1: A Web API is an interface for exchanging ____ via _____</summary>**
 
 A Web API is an interface for exchanging data via the internet (HTTP)
 
 </details>
 
-<details>
-
-**<summary>Q2: What do we call the cycle that describes how we get det data from a Web API?</summary>**
+**<details><summary>Q2: What do we call the cycle that describes how we get det data from a Web API?</summary>**
 
 The HTTP Request and Response cycle
 
 </details>
 
-<details>
-
-**<summary>Q3: What do we call the specific URL that we send a requst to?</summary>**
+**<details><summary>Q3: What do we call the specific URL that we send a requst to?</summary>**
 
 The endpoint
 
 </details>
 
-<details>
-
-**<summary>Q4: What are the four HTTP request verbs and what do they each mean?</summary>**
+**<details><summary>Q4: What are the four HTTP request verbs and what do they each mean?</summary>**
 
 * `"GET"` - Request to get data from the API's dataset (the default)
 * `"POST"` - Request to create data to be added to the API's dataset
@@ -153,9 +145,7 @@ The endpoint
 
 </details>
 
-<details>
-
-**<summary>Q5: How is data typically formatted when sent via HTTP?</summary>**
+**<details><summary>Q5: How is data typically formatted when sent via HTTP?</summary>**
 
 Using JSON (JavaScript Object Notation)
 
@@ -178,9 +168,7 @@ The `fetch(url, config)` sends an HTTP request to the API endpoint specified by 
 * The `config` parameter is optional and is used to specify the type of request (`GET`, `POST`, etc.) but we can omit it when sending a `GET` request.
 * A `Promise` object is returned. It will resolve to the `Response` object (or an error)
 
-<details>
-
-**<summary>Q: How can we handle the promise from fetch once it resolves or rejects?</summary>**
+**<details><summary>Q: How can we handle the promise from fetch once it resolves or rejects?</summary>**
 
 Using `.then()` and `.catch()`!
 
@@ -297,9 +285,7 @@ Step 3 is a "guard clause" for step 4: we don't want to start reading the body i
 
 When an HTTP request is sent to a web API, the response data isn't sent back all at once. Instead, it is sent back in a continuous "stream" of data chunks. That's what the `ReadableStream` in the `response.body` is.
 
-<details>
-
-**<summary>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</summary>**
+**<details><summary>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</summary>**
 
 Getting data from another source requires two steps: first downloading the data and then reading it. If the data is really large, downloading the data can become a blocking task.
 
@@ -325,9 +311,7 @@ return readingPromise
 
 When we send a request, it is entirely possible that the request fails.
 
-<details>
-
-**<summary>Q: Can you think of a reason for a request failing?</summary>**
+**<details><summary>Q: Can you think of a reason for a request failing?</summary>**
 
 Here are some common reasons:
 

@@ -83,9 +83,7 @@ We've learned that Flexbox is a `display` type that allows us to arrange items i
 
 ![Flexbox lets us make one dimensional layouts while grid lets us make two-dimensional layouts](../.gitbook/assets/flex-vs-grid.png)
 
-<details>
-
-**<summary>Q: Consider the gallery in the image below. It is made using grid. How many rows and columns are there?</summary>**
+**<details><summary>Q: Consider the gallery in the image below. It is made using grid. How many rows and columns are there?</summary>**
 
 There are 5 columns and 5 rows
 
@@ -149,9 +147,7 @@ We can simplify this using the `repeat()` function:
 
 ![](../.gitbook/assets/template-columns.png)
 
-<details>
-
-**<summary>Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?</summary>**
+**<details><summary>Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?</summary>**
 
 * If there are more elements than columns, they will flow into a new row that is created automatically.
 * By default, row height is determined by the largest row item.
@@ -159,9 +155,7 @@ We can simplify this using the `repeat()` function:
 
 </details>
 
-<details>
-
-**<summary>Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.</summary>**
+**<details><summary>Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.</summary>**
 
 We can make columns of different sizes by adjusting the relative `fr` units. To make the middle columns twice as wide as the outer columns, use `2fr` instead of `1fr`
 
@@ -278,9 +272,7 @@ Using media queries and the `display: flex` properties, achieve the responsive d
 
 ![](../.gitbook/assets/flexbox-media-query-challenge.png)
 
-<details>
-
-**<summary>Q: What do you notice if different about the two layouts?</summary>**
+**<details><summary>Q: What do you notice if different about the two layouts?</summary>**
 
 * Mobile view: navigation links are in a row and are above the `main`
 * Desktop view: navigation links are in a column and are to the side of `main`

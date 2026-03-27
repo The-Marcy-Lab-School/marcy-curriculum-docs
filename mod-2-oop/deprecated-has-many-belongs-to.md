@@ -144,9 +144,7 @@ publicLib.removeBook(book1.id);
 console.log(schoolLib.hasBook(book1)); // true - still in school library
 ```
 
-<details>
-
-**<summary>Q: What is the relationship between a `Library` and a `Book` class?</summary>**
+**<details><summary>Q: What is the relationship between a `Library` and a `Book` class?</summary>**
 
 A library has many books. A book belongs to a Library
 
@@ -157,9 +155,7 @@ Later this week, we'll learn how to implement an "Is A" relationship with the `e
 
 **TODO:** Now, create a UML diagram for the `Library` class and draw the correct association line between your two classes. If you are using draw.io, go to the "ERD" section and find the "one-to-many" connector
 
-<details>
-
-**<summary>Example: Library and Books ERD</summary>**
+**<details><summary>Example: Library and Books ERD</summary>**
 
 <img src="img/book-library-erd.png" alt="The library and book classes are connected with a one-to-many line. A library has many books (a book belongs to a library)" data-size="original">
 

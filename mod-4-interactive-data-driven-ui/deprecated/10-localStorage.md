@@ -36,9 +36,7 @@ Suppose we had a game where the user is challenged to click a button as many tim
 
 To encourage the competitive spirit of gaming, a key feature that we want to implement is a leaderboard to display the user's previous scores. Take a look at the `speed-clicker-game` where we've implemented this game!
 
-<details>
-
-**<summary>Q: Look at `main.js` and see how the `leaderboard` is stored "in memory". What are the issues with storing a leaderboard in memory?</summary>**
+**<details><summary>Q: Look at `main.js` and see how the `leaderboard` is stored "in memory". What are the issues with storing a leaderboard in memory?</summary>**
 
 When the user refreshes the page or closes their browser, the program will end and all "in memory" variables will be thrown away. When we return to the page, a new `leaderboard` will be created.
 
@@ -81,9 +79,7 @@ leaderboard.push(40);
 // Uncaught TypeError: leaderboard.push is not a function
 ```
 
-<details>
-
-**<summary>Q: Why did we get a TypeError?</summary>**
+**<details><summary>Q: Why did we get a TypeError?</summary>**
 
 Because `localStorage.setItem` converted the given array into a string. When we try to retrieve that array, it is no longer an array!
 

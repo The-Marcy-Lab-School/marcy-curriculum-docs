@@ -135,9 +135,7 @@ In this example, `"flashcards"` is the top-level property which makes http://loc
 }
 ```
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 http://localhost:4000/friends and http://localhost:4000/messages
 
@@ -145,9 +143,7 @@ http://localhost:4000/friends and http://localhost:4000/messages
 
 **Q: How would I make a http://localhost:4000/flashcards/react or http://localhost:4000/flashcards/fetch endpoint?**
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 ```json
 {

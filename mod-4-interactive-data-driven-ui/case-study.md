@@ -67,9 +67,7 @@ Sequence Flow:
 
 #### Scenario 2: A user clicks a recipe card and the recipe details appear
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 1. **`main.js`**: The click handler on `#recipes-list` runs. `event.target.closest('li')` finds the clicked card and gives us `li`.
 2. **`main.js`**: `getRecipeById(li.dataset.recipeId)` is called with the card’s stored id.
@@ -81,9 +79,7 @@ Sequence Flow:
 
 #### Scenario 3: A user submits the search form and matching recipes are listed
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 1. **`main.js`**: The form submit handler runs, calls `event.preventDefault()`, and reads `searchTerm` plus `isQuick` (`.checked`).
 2. **`main.js`**: `await getRecipeBySearchTerm(searchTerm)` is called with the search term.
@@ -96,9 +92,7 @@ Sequence Flow:
 
 #### Scenario 4: Search fails and an error message is shown
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 1. **`main.js`**: The submit handler calls `await getRecipeBySearchTerm(searchTerm)`.
 2. **`fetch-helpers.js`**: The fetch fails (network failure or `!response.ok`), so the `catch` block returns `{ data: null, error }`.
@@ -119,9 +113,7 @@ Open each file and answer the questions.
 3. Which elements start with `class="hidden"`? Why would we hide them by default?
 4. What `data-` attribute is on the fallback `<li>`? What value does it have?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. It enables ES modules in the browser, so we can use `import` / `export` in JavaScript files.
 2. It gets removed when `renderRecipes` runs, because `recipesList.innerHTML = ''` clears the list before new cards are appended.
@@ -138,9 +130,7 @@ Open each file and answer the questions.
 4. `getRecipeById` and `getRecipes` follow the same pattern. What is the one structural difference between them? Why doesn't `getRecipeById` need a second `.then()`?
 5. Compare and contrast `getRecipeBySearchTerm` with the other fetch helpers. What are the benefits/tradeoffs of using `async`/`await` + `try`/`catch` and returning `{ data, error }`? Which style of handling promises do you prefer?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. It resolves to `data.recipes` (an array) on success, and resolves to `null` on failure.
 2. It handles HTTP failure responses (like 404/500) that do not reject `fetch` by default. `.catch()` alone only handles rejected Promises (network/throw errors).
@@ -157,9 +147,7 @@ Open each file and answer the questions.
 3. What is the difference between `renderError` and `hideError`?
 4. What does `li.dataset.recipeId = recipe.id` add to the DOM, what is that value used for later, and why store it on each card?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. To remove old/fallback content before rendering new results and avoid duplicate cards.
 2. The details section is hidden by default, so removing `hidden` makes the selected recipe details visible.
@@ -176,9 +164,7 @@ Open each file and answer the questions.
 4. Where does the quick filter (`Under 20 Minutes`) apply?
 5. In which branches is `hideError()` called?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 1. Initial page load (`getRecipes`), clicking a recipe card (`getRecipeById`), and submitting the search form (`getRecipeBySearchTerm`).
 2. On `#recipes-list` click. One parent listener handles clicks on dynamically rendered cards, including clicks on child elements via `closest('li')`.

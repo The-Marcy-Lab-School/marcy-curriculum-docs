@@ -56,9 +56,7 @@ Up until now, we've been pushing our commits directly to the main branch. But as
 
 ![One does not simply push to main](../.gitbook/assets/do-not-push-to-main.png)
 
-<details>
-
-**<summary>Q: Why might pushing to main be a bad idea?</summary>**
+**<details><summary>Q: Why might pushing to main be a bad idea?</summary>**
 
 As mentioned above, whenever someone views the repository or clones it down, they will see the main branch. If we were to push changes to the main branch and those changes included mistakes (bugs), other developers would see those mistakes! And, well, that just wouldn't look very good.
 
@@ -76,9 +74,7 @@ A **feature branch** is a copy of the main branch at a point in time and allows 
 
 Branching ensures that the main branch is always a "stable" version. That is, if someone were to look at the repo, they can look at the main branch and know that it is fully functional. Every merge represents a successful addition of a new feature.
 
-<details>
-
-**<summary>Q: How is branching similar to cloning?</summary>**
+**<details><summary>Q: How is branching similar to cloning?</summary>**
 
 When the repository is cloned, the local clone can be edited without affecting the remote repository, just like a feature branch can be edited without affecting the main branch.
 
@@ -173,9 +169,7 @@ Check out the process here:
   5. Return to your local repository and `git pull`.
 * The first developer can now `git checkout main` and `git pull` to download the latest commits from GitHub.
 
-<details>
-
-**<summary>Q: Why does Developer 2 first merge the `main` branch into the `feature-y`?</summary>**
+**<details><summary>Q: Why does Developer 2 first merge the `main` branch into the `feature-y`?</summary>**
 
 This is all for the sake of ensuring our managers approve our PR! A PR with merge conflicts is unlikely to be approved.
 

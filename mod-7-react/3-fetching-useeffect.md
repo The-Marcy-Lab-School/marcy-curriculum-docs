@@ -130,9 +130,7 @@ npm run dev
 if (error) return <p>{error.message}</p>
 ```
 
-<details>
-
-**<summary>Potential Solution</summary>**
+**<details><summary>Potential Solution</summary>**
 
 ```jsx
 import { useState } from 'react'
@@ -274,9 +272,7 @@ useEffect(effect, [valueA, valueB]); // re-run the effect whenever the array cha
 
 Add to your dog API app by having it render a dog image on the first render (and only on that first render!)
 
-<details>
-
-**<summary>Potential Solution</summary>**
+**<details><summary>Potential Solution</summary>**
 
 ```jsx
 import { useState, useEffect } from 'react'
@@ -372,9 +368,7 @@ function App() {
 }
 ```
 
-<details>
-
-**<summary>Q: When / how many times will this effect run?</summary>**
+**<details><summary>Q: When / how many times will this effect run?</summary>**
 
 Each time the `onChange` event fires (every input change)
 

@@ -43,9 +43,7 @@ A form is a collection of inputs that can be filled out by a user to submit a co
 
 **Q: What are some forms you've filled out recently? What data did they collect?**
 
-<details>
-
-**<summary>Click Here To See Some Examples</summary>**
+**<details><summary>Click Here To See Some Examples</summary>**
 
 Examples you might see:
 
@@ -80,9 +78,7 @@ Not every user interaction needs a form. Use a form when you're **collecting mul
 
 Can you think of other examples?
 
-<details>
-
-**<summary>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership.</summary>**
+**<details><summary>Q: Which of these user interactions would require a form: (A) clicking on a "like" button on a social media post, (B) Searching for a flight, or (C) signing up for a gym membership.</summary>**
 
 (A) Clicking on a like button would not require a form since there is just one input to interact with: the button
 
@@ -157,9 +153,7 @@ Each input type behaves differently — `text` accepts any characters, `number` 
 
 **TODO:** Inside your form, add in three more `<input>` elements: (1) application date, (2) expected salary, (3) a job posting URL. For each, add a `<label>` describing the form input and surround the label/input pair with a `<div>`.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 We'll use a "date" type input for the application date, a "number" type input for the salary, and a "url" type input for the job posting url. Make sure to add a `<label>` for each `<input>` and wrap them in a `<div>`:
 
@@ -218,9 +212,7 @@ To improve our form's accessibility we need to connect each `<input>` to its `<l
 * **Clicking the label focuses its input** — try it! This is especially helpful for small checkboxes since it makes the clickable area much larger.
 * The connection is semantic, not just visual — assistive technologies understand the relationship
 
-<details>
-
-**<summary>Q: What happens when you click a label without the `for` attribute?</summary>**
+**<details><summary>Q: What happens when you click a label without the `for` attribute?</summary>**
 
 Nothing. The label is just text. The `for` attribute is what creates the connection to the input.
 
@@ -228,9 +220,7 @@ Nothing. The label is just text. The `for` attribute is what creates the connect
 
 **TODO:** Add a `for` and matching `id` attribute to each pair of labels and inputs.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 At this point, your form should look like this:
 

@@ -71,9 +71,7 @@ This architecture pattern organizes our code into three distinct "layers"":
 Often times, it can be hard to implement your application such that it strictly adheres to any one framework or architecture. Keep in mind that architectures like MVC present an ideal to strive for, not a strict pattern that must be followed at all times.
 {% endhint %}
 
-<details>
-
-**<summary>What separate components of this architecture does our application already have?</summary>**
+**<details><summary>What separate components of this architecture does our application already have?</summary>**
 
 We have a Vanilla JS frontend application acting as the view component.
 
@@ -141,9 +139,7 @@ const findFellow = (req, res) => {
 ```
 {% endhint %}
 
-<details>
-
-**<summary>Q: Is it possible to test ONLY the code that interacts with the `fellows` array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</summary>**
+**<details><summary>Q: Is it possible to test ONLY the code that interacts with the `fellows` array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</summary>**
 
 No! And this is the main issue with our current implementation. Because the concerns are not separated, we can't easily test the different aspects of our server. If we separate the logic that interacts with the `fellows` array from the logic that interacts with the `req` and `res` objects, testing becomes possible.
 

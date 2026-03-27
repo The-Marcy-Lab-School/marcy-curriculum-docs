@@ -214,9 +214,7 @@ SELECT title, genre FROM films;
 SELECT title, year, director FROM films;
 ```
 
-<details>
-
-**<summary>Q: Why would you choose specific columns over `SELECT *`?</summary>**
+**<details><summary>Q: Why would you choose specific columns over `SELECT *`?</summary>**
 
 `SELECT *` returns more data than you might need, which is slower on large tables and makes your code harder to understand. Specifying columns makes your intent clear and is more efficient. In production code, `SELECT *` is generally avoided.
 
@@ -316,9 +314,7 @@ SELECT * FROM films LIMIT 3;
 SELECT * FROM films ORDER BY year DESC LIMIT 3;
 ```
 
-<details>
-
-**<summary>Q: What does this query do? `SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;`</summary>**
+**<details><summary>Q: What does this query do? `SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;`</summary>**
 
 It returns the titles of the 2 most recently released sci-fi films, sorted from newest to oldest.
 
@@ -347,9 +343,7 @@ VALUES
   ('Us', 'Jordan Peele', 2019, 'horror');
 ```
 
-<details>
-
-**<summary>Q: You try to insert a film but forget to include the `title` column, which has a `NOT NULL` constraint. What happens?</summary>**
+**<details><summary>Q: You try to insert a film but forget to include the `title` column, which has a `NOT NULL` constraint. What happens?</summary>**
 
 Postgres returns an error: `ERROR: null value in column "title" violates not-null constraint`. The row is not inserted. Constraints are enforced at write time — the database rejects any data that violates the rules defined when the table was created.
 
@@ -463,9 +457,7 @@ SELECT * FROM films;
 ```
 </details>
 
-<details>
-
-**<summary>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with `film_id = 3` and then insert a new film. What `film_id` does the new film get?</summary>**
+**<details><summary>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with `film_id = 3` and then insert a new film. What `film_id` does the new film get?</summary>**
 
 The new film gets the next value in the `SERIAL` sequence — it does **not** reuse the deleted ID. If the sequence was at 7, the new film gets `film_id = 8`. Primary key values are never reused. This is intentional: reusing IDs could cause bugs if anything (a foreign key, a cached reference) still points to the old row.
 

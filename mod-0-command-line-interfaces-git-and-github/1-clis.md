@@ -88,9 +88,7 @@ The files and folders in your computer are organized in a tree-like structure ca
 
 We refer to each folder in the file tree as a **directory**. The **root directory** is the top-most folder that contains all other **sub-directories**.
 
-<details>
-
-**<summary>Q: What are the ways that the file tree is tree-like?</summary>**
+**<details><summary>Q: What are the ways that the file tree is tree-like?</summary>**
 
 The root is like the trunk of the tree and each sub-directory is a branch that can have more branches.
 
@@ -133,9 +131,7 @@ mv bye.txt goodbye.txt && ls
 
 Note that some commands like `pwd` can be entered on their own. Other commands like `mkdir` may use inputs called **arguments**. Some commands like `ls` can be used on their own or with arguments.
 
-<details>
-
-**<summary>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</summary>**
+**<details><summary>Q: Why use The Terminal?? It would be wayyy faster to do this in the Finder</summary>**
 
 For this particular task it might be faster to use a GUI file manager like Finder, however there are many tasks where a CLI like the Terminal can outpace a GUI like Finder.
 
@@ -223,9 +219,7 @@ If I had wanted to go up two levels from `/Users/smith/Documents` to `/Users`, I
 cd ../..
 ```
 
-<details>
-
-**<summary>Suppose I were located in the `/Users/smith/Documents` directory, how could I navigate to the `/Users/jones/Desktop` directory in one `cd` command?</summary>**
+**<details><summary>Suppose I were located in the `/Users/smith/Documents` directory, how could I navigate to the `/Users/jones/Desktop` directory in one `cd` command?</summary>**
 
 ```
 cd ../../jones/Desktop

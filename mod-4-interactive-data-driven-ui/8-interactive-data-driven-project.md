@@ -71,9 +71,7 @@ Unlike your solo projects where the project itself was the main deliverable, for
 
 Expand each below to see details and examples.
 
-<details>
-
-**<summary>A Deployed Project</summary>**
+**<details><summary>A Deployed Project</summary>**
 
 * Your project must meet all of the grading requirements listed below.
 * Each project is deployed on GitHub using an Organization
@@ -86,9 +84,7 @@ Expand each below to see details and examples.
 
 </details>
 
-<details>
-
-**<summary>A Project Spec Sheet</summary>**
+**<details><summary>A Project Spec Sheet</summary>**
 
 * A project spec sheet is a document that provides key details about the project including the API being used, the intended features/user stories, and wireframes.
 * Examples:
@@ -96,9 +92,7 @@ Expand each below to see details and examples.
 
 </details>
 
-<details>
-
-**<summary>A GitHub Organization and Scrum Board</summary>**
+**<details><summary>A GitHub Organization and Scrum Board</summary>**
 
 * A GitHub Organization is a shared account on GitHub where you and your teammates can collaborate on repositories. Having a GitHub organization will make deployment straight forward.
   * [We Cooked Organization](https://github.com/we-cooked)
@@ -110,9 +104,7 @@ Expand each below to see details and examples.
 
 </details>
 
-<details>
-
-**<summary>A Professional README</summary>**
+**<details><summary>A Professional README</summary>**
 
 Your `README.md` should be polished enough that a new engineer can understand and run your project without asking questions.
 
@@ -143,9 +135,7 @@ Use the same professional writing standards we expect in all artifacts:
 
 </details>
 
-<details>
-
-**<summary>AI Usage Document (Required)</summary>**
+**<details><summary>AI Usage Document (Required)</summary>**
 
 Generative AI tools are a required part of this project workflow, but you must be able to explain every line of code you submit.
 
@@ -166,9 +156,7 @@ This project provided us an opportunity to build with AI assistance. Check out o
 
 </details>
 
-<details>
-
-**<summary>A Presentation + Walkthrough Demo Video</summary>**
+**<details><summary>A Presentation + Walkthrough Demo Video</summary>**
 
 * The presentation is your "elevator pitch" to tell your audience about the project, how you built it, and what you learned through the process.
 * Examples:

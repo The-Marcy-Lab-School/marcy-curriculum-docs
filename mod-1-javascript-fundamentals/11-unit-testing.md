@@ -53,9 +53,7 @@ const doubleArrayPurely = (arr) => {
 };
 ```
 
-<details>
-
-**<summary>Q: Imagine you were given this function and asked to verify that it works. How would you test it? What do you expect to happen when testing?</summary>**
+**<details><summary>Q: Imagine you were given this function and asked to verify that it works. How would you test it? What do you expect to happen when testing?</summary>**
 
 To test this manually, you could invoke the function with some sample data and see if the _output_ matches what you _expect_.
 
@@ -159,9 +157,7 @@ We see a passing test because in the `test()` callback, the `expect(expression)`
 
 In the `tests/sum.test.js` file, add a new test with the message `"adds negatives"` and confirms that the `sum` function will work properly for inputs like `-3` and `-2`.
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 test('addsNegatives', () => {
@@ -212,9 +208,7 @@ This example demonstrates a few new details about `expect()` calls.
 
 Now that we have passing tests, we can change _how_ the code works — as long as it keeps passing the same tests.
 
-<details>
-
-**<summary>Challenge: Refactor `doubleArrayPurely` to use the higher-order method `map`</summary>**
+**<details><summary>Challenge: Refactor `doubleArrayPurely` to use the higher-order method `map`</summary>**
 
 ```js
 const doubleArrayPurely = (arr) => {
@@ -256,9 +250,7 @@ Let's try it out. We'll follow 4 steps:
 
 ### Step 2: Write Tests Before Code (They Will Fail)
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 test('can double strings and numbers', () => {
@@ -270,9 +262,7 @@ test('can double strings and numbers', () => {
 
 ### Step 3: Implement Just Enough Code to Pass
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 const doubleArrayPurely = (arr) => {
@@ -385,9 +375,7 @@ describe('deposit', () => {
 
 Now that we have passing tests, we can change _how_ the code works — as long as it keeps passing the same tests.
 
-<details>
-
-**<summary>Challenge: Refactor `deposit` to use the higher-order method `map`</summary>**
+**<details><summary>Challenge: Refactor `deposit` to use the higher-order method `map`</summary>**
 
 ```js
 const deposit = (accounts, transaction) => {
@@ -420,9 +408,7 @@ Requirements:
 
 **Step 2: Write Tests Before Code (Red)**
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 // bank.test.js
@@ -464,9 +450,7 @@ describe('withdraw', () => {
 
 **Step 3: Implement Just Enough Code to Pass (Green)**
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 const withdraw = (owner, amount) => {

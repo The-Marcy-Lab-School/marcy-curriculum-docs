@@ -70,9 +70,7 @@ CREATE TABLE all_data (
 | 7   | Carmen Salas   | Khalo      | dog  |
 | 8   | Carmen Salas   | Frida      | cat  |
 
-<details>
-
-**<summary>Q: What are the issues with storing the data in this way?</summary>**
+**<details><summary>Q: What are the issues with storing the data in this way?</summary>**
 
 * There is a lot of duplicate data in the `owner_name` column
 
@@ -121,9 +119,7 @@ CREATE TABLE pets (
 | 6   | Pon Juablo | cat  | 2         |
 | 7   | Kora       | dog  | 1         |
 
-<details>
-
-**<summary>Q: What are the tradeoffs of this schema design?</summary>**
+**<details><summary>Q: What are the tradeoffs of this schema design?</summary>**
 
 We no longer have duplicate data It is not exactly clear anymore the name of the person who owns each pet
 
@@ -186,9 +182,7 @@ We'll start with a few simple ones. What SQL statements could we write to find o
 * What are the names of the cats in our database?
 * How many birds and dogs are in our database?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 ```sql
 SELECT COUNT(*)
@@ -240,9 +234,7 @@ WHERE people.name = 'Ann Duong';
 * What are the names of the people who own cats?
 * How many pets does Carmen have?
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 ```sql
 SELECT people.name

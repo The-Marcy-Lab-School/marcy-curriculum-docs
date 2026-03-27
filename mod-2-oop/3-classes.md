@@ -124,9 +124,7 @@ To address this memory issue, in 2016 classes were introduced to JavaScript. Let
 
 A **class** is similar to a factory function in that it can be used to create objects that all have the same interface (the same set of properties and methods).
 
-<details>
-
-**<summary>Q: Suppose we wanted to create a class to represent users. What would the default properties be? What methods would be shared by each instance?</summary>**
+**<details><summary>Q: Suppose we wanted to create a class to represent users. What would the default properties be? What methods would be shared by each instance?</summary>**
 
 * The `User` class would have a **constructor function** for making a `User` instance with properties like `username`, `email`, and `password`
 * The `User` class might have methods like `changeUsername` or `setPassword`
@@ -364,9 +362,7 @@ const Animal = {
 const dog = Animal('canine', 'woof');
 ```
 
-<details>
-
-**<summary>Q: Answer</summary>**
+**<details><summary>Q: Answer</summary>**
 
 The following mistakes are made:
 
@@ -416,9 +412,7 @@ console.log(apple.getPricePerPound());
 // 2
 ```
 
-<details>
-
-**<summary>Q: Solution</summary>**
+**<details><summary>Q: Solution</summary>**
 
 ```js
 class FoodItem {
@@ -455,9 +449,7 @@ console.log(myCart); // ShoppingCart { items: Array(3) }
 console.log(myCart.getTotalPrice()); // 13
 ```
 
-<details>
-
-**<summary>Q: Solution</summary>**
+**<details><summary>Q: Solution</summary>**
 
 ```js
 class ShoppingCart {

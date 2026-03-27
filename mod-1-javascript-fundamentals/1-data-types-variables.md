@@ -74,9 +74,7 @@ There are also three **reference data types**: Objects, Arrays, and Functions.
 | **Array**      | `[ "apple", "banana", "cherry" ]`          | An ordered list of similar values            | Storing lists (shopping cart items, game high scores, chat messages)                     |
 | **Function**   | `function greet() { console.log("Hi!"); }` | A reusable block of code                     | Performing actions, handling events, calculations                                        |
 
-<details>
-
-**<summary>Q: Open up YouTube.com. What examples can you come up with for each of the primitive and reference data types listed above?</summary>**
+**<details><summary>Q: Open up YouTube.com. What examples can you come up with for each of the primitive and reference data types listed above?</summary>**
 
 Here are some examples of each of the primitive data types:
 
@@ -193,9 +191,7 @@ Parentheses `()` can always be used to override the default order and make the e
 const result = Math.random() > 0.5 ? "Heads" : "Tails";
 ```
 
-<details>
-
-**<summary>Q: So, what is the order of operations? What is the value stored in result?</summary>**
+**<details><summary>Q: So, what is the order of operations? What is the value stored in result?</summary>**
 
 The order of operations is as follows:
 
@@ -227,9 +223,7 @@ console.log((5 > 3 && 2 + 2) === 4);
 console.log(Math.ceil(Math.random() * 6))
 ```
 
-<details>
-
-**<summary>Answers</summary>**
+**<details><summary>Answers</summary>**
 
 ```js
 // Arithmetic
@@ -282,9 +276,7 @@ For example, what is the result of the expression below? What data type is produ
 console.log("1" + 1);
 ```
 
-<details>
-
-**<summary>Answer</summary>**
+**<details><summary>Answer</summary>**
 
 `"1" + 1;` produces the string `11` because the number `1` is coerced into a string.
 
@@ -321,9 +313,7 @@ console.log(message);
 // Output: The sum of 4 + 3 + 2 + 1 is 10 and the average is 2.5
 ```
 
-<details>
-
-**<summary>Tradeoffs of each approach</summary>**
+**<details><summary>Tradeoffs of each approach</summary>**
 
 The first approach can be written in one line, however, it is very long. This makes it more difficult to read and predict the output. Additionally the `4 + 3 + 2 + 1` expression must be calculated twice since that calculation is not saved anywhere.
 
@@ -373,9 +363,7 @@ count += 3;
 console.log(`count is now ${count}`); // Output: count is now 6
 ```
 
-<details>
-
-**<summary>Q: Can you declare a `const` variable without an initial value? Why or why not?</summary>**
+**<details><summary>Q: Can you declare a `const` variable without an initial value? Why or why not?</summary>**
 
 You cannot! Since a `const` variable cannot be assigned a new value, it must be given a value immediately when declared otherwise it will forever be `undefined` which isn't very useful. Doing so will throw a `SyntaxError`:
 
@@ -469,9 +457,7 @@ const greetFriend = (friend) => {
 ```
 {% endhint %}
 
-<details>
-
-**<summary>Q: Why is it even possible to have two variables called `message` within the `greetFriend` function?</summary>**
+**<details><summary>Q: Why is it even possible to have two variables called `message` within the `greetFriend` function?</summary>**
 
 We can have two variables with the same name as long as they are in different scopes. This is the entire point of scope! It limits name collision errors like `Uncaught SyntaxError: Identifier 'x' has already been declared`
 

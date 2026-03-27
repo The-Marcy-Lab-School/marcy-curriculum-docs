@@ -103,9 +103,7 @@ app.listen(port, () => {
 
 In this example, we use `app.use()` to add a "fallback" controller to our `app`. Notice that we don't specify an endpoint or a method type: this means that the `serve404` controller can run for any request type and any URL. However, if any of the previous controllers send a response, then `serve404` won't run. Because of this, we _must_ place this endpoint last (after the other calls to `app.get()`).
 
-<details>
-
-**<summary>Q: What would happen if we put `app.use(serve404)` before the other calls to `app.get()`?</summary>**
+**<details><summary>Q: What would happen if we put `app.use(serve404)` before the other calls to `app.get()`?</summary>**
 
 The `serve404` controller would be invoked for any request method and URL preventing the other controllers from ever running.
 
@@ -125,9 +123,7 @@ For example, suppose that you wanted the server to keep track of every request t
 * the request method (`GET` or `POST`, etc...)
 * the time the request was received
 
-<details>
-
-**<summary>Q: Why would it be helpful to log information about every incoming request?</summary>**
+**<details><summary>Q: Why would it be helpful to log information about every incoming request?</summary>**
 
 Logging incoming HTTP requests can be incredibly helpful for debugging purposes.
 
@@ -198,17 +194,13 @@ Examples of this include:
 * Error handling middleware like [`errorhandler`](https://expressjs.com/en/resources/middleware/errorhandler.html)
 {% endhint %}
 
-<details>
-
-**<summary>Q: So, if a user sends a request to `http://localhost:8080/api/hello`, which functions are invoked and in what order?</summary>**
+**<details><summary>Q: So, if a user sends a request to `http://localhost:8080/api/hello`, which functions are invoked and in what order?</summary>**
 
 First the `logRoutes` middleware is invoked. The `next()` function is called which passes the request to the next controller, `serveHello`.
 
 </details>
 
-<details>
-
-**<summary>Q: What would happen if the `logRoutes` controller DID send a response to the client? What would happen if it didn't invoke `next()`?</summary>**
+**<details><summary>Q: What would happen if the `logRoutes` controller DID send a response to the client? What would happen if it didn't invoke `next()`?</summary>**
 
 If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent.
 

@@ -59,9 +59,7 @@ As a result, hashing is commonly used for password storage: when a user creates 
 
 ![Usernames are stored in a database alongside the hashed password.](../.gitbook/assets/hashed-password-stored.png)
 
-<details>
-
-**<summary>Q: Why is it important that hashing functions are "one way" when it comes to password storage?</summary>**
+**<details><summary>Q: Why is it important that hashing functions are "one way" when it comes to password storage?</summary>**
 
 Without password hashing, a hacker who obtains a user database can simply read the passwords in plain text.
 
@@ -119,9 +117,7 @@ Remember, a hashing function should have the following properties:
 1. They must be pure — they must produce the same output when given the same input!
 2. They should be "one way" — it is easy to generate a hash from a given string, but relatively impossible to determine the original string from a given hash.
 
-<details>
-
-**<summary>Q: For the algorithm above, given the hashed string `999897`, what is the plain-text string that would generate that hashed string?</summary>**
+**<details><summary>Q: For the algorithm above, given the hashed string `999897`, what is the plain-text string that would generate that hashed string?</summary>**
 
 ```js
 simpleHash("cba") //-> "999897"

@@ -156,9 +156,7 @@ figure {
 
 **TODO:** Add the CSS above into `style.css` and load it into your HTML file using the `link` tag. Then, copy that `link` tag into your `contact.html` and `portfolio.html` pages.
 
-<details>
-
-**<summary>Q: What are the benefits of having CSS in an external file?</summary>**
+**<details><summary>Q: What are the benefits of having CSS in an external file?</summary>**
 
 Just like modules in a JavaScript program, external stylesheets can be reused by multiple pages that want to have the same styling. When you decide to make a change to the overall style of the website, all pages that use that stylesheet will be updated without the need to update pages individually.
 
@@ -269,9 +267,7 @@ Color values can be written in a variety of ways. For example, these are all equ
 * **Hex code**: `#0000ff`
   * Each pair of base-16 values range from `00` (0) to `ff` (255) and represent red/green/blue.
 
-<details>
-
-**<summary>Q: How would you make green using RGB and Hex? What about black and white?</summary>**
+**<details><summary>Q: How would you make green using RGB and Hex? What about black and white?</summary>**
 
 * Green: `rgb(0, 255, 0)` or `#00ff00`
 * Black: `rgb(0, 0, 0)` or `#000000`

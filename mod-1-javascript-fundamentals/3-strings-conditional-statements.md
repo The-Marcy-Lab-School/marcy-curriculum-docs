@@ -217,9 +217,7 @@ Conditional statements allow us to change the behavior of our programs based on 
 
 ![In a decision tree, depending on the conditions, we can make different decisions.](../.gitbook/assets/decision-tree.png)
 
-<details>
-
-**<summary>Q: In the decision tree above, what are the variables that will impact the end result?</summary>**
+**<details><summary>Q: In the decision tree above, what are the variables that will impact the end result?</summary>**
 
 The first variable is the `weather` and then, depending on the weather, the variable `time` or `hungry` is used to determine whether to walk or take the bus.
 
@@ -337,9 +335,7 @@ console.log(isItHot(105));
 // Output: ???
 ```
 
-<details>
-
-**<summary>Q: Why doesn't the last return statement need an `if` statement?</summary>**
+**<details><summary>Q: Why doesn't the last return statement need an `if` statement?</summary>**
 
 If the program makes it to the last `return "Nah"` statement, we can assume that the temperature is less than or equal to 75 because none of the other conditions were `true`.
 

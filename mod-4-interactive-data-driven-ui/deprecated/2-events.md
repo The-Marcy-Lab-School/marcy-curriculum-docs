@@ -142,9 +142,7 @@ const changeToRandomColor = (event) => {
 
 How would you trigger it to be invoked whenever a key was pressed anywhere on the page? What about if you moved your mouse over an element with the id `mouse-area`?
 
-<details>
-
-**<summary>Solution</summary>**
+**<details><summary>Solution</summary>**
 
 ```js
 document.querySelector("#mouse-area").addEventListener('mousemove', changeToRandomColor)

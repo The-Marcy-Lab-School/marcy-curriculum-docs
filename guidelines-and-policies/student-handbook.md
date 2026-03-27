@@ -265,9 +265,7 @@ During our graduation ceremony, we honor our fellows and where they’re from by
 
 Our job celebration traditions began at The Marcy Lab School with our very first cohort as they landed opportunities during their fellowship year. When a fellow was about to receive an offer phone call, they would send the code words “banana bread” in Slack to gather everyone to experience this offer in community. This tradition shifted to an asynchronous celebration for cohorts to follow in light of COVID — fellows began to share “banana bread messages” in the #marcy-lab-family to celebrate with this community when an offer was signed, paired with pictures and/or memes of banana bread (_see below_). Sharing our wins as a community this way has been a beautiful reminder of the opportunities your time at Marcy can lead to!
 
-<details>
-
-**<summary>Banana Bread Examples</summary>**
+**<details><summary>Banana Bread Examples</summary>**
 
 <img src="img/banana-bread.png" alt="Banana Bread" data-size="original">
 
@@ -334,9 +332,7 @@ We've invested in a beautiful 16,000-square-foot campus to provide you all with 
 
 We are so, so excited to be able to be able to present you all with a campus facility and schedule that we believe will help you get every single drop out of what this program has to offer!
 
-<details>
-
-**<summary>Student Lounge Amenities:</summary>**
+**<details><summary>Student Lounge Amenities:</summary>**
 
 * **Refrigerators** - We have two refrigerators on campus. One is for student and staff food storage. The other is for catering leftovers that are open to our community.
 * **Microwave** - We have one microwave for food heating.
@@ -348,9 +344,7 @@ We are so, so excited to be able to be able to present you all with a campus fac
 
 </details>
 
-<details>
-
-**<summary>Campus Facility Norms</summary>**
+**<details><summary>Campus Facility Norms</summary>**
 
 * **Room Booking Norms**
   * Book the room for only 1-2 hours at a time
@@ -391,9 +385,7 @@ Our Resident Advisors ensure that the Marcy Lab School maintains a safe, clean, 
 
 ### Emergency Procedures:
 
-<details>
-
-**<summary>Best Practices for Responding to Emergencies:</summary>**
+**<details><summary>Best Practices for Responding to Emergencies:</summary>**
 
 In the event of an emergency, follow these general procedures:
 
@@ -407,9 +399,7 @@ In the event of an emergency, follow these general procedures:
 
 </details>
 
-<details>
-
-**<summary>Fire Action Steps</summary>**
+**<details><summary>Fire Action Steps</summary>**
 
 1. Pull the fire alarm
 2. Call 911 & notify the fire command station with the following information:
@@ -439,9 +429,7 @@ In the event of an emergency, follow these general procedures:
 
 </details>
 
-<details>
-
-**<summary>Fire Safety - Emergency Action Plan</summary>**
+**<details><summary>Fire Safety - Emergency Action Plan</summary>**
 
 * **Warden** - Caitlin Davidson - 814-573-2130
   * **Duties:** During an emergency making sure that the fire alarm is transmitted, alert other members of the Fire and Life Safety Team, start the evacuation of the floor if necessary by utilizing the closest uncontaminated exits. Notify the fire command station in the lobby by using the fire warden phone of the following:
@@ -460,9 +448,7 @@ In the event of an emergency, follow these general procedures:
 
 </details>
 
-<details>
-
-**<summary>Unwanted/Suspicious Intruder Action Steps</summary>**
+**<details><summary>Unwanted/Suspicious Intruder Action Steps</summary>**
 
 1. Identify the unwanted visitor
 2. If the person refuses to leave, call 911
@@ -478,9 +464,7 @@ In the event of an emergency, follow these general procedures:
 
 </details>
 
-<details>
-
-**<summary>Medical Emergency Action Steps</summary>**
+**<details><summary>Medical Emergency Action Steps</summary>**
 
 1. Get the individual to a safe place
 2. Assess the situation
@@ -494,9 +478,7 @@ In the event of an emergency, follow these general procedures:
 
 </details>
 
-<details>
-
-**<summary>Incident Reporting:</summary>**
+**<details><summary>Incident Reporting:</summary>**
 
 You should use the Incident Report Form in the following situations:
 
