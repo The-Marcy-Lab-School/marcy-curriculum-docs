@@ -6,16 +6,13 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6
 
 So far you've been querying a database that was already set up for you. In this lesson, you'll create your own database and tables from scratch using `CREATE DATABASE` and `CREATE TABLE` and learn about the choices you can make when designing your database tables.
 
-When you build an Express app with an in-memory model, the structure of your data is implied by your JavaScript objects — but nothing enforces it. If someone calls `User.create()` with a missing field, JavaScript might just create an object with `undefined` values and carry on. A database table is different: it's a **contract**. When you define a table, you're declaring that every record stored there will have exactly these fields, of exactly these types, following exactly these rules — and the database will reject anything that doesn't comply, no matter where it comes from.
-
-This matters because your database is shared. Multiple server instances, admin scripts, background jobs, and future developers will all read and write to it. You can't rely on all of them to validate data the same way in code. Defining the structure in the database itself is the only guarantee that holds across all of them.
-
 By the end of this lesson, you'll have designed and built a real database, inserted data into it, and queried it yourself.
 
 **Table of Contents**
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
+- [Why Database Design Matters](#why-database-design-matters)
 - [Creating a Database](#creating-a-database)
 - [CREATE TABLE](#create-table)
   - [Data Types](#data-types)
@@ -45,9 +42,17 @@ By the end of this lesson, you should be able to answer these questions:
 * **`DROP TABLE IF EXISTS`** — deletes a table (and all its data) if it exists. Used to cleanly recreate a table during development.
 * **`DROP DATABASE IF EXISTS`** — deletes a database and all its tables if it exists.
 
+## Why Database Design Matters
+
+When you build an Express app with an in-memory model, the structure of your data is implied by your JavaScript objects — but nothing enforces it. If someone calls `User.create()` with a missing field, JavaScript might just create an object with `undefined` values and carry on. A database table is different: it's a **contract**. When you define a table, you're declaring that every record stored there will have exactly these fields, of exactly these types, following exactly these rules — and **the database will reject anything that doesn't comply**, no matter where it comes from.
+
+This matters because your database is shared. Multiple server instances, admin scripts, background jobs, and future developers will all read and write to it. You can't rely on all of them to validate data the same way in code. Defining the structure in the database itself is the only guarantee that holds across all of them.
+
 ## Creating a Database
 
-Before creating tables, you need a database to put them in. Use `CREATE DATABASE`:
+Before creating tables, you need a database to put them in. 
+
+Open `psql` then use `CREATE DATABASE db_name`:
 
 ```sql
 CREATE DATABASE pet_shelter;
@@ -76,6 +81,8 @@ sudo -u postgres createdb pet_shelter
 {% endhint %}
 
 ## CREATE TABLE
+
+Now that we have a database, let's add some tables.
 
 `CREATE TABLE` defines the structure of a table — its name, what columns it has, what type of data each column stores, and any rules (constraints) that data must follow:
 
@@ -130,13 +137,7 @@ These are the types you'll use most:
 
 ### Constraints
 
-You might be thinking: "Can't I just validate data in my JavaScript before inserting it?" Yes — and you should. But JavaScript validation is your first line of defense, not your only one. It can have bugs. A future developer might add a new route and forget to add validation. Someone might run a script directly against the database to fix data. Constraints are the **last line of defense** — they live in the database itself and are enforced no matter how data gets in.
-
-Consider a `users` table without a `UNIQUE` constraint on `email`. A bug in your registration endpoint — maybe a race condition, maybe a missed check — could create two accounts with the same email. Your app breaks. Support tickets pile up. With a `UNIQUE` constraint, that bug is impossible: Postgres rejects the duplicate before it ever lands in the table.
-
-Constraints also serve as **documentation**. A `NOT NULL` constraint tells every future developer reading your schema: this field is required, always. That's information that would otherwise have to live in a comment, a code review, or someone's memory.
-
-Postgres rejects any `INSERT` or `UPDATE` that would violate a constraint:
+**Constraints** are strict rules that must be followed for any data that is inserted into a database. Postgres rejects any `INSERT` or `UPDATE` that would violate a constraint:
 
 | Constraint                    | What it enforces                                                |
 | ----------------------------- | --------------------------------------------------------------- |
@@ -155,7 +156,7 @@ CREATE TABLE users (
 );
 ```
 
-Here, `username` and `email` are both `NOT NULL` (required) and `UNIQUE` (no duplicates). `is_active` defaults to `TRUE` if not provided.
+Here, `username` and `email` are both `NOT NULL` (required) and `UNIQUE` (no duplicates). `is_active` defaults to `TRUE` if not provided. We'll discuss `SERIAL PRIMARY KEY` in the next section.
 
 <details>
 
@@ -164,6 +165,12 @@ Here, `username` and `email` are both `NOT NULL` (required) and `UNIQUE` (no dup
 Postgres returns an error: `ERROR: duplicate key value violates unique constraint "users_email_key"`. The second insert is rejected — the row is not added. Constraints are enforced at write time.
 
 </details>
+
+You might be thinking: "Can't I just validate data in my JavaScript before inserting it?" Yes — and you should. But JavaScript validation is your first line of defense, not your only one. It can have bugs. A future developer might add a new route and forget to add validation. Someone might run a script directly against the database to fix data. Constraints are the **last line of defense** — they live in the database itself and are enforced no matter how data gets in.
+
+Consider a `users` table without a `UNIQUE` constraint on `email`. A bug in your registration endpoint — maybe a race condition, maybe a missed check — could create two accounts with the same email. Your app breaks. Support tickets pile up. With a `UNIQUE` constraint, that bug is impossible: Postgres rejects the duplicate before it ever lands in the table.
+
+Constraints also serve as **documentation**. A `NOT NULL` constraint tells every future developer reading your schema: this field is required, always. That's information that would otherwise have to live in a comment, a code review, or someone's memory.
 
 ### The Primary Key Column
 
@@ -191,13 +198,14 @@ SELECT * FROM pets;
 
 ## Dropping and Recreating Tables
 
-During development, you'll often need to recreate a table after changing its structure. For example, the `pets` table currently allows `NULL` values for the `age` column. We want to add in a `NOT NULL` constraint.
+When the needs of your application changes, you'll often need to make changes to the structure of your tables and recreate them with the new structure. For example, the `pets` table currently allows `NULL` values for the `age` column. We want to add in a `NOT NULL` constraint.
 
-Use `DROP TABLE IF EXISTS` before `CREATE TABLE`:
+Use `DROP TABLE IF EXISTS` to clear the previous table structure before `CREATE TABLE`:
 
 ```sql
 DROP TABLE IF EXISTS pets;
 
+-- Without DROP TABLE first throws ERROR: relation "pets" already exists
 CREATE TABLE pets (
   pet_id    SERIAL   PRIMARY KEY,
   name      TEXT     NOT NULL,
@@ -225,10 +233,10 @@ CREATE DATABASE pet_shelter;
 Choose a scenario from the list below (or propose your own). Design a single table, create it in Postgres, insert at least 5 rows, and then write queries to explore it.
 
 **Scenario ideas:**
-- A pet shelter tracking available animals
 - A library tracking books available to borrow
 - A music playlist tracking songs
 - A restaurant menu tracking dishes
+- A grocery store tracking food items
 
 **Steps:**
 
