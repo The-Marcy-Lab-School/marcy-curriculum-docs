@@ -21,7 +21,7 @@ SQL is what you use to ask Postgres for data, add new data, change existing data
   - [Rule 4: Logical Clause Order](#rule-4-logical-clause-order)
 - [CRUD With SQL](#crud-with-sql)
   - [SELECT — Reading Data](#select--reading-data)
-  - [Modifier Clauses](#modifier-clauses)
+  - [Modifier Clauses (WHERE, AND, OR, ORDER BY, LIMIT)](#modifier-clauses-where-and-or-order-by-limit)
     - [WHERE — Filter Results](#where--filter-results)
     - [ORDER BY — Sort Results](#order-by--sort-results)
     - [LIMIT — Top N Results](#limit--top-n-results)
@@ -69,37 +69,41 @@ The primary distinction lies in the type of request being handled: while an Expr
 
 **SQL** is the universal language that relational database management systems are designed to parse and execute. The goal of SQL is to be easily readable by a human but structured to be consistently parsed by the DBMS.
 
-For example, consider these SQL statements. What do you think they do?
+For example, consider the database table and SQL statements below. What do you think they do?
+
+![A users table with user_id, name, and email columns](./img/2-intro-to-sql/users-table-example.png)
 
 ```sql
-INSERT INTO users (name) VALUES ('Alice');
+INSERT INTO users (name, email) VALUES ('Ada Lovelace', 'ada@mail.com');
 
 SELECT * FROM users;
 
 SELECT name FROM users;
 
-SELECT name FROM users WHERE id = 1;
+SELECT name FROM users WHERE id = 1001;
 
-UPDATE users SET name = 'Alex' WHERE id = 1;
+UPDATE users SET name = 'Alexa Johnson' WHERE id = 1001;
 
-DELETE FROM users WHERE id = 2;
+DELETE FROM users WHERE id = 1002;
 ```
 
 **<details><summary>Q: What do the SQL statements above do?</summary>**
 
 1. Create a new record in the `users` table
-2. Get the data in all columns from the `users` table
-3. Get only the `name` data for all records in the `users` table
-4. Get only the `name` data for the record with the ID `1` in the `users` table
-5. Update `name` of the the user with the ID `1` in the `users` table to `'Alex'`
-6. Delete the user with the ID `2` from the `users` table. 
+2. Get all of the data from the `users` table
+3. Get the `name` for all records in the `users` table
+4. Get the `name` for the user with the ID `1001` in the `users` table (`'Alex Johnson'`)
+5. Update `name` of that user to `'Alexa Johnson'`
+6. Delete the user with the ID `1002` from the `users` table (Sarah Lee)
 
 </details>
 
-SQL statements are made up of **clauses** and **keywords**.
+SQL statements are made up of **clauses** and **keywords**:
 
-* A **keyword** is a reserved word that has a fixed meaning in SQL (e.g. The keyword  `SELECT` tells PostgreSQL to retrieve data from the database)
-* A **clause** is the combination of keywords and data values that specify how the action should be carried out. Clauses can be combined to form complex SQL queries. (e.g. `SELECT name FROM users` and `WHERE id = 1` specifies that we want to see the data in the `name` column of the `users` table for the row where the user's ID is 1.)
+* A **keyword** is a reserved word that has a fixed meaning in SQL.
+  * e.g. `SELECT` tells PostgreSQL to retrieve data from the database while `UPDATE` tells PostgreSQL to change existing data.
+* A **clause** is the combination of keywords and data values that specify how the action should be carried out. Clauses can be combined to form complex SQL queries.
+  * e.g. The clauses `SELECT name FROM users` and `WHERE id = 1001` combine to specify that we want to see the data in the `name` column of the `users` table for the row where the user's ID is 1001.
 
 ## SQL Syntax Rules
 
@@ -178,7 +182,7 @@ SELECT title FROM films ORDER BY year WHERE genre = 'sci-fi';
 ```
 
 {% hint style="info" %}
-**Indentation tip**: For complex queries, put each clause on its own line. It's easier to read and the semicolon goes at the very end:
+**Tip**: For complex queries, put each clause on its own line. It's easier to read and the semicolon goes at the very end:
 
 ```sql
 SELECT title, genre
@@ -218,7 +222,7 @@ SELECT title, year, director FROM films;
 
 </details>
 
-### Modifier Clauses
+### Modifier Clauses (WHERE, AND, OR, ORDER BY, LIMIT)
 
 #### WHERE — Filter Results
 
