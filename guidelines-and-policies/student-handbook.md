@@ -544,9 +544,7 @@ Below, you will find the use cases under which you can and cannot use AI at Marc
 
 The use of generative AI tools like ChatGPT is permitted at Marcy for the following activities (expand each use case to see an example):
 
-<details>
-
-<summary>Brainstorming and refining your ideas</summary>
+**<details><summary>Brainstorming and refining your ideas</summary>**
 
 _ChatGPT is excellent at providing you with ideas for your projects. Make sure to specify the requirements of the projects and explain the desired features._
 
@@ -554,9 +552,7 @@ _ChatGPT is excellent at providing you with ideas for your projects. Make sure t
 
 </details>
 
-<details>
-
-<summary>Generating example data sets</summary>
+**<details><summary>Generating example data sets</summary>**
 
 _ChatGPT is excellent at generating well-formatted data sets for your projects! Make sure to specify the data types of the dataset you wish to generate and the language or format of the dataset (JavaScript, Python, JSON, comma-separated values/CSV, etc…)_
 
@@ -564,11 +560,7 @@ _ChatGPT is excellent at generating well-formatted data sets for your projects! 
 
 </details>
 
-<details>
-
-<summary>Simplifying or summarizing technical</summary>
-
-documentation
+**<details><summary>Simplifying or summarizing technical documentation</summary>**
 
 _When you encounter a definition in a piece of technical documentation that confuses you, see if ChatGPT can summarize it for you. The documentation should ALWAYS be your “source of truth”, but ChatGPT can help explain complex concepts in language that may be easier to digest. First, state that you want to simplify a definition and then copy-paste the definition below._
 
@@ -576,11 +568,7 @@ _When you encounter a definition in a piece of technical documentation that conf
 
 </details>
 
-<details>
-
-<summary>Checking grammar, spelling, and style in</summary>
-
-writing
+**<details><summary>Checking grammar, spelling, and style in writing</summary>**
 
 _Use ChatGPT as a final review before submitting your writing submissions. Specify the question you are answering to provide the necessary context for ChatGPT to potentially correct any incorrect answers you may be providing. Specify that you want it to check for grammar, spelling, and style to reduce the degree to which it will rewrite your work._
 
@@ -588,9 +576,7 @@ _Use ChatGPT as a final review before submitting your writing submissions. Speci
 
 </details>
 
-<details>
-
-<summary>Checking code style</summary>
+**<details><summary>Checking code style</summary>**
 
 _ChatGPT can be used to identify common code style issues such as variable names, spacing, indentation, and best practices. Specify the language that you are programming in to reduce the likelihood of hallucinations._
 
@@ -598,11 +584,7 @@ _ChatGPT can be used to identify common code style issues such as variable names
 
 </details>
 
-<details>
-
-<summary>Drafting the structure of emails and other</summary>
-
-forms of communication
+**<details><summary>Drafting the structure of emails and other forms of communication</summary>**
 
 _Use ChatGPT to provide a structure for communication with mentors, instructors, and other professionals. But beware, it is easy to tell when emails and resumes were written by AI so only use the suggestion as inspiration for your own writing and make sure to revise it to ensure that it sounds like YOU. Review the key points to learn how to write messages like this on your own until you no longer need ChatGPT to support you._
 

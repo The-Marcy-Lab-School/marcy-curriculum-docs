@@ -445,9 +445,7 @@ The `<fieldset>` and `<legend>` elements are used to group together a set of rel
 
 **Q: When would you use radio buttons vs. a select dropdown?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 Radio buttons when you have 2-5 options and want them all visible. Select dropdowns when you have many options (6+) and want to save space.
 
@@ -496,9 +494,7 @@ When validation fails, the browser shows an error message and prevents submissio
 
 **Q: Why is HTML validation helpful even though we'll add JavaScript validation later?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 \- Provides instant feedback before JavaScript loads - Works even if JavaScript fails or is disabled - Accessible to screen readers - Less code to write (browser does the work)
 

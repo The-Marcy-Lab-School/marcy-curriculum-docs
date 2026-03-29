@@ -237,9 +237,7 @@ export default App
 
 **Q: Compare and Contrast how each of these components return their children. What do you notice?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 * `InstagramPost` and `App` each return more than one line of JSX so the returned value is wrapped in `()`
 * The `App` component uses fragments (`<>`) to wrap its child elements while `InstagramPost` uses a `<figure>`. Fragments let you group elements without a wrapper node. It is the same as if the elements were not grouped.
@@ -459,9 +457,7 @@ const App = () => {
 
 JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It must first be **compiled** (converted) to vanilla JS.
 
-<details>
-
-<summary>See what this code would look like if it were written without JSX</summary>
+**<details><summary>See what this code would look like if it were written without JSX</summary>**
 
 Note how we have to use `React.createElement` here
 

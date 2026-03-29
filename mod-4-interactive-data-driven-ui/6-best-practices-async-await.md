@@ -58,9 +58,7 @@ export const getUsers = () => {
 };
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 We forgot to return `promiseToExtractData` from the first `.then` callback. This means that the first `.then()` returns a promise that resolves to `undefined` in the second `.then()` callback.
 

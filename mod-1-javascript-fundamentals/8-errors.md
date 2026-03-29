@@ -107,7 +107,7 @@ doesNotExist;
 
 *Common*. Node.js generates system errors when exceptions occur within its runtime environment. These usually occur when an application violates an operating system constraint. For example, a system error will occur if an application attempts to read a file that does not exist.
 
-<details><summary>This is a list of system errors commonly-encountered when writing a Node.js program.</summary>
+**<details><summary>This is a list of system errors commonly-encountered when writing a Node.js program.</summary>**
 
 For a comprehensive list, see the [`errno`(3) man page](https://man7.org/linux/man-pages/man3/errno.3.html).
 

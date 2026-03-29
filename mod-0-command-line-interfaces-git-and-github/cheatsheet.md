@@ -10,9 +10,7 @@
 
 ## Review Branching
 
-<details>
-
-<summary>When should we create a new branch?</summary>
+**<details><summary>When should we create a new branch?</summary>**
 
 Branches are used to diverge from the main code base. They are useful because they create a copy of existing code without modifying the existing code. Think of it as your very own sandbox where you can create anything new.
 
@@ -20,17 +18,13 @@ Therefore, a new branch should be created for any new change to any of the files
 
 </details>
 
-<details>
-
-<summary>When do merge conflicts occur?</summary>
+**<details><summary>When do merge conflicts occur?</summary>**
 
 Merge conflicts occur when we have code that could possibly overwrite code that was already there. They are bound to happen if multiple people are working on the same file.
 
 </details>
 
-<details>
-
-<summary>Things to avoid</summary>
+**<details><summary>Things to avoid</summary>**
 
 The `main` branch should always have working code so as a best practice...
 

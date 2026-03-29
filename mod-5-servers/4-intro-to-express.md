@@ -313,9 +313,7 @@ With a `node:http` server, reading query strings required manually constructing 
 
 For example: `/api/users?contains=a` would return Carmen and Maya
 
-<details>
-
-<summary>Solution</summary>
+**<details><summary>Solution</summary>**
 
 ```js
 const serveUsers = (req, res) => {

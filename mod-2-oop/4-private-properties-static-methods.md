@@ -361,9 +361,7 @@ class Counter {
 }
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 The `value` field is a private field so it should be referenced with `this.#value` instead of `this.value` in each of the instance methods.
 
@@ -371,9 +369,7 @@ The `value` field is a private field so it should be referenced with `this.#valu
 
 ### What is the purpose of using the # notation for a field in a class?
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 It indicates a private field.
 
@@ -383,9 +379,7 @@ The `#` notation in JavaScript is used to indicate private fields within a class
 
 ### How do you call a static method on a class?
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 `ClassName.staticMethod()`
 

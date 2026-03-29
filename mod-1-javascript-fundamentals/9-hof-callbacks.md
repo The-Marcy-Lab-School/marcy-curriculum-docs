@@ -181,8 +181,7 @@ executeCallback(sayHello());
 // TypeError: callback is not a function
 ```
 
-<details>
-<summary>Q: Why does an error get thrown? Why is it saying callback is not a function</summary>
+**<details><summary>Q: Why does an error get thrown? Why is it saying callback is not a function</summary>**
 
 When you invoke `executeCallback(sayHello())`, the `sayHello()` function call gets resolved first. Since `sayHello()` returns `undefined`, that is what `executeCallback` gets as its callback:
 

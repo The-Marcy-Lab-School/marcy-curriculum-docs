@@ -483,9 +483,7 @@ Whether you're loading a file locally or from a server, your browser is doing th
 
 **Q1: What is the difference between a markup language and a plain text file?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 A plain text file (`.txt`) stores characters that are interpreted literally. A markup language (like HTML or Markdown) contains symbols that influence how the text is displayed when rendered. For example, `<strong>bold</strong>` in HTML will display as **bold** text rather than showing the angle brackets.
 
@@ -493,9 +491,7 @@ A plain text file (`.txt`) stores characters that are interpreted literally. A m
 
 **Q2: What is the difference between the `file://` protocol and the `https://` protocol?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 * The `file://` protocol retrieves HTML files directly from your local file system (your computer).
 * The `https://` protocol retrieves HTML files from a server over the internet.
@@ -513,9 +509,7 @@ A plain text file (`.txt`) stores characters that are interpreted literally. A m
 <ol>
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 1. The `<h1>` tag is not properly closed—it should be `</h1>`, not `<h1>`.
 2. The `<p>` tag is missing a `>` after `<p`—it should be `<p>This is Ada Lovelace.</p>`.
@@ -530,9 +524,7 @@ A plain text file (`.txt`) stores characters that are interpreted literally. A m
 <img>picture-of-cat.png</img>
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 Two issues:
 
@@ -549,9 +541,7 @@ Two issues:
 
 **Q5: Create an anchor tag that links to `https://google.com` with the visible text "Search on Google".**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 ```html
 <a href="https://google.com">Search on Google</a>
@@ -561,9 +551,7 @@ Two issues:
 
 **Q6: What are the three semantic elements that structure the main parts of a webpage, and what does each contain?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 1. `<header>` — Contains navigation, logo, or introductory content
 2. `<main>` — Contains the primary content of the page
@@ -587,9 +575,7 @@ Two issues:
 </body>
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 ```html
 <header>

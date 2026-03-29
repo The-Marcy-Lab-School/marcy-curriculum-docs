@@ -86,17 +86,13 @@ Below, you can learn more about each event.
 
 These whole-group meetings will ensure you remain grounded and connected to your classmates! Share your wins, challenges, and the things you learn as you embark on this journey!
 
-<details>
-
-<summary>Mindful Morning</summary>
+**<details><summary>Mindful Morning</summary>**
 
 As usual, we will begin our days with meditation and journaling! In the second half of mindful morning, we will transition into stand up (see below).
 
 </details>
 
-<details>
-
-<summary>Daily Stand Up and Stand Down</summary>
+**<details><summary>Daily Stand Up and Stand Down</summary>**
 
 Check in with your team every morning and afternoon to align on team progress and priorities. Led by your scrum master, you will update your scrum board and share:
 
@@ -106,34 +102,26 @@ Check in with your team every morning and afternoon to align on team progress an
 
 </details>
 
-<details>
-
-<summary>Code Challenge</summary>
+**<details><summary>Code Challenge</summary>**
 
 Even during Civic Tech Hackathon, we will continue practicing our Code Challenge skills! However, Code Challenge will only occur on Tuesdays on Wednesdays.
 
 </details>
 
-<details>
-
-<summary>Sprint Kickoffs</summary>
+**<details><summary>Sprint Kickoffs</summary>**
 
 Start the sprint off strong by reviewing the milestones and deliverables for the current sprint. Led by your scrum master, meet with your team to update your scrum board and assign tickets.
 
 </details>
 
-<details>
-
-<summary>Sprint Demos</summary>
+**<details><summary>Sprint Demos</summary>**
 
 Held weekly on the last day of each Sprint.\
 Share the progress your team has made during the sprint and get feedback from your peers and instructors.
 
 </details>
 
-<details>
-
-<summary>Sprint Retro</summary>
+**<details><summary>Sprint Retro</summary>**
 
 Held weekly after Sprint Demos, reflect on the successes (and missteps) of the previous sprint and make adjustments for the upcoming sprint. This is where you make progress as a team on _how_ you work together to ensure that your sprint objectives are met.
 
@@ -143,17 +131,13 @@ Held weekly after Sprint Demos, reflect on the successes (and missteps) of the p
 
 During each week-long sprint, you will have multiple touch points with your support staff whose aim is to ensure that you and your team are moving in the right direction and at the right pace.
 
-<details>
-
-<summary>Manager Meetings</summary>
+**<details><summary>Manager Meetings</summary>**
 
 Teams will meet twice per week with their instructional staff to share updates on their team's progress. Instructional staff can provide guidance and support on project planning, team communication, task distribution and prioritization, managing scope creep, and technical problem solving.
 
 </details>
 
-<details>
-
-<summary>Scrum Master Group Coaching</summary>
+**<details><summary>Scrum Master Group Coaching</summary>**
 
 This isn't shown on the calendar! With support and coaching from the instructional staff, scrum masters will gather once per week to discuss strategies for ensuring their team is remaining organized when it comes to completing their tasks and deliverables on time.
 

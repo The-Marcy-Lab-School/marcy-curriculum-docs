@@ -255,9 +255,7 @@ When you're designing a new system, ask:
 
 **Practice:** Look at the School/Course/Student system. Which strategies does it use?
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 * **Coordinator Pattern:** School coordinates students and courses
 * **Creator Responsibility:** School creates the enrollment relationship (debatable - could be student)

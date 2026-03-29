@@ -577,9 +577,7 @@ p {
 
 **Q: The tags `h1`, `h2`, and `p` all have different default styles. How are they different?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 Among other things, `h1` and `h2` elements are both bold compared to `p`.
 
@@ -603,9 +601,7 @@ p {
 }
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 1. In the first CSS rule, there is no selector.
 2. In the second rule, `[]` are used instead of `{}`
@@ -621,9 +617,7 @@ p {
 <p>third</p>
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 ```css
 p {
@@ -663,9 +657,7 @@ p {
 }
 ```
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 Did you fall for my trap?
 
@@ -675,9 +667,7 @@ It will be orange! While the selector `#its-purple` is the most specific selecto
 
 **Q: How do you link an external CSS file called `style.css` to an HTML document? Where in the HTML should this go?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 Use the `<link>` tag with `rel="stylesheet"` and `href` pointing to the CSS file. It should go in the `<head>`:
 
@@ -691,9 +681,7 @@ Use the `<link>` tag with `rel="stylesheet"` and `href` pointing to the CSS file
 
 **Q: How would you apply the same styles to all `h1`, `h2`, AND `h3` elements using a single CSS rule?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 Use a multi-selector by separating the element selectors with commas:
 
@@ -708,9 +696,7 @@ h1, h2, h3 {
 
 **Q: What are three different ways you could set an element's text color to red in CSS?**
 
-<details>
-
-<summary>Answer</summary>
+**<details><summary>Answer</summary>**
 
 1. **Named color**: `color: red;`
 2. **Hex code**: `color: #FF0000;`

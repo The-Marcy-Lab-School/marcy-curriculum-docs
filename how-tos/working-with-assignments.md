@@ -119,9 +119,7 @@ For example, an assignment with 10 automated tests requires 8 passing tests to b
 
 To support you in your growth as a software engineer, your instructor may provide feedback on any of the following areas (expand each category to see more details):
 
-<details>
-
-<summary>Code Quality</summary>
+**<details><summary>Code Quality</summary>**
 
 * Adherence to coding standards and conventions (e.g., ESLint rules)
 * Use of proper naming conventions (variables, functions)
@@ -130,9 +128,7 @@ To support you in your growth as a software engineer, your instructor may provid
 
 </details>
 
-<details>
-
-<summary>Functionality</summary>
+**<details><summary>Functionality</summary>**
 
 * Does the code meet the project requirements?
 * Does it pass all tests, both automated and edge cases?
@@ -140,9 +136,7 @@ To support you in your growth as a software engineer, your instructor may provid
 
 </details>
 
-<details>
-
-<summary>Modularity and Reusability</summary>
+**<details><summary>Modularity and Reusability</summary>**
 
 * Proper use of functions or classes
 * Modular and reusable code (avoiding large, monolithic functions)
@@ -150,9 +144,7 @@ To support you in your growth as a software engineer, your instructor may provid
 
 </details>
 
-<details>
-
-<summary>Version Control Practices</summary>
+**<details><summary>Version Control Practices</summary>**
 
 * Meaningful commit messages
 * Consistent use of branches
@@ -160,9 +152,7 @@ To support you in your growth as a software engineer, your instructor may provid
 
 </details>
 
-<details>
-
-<summary>Code Structure and Organization</summary>
+**<details><summary>Code Structure and Organization</summary>**
 
 * File structure
 * Separation of concerns
@@ -170,9 +160,7 @@ To support you in your growth as a software engineer, your instructor may provid
 
 </details>
 
-<details>
-
-<summary>Error Handling</summary>
+**<details><summary>Error Handling</summary>**
 
 * Proper use of try-catch blocks
 * Graceful handling of unexpected inputs or states
@@ -180,9 +168,7 @@ To support you in your growth as a software engineer, your instructor may provid
 
 </details>
 
-<details>
-
-<summary>Efficiency and Performance</summary>
+**<details><summary>Efficiency and Performance</summary>**
 
 * Time and space complexity
 * Use of appropriate data structures and algorithms
@@ -244,9 +230,7 @@ Assignments below 75% must be revised and resubmitted.
 
 While the score will primarily reflect the accuracy and completion of your responses, to support you in your growth as a technical communicator, your instructor may also provide feedback on the following areas:
 
-<details>
-
-<summary>Clarity</summary>
+**<details><summary>Clarity</summary>**
 
 * Is the main idea or goal of the writing clear?
 * Are technical terms defined or explained for the intended audience?
@@ -254,9 +238,7 @@ While the score will primarily reflect the accuracy and completion of your respo
 
 </details>
 
-<details>
-
-<summary>Structure</summary>
+**<details><summary>Structure</summary>**
 
 * Does the content follow a logical flow?
 * Are headings, subheadings, and paragraphs effectively used to guide the reader?
@@ -264,9 +246,7 @@ While the score will primarily reflect the accuracy and completion of your respo
 
 </details>
 
-<details>
-
-<summary>Engagement</summary>
+**<details><summary>Engagement</summary>**
 
 * Is the tone appropriate for the audience (e.g., conversational vs. formal)?
 * Does the writing capture and maintain interest?
@@ -274,18 +254,14 @@ While the score will primarily reflect the accuracy and completion of your respo
 
 </details>
 
-<details>
-
-<summary>Audience Fit</summary>
+**<details><summary>Audience Fit</summary>**
 
 * Does the writing match the knowledge level of the intended audience?
 * Are key questions or concerns the audience might have addressed?
 
 </details>
 
-<details>
-
-<summary>Mechanics</summary>
+**<details><summary>Mechanics</summary>**
 
 * Are there grammar, spelling, or punctuation errors?
 * Is the formatting consistent and professional (e.g., indentation in code snippets, use of backticks and code fences to highlight code, use of bolding and italics to emphasize key words)?

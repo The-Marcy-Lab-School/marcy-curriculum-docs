@@ -221,9 +221,7 @@ Open the example in `3-media-queries/index.html` and notice how the background c
 
 **Challenge**: At `700px` add a second column. At `800px` to set the background to `mediumpurple` and text color to `white`. At `900px` add a third column.
 
-<details>
-
-<summary>Solution</summary>
+**<details><summary>Solution</summary>**
 
 To set the number of grid columns to 2 at 700 pixels, we need to add a second ruleset to the media query.
 

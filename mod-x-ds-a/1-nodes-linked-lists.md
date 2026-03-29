@@ -117,9 +117,7 @@ console.log(list.head.next.next);
 // Node { data: 'a', next: null }
 ```
 
-<details>
-
-<summary>Solution</summary>
+**<details><summary>Solution</summary>**
 
 ```js
 class LinkList {
@@ -162,9 +160,7 @@ console.log(list.head.next.next);
 // Node { data: 'c', next: null }
 ```
 
-<details>
-
-<summary>Solution</summary>
+**<details><summary>Solution</summary>**
 
 ```js
 class LinkList {
@@ -222,9 +218,7 @@ nodeC.next = nodeA; // a cycle!
 isCyclic(list.head); // true
 ```
 
-<details>
-
-<summary>Solution</summary>
+**<details><summary>Solution</summary>**
 
 ```js
 function isCyclic(headNode) {
