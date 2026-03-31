@@ -45,8 +45,23 @@ Follow the instructions below according to your operating system:
 3. You should see something like "Postgres.app with PostgreSQL \[version]". Click on this link to download Postgres to your Mac.
 4. After it's finished downloading, install the program, and run it.
 5. Now, you'll have to initialize your database. Click the Initialize button on the right-hand side. The Postgres app should now say **Running**
-6. To let us use Postgres CLI commands, open up a terminal window and run this command `sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
-   * If you're not able to run this command, skip down to the TablePlus setup steps.
+6. To let us use Postgres CLI commands, open up a terminal window and run this command:
+   
+   ```sh
+   sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
+   ```
+
+   {% hint style="info" %}
+   If you are using a Marcy loaner laptop, you will get an error that says `Marcy_Student not on sudoers list`. If that is the case then first run the following command:
+
+   ```sh
+   su marcyadmin
+   ```
+
+   The password is `unlock#`. This will open a temporary session in your terminal as the super user `marcyadmin`. 
+   
+   Then, copy and paste the `sudo mkdir ...` command above and then type and enter `exit` to exit the super user session.
+   {% endhint %}
 7. Restart your terminal
 8. In your terminal, type in `createdb example`. You should not get an error after the command runs. Now let's see it in action!
 9. In order to access your Postgres databases, you'll need a user account (called a "role"). By default, the installation process creates a user called `postgres` which you can use.
