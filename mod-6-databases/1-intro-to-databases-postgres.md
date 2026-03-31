@@ -176,6 +176,18 @@ Now that we know what a database is and how PostgreSQL fits into your overall so
    sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
    ```
 
+   {% hint style="info" %}
+   If you are using a Marcy loaner laptop, you will get an error that says `Marcy_Student not on sudoers list`. If that is the case then first run the following command:
+
+   ```sh
+   su marcyadmin
+   ```
+
+   The password is `unlock#`. This will open a temporary session in your terminal as the super user `marcyadmin`. 
+   
+   Then, copy and paste the `sudo mkdir ...` command above and then type and enter `exit` to exit the super user session.
+   {% endhint %}
+
 5. **Restart your terminal**, then verify the installation:
 
    ```sh
