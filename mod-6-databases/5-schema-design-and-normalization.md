@@ -485,9 +485,18 @@ CREATE TABLE classes (
 CREATE TABLE enrollments (
   enrollment_id  SERIAL  PRIMARY KEY,
   student_id     INTEGER REFERENCES students(student_id),
-  class_id       INTEGER REFERENCES classes(class_id)
+  class_id       INTEGER REFERENCES classes(class_id),
+  UNIQUE (student_id, class_id)
 );
 ```
+
+**<details><summary>Q: The `enrollments` table has both a `SERIAL PRIMARY KEY` and a `UNIQUE (student_id, class_id)` constraint. What does the `UNIQUE` constraint add that the primary key doesn't already provide?</summary>**
+
+The primary key (`enrollment_id`) uniquely identifies each row — it's the row's identifier. But it says nothing about the *combination* of `student_id` and `class_id`. Without the `UNIQUE` constraint, nothing would stop the same student from being enrolled in the same class twice, producing two rows with different `enrollment_id` values but identical `student_id` and `class_id`.
+
+`UNIQUE (student_id, class_id)` enforces the business rule that a student can only be enrolled in a given class once. The primary key and the unique constraint serve different purposes: the primary key identifies the row; the unique constraint enforces a real-world constraint on the data.
+
+</details>
 
 **<details><summary>Q: What happens if you try to `CREATE TABLE classes` before `CREATE TABLE teachers`?</summary>**
 
