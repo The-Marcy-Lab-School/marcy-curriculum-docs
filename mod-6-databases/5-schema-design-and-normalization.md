@@ -6,7 +6,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6
 
 You now know how to write SQL queries against existing tables. Before those tables can exist, someone has to design them. That process is **schema design** — deciding what tables to create, what columns they hold, and how they relate to each other.
 
-In this lesson, you'll learn what normalization means, why it matters, and how to apply it as you design a schema using DBML and [dbdiagram.io](https://dbdiagram.io).
+In this lesson, you'll learn what normalization means, why it matters, and how to translate a well-designed schema into SQL with foreign keys.
 
 **Table of Contents**
 
@@ -18,15 +18,15 @@ In this lesson, you'll learn what normalization means, why it matters, and how t
   - [Normalization Rule #2: Atomic Values](#normalization-rule-2-atomic-values)
   - [Don't Forget The Primary Key!](#dont-forget-the-primary-key)
   - [Normalization Rule #3: Primary Key Dependency](#normalization-rule-3-primary-key-dependency)
-- [ERDs: Design Before You Code](#erds-design-before-you-code)
-  - [The Three-Step Design Process](#the-three-step-design-process)
+- [The Three-Step Design Process](#the-three-step-design-process)
   - [Step 1 — Identify Tables](#step-1--identify-tables)
   - [Step 2 — Define Columns](#step-2--define-columns)
   - [Step 3 — Determine Relationships](#step-3--determine-relationships)
-  - [From ERD to SQL](#from-erd-to-sql)
+- [From Design to SQL](#from-design-to-sql)
   - [See It in Action](#see-it-in-action)
 - [Normalization Rules Challenge](#normalization-rules-challenge)
 - [Practice](#practice)
+- [ERDs: Design Before You Code (Extension)](#erds-design-before-you-code-extension)
 
 ## Essential Questions
 
@@ -35,9 +35,8 @@ By the end of this lesson, you should be able to answer these questions:
 1. What is normalization and what problems does it prevent?
 2. What are the three rules of normalization? What problem does each one solve?
 3. What is a database schema and why is it worth designing before writing any code?
-4. What is an Entity Relationship Diagram (ERD) and what information does it communicate?
-5. What is the difference between a one-to-many and a many-to-many relationship? How is each represented in a relational database?
-6. How do you add a foreign key constraint to a `CREATE TABLE` statement? Why does the order in which you create tables matter?
+4. What is the difference between a one-to-many and a many-to-many relationship? How is each represented in a relational database?
+5. How do you add a foreign key constraint to a `CREATE TABLE` statement? Why does the order in which you create tables matter?
 
 ## Key Concepts
 
@@ -45,11 +44,10 @@ By the end of this lesson, you should be able to answer these questions:
 * **Normal forms** — a set of rules for normalization. The three rules covered in this lesson address the most common design problems: unique primary keys, atomic values, and primary key dependency.
 * **Schema** — the structure of a database: which tables exist, which columns each table has, the data types of those columns, and the constraints enforced on them.
 * **Schema design** — the process of planning that structure before writing any code.
-* **ERD (Entity Relationship Diagram)** — a visual diagram showing each table's columns and the relationships between tables.
-* **DBML (Database Markup Language)** — a plain-text format used by tools like [dbdiagram.io](https://dbdiagram.io) to generate ERDs.
 * **One-to-many** — a relationship where one row in table A can be referenced by many rows in table B (e.g., one user has many posts).
 * **Many-to-many** — a relationship where rows in each table can reference many rows in the other (e.g., a student can enroll in many classes; a class can have many students).
 * **Association/junction table** — a table that represents a many-to-many relationship by storing two foreign keys, one referencing each side.
+* **ERD (Entity Relationship Diagram)** — a visual diagram showing each table's columns and the relationships between tables. *(See the Extension section.)*
 
 ## What is Schema Design?
 
@@ -125,7 +123,6 @@ Primary keys also allow for the existence of foreign keys: columns in tables tha
 
 Atomicity ("being like an atom") means that every cell must contains a single, indivisible value — no comma-separated lists, no arrays, no packed strings. A cell that follows this rule is "atomic".
 
-
 Consider this `orders` table again and notice that `products_purchased` is *not* atomic. 
 
 ![A table of orderes with order_id, customer_id, customer_name, customer_address, and products_purchased.](./img/5-schema-design-normalization/normalization-1.png)
@@ -183,79 +180,17 @@ The third rule of normalization avoids redundancy and repetitive data by requiri
 
 We fix this by extracting each dependency into its own table:
 
-**`customers`** tells us details about each customer and nothing else
+* **`customers`** tells us details about each customer and nothing else
+* **`orders`** tells us who placed each order
+* **`order_products`** tells us which products were purchased in each order
 
-| customer_id | customer_name | customer_address     |
-| ----------- | ------------- | -------------------- |
-| 1           | Avery         | 12 Apple Avenue      |
-| 2           | Blake         | 34 Banana Boulevard  |
-| 3           | Charles       | 78 Strawberry Street |
-
-**`orders`** tells us who placed each order
-
-| order_id | customer_id |
-| -------- | ----------- |
-| 1        | 1           |
-| 2        | 2           |
-| 3        | 3           |
-| 4        | 3           |
-
-**`order_products`** tells us which products were purchased in each order
-
-| order_product_id | order_id | product_purchased |
-| ---------------- | -------- | ----------------- |
-| 1                | 1        | Roku TV           |
-| 2                | 1        | Apple Macbook     |
-| 3                | 1        | Nintendo Switch   |
-| 4                | 2        | Roku TV           |
-| 5                | 2        | Nintendo Switch   |
-| 6                | 3        | Roku TV           |
-| 7                | 3        | Apple Macbook     |
-| 8                | 4        | Nintendo Switch   |
+![](./img/5-schema-design-normalization/normalization-3-good.png)
 
 Now, when Charles updates his address, the change only happens in one place. Additionally, the orders table only needs to know the `customer_id`, not the name or address.
 
-## ERDs: Design Before You Code
+## The Three-Step Design Process
 
 Normalization is something that you can do to improve the design of an existing database. But we can and should use those principles from the start when designing a database from scratch.
-
-But before you write any code or add any data to your database, you should create an **Entity Relationship Diagram (ERD)**:
-
-![An ERD maps contents of database tables (entities) and the relationships between them.](./img/5-schema-design-normalization/authors-books-erd.png)
-
-Creating a diagram like this gives everyone a single source of truth *before* anyone writes a line of application code and serves as an easy-to-read visual representation of the tables, columns, and relationships within our database.
-
-While you can draw ERDs by hand, we can also use software to create beautiful ERDs for us. 
-
-**Database Markup Language (DBML)** is a plain-text format for describing a database schema. When you paste it into [dbdiagram.io](https://dbdiagram.io), it renders a visual ERD you can share with your team.
-
-Try pasting the following into the dbdiagram editor:
-
-```dbml
-Table authors {
-  author_id integer [pk]
-  first_name text
-  last_name  text
-  dob        date
-}
-
-// One-to-many: each author can have many books
-
-Table books {
-  book_id integer [pk]
-  title text
-  author_id integer [ref: > authors.author_id]
-  published_date date
-}
-```
-
-**<details><summary>Q: What is the point of creating a diagram like this vs. using SQL to create the database directly in PostgreSQL?</summary>**
-
-Diagrams are easy to collaborate on and make changes before committing anything to code. As a team, you can align on your design decisions before getting to work where changes will become more costly.
-
-</details>
-
-### The Three-Step Design Process
 
 A normalized schema emerges naturally from following three steps:
 
@@ -263,9 +198,7 @@ A normalized schema emerges naturally from following three steps:
 2. **Define columns** — what properties does each entity have? If a property could change independently of the others (like a product name), it belongs in its own table, not repeated as a column on a related table.
 3. **Determine relationships** — how do the entities relate? If the relationship produces multiple values per row, you need a junction table (Rule #2). If a column's value is determined by a non-primary column, it needs to move to its own table (Rule #3).
 
-Open [dbdiagram.io](https://dbdiagram.io) and clear the editor — we'll design a school database using the three steps above, with normalization driving every decision.
-
-**User stories for a school application:**
+We'll apply these steps to design a school database. Here are the user stories:
 
 - We can see all students at the school
 - We can see all teachers at the school
@@ -286,140 +219,34 @@ Each distinct entity — something with its own properties and its own existence
 
 Without `enrollments`, the only alternative would be storing courses as a comma-separated list on the `students` table — a direct violation of atomicity.
 
-In DBML, declare each table with its primary key:
-
-```
-Table students {
-  student_id integer [pk]
-}
-
-Table teachers {
-  teacher_id integer [pk]
-}
-
-Table classes {
-  class_id integer [pk]
-}
-
-Table enrollments {
-  enrollment_id integer [pk]
-}
-```
-
-Paste this into dbdiagram.io to see four tables appear.
-
 </details>
 
 ### Step 2 — Define Columns
 
-For each table, first define a primary key column. Primary keys are named after their table: `student_id`, `teacher_id`, `class_id`. Foreign keys use the exact same name as the primary key they reference.
+For each table, define a primary key column named after the table (`student_id`, `teacher_id`, `class_id`). Foreign keys use the exact same name as the primary key they reference.
 
-Then, ask: which additional information is needed to answer my user story questions? Which table does each piece of information belong to? 
-
-In DBML, you can list the name of the column followed by its type. If the column is a primary key, add `[pk]`. For example, here is the books table from before:
-
-```
-Table books {
-  book_id integer [pk]
-  title text
-  author_id integer
-  published_date date
-}
-```
+Then ask: which additional information is needed to answer the user story questions? Which table does each piece of information belong to?
 
 **<details><summary>School Solution</summary>**
-```
-Table students {
-  student_id integer [pk]
-  first_name varchar
-  last_name  varchar
-  dob        date
-}
 
-Table teachers {
-  teacher_id integer [pk]
-  first_name varchar
-  last_name  varchar
-}
-
-Table classes {
-  class_id   integer [pk]
-  title      varchar
-  teacher_id integer    -- foreign key, not teacher_name
-}
-
-Table enrollments {
-  enrollment_id integer [pk]
-  student_id    integer
-  class_id      integer
-}
-```
-
-Notice that `classes` has a `teacher_id` column — not `teacher_name`. A teacher's name belongs in the `teachers` table, determined by `teacher_id`. Putting `teacher_name` directly on `classes` would break Rule #3: the name depends on the teacher, not on the class. If the teacher changes their name, every class they teach would need to be updated.
+- `students`: `student_id`, `first_name`, `last_name`, `dob`
+- `teachers`: `teacher_id`, `first_name`, `last_name`
+- `classes`: `class_id`, `title`, `teacher_id` — not `teacher_name`. A teacher's name belongs in the `teachers` table. Putting `teacher_name` directly on `classes` would break Rule #3: the name depends on the teacher, not on the class.
+- `enrollments`: `enrollment_id`, `student_id`, `class_id`
 
 </details>
 
-
 ### Step 3 — Determine Relationships
 
-Lastly, consider what relationships exist between tables. Ask: is this one-to-many or many-to-many? 
+For each table, ask: is each relationship one-to-many or many-to-many?
 
-Then, in DBML, use the following syntax for each type of relationship:
-
-* one-to-one:  `[ref: - authors.author_id]`
-* many-to-one:  `[ref: > table.table_id]` (you can also use `<` to change the direction)
-
-For example, **many** books can be written by **one** author:
-
-```dbml
-Table authors {
-  author_id integer [pk]
-  first_name text
-  last_name  text
-  dob        date
-}
-
-// One-to-many: each author can have many books
-
-Table books {
-  book_id integer [pk]
-  title text
-  author_id integer [ref: > authors.author_id]
-  published_date date
-}
-```
-
+- **One-to-many**: one row in table A is referenced by many rows in table B. The foreign key lives on the "many" side.
+- **Many-to-many**: rows in each table can reference many rows in the other. Requires a junction table.
 
 **<details><summary>School Solution</summary>**
 
-```
-Table students {
-  student_id integer [pk]
-  first_name varchar
-  last_name  varchar
-  dob        date
-}
-
-Table teachers {
-  teacher_id integer [pk]
-  first_name varchar
-  last_name  varchar
-}
-
-// Each class can have one teacher
-Table classes {
-  class_id   integer [pk]
-  title      varchar
-  teacher_id integer [ref: - teachers.teacher_id]
-}
-
-// Students and classes can each have many enrollments
-Table enrollments {
-  enrollment_id integer [pk]
-  student_id    integer [ref: > students.student_id]
-  class_id      integer [ref: > classes.class_id]
-}
-```
+- A teacher can teach many classes, but each class has only one teacher → **one-to-many**. `teacher_id` lives on `classes`.
+- A student can be enrolled in many classes, and a class can have many students → **many-to-many**. The `enrollments` junction table holds both `student_id` and `class_id`.
 
 </details>
 
@@ -433,14 +260,13 @@ The `enrollments` junction table solves this by giving each student-class pairin
 
 </details>
 
-### From ERD to SQL
+## From Design to SQL
 
-The DBML you wrote in dbdiagram.io is a design tool — it helps you see the schema visually. To actually build it in Postgres, you translate each table into a `CREATE TABLE` statement.
+Once you've identified your tables, columns, and relationships, you translate each table into a `CREATE TABLE` statement.
 
-In SQL, we create a reference from one table to another table using `REFERENCES table(column_name)` directly on foreign key columns:
+In SQL, foreign key relationships use `REFERENCES table(column_name)` directly on the foreign key column:
 
 ```sql
--- SQL
 CREATE TABLE classes (
   class_id    SERIAL  PRIMARY KEY,
   title       TEXT    NOT NULL,
@@ -579,7 +405,7 @@ FROM students
 WHERE students.first_name = 'Alice';
 ```
 
-Run `\d enrollments` and compare the output to the `CREATE TABLE enrollments` statement you just read — the `REFERENCES` constraints and their target tables should match exactly what you wrote in your ERD. The ERD is the plan; the SQL is the implementation; normalization is the reason the plan looks the way it does.
+Run `\d enrollments` and compare the output to the `CREATE TABLE enrollments` statement above — the `REFERENCES` constraints and the `UNIQUE` constraint should all appear exactly as written.
 
 ## Normalization Rules Challenge
 
@@ -644,32 +470,104 @@ Now `department_name` lives in exactly one place — rename Engineering once and
 
 </details>
 
-
 ## Practice
 
-In groups, use [dbdiagram.io](https://dbdiagram.io) to design a schema for one of the following. Follow the three-step process, then translate your ERD to SQL. Be ready to explain every structural decision in terms of normalization.
+In groups, design a schema for one of the following. Follow the three-step process, then translate your design to SQL. Be ready to explain every structural decision in terms of normalization.
 
 - An online store (users, products, orders, order items)
 - A photo-sharing app with comments (users, photos, comments)
 - A restaurant reservation system (customers, restaurants, tables, reservations)
 - A job board (companies, job listings, applicants, applications)
 
-**Step 1 — Design your ERD in dbdiagram.io**
+**Step 1 — Plan your schema**
 
-For each design decision, be able to answer:
+Work through the three steps on paper or a whiteboard:
+- Which tables do you need? What does each one represent?
+- What columns does each table have? Where does each piece of information belong?
+- What are the relationships? Which are one-to-many? Which are many-to-many?
+
+For each decision, be able to answer:
 - **Why is this a separate table?** (What redundancy or violation would occur if it weren't?)
 - **Why does this column live here and not somewhere else?** (What does it depend on?)
 - **Why does this relationship need a junction table?**
 
-For each table:
-- Name the primary key after the table (`company_id` in `companies`, etc.)
-- Use the same name as the primary key in any foreign key column that references it
-- Identify whether each relationship is one-to-many or many-to-many, and explain what that means for the schema
+**Step 2 — Translate your design to SQL**
 
-**Step 2 — Translate your ERD to SQL**
-
-Write a `CREATE TABLE` statement for every table in your design. For each statement:
+Write a `CREATE TABLE` statement for every table. For each statement:
 - Use `SERIAL PRIMARY KEY` for the primary key column
 - Use `REFERENCES other_table(other_table_id)` for every foreign key column
 - Order your statements so that parent tables are created before child tables
-- Run your SQL in `psql` and use `\d table_name` to verify the `REFERENCES` constraints appear as expected
+- Run your SQL in `psql` and use `\d table_name` to verify the constraints appear as expected
+
+**Extension:** Visualize your schema in [dbdiagram.io](https://dbdiagram.io) using DBML.
+
+## ERDs: Design Before You Code (Extension)
+
+An **Entity Relationship Diagram (ERD)** is a visual representation of your schema — each table's columns and the relationships between them — before you write any SQL.
+
+![An ERD maps contents of database tables (entities) and the relationships between them.](./img/5-schema-design-normalization/authors-books-erd.png)
+
+Creating a diagram like this gives everyone a single source of truth *before* anyone writes a line of application code.
+
+**Database Markup Language (DBML)** is a plain-text format for describing a database schema. When you paste it into [dbdiagram.io](https://dbdiagram.io), it renders a visual ERD you can share with your team.
+
+Try pasting the following into the dbdiagram editor:
+
+```dbml
+Table authors {
+  author_id integer [pk]
+  first_name text
+  last_name  text
+  dob        date
+}
+
+// One-to-many: each author can have many books
+
+Table books {
+  book_id integer [pk]
+  title text
+  author_id integer [ref: > authors.author_id]
+  published_date date
+}
+```
+
+**<details><summary>Q: What is the point of creating a diagram like this vs. using SQL to create the database directly in PostgreSQL?</summary>**
+
+Diagrams are easy to collaborate on and make changes before committing anything to code. As a team, you can align on your design decisions before getting to work where changes will become more costly.
+
+</details>
+
+Here is the complete school database in DBML. Paste it into dbdiagram.io and compare the diagram to the `CREATE TABLE` statements you already wrote:
+
+```dbml
+Table students {
+  student_id integer [pk]
+  first_name varchar
+  last_name  varchar
+  dob        date
+}
+
+Table teachers {
+  teacher_id integer [pk]
+  first_name varchar
+  last_name  varchar
+}
+
+// Each class can have one teacher
+Table classes {
+  class_id   integer [pk]
+  title      varchar
+  teacher_id integer [ref: - teachers.teacher_id]
+}
+
+// Students and classes can each have many enrollments
+Table enrollments {
+  enrollment_id integer [pk]
+  student_id    integer [ref: > students.student_id]
+  class_id      integer [ref: > classes.class_id]
+}
+```
+
+In DBML, relationships use these symbols:
+* one-to-one: `[ref: - table.column]`
+* many-to-one: `[ref: > table.column]` (use `<` to flip direction)
