@@ -16,12 +16,14 @@ In this lesson, you'll learn what normalization means, why it matters, and how t
 - [Normalization](#normalization)
   - [Normalization Rule #1: Unique Primary Keys](#normalization-rule-1-unique-primary-keys)
   - [Normalization Rule #2: Atomic Values](#normalization-rule-2-atomic-values)
-  - [Don't Forget The Primary Key!](#dont-forget-the-primary-key)
+    - [Don't Forget The Primary Key!](#dont-forget-the-primary-key)
   - [Normalization Rule #3: Primary Key Dependency](#normalization-rule-3-primary-key-dependency)
-- [The Three-Step Design Process](#the-three-step-design-process)
+    - [Association Tables for Many-To-Many Relationships](#association-tables-for-many-to-many-relationships)
+- [The Four-Step Design Process](#the-four-step-design-process)
   - [Step 1 — Identify Tables](#step-1--identify-tables)
   - [Step 2 — Define Columns](#step-2--define-columns)
   - [Step 3 — Determine Relationships](#step-3--determine-relationships)
+  - [Step 4 — Apply Constraints](#step-4--apply-constraints)
 - [From Design to SQL](#from-design-to-sql)
   - [See It in Action](#see-it-in-action)
 - [Normalization Rules Challenge](#normalization-rules-challenge)
@@ -46,7 +48,7 @@ By the end of this lesson, you should be able to answer these questions:
 * **Schema design** — the process of planning that structure before writing any code.
 * **One-to-many** — a relationship where one row in table A can be referenced by many rows in table B (e.g., one user has many posts).
 * **Many-to-many** — a relationship where rows in each table can reference many rows in the other (e.g., a student can enroll in many classes; a class can have many students).
-* **Association/junction table** — a table that represents a many-to-many relationship by storing two foreign keys, one referencing each side.
+* **Association/Bridge table** — a table that represents a many-to-many relationship by storing two foreign keys, one referencing each side.
 * **ERD (Entity Relationship Diagram)** — a visual diagram showing each table's columns and the relationships between tables. *(See the Extension section.)*
 
 ## What is Schema Design?
@@ -59,7 +61,7 @@ When you write `CREATE TABLE`, you are declaring your schema in SQL. Consider th
 CREATE TABLE authors (
   author_id SERIAL PRIMARY KEY,
   first_name TEXT NOT NULL,
-  last_name INT NOT NULL,
+  last_name TEXT NOT NULL,
   dob DATE
 );
 
@@ -93,7 +95,7 @@ Understanding the principles of normalization will allow you to defend and expla
 
 Consider the database table below which stores data for orders from an electronics store:
 
-![A table of orderes with order_id, customer_id, customer_name, customer_address, and products_purchased.](./img/5-schema-design-normalization/normalization-1.png)
+![A table of orders with order_id, customer_id, customer_name, customer_address, products_purchased, and product_prices.](./img/5-schema-design-normalization/normalization-1.png)
 
 **<details><summary>Q: Where do you see corrupted (inaccurate and/or inconsistent) data? Where do you see redundant data?</summary>**
 
@@ -105,7 +107,11 @@ SELECT customer_address FROM orders WHERE customer_id = 3;
 ```
 In addition, the `customer_name` column is redundant. The `customer_id` column uniquely identifies the customer on its own making the `customer_name` column unnecessary and opens the door for potential data corruption.
 
+When looking at `product_prices`, the data is very repetitive and if we wanted to update the price for a product, we would have to update it in every row.
+
 </details>
+
+There are a number of things wrong with this schema design. Let's fix them by applying the rules of normalization.
 
 ### Normalization Rule #1: Unique Primary Keys
 
@@ -123,17 +129,19 @@ Primary keys also allow for the existence of foreign keys: columns in tables tha
 
 Atomicity ("being like an atom") means that every cell must contains a single, indivisible value — no comma-separated lists, no arrays, no packed strings. A cell that follows this rule is "atomic".
 
-Consider this `orders` table again and notice that `products_purchased` is *not* atomic. 
+Consider this `orders` table again and notice that both `products_purchased` and `product_prices` are *not* atomic. 
 
-![A table of orderes with order_id, customer_id, customer_name, customer_address, and products_purchased.](./img/5-schema-design-normalization/normalization-1.png)
+![A table of orders with order_id, customer_id, customer_name, customer_address, products_purchased, and product_prices.](./img/5-schema-design-normalization/normalization-1.png)
 
-Storing multiple values in one column feels convenient, but it creates real problems:
-- **Updates are fragile** — renaming a product (e.g. from `'Apple Macbook'` to `'Apple Macbook Pro'`) means hunting inside comma-separated strings across every row to make the change
-- **Querying is awkward** — "find all orders that include `'Laptop'`" is possible but awkward with a simple `WHERE` clause. Again, string parsing is required.
+**<details><summary>Q: What difficulties could storing multiple values in one cell create?</summary>**
+Storing multiple values in one column feels convenient, but it also makes the database harder to work with:
+- **Updates are fragile**: The `product_prices` column is fully dependent on the `products_purchased` column so the order of values must match perfectly. If a customer decides to remove a product from their order, we also have to update the product prices list. If we forget to change both columns, or we make a mistake, it can be difficult to debug.
+- **Querying is awkward**: If I want to know the price of a product, I have to query both columns, then use string parsing to separate both columns into parallel arrays, find the index of the product I'm looking for, then grab the matching price. What a headache!
+</details>
 
-We can fix this by giving each `product_purchased` value its own row:
+We can fix this by giving each product in each order its own row:
 
-![Every cell contains one and only one value. These cells are "atomic".](./img/5-schema-design-normalization/normalization-2.png)
+![The same orders table where products_purchased and product_prices each have one value per row. Every cell is now atomic.](./img/5-schema-design-normalization/normalization-2.png)
 
 We've satisfied the rule of atomicity! But we've caused another issue.
 
@@ -145,7 +153,7 @@ Technically, we can uniquely identify each row if we treat the combination of th
 
 </details>
 
-### Don't Forget The Primary Key!
+#### Don't Forget The Primary Key!
 
 Remember, every table needs a single unique, primary key to identify each row. We *could* do this by adding a column called `order_product_id`:
 
@@ -161,11 +169,13 @@ The issue with this design is that we now have a lot of redundant and repetitive
 
 **<details><summary>Q: Which columns are dependent on a non-primary key column? Look for rows that have pairs of columns whose values are always the same.</summary>**
 
-Both `customer_name` and `customer_address` depend on the on `customer_id` (every row with `customer_id=1` has `customer_name=Avery` and `customer_address='12 Apple Avenue'`)
+Both `customer_name` and `customer_address` depend on the on `customer_id` (the customer with `customer_id=1` should always have `customer_name=Avery` and `customer_address='12 Apple Avenue'`)
 
-Similarly, the `customer_id` value is dependent on `order_id` (every row with `order_id=1` has `customer_id=1`).
+The `customer_id` value is dependent on `order_id` (every order with `order_id=1` should always have `customer_id=1`).
 
-None of these columns depend on `order_product_id`.
+The `product_price` value is dependent on the `product_purchased` (every Roku TV should always cost 149.99)
+
+None of these columns depend on the primary key `order_product_id`.
 
 </details>
 
@@ -173,30 +183,48 @@ The existence of non-primary key dependencies creates repetitive/redundant data 
 
 * If Charles (`customer_id=3`) changes their address in the database, then every row with `customer_id=3` must also be changed. Miss one and the data is inconsistent. We can see that this already happened!
 * An order can only ever have one customer attached to it making it redundant to list the customer next to the order when listing out the products in an order.
+* If the price changes for the Roku TV, we need to update the price in every single row where Roku TV appears.
 
 ### Normalization Rule #3: Primary Key Dependency
 
-The third rule of normalization avoids redundancy and repetitive data by requiring that every column must depend solely on the primary key — not on some other column.
+The third rule of normalization avoids redundancy and repetitive data by requiring that every column depend solely on the primary key — not on some other column.
 
 We fix this by extracting each dependency into its own table:
 
-* **`customers`** tells us details about each customer and nothing else
+* **`customers`** tells us details about each customer
+* **`products`** tells us details about each product
 * **`orders`** tells us who placed each order
 * **`order_products`** tells us which products were purchased in each order
 
-![](./img/5-schema-design-normalization/normalization-3-good.png)
+![The single "flat" table has been split into four tables](./img/5-schema-design-normalization/normalization-3-good.png)
 
-Now, when Charles updates his address, the change only happens in one place. Additionally, the orders table only needs to know the `customer_id`, not the name or address.
+This new schema has a number of improvements:
+* Now, when Charles updates his address, the change only happens in one place. 
+* The same is true if we need to update the price of a product.
+* The `orders` table only needs to know the `customer_id`, not the name or address.
 
-## The Three-Step Design Process
+#### Association Tables for Many-To-Many Relationships
+
+This database schema has a few interesting relationships now:
+* **Customers --< Orders**: A customer can place many orders (one to many)
+* **Orders >--< Products**: An order can contain main products AND a product can be in many orders (many to many)
+
+The `orders` table is the representation of the **one-to-many** relationship between orders and customers. As you can see, each `order_id` corresponds with a specific `customer_id`, but the same `customer_id` can show up many times.
+
+We can't add a `product` column to the `orders` table since each order can have many products. Instead, we create the `order_products` table to represent the **many-to-many** relationship between orders and products.
+
+This kind of many-to-many table is also called a **bridge table** or **association table**.
+
+## The Four-Step Design Process
 
 Normalization is something that you can do to improve the design of an existing database. But we can and should use those principles from the start when designing a database from scratch.
 
-A normalized schema emerges naturally from following three steps:
+A normalized schema emerges naturally from following four steps:
 
 1. **Identify tables** — what distinct types of things does the app need to store? Each type of entity that has its own properties and its own lifecycle gets its own table.
 2. **Define columns** — what properties does each entity have? If a property could change independently of the others (like a product name), it belongs in its own table, not repeated as a column on a related table.
 3. **Determine relationships** — how do the entities relate? If the relationship produces multiple values per row, you need a junction table (Rule #2). If a column's value is determined by a non-primary column, it needs to move to its own table (Rule #3).
+4. **Apply Constraints** — which properties must be unique? Which properties cannot be null? Which properties should have a default value if no value is provided?
 
 We'll apply these steps to design a school database. Here are the user stories:
 
@@ -215,7 +243,7 @@ Each distinct entity — something with its own properties and its own existence
 - `students` — a student exists independently; they have their own name, DOB, etc.
 - `teachers` — a teacher exists independently; they have their own name, etc.
 - `classes` — a class exists independently; it has a title and an assigned teacher
-- `enrollments` — the relationship between students and classes needs its own table (a student can be in many classes, a class can have many students — this is a many-to-many, which means a junction table)
+- `enrollments` — the relationship between students and classes needs its own table (a student can be in many classes, a class can have many students — this is a many-to-many, which means an association table)
 
 Without `enrollments`, the only alternative would be storing courses as a comma-separated list on the `students` table — a direct violation of atomicity.
 
@@ -223,9 +251,13 @@ Without `enrollments`, the only alternative would be storing courses as a comma-
 
 ### Step 2 — Define Columns
 
-For each table, define a primary key column named after the table (`student_id`, `teacher_id`, `class_id`). Foreign keys use the exact same name as the primary key they reference.
+For each table, define a primary key column named after the table (`student_id`, `teacher_id`, `class_id`). 
 
-Then ask: which additional information is needed to answer the user story questions? Which table does each piece of information belong to?
+Then ask: which additional columns are needed to answer the user story questions? Which table does each piece of information belong to? Which tables need foreign key columns to connect to other tables?
+
+{% hint style="info" %}
+Foreign keys use the exact same name as the primary key they reference.
+{% endhint %}
 
 **<details><summary>School Solution</summary>**
 
@@ -246,7 +278,7 @@ For each table, ask: is each relationship one-to-many or many-to-many?
 **<details><summary>School Solution</summary>**
 
 - A teacher can teach many classes, but each class has only one teacher → **one-to-many**. `teacher_id` lives on `classes`.
-- A student can be enrolled in many classes, and a class can have many students → **many-to-many**. The `enrollments` junction table holds both `student_id` and `class_id`.
+- A student can be enrolled in many classes, and a class can have many students → **many-to-many**. The `enrollments` association table holds both `student_id` and `class_id`.
 
 </details>
 
@@ -256,7 +288,41 @@ A student can be enrolled in many classes and a class can have many students —
 
 The only alternative would be storing courses as a comma-separated list (e.g., `courses = "Math, Science, History"`) directly on the `students` table. That breaks the rule of atomicity — multiple values in one cell. Querying it is awkward, updating it is fragile, and you can't enforce foreign keys to the `classes` table.
 
-The `enrollments` junction table solves this by giving each student-class pairing its own row. This is normalization in practice: a relationship that produces multiple values per entity gets its own table.
+The `enrollments` association table solves this by giving each student-class pairing its own row. This is normalization in practice: a relationship that produces multiple values per entity gets its own table.
+
+</details>
+
+### Step 4 — Apply Constraints
+
+Once you know your tables, columns, and relationships, ask: what rules should the database enforce on the data itself?
+
+- **`NOT NULL`** — must this column always have a value? Names, titles, and foreign keys usually should.
+- **`UNIQUE`** — must this value (or combination of values) be unique across all rows? Usernames, emails, and association table pairs usually should.
+- **`DEFAULT`** — what value should this column have if none is provided? Timestamps and boolean flags often have sensible defaults.
+
+**<details><summary>School Solution</summary>**
+
+- `students.first_name`, `students.last_name` — `NOT NULL`: a student must have a name
+- `students.dob` — nullable: date of birth is useful but not required to enroll
+- `teachers.first_name`, `teachers.last_name` — `NOT NULL`: a teacher must have a name
+- `classes.title` — `NOT NULL`: a class must have a title
+- `classes.teacher_id` — nullable: a class might exist before a teacher is assigned
+- `enrollments.student_id`, `enrollments.class_id` — `NOT NULL`: an enrollment without a student or class is meaningless
+- `enrollments (student_id, class_id)` — `UNIQUE`: a student should only be enrolled in the same class once
+
+</details>
+
+**<details><summary>Q: Why should `classes.teacher_id` be nullable rather than `NOT NULL`?</summary>**
+
+A class might be created before a teacher is assigned to it — for example, when building out the semester schedule before staff assignments are finalized. Making `teacher_id NOT NULL` would prevent the class from being inserted until a teacher exists and is known. Keeping it nullable allows the class to exist independently and have a teacher assigned later.
+
+</details>
+
+**<details><summary>Q: Why does `enrollments` need `UNIQUE (student_id, class_id)` rather than just making `student_id` or `class_id` unique on their own?</summary>**
+
+Making `student_id` unique on `enrollments` would mean each student could only ever be enrolled in one class — clearly wrong. Making `class_id` unique would mean each class could only ever have one student. Neither column should be unique on its own.
+
+The constraint we actually want is: the *combination* of `student_id` and `class_id` must be unique. A student can be in many classes, and a class can have many students — but the same student cannot be in the same class twice. `UNIQUE (student_id, class_id)` expresses exactly that rule.
 
 </details>
 
@@ -472,7 +538,7 @@ Now `department_name` lives in exactly one place — rename Engineering once and
 
 ## Practice
 
-In groups, design a schema for one of the following. Follow the three-step process, then translate your design to SQL. Be ready to explain every structural decision in terms of normalization.
+In groups, design a schema for one of the following. Follow the four-step process, then translate your design to SQL. Be ready to explain every structural decision in terms of normalization.
 
 - An online store (users, products, orders, order items)
 - A photo-sharing app with comments (users, photos, comments)
@@ -481,15 +547,17 @@ In groups, design a schema for one of the following. Follow the three-step proce
 
 **Step 1 — Plan your schema**
 
-Work through the three steps on paper or a whiteboard:
+Work through the four steps on paper or a whiteboard:
 - Which tables do you need? What does each one represent?
 - What columns does each table have? Where does each piece of information belong?
 - What are the relationships? Which are one-to-many? Which are many-to-many?
+- What constraints should exist on the columns? Which should be unique, not null, or have default values?
 
 For each decision, be able to answer:
 - **Why is this a separate table?** (What redundancy or violation would occur if it weren't?)
 - **Why does this column live here and not somewhere else?** (What does it depend on?)
 - **Why does this relationship need a junction table?**
+- **Why must this column be unique, be not null, or have a default value?**
 
 **Step 2 — Translate your design to SQL**
 
