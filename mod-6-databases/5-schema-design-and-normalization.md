@@ -210,11 +210,16 @@ This database schema has a few interesting relationships now:
 * **Customers --< Orders**: A customer can place many orders (one to many)
 * **Orders >--< Products**: An order can contain main products AND a product can be in many orders (many to many)
 
-The `orders` table is the representation of the **one-to-many** relationship between orders and customers. As you can see, each `order_id` corresponds with a specific `customer_id`, but the same `customer_id` can show up many times.
+The `order_products` table represents this **many-to-many** relationship between `orders` and `products` and is referred to as an **"association" or "bridge" table**. 
+* Association tables often have a primary key and *two* foreign keys: one for each table that it connects
+* Each pair of foreign keys should be unique to avoid duplicate relationships (order `5` shouldn't have product `3` multiple times)
+* Association tables can also have additional columns that describe the relationship further (e.g. `product_quantity` to indicate the quantity of a product in an order)
 
-We can't add a `product` column to the `orders` table since each order can have many products. Instead, we create the `order_products` table to represent the **many-to-many** relationship between orders and products.
+**<details><summary>Q: Why can't we just add the product information to the `orders` table?</summary>**
 
-This kind of many-to-many table is also called a **bridge table** or **association table**.
+We can't add a `product` column to the `orders` table since each order can have many products.
+
+</details>
 
 ## Designing a Multi-Table Schema
 
