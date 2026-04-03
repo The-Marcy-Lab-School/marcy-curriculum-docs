@@ -16,14 +16,16 @@ In this lesson, you'll learn what normalization means, why it matters, and how t
 - [Normalization](#normalization)
   - [Normalization Rule #1: Unique Primary Keys](#normalization-rule-1-unique-primary-keys)
   - [Normalization Rule #2: Atomic Values](#normalization-rule-2-atomic-values)
+  - [Don't Forget The Primary Key!](#dont-forget-the-primary-key)
   - [Normalization Rule #3: Primary Key Dependency](#normalization-rule-3-primary-key-dependency)
-  - [Normalization Rules Challenge](#normalization-rules-challenge)
 - [ERDs: Design Before You Code](#erds-design-before-you-code)
   - [The Three-Step Design Process](#the-three-step-design-process)
   - [Step 1 — Identify Tables](#step-1--identify-tables)
   - [Step 2 — Define Columns](#step-2--define-columns)
   - [Step 3 — Determine Relationships](#step-3--determine-relationships)
+  - [From ERD to SQL](#from-erd-to-sql)
   - [See It in Action](#see-it-in-action)
+- [Normalization Rules Challenge](#normalization-rules-challenge)
 - [Practice](#practice)
 
 ## Essential Questions
@@ -35,6 +37,7 @@ By the end of this lesson, you should be able to answer these questions:
 3. What is a database schema and why is it worth designing before writing any code?
 4. What is an Entity Relationship Diagram (ERD) and what information does it communicate?
 5. What is the difference between a one-to-many and a many-to-many relationship? How is each represented in a relational database?
+6. How do you add a foreign key constraint to a `CREATE TABLE` statement? Why does the order in which you create tables matter?
 
 ## Key Concepts
 
@@ -52,17 +55,39 @@ By the end of this lesson, you should be able to answer these questions:
 
 > sche·ma /ˈskēmə/ (noun) — a representation of a plan in the form of an outline or model.
 
-A database **schema** describes the structure of your database:
+When you write `CREATE TABLE`, you are declaring your schema in SQL. Consider the SQL below that declares the schema for a database of authors and books:
 
-- Which tables exist (`users`, `posts`, `enrollments`...)
-- Which columns each table has and their data types (`user_id SERIAL`, `username TEXT`...)
-- Which constraints are enforced (`NOT NULL`, `UNIQUE`, `PRIMARY KEY`, `REFERENCES`...)
+```sql
+CREATE TABLE authors (
+  author_id SERIAL PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name INT NOT NULL,
+  dob DATE
+);
 
-When you write `CREATE TABLE`, you are declaring your schema in SQL. **Schema design** is the process of deciding *what* to declare before writing any application code.
+CREATE TABLE books (
+  book_id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  published_date DATE,
+  author_id INT NOT NULL REFERENCES authors(author_id),
+);
+```
+
+With this database, we can answer questions like:
+- When was the author Toni Morrison born?
+- Who wrote the book Between the World and Me?
+- How many books did Brandon Sanderson write?
+
+Before you can create tables like this, you have to plan and decide what your schema will look like. **Schema design** is this planning process and involves asking:
+- What kinds of questions do I want to be able to answer with my data?
+- To answer those questions, which tables will need to exist and what columns will they have?
+- What is the best data type for each column?
+- Which constraints should be enforced for each column?
+- What relationships exist between tables?
 
 ## Normalization
 
-The foundation of every well-designed database are the rules of **normalization**: a set of guiding principles that help us avoid two common issues with database design:
+The foundation of every well-designed relational database are the guiding principles of **normalization**. A "normalized" database is one that avoids two common database issues:
 1. **Data Corruption** — the data becomes inaccurate and inconsistent
 2. **Data Redundancy** — values are repeated unnecessarily or appear multiple times
 
@@ -70,12 +95,7 @@ Understanding the principles of normalization will allow you to defend and expla
 
 Consider the database table below which stores data for orders from an electronics store:
 
-| order_id | customer_id | customer_name | customer_address     | products_purchased                      |
-| -------- | ----------- | ------------- | -------------------- | --------------------------------------- |
-| 1        | 1           | Avery         | 12 Apple Avenue      | Roku TV, Apple Macbook, Nintendo Switch |
-| 2        | 2           | Blake         | 34 Banana Boulevard  | Roku TV, Nintendo Switch                |
-| 3        | 3           | Charles       | 56 Cherry Court      | Roku TV, Apple Macbook                  |
-| 4        | 3           | Charles       | 78 Strawberry Street | Nintendo Switch                         |
+![A table of orderes with order_id, customer_id, customer_name, customer_address, and products_purchased.](./img/5-schema-design-normalization/normalization-1.png)
 
 **<details><summary>Q: Where do you see corrupted (inaccurate and/or inconsistent) data? Where do you see redundant data?</summary>**
 
@@ -91,42 +111,34 @@ In addition, the `customer_name` column is redundant. The `customer_id` column u
 
 ### Normalization Rule #1: Unique Primary Keys
 
-The fundamental rule of all relational databases is the existence of a primary key: a column that uniquely identifies each row in a table. 
+The fundamental rule of all relational databases is that there must be a **primary key**: a column that uniquely identifies each row in a table. 
 
 Primary keys also allow for the existence of foreign keys: columns in tables that reference the primary key of another table.
 
-![A table showing primary keys and foreign keys.](./img/1-intro-to-databases-postgres/primary-foreign-keys.png)
+**<details><summary>Q: What is the primary key in the `orders` table? How do you know?</summary>**
+
+`order_id` because it is unique for every single row.
+
+</details>
 
 ### Normalization Rule #2: Atomic Values
 
-Atomicity ("being like an atom") means to that every cell must contains a single, indivisible value — no comma-separated lists, no arrays, no packed strings. A cell that follows this rule is "atomic".
+Atomicity ("being like an atom") means that every cell must contains a single, indivisible value — no comma-separated lists, no arrays, no packed strings. A cell that follows this rule is "atomic".
 
-Consider this `orders` table again
 
-| order_id | customer_id | customer_name | customer_address     | products_purchased                      |
-| -------- | ----------- | ------------- | -------------------- | --------------------------------------- |
-| 1        | 1           | Avery         | 12 Apple Avenue      | Roku TV, Apple Macbook, Nintendo Switch |
-| 2        | 2           | Blake         | 34 Banana Boulevard  | Roku TV, Nintendo Switch                |
-| 3        | 3           | Charles       | 56 Cherry Court      | Roku TV, Apple Macbook                  |
-| 4        | 3           | Charles       | 78 Strawberry Street | Nintendo Switch                         |
+Consider this `orders` table again and notice that `products_purchased` is *not* atomic. 
 
-Storing multiple values in the `products_purchased` column feels convenient, but it creates real problems:
+![A table of orderes with order_id, customer_id, customer_name, customer_address, and products_purchased.](./img/5-schema-design-normalization/normalization-1.png)
 
-- **Updates are fragile** — renaming a product means hunting inside comma-separated strings across every row to make the change
-- **Querying is awkward** — "find all orders that include a Laptop" requires string parsing (this can't be done easily with a `WHERE` clause)
+Storing multiple values in one column feels convenient, but it creates real problems:
+- **Updates are fragile** — renaming a product (e.g. from `'Apple Macbook'` to `'Apple Macbook Pro'`) means hunting inside comma-separated strings across every row to make the change
+- **Querying is awkward** — "find all orders that include `'Laptop'`" is possible but awkward with a simple `WHERE` clause. Again, string parsing is required.
 
 We can fix this by giving each `product_purchased` value its own row:
 
-| order_id | customer_id | customer_name | customer_address     | product_purchased |
-| -------- | ----------- | ------------- | -------------------- | ----------------- |
-| 1        | 1           | Avery         | 12 Apple Avenue      | Roku TV           |
-| 1        | 1           | Avery         | 12 Apple Avenue      | Apple Macbook     |
-| 1        | 1           | Avery         | 12 Apple Avenue      | Nintendo Switch   |
-| 2        | 2           | Blake         | 34 Banana Boulevard  | Roku TV           |
-| 2        | 2           | Blake         | 34 Banana Boulevard  | Nintendo Switch   |
-| 3        | 3           | Charles       | 56 Cherry Court      | Roku TV           |
-| 3        | 3           | Charles       | 56 Cherry Court      | Apple Macbook     |
-| 4        | 3           | Charles       | 78 Strawberry Street | Nintendo Switch   |
+![Every cell contains one and only one value. These cells are "atomic".](./img/5-schema-design-normalization/normalization-2.png)
+
+We've satisfied the rule of atomicity! But we've caused another issue.
 
 **<details><summary>Q: This solution introduces a new issue, can you see it?</summary>**
 
@@ -136,22 +148,19 @@ Technically, we can uniquely identify each row if we treat the combination of th
 
 </details>
 
-### Normalization Rule #3: Primary Key Dependency
+### Don't Forget The Primary Key!
 
-We now need a single, unique, primary key to identify each row in the table to satisfy the first normalization rule. We can do this by adding a column called `order_product_id`:
+Remember, every table needs a single unique, primary key to identify each row. We *could* do this by adding a column called `order_product_id`:
 
-| order_product_id | order_id | customer_id | customer_name | customer_address     | product_purchased |
-| ---------------- | -------- | ----------- | ------------- | -------------------- | ----------------- |
-| 1                | 1        | 1           | Avery         | 12 Apple Avenue      | Roku TV           |
-| 2                | 1        | 1           | Avery         | 12 Apple Avenue      | Apple Macbook     |
-| 3                | 1        | 1           | Avery         | 12 Apple Avenue      | Nintendo Switch   |
-| 4                | 2        | 2           | Blake         | 34 Banana Boulevard  | Roku TV           |
-| 5                | 2        | 2           | Blake         | 34 Banana Boulevard  | Nintendo Switch   |
-| 6                | 3        | 3           | Charles       | 56 Cherry Court      | Roku TV           |
-| 7                | 3        | 3           | Charles       | 56 Cherry Court      | Apple Macbook     |
-| 8                | 4        | 3           | Charles       | 78 Strawberry Street | Nintendo Switch   |
+{% hint style="danger" %}
 
-However, this new table breaks the third rule of normalization: every column must depend solely on the primary key — not on some other column.
+![This breaks the third rule of normalization: every column must depend solely on the primary key.](./img/5-schema-design-normalization/normalization-3-bad.png)
+
+Don't do this!
+
+{% endhint %}
+
+The issue with this design is that we now have a lot of redundant and repetitive data. This is caused by having too many columns that are dependent on non-primary key columns.
 
 **<details><summary>Q: Which columns are dependent on a non-primary key column? Look for rows that have pairs of columns whose values are always the same.</summary>**
 
@@ -167,6 +176,10 @@ The existence of non-primary key dependencies creates repetitive/redundant data 
 
 * If Charles (`customer_id=3`) changes their address in the database, then every row with `customer_id=3` must also be changed. Miss one and the data is inconsistent. We can see that this already happened!
 * An order can only ever have one customer attached to it making it redundant to list the customer next to the order when listing out the products in an order.
+
+### Normalization Rule #3: Primary Key Dependency
+
+The third rule of normalization avoids redundancy and repetitive data by requiring that every column must depend solely on the primary key — not on some other column.
 
 We fix this by extracting each dependency into its own table:
 
@@ -200,77 +213,13 @@ We fix this by extracting each dependency into its own table:
 | 7                | 3        | Apple Macbook     |
 | 8                | 4        | Nintendo Switch   |
 
-Now, when Charles updates his address, the change only happens in one place and we've eliminated rows with duplicate data.
-
-### Normalization Rules Challenge
-
-Consider this `employees` table. Which normalization rules does it break? How would you fix it?
-
-| employee_id | employee_name | department_id | department_name | project_names               |
-| ----------- | ------------- | ------------- | --------------- | --------------------------- |
-| 1           | Ana           | 10            | Engineering     | Website Redesign, API Audit |
-| 2           | Ben           | 10            | Engineering     | API Audit                   |
-| 3           | Cara          | 20            | Marketing       | Brand Refresh               |
-| 4           | Dan           | 20            | Marketing       | Brand Refresh, Social Media |
-
-**<details><summary>Which rules does this table break?</summary>**
-
-**Rule #2 — Atomic Values:** `project_names` stores multiple values in a single cell (e.g., `"Website Redesign, API Audit"`). Each project must get its own row.
-
-**Rule #3 — Primary Key Dependency:** `department_name` depends on `department_id`, not on `employee_id`. If the Engineering department is renamed, every Engineering employee's row must be updated — and it's easy to miss one.
-
-</details>
-
-**<details><summary>How would you fix it?</summary>**
-
-Extract each dependency into its own table and use a junction table for the many-to-many relationship between employees and projects.
-
-**`departments`**
-
-| department_id | department_name |
-| ------------- | --------------- |
-| 10            | Engineering     |
-| 20            | Marketing       |
-
-**`employees`**
-
-| employee_id | employee_name | department_id |
-| ----------- | ------------- | ------------- |
-| 1           | Ana           | 10            |
-| 2           | Ben           | 10            |
-| 3           | Cara          | 20            |
-| 4           | Dan           | 20            |
-
-**`projects`**
-
-| project_id | project_name     |
-| ---------- | ---------------- |
-| 1          | Website Redesign |
-| 2          | API Audit        |
-| 3          | Brand Refresh    |
-| 4          | Social Media     |
-
-**`employee_projects`** (junction table)
-
-| employee_project_id | employee_id | project_id |
-| ------------------- | ----------- | ---------- |
-| 1                   | 1           | 1          |
-| 2                   | 1           | 2          |
-| 3                   | 2           | 2          |
-| 4                   | 3           | 3          |
-| 5                   | 4           | 3          |
-| 6                   | 4           | 4          |
-
-Now `department_name` lives in exactly one place — rename Engineering once and every employee inherits it automatically. And each project assignment gets its own row with its own primary key, making queries like "find all employees on the API Audit project" trivial.
-
-</details>
-
+Now, when Charles updates his address, the change only happens in one place. Additionally, the orders table only needs to know the `customer_id`, not the name or address.
 
 ## ERDs: Design Before You Code
 
-Normalization is something that you can do to improve the design of an existing database. But it would be much better to use those principles from the start before you write any code or add any data to your database. 
+Normalization is something that you can do to improve the design of an existing database. But we can and should use those principles from the start when designing a database from scratch.
 
-The primary way to design a database schema from scratch is with an **Entity Relationship Diagram (ERD)**:
+But before you write any code or add any data to your database, you should create an **Entity Relationship Diagram (ERD)**:
 
 ![An ERD maps contents of database tables (entities) and the relationships between them.](./img/5-schema-design-normalization/authors-books-erd.png)
 
@@ -283,13 +232,6 @@ While you can draw ERDs by hand, we can also use software to create beautiful ER
 Try pasting the following into the dbdiagram editor:
 
 ```dbml
-Table books {
-  book_id integer [pk]
-  title text
-  author_id integer
-  published_date date
-}
-
 Table authors {
   author_id integer [pk]
   first_name text
@@ -298,8 +240,20 @@ Table authors {
 }
 
 // One-to-many: each author can have many books
-Ref: "authors"."author_id" < "books"."author_id"
+
+Table books {
+  book_id integer [pk]
+  title text
+  author_id integer [ref: > authors.author_id]
+  published_date date
+}
 ```
+
+**<details><summary>Q: What is the point of creating a diagram like this vs. using SQL to create the database directly in PostgreSQL?</summary>**
+
+Diagrams are easy to collaborate on and make changes before committing anything to code. As a team, you can align on your design decisions before getting to work where changes will become more costly.
+
+</details>
 
 ### The Three-Step Design Process
 
@@ -411,19 +365,13 @@ Notice that `classes` has a `teacher_id` column — not `teacher_name`. A teache
 Lastly, consider what relationships exist between tables. Ask: is this one-to-many or many-to-many? 
 
 Then, in DBML, use the following syntax for each type of relationship:
-* one-to-one:  `Ref: "table1"."table1_id" - "table2"."table1_id"`
-* one-to-many:  `Ref: "table1"."table1_id" < "table2"."table1_id"`
 
-For example, **one** author can have **many** books:
+* one-to-one:  `[ref: - authors.author_id]`
+* many-to-one:  `[ref: > table.table_id]` (you can also use `<` to change the direction)
+
+For example, **many** books can be written by **one** author:
 
 ```dbml
-Table books {
-  book_id integer [pk]
-  title text
-  author_id integer
-  published_date date
-}
-
 Table authors {
   author_id integer [pk]
   first_name text
@@ -432,7 +380,13 @@ Table authors {
 }
 
 // One-to-many: each author can have many books
-Ref: "authors"."author_id" < "books"."author_id"
+
+Table books {
+  book_id integer [pk]
+  title text
+  author_id integer [ref: > authors.author_id]
+  published_date date
+}
 ```
 
 
@@ -452,21 +406,19 @@ Table teachers {
   last_name  varchar
 }
 
+// Each class can have one teacher
 Table classes {
   class_id   integer [pk]
   title      varchar
-  teacher_id integer
+  teacher_id integer [ref: - teachers.teacher_id]
 }
 
+// Students and classes can each have many enrollments
 Table enrollments {
   enrollment_id integer [pk]
-  student_id    integer
-  class_id      integer
+  student_id    integer [ref: > students.student_id]
+  class_id      integer [ref: > classes.class_id]
 }
-
-Ref: "classes"."teacher_id"  - "teachers"."teacher_id"
-Ref: "classes"."class_id"    < "enrollments"."class_id"
-Ref: "students"."student_id" < "enrollments"."student_id"
 ```
 
 </details>
@@ -481,9 +433,94 @@ The `enrollments` junction table solves this by giving each student-class pairin
 
 </details>
 
+### From ERD to SQL
+
+The DBML you wrote in dbdiagram.io is a design tool — it helps you see the schema visually. To actually build it in Postgres, you translate each table into a `CREATE TABLE` statement.
+
+In SQL, we create a reference from one table to another table using `REFERENCES table(column_name)` directly on foreign key columns:
+
+```sql
+-- SQL
+CREATE TABLE classes (
+  class_id    SERIAL  PRIMARY KEY,
+  title       TEXT    NOT NULL,
+  teacher_id  INTEGER REFERENCES teachers(teacher_id)
+);
+```
+
+**Creation order matters**
+
+A `REFERENCES` constraint means Postgres enforces the relationship at the database level — any attempt to insert a row into `classes` with a `teacher_id` that doesn't exist in `teachers` will be rejected. Because of this, **referenced tables must be created before the tables that reference them**:
+
+- `students` and `teachers` have no foreign keys — create them first
+- `classes` references `teachers` — create it after `teachers`
+- `enrollments` references both `students` and `classes` — create it last
+
+Here is the complete `school_db` schema. Read through it and trace each `REFERENCES` back to the table and column it points to before running it:
+
+```sql
+-- No foreign keys — create first
+CREATE TABLE students (
+  student_id  SERIAL PRIMARY KEY,
+  first_name  TEXT   NOT NULL,
+  last_name   TEXT   NOT NULL,
+  dob         DATE
+);
+
+-- No foreign keys — create first
+CREATE TABLE teachers (
+  teacher_id  SERIAL PRIMARY KEY,
+  first_name  TEXT   NOT NULL,
+  last_name   TEXT   NOT NULL
+);
+
+-- References teachers — create after teachers
+CREATE TABLE classes (
+  class_id    SERIAL  PRIMARY KEY,
+  title       TEXT    NOT NULL,
+  teacher_id  INTEGER REFERENCES teachers(teacher_id)
+);
+
+-- References students and classes — create last
+CREATE TABLE enrollments (
+  enrollment_id  SERIAL  PRIMARY KEY,
+  student_id     INTEGER REFERENCES students(student_id),
+  class_id       INTEGER REFERENCES classes(class_id)
+);
+```
+
+**<details><summary>Q: What happens if you try to `CREATE TABLE classes` before `CREATE TABLE teachers`?</summary>**
+
+Postgres throws an error: `relation "teachers" does not exist`. The `REFERENCES teachers(teacher_id)` clause needs `teachers` to already exist so Postgres can verify the column it's linking to. Always create parent tables before child tables.
+
+</details>
+
+**<details><summary>Q: In the school schema, which tables are "parents" and which are "children"? What determines this?</summary>**
+
+- `students` and `teachers` are parents — their primary keys are referenced by other tables, but they don't reference anyone themselves
+- `classes` is a child of `teachers` — it holds `teacher_id REFERENCES teachers`
+- `enrollments` is a child of both `students` and `classes` — it holds foreign keys pointing to both
+
+A table is a "parent" when its primary key is referenced by another table's foreign key. A table is a "child" when it holds a foreign key column pointing at a parent.
+
+</details>
+
+**<details><summary>Q: What does Postgres do if you try to INSERT a row into `classes` with a `teacher_id` that doesn't exist in `teachers`?</summary>**
+
+Postgres rejects the insert with a foreign key violation error:
+
+```
+ERROR: insert or update on table "classes" violates foreign key constraint
+DETAIL: Key (teacher_id)=(99) is not present in table "teachers".
+```
+
+This is referential integrity — the database itself guarantees that every `teacher_id` in `classes` points to a real teacher. You don't need to check this in your application code because Postgres won't let the bad data in.
+
+</details>
+
 ### See It in Action
 
-The follow-along repo includes a `school-setup.sql` file that translates this DBML design into SQL — `CREATE TABLE` statements with real data types, constraints, and foreign keys, plus seed data to query against.
+The `school-setup.sql` file in the follow-along repo contains exactly the `CREATE TABLE` statements above, plus seed data to query against.
 
 Run it to create `school_db`:
 
@@ -525,6 +562,7 @@ SELECT * FROM students;
 SELECT * FROM enrollments;
 
 -- What classes is Alice enrolled in?
+-- (teaser for the next lesson — don't worry about the syntax yet)
 SELECT students.first_name, classes.title
 FROM students
   INNER JOIN enrollments ON students.student_id = enrollments.student_id
@@ -532,16 +570,82 @@ FROM students
 WHERE students.first_name = 'Alice';
 ```
 
-Look at the `\d enrollments` output — the `REFERENCES` constraints are the SQL implementation of the foreign key relationships you drew in dbdiagram.io. The ERD is the plan; the SQL is the implementation; normalization is the reason the plan looks the way it does.
+Run `\d enrollments` and compare the output to the `CREATE TABLE enrollments` statement you just read — the `REFERENCES` constraints and their target tables should match exactly what you wrote in your ERD. The ERD is the plan; the SQL is the implementation; normalization is the reason the plan looks the way it does.
+
+## Normalization Rules Challenge
+
+Consider this `employees` table. Which normalization rules does it break? How would you fix it?
+
+| employee_id | employee_name | department_id | department_name | project_names               |
+| ----------- | ------------- | ------------- | --------------- | --------------------------- |
+| 1           | Ana           | 10            | Engineering     | Website Redesign, API Audit |
+| 2           | Ben           | 10            | Engineering     | API Audit                   |
+| 3           | Cara          | 20            | Marketing       | Brand Refresh               |
+| 4           | Dan           | 20            | Marketing       | Brand Refresh, Social Media |
+
+**<details><summary>Which rules does this table break?</summary>**
+
+**Rule #2 — Atomic Values:** `project_names` stores multiple values in a single cell (e.g., `"Website Redesign, API Audit"`). Each project must get its own row.
+
+**Rule #3 — Primary Key Dependency:** `department_name` depends on `department_id`, not on `employee_id`. If the Engineering department is renamed, every Engineering employee's row must be updated — and it's easy to miss one.
+
+</details>
+
+**<details><summary>How would you fix it?</summary>**
+
+Extract each dependency into its own table and use a junction table for the many-to-many relationship between employees and projects.
+
+**`departments`**
+
+| department_id | department_name |
+| ------------- | --------------- |
+| 10            | Engineering     |
+| 20            | Marketing       |
+
+**`employees`**
+
+| employee_id | employee_name | department_id |
+| ----------- | ------------- | ------------- |
+| 1           | Ana           | 10            |
+| 2           | Ben           | 10            |
+| 3           | Cara          | 20            |
+| 4           | Dan           | 20            |
+
+**`projects`**
+
+| project_id | project_name     |
+| ---------- | ---------------- |
+| 1          | Website Redesign |
+| 2          | API Audit        |
+| 3          | Brand Refresh    |
+| 4          | Social Media     |
+
+**`employee_projects`** (junction table)
+
+| employee_project_id | employee_id | project_id |
+| ------------------- | ----------- | ---------- |
+| 1                   | 1           | 1          |
+| 2                   | 1           | 2          |
+| 3                   | 2           | 2          |
+| 4                   | 3           | 3          |
+| 5                   | 4           | 3          |
+| 6                   | 4           | 4          |
+
+Now `department_name` lives in exactly one place — rename Engineering once and every employee inherits it automatically. And each project assignment gets its own row with its own primary key, making queries like "find all employees on the API Audit project" trivial.
+
+</details>
+
 
 ## Practice
 
-In groups, use [dbdiagram.io](https://dbdiagram.io) to design a schema for one of the following. Generate a full ERD using all three steps, and be ready to explain every structural decision in terms of normalization.
+In groups, use [dbdiagram.io](https://dbdiagram.io) to design a schema for one of the following. Follow the three-step process, then translate your ERD to SQL. Be ready to explain every structural decision in terms of normalization.
 
 - An online store (users, products, orders, order items)
 - A photo-sharing app with comments (users, photos, comments)
 - A restaurant reservation system (customers, restaurants, tables, reservations)
 - A job board (companies, job listings, applicants, applications)
+
+**Step 1 — Design your ERD in dbdiagram.io**
 
 For each design decision, be able to answer:
 - **Why is this a separate table?** (What redundancy or violation would occur if it weren't?)
@@ -552,3 +656,11 @@ For each table:
 - Name the primary key after the table (`company_id` in `companies`, etc.)
 - Use the same name as the primary key in any foreign key column that references it
 - Identify whether each relationship is one-to-many or many-to-many, and explain what that means for the schema
+
+**Step 2 — Translate your ERD to SQL**
+
+Write a `CREATE TABLE` statement for every table in your design. For each statement:
+- Use `SERIAL PRIMARY KEY` for the primary key column
+- Use `REFERENCES other_table(other_table_id)` for every foreign key column
+- Order your statements so that parent tables are created before child tables
+- Run your SQL in `psql` and use `\d table_name` to verify the `REFERENCES` constraints appear as expected
