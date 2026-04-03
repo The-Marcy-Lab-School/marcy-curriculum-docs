@@ -16,7 +16,6 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/s
     - [Scenario 4: A logged-in user clicks the Like button on a bookmark](#scenario-4-a-logged-in-user-clicks-the-like-button-on-a-bookmark)
     - [Scenario 5: A logged-in user clicks Delete on their own bookmark](#scenario-5-a-logged-in-user-clicks-delete-on-their-own-bookmark)
   - [Guided Reading Questions](#guided-reading-questions)
-    - [`server/db/init.js`](#serverdbinitjs)
     - [`server/db/pool.js`](#serverdbpooljs)
     - [`server/db/seed.js`](#serverdbseedjs)
     - [`server/models/userModel.js`](#servermodelsusermodeljs)
@@ -47,8 +46,8 @@ cp server/.env.template server/.env
 # Install dependencies
 npm install
 
-# Initialize the database schema
-npm run db:init
+# Seed the database (drops/recreates schema and inserts sample data)
+npm run db:seed
 
 # Start the server
 npm run dev
@@ -67,7 +66,7 @@ The completed solution files are:
 **Server**
 - `server/index.js` — Express server, middleware, and routes
 - `server/db/pool.js` — Shared Postgres connection pool
-- `server/db/init.js` — One-time schema initialization script
+- `server/db/seed.js` — Drops, recreates schema, and inserts sample data
 - `server/models/userModel.js` — User data access and password validation
 - `server/models/bookmarkModel.js` — Bookmark data access with JOIN queries
 - `server/controllers/authControllers.js` — Register, login, me, logout
@@ -82,26 +81,27 @@ The completed solution files are:
 
 ## Schema
 
-The application uses three tables. Run `npm run db:init` to create them.
+The application uses three tables. Run `npm run db:seed` to create them and load sample data.
 
 ```sql
-CREATE TABLE IF NOT EXISTS users (
-  user_id   SERIAL PRIMARY KEY,
-  username  TEXT UNIQUE NOT NULL,
+CREATE TABLE users (
+  user_id       SERIAL PRIMARY KEY,
+  username      TEXT UNIQUE NOT NULL,
   password_hash TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS bookmarks (
+CREATE TABLE bookmarks (
   bookmark_id SERIAL PRIMARY KEY,
   title       TEXT NOT NULL,
   url         TEXT NOT NULL,
   user_id     INT REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS bookmark_likes (
-  user_id     INT REFERENCES users(user_id) ON DELETE CASCADE,
-  bookmark_id INT REFERENCES bookmarks(bookmark_id) ON DELETE CASCADE,
-  PRIMARY KEY (user_id, bookmark_id)
+CREATE TABLE bookmark_likes (
+  bookmark_likes_id SERIAL PRIMARY KEY,
+  user_id           INT REFERENCES users(user_id) ON DELETE CASCADE,
+  bookmark_id       INT REFERENCES bookmarks(bookmark_id) ON DELETE CASCADE,
+  UNIQUE (user_id, bookmark_id)
 );
 ```
 
@@ -271,24 +271,6 @@ Open each file and answer the questions.
 
 ---
 
-#### `server/db/init.js`
-
-1. `init.js` loads a separate `init.sql` file and executes it rather than providing the SQL directly inside of the `pool.query()` call. What are the benefits of doing this? What are the constraints of this approach?
-2. The `CREATE TABLE` statements use `CREATE TABLE IF NOT EXISTS` instead of `CREATE TABLE`. What does this mean? What would happen if you ran `npm run db:init` a second time without `IF NOT EXISTS`?
-3. Both `bookmarks` and `bookmark_likes` reference `users` with `ON DELETE CASCADE`. What does `ON DELETE CASCADE` mean? What happens to a user's bookmarks and likes when their account is deleted?
-4. The `bookmark_likes` table has no `like_id SERIAL` column. Instead it uses `PRIMARY KEY (user_id, bookmark_id)`. What is a composite primary key? What constraint does this enforce, and why is it more appropriate here than a serial ID?
-
-**<details><summary>Answers</summary>**
-
-1. Setting up the database table structure can involve many steps so keeping the SQL logic in a separate file dramatically improves readability and creates clear separation of concerns. Additionally, VS Code has syntax highlighting for `.sql` files making it easier to read, write, and edit SQL code. SQL written as a string in JavaScript is simply more prone to typos. Lastly, you can run a SQL file using the `psql` CLI which can makes the approach more flexible in terms of where you can use that code. The only constraint is that the SQL is hard-coded so data generated at runtime cannot be used.
-2. `CREATE TABLE IF NOT EXISTS` only creates the table if it doesn't already exist. Without it, running `npm run db:init` a second time would throw an error because the table already exists and Postgres won't overwrite it.
-3. `ON DELETE CASCADE` means that when a row in the referenced table is deleted, all rows in this table that reference it are automatically deleted too. Deleting a user automatically deletes all of their bookmarks (via `bookmarks.user_id`) and all of their likes (via `bookmark_likes.user_id`).
-4. A composite primary key uses two or more columns together as a unique identifier. `PRIMARY KEY (user_id, bookmark_id)` means the combination of `user_id` and `bookmark_id` must be unique — a user can only like a specific bookmark once. A serial `like_id` would allow duplicate likes from the same user on the same bookmark.
-
-</details>
-
----
-
 #### `server/db/pool.js`
 
 1. Why does the application use a connection pool instead of creating a new database connection for each request?
@@ -305,17 +287,21 @@ Open each file and answer the questions.
 
 #### `server/db/seed.js`
 
-1. `init.js` loads a separate `init.sql` file and executes it, but `seed.js` keeps all logic in JavaScript with no `.sql` file. Why can't the seed data follow the same pattern as the schema?
+1. `seed.js` handles both schema setup and data insertion in a single JavaScript file, rather than a `.sql` file like the seed files from lesson 4. Why does it need to be JavaScript? What does `seed.js` need to do that a `.sql` file cannot?
 2. The seed function uses `Promise.all()` to hash all three passwords at once instead of awaiting each `bcrypt.hash()` call in sequence. What does `Promise.all()` do differently? Why does this matter for a slow operation like bcrypt hashing?
-3. The seed function deletes from all three tables before inserting, in the order `bookmark_likes` → `bookmarks` → `users`. Why does this specific order matter? What error would occur if you tried `DELETE FROM users` first?
+3. The seed function drops all three tables before recreating them, in the order `bookmark_likes` → `bookmarks` → `users`. Why does this specific order matter? What error would occur if you tried to drop `users` first?
 4. Both `INSERT` queries use a `RETURNING` clause allowing us to capture the newly created data into variables. What problem would arise if you hardcoded IDs like `1`, `2`, `3` when inserting likes instead of using the data returned by the previous inserts?
+5. Both `bookmarks` and `bookmark_likes` reference `users` with `ON DELETE CASCADE`. What does `ON DELETE CASCADE` mean? What happens to a user's bookmarks and likes when their account is deleted?
+6. The `bookmark_likes` table has a `bookmark_likes_id SERIAL PRIMARY KEY` column and a separate `UNIQUE (user_id, bookmark_id)` constraint. What does the `UNIQUE` constraint enforce? Why does this table need both a surrogate primary key and a unique constraint on the pair of foreign keys?
 
 **<details><summary>Answers</summary>**
 
 1. The seed data includes passwords that must be hashed with `bcrypt` before being stored — plain-text passwords can never go into the database. `bcrypt.hash()` is a JavaScript function; there is no equivalent in SQL. A `.sql` file is just static text with no way to call external libraries. Any seed data that requires runtime computation must live in JavaScript.
 2. `Promise.all()` runs all three `bcrypt.hash()` calls concurrently — all three start at the same time and the code waits for all of them to finish together. Awaiting each call in sequence runs them one at a time. Since bcrypt is intentionally slow (~300ms per hash at 12 rounds), sequential hashing would take ~900ms total. `Promise.all()` cuts that to ~300ms regardless of how many passwords there are.
-3. `bookmark_likes` has a foreign key referencing `bookmarks`, and `bookmarks` has a foreign key referencing `users`. Deleting from `users` first would violate the foreign key constraint on `bookmarks` — Postgres won't allow deleting a user row that other rows still reference. You must delete dependent rows first, working from the most dependent table (`bookmark_likes`) back to the least (`users`).
+3. `bookmark_likes` has a foreign key referencing `bookmarks`, and `bookmarks` has a foreign key referencing `users`. Dropping `users` first would violate the foreign key constraint — Postgres won't allow dropping a table that other tables still reference. You must drop dependent tables first, working from the most dependent (`bookmark_likes`) back to the least (`users`).
 4. After each `INSERT`, Postgres assigns auto-incremented IDs via `SERIAL`. The actual values depend on the sequence state — if the seed has been run before, the sequence has already advanced and `user_id` 1 may not exist. `RETURNING` captures the real IDs that Postgres just assigned so the likes insert references rows that are guaranteed to exist. Hardcoded IDs would silently produce wrong data or throw a foreign key violation on any run after the first.
+5. `ON DELETE CASCADE` means that when a row in the referenced table is deleted, all rows in this table that reference it are automatically deleted too. Deleting a user automatically deletes all of their bookmarks (via `bookmarks.user_id`) and all of their likes (via `bookmark_likes.user_id`).
+6. `UNIQUE (user_id, bookmark_id)` means the combination of `user_id` and `bookmark_id` must be unique across all rows — a user can only like a specific bookmark once. The `bookmark_likes_id SERIAL PRIMARY KEY` gives each row a stable, single-column identifier that is easier to reference and work with. The `UNIQUE` constraint enforces the business rule (no duplicate likes) separately from the primary key's job of uniquely identifying each row.
 
 </details>
 
@@ -423,7 +409,7 @@ Open each file and answer the questions.
 
 - [ ] `CREATE TABLE IF NOT EXISTS` with `SERIAL PRIMARY KEY`, `TEXT`, `INT`, `NOT NULL`, `UNIQUE`
 - [ ] Foreign keys with `REFERENCES` and `ON DELETE CASCADE`
-- [ ] Composite primary key (`PRIMARY KEY (col1, col2)`)
+- [ ] `UNIQUE (col1, col2)` constraint to enforce uniqueness across a pair of columns
 - [ ] `INSERT`, `SELECT`, `UPDATE`, `DELETE` with parameterized queries (`$1`, `$2`)
 - [ ] `INNER JOIN` to combine rows from two tables
 - [ ] `LEFT JOIN` to include rows with no matching records in the joined table
@@ -431,7 +417,7 @@ Open each file and answer the questions.
 - [ ] `ORDER BY` to sort results
 - [ ] Connection pool with `pg` (`new Pool(config)`)
 - [ ] Dual connection config: `PG_CONNECTION_STRING` for production, individual vars for development
-- [ ] `npm run db:init` via `server/db/init.js` to initialize schema
+- [ ] `npm run db:seed` via `server/db/seed.js` to drop, recreate, and seed the database
 
 ### Core — Authentication & Authorization
 
