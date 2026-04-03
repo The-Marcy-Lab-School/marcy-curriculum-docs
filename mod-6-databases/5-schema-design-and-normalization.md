@@ -19,16 +19,17 @@ In this lesson, you'll learn what normalization means, why it matters, and how t
     - [Don't Forget The Primary Key!](#dont-forget-the-primary-key)
   - [Normalization Rule #3: Primary Key Dependency](#normalization-rule-3-primary-key-dependency)
     - [Association Tables for Many-To-Many Relationships](#association-tables-for-many-to-many-relationships)
-- [The Four-Step Design Process](#the-four-step-design-process)
-  - [Step 1 — Identify Tables](#step-1--identify-tables)
-  - [Step 2 — Define Columns](#step-2--define-columns)
-  - [Step 3 — Determine Relationships](#step-3--determine-relationships)
-  - [Step 4 — Apply Constraints](#step-4--apply-constraints)
-- [From Design to SQL](#from-design-to-sql)
+- [Designing a Multi-Table Schema](#designing-a-multi-table-schema)
+  - [Create Independent Tables First](#create-independent-tables-first)
+  - [Use `REFERENCES` for Foreign Keys](#use-references-for-foreign-keys)
+  - [Creation order matters](#creation-order-matters)
+  - [`UNIQUE` Constraint on Multiple Columns](#unique-constraint-on-multiple-columns)
+  - [Complete Schema](#complete-schema)
+  - [Schema Investigation](#schema-investigation)
   - [See It in Action](#see-it-in-action)
-- [Normalization Rules Challenge](#normalization-rules-challenge)
 - [Practice](#practice)
 - [ERDs: Design Before You Code (Extension)](#erds-design-before-you-code-extension)
+- [Normalization Rules Challenge](#normalization-rules-challenge)
 
 ## Essential Questions
 
@@ -215,122 +216,81 @@ We can't add a `product` column to the `orders` table since each order can have 
 
 This kind of many-to-many table is also called a **bridge table** or **association table**.
 
-## The Four-Step Design Process
+## Designing a Multi-Table Schema
 
-Normalization is something that you can do to improve the design of an existing database. But we can and should use those principles from the start when designing a database from scratch.
+Now that we know the rules of normalization, we can apply them when designing a schema from scratch.
 
-A normalized schema emerges naturally from following four steps:
+Let's practice by building a **school database**. With this database, we want to be able to answer these data questions:
 
-1. **Identify tables** — what distinct types of things does the app need to store? Each type of entity that has its own properties and its own lifecycle gets its own table.
-2. **Define columns** — what properties does each entity have? If a property could change independently of the others (like a product name), it belongs in its own table, not repeated as a column on a related table.
-3. **Determine relationships** — how do the entities relate? If the relationship produces multiple values per row, you need a junction table (Rule #2). If a column's value is determined by a non-primary column, it needs to move to its own table (Rule #3).
-4. **Apply Constraints** — which properties must be unique? Which properties cannot be null? Which properties should have a default value if no value is provided?
+- Which students attend the school?
+- Which teachers work at the school?
+- What courses are available at the school?
+- Which teacher is assigned to each course?
+- Which students are enrolled in which courses?
 
-We'll apply these steps to design a school database. Here are the user stories:
+Take a moment now and consider:
+- What "entities" or "things" exist in this database system? What kinds of relationships will exist between them?
+  - → This will determine our tables, the need for foreign keys, and if we need any association/bridge tables.
+- What data does each thing need to know to answer the data questions? 
+  - → This will determine the columns in each table, their data types, and constraints.
 
-- We can see all students at the school
-- We can see all teachers at the school
-- We can see all courses available
-- We can see which students are enrolled in which courses
-- We can see which teacher is assigned to each course
-
-### Step 1 — Identify Tables
-
-Each distinct entity — something with its own properties and its own existence — gets its own table.
-
-**<details><summary>Q: Based on the user stories, what tables do we need?</summary>**
+**<details><summary>Q: What tables do we need? What are their relationships?</summary>**
 
 - `students` — a student exists independently; they have their own name, DOB, etc.
 - `teachers` — a teacher exists independently; they have their own name, etc.
 - `classes` — a class exists independently; it has a title and an assigned teacher
-- `enrollments` — the relationship between students and classes needs its own table (a student can be in many classes, a class can have many students — this is a many-to-many, which means an association table)
+- `enrollments` — the relationship between students and classes needs its own table. A student can be in many classes and a class can have many students — this is a many-to-many relationship, which requires an association table.
 
 Without `enrollments`, the only alternative would be storing courses as a comma-separated list on the `students` table — a direct violation of atomicity.
 
 </details>
 
-### Step 2 — Define Columns
+**<details><summary>What columns does each table need?</summary>**
 
-For each table, define a primary key column named after the table (`student_id`, `teacher_id`, `class_id`). 
+Remember, name primary keys after their table (`student_id`, `teacher_id`, `class_id`). Foreign keys use the exact same name as the primary key they reference.
 
-Then ask: which additional columns are needed to answer the user story questions? Which table does each piece of information belong to? Which tables need foreign key columns to connect to other tables?
-
-{% hint style="info" %}
-Foreign keys use the exact same name as the primary key they reference.
-{% endhint %}
-
-**<details><summary>School Solution</summary>**
-
-- `students`: `student_id`, `first_name`, `last_name`, `dob`
-- `teachers`: `teacher_id`, `first_name`, `last_name`
-- `classes`: `class_id`, `title`, `teacher_id` — not `teacher_name`. A teacher's name belongs in the `teachers` table. Putting `teacher_name` directly on `classes` would break Rule #3: the name depends on the teacher, not on the class.
-- `enrollments`: `enrollment_id`, `student_id`, `class_id`
-
-</details>
-
-### Step 3 — Determine Relationships
-
-For each table, ask: is each relationship one-to-many or many-to-many?
-
-- **One-to-many**: one row in table A is referenced by many rows in table B. The foreign key lives on the "many" side.
-- **Many-to-many**: rows in each table can reference many rows in the other. Requires a junction table.
-
-**<details><summary>School Solution</summary>**
-
-- A teacher can teach many classes, but each class has only one teacher → **one-to-many**. `teacher_id` lives on `classes`.
-- A student can be enrolled in many classes, and a class can have many students → **many-to-many**. The `enrollments` association table holds both `student_id` and `class_id`.
+- `students`: 
+  - `student_id` [PK]
+  - `first_name`
+  - `last_name`
+  - `dob`
+- `teachers`: 
+  - `teacher_id` [PK]
+  - `first_name`
+  - `last_name`
+- `classes`: 
+  - `class_id` [PK]
+  - `title`
+  - `teacher_id` [FK]
+- `enrollments`: 
+  - `enrollment_id` [PK]
+  - `student_id` [FK]
+  - `class_id` [FK]
 
 </details>
 
-**<details><summary>Q: Why does the `enrollments` table exist? What would go wrong if you tried to store enrollment data directly on the `students` table instead?</summary>**
+### Create Independent Tables First
 
-A student can be enrolled in many classes and a class can have many students — this is a many-to-many relationship. There is no way to represent that with a single foreign key column on either table.
+Now let's write the `CREATE TABLE` statements. Let's start with `students` and `teachers` since they exist on their own and won't need to reference other tables. The syntax should be familiar:
 
-The only alternative would be storing courses as a comma-separated list (e.g., `courses = "Math, Science, History"`) directly on the `students` table. That breaks the rule of atomicity — multiple values in one cell. Querying it is awkward, updating it is fragile, and you can't enforce foreign keys to the `classes` table.
+```sql
+CREATE TABLE students (
+  student_id  SERIAL PRIMARY KEY,
+  first_name  TEXT   NOT NULL,
+  last_name   TEXT   NOT NULL,
+  dob         DATE
+);
 
-The `enrollments` association table solves this by giving each student-class pairing its own row. This is normalization in practice: a relationship that produces multiple values per entity gets its own table.
+CREATE TABLE teachers (
+  teacher_id  SERIAL PRIMARY KEY,
+  first_name  TEXT   NOT NULL,
+  last_name   TEXT   NOT NULL
+);
+```
 
-</details>
+### Use `REFERENCES` for Foreign Keys
 
-### Step 4 — Apply Constraints
-
-Once you know your tables, columns, and relationships, ask: what rules should the database enforce on the data itself?
-
-- **`NOT NULL`** — must this column always have a value? Names, titles, and foreign keys usually should.
-- **`UNIQUE`** — must this value (or combination of values) be unique across all rows? Usernames, emails, and association table pairs usually should.
-- **`DEFAULT`** — what value should this column have if none is provided? Timestamps and boolean flags often have sensible defaults.
-
-**<details><summary>School Solution</summary>**
-
-- `students.first_name`, `students.last_name` — `NOT NULL`: a student must have a name
-- `students.dob` — nullable: date of birth is useful but not required to enroll
-- `teachers.first_name`, `teachers.last_name` — `NOT NULL`: a teacher must have a name
-- `classes.title` — `NOT NULL`: a class must have a title
-- `classes.teacher_id` — nullable: a class might exist before a teacher is assigned
-- `enrollments.student_id`, `enrollments.class_id` — `NOT NULL`: an enrollment without a student or class is meaningless
-- `enrollments (student_id, class_id)` — `UNIQUE`: a student should only be enrolled in the same class once
-
-</details>
-
-**<details><summary>Q: Why should `classes.teacher_id` be nullable rather than `NOT NULL`?</summary>**
-
-A class might be created before a teacher is assigned to it — for example, when building out the semester schedule before staff assignments are finalized. Making `teacher_id NOT NULL` would prevent the class from being inserted until a teacher exists and is known. Keeping it nullable allows the class to exist independently and have a teacher assigned later.
-
-</details>
-
-**<details><summary>Q: Why does `enrollments` need `UNIQUE (student_id, class_id)` rather than just making `student_id` or `class_id` unique on their own?</summary>**
-
-Making `student_id` unique on `enrollments` would mean each student could only ever be enrolled in one class — clearly wrong. Making `class_id` unique would mean each class could only ever have one student. Neither column should be unique on its own.
-
-The constraint we actually want is: the *combination* of `student_id` and `class_id` must be unique. A student can be in many classes, and a class can have many students — but the same student cannot be in the same class twice. `UNIQUE (student_id, class_id)` expresses exactly that rule.
-
-</details>
-
-## From Design to SQL
-
-Once you've identified your tables, columns, and relationships, you translate each table into a `CREATE TABLE` statement.
-
-In SQL, foreign key relationships use `REFERENCES table(column_name)` directly on the foreign key column:
+`classes` needs a `teacher_id` column that points to a row in `teachers`. In SQL, you declare a foreign key with `REFERENCES`:
 
 ```sql
 CREATE TABLE classes (
@@ -340,17 +300,50 @@ CREATE TABLE classes (
 );
 ```
 
-**Creation order matters**
+### Creation order matters
 
-A `REFERENCES` constraint means Postgres enforces the relationship at the database level — any attempt to insert a row into `classes` with a `teacher_id` that doesn't exist in `teachers` will be rejected. Because of this, **referenced tables must be created before the tables that reference them**:
+`REFERENCES teachers(teacher_id)` tells Postgres to enforce the relationship at the database level — it will reject any insert into `classes` with a `teacher_id` that doesn't exist in `teachers`. This is called **referential integrity**.
+
+Because of this enforcement, **referenced tables must exist before the tables that reference them**:
 
 - `students` and `teachers` have no foreign keys — create them first
-- `classes` references `teachers` — create it after `teachers`
-- `enrollments` references both `students` and `classes` — create it last
+- `classes` references `teachers` so `teachers` must exist before `classes`
+- `enrollments` references both `students` and `classes` so it should be created last
 
-Here is the complete `school_db` schema. Read through it and trace each `REFERENCES` back to the table and column it points to before running it:
+**Dropping tables follows the reverse order.** If you need to reset the schema, you must drop tables from most-dependent to least-dependent — the opposite of creation order. Dropping a parent table while a child still references it will fail with a foreign key constraint error:
 
 ```sql
+-- Drop in reverse dependency order
+DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS classes;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS teachers;
+```
+
+### `UNIQUE` Constraint on Multiple Columns
+
+`enrollments` links a student to a class. A student should only be enrolled in the same class once — but `student_id` and `class_id` individually can (and should) repeat. The constraint we need is on the *combination*:
+
+```sql
+CREATE TABLE enrollments (
+  enrollment_id  SERIAL  PRIMARY KEY,
+  student_id     INTEGER REFERENCES students(student_id),
+  class_id       INTEGER REFERENCES classes(class_id),
+  UNIQUE (student_id, class_id)
+);
+```
+
+`UNIQUE (student_id, class_id)` means no two rows can share the same `student_id` and `class_id` pair. A student can be in many classes, a class can have many students — but the same student can't be enrolled in the same class twice.
+
+### Complete Schema
+
+```sql
+-- Drop in reverse dependency order
+DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS classes;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS teachers;
+
 -- No foreign keys — create first
 CREATE TABLE students (
   student_id  SERIAL PRIMARY KEY,
@@ -382,27 +375,27 @@ CREATE TABLE enrollments (
 );
 ```
 
-**<details><summary>Q: The `enrollments` table has both a `SERIAL PRIMARY KEY` and a `UNIQUE (student_id, class_id)` constraint. What does the `UNIQUE` constraint add that the primary key doesn't already provide?</summary>**
+### Schema Investigation
 
-The primary key (`enrollment_id`) uniquely identifies each row — it's the row's identifier. But it says nothing about the *combination* of `student_id` and `class_id`. Without the `UNIQUE` constraint, nothing would stop the same student from being enrolled in the same class twice, producing two rows with different `enrollment_id` values but identical `student_id` and `class_id`.
+**<details><summary>Q: Why does `classes` get the `teacher_id` and not the `teacher_name`?</summary>**
 
-`UNIQUE (student_id, class_id)` enforces the business rule that a student can only be enrolled in a given class once. The primary key and the unique constraint serve different purposes: the primary key identifies the row; the unique constraint enforces a real-world constraint on the data.
+A teacher's name belongs in the `teachers` table. Putting `teacher_name` directly on `classes` would break Normalization Rule #3: the name depends on the teacher, not on the class.
+
+</details>
+
+**<details><summary>Q: Why does the `enrollments` table exist? What would go wrong if you tried to store enrollment data directly on the `students` table instead?</summary>**
+
+A student can be enrolled in many classes and a class can have many students — this is a many-to-many relationship. There is no way to represent that with a single foreign key column on either table.
+
+The only alternative would be storing courses as a comma-separated list (e.g., `courses = "Math, Science, History"`) directly on the `students` table. That breaks the rule of atomicity — multiple values in one cell. Querying it is awkward, updating it is fragile, and you can't enforce foreign keys to the `classes` table.
+
+The `enrollments` association table solves this by giving each student-class pairing its own row. This is normalization in practice: a relationship that produces multiple values per entity gets its own table.
 
 </details>
 
 **<details><summary>Q: What happens if you try to `CREATE TABLE classes` before `CREATE TABLE teachers`?</summary>**
 
 Postgres throws an error: `relation "teachers" does not exist`. The `REFERENCES teachers(teacher_id)` clause needs `teachers` to already exist so Postgres can verify the column it's linking to. Always create parent tables before child tables.
-
-</details>
-
-**<details><summary>Q: In the school schema, which tables are "parents" and which are "children"? What determines this?</summary>**
-
-- `students` and `teachers` are parents — their primary keys are referenced by other tables, but they don't reference anyone themselves
-- `classes` is a child of `teachers` — it holds `teacher_id REFERENCES teachers`
-- `enrollments` is a child of both `students` and `classes` — it holds foreign keys pointing to both
-
-A table is a "parent" when its primary key is referenced by another table's foreign key. A table is a "child" when it holds a foreign key column pointing at a parent.
 
 </details>
 
@@ -416,6 +409,14 @@ DETAIL: Key (teacher_id)=(99) is not present in table "teachers".
 ```
 
 This is referential integrity — the database itself guarantees that every `teacher_id` in `classes` points to a real teacher. You don't need to check this in your application code because Postgres won't let the bad data in.
+
+</details>
+
+**<details><summary>Q: Why does `enrollments` need `UNIQUE (student_id, class_id)` rather than just making `student_id` or `class_id` individually unique?</summary>**
+
+Making `student_id` unique on `enrollments` would mean each student could only ever be enrolled in one class — clearly wrong. Making `class_id` unique would mean each class could only ever have one student.
+
+The constraint we actually want is on the *pair*: a student can be in many classes, and a class can have many students — but the same student cannot be in the same class twice. `UNIQUE (student_id, class_id)` expresses exactly that rule.
 
 </details>
 
@@ -460,6 +461,8 @@ sudo -u postgres psql school_db
 
 -- Query across the schema
 SELECT * FROM students;
+SELECT * FROM teachers;
+SELECT * FROM classes;
 SELECT * FROM enrollments;
 
 -- What classes is Alice enrolled in?
@@ -473,72 +476,9 @@ WHERE students.first_name = 'Alice';
 
 Run `\d enrollments` and compare the output to the `CREATE TABLE enrollments` statement above — the `REFERENCES` constraints and the `UNIQUE` constraint should all appear exactly as written.
 
-## Normalization Rules Challenge
-
-Consider this `employees` table. Which normalization rules does it break? How would you fix it?
-
-| employee_id | employee_name | department_id | department_name | project_names               |
-| ----------- | ------------- | ------------- | --------------- | --------------------------- |
-| 1           | Ana           | 10            | Engineering     | Website Redesign, API Audit |
-| 2           | Ben           | 10            | Engineering     | API Audit                   |
-| 3           | Cara          | 20            | Marketing       | Brand Refresh               |
-| 4           | Dan           | 20            | Marketing       | Brand Refresh, Social Media |
-
-**<details><summary>Which rules does this table break?</summary>**
-
-**Rule #2 — Atomic Values:** `project_names` stores multiple values in a single cell (e.g., `"Website Redesign, API Audit"`). Each project must get its own row.
-
-**Rule #3 — Primary Key Dependency:** `department_name` depends on `department_id`, not on `employee_id`. If the Engineering department is renamed, every Engineering employee's row must be updated — and it's easy to miss one.
-
-</details>
-
-**<details><summary>How would you fix it?</summary>**
-
-Extract each dependency into its own table and use a junction table for the many-to-many relationship between employees and projects.
-
-**`departments`**
-
-| department_id | department_name |
-| ------------- | --------------- |
-| 10            | Engineering     |
-| 20            | Marketing       |
-
-**`employees`**
-
-| employee_id | employee_name | department_id |
-| ----------- | ------------- | ------------- |
-| 1           | Ana           | 10            |
-| 2           | Ben           | 10            |
-| 3           | Cara          | 20            |
-| 4           | Dan           | 20            |
-
-**`projects`**
-
-| project_id | project_name     |
-| ---------- | ---------------- |
-| 1          | Website Redesign |
-| 2          | API Audit        |
-| 3          | Brand Refresh    |
-| 4          | Social Media     |
-
-**`employee_projects`** (junction table)
-
-| employee_project_id | employee_id | project_id |
-| ------------------- | ----------- | ---------- |
-| 1                   | 1           | 1          |
-| 2                   | 1           | 2          |
-| 3                   | 2           | 2          |
-| 4                   | 3           | 3          |
-| 5                   | 4           | 3          |
-| 6                   | 4           | 4          |
-
-Now `department_name` lives in exactly one place — rename Engineering once and every employee inherits it automatically. And each project assignment gets its own row with its own primary key, making queries like "find all employees on the API Audit project" trivial.
-
-</details>
-
 ## Practice
 
-In groups, design a schema for one of the following. Follow the four-step process, then translate your design to SQL. Be ready to explain every structural decision in terms of normalization.
+In groups, design a schema for one of the following and build it directly in SQL. Be ready to explain every structural decision in terms of normalization.
 
 - An online store (users, products, orders, order items)
 - A photo-sharing app with comments (users, photos, comments)
@@ -547,7 +487,7 @@ In groups, design a schema for one of the following. Follow the four-step proces
 
 **Step 1 — Plan your schema**
 
-Work through the four steps on paper or a whiteboard:
+Work through the design on paper or a whiteboard:
 - Which tables do you need? What does each one represent?
 - What columns does each table have? Where does each piece of information belong?
 - What are the relationships? Which are one-to-many? Which are many-to-many?
@@ -639,3 +579,66 @@ Table enrollments {
 In DBML, relationships use these symbols:
 * one-to-one: `[ref: - table.column]`
 * many-to-one: `[ref: > table.column]` (use `<` to flip direction)
+
+## Normalization Rules Challenge
+
+Consider this `employees` table. Which normalization rules does it break? How would you fix it?
+
+| employee_id | employee_name | department_id | department_name | project_names               |
+| ----------- | ------------- | ------------- | --------------- | --------------------------- |
+| 1           | Ana           | 10            | Engineering     | Website Redesign, API Audit |
+| 2           | Ben           | 10            | Engineering     | API Audit                   |
+| 3           | Cara          | 20            | Marketing       | Brand Refresh               |
+| 4           | Dan           | 20            | Marketing       | Brand Refresh, Social Media |
+
+**<details><summary>Which rules does this table break?</summary>**
+
+**Rule #2 — Atomic Values:** `project_names` stores multiple values in a single cell (e.g., `"Website Redesign, API Audit"`). Each project must get its own row.
+
+**Rule #3 — Primary Key Dependency:** `department_name` depends on `department_id`, not on `employee_id`. If the Engineering department is renamed, every Engineering employee's row must be updated — and it's easy to miss one.
+
+</details>
+
+**<details><summary>How would you fix it?</summary>**
+
+Extract each dependency into its own table and use a junction table for the many-to-many relationship between employees and projects.
+
+**`departments`**
+
+| department_id | department_name |
+| ------------- | --------------- |
+| 10            | Engineering     |
+| 20            | Marketing       |
+
+**`employees`**
+
+| employee_id | employee_name | department_id |
+| ----------- | ------------- | ------------- |
+| 1           | Ana           | 10            |
+| 2           | Ben           | 10            |
+| 3           | Cara          | 20            |
+| 4           | Dan           | 20            |
+
+**`projects`**
+
+| project_id | project_name     |
+| ---------- | ---------------- |
+| 1          | Website Redesign |
+| 2          | API Audit        |
+| 3          | Brand Refresh    |
+| 4          | Social Media     |
+
+**`employee_projects`** (junction table)
+
+| employee_project_id | employee_id | project_id |
+| ------------------- | ----------- | ---------- |
+| 1                   | 1           | 1          |
+| 2                   | 1           | 2          |
+| 3                   | 2           | 2          |
+| 4                   | 3           | 3          |
+| 5                   | 4           | 3          |
+| 6                   | 4           | 4          |
+
+Now `department_name` lives in exactly one place — rename Engineering once and every employee inherits it automatically. And each project assignment gets its own row with its own primary key, making queries like "find all employees on the API Audit project" trivial.
+
+</details>
