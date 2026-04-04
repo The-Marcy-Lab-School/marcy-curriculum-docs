@@ -206,18 +206,27 @@ This new schema has a number of improvements:
 
 #### Association Tables for Many-To-Many Relationships
 
-This database schema has a few interesting relationships now:
-* **Customers --< Orders**: A customer can place many orders (one to many)
-* **Orders >--< Products**: An order can contain main products AND a product can be in many orders (many to many)
+Look at the relationship between `orders` and `products` in this new schema:
 
-The `order_products` table represents this **many-to-many** relationship between `orders` and `products` and is referred to as an **"association" or "bridge" table**. 
-* Association tables often have a primary key and *two* foreign keys: one for each table that it connects
-* Each pair of foreign keys should be unique to avoid duplicate relationships (order `5` shouldn't have product `3` multiple times)
-* Association tables can also have additional columns that describe the relationship further (e.g. `product_quantity` to indicate the quantity of a product in an order)
+![The order_products table sits between orders and products, connecting them.](./img/5-schema-design-normalization/normalization-one-to-many.png)
 
-**<details><summary>Q: Why can't we just add the product information to the `orders` table?</summary>**
+* A single order can contain many products
+* A single product can appear in many different orders
 
-We can't add a `product` column to the `orders` table since each order can have many products.
+This is a **many-to-many** relationship. You can't represent it with a foreign key column on either table — adding a `product_id` column to `orders` would only allow one product per order, which violates atomicity.
+
+Instead, `order_products` acts as an **association table** (also called a bridge table) that connects `orders` and `products`. Every row in `order_products` represents one product being part of one order:
+
+* It has its own primary key (`order_product_id`)
+* It has two foreign keys — `order_id` references `orders`, and `product_id` references `products`
+* The *combination* of those two foreign keys must be unique (e.g. order `5` shouldn't have product `3` listed twice)
+* It can carry additional columns that describe the relationship, like `product_quantity`
+
+**<details><summary>Q: Why can't we just add the product information directly to the `orders` table?</summary>**
+
+Each order can contain multiple products. Adding a single `product_id` column to `orders` would only allow one product per order — and storing multiple product IDs in one column would violate atomicity (multiple values in a single cell).
+
+The `order_products` association table solves this by giving each order-product pairing its own row. This is normalization in practice: a relationship that produces multiple values per entity gets its own table.
 
 </details>
 
