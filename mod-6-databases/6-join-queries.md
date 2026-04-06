@@ -113,7 +113,7 @@ Splitting into two tables eliminates all of this. The user's info lives in one r
 
 </details>
 
-To create a more normalized database schema, we can split the data into two tables: `users` and `posts`. These tables have a **one-to-many** relationship: one user can author many posts. The `posts` table holds a `user_id` foreign key that references `users.user_id`.
+To create a more normalized database schema, we should split the data into two tables: `users` and `posts`. These tables have a **one-to-many** relationship: one user can author many posts. The `posts` table holds a `user_id` foreign key that references `users.user_id`.
 
 **`users` table:**
 
@@ -152,7 +152,7 @@ But what about those questions that cross the boundary between tables?
 - Who wrote the post titled `'Advanced Joins'`?
 - How many posts has each user written?
 
-None of these can be answered from a single table. `posts` knows the `user_id` of each post's author, but not their username — that lives in `users`. To connect them, you need a JOIN.
+None of these can be answered from a single table. `posts` knows the `user_id` of each post's author, but not their username — that lives in `users`. To connect the data back into a flat table, you need a JOIN.
 
 There are six different kinds of `JOIN` queries in SQL but the two most commonly used are:
 * `INNER JOIN`
@@ -162,9 +162,9 @@ There are six different kinds of `JOIN` queries in SQL but the two most commonly
 
 ### INNER JOIN Syntax
 
-`INNER JOIN` combines rows from two tables where the join condition is true. Rows with no match on either side are excluded from the result.
+Suppose we wanted to see all users who made a post, excluding those who did not.
 
-For example, we can see all users who made a post, excluding those who did not.
+`INNER JOIN` combines rows from two tables where the join condition is true. Rows with no match on either side are excluded from the result.
 
 ```sql
 SELECT *
@@ -313,9 +313,9 @@ ORDER BY post_count DESC;
 
 ### Association Tables and Three-Way JOINs
 
-Some relationships are many-to-many. In `social_db`, a post can have many tags, and a tag can appear on many posts. This is the same pattern as `enrollments` connecting `students` and `classes` in the previous lesson — a many-to-many relationship needs an association table because there's no place to put a single foreign key that would capture both sides.
+Some relationships are many-to-many. In `social_db`, a post can have many tags, and a tag can appear on many posts. This is the same pattern as `order_products` connecting `orders` and `products` and `enrollments` connecting `students` and `classes`.
 
-The four tables in `social_db` and how they connect:
+In this social media database, the four tables in `social_db` have the following relationships:
 
 - `users` — one row per user; independent table
 - `posts` — one row per post; references `users` via `user_id` (the one-to-many you've been working with)
@@ -345,8 +345,10 @@ The four tables in `social_db` and how they connect:
 To query across a many-to-many relationship, JOIN through the association table:
 
 ```sql
--- All tags on a specific post
-SELECT posts.title, tags.name AS tag
+-- All tags (tag names) on a specific post
+SELECT 
+  posts.title, 
+  tags.name AS tag
 FROM posts
   INNER JOIN post_tags ON posts.post_id = post_tags.post_id
   INNER JOIN tags ON post_tags.tag_id = tags.tag_id
@@ -355,7 +357,9 @@ WHERE posts.title = 'Learning SQL';
 
 ```sql
 -- All posts with a given tag, including the author's username
-SELECT posts.title, users.username
+SELECT 
+  posts.title, 
+  users.username
 FROM posts
   INNER JOIN post_tags ON posts.post_id = post_tags.post_id
   INNER JOIN tags      ON post_tags.tag_id = tags.tag_id
