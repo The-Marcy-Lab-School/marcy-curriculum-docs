@@ -30,10 +30,10 @@ A **JOIN** combines rows from two tables based on a matching column — typicall
 - [LEFT JOIN](#left-join)
   - [When INNER JOIN Is Not Enough](#when-inner-join-is-not-enough)
   - [LEFT JOIN Practice](#left-join-practice)
-- [GROUP BY with JOINs](#group-by-with-joins)
-  - [Smart GROUP BY with Primary Keys](#smart-group-by-with-primary-keys)
 - [Many-to-Many Relationships](#many-to-many-relationships)
   - [Association Tables and Three-Way JOINs](#association-tables-and-three-way-joins)
+- [GROUP BY with JOINs](#group-by-with-joins)
+  - [Smart GROUP BY with Primary Keys](#smart-group-by-with-primary-keys)
 - [Challenge: JOIN Queries](#challenge-join-queries)
 
 ## Essential Questions
@@ -309,62 +309,6 @@ ORDER BY post_count DESC;
 
 </details>
 
-## GROUP BY with JOINs
-
-You already know `GROUP BY` from the aggregates lesson. In a JOIN query, `GROUP BY` lets you produce per-entity summaries — for example, counting posts per user.
-
-```sql
-SELECT
-  users.username,
-  COUNT(posts.post_id) AS post_count
-FROM users
-  LEFT JOIN posts ON users.user_id = posts.user_id
-GROUP BY users.user_id
-ORDER BY post_count DESC;
-```
-
-### Smart GROUP BY with Primary Keys
-
-In standard SQL, every non-aggregate column in `SELECT` must appear in `GROUP BY`. That would mean listing both `users.user_id` and `users.username` in the clause.
-
-Postgres relaxes this rule: **when you `GROUP BY` a primary key, you can include other columns from that same table in `SELECT` without listing them in `GROUP BY`**. Postgres knows that if you've grouped by `user_id`, `username` is uniquely determined by it — there can only be one username per group.
-
-```sql
--- Standard SQL: must list every selected column
-SELECT users.user_id, users.username, COUNT(posts.post_id) AS post_count
-FROM users
-  LEFT JOIN posts ON users.user_id = posts.user_id
-GROUP BY users.user_id, users.username;
-
--- Postgres smart GROUP BY: listing only the primary key is enough
-SELECT users.user_id, users.username, COUNT(posts.post_id) AS post_count
-FROM users
-  LEFT JOIN posts ON users.user_id = posts.user_id
-GROUP BY users.user_id;
-```
-
-{% hint style="info" %}
-The smart `GROUP BY` optimization applies to the table whose primary key you're grouping by. Columns from the *joined* table (e.g., `posts`) still need to be inside an aggregate function or explicitly listed in `GROUP BY`.
-{% endhint %}
-
-**<details><summary>Q: Write a query that returns each user's `user_id`, `username`, and `email` along with the number of posts they've written. Include users with zero posts, ordered by post count descending.</summary>**
-
-```sql
-SELECT
-  users.user_id,
-  users.username,
-  users.email,
-  COUNT(posts.post_id) AS post_count
-FROM users
-  LEFT JOIN posts ON users.user_id = posts.user_id
-GROUP BY users.user_id
-ORDER BY post_count DESC;
-```
-
-Grouping by `users.user_id` (the primary key) allows `users.username` and `users.email` in `SELECT` without listing them in `GROUP BY`.
-
-</details>
-
 ## Many-to-Many Relationships
 
 ### Association Tables and Three-Way JOINs
@@ -424,6 +368,62 @@ WHERE tags.name = 'sql';
 A foreign key column holds one value per row — it can reference exactly one row in the other table. If you put `tag_id` on `posts`, a post could only have one tag. If you put `post_id` on `tags`, a tag could only belong to one post.
 
 Neither captures "many on both sides." The association table solves this by giving each post-tag pairing its own row, allowing any post to have any number of tags and any tag to appear on any number of posts.
+
+</details>
+
+## GROUP BY with JOINs
+
+You already know `GROUP BY` from the aggregates lesson. In a JOIN query, `GROUP BY` lets you produce per-entity summaries — for example, counting posts per user.
+
+```sql
+SELECT
+  users.username,
+  COUNT(posts.post_id) AS post_count
+FROM users
+  LEFT JOIN posts ON users.user_id = posts.user_id
+GROUP BY users.user_id
+ORDER BY post_count DESC;
+```
+
+### Smart GROUP BY with Primary Keys
+
+In standard SQL, every non-aggregate column in `SELECT` must appear in `GROUP BY`. That would mean listing both `users.user_id` and `users.username` in the clause.
+
+Postgres relaxes this rule: **when you `GROUP BY` a primary key, you can include other columns from that same table in `SELECT` without listing them in `GROUP BY`**. Postgres knows that if you've grouped by `user_id`, `username` is uniquely determined by it — there can only be one username per group.
+
+```sql
+-- Standard SQL: must list every selected column
+SELECT users.user_id, users.username, COUNT(posts.post_id) AS post_count
+FROM users
+  LEFT JOIN posts ON users.user_id = posts.user_id
+GROUP BY users.user_id, users.username;
+
+-- Postgres smart GROUP BY: listing only the primary key is enough
+SELECT users.user_id, users.username, COUNT(posts.post_id) AS post_count
+FROM users
+  LEFT JOIN posts ON users.user_id = posts.user_id
+GROUP BY users.user_id;
+```
+
+{% hint style="info" %}
+The smart `GROUP BY` optimization applies to the table whose primary key you're grouping by. Columns from the *joined* table (e.g., `posts`) still need to be inside an aggregate function or explicitly listed in `GROUP BY`.
+{% endhint %}
+
+**<details><summary>Q: Write a query that returns each user's `user_id`, `username`, and `email` along with the number of posts they've written. Include users with zero posts, ordered by post count descending.</summary>**
+
+```sql
+SELECT
+  users.user_id,
+  users.username,
+  users.email,
+  COUNT(posts.post_id) AS post_count
+FROM users
+  LEFT JOIN posts ON users.user_id = posts.user_id
+GROUP BY users.user_id
+ORDER BY post_count DESC;
+```
+
+Grouping by `users.user_id` (the primary key) allows `users.username` and `users.email` in `SELECT` without listing them in `GROUP BY`.
 
 </details>
 
