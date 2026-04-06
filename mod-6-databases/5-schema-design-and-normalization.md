@@ -44,6 +44,7 @@ By the end of this lesson, you should be able to answer these questions:
 ## Key Concepts
 
 * **Normalization** — the practice of structuring a database so that every fact is stored in exactly one place, eliminating redundancy and keeping data consistent.
+* **Flat Table** — a table containing data across multiple entities, often prone to data corruption and redundancy.
 * **Normal forms** — a set of rules for normalization. The three rules covered in this lesson address the most common design problems: unique primary keys, atomic values, and primary key dependency.
 * **Schema** — the structure of a database: which tables exist, which columns each table has, the data types of those columns, and the constraints enforced on them.
 * **Schema design** — the process of planning that structure before writing any code.
@@ -94,9 +95,14 @@ The foundation of every well-designed relational database are the guiding princi
 
 Understanding the principles of normalization will allow you to defend and explain the *why* behind every decision you make in your schema design.
 
-Consider the database table below which stores data for orders from an electronics store:
+Consider the database table below which stores data for orders from an electronics store. It helps us answer these business questions:
+1. What products are available and how much do they cost?
+2. What customers have placed orders?
+3. What products were purchased in each order?
 
 ![A table of orders with order_id, customer_id, customer_name, customer_address, products_purchased, and product_prices.](./img/5-schema-design-normalization/normalization-1.png)
+
+This is considered a "flat table": all of the data needed to answer the business questions live in a single table. As we go through this lesson, we'll see how flat tables can make our database more prone to data corruption and redundancy.
 
 **<details><summary>Q: Where do you see corrupted (inaccurate and/or inconsistent) data? Where do you see redundant data?</summary>**
 
