@@ -30,10 +30,10 @@ A **JOIN** combines rows from two tables based on a matching column — typicall
 - [LEFT JOIN](#left-join)
   - [When INNER JOIN Is Not Enough](#when-inner-join-is-not-enough)
   - [LEFT JOIN Practice](#left-join-practice)
-- [Many-to-Many Relationships](#many-to-many-relationships)
-  - [Association Tables and Three-Way JOINs](#association-tables-and-three-way-joins)
 - [GROUP BY with JOINs](#group-by-with-joins)
   - [Smart GROUP BY with Primary Keys](#smart-group-by-with-primary-keys)
+- [Many-to-Many Relationships](#many-to-many-relationships)
+  - [Association Tables and Three-Way JOINs](#association-tables-and-three-way-joins)
 - [Challenge: JOIN Queries](#challenge-join-queries)
 
 ## Essential Questions
@@ -96,24 +96,18 @@ Consider the "flat" table of users and the posts they've made:
 | 4       | Why I Love Coding | 3       | carmen_s  | carmen@example.com |
 | 5       | Advanced Joins    | 2       | reuben_o  | reuben@example.com |
 
-With this table, we can answer questions like:
-
-- What posts did `ann_duong` write?
-- Who wrote the post titled `'Advanced Joins'`?
-- How many posts has each user written?
-
 **<details><summary>Q: What is the problem with storing all of this data in a single flat table instead of two separate tables?</summary>**
 
-A flat table like this breaks the normalization rule requiring every column to be dependent on the primary key. `username` and `email` are dependent on the `user_id`, not on the `post_id`. The following issues inefficiencies:
-- `username` and `email` would be duplicated on every post row for the same user
+A flat table like this breaks the normalization rule requiring every column to be dependent on the primary key. `username` and `email` are dependent on `user_id`, not on `post_id`:
+- `username` and `email` are duplicated on every post row for the same user
 - If a user changes their email, you'd need to update every post they've ever written
-- A user with no posts would have no row at all, or a row with `NULL` post columns
+- A user with no posts would have no row at all
 
 Splitting into two tables eliminates all of this. The user's info lives in one row in `users`. Posts reference it via `user_id`. Change the email once — all posts see the update automatically through the foreign key.
 
 </details>
 
-To create a more normalized database schema, we should split the data into two tables: `users` and `posts`. These tables have a **one-to-many** relationship: one user can author many posts. The `posts` table holds a `user_id` foreign key that references `users.user_id`.
+To create a normalized schema, we split the data into two tables: `users` and `posts`. These tables have a **one-to-many** relationship: one user can author many posts. The `posts` table holds a `user_id` foreign key that references `users.user_id`.
 
 **`users` table:**
 
@@ -136,27 +130,20 @@ To create a more normalized database schema, we should split the data into two t
 
 Notice: `ben_s` (user_id 4) has no posts. This will matter when we compare INNER JOIN and LEFT JOIN.
 
-With two separate tables, you can easily answer questions about each one independently:
+With two separate tables, you can answer questions about each one independently:
 
 ```sql
--- Who are all the users?
 SELECT * FROM users;
-
--- What posts exist?
 SELECT * FROM posts;
 ```
 
-But what about those questions that cross the boundary between tables?
+But what about questions that cross the boundary between tables?
 
 - What posts did `ann_duong` write?
 - Who wrote the post titled `'Advanced Joins'`?
 - How many posts has each user written?
 
-None of these can be answered from a single table. `posts` knows the `user_id` of each post's author, but not their username — that lives in `users`. To connect the data back into a flat table, you need a JOIN.
-
-There are six different kinds of `JOIN` queries in SQL but the two most commonly used are:
-* `INNER JOIN`
-* `LEFT JOIN` (and `RIGHT JOIN`)
+None of these can be answered from a single table. `posts` knows the `user_id` of each post's author, but not their username — that lives in `users`. To answer them, you need a JOIN.
 
 ## INNER JOIN
 
@@ -278,6 +265,8 @@ Result:
 
 `ben_s` now appears with `NULL` for all `posts` columns.
 
+### LEFT JOIN Practice
+
 **<details><summary>Q: How would you use a `LEFT JOIN` to find all users who have *not* written any posts?</summary>**
 
 When a `LEFT JOIN` finds no match in the right table, the right-side columns are `NULL`. Filter for exactly those rows:
@@ -293,101 +282,35 @@ WHERE posts.post_id IS NULL;
 
 </details>
 
-### LEFT JOIN Practice
-
-**<details><summary>Q: Write a query that returns every user's `username` and their post count, including users with zero posts. Order by post count descending.</summary>**
-
-```sql
-SELECT users.username, COUNT(posts.post_id) AS post_count
-FROM users
-  LEFT JOIN posts ON users.user_id = posts.user_id
-GROUP BY users.user_id
-ORDER BY post_count DESC;
-```
-
-`COUNT(posts.post_id)` counts non-NULL values, so users with no posts get `0`. Using `COUNT(*)` instead would count the NULL row as 1, giving the wrong answer for users with no posts.
-
-</details>
-
-## Many-to-Many Relationships
-
-### Association Tables and Three-Way JOINs
-
-Some relationships are many-to-many. In `social_db`, a post can have many tags, and a tag can appear on many posts. This is the same pattern as `order_products` connecting `orders` and `products` and `enrollments` connecting `students` and `classes`.
-
-In this social media database, the four tables in `social_db` have the following relationships:
-
-- `users` — one row per user; independent table
-- `posts` — one row per post; references `users` via `user_id` (the one-to-many you've been working with)
-- `tags` — one row per tag (`sql`, `databases`, `beginner`, etc.); independent table
-- `post_tags` — one row per post-tag pairing; holds `post_id` and `tag_id` as foreign keys (the association table)
-
-**`tags` table:**
-
-| tag_id | name       |
-| ------ | ---------- |
-| 1      | javascript |
-| 2      | sql        |
-| 3      | databases  |
-| 4      | beginner   |
-
-**`post_tags` table:**
-
-| post_tag_id | post_id | tag_id |
-| ----------- | ------- | ------ |
-| 1           | 1       | 4      |
-| 2           | 2       | 2      |
-| 3           | 2       | 3      |
-| 4           | 3       | 2      |
-| 5           | 3       | 3      |
-| 6           | 5       | 2      |
-
-To query across a many-to-many relationship, JOIN through the association table:
-
-```sql
--- All tags (tag names) on a specific post
-SELECT 
-  posts.title, 
-  tags.name AS tag
-FROM posts
-  INNER JOIN post_tags ON posts.post_id = post_tags.post_id
-  INNER JOIN tags ON post_tags.tag_id = tags.tag_id
-WHERE posts.title = 'Learning SQL';
-```
-
-```sql
--- All posts with a given tag, including the author's username
-SELECT 
-  posts.title, 
-  users.username
-FROM posts
-  INNER JOIN post_tags ON posts.post_id = post_tags.post_id
-  INNER JOIN tags      ON post_tags.tag_id = tags.tag_id
-  INNER JOIN users     ON posts.user_id = users.user_id
-WHERE tags.name = 'sql';
-```
-
-**<details><summary>Q: Why can't you represent a many-to-many relationship with just a foreign key on one of the two main tables?</summary>**
-
-A foreign key column holds one value per row — it can reference exactly one row in the other table. If you put `tag_id` on `posts`, a post could only have one tag. If you put `post_id` on `tags`, a tag could only belong to one post.
-
-Neither captures "many on both sides." The association table solves this by giving each post-tag pairing its own row, allowing any post to have any number of tags and any tag to appear on any number of posts.
-
-</details>
-
 ## GROUP BY with JOINs
 
-You already know `GROUP BY` from the aggregates lesson. In a JOIN query, `GROUP BY` lets you produce per-entity summaries — for example, counting posts per user.
+You already know `GROUP BY` from the aggregates lesson. If we wanted to see the post count for each `user_id`, we could write:
 
 ```sql
 SELECT
+  user_id,
+  COUNT(posts.post_id) AS post_count
+FROM posts
+GROUP BY user_id
+ORDER BY post_count DESC;
+```
+
+But if we wanted to also include the `username` which lives in the `users` table, we need to use a JOIN:
+
+```sql
+SELECT
+  users.user_id,
   users.username,
   COUNT(posts.post_id) AS post_count
 FROM users
   LEFT JOIN posts ON users.user_id = posts.user_id
-GROUP BY users.user_id
+GROUP BY users.user_id, users.username
 ORDER BY post_count DESC;
 ```
+
+Here are some things to note:
+* We are grouping by both `users.user_id` and `users.username`
+* `COUNT(posts.post_id)` counts non-NULL values, so users with no posts get `0`. Using `COUNT(*)` instead would count the NULL row as 1, giving the wrong answer for users with no posts.
 
 ### Smart GROUP BY with Primary Keys
 
@@ -431,6 +354,68 @@ Grouping by `users.user_id` (the primary key) allows `users.username` and `users
 
 </details>
 
+## Many-to-Many Relationships
+
+### Association Tables and Three-Way JOINs
+
+Some relationships are many-to-many. In `social_db`, a post can have many tags, and a tag can appear on many posts. This is the same pattern as `enrollments` connecting `students` and `classes` in the previous lesson — a many-to-many relationship needs an association table because there's no place to put a single foreign key that would capture both sides.
+
+The four tables in `social_db` and how they connect:
+
+- `users` — one row per user; independent table
+- `posts` — one row per post; references `users` via `user_id` (the one-to-many you've been working with)
+- `tags` — one row per tag (`sql`, `databases`, `beginner`, etc.); independent table
+- `post_tags` — one row per post-tag pairing; holds `post_id` and `tag_id` as foreign keys (the association table)
+
+**`tags` table:**
+
+| tag_id | name       |
+| ------ | ---------- |
+| 1      | javascript |
+| 2      | sql        |
+| 3      | databases  |
+| 4      | beginner   |
+
+**`post_tags` table:**
+
+| post_tag_id | post_id | tag_id |
+| ----------- | ------- | ------ |
+| 1           | 1       | 4      |
+| 2           | 2       | 2      |
+| 3           | 2       | 3      |
+| 4           | 3       | 2      |
+| 5           | 3       | 3      |
+| 6           | 5       | 2      |
+
+To query across a many-to-many relationship, JOIN through the association table:
+
+```sql
+-- All tags on a specific post
+SELECT posts.title, tags.name AS tag
+FROM posts
+  INNER JOIN post_tags ON posts.post_id = post_tags.post_id
+  INNER JOIN tags      ON post_tags.tag_id = tags.tag_id
+WHERE posts.title = 'Learning SQL';
+```
+
+```sql
+-- All posts with a given tag, including the author's username
+SELECT posts.title, users.username
+FROM posts
+  INNER JOIN post_tags ON posts.post_id = post_tags.post_id
+  INNER JOIN tags      ON post_tags.tag_id = tags.tag_id
+  INNER JOIN users     ON posts.user_id = users.user_id
+WHERE tags.name = 'sql';
+```
+
+**<details><summary>Q: Why can't you represent a many-to-many relationship with just a foreign key on one of the two main tables?</summary>**
+
+A foreign key column holds one value per row — it can reference exactly one row in the other table. If you put `tag_id` on `posts`, a post could only have one tag. If you put `post_id` on `tags`, a tag could only belong to one post.
+
+Neither captures "many on both sides." The association table solves this by giving each post-tag pairing its own row, allowing any post to have any number of tags and any tag to appear on any number of posts.
+
+</details>
+
 **<details><summary>Q: How many posts use the `'sql'` tag? Write the query.</summary>**
 
 ```sql
@@ -438,16 +423,6 @@ SELECT COUNT(DISTINCT post_tags.post_id) AS post_count
 FROM tags
   INNER JOIN post_tags ON tags.tag_id = post_tags.tag_id
 WHERE tags.name = 'sql';
-```
-
-Or using `GROUP BY`:
-
-```sql
-SELECT tags.name, COUNT(post_tags.post_id) AS post_count
-FROM tags
-  INNER JOIN post_tags ON tags.tag_id = post_tags.tag_id
-GROUP BY tags.tag_id
-HAVING tags.name = 'sql';
 ```
 
 </details>
@@ -478,18 +453,6 @@ ORDER BY post_count DESC;
 
 </details>
 
-**<details><summary>Q: Which tags does the post `'Learning SQL'` have? Return only the tag names.</summary>**
-
-```sql
-SELECT tags.name
-FROM posts
-  INNER JOIN post_tags ON posts.post_id = post_tags.post_id
-  INNER JOIN tags      ON post_tags.tag_id = tags.tag_id
-WHERE posts.title = 'Learning SQL';
-```
-
-</details>
-
 **<details><summary>Q: Which posts are tagged `'databases'`? Return the post title and the author's `username`.</summary>**
 
 ```sql
@@ -499,18 +462,6 @@ FROM posts
   INNER JOIN tags      ON post_tags.tag_id = tags.tag_id
   INNER JOIN users     ON posts.user_id = users.user_id
 WHERE tags.name = 'databases';
-```
-
-</details>
-
-**<details><summary>Q: For each tag, how many posts use it? Include tags used on zero posts. Order by post count descending.</summary>**
-
-```sql
-SELECT tags.name, COUNT(post_tags.post_id) AS post_count
-FROM tags
-  LEFT JOIN post_tags ON tags.tag_id = post_tags.tag_id
-GROUP BY tags.tag_id
-ORDER BY post_count DESC;
 ```
 
 </details>
