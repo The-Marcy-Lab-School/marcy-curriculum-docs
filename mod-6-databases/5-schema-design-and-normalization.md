@@ -100,7 +100,9 @@ Consider the database table below which stores data for orders from an electroni
 2. What customers have placed orders?
 3. What products were purchased in each order?
 
-![A table of orders with order_id, customer_id, customer_name, customer_address, products_purchased, and product_prices.](./img/5-schema-design-normalization/normalization-1.png)
+![A table of orders with order_id, customer_id, customer_name, customer_address, products_purchased, and product_prices.)](./img/5-schema-design-normalization/normalization-1.png)
+
+> View these tables in [Google Sheets](https://docs.google.com/spreadsheets/d/1Ca8yKI8SwsQht-ZgPE569_2BBS8iAuad9LdgB3nJhUY/edit?gid=1945793170#gid=1945793170)
 
 This is considered a "flat table": all of the data needed to answer the business questions live in a single table. As we go through this lesson, we'll see how flat tables can make our database more prone to data corruption and redundancy.
 
