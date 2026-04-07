@@ -18,6 +18,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/s
   - [Guided Reading Questions](#guided-reading-questions)
     - [`server/db/pool.js`](#serverdbpooljs)
     - [`server/db/seed.js`](#serverdbseedjs)
+    - [`server/index.js`](#serverindexjs)
     - [`server/models/userModel.js`](#servermodelsusermodeljs)
     - [`server/models/bookmarkModel.js`](#servermodelsbookmarkmodeljs)
     - [`server/middleware/checkAuthentication.js`](#servermiddlewarecheckauthenticationjs)
@@ -307,6 +308,22 @@ Open each file and answer the questions.
 
 ---
 
+#### `server/index.js`
+
+1. The global error handler `handleError` has four parameters `(err, req, res, next)` instead of the usual three. Why does Express require exactly four parameters to treat a function as an error handler? What would happen if you wrote it with three?
+2. Why must `app.use(handleError)` be registered *after* all routes and other middleware? What would happen if it were placed before them?
+3. The handler always sends a generic `500` response rather than forwarding `err.message`. Why is this safer?
+
+**<details><summary>Answers</summary>**
+
+1. Express identifies error-handling middleware solely by the number of parameters in the function signature — it must be exactly four. If you write it with three parameters, Express treats it as regular middleware and it will never receive errors forwarded with `next(err)`. The `next` parameter is required even if you never call it inside the handler.
+2. Express processes middleware in the order it is registered. `next(err)` forwards the error to the *next* error handler in the chain. If `handleError` were registered before the routes, no errors from those routes would reach it. It must be last so it can catch errors that bubble up from any route above it.
+3. Errors that reach the global handler are unexpected failures — a database crash, connection timeout, or a bug in the code. `err.message` in these cases might expose internal details like table names, file paths, or query strings that an attacker could use. A generic message keeps those details server-side (logged with `console.error`) while still returning a useful status code. Intentional error messages (like `"Bookmark not found"`) are handled inline in the controllers and never reach this handler.
+
+</details>
+
+---
+
 #### `server/models/userModel.js`
 
 1. Every function in this module queries the `users` table but only one of them ever selects `password_hash`. Which function is the exception? Why is it the only one that needs `password_hash`, and what does it do with it?
@@ -376,12 +393,16 @@ Open each file and answer the questions.
 1. `deleteBookmark` fetches the bookmark first, then checks ownership before deleting. What status code does it send if the bookmark doesn't exist? What status code if it exists but belongs to another user? Why are these different?
 2. `likeBookmark` and `unlikeBookmark` are two separate controllers rather than a single `toggleLike` controller. What would a `toggleLike` controller need to do differently? What are the tradeoffs between the two approaches?
 3. When `destroy()` deletes a bookmark, its associated rows in `bookmark_likes` are deleted automatically. Where exactly in the codebase is this behavior defined? What would happen to the `bookmark_likes` rows if that behavior weren't in place?
+4. Every controller wraps its logic in `try/catch` and calls `next(err)` in the catch block. What does `next(err)` do? What would happen if the `try/catch` were missing and a database query threw an error?
+5. `listBookmarks` has no validation logic — it just fetches and responds. Why is it still worth wrapping in `try/catch` even for a simple read operation?
 
 **<details><summary>Answers</summary>**
 
 1. `404 Not Found` if the bookmark doesn't exist — the requested resource is absent. `403 Forbidden` if it exists but belongs to another user — the resource exists but the requester doesn't have permission to modify it. These are different because they communicate different problems to the client: "that thing doesn't exist" versus "that thing exists but it's not yours."
 2. A single `toggleLike` controller would first query the `bookmark_likes` table to check if the like exists, then either insert or delete based on the result. The two-controller approach is simpler and more RESTful — `POST` to create a resource, `DELETE` to remove it — which is consistent with how the rest of the API is designed. The tradeoff is that the client must track like state and choose the right method, whereas a toggle endpoint offloads that logic to the server.
 3. The `ON DELETE CASCADE` clause on `bookmark_likes.bookmark_id REFERENCES bookmarks(bookmark_id)` — defined in `server/db/init.js`. Without it, deleting a bookmark would fail with a foreign key constraint violation because `bookmark_likes` rows still reference the bookmark's `bookmark_id`. You would have to manually delete all associated likes before deleting the bookmark.
+4. Calling `next(err)` (with an argument) signals to Express that something went wrong and hands the error to the next error-handling middleware — in this case, `handleError` in `index.js`. Without `try/catch`, an error thrown inside an `async` function becomes an unhandled promise rejection. Express does not automatically catch these — the request would hang with no response sent to the client.
+5. Even read-only operations can fail unexpectedly — the database connection could drop, the query could time out, or the connection pool could be exhausted. Wrapping in `try/catch` ensures that any failure sends a `500` response rather than leaving the request hanging.
 
 </details>
 
@@ -439,6 +460,10 @@ Open each file and answer the questions.
 - [ ] MVC model swap: controller is unchanged when swapping in-memory model for Postgres model
 - [ ] `RETURNING` clause in `INSERT`/`UPDATE`/`DELETE` to get the affected row back
 - [ ] Tracing a request across all layers: frontend fetch → controller → model → Postgres → response
+- [ ] `try/catch` in async controllers to catch unexpected errors
+- [ ] `next(err)` to forward errors to Express error-handling middleware
+- [ ] Global error handler with 4-argument signature `(err, req, res, next)` registered after all routes
+- [ ] Always sending a generic message from the global handler to avoid leaking internal error details
 
 ### Core — Frontend
 
