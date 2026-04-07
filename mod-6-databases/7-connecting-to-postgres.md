@@ -10,14 +10,15 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6
 - [Key Concepts](#key-concepts)
 - [Setup](#setup)
 - [What is `pg`?](#what-is-pg)
-  - [Step 1. Installing `pg` and `dotenv`](#step-1-installing-pg-and-dotenv)
-  - [Step 2. Adding Postgres Configuration Values to `.env` File](#step-2-adding-postgres-configuration-values-to-env-file)
-  - [Step 3. Create a `Pool` Instance](#step-3-create-a-pool-instance)
-  - [Deep Dive: What Exactly is a Pool?](#deep-dive-what-exactly-is-a-pool)
-- [Running Queries with `pool.query()`](#running-queries-with-poolquery)
+  - [Creating a `Pool` Instance](#creating-a-pool-instance)
+  - [Sending a Query with `pool.query()`](#sending-a-query-with-poolquery)
+  - [Closing Connections with `pool.end()`](#closing-connections-with-poolend)
+  - [Query Challenge: Get a Single User](#query-challenge-get-a-single-user)
+- [Parameterized Queries](#parameterized-queries)
   - [Beware of SQL Injections!](#beware-of-sql-injections)
-  - [Parameterized Queries: `$1` Placeholders](#parameterized-queries-1-placeholders)
-  - [RETURNING](#returning)
+  - [`$NUM` Placeholders](#num-placeholders)
+  - [Parameterized Queries Challenge: `findByCredentials()`](#parameterized-queries-challenge-findbycredentials)
+- [RETURNING](#returning)
 - [Practice: Writing Query Functions](#practice-writing-query-functions)
 
 ## Essential Questions
@@ -46,13 +47,9 @@ By the end of this lesson, you should be able to answer these questions:
 
 With a seeded database, we know that we can run SQL queries directly in `psql` and TablePlus. Now it's time to run those same queries from JavaScript.
 
-Your Express server stores data in memory — JavaScript arrays that live only as long as the process is running. Restart the server and everything is gone. In this lesson, we connect a Node application to a real Postgres database using the `pg` library so that data persists.
-
-**You already know the queries**:`SELECT * FROM users WHERE user_id = $1` is the same SQL you've been writing all week. The only new thing is how you send it — from JavaScript instead of a terminal.
-
 ## What is `pg`?
 
-Your Postgres database is an independent process running on your computer (or a remote server). Your Node application can't just "call" it like a function or send an HTTP request to it with `fetch`.
+Your Postgres database is an independent process running on your computer (or a remote server). Your Node application can't just call it like a function or use `fetch()` to send it an HTTP request.
 
 ![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
 
@@ -64,215 +61,181 @@ The `pg` library acts as the bridge between a Node application and Postgres. It:
 
 Without `pg`, there is no way to speak PostgreSQL from JavaScript.
 
-Before we can use `pg` in our application, we need to do some configuration. This is boilerplate meaning it will be the same configuration steps every time you start a new project with `pg`!
+Before we can use `pg` in our application, we need to do some set up.
 
-### Step 1. Installing `pg` and `dotenv`
-
-First, we need to install the `pg` and `dotenv` modules:
+First, we need to install the `pg` modules:
 
 ```sh
-npm install pg dotenv
+npm install pg
 ```
 
-* `pg` is the Postgres "client"—it is the tool we will use to communicate with the Postgres server.
-* `dotenv` helps us use environment variables stored in a `.env` file
+`pg` is the Postgres "client" library—it has the tools we will use to communicate with the Postgres server.
 
-### Step 2. Adding Postgres Configuration Values to `.env` File
+### Creating a `Pool` Instance
 
 In order to connect to our Postgres server, `pg` needs to know a few things:
-* the host and port where the server is running
-* the specific database to connect to
-* the username and password credentials (not needed for MacOS, needed for WSL connections)
+* the **host** and **port** of Postgres
+* the **database name**
+* username and password credentials (on MacOS, these may be optional if your local Postgres is configured to use your system's login)
 
-These are the same things that we provide to TablePlus when connecting to Postgres.
+The `pg` module provides a class called `Pool` whose constructor we invoke with a configuration object containing these details.
 
-We often will store this information inside of a `.env` file rather than hard-coding it into our program. We will be using the variables defined in the `.env.template` file in the example repository for this lesson:
-
-```sh
-# Local development — credentials to connect to your local Postgres server
-PG_HOST=localhost
-PG_PORT=5432
-PG_DATABASE=users_db
-PG_USER=
-PG_PASSWORD=
-
-# Production — Add a value here to connect to a production database
-# PG_CONNECTION_STRING=postgres://user:password@host:5432/database
-```
-
-Remember, never commit your `.env` file to GitHub. Make sure it is added to `.gitignore` alongside things like `node_modules`:
-
-```gitignore
-# .gitignore
-node_modules
-.env
-```
-
-{% hint style="info" %}
-**What is PG_CONNECTION STRING?**
-
-The `PG_CONNECTION_STRING` variable will be used when we eventually deploy a Postgres database onto a hosting platform like Render. Render will provide us with a single URL that contains all of the connection information in one string. If we want to test our application using the production database, we can add that connection string here.
-
-For now, we can leave it commented out.
-{% endhint %}
-
-### Step 3. Create a `Pool` Instance
-
-Take a look at `db/pool.js`. It imports the `Pool` constructor from `pg` and then creates a `pool` instance using the environment variables we just set:
-
-```js
+{% code title="db/pool.js" overflow="wrap" lineNumbers="true" %}
+```javascript
 const { Pool } = require('pg');
-const dotenv = require('dotenv');
 
-dotenv.config(); // loads values from .env to create configurations
-
-const productionConfig = {
-  connectionString: process.env.PG_CONNECTION_STRING
+const config = {
+  host: 'localhost',
+  port: 5432,
+  database: 'users_db',
+  user: 'username',
+  password: 'password',
 };
 
-const developmentConfig = {
-  host: process.env.PG_HOST,
-  port: process.env.PG_PORT,
-  user: process.env.PG_USER,
-  password: process.env.PG_PASSWORD,
-  database: process.env.PG_DATABASE,
-}
-
-// If the PG_CONNECTION_STRING is set, use it. Otherwise use the individual variables.
-const pool = process.env.PG_CONNECTION_STRING
-  ? new Pool(productionConfig)
-  : new Pool(developmentConfig);
+const pool = new Pool(config);
 ```
+{% endcode %}
 
-When invoking the `Pool` constructor, we provide a configuration object that either has the single `connectionString` or individual values for `host`, `port`, etc. The `pool` instance represents our open connection to Postgres (technically a group of open connections) through which we can send SQL. 
-
-The method `pool.query()` can be used to execute any SQL statement we provide as a string. Uncomment the test block in `pool.js` to confirm the connection is working:
-
-```js
-const test = async () => {
-  const { rows } = await pool.query('SELECT * FROM users');
-  console.log(rows);
-};
-test()
-```
-
-Run it with `node db/pool.js`. You should see your seeded users logged to the terminal.
-
-Try it first *without* `.finally(() => pool.end())` — you'll notice the process hangs and never exits. That's because the pool keeps several database connections open in the background, waiting for more queries. Node won't exit while those connections are open.
-
-`pool.end()` closes all the connections in the pool, allowing the process to exit. Chaining it in `.finally()` ensures it runs whether the query succeeds or fails.
+A `Pool` instance manages a group of connections to your Postgres server (a.k.a "connection pool"). 
 
 {% hint style="info" %}
-`pool.end()` is only needed in **one-shot scripts** — files you run directly with `node` to do a single task. When you're running a long-lived Express server, you *want* the pool to stay open so it can handle repeated requests. Never call `pool.end()` in a server.
-{% endhint %}
-
-Now that we know `pool` provides a connection to our database, we export it so that it can be used by other files in our project:
-
-```js
-module.exports = pool;
-```
-
-**<details><summary>Q: Why do we export the pool from a separate `db/pool.js` file rather than creating it inside each file that needs it?</summary>**
-
-The pool should be a singleton — one shared instance for the entire application. If you created a new `Pool` in every file, you'd end up with multiple pools competing for connections and consuming more resources than necessary. Exporting from `db/pool.js` ensures the pool is created once and everything shares the same instance.
-
-</details>
-
-**<details><summary>Q: Why does `pool.js` check for `PG_CONNECTION_STRING` first, before the individual variables?</summary>**
-
-Deployment platforms like Render and Railway automatically inject a `DATABASE_URL` or similar connection string environment variable when you add a Postgres database to your project. Using the connection string in production is simpler — one variable instead of five — and it's the format these platforms expect. Individual variables (`PG_HOST`, `PG_DATABASE`, etc.) are more readable during local development where you're configuring things manually. The `pool.js` file handles both cases so neither environment requires changes to the code.
-
-</details>
-
-### Deep Dive: What Exactly is a Pool?
+**Why do we need a pool of connections rather than one?**
 
 When your application needs to query the database, it needs an open **connection** — a dedicated channel to communicate with Postgres. When we use `pg` in our servers, each time a client sends an HTTP request to our server, our server will then send a SQL query to Postgres using that open connection. 
 
 ![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
 
-However, only a connection can only process one SQL query at a time. If multiple users send HTTP requests to our server at the same time, we would end up with a bottleneck with more and more users waiting for their turn to use that one connection. Additionally, opening a new connection takes time and resources. If your server opened and closed a connection for every HTTP request, it would be noticeably slow.
+However, a connection can only process one SQL query at a time. If multiple users send HTTP requests to our server at the same time, we would end up with a bottleneck with more and more users waiting for their turn to use that one connection. Additionally, opening a new connection takes time and resources. If your server opened and closed a connection for every HTTP request, it would be noticeably slow.
 
-A **connection pool** solves this by keeping a set of connections open and ready. When a query comes in, the poollends an available connection. When the query finishes, the connection returns to the pool.
+A **connection pool** solves this by keeping a set of connections open and ready. When a query comes in, the pool lends an available connection. When the query finishes, the connection returns to the pool.
 
-No waiting for a single connection to free up. No waiting to open and close a connection. 
+No waiting for a single connection to free up. No waiting to open and close a connection.
+{% endhint %}
 
-## Running Queries with `pool.query()`
+### Sending a Query with `pool.query()`
 
-Let's look closer at running queries with `pool.query()`. Typically, we will use `pool.js` to create the `pool` instance and export it. Then we will import it into other files to actually use `pool.query()`.
+We're ready to send SQL to Postgres!
 
-In `queries.js`, we start by importing the `pool` instance. Then, we can create functions for each specific query we want to run, such as getting all users from the table:
-* `pool.query()` returns a **Promise**:
-* `pool.query()` resolves to a result object. The property you'll use most is `.rows`:
+The method `pool.query()` can be used to execute any SQL statement we provide as a string:
 
-```js
-const pool = require('./pool');
-
-const getAllUsers = async () => {
-  const result = await pool.query('SELECT * FROM users ORDER BY user_id');
-  return result.rows; // an array of user objects
+{% code title="db/pool.js" %}
+```javascript
+const printUsers = async () => {
+  const result = await pool.query('SELECT * FROM users');
+  console.log(result);
+  // {
+  //   ...,
+  //   rows: [ /* user data */ ],
+  //   ...,
+  // }
 };
+```
+{% endcode %}
 
-// ...
+Here are some key details about `pool.query()`:
+* `pool.query()` returns a **Promise**
+* `pool.query()` resolves to a result object. The property you'll use most is `.rows`
+* Each element of `result.rows` is a plain JavaScript object. Column names become property keys, exactly as named in the database.
 
+Most often, we will only care about `rows` so it is common to destructure it immediately from the results:
+
+{% code title="db/pool.js"%}
+```javascript
+const printUsers = async () => {
+  const { rows } = await pool.query('SELECT * FROM users');
+  console.log(rows);
+  // [ /* user data */ ]
+};
+```
+{% endcode %}
+
+Run this file with `node db/pool.js`. You should see your seeded users logged to the terminal!
+
+### Closing Connections with `pool.end()`
+
+You'll notice that your Node program executes the query and then hangs—the process never exits. That's because the pool keeps several database connections open in the background, waiting for more queries. Node won't exit while those connections are open.
+
+`pool.end()` closes all the connections in the pool, allowing the process to exit cleanly. Let's add a call to `pool.end()` after we run all of our queries
+
+{% code title="db/pool.js" %}
+```javascript
 const main = async () => {
-  console.log('--- All users ---');
-  const users = await getAllUsers();
-  console.log(users);
-  // --- All users ---
-  // [
-  //   { user_id: 1, username: 'ann_duong', email: 'ann@example.com' },
-  //   { user_id: 2, username: 'reuben_o',  email: 'reuben@example.com' }
-  // ]
+  await printUsers();
 
-  // ...
+  // Close connections and print after to confirm
+  await pool.end();
+  console.log('Connection pool drained');
 };
 
 main()
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  })
-  .finally(() => pool.end());
 ```
+{% endcode %}
 
-Each element of `result.rows` is a plain JavaScript object. Column names become property keys, exactly as named in the database.
+`pool.end()` is only needed in **one-shot scripts** — files you run directly with `node` to do a single task. When you're running a long-lived Express server, you *want* the pool to stay open so it can handle repeated requests. Never call `pool.end()` in a server.
 
-You can also destructure `rows` directly from the result, which is a common shorthand:
+### Query Challenge: Get a Single User
 
-```js
-const { rows } = await pool.query('SELECT * FROM users');
-console.log(rows); // same array as result.rows above
-```
+Write a function called `getUserById(user_id)` that *returns* (not prints) a specific user given the user's `user_id`.
 
-**<details><summary>Q: You run `SELECT * FROM users WHERE user_id = $1` with an ID that doesn't exist. What does `result.rows` look like?</summary>**
+**<details><summary>Solution</summary>**
 
-`result.rows` will be an empty array `[]`. `pool.query()` does not throw an error when a `SELECT` returns no rows — it just returns zero rows. Handle this explicitly:
+**DANGER:** This solution works but has a serious security vulnerability. Read the next section to see why.
 
 ```js
 const getUserById = async (user_id) => {
-  const { rows } = await pool.query(
-    'SELECT * FROM users WHERE user_id = $1',
-    [user_id]
-  );
-  return rows[0] || null; // first row, or null if not found
+  const { rows } = await pool.query(`SELECT * FROM users WHERE user_id = ${user_id}`);
+  return rows[0];
+}
+```
+
+Even though this query only ever returns a single user, it will still put the result in a `rows` array. Rather than return the entire array, we return just the first element.
+
+In `main()` we can call `getUserById()` and log the result:
+
+```js
+const main = async () => {
+  await printUsers()
+  
+  const user = await getUserById(1);
+  console.log(user);
+  // { user_id: 1, username: 'ann_duong', email: 'ann@example.com' },
+
+  await pool.end();
+  console.log('Connection pool drained');
 };
+
+main()
+```
+
+</details>
+
+**<details><summary>Q: What happens if you call the function with an ID that doesn't exist? What does `result.rows` look like?</summary>**
+
+`result.rows` will be an empty array `[]`. `pool.query()` does not throw an error when a `SELECT` returns no rows — it just returns zero rows.
+
+```js
+const getUserById = async (user_id) => {
+  const { rows } = await pool.query(`SELECT * FROM users WHERE user_id = ${user_id}`);
+  return rows[0] || null;
+}
 ```
 
 Returning `null` makes the "not found" case explicit for any code that calls this function.
 
 </details>
 
+## Parameterized Queries
 
 ### Beware of SQL Injections!
 
-When your queries include values from user input — an ID from the URL, a username from a form — you must use **parameterized queries**.
+When your queries include values from user input — an ID from the URL, a username from a form — using string interpolation can open serious security vulnerabilities:
 
 {% hint style="danger" %}
 ```javascript
-// NEVER DO THIS
 const getUserById = async (user_id) => {
+  // NEVER USE STRING INTERPOLATION
   const { rows } = await pool.query(`SELECT * FROM users WHERE user_id = ${user_id}`);
-  return rows[0];
+  return rows[0] || null;
 };
 ```
 {% endhint %}
@@ -291,7 +254,7 @@ SELECT * FROM users WHERE user_id = 1; DROP TABLE users; --
 
 Postgres would execute both statements and your `users` table would be gone. This is **SQL injection** — one of the most common and destructive web vulnerabilities.
 
-### Parameterized Queries: `$1` Placeholders
+### `$NUM` Placeholders
 
 Parameterized queries separate the SQL structure from the values:
 
@@ -312,7 +275,11 @@ const getUserById = async (user_id) => {
 
 Even if a user passes `1; DROP TABLE users; --` as `user_id`, Postgres treats the entire string as a value being compared to the `user_id` column. It finds no match and returns no rows. The table is safe.
 
-**<details><summary>Q: A query needs to filter by both `username` and `email`. How do you write it with parameterized placeholders?</summary>**
+### Parameterized Queries Challenge: `findByCredentials()`
+
+Write a function called `findByCredentials(username, email)` that finds a user with the given `username` and `email`.
+
+**<details><summary>Solution</summary>**
 
 ```js
 const findByCredentials = async (username, email) => {
@@ -328,7 +295,9 @@ const findByCredentials = async (username, email) => {
 
 </details>
 
-### RETURNING
+## RETURNING
+
+Suppose I wanted to write a function `createUser(username, email)` that inserts a user into the database and then returns the newly created user.
 
 Unlike `SELECT`, write operations (`INSERT`, `UPDATE`, `DELETE`) don't return rows by default — they only tell you how many rows were affected (`rowCount`). For these write operations, if I want to see the result, I would need to write a second `SELECT` query:
 
@@ -352,7 +321,7 @@ const createUser = async (username, email) => {
 ```
 {% endhint %}
 
-However, we can also add use `RETURNING *` to the end of the query to get back the updated row:
+Instead, we can add use `RETURNING *` to the end of the query to get back the updated row:
 
 {% hint style="success" %}
 With RETURNING:
@@ -370,64 +339,44 @@ const createUser = async (username, email) => {
 
 This `createUser()` function now inserts a given username and email into the users table and returns the newly created user — including the auto-generated `user_id` — without needing to make a second query.
 
-{% hint style="info" %}
-`RETURNING *` is a Postgres extension of SQL that makes `INSERT`, `UPDATE`, and `DELETE` return the affected row(s) as if they were a `SELECT`.
-{% endhint %}
-
-**<details><summary>Q: `createUser` returns the newly created user. How would you call it and log the result?</summary>**
+In `main()` we can call `createUser()` and log the result:
 
 ```js
 const main = async () => {
+  // ...
+  
   const newUser = await createUser('new_person', 'new@example.com');
   console.log(newUser);
   // { user_id: 4, username: 'new_person', email: 'new@example.com' }
 };
 
-main()
-  .catch(console.error)
-  .finally(() => pool.end());
+main();
 ```
 
-`createUser` is `async`, so you must `await` it. The returned object is the newly inserted row, including the `user_id` that Postgres generated.
+The returned object is the newly inserted row, including the `user_id` that Postgres generated.
 
-</details>
+{% hint style="info" %}
+Due to the `UNIQUE` constraint on username and email set in the `seed.sql` file, running this file again with the same username and email will cause an error!
+{% endhint %}
 
 ## Practice: Writing Query Functions
 
-`db/queries.js` is where we practice sending each type of SQL query from JavaScript. Each query is wrapped in an `async` function that calls `pool.query()` and returns the result.
+Now it is time for you to show what you've learned! Create the two functions below, invoke them in `main()` and print the results! Then run `node db/pool.js` to test your work.
 
-Here are the two `SELECT` functions, already implemented:
+**`updateUser(user_id, username, email)`**
+- `UPDATE` the row with the matching `user_id`
+- Set `username` and `email` to the new values
+- Use `RETURNING *` to get back the updated row
+- Return the updated user, or `null` if not found
 
-```js
-// db/queries.js
-const pool = require('./pool');
-
-// Returns all users, ordered by user_id
-const getAllUsers = async () => {
-  const { rows } = await pool.query(
-    'SELECT * FROM users ORDER BY user_id'
-  );
-  return rows;
-};
-
-// Returns a single user by user_id, or null if not found
-const getUserById = async (user_id) => {
-  const { rows } = await pool.query(
-    'SELECT * FROM users WHERE user_id = $1',
-    [user_id]
-  );
-  return rows[0] || null;
-};
-```
-
-Run the file with `npm run db:queries` to see these in action.
-
-The remaining two operations — `UPDATE` and `DELETE` — follow the same pattern but write data instead of reading it. See if you can implement those functions!
+**`deleteUser(user_id)`**
+- `DELETE` the row with the matching `user_id`
+- Use `RETURNING *` to get back the deleted row
+- Return the deleted user, or `null` if not found
 
 **<details><summary>Solution</summary>**
 
 ```js
-// UPDATE — modifies an existing row and returns it, or null if not found
 const updateUser = async (user_id, username, email) => {
   const { rows } = await pool.query(
     `UPDATE users
@@ -439,7 +388,6 @@ const updateUser = async (user_id, username, email) => {
   return rows[0] || null;
 };
 
-// DELETE — removes a row and returns it, or null if not found
 const deleteUser = async (user_id) => {
   const { rows } = await pool.query(
     'DELETE FROM users WHERE user_id = $1 RETURNING *',
@@ -448,11 +396,12 @@ const deleteUser = async (user_id) => {
   return rows[0] || null;
 };
 ```
+
 </details>
 
 **<details><summary>Q: What is the difference between `rows[0]` and `rows`? When do you use each?</summary>**
 
-- `rows` — the full array of matching rows. Use when you expect multiple results (e.g., `getAllUsers` — returns every user).
+- `rows` — the full array of matching rows. Use when you expect multiple results (e.g., `getAllUsers`).
 - `rows[0]` — the first row only. Use when you expect exactly one result (e.g., `getUserById`, `createUser`, `updateUser`).
 
 If you use `rows[0]` and no row exists, you get `undefined`. That's why functions like `getUserById` and `updateUser` return `rows[0] || null` — to make the "not found" case explicit.
