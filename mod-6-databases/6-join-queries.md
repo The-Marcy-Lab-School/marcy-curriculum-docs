@@ -40,10 +40,11 @@ A **JOIN** combines rows from two tables based on a matching column — typicall
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. What does `INNER JOIN` do? What rows does it include, and what does it exclude?
-2. What is the difference between `INNER JOIN` and `LEFT JOIN`? When do you use each?
-3. How do you use `GROUP BY` in a JOIN query? Why do you only need to `GROUP BY` the primary key in Postgres?
-4. What is a many-to-many relationship? How do you query one using an association table?
+1. In SQL, why would a developer use a JOIN clause?
+2. What does `INNER JOIN` do? What rows does it include, and what does it exclude?
+3. What is the difference between `INNER JOIN` and `LEFT JOIN`? When do you use each?
+4. How do you use `GROUP BY` in a JOIN query? Why do you only need to `GROUP BY` the primary key in Postgres?
+5. What is a many-to-many relationship? How do you query one using an association table?
 
 ## Key Concepts
 
