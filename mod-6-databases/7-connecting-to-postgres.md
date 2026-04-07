@@ -105,7 +105,9 @@ When your application needs to query the database, it needs an open **connection
 
 ![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
 
-However, a connection can only process one SQL query at a time. If multiple users send HTTP requests to our server at the same time, we would end up with a bottleneck with more and more users waiting for their turn to use that one connection. Additionally, opening a new connection takes time and resources. If your server opened and closed a connection for every HTTP request, it would be noticeably slow.
+However, a connection can only process one SQL query at a time. If multiple users send HTTP requests to our server at the same time, we would end up with a bottleneck with more and more users waiting for their turn to use that one connection. 
+
+Additionally, opening a new connection takes time and resources. If your server opened and closed a connection for every HTTP request, it would be noticeably slow.
 
 A **connection pool** solves this by keeping a set of connections open and ready. When a query comes in, the pool lends an available connection. When the query finishes, the connection returns to the pool.
 
