@@ -103,6 +103,7 @@
   * [5. Schema Design & Normalization](mod-6-databases/5-schema-design-and-normalization.md)
   * [6. JOIN Queries](mod-6-databases/6-join-queries.md)
   * [7. Connecting Servers to Postgres with pg](mod-6-databases/7-connecting-to-postgres.md)
+  * [8. Postgres-Backed Models ](mod-6-databases/8-postgres-models.md)
   * [Case Study: Social Bookmark Manager](mod-6-databases/case-study.md)
   * [Cheat Sheet](mod-6-databases/cheatsheet.md)
 * [Mod 7 - React](mod-7-react/README.md)
