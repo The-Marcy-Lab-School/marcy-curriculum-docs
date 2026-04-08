@@ -271,13 +271,11 @@ Open each file and answer the questions.
 
 #### `server/db/pool.js`
 
-1. Why does the application use a connection pool instead of creating a new database connection for each request?
-2. `pool.js` checks for `process.env.PG_CONNECTION_STRING` first and falls back to individual variables (`PG_HOST`, `PG_PORT`, etc.) if it isn't set. Why might a deployed application use a connection string while a local development environment uses individual variables?
+1. `pool.js` checks for `process.env.PG_CONNECTION_STRING` first and falls back to individual variables (`PG_HOST`, `PG_PORT`, etc.) if it isn't set. Look into connection strings provided by Render. Then consider: how does `pool.js` make it possible to change which configuration is used depending on the provided environment variables?
 
 **<details><summary>Answers</summary>**
 
-1. Opening a new database connection on every request is slow and resource-intensive. A connection pool creates a fixed set of connections that are reused across requests, making the application significantly faster and preventing the database from being overwhelmed by too many simultaneous connections.
-2. Hosting providers like Render provide a single `DATABASE_URL` connection string for deployed databases. Individual variables (`PG_HOST`, `PG_PORT`, etc.) are more convenient when configuring a local database by hand. Supporting both means the same `pool.js` works in both environments without modification.
+1. Hosting providers like Render provide a single `DATABASE_URL` connection string for deployed databases. Individual variables (`PG_HOST`, `PG_PORT`, etc.) are more convenient when configuring a local database by hand. `pool.js` creates two separate configurations: one using the `PG_CONNECTION_STRING` and the other using individual variables. It checks to see if this `PG_CONNECTION_STRING` exists, and if it does, it uses the production configuration. If not, it uses the development configuration. This makes it possible to use this same file in both situations without modification. Instead, we just change which environment variables we provide.
 
 </details>
 
@@ -285,7 +283,7 @@ Open each file and answer the questions.
 
 #### `server/db/seed.js`
 
-1. `seed.js` handles both schema setup and data insertion in a single JavaScript file, rather than a `.sql` file like the seed files from lesson 4. Why does it need to be JavaScript? What does `seed.js` need to do that a `.sql` file cannot?
+1. On lines 43–47, `seed.js` calls `bcrypt.hash()` to generate password hashes before inserting users. Why does the seed file need to be JavaScript instead of a plain `.sql` file? What would be lost if the seed data were moved into a `.sql` file?
 2. The seed function uses `Promise.all()` to hash all three passwords at once instead of awaiting each `bcrypt.hash()` call in sequence. What does `Promise.all()` do differently? Why does this matter for a slow operation like bcrypt hashing?
 3. The seed function drops all three tables before recreating them, in the order `bookmark_likes` → `bookmarks` → `users`. Why does this specific order matter? What error would occur if you tried to drop `users` first?
 4. Both `INSERT` queries use a `RETURNING` clause allowing us to capture the newly created data into variables. What problem would arise if you hardcoded IDs like `1`, `2`, `3` when inserting likes instead of using the data returned by the previous inserts?
@@ -341,13 +339,13 @@ Open each file and answer the questions.
 
 1. The `list()` query uses both an `INNER JOIN` and a `LEFT JOIN`. Explain how and why each type of JOIN is used.
 2. The query uses `GROUP BY bookmarks.bookmark_id, users.username`. Why is `GROUP BY` required here? What would happen without it?
-3. Compare `bookmarkModel.list()` here to the mod-5 version (`return [...bookmarks]`). What changed in the model? What stayed exactly the same from the controller's perspective?
+3. Look at how `listBookmarks` in `bookmarkControllers.js` calls `bookmarkModel.list()` — it just calls it and sends the result, with no knowledge of how the data is fetched. Now look at the implementation of `list()` in this file. What does this tell you about the relationship between the model and controller layers? What would the controller need to change if you swapped this SQL implementation for one that read from an in-memory array instead?
 
 **<details><summary>Answers</summary>**
 
 1. We use `LEFT JOIN` for `bookmark_likes` because it's permissive — bookmarks with zero likes still appear in the results. `INNER JOIN users` excludes any bookmarks without a matching user—but that's okay because the schema guarantees via foreign key that every bookmark has a matching user, so no rows would be dropped anyway.
 2. `GROUP BY` is required whenever you use an aggregate function like `COUNT`. Without it, Postgres doesn't know how to collapse the multiple rows produced by the join (one row per like) into a single row per bookmark. `GROUP BY bookmarks.bookmark_id, users.user_id` tells Postgres to group all rows with the same `bookmark_id` together so `COUNT` can total the likes for each bookmark.
-3. The model method signature is identical — `list()` takes no arguments and returns an array of objects. The controller calls it the same way: `const bookmarks = await bookmarkModel.list()`. What changed is the implementation: instead of returning `[...bookmarks]` from an in-memory array, it now runs an async SQL query. The controller didn't need to change at all — this is the payoff of MVC.
+3. The controller calls `bookmarkModel.list()` and sends the result without knowing or caring how the data is fetched. The model's job is to return an array of bookmark objects — the controller only depends on that contract. If `list()` were swapped from a SQL query to reading from an in-memory array (or vice versa), the controller wouldn't need to change at all. This is the payoff of MVC: the controller is isolated from implementation details of the data layer.
 
 </details>
 
@@ -356,8 +354,8 @@ Open each file and answer the questions.
 #### `server/middleware/checkAuthentication.js`
 
 1. `checkAuthentication` checks for `req.session.user_id`. Where was this value originally set, and how does the server know which session belongs to which incoming request?
-2. `checkAuthentication` returns `401` when the session is missing. What is the difference between `401 Unauthorized` and `403 Forbidden`? Which should the `deleteBookmark` controller use if a logged-in user tries to delete someone else's bookmark?
-3. `checkAuthentication` is applied directly to individual routes that need protection (`POST /api/bookmarks`, `DELETE /api/bookmarks/:bookmark_id`, etc.) rather than to the entire router through `app.use(checkAuthentication)`. What would be the benefit of applying it to a whole router instead? What problem would that create for this application?
+2. `checkAuthentication` returns `401` when `req.session.user_id` is missing. Open `deleteBookmark` in `bookmarkControllers.js` — it also rejects some requests, but with a `403` instead. What is the difference between what these two status codes communicate? Why is `403` the right choice there rather than `401`?
+3. Look at the bookmark routes in `index.js`. `checkAuthentication` appears on some routes but not others — `POST` and `DELETE` routes have it, but `GET /api/bookmarks` does not. Why isn't `checkAuthentication` applied to all routes at once with `app.use(checkAuthentication)`? What would break if it were?
 
 **<details><summary>Answers</summary>**
 
@@ -373,7 +371,7 @@ Open each file and answer the questions.
 
 1. The `register` controller checks for an existing username before creating a new user. What HTTP status code does it return if the username is already taken, and why is that the appropriate code?
 2. After a successful registration and login, the controller sets `req.session.user_id = user.user_id`. Where does `req.session` come from and why are we storing only `user.user_id` in it as opposed to the entire `user` object? 
-3. There is an intentional security issue somewhere in this file. Can you find it? What data is being exposed that shouldn't be, and how would you fix it?
+3. In the `login` controller, `res.send(user)` sends the result of `userModel.validatePassword()` directly to the client. Open `userModel.js` and look at what `validatePassword` returns on success. Is everything in that object safe to send? What would you change?
 
 **<details><summary>Answers</summary>**
 
@@ -388,7 +386,7 @@ Open each file and answer the questions.
 #### `server/controllers/bookmarkControllers.js`
 
 1. `deleteBookmark` fetches the bookmark first, then checks ownership before deleting. What status code does it send if the bookmark doesn't exist? What status code if it exists but belongs to another user? Why are these different?
-2. `likeBookmark` and `unlikeBookmark` are two separate controllers rather than a single `toggleLike` controller. What would a `toggleLike` controller need to do differently? What are the tradeoffs between the two approaches?
+2. Look at the like routes in `index.js` — liking uses `POST /api/bookmarks/:bookmark_id/likes` and unliking uses `DELETE` on the same path. Why are these two separate routes and controllers rather than a single `toggleLike` endpoint? What would the client need to handle differently if a toggle endpoint were used instead?
 3. When `destroy()` deletes a bookmark, its associated rows in `bookmark_likes` are deleted automatically. Where exactly in the codebase is this behavior defined? What would happen to the `bookmark_likes` rows if that behavior weren't in place?
 4. Every controller wraps its logic in `try/catch` and calls `next(err)` in the catch block. What does `next(err)` do? What would happen if the `try/catch` were missing and a database query threw an error?
 5. `listBookmarks` has no validation logic — it just fetches and responds. Why is it still worth wrapping in `try/catch` even for a simple read operation?
