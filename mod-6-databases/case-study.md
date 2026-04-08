@@ -108,10 +108,7 @@ CREATE TABLE bookmark_likes (
 
 **Entity relationship diagram:**
 
-```
-users ──< bookmarks
-users >──< bookmarks  (through bookmark_likes)
-```
+![users, bookmarks, and bookmark_likes connected in an ERD](./img/case-study/erd.png)
 
 ## API Endpoints
 
