@@ -24,11 +24,10 @@ A **JOIN** combines rows from two tables based on a matching column — typicall
 - [Key Concepts](#key-concepts)
 - [Setup](#setup)
 - [One-to-Many: Users and Posts](#one-to-many-users-and-posts)
-- [INNER JOIN](#inner-join)
-  - [INNER JOIN Syntax](#inner-join-syntax)
+- [JOINs](#joins)
+  - [INNER JOIN — Only Matching Rows](#inner-join--only-matching-rows)
   - [INNER JOIN Practice](#inner-join-practice)
-- [LEFT JOIN](#left-join)
-  - [When INNER JOIN Is Not Enough](#when-inner-join-is-not-enough)
+  - [LEFT JOIN — All Rows](#left-join--all-rows)
   - [LEFT JOIN Practice](#left-join-practice)
 - [GROUP BY with JOINs](#group-by-with-joins)
   - [Smart GROUP BY with Primary Keys](#smart-group-by-with-primary-keys)
@@ -146,9 +145,13 @@ But what about questions that cross the boundary between tables?
 
 None of these can be answered from a single table. `posts` knows the `user_id` of each post's author, but not their username — that lives in `users`. To answer them, you need a JOIN.
 
-## INNER JOIN
+## JOINs
 
-### INNER JOIN Syntax
+JOIN statements in SQL use data across multiple tables. There are multiple types of JOINs that combine tables in slightly different ways but the two that are used most often are `LEFT JOIN` and `INNER JOIN`.
+
+![Copyright C.L. Moffat 2008](./img/6-joins/join-venn-diagrams.png)
+
+### INNER JOIN — Only Matching Rows
 
 Suppose we wanted to see all users who made a post, excluding those who did not.
 
@@ -236,9 +239,7 @@ WHERE users.username = 'reuben_o';
 
 </details>
 
-## LEFT JOIN
-
-### When INNER JOIN Is Not Enough
+### LEFT JOIN — All Rows
 
 `INNER JOIN` only returns rows where both tables have a match. Users with no posts are silently excluded. Sometimes that's what you want — but when you need to include everyone regardless of whether they have related rows, use `LEFT JOIN`.
 
