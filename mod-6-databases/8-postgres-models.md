@@ -38,7 +38,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 1. What is the difference between an in-memory model and a Postgres-backed model?
 2. When you swap a model from in-memory to Postgres, what changes in your controllers and routes?
-3. Why must every model method be `async` when using `pg`?
+3. What is authentication?
 4. What is the purpose of `try/catch` in a controller, and what happens if you skip it?
 5. What does the error-handling middleware do, and why must it have exactly four parameters?
 
@@ -46,7 +46,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 * **In-memory model** — a model that stores data in JavaScript arrays and objects. All data is lost when the server restarts.
 * **Postgres-backed model** — a model that uses `pool.query()` to read and write data in a database. Data persists across server restarts.
-* **`async` model method** — every method that calls `pool.query()` must be `async` because `pool.query()` returns a Promise.
+* **Authentication** — the process of verifying a user's identity (e.g. a user logging in with a username and password).
 * **`try/catch` in controllers** — catches any error thrown by a model method and forwards it to the error-handling middleware via `next(err)`.
 * **Error-handling middleware** — an Express middleware with exactly four parameters `(err, req, res, next)` that sends a structured error response when something goes wrong.
 
