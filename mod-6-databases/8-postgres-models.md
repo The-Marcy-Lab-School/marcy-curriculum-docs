@@ -144,8 +144,9 @@ let users = [
 let nextId = 3;
 
 // Returns all users — never exposes password
-module.exports.list = () =>
-  users.map(({ user_id, username }) => ({ user_id, username }));
+module.exports.list = () => {
+  return users.map(({ user_id, username }) => ({ user_id, username }));
+}
 
 // Stores the user and returns user_id and username — never exposes password
 module.exports.create = (username, password) => {
@@ -155,8 +156,9 @@ module.exports.create = (username, password) => {
 };
 
 // Returns the full user object including password — used only for login comparison
-module.exports.findByUsername = (username) =>
-  users.find((u) => u.username === username) || null;
+module.exports.findByUsername = (username) => {
+  return users.find((u) => u.username === username) || null;
+}
 
 // Updates the user's password and returns user_id and username
 // Returns null if user not found
