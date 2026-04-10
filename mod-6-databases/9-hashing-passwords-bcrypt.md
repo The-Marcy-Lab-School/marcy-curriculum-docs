@@ -4,9 +4,27 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-9-hashing-passwords-bcrypt)!
 {% endhint %}
 
-Every application we've built so far has had data — pets, bookmarks, posts — but no users. Adding users means letting people create accounts and log in. The moment you do that, you're responsible for protecting their passwords.
+In lesson 8, you built a working user system — registration, login, and basic CRUD, all backed by Postgres. But there are two flaws hiding in plain sight.
 
-This lesson is about **hashing** — the technique that makes it safe to handle passwords at all. It's the foundation for everything in the next few lessons: building a registration endpoint, login, and protected routes.
+Look at the `seed.sql` from lesson 8:
+
+```sql
+INSERT INTO users (username, password) VALUES
+  ('alice', 'password123'),
+  ('bob',   'hunter2');
+```
+
+And the `login` controller:
+
+```js
+if (!user || user.password !== password) {
+  return res.status(401).send({ message: 'Invalid credentials' });
+}
+```
+
+Passwords are stored exactly as the user typed them and compared the same way. If the database is ever breached, every password is immediately readable. This lesson fixes that problem.
+
+The fix is **hashing** — a technique that makes it safe to store and verify passwords. The second flaw (unprotected update and delete routes) is addressed in lesson 12.
 
 **Table of Contents**
 
@@ -46,9 +64,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 ## Why We Never Store Passwords in Plaintext
 
-When a user creates an account, they give you their password. Let's say its the string `"mypassword"`. What do you do with it?
-
-The wrong answer — and a historically common one — is to store it directly in the database as-is. This is called storing a **plaintext password**, and it creates a serious vulnerability.
+In lesson 8, passwords were stored in plaintext — exactly as typed — and compared directly with `===`. This is the wrong approach, and a historically common one.
 
 Databases get breached. Whether through a hack, a misconfigured server, or a bug that leaks data, it happens to companies large and small. When a database is breached and passwords are stored in plaintext, every password is immediately readable. Worse: since most people reuse passwords across sites, a breach of your app can compromise your users' email, bank, and social media accounts too.
 
@@ -247,7 +263,7 @@ bcrypt embeds the salt inside the hash string when it creates it. `bcrypt.compar
 3. Server calls `bcrypt.compare(password, storedHash)`
 4. If `true` → authentication succeeds; if `false` → 401
 
-The next lesson puts this into practice: you'll build the `userModel` and the registration endpoint.
+Lesson 10 puts this into practice: you'll update the `userModel` to use bcrypt and rebuild the registration and login endpoints with proper password hashing.
 
 ## Practice
 
