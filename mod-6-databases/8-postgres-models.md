@@ -249,10 +249,16 @@ const register = async (req, res, next) => {
     // 1. Pull the username and password out of the request body
     const { username, password } = req.body;
 
-    // 2. Store the new user — the model returns only user_id and username, never the password
+    // 2. Check if the username is already taken
+    const existingUser = await userModel.findByUsername(username);
+    if (existingUser) {
+      return res.status(400).send({ message: 'Username already taken' });
+    }
+
+    // 3. Store the new user — the model returns only user_id and username, never the password
     const user = await userModel.create(username, password);
 
-    // 3. Respond with the new user and a 201 Created status
+    // 4. Respond with the new user and a 201 Created status
     res.status(201).send(user);
   } catch (err) {
     next(err);
@@ -382,7 +388,7 @@ CREATE TABLE users (
 );
 ```
 
-Open `userModel.js`. The method signatures and comments are already there — you just need to fill in the SQL. We've implemented the first two for you:
+Open `userModel.js`. The method signatures and comments are already there — you just need to fill in the SQL (refer back to lesson 7 to see how to use `pool.query()` and lesson 2 to review CRUD operations):
 
 {% code title="server/models/userModel.js" %}
 ```javascript
@@ -390,17 +396,13 @@ const pool = require('../db/pool');
 
 // Returns all users — never expose the password
 module.exports.list = async () => {
-  const { rows } = await pool.query('SELECT user_id, username FROM users ORDER BY user_id');
-  return rows;
+  // TODO
 };
 
 // Stores the user and returns user_id and username — never expose password
 module.exports.create = async (username, password) => {
-  const query = 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING user_id, username';
-  const { rows } = await pool.query(query, [username, password]);
-  return rows[0];
+  // TODO
 };
-
 
 // Returns the full user object including password — used only for login comparison
 // Returns null if not found

@@ -176,12 +176,11 @@ Note: Observe how the diagram visualizes the two pathways: if the username was t
 4. **`server/index.js`**: `express.json()` parses the request body into `req.body`. The request matches `POST /api/auth/register` and calls the `register` controller.
 5. **`server/controllers/authControllers.js`**: The controller calls `userModel.findByUsername(username)` to check if the username is already taken.
 6. **`server/models/userModel.js`**: `findByUsername()` queries the `users` table and returns the user row or `null`.
-7. **`server/controllers/authControllers.js`**: If a user was found, the controller sends `400`. Otherwise, it calls `bcrypt.hash(password, SALT_ROUNDS)` to hash the plain-text password.
-8. **`server/controllers/authControllers.js`**: Calls `userModel.create(username, passwordHash)`.
-9. **`server/models/userModel.js`**: `create()` runs `INSERT INTO users ... RETURNING user_id, username` and returns the new user object (no `password_hash`).
-10. **`server/controllers/authControllers.js`**: Sets `req.session.user_id = user.user_id`, then sends `res.status(201).send(user)`.
-11. **`frontend/src/fetch-helpers.js`**: Parses the response and returns `{ data: user, error: null }`.
-12. **`frontend/src/main.js`**: Destructures `{ data: user }`. If `user` is `null` (registration failed), the handler returns early. Otherwise, `currentUser = user`, `renderAuthView(user)` is called — hides auth forms, shows "My Bookmarks" section, and re-renders the feed with like buttons enabled.
+7. **`server/controllers/authControllers.js`**: If a user was found, the controller sends `400`. Otherwise, it calls `userModel.create(username, password)`.
+8. **`server/models/userModel.js`**: `create()` hashes the password with `bcrypt.hash()`, then runs `INSERT INTO users ... RETURNING user_id, username` and returns the new user object (no `password_hash`).
+9. **`server/controllers/authControllers.js`**: Sets `req.session.user_id = user.user_id`, then sends `res.status(201).send(user)`.
+10. **`frontend/src/fetch-helpers.js`**: Parses the response and returns `{ data: user, error: null }`.
+11. **`frontend/src/main.js`**: Destructures `{ data: user }`. If `user` is `null` (registration failed), the handler returns early. Otherwise, `currentUser = user`, `renderAuthView(user)` is called — hides auth forms, shows "My Bookmarks" section, and re-renders the feed with like buttons enabled.
 
 ---
 
