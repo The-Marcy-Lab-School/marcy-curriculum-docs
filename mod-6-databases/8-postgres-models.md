@@ -4,23 +4,33 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-8-postgres-models)!
 {% endhint %}
 
+Every application we've built so far has had data — pets, bookmarks, posts — but that data disappears the moment you restart the server. In this lesson we'll connect our Express server to Postgres so that data persists.
+
+We'll build a user management system: registration, login, and basic CRUD operations on users. Along the way, you'll see the key architectural pattern of this module: **the model swap** — replacing an in-memory model with a Postgres-backed one without changing a single line of controller or route code.
+
+By the end of this lesson, you'll have a working app — and two obvious problems with it. Identifying them is the point. They're the exact problems that lessons 9 and 12 solve.
+
 **Table of Contents**
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Setup](#setup)
+  - [Files](#files)
+  - [Test the Endpoints](#test-the-endpoints)
+- [Building the User API](#building-the-user-api)
+  - [The In-Memory User Model](#the-in-memory-user-model)
+  - [User Controllers](#user-controllers)
+  - [Auth Controllers](#auth-controllers)
+  - [API Routes](#api-routes)
 - [Where Does `pg` Fit Into an Express Application?](#where-does-pg-fit-into-an-express-application)
-- [Configuring `pg` In an Express App](#configuring-pg-in-an-express-app)
-  - [Environment Variables](#environment-variables)
-  - [Production and Development Configurations](#production-and-development-configurations)
-  - [Export the `pool` Instance](#export-the-pool-instance)
-- [Replacing the In-Memory Model](#replacing-the-in-memory-model)
-  - [The Postgres Model](#the-postgres-model)
-- [Controllers and Error Handling](#controllers-and-error-handling)
+  - [`pg.Pool` Setup](#pgpool-setup)
+  - [Challenge: Write the Postgres User Model](#challenge-write-the-postgres-user-model)
+  - [The Model Swap](#the-model-swap)
+- [Error Handling](#error-handling)
   - [`try/catch` in Every Controller](#trycatch-in-every-controller)
   - [Error-Handling Middleware](#error-handling-middleware)
-- [Tracing a Request End to End with Sequence Diagrams](#tracing-a-request-end-to-end-with-sequence-diagrams)
-- [Practice: Write the Owner Model](#practice-write-the-owner-model)
+  - [Tracing a Request End to End](#tracing-a-request-end-to-end)
+- [What's Wrong With This Code?](#whats-wrong-with-this-code)
 
 ## Essential Questions
 
@@ -28,504 +38,573 @@ By the end of this lesson, you should be able to answer these questions:
 
 1. What is the difference between an in-memory model and a Postgres-backed model?
 2. When you swap a model from in-memory to Postgres, what changes in your controllers and routes?
-3. Why do we store database credentials in a `.env` file and never commit it?
-4. Why must every model method be `async` when using `pg`?
-5. What is the purpose of `try/catch` in a controller, and what happens if you skip it?
-6. What does the error-handling middleware do, and why must it have exactly four parameters?
+3. Why must every model method be `async` when using `pg`?
+4. What is the purpose of `try/catch` in a controller, and what happens if you skip it?
+5. What does the error-handling middleware do, and why must it have exactly four parameters?
 
 ## Key Concepts
 
 * **In-memory model** — a model that stores data in JavaScript arrays and objects. All data is lost when the server restarts.
 * **Postgres-backed model** — a model that uses `pool.query()` to read and write data in a database. Data persists across server restarts.
-* **`pool.js`** — a dedicated file that creates and exports the `Pool` instance. Models `require()` it instead of creating their own connections.
-* **`.env` file** — a file that stores environment variables like database credentials. It is never committed to version control.
 * **`async` model method** — every method that calls `pool.query()` must be `async` because `pool.query()` returns a Promise.
 * **`try/catch` in controllers** — catches any error thrown by a model method and forwards it to the error-handling middleware via `next(err)`.
 * **Error-handling middleware** — an Express middleware with exactly four parameters `(err, req, res, next)` that sends a structured error response when something goes wrong.
 
 ## Setup
 
-**Before you begin:** Clone down the repo above and follow the setup steps in the `README` file. In this lesson, you will be building an API for managing a list of pets and owners.
-
-Once the server is running, you can test the API endpoints using `curl` from a terminal. Here are the commands for every route:
-
-**Pets**
+**Before you begin:** Clone down the repo above and follow the setup steps below.
 
 ```sh
-# Get all pets
-curl http://localhost:3000/api/pets/
+# cd into server
+cd server
 
-# Get a single pet
-curl http://localhost:3000/api/pets/1
+# Install dependencies
+npm install
 
-# Create a pet
-curl -X POST http://localhost:3000/api/pets/ \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Mochi", "species": "cat"}'
-
-# Update a pet
-curl -X PATCH http://localhost:3000/api/pets/1 \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Mochi", "species": "rabbit"}'
-
-# Delete a pet
-curl -X DELETE http://localhost:3000/api/pets/1
+# Start the server
+npm run dev
 ```
 
-**Owners**
+### Files
+
+- `index.js` — Express app with authentication and user routes
+- `db/pool.js` — connection pool (edit this to match your local Postgres setup)
+- `db/seed.sql` — creates the `users` table and seeds sample data
+- `models/userModel-in-memory.js` — in-memory User model (the starting point)
+- `models/userModel.js` — Postgres User model (TODOs — fill this in!)
+- `controllers/authControllers.js` — `register` and `login` handlers
+- `controllers/userControllers.js` — `listUsers`, `updateUser`, `deleteUser` handlers
+
+### Test the Endpoints
+
+Once the server is running, test the API with these `curl` commands:
+
+**Authentication**
+
+| Method | Path                 | Description       |
+| ------ | -------------------- | ----------------- |
+| POST   | `/api/auth/register` | Create a new user |
+| POST   | `/api/auth/login`    | Log in            |
 
 ```sh
-# Get all owners
-curl http://localhost:3000/api/owners/
-
-# Create an owner
-curl -X POST http://localhost:3000/api/owners/ \
+# Register a new user
+curl -X POST http://localhost:3000/api/auth/register \
   -H "Content-Type: application/json" \
-  -d '{"name": "Alex Kim", "email": "alex@example.com"}'
+  -d '{"username": "alice", "password": "password123"}'
 
-# Get a single owner
-curl http://localhost:3000/api/owners/1
-
-# Update an owner
-curl -X PATCH http://localhost:3000/api/owners/1 \
+# Login
+curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"name": "Alexandra Kim"}'
+  -d '{"username": "alice", "password": "password123"}'
 
-# Delete an owner
-curl -X DELETE http://localhost:3000/api/owners/1
+# Login with wrong password (expect 401)
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "alice", "password": "wrongpassword"}'
 ```
+
+**Users**
+
+| Method | Path                  | Description       |
+| ------ | --------------------- | ----------------- |
+| GET    | `/api/users`          | List all users    |
+| PATCH  | `/api/users/:user_id` | Update a password |
+| DELETE | `/api/users/:user_id` | Delete a user     |
+
+```sh
+# List all users
+curl http://localhost:3000/api/users
+
+# Update a user's password
+curl -X PATCH http://localhost:3000/api/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"password": "newpassword"}'
+
+# Delete a user
+curl -X DELETE http://localhost:3000/api/users/1
+```
+
+## Building the User API
+
+### The In-Memory User Model
+
+The app starts with an in-memory model — data stored in a JavaScript array:
+
+{% code title="server/models/userModel-in-memory.js" %}
+```javascript
+let users = [
+  { user_id: 1, username: 'alice', password: 'password123' },
+  { user_id: 2, username: 'bob',   password: 'hunter2' },
+];
+let nextId = 3;
+
+// Returns all users — never exposes password
+module.exports.list = () =>
+  users.map(({ user_id, username }) => ({ user_id, username }));
+
+// Stores the user and returns user_id and username — never exposes password
+module.exports.create = (username, password) => {
+  const user = { user_id: nextId++, username, password };
+  users.push(user);
+  return { user_id: user.user_id, username: user.username };
+};
+
+// Returns the full user object including password — used only for login comparison
+module.exports.findByUsername = (username) =>
+  users.find((u) => u.username === username) || null;
+
+// Updates the user's password and returns user_id and username
+// Returns null if user not found
+module.exports.update = (user_id, password) => {
+  const user = users.find((u) => u.user_id === Number(user_id));
+  if (!user) return null;
+  user.password = password;
+  return { user_id: user.user_id, username: user.username };
+};
+
+// Deletes the user and returns user_id and username
+// Returns null if user not found
+module.exports.destroy = (user_id) => {
+  const idx = users.findIndex((u) => u.user_id === Number(user_id));
+  if (idx === -1) return null;
+  const [user] = users.splice(idx, 1);
+  return { user_id: user.user_id, username: user.username };
+};
+```
+{% endcode %}
+
+A few things worth noticing before moving on:
+
+- `list()` returns only `user_id` and `username` — it deliberately hides the `password` field
+- `findByUsername()` is the *only* function that returns the full user object including `password` — the login controller needs it to compare passwords
+- Every other function hides the password in its return value — the caller never needs to see it back
+
+These conventions carry over directly to the Postgres version.
+
+### User Controllers
+
+The user controllers handle listing, updating, and deleting users:
+
+{% code title="server/controllers/userControllers.js" %}
+```javascript
+const userModel = require('../models/userModel-in-memory');
+
+// GET /api/users
+const listUsers = async (req, res, next) => {
+  try {
+    const users = await userModel.list();
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// PATCH /api/users/:user_id { password }
+const updateUser = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+    const user = await userModel.update(req.params.user_id, password);
+    if (!user) return res.status(404).send({ message: 'User not found' });
+    res.send(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// DELETE /api/users/:user_id
+const deleteUser = async (req, res, next) => {
+  try {
+    const user = await userModel.destroy(req.params.user_id);
+    if (!user) return res.status(404).send({ message: 'User not found' });
+    res.send(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { listUsers, updateUser, deleteUser };
+```
+{% endcode %}
+
+### Auth Controllers
+
+**Authentication** is the process of verifying a user's identity. The most common form of authentication is a user logging in with a username and password combination.
+
+The repo comes with two authentication endpoints: `register` and `login`. These are the first time you're seeing authentication logic, so the controllers are heavily commented:
+
+{% code title="server/controllers/authControllers.js" %}
+```javascript
+const userModel = require('../models/userModel-in-memory');
+
+// POST /api/auth/register { username, password }
+const register = async (req, res, next) => {
+  try {
+    // 1. Pull the username and password out of the request body
+    const { username, password } = req.body;
+
+    // 2. Store the new user — the model returns only user_id and username, never the password
+    const user = await userModel.create(username, password);
+
+    // 3. Respond with the new user and a 201 Created status
+    res.status(201).send(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// POST /api/auth/login { username, password }
+const login = async (req, res, next) => {
+  try {
+    // 1. Pull the username and password out of the request body
+    const { username, password } = req.body;
+
+    // 2. Look up the user by username — returns the full row including password
+    const user = await userModel.findByUsername(username);
+
+    // 3. If no user was found, or the password doesn't match, reject the request.
+    //    The same generic message is returned for both cases so an attacker
+    //    can't tell whether the username or the password was wrong.
+    if (!user || user.password !== password) {
+      return res.status(401).send({ message: 'Invalid credentials' });
+    }
+
+    // 4. Credentials are valid — respond with user_id and username only
+    res.send({ user_id: user.user_id, username: user.username });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { register, login };
+```
+{% endcode %}
+
+Notice step 3 in `login`: the password comparison is a plain `!==` string check. It works — but it has a serious security flaw we'll address in lesson 9.
+
+### API Routes
+
+All five routes are registered in `index.js`.
+
+{% code title="server/index.js" %}
+```javascript
+// ====================================
+// Auth routes
+// ====================================
+
+app.post('/api/auth/register', register);
+app.post('/api/auth/login', login);
+
+// ====================================
+// User routes
+// ====================================
+
+app.get('/api/users', listUsers);
+app.patch('/api/users/:user_id', updateUser);
+app.delete('/api/users/:user_id', deleteUser);
+```
+{% endcode %}
 
 ## Where Does `pg` Fit Into an Express Application?
 
-In the previous lesson, you ran queries in a standalone Node script (`db/pool.js`) and called `pool.end()` at the end to close the connection pool. That worked fine for a one-shot script, but a real Express server needs to keep the pool open indefinitely so it can handle request after request.
+Now that we understand how the application works, how will we use `pg` to make our data persistent?
 
-In this lesson, we'll look at how to utilize `pg` in the context of an Express server application. When a user sends a `GET /api/pets` request to our server, the server will then use `pg` to send a `SELECT * FROM pets;` SQL query to Postgres instead of using an in-memory array.
+When a client sends a `POST /api/auth/register` request, the server uses `pg` to run an `INSERT INTO users` SQL query against Postgres instead of pushing into a JavaScript array.
 
-![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
+![A diagram showing the database running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
 
-The beauty of this MVC architecture, as you will see, is that our controllers won't need to change at all! Just our models.
+The beauty of this MVC architecture is that our controllers won't need to change at all when we make this swap. Just the models.
 
-In this lesson we will also learn some best practices for utilizing `pg` in the context of an Express server application. We will:
-* Utilize a `db/seed.sql` file to create the database schema and seed the tables with data
-* Store database connection credentials in a `.env` file for security
-* Initialize a connection `pool` in `db/pool.js` and export it so it can be shared by our models
-* Import the `pool` into our model files and update the model methods to use SQL instead of the in-memory array
+### `pg.Pool` Setup
+
+1. First, edit `db/pool.js` and update the user and password fields to match your local Postgres setup. (On macOS you may be able to delete those fields entirely)
+
+    ```js
+    const { Pool } = require('pg');
+
+    const config = {
+      host: 'localhost',
+      port: 5432,
+      database: 'users_db',
+      user: 'username', // <-- update me (or delete for MacOS)
+      password: 'password', // <-- update me (or delete for MacOS)
+    }
+
+    // Create the pool and export it
+    const pool = new Pool(config);
+
+    module.exports = pool;
+    ```
 
 {% hint style="info" %}
-**Do NOT call `pool.end()`**
-
-In the script from the last lesson, you called `pool.end()` so the Node process could exit. In a server, you *want* the process to keep running. As long as `pool.end()` is never called, the pool stays open and ready to handle queries for every incoming HTTP request.
-{% endhint %}
-
-## Configuring `pg` In an Express App
-
-In the previous lesson, we initialized a `Pool` instance like this:
-
-{% hint style="warning" %}
-```javascript
-const { Pool } = require('pg');
-
-const config = {
-  host: 'localhost',
-  port: 5432,
-  database: 'users_db',
-  user: 'username',
-  password: 'password',
-}
-
-const pool = new Pool(config);
-```
-{% endhint %}
-
-Hard-coding database credentials (host, port, username, password) directly in your source code is dangerous — anyone who can read your code can read your secrets, and those secrets get committed to version control.
-
-Instead, we should store this data in a gitignored `.env` file.
-
-### Environment Variables
-
-Start by adding your database credentials to the `.env` file (copy the `.env.template` file if you haven't already):
-
-{% code title="server/.env" %}
-```sh
-# Local development — fill in your values
-PG_HOST=localhost
-PG_PORT=5432
-PG_DATABASE=pets_db
-PG_USER=your_username
-PG_PASSWORD=your_password
-
-# When using a deployed production database, the host (e.g. Render) will provide a connection string to use instead
-# PG_CONNECTION_STRING=postgres://user:password@host:5432/database
-```
-{% endcode %}
-
-**Never commit `.env` to Git.** Add it to `.gitignore` immediately. Credentials that reach a public repository are compromised — even if you delete them later, they may have been indexed or copied.
-
-Your `.gitignore` should already include:
-
-```
-.env
-node_modules/
-```
-
-### Production and Development Configurations
-
-`pool.js` uses the `dotenv` library to load environment variables into `process.env`. It then creates a configuration object and initializes the pool:
-
-{% code title="server/db/pool.js" %}
-```javascript
-require('dotenv').config(); // loads environment variables from .env into process.env
-const { Pool } = require('pg');
-
-// In a local development environment, use this configuration
-const devConfig = {
-  host: process.env.PG_HOST,
-  port: process.env.PG_PORT,
-  user: process.env.PG_USER,
-  password: process.env.PG_PASSWORD,
-  database: process.env.PG_DATABASE,
-}
-
-// When using a deployed production DB hosted by a platform like Render
-// you will be given a connection string to use instead
-const prodConfig = {
-  connectionString: process.env.PG_CONNECTION_STRING
-};
-
-// If the connection string exists, use the production configuration
-const config = process.env.PG_CONNECTION_STRING ? prodConfig : devConfig;
-
-// Create the pool and export it
-const pool = new Pool(config);
-module.exports = pool;
-```
-{% endcode %}
-
-Notice that there are two configuration modes in this file:
-
-- **Local development** — uses individual vars (`PG_HOST`, `PG_PORT`, etc.)
-- **Production** — uses the single `PG_CONNECTION_STRING`. 
-
-When using a deployed production database, the host (e.g. Render) will provide a connection string to use instead. If that connection string is present, that takes priority. If not, it falls back to the development configuration. This means the same `pool.js` works in both environments without any code changes.
-
-### Export the `pool` Instance
-
-Rather than executing SQL queries in `pool.js`, `pool` is exported. This way every model that needs to query the database simply does:
+Note that `pool.js` creates the connection pool and exports it. Every model that needs to query the database just needs to import it:
 
 ```javascript
 const pool = require('../db/pool');
 ```
 
-As a result, there is one shared pool of connections used across the whole server.
+There is one shared pool of connections across the whole server. You never run queries inside `pool.js` — it just creates and exports the pool. Querying is the model's job.
+{% endhint %}
 
-We're now ready to swap out the in-memory array for Postgres!
+2. Then, run the commands below to create the `users_db` and seed it:
 
-## Replacing the In-Memory Model
+    ```sh
+    # Create the database (run once)
+    createdb users_db           # Mac
+    sudo -u postgres createdb users_db   # Windows/WSL
 
-Before we knew about Postgres, our app used an in-memory model — data stored in plain JavaScript arrays:
+    # Initialize the schema
+    psql -f db/seed.sql                    # Mac
+    sudo -u postgres psql -f db/seed.sql   # Windows/WSL
 
-{% code title="server/models/petModel-memory.js"%}
+    # Start the server
+    npm run dev
+    ```
+
+
+### Challenge: Write the Postgres User Model
+
+The app currently runs on the in-memory model. Your job is to implement the Postgres-backed version.
+
+This is the schema you are working with:
+
+```sql
+CREATE TABLE users (
+  user_id  SERIAL PRIMARY KEY,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
+```
+
+Open `userModel.js`. The method signatures and comments are already there — you just need to fill in the SQL. We've implemented the first two for you:
+
+{% code title="server/models/userModel.js" %}
 ```javascript
-let allPets = [];
-let nextId = 1;
+const pool = require('../db/pool');
 
-module.exports.list = () => [...allPets];
-
-module.exports.find = (pet_id) =>
-  allPets.find((p) => p.pet_id === Number(pet_id)) || null;
-
-module.exports.create = (name, species) => {
-  const pet = { pet_id: nextId++, name, species };
-  allPets.push(pet);
-  return pet;
+// Returns all users — never expose the password
+module.exports.list = async () => {
+  const { rows } = await pool.query('SELECT user_id, username FROM users ORDER BY user_id');
+  return rows;
 };
 
-// more methods...
+// Stores the user and returns user_id and username — never expose password
+module.exports.create = async (username, password) => {
+  const query = 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING user_id, username';
+  const { rows } = await pool.query(query, [username, password]);
+  return rows[0];
+};
+
+
+// Returns the full user object including password — used only for login comparison
+// Returns null if not found
+module.exports.findByUsername = async (username) => {
+  // TODO
+};
+
+// Updates the user's password and returns user_id and username — never expose password
+// Returns null if not found
+module.exports.update = async (user_id, password) => {
+  // TODO
+};
+
+// Deletes the user and returns user_id and username
+// Returns null if not found
+module.exports.destroy = async (user_id) => {
+  // TODO
+};
 ```
 {% endcode %}
 
-This works, but the data disappears the moment the server restarts. There's also a subtle difference: the in-memory methods return values *synchronously* — they don't return Promises.
+Use `userModel-in-memory.js` as your reference for what each function should accept and return. Only the internals change — every method is now `async`, data comes from Postgres instead of an array, and `RETURNING user_id, username` replaces the manual return object.
 
-### The Postgres Model
+**<details><summary>Solution: `userModel.js`</summary>**
 
-Here is the same model rewritten to import `pool` and use `pool.query()`:
-
-{% code title="server/models/petModel.js" %}
 ```javascript
 const pool = require('../db/pool');
 
 module.exports.list = async () => {
-  const { rows } = await pool.query('SELECT * FROM pets ORDER BY pet_id');
+  const { rows } = await pool.query('SELECT user_id, username FROM users ORDER BY user_id');
   return rows;
 };
 
-module.exports.find = async (pet_id) => {
-  const { rows } = await pool.query(
-    'SELECT * FROM pets WHERE pet_id = $1',
-    [pet_id]
-  );
-  return rows[0] || null;
-};
-
-module.exports.create = async (name, species) => {
-  const { rows } = await pool.query(
-    'INSERT INTO pets (name, species) VALUES ($1, $2) RETURNING *',
-    [name, species]
-  );
+module.exports.create = async (username, password) => {
+  const query = 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING user_id, username';
+  const { rows } = await pool.query(query, [username, password]);
   return rows[0];
 };
 
-module.exports.update = async (pet_id, name, species) => {
-  const { rows } = await pool.query(
-    `UPDATE pets
-     SET name = COALESCE($1, name), species = COALESCE($2, species)
-     WHERE pet_id = $3
-     RETURNING *`,
-    [name, species, pet_id]
-  );
+module.exports.findByUsername = async (username) => {
+  const query = 'SELECT * FROM users WHERE username = $1';
+  const { rows } = await pool.query(query, [username]);
   return rows[0] || null;
 };
 
-module.exports.destroy = async (pet_id) => {
-  const { rows } = await pool.query(
-    'DELETE FROM pets WHERE pet_id = $1 RETURNING *',
-    [pet_id]
-  );
+module.exports.update = async (user_id, password) => {
+  const query = 'UPDATE users SET password = $1 WHERE user_id = $2 RETURNING user_id, username';
+  const { rows } = await pool.query(query, [password, user_id]);
+  return rows[0] || null;
+};
+
+module.exports.destroy = async (user_id) => {
+  const query = 'DELETE FROM users WHERE user_id = $1 RETURNING user_id, username';
+  const { rows } = await pool.query(query, [user_id]);
   return rows[0] || null;
 };
 ```
-{% endcode %}
 
-**What changed in the model:**
+</details>
 
-- Every method is now `async` — `pool.query()` returns a Promise, so you must `await` it
-- Data comes from Postgres instead of an in-memory array
-- IDs are generated by Postgres (`SERIAL`), not by a JavaScript counter
-- `RETURNING *` brings back the inserted/updated/deleted row so you don't need a follow-up `SELECT`
-- `COALESCE($1, name)` in `UPDATE` keeps the existing value when a field is omitted — the Postgres equivalent of `name ?? pet.name`
+### The Model Swap
 
-**What did NOT change:**
+Once your Postgres model is complete, open both controller files and change this one line in each:
 
-- The exported function names: `list`, `find`, `create`, `update`, `destroy`
-- The parameters each function accepts
-- What each function returns (a single object, an array, or `null`)
+```javascript
+// Before
+const userModel = require('../models/userModel-in-memory');
 
-This is the payoff of **separation of concerns**. The controllers call the same model methods with the same arguments and get back the same shapes of data. They have no idea — and don't need to know — whether the data came from memory or Postgres.
+// After
+const userModel = require('../models/userModel');
+```
+
+That's it. The controllers, routes, and everything else stay exactly the same. Test your endpoints with the `curl` commands from the Setup section — they should now read from and write to the database.
 
 {% hint style="info" %}
-Open `petControllers.js`. Read it. Notice that it does not change at all when you swap from the in-memory model to the Postgres model. Not a single line. The controller only knows that `petModel.find(id)` gives it a pet or `null`. Where the pet comes from is the model's problem.
+The controllers don't care where the user data comes from. They only know that `userModel.findByUsername(username)` returns a user or `null`. Whether that user comes from a JavaScript array or a Postgres database is the model's problem — not the controller's.
 
 **This is why MVC matters.**
 {% endhint %}
 
-## Controllers and Error Handling
+## Error Handling
 
-In-memory model methods never fail — they operate on local variables and return immediately. Postgres model methods can fail for many reasons: the database is down, the query has a syntax error, a unique constraint is violated, the connection times out. Any of these will cause `pool.query()` to throw.
+In-memory model methods never fail — they operate on local variables and return immediately. Postgres model methods can fail for many reasons: the database is down, a query has a syntax error, a unique constraint is violated, the connection times out. Any of these will cause `pool.query()` to throw.
 
 ### `try/catch` in Every Controller
 
-Unhandled rejections crash the request and the client gets no response (or a generic network error). 
+Unhandled rejections crash the request — the client gets no response or a generic network error. With `try/catch`, you catch the error and handle it gracefully without crashing the server.
 
-With `try/catch`, you can catch the error and handle it gracefully without crashing the server.
+Every controller in this repo follows the same pattern:
 
-{% code title="server/controllers/petControllers.js" %}
-```javascript
-const petModel = require('../models/petModel');
+1. `await` the model method inside `try`
+2. Send a success response if everything worked, or a `4xx` if the client made a mistake
+3. In `catch`, call `next(err)` and let the error-handling middleware take it from there
 
-const getAllPets = async (req, res, next) => {
-  try {
-    const pets = await petModel.list();
-    res.send(pets);
-  } catch (err) {
-    // Doing this for every controller would be repetitive
-    res.status(500).send({ message: `Internal Server Error`});
-  }
-};
+**<details><summary>Q: Why handle user errors (`4xx`) separately from the `catch` block?</summary>**
 
-// other controllers...
-```
-{% endcode %}
+`user === null` means the query *succeeded* but found no matching row — that's a 404, the resource doesn't exist.
+
+An error caught by `catch` means something actually *broke* — a database failure, a malformed query, a connection timeout. That's a 500.
+
+These are different problems that deserve different status codes. `if (!user)` handles the "not found" case; `catch` handles the "something went wrong" case.
+
+</details>
 
 ### Error-Handling Middleware
 
-Doing this for every single controller would be highly repetitive. A better practice is to instead define a generic catch-all error handling controller in `index.js`:
+Writing a `catch` block in every controller would be highly repetitive. Instead, every `catch` block calls `next(err)` and defers to a single error-handling middleware registered in `index.js`:
 
 {% code title="server/index.js" %}
 ```javascript
 // Error-handling middleware — must have exactly four parameters
 const handleError = (err, req, res, next) => {
   console.error(err);
-  res.status(500).send({ message: `Internal Server Error` });
+  res.status(500).send({ message: 'Internal Server Error' });
 };
 
 app.use(handleError);
 ```
 {% endcode %}
 
-This middleware must be registered *after* all your routes. It acts as a catch-all: any error from any route flows here, gets logged, and gets sent back as a structured JSON response with an appropriate status code.
-
-When any controller calls `next(err)`, Express skips all remaining regular middleware and routes and looks for an error-handling middleware like the one we just created.
-
-{% code title="server/controllers/petControllers.js" %}
-```javascript
-const petModel = require('../models/petModel');
-
-const getAllPets = async (req, res, next) => {
-  try {
-    const pets = await petModel.list();
-    res.send(pets);
-  } catch (err) {
-    next(err); // passes control to the error handler
-  }
-};
-
-const getPet = async (req, res, next) => {
-  try {
-    const pet = await petModel.find(req.params.pet_id);
-    if (!pet) return res.status(404).json({ error: 'Pet not found' });
-    res.send(pet);
-  } catch (err) {
-    next(err); // passes control to the error handler
-  }
-};
-
-// so on...
-```
-{% endcode %}
-
-The pattern inside every controller is the same:
-
-1. `await` the model method inside `try`
-2. Send a success response if everything worked (or a `4xx` error if the user made a mistake)
-3. In `catch`, call `next(err)` and let the middleware handle the error.
+This must be registered *after* all your routes. When any controller calls `next(err)`, Express skips all remaining middleware and routes and passes control directly to this handler.
 
 {% hint style="warning" %}
-Express identifies an error-handling middleware *only* by its four-parameter signature `(err, req, res, next)`. If you write it with three parameters like a regular middleware, Express will never call it for errors.
+Express identifies an error-handling middleware *only* by its four-parameter signature `(err, req, res, next)`. If you write it with three parameters, Express will treat it as regular middleware and never call it for errors.
 {% endhint %}
 
-**<details><summary>Q: Why do handle user errors (`4xx` errors) separately from the `catch` block?</summary>**
+### Tracing a Request End to End
 
-`pet === null` means the query *succeeded* but found no matching row. That's a 404 — the resource doesn't exist.
+Here is the full sequence for a successful `POST /api/auth/register` request:
 
-An error caught by `catch` means something actually *broke* — a database failure, a malformed query, a connection timeout. That's a 500.
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Express
+    participant authControllers
+    participant userModel
+    participant Postgres
 
-These are different problems that deserve different status codes. `if (!pet)` handles the "not found" case; `catch` handles the "something went wrong" case.
+    Client->>Express: POST /api/auth/register { username, password }
+    Express->>authControllers: register(req, res, next)
+    authControllers->>userModel: create(username, password)
+    userModel->>Postgres: INSERT INTO users ... RETURNING user_id, username
+    Postgres-->>userModel: { user_id: 3, username: 'carol' }
+    userModel-->>authControllers: { user_id: 3, username: 'carol' }
+    authControllers-->>Express: res.status(201).send(user)
+    Express-->>Client: 201 { user_id: 3, username: 'carol' }
+```
 
-</details>
+Each layer only knows about the layers directly next to it:
 
-
-## Tracing a Request End to End with Sequence Diagrams
-
-To help visualize the entire process, we can use a **sequence diagram** which shows the interactions between each layer of the application.
-
-Here is the full sequence for when a user sends a `GET /api/pets/2` request:
-
-![The sequence is client → Express → controller → model → Postgres → model → controller → Express → Client](./img/8-postgres-models/sequence-get-pet-2.png)
-
-Each layer only knows about the layers directly next to it: 
-- The client knows nothing about Express internals. 
-- Express knows nothing about the model. 
-- The controller knows nothing about SQL. 
-- The model knows nothing about HTTP. 
-
-That clean separation is what makes the code easy to reason about and easy to change — including swapping the model from in-memory to Postgres.
+- The client knows nothing about Express internals
+- The controller knows nothing about SQL
+- The model knows nothing about HTTP
 
 **<details><summary>Q: What does the flow look like when a database error occurs?</summary>**
 
-Suppose a client tries to create an owner with an email that already exists in the database. The `owners.email` column has a `UNIQUE` constraint, so Postgres will reject the insert.
+Suppose two users try to register with the same username. The `username` column has a `UNIQUE` constraint, so Postgres will reject the second insert:
 
-![A user tries to POST a user with a duplicate email, causing Postgres to reject the insert and throw an error.](./img/8-postgres-models/sequence-error.png)
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Express
+    participant authControllers
+    participant userModel
+    participant Postgres
 
-The query reaches Postgres, but Postgres rejects it because `ann@example.com` is already in the table. `pool.query()` throws, the controller's `catch` block calls `next(err)`, and `handleError` sends the error response. No stack trace leaks. No silent crash.
+    Client->>Express: POST /api/auth/register { username: 'alice', password: '...' }
+    Express->>authControllers: register(req, res, next)
+    authControllers->>userModel: create('alice', '...')
+    userModel->>Postgres: INSERT INTO users (username, ...) VALUES ('alice', ...)
+    Postgres-->>userModel: ERROR: duplicate key value violates unique constraint
+    userModel-->>authControllers: throws error
+    authControllers->>Express: next(err)
+    Express-->>Client: 500 Internal Server Error
+```
+
+`pool.query()` throws, the controller's `catch` block calls `next(err)`, and `handleError` sends the error response. No stack trace leaks. No silent crash.
 
 </details>
 
-## Practice: Write the Owner Model
+## What's Wrong With This Code?
 
-The repo includes:
+The app works. Users can register, log in, and be managed through the API. But there are two serious problems worth naming before moving on.
 
-- `ownerModel-memory.js` — the in-memory version, already complete
-- `ownerModel.js` — a stub with empty functions, waiting for you to fill in
-- `ownerControllers.js` — already wired up, currently pointing at `ownerModel-memory`
+**Problem 1: Passwords are stored in plaintext.**
 
-The `owners` table already exists in the database after running the seed file:
+Look at the database directly:
 
 ```sql
-CREATE TABLE owners (
-  owner_id SERIAL PRIMARY KEY,
-  name     TEXT NOT NULL,
-  email    TEXT NOT NULL UNIQUE
-);
+SELECT * FROM users;
 ```
 
-**Step 1:** Fill in each function in `ownerModel.js` using `pool.query()`. Use `petModel.js` as your reference — the structure is identical, just swap the table name and column names.
-
-**Step 2:** Once your model is complete, open `ownerControllers.js` and change this one line:
-
-```javascript
-// Before
-const ownerModel = require('../models/ownerModel-memory');
-
-// After
-const ownerModel = require('../models/ownerModel');
+```
+ user_id | username |  password
+---------+----------+------------
+       1 | alice    | password123
+       2 | bob      | hunter2
 ```
 
-That's it. The controllers, routes, and everything else stay exactly the same. Test your endpoints with Postman or a browser — they should now read from and write to the database.
+Every password is readable as plain text. If an attacker gains access to this database, every user's password is immediately exposed. Since most people reuse passwords across sites, a breach of your app can compromise their email, bank, and other accounts too.
 
-**<details><summary>Solution: `ownerModel.js`</summary>**
+Lesson 9 fixes this by introducing **hashing** — a technique that makes it safe to handle passwords at all.
 
-```javascript
-const pool = require('../db/pool');
+**Problem 2: Anyone can update or delete any user.**
 
-module.exports.list = async () => {
-  const { rows } = await pool.query('SELECT * FROM owners ORDER BY owner_id');
-  return rows;
-};
+Try this:
 
-module.exports.find = async (owner_id) => {
-  const { rows } = await pool.query(
-    'SELECT * FROM owners WHERE owner_id = $1',
-    [owner_id]
-  );
-  return rows[0] || null;
-};
-
-module.exports.create = async (name, email) => {
-  const { rows } = await pool.query(
-    'INSERT INTO owners (name, email) VALUES ($1, $2) RETURNING *',
-    [name, email]
-  );
-  return rows[0];
-};
-
-module.exports.update = async (owner_id, name, email) => {
-  const { rows } = await pool.query(
-    `UPDATE owners
-     SET name = COALESCE($1, name), email = COALESCE($2, email)
-     WHERE owner_id = $3
-     RETURNING *`,
-    [name, email, owner_id]
-  );
-  return rows[0] || null;
-};
-
-module.exports.destroy = async (owner_id) => {
-  const { rows } = await pool.query(
-    'DELETE FROM owners WHERE owner_id = $1 RETURNING *',
-    [owner_id]
-  );
-  return rows[0] || null;
-};
+```sh
+curl -X DELETE http://localhost:3000/api/users/1
 ```
 
-</details>
+User 1 is gone — and we didn't have to be logged in to do it. Any client can modify or delete any user.
 
-**<details><summary>Q: Why does the `email` column have a `UNIQUE` constraint, and what happens when you violate it?</summary>**
-
-The `UNIQUE` constraint on `email` prevents two owners from being registered with the same email address — a common requirement for accounts or profiles.
-
-If you try to `INSERT` a duplicate email, Postgres throws an error with code `23505` (unique violation). `pool.query()` rejects the Promise, your controller's `catch` block calls `next(err)`, and the error-handling middleware sends back a 500.
-
-For a production app, you would inspect `err.code === '23505'` in the controller or model and return a more specific 409 Conflict response instead of a generic 500.
-
-</details>
+Lesson 12 fixes this by introducing **authorization middleware** — a layer that verifies who is making the request before allowing certain actions to proceed.
