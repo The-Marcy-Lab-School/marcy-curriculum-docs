@@ -15,7 +15,7 @@ By the end of this lesson, you'll have a working app — and two obvious problem
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Setup](#setup)
-  - [Files](#files)
+  - [File Structure](#file-structure)
   - [Test the Endpoints](#test-the-endpoints)
 - [Building the User API](#building-the-user-api)
   - [The In-Memory User Model](#the-in-memory-user-model)
@@ -64,15 +64,21 @@ npm install
 npm run dev
 ```
 
-### Files
+### File Structure
 
-- `index.js` — Express app with authentication and user routes
-- `db/pool.js` — connection pool (edit this to match your local Postgres setup)
-- `db/seed.sql` — creates the `users` table and seeds sample data
-- `models/userModel-in-memory.js` — in-memory User model (the starting point)
-- `models/userModel.js` — Postgres User model (TODOs — fill this in!)
-- `controllers/authControllers.js` — `register` and `login` handlers
-- `controllers/userControllers.js` — `listUsers`, `updateUser`, `deleteUser` handlers
+```
+server/
+├── controllers/
+│   ├── authControllers.js        # register and login
+│   └── userControllers.js        # listUsers, updateUser, deleteUser
+├── db/
+│   ├── pool.js                   # Postgres connection pool (edit for local setup)
+│   └── seed.sql                  # Database schema and sample data
+├── models/
+│   ├── userModel-in-memory.js    # Starting point (in-memory data)
+│   └── userModel.js              # Postgres User model (TODO)
+└── index.js                      # Main Express app & authentication routes
+```
 
 ### Test the Endpoints
 
