@@ -39,8 +39,7 @@ By the end of this lesson, you should be able to answer these questions:
 1. What is the difference between an in-memory model and a Postgres-backed model?
 2. When you swap a model from in-memory to Postgres, what changes in your controllers and routes?
 3. What is authentication? How does a server handle login and registration?
-4. What is the purpose of `try/catch` in a controller, and what happens if you skip it?
-5. What does the error-handling middleware do, and why must it have exactly four parameters?
+4. How should our server handle database errors?
 
 ## Key Concepts
 
