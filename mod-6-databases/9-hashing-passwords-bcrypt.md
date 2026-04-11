@@ -332,6 +332,7 @@ Three methods are unchanged because they have nothing to do with passwords. Thre
 {% tabs %}
 
 {% tab title="Hashed Passwords with Bcrypt" %} 
+
 ```javascript
 // models/userModel.js
 const bcrypt = require('bcrypt');
@@ -387,9 +388,11 @@ module.exports.destroy = async (user_id) => {
   return rows[0] || null;
 };
 ```
+
 {% endtab %}
 
 {% tab title="Plaintext Passwords" %} 
+
 ```javascript
 const pool = require('../db/pool');
 
@@ -430,6 +433,7 @@ module.exports.destroy = async (user_id) => {
   return rows[0] || null;
 };
 ```
+
 {% endtab %}
 
 {% endtabs %} 
