@@ -334,7 +334,6 @@ Three methods are unchanged because they have nothing to do with passwords. Thre
 {% tab title="Hashed Passwords with Bcrypt" %}
 
 ```javascript
-// models/userModel.js
 const bcrypt = require('bcrypt');
 const pool = require('../db/pool');
 
