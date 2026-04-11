@@ -155,10 +155,23 @@ module.exports.create = (username, password) => {
   return { user_id: user.user_id, username: user.username };
 };
 
-// Returns the full user object including password — used only for login comparison
+// Returns user_id and username — never exposes password
+// Used only to check whether a username is already taken (register)
+// Returns null if not found
 module.exports.findByUsername = (username) => {
-  return users.find((u) => u.username === username) || null;
-}
+  const user = users.find((u) => u.username === username);
+  if (!user) return null;
+  return { user_id: user.user_id, username: user.username };
+};
+
+// Finds the user by username and validates the password
+// Returns user_id and username if credentials match — never exposes password
+// Returns null if not found or password doesn't match
+module.exports.validatePassword = (username, password) => {
+  const user = users.find((u) => u.username === username);
+  if (!user || user.password !== password) return null;
+  return { user_id: user.user_id, username: user.username };
+};
 
 // Updates the user's password and returns user_id and username
 // Returns null if user not found
@@ -182,9 +195,9 @@ module.exports.destroy = (user_id) => {
 
 A few things worth noticing before moving on:
 
-- `list()` returns only `user_id` and `username` — it deliberately hides the `password` field
-- `findByUsername()` is the *only* function that returns the full user object including `password` — the login controller needs it to compare passwords
-- Every other function hides the password in its return value — the caller never needs to see it back
+- Every method returns only `user_id` and `username` — the password is **never** sent back to a caller
+- `findByUsername()` is used only by `register` to check whether a username is already taken — because it returns no password, it's safe to hand back to the controller as-is
+- `validatePassword()` handles login: it does the internal lookup, compares the password, and returns `{ user_id, username }` on success or `null` on failure — the controller never touches the password field directly
 
 These conventions carry over directly to the Postgres version.
 
@@ -271,18 +284,17 @@ const login = async (req, res, next) => {
     // 1. Pull the username and password out of the request body
     const { username, password } = req.body;
 
-    // 2. Look up the user by username — returns the full row including password
-    const user = await userModel.findByUsername(username);
-
-    // 3. If no user was found, or the password doesn't match, reject the request.
+    // 2. Validate credentials — the model handles the lookup and comparison.
+    //    Returns user_id and username if valid, null otherwise.
     //    The same generic message is returned for both cases so an attacker
     //    can't tell whether the username or the password was wrong.
-    if (!user || user.password !== password) {
+    const user = await userModel.validatePassword(username, password);
+    if (!user) {
       return res.status(401).send({ message: 'Invalid credentials' });
     }
 
-    // 4. Credentials are valid — respond with user_id and username only
-    res.send({ user_id: user.user_id, username: user.username });
+    // 3. Credentials are valid — respond with user_id and username
+    res.send(user);
   } catch (err) {
     next(err);
   }
@@ -292,7 +304,7 @@ module.exports = { register, login };
 ```
 {% endcode %}
 
-Notice step 3 in `login`: the password comparison is a plain `!==` string check. It works — but it has a serious security flaw we'll address in lesson 9.
+Notice that `validatePassword` encapsulates the lookup *and* the comparison — the controller never touches the password field directly. The comparison itself is still a plain `!==` string check, which works but has a serious security flaw we'll address in lesson 9.
 
 ### API Routes
 
@@ -404,9 +416,17 @@ module.exports.create = async (username, password) => {
   // TODO
 };
 
-// Returns the full user object including password — used only for login comparison
+// Returns user_id and username — never exposes password
+// Used only to check whether a username is already taken (register)
 // Returns null if not found
 module.exports.findByUsername = async (username) => {
+  // TODO
+};
+
+// Finds the user by username and validates the password
+// Returns user_id and username if credentials match — never exposes password
+// Returns null if not found or password doesn't match
+module.exports.validatePassword = async (username, password) => {
   // TODO
 };
 
@@ -443,9 +463,17 @@ module.exports.create = async (username, password) => {
 };
 
 module.exports.findByUsername = async (username) => {
-  const query = 'SELECT * FROM users WHERE username = $1';
+  const query = 'SELECT user_id, username FROM users WHERE username = $1';
   const { rows } = await pool.query(query, [username]);
   return rows[0] || null;
+};
+
+module.exports.validatePassword = async (username, password) => {
+  const query = 'SELECT * FROM users WHERE username = $1';
+  const { rows } = await pool.query(query, [username]);
+  const user = rows[0];
+  if (!user || user.password !== password) return null;
+  return { user_id: user.user_id, username: user.username };
 };
 
 module.exports.update = async (user_id, password) => {
@@ -478,7 +506,7 @@ const userModel = require('../models/userModel');
 That's it. The controllers, routes, and everything else stay exactly the same. Test your endpoints with the `curl` commands from the Setup section — they should now read from and write to the database.
 
 {% hint style="info" %}
-The controllers don't care where the user data comes from. They only know that `userModel.findByUsername(username)` returns a user or `null`. Whether that user comes from a JavaScript array or a Postgres database is the model's problem — not the controller's.
+The controllers don't care where the user data comes from. They only know that `userModel.validatePassword(username, password)` returns `{ user_id, username }` or `null`. Whether that check runs against a JavaScript array or a Postgres database is the model's problem — not the controller's.
 
 **This is why MVC matters.**
 {% endhint %}

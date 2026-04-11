@@ -1,21 +1,23 @@
-# 10. User Model and Registration
+# 10. User Model, Registration, and Login
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-10-user-model-and-registration)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-10-auth-with-bcrypt)!
 {% endhint %}
 
-In lesson 9, you learned why plaintext passwords are dangerous and how bcrypt solves the problem. Now let's apply it. In this lesson, you'll update the user system from lesson 8 — replacing the plaintext `password` column with a `password_hash`, rebuilding the `userModel` with bcrypt-aware methods, and writing a proper registration endpoint that hashes passwords before storing them.
+In lesson 9, you learned why plaintext passwords are dangerous and how bcrypt solves the problem. Now let's apply it. In this lesson, you'll update the user system from lesson 8 — replacing the plaintext `password` column with a `password_hash`, rebuilding the `userModel` with bcrypt-aware methods, and writing proper registration and login endpoints.
 
 **Table of Contents**
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
+- [Setup](#setup)
 - [Seeding with Hashed Passwords](#seeding-with-hashed-passwords)
 - [The User Model](#the-user-model)
   - [Why `validatePassword` Lives in the Model](#why-validatepassword-lives-in-the-model)
 - [The Registration Endpoint](#the-registration-endpoint)
+- [The Login Endpoint](#the-login-endpoint)
 - [Auth Routes in `index.js`](#auth-routes-in-indexjs)
-- [Tracing the Registration Flow](#tracing-the-registration-flow)
+- [Tracing the Auth Flows](#tracing-the-auth-flows)
 
 ## Essential Questions
 
@@ -30,6 +32,8 @@ By the end of this lesson, you should be able to answer these questions:
 * **`password_hash`** — the column name for a stored hashed password. The name signals to every developer that this column never holds a plaintext password.
 * **`bcrypt.hash(password, saltRounds)`** — hashes a plaintext password before storing. Called in the seed file and inside the model's `create` and `update` methods. Controllers never call `bcrypt` directly.
 * **`userModel.validatePassword(username, password)`** — a model method that looks up a user by username and calls `bcrypt.compare()` internally. Returns `{ user_id, username }` if valid, or `null` if not. The controller never sees `password_hash`.
+
+## Setup
 
 ## Seeding with Hashed Passwords
 
@@ -129,7 +133,9 @@ This is also your first look at `bcrypt` in the application. `bcrypt.hash(passwo
 
 ## The User Model
 
-The user model has six functions. Five are updated versions of what you built in lesson 8. The new one is `validatePassword`.
+The user model has the same six functions as what was built in lesson 8:
+* The functions `list`, `findByUsername` and `delete` remain unchanged as they have nothing to do with the password. 
+* The methods `create`, `update`, and `validatePassword` now all use `bcrypt` to hash and validate passwords
 
 ```js
 // models/userModel.js
@@ -144,37 +150,55 @@ module.exports.list = async () => {
   return rows;
 };
 
-
-module.exports.findByUsername = async (username) => { /* unchanged */ };
-module.exports.destroy = async (userId) => { /* unchanged */ };
-
 // Now hashes the password before storing
 module.exports.create = async (username, password) => {
-  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+  const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
   const query = 'INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING user_id, username';
-  const result = await pool.query(query, [username, passwordHash]);
-  return result.rows[0];
+  const { rows } = await pool.query(query, [username, password_hash]);
+  return rows[0];
 };
 
-module.exports.update = async (userId, password) => {
-  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
-  const query = 'UPDATE users SET password_hash = $1 WHERE user_id = $2 RETURNING user_id, username';
-  const result = await pool.query(query, [passwordHash, userId]);
-  return result.rows[0] || null;
+// Unchanged
+module.exports.findByUsername = async (username) => {
+  const query = 'SELECT user_id, username FROM users WHERE username = $1';
+  const { rows } = await pool.query(query, [username]);
+  return rows[0] || null;
 };
 
+// As before, looks for a matching username and returns null if not found
+// Now uses bcrypt.compare to validate the password
+// As before, returns null if invalid or the user without the password exposed if valid
 module.exports.validatePassword = async (username, password) => {
-  const 
-  const user = await 
+  const query = 'SELECT * FROM users WHERE username = $1';
+  const { rows } = await pool.query(query, [username]);
+  const user = rows[0];
   if (!user) return null;
+  
   const isValid = await bcrypt.compare(password, user.password_hash);
   if (!isValid) return null;
   return { user_id: user.user_id, username: user.username };
 };
+
+// Now hashes the new password before updating
+module.exports.update = async (user_id, password) => {
+  const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
+  const query = 'UPDATE users SET password_hash = $1 WHERE user_id = $2 RETURNING user_id, username';
+  const { rows } = await pool.query(query, [password_hash, user_id]);
+  return rows[0] || null;
+};
+
+// Unchanged
+module.exports.destroy = async (user_id) => {
+  const query = 'DELETE FROM users WHERE user_id = $1 RETURNING user_id, username';
+  const { rows } = await pool.query(query, [user_id]);
+  return rows[0] || null;
+};
 ```
 
 {% hint style="info" %}
-Notice that `list`, `create`, `find`, `update`, and `destroy` all select only `user_id, username` — never `password_hash`. The only function that ever reads `password_hash` is `findByUsername`, and it is called only from `validatePassword`. Controllers never see the hash.
+Notice that not a single one of these functions exposes the password hash to the Controllers. 
+
+`validatePassword` is the only function that selects the password with `SELECT * FROM users...` however it ensures that when returning, the password is not included.
 {% endhint %}
 
 ### Why `validatePassword` Lives in the Model
@@ -217,11 +241,9 @@ const register = async (req, res, next) => {
     next(err);
   }
 };
-
-module.exports = { register };
 ```
 
-**<details><summary>Q: Why check for an existing username before hashing the password?</summary>**
+**<details><summary>Q: Why check for an existing username before hashing the password and not after?</summary>**
 
 `bcrypt.hash()` is intentionally slow — that's part of what makes it secure. If we hashed first and then discovered the username was taken, we'd have wasted an expensive computation. Checking the database first short-circuits early.
 
@@ -233,21 +255,55 @@ The `password_hash` is not useful to the client — it can't be used to authenti
 
 </details>
 
+## The Login Endpoint
+
+The login controller has two steps:
+
+```js
+// controllers/authControllers.js
+const login = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    // Step 1: Validate credentials — findByUsername + bcrypt.compare in one call
+    const user = await userModel.validatePassword(username, password);
+
+    // Step 2: If invalid, return 401 — same message for wrong username and wrong password
+    if (!user) return res.status(401).send({ message: 'Invalid credentials' });
+
+    res.send(user); // { user_id, username }
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { register, login };
+```
+
+Notice how clean the login controller is — it doesn't touch `bcrypt` directly. `userModel.validatePassword()` handles the database lookup and hash comparison internally. The controller only ever sees `{ user_id, username }` or `null`.
+
+{% hint style="info" %}
+Both "user not found" and "wrong password" return the same `401 Invalid credentials`. This is intentional — telling an attacker whether a username exists gives them information. Always use the same generic message for both failure cases.
+{% endhint %}
+
 ## Auth Routes in `index.js`
 
-Auth routes go in a dedicated section in `index.js`. For now only `register` is wired up — `login`, `/me`, and `logout` come in lesson 11.
+Both auth routes are wired up in `index.js`. `/me` and `logout` require sessions and come in lesson 11.
 
 ```js
 // index.js
 const express = require('express');
-const { register } = require('./controllers/authControllers');
+const { register, login } = require('./controllers/authControllers');
 const { listUsers, updateUser, deleteUser } = require('./controllers/userControllers');
+const logRoutes = require('./middleware/logRoutes');
 
 const app = express();
 app.use(express.json());
+app.use(logRoutes);
 
 // ---- Auth Routes ----
 app.post('/api/auth/register', register);
+app.post('/api/auth/login', login);
 
 // ---- User Routes ----
 app.get('/api/users', listUsers);
@@ -255,15 +311,20 @@ app.patch('/api/users/:user_id', updateUser);
 app.delete('/api/users/:user_id', deleteUser);
 
 // ---- Error-Handling Middleware ----
-app.use((err, req, res, next) => {
+const handleError = (err, req, res, next) => {
   console.error(err);
-  res.status(err.status || 500).send({ message: err.message || 'Internal server error' });
-});
+  res.status(500).send({ message: 'Internal Server Error' });
+};
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+app.use(handleError);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 ```
 
-## Tracing the Registration Flow
+## Tracing the Auth Flows
+
+**Registration — username available:**
 
 ```mermaid
 sequenceDiagram
@@ -274,18 +335,18 @@ sequenceDiagram
 
   C->>S: POST /api/auth/register { username, password }
   S->>M: findByUsername(username)
-  M->>DB: SELECT * FROM users WHERE username = $1
+  M->>DB: SELECT user_id, username FROM users WHERE username = $1
   DB-->>M: (no rows)
   M-->>S: null
-  S->>S: bcrypt.hash(password, saltRounds)
-  S->>M: create(username, passwordHash)
+  S->>M: create(username, password)
+  M->>M: bcrypt.hash(password, SALT_ROUNDS)
   M->>DB: INSERT INTO users ... RETURNING user_id, username
   DB-->>M: { user_id: 3, username: 'alice' }
   M-->>S: { user_id: 3, username: 'alice' }
   S-->>C: 201 { user_id: 3, username: 'alice' }
 ```
 
-If the username is already taken, the flow short-circuits early:
+**Registration — username already taken:**
 
 ```mermaid
 sequenceDiagram
@@ -296,10 +357,33 @@ sequenceDiagram
 
   C->>S: POST /api/auth/register { username: 'alice', password: '...' }
   S->>M: findByUsername('alice')
-  M->>DB: SELECT * FROM users WHERE username = $1
-  DB-->>M: { user_id: 1, username: 'alice', ... }
-  M-->>S: { user_id: 1, ... }
-  S-->>C: 409 { message: 'Username already taken' }
+  M->>DB: SELECT user_id, username FROM users WHERE username = $1
+  DB-->>M: { user_id: 1, username: 'alice' }
+  M-->>S: { user_id: 1, username: 'alice' }
+  S-->>C: 400 { message: 'Username already taken' }
 ```
 
-The next lesson introduces `cookie-session`, uses it to add auto-login on register, and builds out the remaining auth surface: login, `/api/auth/me`, and logout.
+**Login:**
+
+```mermaid
+sequenceDiagram
+  participant C as Client
+  participant S as Server (login)
+  participant M as userModel
+  participant DB as Postgres
+
+  C->>S: POST /api/auth/login { username, password }
+  S->>M: validatePassword(username, password)
+  M->>DB: SELECT * FROM users WHERE username = $1
+  DB-->>M: { user_id, username, password_hash }
+  M->>M: bcrypt.compare(password, password_hash)
+  alt invalid credentials
+    M-->>S: null
+    S-->>C: 401 { message: 'Invalid credentials' }
+  else valid credentials
+    M-->>S: { user_id, username }
+    S-->>C: 200 { user_id, username }
+  end
+```
+
+The next lesson introduces `cookie-session` to add sessions to both register and login, plus `/api/auth/me` and logout.

@@ -247,7 +247,18 @@ sequenceDiagram
 
 When a user returns to your app after previously logging in, their session cookie is still in their browser. The frontend needs a way to ask: "Am I still logged in? Who am I?"
 
-The `/api/auth/me` endpoint handles this:
+The `/api/auth/me` endpoint handles this. It uses `userModel.find(userId)` — a new model method that looks up a user by their `user_id`:
+
+```js
+// models/userModel.js
+module.exports.find = async (userId) => {
+  const { rows } = await pool.query(
+    'SELECT user_id, username FROM users WHERE user_id = $1',
+    [userId]
+  );
+  return rows[0] || null;
+};
+```
 
 ```js
 const getMe = async (req, res, next) => {
