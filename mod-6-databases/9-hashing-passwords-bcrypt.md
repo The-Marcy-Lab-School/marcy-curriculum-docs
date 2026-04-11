@@ -30,6 +30,7 @@ The fix is **hashing** — a technique that makes it safe to store and verify pa
 - [Bcrypt](#bcrypt)
   - [Hashing a Password with `bcrypt.hash(str, saltRounds)`](#hashing-a-password-with-bcrypthashstr-saltrounds)
   - [Comparing Passwords with `bcrypt.compare(plaintext, hash)`](#comparing-passwords-with-bcryptcompareplaintext-hash)
+- [{% endhint %}](#-endhint-)
 - [Applying Bcrypt to the User Model](#applying-bcrypt-to-the-user-model)
   - [Seeding with Hashed Passwords](#seeding-with-hashed-passwords)
   - [The User Model](#the-user-model)
@@ -187,26 +188,6 @@ const isWrong = await bcrypt.compare('wrongpassword', hashedPassword);
 console.log(isWrong); // false
 ```
 
-{% hint style="info" %}
-**How does bcrypt know what salt was used to generate the `hash`?**
-
-It's actually embedded directly in the `hash` string itself and publicly visible. A typical bcrypt hash looks something like this:
-
-```
-$2a$12$R9h/lRnG9v5Iy.EBk92.uOayWp.mB199P9W.oX076/75S2pT.Dq.
-```
-
-It is divided into sections by the `$` symbol:
-- **Prefix (`$2a$`)**: Identifies the version of the bcrypt algorithm used.
-- **Cost Factor/Salt Rounds (`$12$`)**: This tells the computer how many iterations ($2^{12}$ or 4,096 rounds) to run. This is what makes bcrypt "slow" and resistant to brute-force attacks.
-- **Salt (the next 22 characters)**: This is the random "noise" added to the password before hashing.
-- **Hash (the remaining characters)**: This is the final result of the password + salt + multiple rounds of computation.
-
-Counterintuitively, the salt doesn't need to be a secret in order for the hashed password to be secure. As long as the salt is unique and the original password is unknown, it is still impossible to reverse the hashing function.
-
-And the nice thing is that `bcrypt.compare()` extracts the embedded salt automatically for you — you never need to manage it directly.
-{% endhint %}
-
 **Q: You call `bcrypt.hash('secret', 8)` twice and get `hash1` and `hash2` — two different hash strings. What does `bcrypt.compare('secret', hash2)` return?**
 
 Try it out!
@@ -228,14 +209,33 @@ bcrypt.compare('secret', hash2); // ?
 
 </details>
 
+{% hint style="info" %}
+**How does bcrypt know what salt was used to generate the `hash`?**
+
+It's actually embedded directly in the `hash` string itself and publicly visible. A typical bcrypt hash looks something like this:
+
+```
+$2a$12$R9h/lRnG9v5Iy.EBk92.uOayWp.mB199P9W.oX076/75S2pT.Dq.
+```
+
+It is divided into sections by the `$` symbol:
+- **Prefix (`$2a$`)**: Identifies the version of the bcrypt algorithm used.
+- **Cost Factor/Salt Rounds (`$12$`)**: This tells the computer how many iterations ($2^{12}$ or 4,096 rounds) to run. This is what makes bcrypt "slow" and resistant to brute-force attacks.
+- **Salt (the next 22 characters)**: This is the random "noise" added to the password before hashing.
+- **Hash (the remaining characters)**: This is the final result of the password + salt + multiple rounds of computation.
+
+Counterintuitively, the salt doesn't need to be a secret in order for the hashed password to be secure. As long as the salt is unique and the original password is unknown, it is still impossible to reverse the hashing function.
+
+And the nice thing is that `bcrypt.compare()` extracts the embedded salt automatically for you — you never need to manage it directly.
+{% endhint %}
 ---
 
 ## Applying Bcrypt to the User Model
 
 Now that you understand `bcrypt.hash()` and `bcrypt.compare()`, applying them to the user system from lesson 8 is straightforward. There are three things to update:
 
-1. The**seed file** — switch from`.sql` to`.js` so we can hash passwords before inserting
-2. The**user model** — three methods change; three stay exactly the same
+1. The **seed file** — switch from`.sql` to`.js` so we can hash passwords before inserting
+2. The **user model** — three methods change; three stay exactly the same
 3. Nothing else — controllers and routes are unchanged
 
 ### Seeding with Hashed Passwords
