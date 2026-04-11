@@ -331,7 +331,7 @@ Three methods are unchanged because they have nothing to do with passwords. Thre
 
 {% tabs %}
 
-{% tab title="Hashed Passwords with Bcrypt" %} 
+{% tab title="Hashed Passwords with Bcrypt" %}
 
 ```javascript
 // models/userModel.js
@@ -391,7 +391,7 @@ module.exports.destroy = async (user_id) => {
 
 {% endtab %}
 
-{% tab title="Plaintext Passwords" %} 
+{% tab title="Plaintext Passwords" %}
 
 ```javascript
 const pool = require('../db/pool');
