@@ -615,16 +615,7 @@ sequenceDiagram
 
 ## The Frontend Application
 
-The repo includes a minimal frontend built with Vanilla JS and Vite. Run it alongside the server to see the full stack in action:
-
-```sh
-# In a second terminal, from the repo root
-cd frontend
-npm install
-npm run dev   # starts at http://localhost:5173, proxies /api → localhost:3000
-```
-
-The frontend has three sections:
+The repo includes a minimal frontend built with Vanilla JS. The frontend has three sections:
 
 - **Auth** — login and register forms, hidden until "Log In / Register" is clicked
 - **All Users** — a list of every registered user, always visible
@@ -632,7 +623,7 @@ The frontend has three sections:
 
 The questions below guide you through how the frontend is structured. Try to answer each one by reading the code before opening the answer.
 
-**<details><summary>What is each file responsible for? Why split them at all?</summary>**
+**<details><summary>1. What is each file responsible for? Why split them at all?</summary>**
 
 | File               | Responsibility                                                                                                                                       |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -644,7 +635,7 @@ The split means each file can be read and understood in isolation. If something 
 
 </details>
 
-**<details><summary>What does the CSS class `"hidden"` do?</summary>**
+**<details><summary>2. What does the CSS class `"hidden"` do?</summary>**
 
 In `styles.css`:
 
@@ -660,7 +651,7 @@ In JavaScript, `element.classList.add('hidden')` hides an element and `element.c
 
 </details>
 
-**<details><summary>Which sections are shown / hidden for guests?</summary>**
+**<details><summary>3. Which sections are shown / hidden for guests?</summary>**
 
 On initial load, `currentUser` is `null` and `renderAuthView(null)` runs. In that state:
 
@@ -671,7 +662,7 @@ The auth forms only appear when the guest clicks "Log In / Register".
 
 </details>
 
-**<details><summary>Which sections can logged-in users see / access?</summary>**
+**<details><summary>4. Which sections can logged-in users see / access?</summary>**
 
 After a successful login or register, `renderAuthView(currentUser)` runs with a real user object:
 
@@ -682,7 +673,7 @@ The profile section becomes accessible via the nav — it shows username, user I
 
 </details>
 
-**<details><summary>How is the fetch code organized? What is the point of the `baseURL` variable?</summary>**
+**<details><summary>5. How is the fetch code organized? What is the point of the `baseURL` variable?</summary>**
 
 All fetch calls live in `fetch-helpers.js` and flow through a single `handleFetch` wrapper:
 
@@ -709,7 +700,7 @@ export const getUsers = () => handleFetch(`${baseURL}/users`);
 
 </details>
 
-**<details><summary>How does the frontend keep track of the logged-in user's information?</summary>**
+**<details><summary>6. How does the frontend keep track of the logged-in user's information?</summary>**
 
 A plain JavaScript variable in `main.js`:
 
@@ -729,7 +720,7 @@ It is set back to `null` when the account is deleted. There is no cookie, no `lo
 </details>
 
 
-**<details><summary>What happens when the user refreshes the page?</summary>**
+**<details><summary>7. What happens when the user refreshes the page?</summary>**
 
 All JavaScript restarts from scratch and `currentUser` initialises to `null` again. There is no `GET /api/auth/me` call on startup — this server has no session endpoint — so the server never tells the frontend who was logged in. The user always appears as a guest after a refresh, even if they had just logged in seconds before.
 

@@ -440,7 +440,7 @@ module.exports.destroy = async (user_id) => {
 {% hint style="info" %}
 `validatePassword` is the only function that selects the password with `SELECT *` — but it ensures the hash never leaves the model by returning only `{ user_id, username }`.
 
-Again, note that the controllers do not need to be updated in when making this change!
+Again, note that the controllers and the frontend do not need to be updated in when making this change!
 {% endhint %}
 
 ### Tracing the Auth Flows
