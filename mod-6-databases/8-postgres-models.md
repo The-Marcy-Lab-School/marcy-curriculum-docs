@@ -30,6 +30,8 @@ By the end of this lesson, you'll have a working app — and two obvious problem
   - [`try/catch` in Every Controller](#trycatch-in-every-controller)
   - [Error-Handling Middleware](#error-handling-middleware)
   - [Tracing a Request End to End](#tracing-a-request-end-to-end)
+- [The Frontend Application](#the-frontend-application)
+  - [Tracing a Login Request End to End](#tracing-a-login-request-end-to-end)
 - [What's Wrong With This Code?](#whats-wrong-with-this-code)
 
 ## Essential Questions
@@ -608,6 +610,242 @@ sequenceDiagram
 ```
 
 `pool.query()` throws, the controller's `catch` block calls `next(err)`, and `handleError` sends the error response. No stack trace leaks. No silent crash.
+
+</details>
+
+## The Frontend Application
+
+The repo includes a minimal frontend built with Vanilla JS and Vite. Run it alongside the server to see the full stack in action:
+
+```sh
+# In a second terminal, from the repo root
+cd frontend
+npm install
+npm run dev   # starts at http://localhost:5173, proxies /api → localhost:3000
+```
+
+The frontend has three sections:
+
+- **Auth** — login and register forms, hidden until "Log In / Register" is clicked
+- **All Users** — a list of every registered user, always visible
+- **My Profile** — view your username/ID, change your password, or delete your account (visible after login)
+
+The questions below guide you through how the frontend is structured. Try to answer each one by reading the code before opening the answer.
+
+**<details><summary>What is each file responsible for? Why split them at all?</summary>**
+
+| File               | Responsibility                                                                                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fetch-helpers.js` | Communicates with the server. Takes data in, returns data. Never touches the DOM.                                                                    |
+| `dom-helpers.js`   | Reads from and writes to the DOM. Owns its own `querySelector` references. Never calls `fetch`.                                                      |
+| `main.js`          | The coordinator. Holds event listeners, calls fetch helpers when the user acts, passes results to dom helpers. Also owns the `currentUser` variable. |
+
+The split means each file can be read and understood in isolation. If something renders wrong, the problem is in `dom-helpers.js`. If an API call returns bad data, the problem is in `fetch-helpers.js`. `main.js` stays focused on wiring them together.
+
+</details>
+
+**<details><summary>What does the CSS class `"hidden"` do?</summary>**
+
+In `styles.css`:
+
+```css
+.hidden {
+  display: none !important;
+}
+```
+
+Adding the `hidden` class to an element removes it from the layout entirely. Removing it makes the element visible again. The `!important` ensures no other rule can override it.
+
+In JavaScript, `element.classList.add('hidden')` hides an element and `element.classList.remove('hidden')` shows it. This logic is used throughout the functions found in `dom-helpers.js`. 
+
+</details>
+
+**<details><summary>Which sections are shown / hidden for guests?</summary>**
+
+On initial load, `currentUser` is `null` and `renderAuthView(null)` runs. In that state:
+
+- **Visible:** `#guest-controls` (the "Log In / Register" button), `#users-section` (All Users list)
+- **Hidden:** `#auth-controls` (username display), `#auth-section` (login/register forms), `#show-profile-btn` (My Profile tab), `#profile-section`
+
+The auth forms only appear when the guest clicks "Log In / Register".
+
+</details>
+
+**<details><summary>Which sections can logged-in users see / access?</summary>**
+
+After a successful login or register, `renderAuthView(currentUser)` runs with a real user object:
+
+- **Visible:** `#auth-controls` (shows `@username` in the header), `#show-profile-btn` (My Profile tab), `#users-section`
+- **Hidden:** `#guest-controls`, `#auth-section`
+
+The profile section becomes accessible via the nav — it shows username, user ID, a change-password form, and a delete-account button.
+
+</details>
+
+**<details><summary>How is the fetch code organized? What is the point of the `baseURL` variable?</summary>**
+
+All fetch calls live in `fetch-helpers.js` and flow through a single `handleFetch` wrapper:
+
+```javascript
+const handleFetch = async (url, config) => {
+  try {
+    const response = await fetch(url, config);
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    const data = await response.json();
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+};
+```
+
+`handleFetch` applies `try/catch` once so the individual fetch functions don't need to. Every caller gets the same `{ data, error }` shape regardless of whether the request succeeded or failed.
+
+`baseURL = '/api'` means if the API path ever changes (e.g. to `/api/v2`), only one line in one file needs to update. It also keeps each individual fetch function short:
+
+```javascript
+export const getUsers = () => handleFetch(`${baseURL}/users`);
+```
+
+</details>
+
+**<details><summary>How does the frontend keep track of the logged-in user's information?</summary>**
+
+A plain JavaScript variable in `main.js`:
+
+```javascript
+let currentUser = null;
+```
+
+After a successful login or register, it is set to the user object returned by the server:
+
+```javascript
+const { data: user, error } = await login(username, password);
+currentUser = user; // { user_id: 1, username: 'alice' }
+```
+
+It is set back to `null` when the account is deleted. There is no cookie, no `localStorage`, no session — just a variable in memory.
+
+</details>
+
+
+**<details><summary>What happens when the user refreshes the page?</summary>**
+
+All JavaScript restarts from scratch and `currentUser` initialises to `null` again. There is no `GET /api/auth/me` call on startup — this server has no session endpoint — so the server never tells the frontend who was logged in. The user always appears as a guest after a refresh, even if they had just logged in seconds before.
+
+This is the fundamental problem that lesson 10 solves with `cookie-session`.
+
+</details>
+
+**<details><summary>8. Every fetch function returns `{ data, error }`. Why check `if (error)` rather than `if (!data)`?</summary>**
+
+Because `data` can legitimately be `null` even when a request succeeds.
+
+`if (!data)` would falsely treat a successful-but-null response as a failure. For example, a `DELETE` endpoint that returns an empty body, or a future `GET /api/auth/me` returning `null` when no one is logged in, would both have `data: null` — but that's not an error.
+
+Checking `if (error)` is precise: it triggers only when `handleFetch`'s `catch` block fired, meaning something actually went wrong (network failure, non-2xx response, parse error).
+
+</details>
+
+**<details><summary>9. `renderAuthView` is called with either a user object or `null`. How does one function handle both states?</summary>**
+
+```javascript
+export const renderAuthView = (currentUser) => {
+  if (currentUser) {
+    currentUsernameEl.textContent = `@${currentUser.username}`;
+    guestControls.classList.add('hidden');
+    authControls.classList.remove('hidden');
+    authSection.classList.add('hidden');
+    showProfileBtn.classList.remove('hidden');
+  } else {
+    guestControls.classList.remove('hidden');
+    authControls.classList.add('hidden');
+    authSection.classList.add('hidden');
+    showProfileBtn.classList.add('hidden');
+    profileSection.classList.add('hidden');
+  }
+};
+```
+
+Passing a user object takes the `if` branch — shows the username and profile tab, hides guest controls. Passing `null` takes the `else` branch and reverses everything.
+
+One function for both states means the logged-in and logged-out UI are always mirrors of each other. You can't update one path without seeing the other. It also means `main.js` only ever calls one thing — `renderAuthView(currentUser)` — regardless of what `currentUser` is.
+
+</details>
+
+### Tracing a Login Request End to End
+
+The diagram below traces a login request through every layer of the stack — from the form submit in the browser to Postgres and back.
+
+```mermaid
+sequenceDiagram
+  participant B as Browser
+  participant M as main.js
+  participant F as fetch-helpers.js
+  participant C as authControllers.js
+  participant UM as userModel.js
+  participant DB as Postgres
+
+  B->>M: user submits #login-form
+  M->>M: e.preventDefault()
+  M->>F: login(username, password)
+  F->>C: POST /api/auth/login { username, password }
+  C->>UM: validatePassword(username, password)
+  UM->>DB: SELECT * FROM users WHERE username = $1
+  DB-->>UM: row (or no rows)
+
+  alt username not found or wrong password
+    UM-->>C: null
+    C-->>F: 401 { message: 'Invalid credentials' }
+    F-->>M: { data: null, error }
+    M->>B: showError('login-error', '...')
+  else credentials valid
+    UM-->>C: { user_id, username }
+    C-->>F: 200 { user_id, username }
+    F-->>M: { data: user, error: null }
+    M->>M: currentUser = user
+    M->>B: renderAuthView(currentUser)
+    M->>B: renderProfile(currentUser)
+  end
+```
+
+Each layer only communicates with the layers directly beside it. `main.js` knows nothing about SQL. `userModel.js` knows nothing about the DOM. The boundary between `fetch-helpers.js` and `authControllers.js` is the HTTP request — the line that crosses from browser to server.
+
+**<details><summary>Generate a Sequence Diagram of Your Own Using Mermaid!</summary>**
+
+Go to [https://mermaid.ai/](https://mermaid.ai/) and make a new Diagram. Then, paste the syntax below into the editor on the left:
+
+```
+sequenceDiagram
+  participant B as Browser
+  participant M as main.js
+  participant F as fetch-helpers.js
+  participant C as authControllers.js
+  participant UM as userModel.js
+  participant DB as Postgres
+
+  B->>M: user submits #login-form
+  M->>M: e.preventDefault()
+  M->>F: login(username, password)
+  F->>C: POST /api/auth/login { username, password }
+  C->>UM: validatePassword(username, password)
+  UM->>DB: SELECT * FROM users WHERE username = $1
+  DB-->>UM: row (or no rows)
+
+  alt username not found or wrong password
+    UM-->>C: null
+    C-->>F: 401 { message: 'Invalid credentials' }
+    F-->>M: { data: null, error }
+    M->>B: showError('login-error', '...')
+  else credentials valid
+    UM-->>C: { user_id, username }
+    C-->>F: 200 { user_id, username }
+    F-->>M: { data: user, error: null }
+    M->>M: currentUser = user
+    M->>B: renderAuthView(currentUser)
+    M->>B: renderProfile(currentUser)
+  end
+```
 
 </details>
 
