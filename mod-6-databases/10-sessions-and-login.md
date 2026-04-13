@@ -68,31 +68,11 @@ A JavaScript variable in your server code is shared across *all* users. Setting 
 
 The solution is **session cookies**: small files containing a unique identifier (e.g. a user ID) given to a client by a server. The session cookie is automatically sent back to the server with each subsequent request announcing who they are. Any client with a cookie is automatically authenticated:
 
-```
-1. User submits login credentials
-   Client → POST /api/auth/login { username, password }
-
-2. Server verifies credentials
-   Server: "That's alice. Her user_id is 7."
-
-3. Server sets a session cookie in the response
-   Server → Set-Cookie: session=<encrypted data>
-   (The encrypted data contains { userId: 7 })
-
-4. Browser stores the cookie automatically
-
-5. User makes another request
-   Client → GET /api/auth/me
-             Cookie: session=<encrypted data>   ← sent automatically
-
-6. Server reads the cookie and decrypts it
-   Server: "The cookie says userId is 7. That's alice."
-   Server → alice's user data
-```
+![The cookie is generated when a user logs in and is sent with every subsequent request.](./img/10-sessions-login/cookies-diagram.png)
 
 The cookie is sent automatically by the browser with every request to the same domain — no extra frontend code needed.
 
-**<details><summary>Q: What is the difference between a session stored in a cookie and a session stored in a database?</summary>**
+**<details><summary>Q: Are cookies stored in the database / on the server?</summary>**
 
 * **Cookie-based sessions** (`cookie-session`): session data is encrypted and stored in the cookie itself. No server-side storage needed. Simpler to set up, but limited in size and harder to invalidate (the server doesn't track sessions).
 
@@ -103,6 +83,8 @@ For learning and small apps, `cookie-session` is sufficient. Production applicat
 </details>
 
 ## Setting Up `cookie-session`
+
+The `cookie-session` package handles a lot of this for us.
 
 Install the package:
 
@@ -130,10 +112,13 @@ SESSION_SECRET=some-long-random-secret-string
 ```
 
 {% hint style="warning" %}
-The `secret` is used to sign the cookie, which prevents tampering. It must be kept private — never commit it to GitHub. Use a long, random string in production.
+The `secret` is used to "sign" the cookie, which prevents tampering. It is like the password for encoding and decoding the cookie. It must be kept private — never commit it to GitHub. Use a long, random string in production.
 {% endhint %}
 
-Once this middleware is in place, `req.session` is available in every controller. You can read from it and write to it:
+Once this middleware is in place, `req.session` is available in every controller
+* You can read from it to see if a user has a valid cookie
+* You can write to it when a user logs in / registers to set their cookie
+* You can also set it to `null` to delete the cookie
 
 ```js
 // Writing to the session (sets a cookie in the response)
@@ -148,7 +133,7 @@ req.session = null;
 
 ## Auto-Login on Register
 
-Now that `req.session` is available, we can update the registration controller from lesson 9 to start a session immediately after creating the user. This way, a user who registers is automatically logged in — they don't have to submit a second form.
+Now that `req.session` is available, we can update the registration controller from lesson 9 to start a session immediately after creating the user. This way, a user who registers is automatically logged in — they don't have to submit a second form to log in.
 
 ```js
 const register = async (req, res, next) => {
@@ -216,8 +201,6 @@ const login = async (req, res, next) => {
 Both "user not found" and "wrong password" return the same `401 Invalid credentials`. This is intentional — telling an attacker whether a username exists gives them information. Always use the same generic message for both failure cases.
 {% endhint %}
 
-Notice how clean the login controller is compared to lesson 8's naive version. It doesn't touch `bcrypt` directly — `userModel.validatePassword()` handles the hash comparison internally. The controller only sees `{ user_id, username }` or `null`.
-
 ```mermaid
 sequenceDiagram
   participant C as Client
@@ -257,6 +240,10 @@ module.exports.find = async (userId) => {
 };
 ```
 
+The `getMe` controller uses `userModel.find(userId)` to see if a user with the `userId` in their cookie exists in the database:
+* If there is no user with the given `userId`: the user is not logged in → `401` Not Authenticated.
+* If there is a found user: the user previously logged in → `200` and send them the `user` data!
+
 ```js
 const getMe = async (req, res, next) => {
   try {
@@ -269,7 +256,7 @@ const getMe = async (req, res, next) => {
     const user = await userModel.find(userId);
     if (!user) return res.status(401).send(null);
 
-    res.send({ user_id: user.user_id, username: user.username });
+    res.send(user);
   } catch (err) {
     next(err);
   }

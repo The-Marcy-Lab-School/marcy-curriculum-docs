@@ -45,13 +45,13 @@ By the end of this lesson, you should be able to answer these questions:
 
 These two terms are related but distinct:
 
-|                       | Authentication                    | Authorization                                 |
-| --------------------- | --------------------------------- | --------------------------------------------- |
-| **Question**          | Who are you?                      | What are you allowed to do?                   |
-| **How**               | Login (username + password)       | Session check + permission check              |
-| **Status on failure** | 401 Unauthorized                  | 403 Forbidden                                 |
-| **Comes first?**      | Yes                               | After authentication                          |
-| **Example**           | Logging into an app               | Editing *your own* post, not someone else's   |
+|                       | Authentication              | Authorization                               |
+| --------------------- | --------------------------- | ------------------------------------------- |
+| **Question**          | Who are you?                | What are you allowed to do?                 |
+| **How**               | Login (username + password) | Session check + permission check            |
+| **Status on failure** | 401 Unauthorized            | 403 Forbidden                               |
+| **Comes first?**      | Yes                         | After authentication                        |
+| **Example**           | Logging into an app         | Editing *your own* post, not someone else's |
 
 Authentication always comes first. You can't authorize someone whose identity you haven't verified.
 
