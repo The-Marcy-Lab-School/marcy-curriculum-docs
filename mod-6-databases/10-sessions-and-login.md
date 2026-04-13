@@ -13,12 +13,10 @@ In lesson 9, you built a registration endpoint that hashes passwords and stores 
 - [The Problem: HTTP is Stateless](#the-problem-http-is-stateless)
 - [The Solution: Sessions and Cookies](#the-solution-sessions-and-cookies)
 - [Setting Up `cookie-session`](#setting-up-cookie-session)
-- [Auto-Login on Register](#auto-login-on-register)
-- [Building the Login Endpoint](#building-the-login-endpoint)
-  - [The Login Flow](#the-login-flow)
+  - [Auto-Login on Register](#auto-login-on-register)
   - [The Login Controller](#the-login-controller)
-- [The `/api/auth/me` Pattern](#the-apiauthme-pattern)
-- [Logout](#logout)
+  - [Staying Logged In With The `/api/auth/me` Pattern](#staying-logged-in-with-the-apiauthme-pattern)
+  - [Logout](#logout)
 - [Putting It Together: Auth Endpoints](#putting-it-together-auth-endpoints)
 
 ## Essential Questions
@@ -58,33 +56,20 @@ Server → ??? I've never seen this person before.
 
 After a user logs in, the server processes the login request, sends back a response, and immediately forgets everything. The next request arrives as if the login never happened.
 
-**<details><summary>Q: Why doesn't the server just save the user ID in a JavaScript variable after login?</summary>**
-
-A JavaScript variable in your server code is shared across *all* users. Setting `let currentUser = user` after login would overwrite the previous user's session every time anyone logged in. There's no way to associate a server-side variable with a specific browser connection — HTTP doesn't maintain persistent connections between requests.
-
-</details>
-
 ## The Solution: Sessions and Cookies
 
-The solution is **session cookies**: small files containing a unique identifier (e.g. a user ID) given to a client by a server. The session cookie is automatically sent back to the server with each subsequent request announcing who they are. Any client with a cookie is automatically authenticated:
+One common solution is **session cookies**: small files containing a unique identifier (e.g. a user ID) given to a client by a server. The client saves the cookie and automatically sends it back to the server with each subsequent request, showing that they've already been authenticated:
 
 ![The cookie is generated when a user logs in and is sent with every subsequent request.](./img/10-sessions-login/cookies-diagram.png)
 
 The cookie is sent automatically by the browser with every request to the same domain — no extra frontend code needed.
 
-**<details><summary>Q: Are cookies stored in the database / on the server?</summary>**
-
-* **Cookie-based sessions** (`cookie-session`): session data is encrypted and stored in the cookie itself. No server-side storage needed. Simpler to set up, but limited in size and harder to invalidate (the server doesn't track sessions).
-
-* **Database-backed sessions** (`express-session` with a store): the server stores session data in a database or Redis and puts only a session ID in the cookie. More flexible — no size limit, and you can explicitly delete sessions — but requires additional infrastructure.
-
-For learning and small apps, `cookie-session` is sufficient. Production applications often use database-backed sessions.
-
-</details>
-
 ## Setting Up `cookie-session`
 
-The `cookie-session` package handles a lot of this for us.
+To implement session cookies, we will use the `cookie-session` package. It handles:
+- Creating session cookies
+- Sending them to the client
+- Extracting cookies from requests
 
 Install the package:
 
@@ -98,21 +83,29 @@ Add it to your Express app as middleware, before your routes:
 require('dotenv').config();
 const cookieSession = require('cookie-session');
 
+// other middleware 
 app.use(cookieSession({
   name: 'session',
   secret: process.env.SESSION_SECRET,
   maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
 }));
+
+// routes
 ```
 
-Add `SESSION_SECRET` to your `.env` file:
+`cookieSession()` is a function that generates middleware for managing session cookies. It takes a configuration object with the following properties:
+* `name: 'session'` — defines the name of the cookie as it appears in the browser DevTools (go to Application → Cookies to see cookies). Defaults to `'session'`.
+* `secret: process.env.SESSION_SECRET` — defines a private string used to "sign" the cookie. The signature lets the server detect if the cookie was tampered with. The cookie data (e.g. `{ userId: 7 }`) is encoded, not encrypted — it is readable by anyone who has the cookie so we should never store sensitive data like passwords in the session.
+* `maxAge: 24 * 60 * 60 * 1000` — defines how long the cookie will be valid. In this case, we calculate 24 hours in milliseconds.
+
+The `process.env.SESSION_SECRET` value is read from a `.env` file using the `dotenv` package. We need to create a `.env` file and add a `SESSION_SECRET` value:
 
 ```
 SESSION_SECRET=some-long-random-secret-string
 ```
 
 {% hint style="warning" %}
-The `secret` is used to "sign" the cookie, which prevents tampering. It is like the password for encoding and decoding the cookie. It must be kept private — never commit it to GitHub. Use a long, random string in production.
+The `secret` is used to "sign" the cookie, which prevents tampering. It is like the password for encrypting and decrypting the cookie. It must be kept private — never commit it to GitHub. Use a long, random string in production.
 {% endhint %}
 
 Once this middleware is in place, `req.session` is available in every controller
@@ -131,9 +124,9 @@ const userId = req.session.userId; // 7
 req.session = null;
 ```
 
-## Auto-Login on Register
+### Auto-Login on Register
 
-Now that `req.session` is available, we can update the registration controller from lesson 9 to start a session immediately after creating the user. This way, a user who registers is automatically logged in — they don't have to submit a second form to log in.
+Now that `req.session` is available, we can update the registration controller to save the newly created user's ID in `req.session`. When we send the response, the cookie will be included.
 
 ```js
 const register = async (req, res, next) => {
@@ -147,7 +140,7 @@ const register = async (req, res, next) => {
 
     const user = await userModel.create(username, password);
 
-    // Start a session — the user is now logged in
+    // Add a { userId } property to the session object with the new user's user_id value
     req.session.userId = user.user_id;
 
     res.status(201).send(user);
@@ -157,19 +150,20 @@ const register = async (req, res, next) => {
 };
 ```
 
-The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set an encrypted cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller.
+The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set a cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller.
 
-## Building the Login Endpoint
-
-### The Login Flow
-
-Login has three steps:
-
-1. Call `userModel.validatePassword(username, password)` — this finds the user and compares the password against the stored hash in one step
-2. If it returns `null`, the credentials are invalid — return `401`
-3. If it returns a user, set the session and return the user
+To see the cookie in you browser, try this out:
+1. Run the server and connect to it in your browser
+2. Open your browser's DevTools and go to Applications → Cookies → `http://localhost:8080`.
+3. Confirm that you have NO cookies
+4. Create a new user using the registration form
+5. Observe that new cookie has been stored in your browser with the name `session`! 
+  
+The data has been encoded using Base64 encoding. Unlike encryption, encoded strings can easily be reversed. Try copying the cookie from your browser and pasting it into this online decoder tool: [https://www.base64decode.org/](https://www.base64decode.org/)
 
 ### The Login Controller
+
+We want to do the same thing when a user logs in:
 
 ```js
 // controllers/authControllers.js
@@ -179,27 +173,23 @@ const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    // Step 1: Validate the credentials (findByUsername + bcrypt.compare in one call)
     const user = await userModel.validatePassword(username, password);
 
-    // Step 2: If invalid, return 401 — same message for wrong username and wrong password
     if (!user) {
       return res.status(401).send({ message: 'Invalid credentials' });
     }
 
-    // Step 3: Credentials are valid — start a session
+    // The user has been validated, add their user_id to the cookie
     req.session.userId = user.user_id;
 
-    res.send({ user_id: user.user_id, username: user.username });
+    res.send(user);
   } catch (err) {
     next(err);
   }
 };
 ```
 
-{% hint style="info" %}
-Both "user not found" and "wrong password" return the same `401 Invalid credentials`. This is intentional — telling an attacker whether a username exists gives them information. Always use the same generic message for both failure cases.
-{% endhint %}
+We can visualize this login flow like this:
 
 ```mermaid
 sequenceDiagram
@@ -223,30 +213,34 @@ sequenceDiagram
   end
 ```
 
-## The `/api/auth/me` Pattern
+### Staying Logged In With The `/api/auth/me` Pattern
 
-When a user returns to your app after previously logging in, their session cookie is still in their browser. The frontend needs a way to ask: "Am I still logged in? Who am I?"
+So, why do we store the user ID in the cookie? Why not some other piece of data like their username?
 
-The `/api/auth/me` endpoint handles this. It uses `userModel.find(userId)` — a new model method that looks up a user by their `user_id`:
+When a user returns to your app after previously logging in, their session cookie is still in their browser. The frontend needs a way to say: "I have a cookie, don't ask me to log in again!"
+
+The `/api/auth/me` endpoint handles this. It uses `userModel.find(user_id)` — a new model method that looks up a user by their `user_id`:
 
 ```js
 // models/userModel.js
-module.exports.find = async (userId) => {
+module.exports.find = async (user_id) => {
   const { rows } = await pool.query(
     'SELECT user_id, username FROM users WHERE user_id = $1',
-    [userId]
+    [user_id]
   );
   return rows[0] || null;
 };
 ```
 
-The `getMe` controller uses `userModel.find(userId)` to see if a user with the `userId` in their cookie exists in the database:
-* If there is no user with the given `userId`: the user is not logged in → `401` Not Authenticated.
-* If there is a found user: the user previously logged in → `200` and send them the `user` data!
+The `getMe` controller can invoke `userModel.find()` with the user id stored in the session cookie
+* If there is no `userId` in the cookie or there no user with the given `userId`: the user is not logged in → `401` Not Authenticated.
+* If there *is* a found user: `200` and send them their `user` data!
 
 ```js
+// GET /api/auth/me
 const getMe = async (req, res, next) => {
   try {
+    // Get the userId from the session cookie
     const { userId } = req.session;
 
     // No session — user is not logged in
@@ -254,8 +248,11 @@ const getMe = async (req, res, next) => {
 
     // Session exists — look up and return the user
     const user = await userModel.find(userId);
+
+    // If no valid user — user is not logged in
     if (!user) return res.status(401).send(null);
 
+    // The user was found — user IS logged in
     res.send(user);
   } catch (err) {
     next(err);
@@ -263,40 +260,103 @@ const getMe = async (req, res, next) => {
 };
 ```
 
-The frontend calls `GET /api/auth/me` when the app loads. If the response is `200`, the user is logged in. If it's `401`, the app shows the login screen.
+The frontend calls `GET /api/auth/me` when the app loads in `main.js`. 
+* If it returns a user, `currentUser` is set and the logged-in view and the profile are rendered 
+* If it returns `401`, `currentUser` stays `null` and the guest view is rendered
 
-```js
-// public/app.js
-const checkLoginStatus = async () => {
-  const response = await fetch('/api/auth/me');
-  if (response.ok) {
-    const user = await response.json();
-    renderLoggedInView(user);
-  } else {
-    renderLoginForm();
+{% tabs %}
+
+{% tab title="main.js" %} 
+
+```javascript
+// imports, etc...
+
+let currentUser = null;
+
+// event handlers, etc....
+
+const main = async () => {
+  const { data } = await getCurrentUser();
+  currentUser = data;           // null if not logged in, { user_id, username } if logged in
+  renderAuthView(currentUser);  // one function handles both guest and logged-in views
+  if (currentUser) renderProfile(currentUser);
+  await refreshUsers();         // always load the users list on startup
+};
+
+main();
+```
+
+{% endtab %}
+
+{% tab title="fetch-helpers.js" %} 
+
+```javascript
+const handleFetch = async (url, config) => {
+  try {
+    const response = await fetch(url, config);
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    const data = await response.json();
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error };
   }
 };
 
-checkLoginStatus();
+const baseURL = '/api';
+
+// ============================================
+// Auth
+// ============================================
+
+export const getCurrentUser = async () => {
+  // If no session exists, the request returns 401 — we treat that as "not logged in"
+  const { data } = await handleFetch(`${baseURL}/auth/me`);
+  return { data };
+};
+
+// more fetch helpers...
 ```
+
+{% endtab %}
+
+{% endtabs %} 
+
 
 ```mermaid
 sequenceDiagram
-  participant C as Client
+  participant B as Browser
+  participant M as main.js
+  participant F as fetch-helpers.js
   participant S as Server (getMe)
-  participant M as userModel
+  participant UM as userModel
   participant DB as Postgres
 
-  C->>S: GET /api/auth/me (Cookie: session=...)
-  alt no session
-    S-->>C: 401 null
+  B->>M: page loads, main() runs
+  M->>F: getCurrentUser()
+  F->>S: GET /api/auth/me (Cookie: session=...)
+
+  alt no session cookie
+    S-->>F: 401 null
+    F-->>M: { data: null }
+    M->>M: currentUser = null
+    M->>B: renderAuthView(null) — guest view
   else session exists
-    S->>M: find(userId)
-    M->>DB: SELECT user_id, username FROM users WHERE user_id = $1
-    DB-->>M: { user_id, username }
-    M-->>S: { user_id, username }
-    S-->>C: 200 { user_id, username }
+    S->>UM: find(userId)
+    UM->>DB: SELECT user_id, username FROM users WHERE user_id = $1
+    DB-->>UM: { user_id, username }
+    UM-->>S: { user_id, username }
+    S-->>F: 200 { user_id, username }
+    F-->>M: { data: user }
+    M->>M: currentUser = user
+    M->>B: renderAuthView(currentUser) — logged-in view
+    M->>B: renderProfile(currentUser)
   end
+
+  M->>F: refreshUsers()
+  F->>S: GET /api/users
+  S-->>F: 200 [{ user_id, username }, ...]
+  F-->>M: { data: users }
+  M->>B: renderUsers(users)
 ```
 
 **<details><summary>Q: Why call `/api/auth/me` on every page load instead of just after login?</summary>**
@@ -305,11 +365,12 @@ When a user logs in and is redirected to a new page, that page loads fresh — i
 
 </details>
 
-## Logout
+### Logout
 
-Logout clears the session:
+Before we had session cookies, a user was immediately logged out when they refreshed their browser. Now, a new `/api/auth/logout` endpoint should be called which sets teh session to `null`:
 
 ```js
+// DELETE /api/auth/logout
 const logout = (req, res) => {
   req.session = null; // tells cookie-session to delete the cookie
   res.send({ message: 'Logged out' });
@@ -317,6 +378,8 @@ const logout = (req, res) => {
 ```
 
 Setting `req.session = null` tells `cookie-session` to remove the cookie from the browser. On the next request, `req.session.userId` will be `undefined`.
+
+Try it out with your DevTools open and see the cookie disappear!
 
 **<details><summary>Q: A user logs out, but they saved their session cookie before logging out and manually restore it in their browser. Can they log back in?</summary>**
 
