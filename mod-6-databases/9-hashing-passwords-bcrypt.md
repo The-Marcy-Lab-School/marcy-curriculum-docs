@@ -117,7 +117,7 @@ The original password never needs to be recovered — or stored.
 
 Even a strong one-way hashing function has a weakness: if `"password123"` always produces the same hash, an attacker can build a **rainbow table** — a precomputed lookup of common passwords and their hashes.
 
-![](./img/9-hashing-passwords-bcrypt/rainbow-table.png)
+![A rainbow table contains precomputed hashes.](./img/9-hashing-passwords-bcrypt/rainbow-table.png)
 
 If a hash ever shows up in a breached database, a hacker with a rainbow table can quickly look up the original password. Rainbow tables have one weakness though: they are incredibly time and resource consuming to generate.
 
