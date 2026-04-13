@@ -30,7 +30,6 @@ The fix is **hashing** — a technique that makes it safe to store and verify pa
 - [Bcrypt](#bcrypt)
   - [Hashing a Password with `bcrypt.hash(str, saltRounds)`](#hashing-a-password-with-bcrypthashstr-saltrounds)
   - [Comparing Passwords with `bcrypt.compare(plaintext, hash)`](#comparing-passwords-with-bcryptcompareplaintext-hash)
-- [{% endhint %}](#-endhint-)
 - [Applying Bcrypt to the User Model](#applying-bcrypt-to-the-user-model)
   - [Seeding with Hashed Passwords](#seeding-with-hashed-passwords)
   - [The User Model](#the-user-model)
@@ -227,7 +226,9 @@ It is divided into sections by the `$` symbol:
 Counterintuitively, the salt doesn't need to be a secret in order for the hashed password to be secure. As long as the salt is unique and the original password is unknown, it is still impossible to reverse the hashing function.
 
 And the nice thing is that `bcrypt.compare()` extracts the embedded salt automatically for you — you never need to manage it directly.
+
 {% endhint %}
+
 ---
 
 ## Applying Bcrypt to the User Model
