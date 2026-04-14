@@ -266,7 +266,7 @@ The frontend calls `GET /api/auth/me` when the app loads in `main.js`.
 
 {% tabs %}
 
-{% tab title="main.js" %} 
+{% tab title="main.js" %}
 
 ```javascript
 // imports, etc...
@@ -288,7 +288,7 @@ main();
 
 {% endtab %}
 
-{% tab title="fetch-helpers.js" %} 
+{% tab title="fetch-helpers.js" %}
 
 ```javascript
 const handleFetch = async (url, config) => {
@@ -319,8 +319,7 @@ export const getCurrentUser = async () => {
 
 {% endtab %}
 
-{% endtabs %} 
-
+{% endtabs %}
 
 ```mermaid
 sequenceDiagram
