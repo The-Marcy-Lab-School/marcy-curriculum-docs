@@ -132,6 +132,9 @@ Now that `req.session` is available, we can update the registration controller t
 const register = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).send({ error: 'Username and password are required.' });
+    }
 
     const existingUser = await userModel.findByUsername(username);
     if (existingUser) {
@@ -399,8 +402,13 @@ const userModel = require('../models/userModel');
 const register = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).send({ error: 'Username and password are required.' });
+    }
     const existingUser = await userModel.findByUsername(username);
-    if (existingUser) return res.status(409).send({ message: 'Username already taken' });
+    if (existingUser) {
+      return res.status(400).send({ message: 'Username already taken' });
+    }
     const user = await userModel.create(username, password);
     req.session.userId = user.user_id;
     res.status(201).send(user);
@@ -413,7 +421,9 @@ const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await userModel.validatePassword(username, password);
-    if (!user) return res.status(401).send({ message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(401).send({ message: 'Invalid credentials' });
+    }
     req.session.userId = user.user_id;
     res.send({ user_id: user.user_id, username: user.username });
   } catch (err) {
@@ -424,9 +434,13 @@ const login = async (req, res, next) => {
 const getMe = async (req, res, next) => {
   try {
     const { userId } = req.session;
-    if (!userId) return res.status(401).send(null);
+    if (!userId) {
+      return res.status(401).send(null);
+    }
     const user = await userModel.find(userId);
-    if (!user) return res.status(401).send(null);
+    if (!user) {
+      return res.status(401).send(null);
+    }
     res.send({ user_id: user.user_id, username: user.username });
   } catch (err) {
     next(err);

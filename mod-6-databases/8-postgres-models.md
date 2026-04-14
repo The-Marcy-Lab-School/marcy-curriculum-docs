@@ -263,6 +263,9 @@ const register = async (req, res, next) => {
   try {
     // 1. Pull the username and password out of the request body
     const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).send({ error: 'Username and password are required.' });
+    }
 
     // 2. Check if the username is already taken
     const existingUser = await userModel.findByUsername(username);
