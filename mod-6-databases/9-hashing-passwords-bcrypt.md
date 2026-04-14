@@ -162,14 +162,22 @@ const bcrypt = require('bcrypt');
 
 const main = async () => {
   const saltRounds = 8;
+  
+  // Same password
   const hashedPassword = await bcrypt.hash('mypassword', saltRounds);
+  const hashedPassword2 = await bcrypt.hash('mypassword', saltRounds);
+  
+  // Different hashes because a unique salt is generated for each hash
   console.log(hashedPassword);
-  // $2b$08$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
+  console.log(hashedPassword2);
+}
+
+main();
 ```
 
 {% endcode %}
 
-Run it twice with the same password and you get two different hashes — because bcrypt generates a new salt each time.
+Invoke it twice with the same password and you get two different hashes — because bcrypt generates a new salt each time.
 
 {% hint style="info" %}
 `saltRounds` controls how computationally expensive the hash is to produce. Higher rounds = exponentially harder to brute-force, but also slower on every registration and login. `12` is the production standard. `8` is fine for learning.
