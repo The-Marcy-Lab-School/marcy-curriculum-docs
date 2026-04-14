@@ -101,7 +101,7 @@ Both are required. A function that is pure but not one-way lets attackers revers
 
 ### Authenticating with a Hash
 
-Because hashing is pure and one-way, a server can verify a password without ever storing it:
+Because hashing is pure and one-way, a server can verify a password without ever storing the plaintext version. It just needs the hash:
 
 ![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated.](./img/9-hashing-passwords-bcrypt/hashed-password-lookup.png)
 
