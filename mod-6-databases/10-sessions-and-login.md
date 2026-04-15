@@ -80,32 +80,27 @@ npm install cookie-session
 Add it to your Express app as middleware, before your routes:
 
 ```js
-require('dotenv').config();
 const cookieSession = require('cookie-session');
 
-// other middleware 
+// other middleware...
+
+// ⚠️ secret is hardcoded for development only — move to .env before deploying
 app.use(cookieSession({
   name: 'session',
-  secret: process.env.SESSION_SECRET,
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+  secret: 'dev-only-secret-replace-before-deploying', 
+  maxAge: 24 * 60 * 60 * 1000,
 }));
 
-// routes
+// routes...
 ```
 
 `cookieSession()` is a function that generates middleware for managing session cookies. It takes a configuration object with the following properties:
 * `name: 'session'` — defines the name of the cookie as it appears in the browser DevTools (go to Application → Cookies to see cookies). Defaults to `'session'`.
-* `secret: process.env.SESSION_SECRET` — defines a private string used to "sign" the cookie. The signature lets the server detect if the cookie was tampered with. The cookie data (e.g. `{ userId: 7 }`) is encoded, not encrypted — it is readable by anyone who has the cookie so we should never store sensitive data like passwords in the session.
+* `secret: '...'` — defines a private string used to "sign" the cookie. The signature lets the server detect if the cookie was tampered with. The cookie data (e.g. `{ userId: 7 }`) is encoded, not encrypted — it is readable by anyone who has the cookie so we should never store sensitive data like passwords in the session.
 * `maxAge: 24 * 60 * 60 * 1000` — defines how long the cookie will be valid. In this case, we calculate 24 hours in milliseconds.
 
-The `process.env.SESSION_SECRET` value is read from a `.env` file using the `dotenv` package. We need to create a `.env` file and add a `SESSION_SECRET` value:
-
-```
-SESSION_SECRET=some-long-random-secret-string
-```
-
 {% hint style="warning" %}
-The `secret` is used to "sign" the cookie, which prevents tampering. It is like the password for encrypting and decrypting the cookie. It must be kept private — never commit it to GitHub. Use a long, random string in production.
+The `secret` is used to "sign" the cookie, which prevents tampering. It is like the password for the cookie. It must be kept private — never commit it to GitHub in your production apps. Use a long, random string in production and always store it in a `.env` file.
 {% endhint %}
 
 Once this middleware is in place, `req.session` is available in every controller
