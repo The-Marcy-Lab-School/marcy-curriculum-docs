@@ -4,9 +4,7 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-12-putting-it-all-together)!
 {% endhint %}
 
-Across lessons 8–11 you built a complete authentication and authorization system from scratch. Before adding new features, this lesson does two things: it reviews what you've built and why each piece matters, then extends the app with a new user-owned resource — bookmarks — using every pattern you've learned.
-
-Along the way, you'll also move all sensitive configuration into environment variables, the standard practice before any real deployment.
+Across lessons 8–11 you built a complete authentication and authorization system from scratch. This lesson reviews what you've built and why each piece matters, then extends the app with a new user-owned resource — bookmarks — using every pattern you've learned.
 
 **Table of Contents**
 
@@ -14,16 +12,13 @@ Along the way, you'll also move all sensitive configuration into environment var
 - [Key Concepts](#key-concepts)
 - [Review: What We've Built So Far](#review-what-weve-built-so-far)
   - [The Route List](#the-route-list)
-- [Hardening for Deployment: Environment Variables](#hardening-for-deployment-environment-variables)
-  - [What Goes in `.env`](#what-goes-in-env)
-  - [Updating `pool.js`](#updating-pooljs)
-  - [The `.env.template` Pattern](#the-envtemplate-pattern)
 - [Adding a User-Owned Resource: Bookmarks](#adding-a-user-owned-resource-bookmarks)
-  - [Schema Design](#schema-design)
+  - [Every Layer Changes](#every-layer-changes)
+  - [Schema and Seeds](#schema-and-seeds)
   - [The Bookmark Model](#the-bookmark-model)
-  - [Bookmark Controllers](#bookmark-controllers)
-  - [Challenge: Ownership Checks](#challenge-ownership-checks)
-  - [Bookmark Routes](#bookmark-routes)
+  - [Bookmark Controllers and Routes](#bookmark-controllers-and-routes)
+    - [Adding Ownership Checks](#adding-ownership-checks)
+    - [Adding Routes](#adding-routes)
 - [Updating the Frontend](#updating-the-frontend)
   - [Fetch Helpers](#fetch-helpers)
   - [DOM Helpers](#dom-helpers)
@@ -34,31 +29,27 @@ Along the way, you'll also move all sensitive configuration into environment var
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. What sensitive values must never be committed to GitHub? Where should they live instead?
-2. How does moving database credentials to `.env` change `pool.js`?
-3. What is the difference between `.env` and `.env.template`? Why commit one but not the other?
-4. When adding a new user-owned resource, which layers of the app need to change?
-5. How do you check ownership for a resource like bookmarks, where the owner isn't in the URL?
+1. When adding a new user-owned resource, which layers of the app need to change, and in what order?
+2. When a model method needs data from two tables, what SQL clause do you use?
+3. When creating a resource, where does the `user_id` come from — and why shouldn't the client supply it?
+4. How do you check ownership for a resource like bookmarks, where the owner isn't in the URL?
 
 ## Key Concepts
 
-* **Environment variable** — a variable set outside the application code, typically in a `.env` file. Used to store secrets and configuration that varies between environments (development, production).
-* **`.env`** — the file that holds your actual secrets. Never committed to version control.
-* **`.env.template`** — a committed file that documents which environment variables the app needs, with empty values. New developers copy this and fill in their own values.
-* **`dotenv`** — the npm package that reads `.env` and loads its values into `process.env`.
 * **Foreign key** — a column in one table that references the primary key of another table, creating a relationship between rows.
 * **`ON DELETE CASCADE`** — a foreign key option that automatically deletes related rows when the referenced row is deleted. Deleting a user deletes all their bookmarks.
+* **`JOIN`** — a SQL clause that combines rows from two tables based on a matching column. Used here to attach a `username` to each bookmark row without storing it in the `bookmarks` table.
 
 ## Review: What We've Built So Far
 
 Here is a summary of the system built across lessons 8–11. Each lesson added one layer to the stack.
 
-| Lesson | What changed | Key idea |
-|--------|--------------|----------|
-| **8** | Swapped in-memory model for Postgres; added register and login controllers | MVC model swap — controllers and routes never changed |
-| **9** | Added `bcrypt.hash()` on create/update; `bcrypt.compare()` on login; renamed column to `password_hash` | Passwords must never be stored in plaintext |
+| Lesson | What changed                                                                                                               | Key idea                                                          |
+| ------ | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| **8**  | Swapped in-memory model for Postgres; added register and login controllers                                                 | MVC model swap — controllers and routes never changed             |
+| **9**  | Added `bcrypt.hash()` on create/update; `bcrypt.compare()` on login; renamed column to `password_hash`                     | Passwords must never be stored in plaintext                       |
 | **10** | Added `cookie-session`; set `req.session.userId` on login/register; added `GET /api/auth/me` and `DELETE /api/auth/logout` | Sessions let the server remember who is logged in across requests |
-| **11** | Added `checkAuthentication` middleware; added ownership checks in `updateUser` and `deleteUser` | Authentication gates entry; ownership gates modifications |
+| **11** | Added `checkAuthentication` middleware; added ownership checks in `updateUser` and `deleteUser`                            | Authentication gates entry; ownership gates modifications         |
 
 ### The Route List
 
@@ -75,141 +66,49 @@ PATCH  /api/users/:user_id → checkAuthentication → updateUser (+ ownership)
 DELETE /api/users/:user_id → checkAuthentication → deleteUser (+ ownership)
 ```
 
-This lesson adds four more at the bottom.
-
-## Hardening for Deployment: Environment Variables
-
-Before adding bookmarks, there's housekeeping to do. Open `server/db/pool.js` from any previous lesson:
-
-```js
-const config = {
-  host: 'localhost',
-  port: 5432,
-  database: 'users_db',
-  user: 'username',     // ← hardcoded
-  password: 'password', // ← hardcoded
-};
-```
-
-And look at the `SESSION_SECRET` in `index.js`:
-
-```js
-app.use(cookieSession({
-  secret: process.env.SESSION_SECRET, // already in .env — good
-}));
-```
-
-The session secret is already in `.env`. Database credentials should be too. If you push this repo to GitHub with hardcoded credentials, those credentials are permanently exposed in the git history — even if you delete them later.
-
-### What Goes in `.env`
-
-Any value that:
-- Is a secret (password, API key, signing secret)
-- Varies between environments (dev database vs. production database)
-- Should never be visible in the codebase
-
-In this app, that means:
-
-```
-SESSION_SECRET=some-long-random-string
-
-PGHOST=localhost
-PGPORT=5432
-PGDATABASE=users_db
-PGUSER=
-PGPASSWORD=
-```
-
-{% hint style="warning" %}
-`.env` must be in `.gitignore`. Never commit it. If you accidentally commit secrets, rotate them immediately — deleting the file doesn't remove it from git history.
-{% endhint %}
-
-### Updating `pool.js`
-
-With those values in `.env`, the `pg` connection config reads from `process.env` instead of hardcoded values:
-
-{% tabs %}
-
-{% tab title="With Environment Variables (New)" %}
-
-{% code title="server/db/pool.js" %}
-```js
-const { Pool } = require('pg');
-
-// Values come from .env via dotenv — never hardcode credentials
-const pool = new Pool({
-  host:     process.env.PGHOST,
-  port:     process.env.PGPORT,
-  database: process.env.PGDATABASE,
-  user:     process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-});
-
-module.exports = pool;
-```
-{% endcode %}
-
-{% endtab %}
-
-{% tab title="Hardcoded (Old)" %}
-
-```js
-const { Pool } = require('pg');
-
-const config = {
-  host: 'localhost',
-  port: 5432,
-  database: 'users_db',
-  user: 'username',
-  password: 'password',
-};
-
-const pool = new Pool(config);
-module.exports = pool;
-```
-
-{% endtab %}
-
-{% endtabs %}
-
-`dotenv` (already called at the top of `index.js` with `require('dotenv').config()`) loads `.env` into `process.env` before any of these values are read.
-
-### The `.env.template` Pattern
-
-`.env` is gitignored — so how do teammates know which variables to set? The answer is `.env.template`: a committed file with all the variable names and empty (or example) values.
-
-{% code title="server/.env.template" %}
-```
-SESSION_SECRET=''
-
-PGHOST=localhost
-PGPORT=5432
-PGDATABASE=users_db
-PGUSER=
-PGPASSWORD=
-```
-{% endcode %}
-
-When a new developer clones the repo, their first step is:
-
-```sh
-cp server/.env.template server/.env
-# then fill in the real values
-```
-
-This makes setup self-documenting: the template is always up to date because it's in version control, and no real secrets are ever committed.
+This lesson adds four more for a new resource that every user can create: bookmarks.
 
 ## Adding a User-Owned Resource: Bookmarks
 
-With the codebase hardened, you're ready to add bookmarks. A bookmark is a titled URL saved by a specific user. It's a natural user-owned resource: users create their own bookmarks and no one else can modify or delete them.
+With the foundation of our codebase set, you're ready to add bookmarks. A bookmark is a titled URL saved by a specific user. Users can view all bookmarks in a public feed, view any user's profile to see their bookmarks, and create or delete their own.
 
-As with the user system in lessons 8–11, you'll build layer by layer: schema first, then model, then controllers, then routes, then frontend.
+![The complete bookmarks app lets users see all bookmarks in the database.](./img/12-putting-it-all-together/bookmarks-app.png)
 
-### Schema Design
+### Every Layer Changes
 
-Bookmarks belong to users, so the `bookmarks` table needs a foreign key:
+One of the most important things to internalize as a full-stack developer is that adding a new resource isn't a one-file change — it touches every layer of the application:
 
-{% code title="server/db/seed.js" %}
+![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
+
+Every layer in the application needs an update. The order in which you build them matters too: start from the right (the database) and work your back to the browser, so each layer has something to build on before you need it.
+
+| Order | Layer                    | What changes                                                                                       |
+| ----- | ------------------------ | -------------------------------------------------------------------------------------------------- |
+| 1     | **Schema / Seeds**       | New `bookmarks` table with a FK to `users` and seed bookmark rows                                  |
+| 2     | **Model methods**        | New file `bookmarkModel.js` with query methods for list, listByUser, create, find, update, destroy |
+| 3     | **Controllers + Routes** | New file `bookmarkControllers.js` and wire up bookmark routes in `index.js`                        |
+| 4     | **Fetch helpers**        | New functions in `fetch-helpers.js` to call the bookmark endpoints                                 |
+| 5     | **Main**                 | New event listeners and a `showProfile` navigation helper in `main.js`                             |
+| 6     | **HTML / CSS**           | New bookmarks section and restructured profile section in `index.html`                             |
+| 7     | **DOM helpers**          | New render functions in `dom-helpers.js` for bookmark cards and the updated profile view           |
+
+Work through each layer below. Four of them have a challenge — these are the moments where the pattern is new enough that writing it yourself builds the most understanding.
+
+### Schema and Seeds
+
+Bookmarks belong to users, so the `bookmarks` table needs a **foreign key** to create this relationship. 
+
+**🔎 Challenge 1: Write the `bookmarks` table**
+
+Inside the `seed.js` file, use what you know about the `users` table to write the `CREATE TABLE` statement for `bookmarks`. The table needs:
+- A primary key
+- A `title` and `url` that cannot be null
+- A `user_id` column that references `users(user_id)`
+
+Consider: what should happen to a user's bookmarks when that user is deleted? Look up what `ON DELETE CASCADE` does in SQL.
+
+**<details><summary>Solution</summary>**
+
 ```js
 await pool.query(`
   CREATE TABLE bookmarks (
@@ -220,31 +119,90 @@ await pool.query(`
   )
 `);
 ```
-{% endcode %}
 
-`user_id INTEGER REFERENCES users(user_id)` is the foreign key. It tells Postgres: every value in this column must exist as a `user_id` in the `users` table.
+Here `user_id` references `users(user_id)`, telling Postgres that every bookmark must be owned by a real user.
 
-`ON DELETE CASCADE` means: when a user is deleted, Postgres automatically deletes all their bookmarks. Without it, deleting a user with bookmarks would fail with a foreign key violation.
+`ON DELETE CASCADE` means Postgres automatically deletes a user's bookmarks when that user is deleted. Without it, trying to delete a user who has bookmarks would fail with a foreign key violation.
 
-{% hint style="info" %}
-The seed file also drops `bookmarks` before `users`. Order matters: you can't drop `users` while `bookmarks` still has foreign keys pointing at it.
+</details>
 
-```js
-await pool.query('DROP TABLE IF EXISTS bookmarks');
-await pool.query('DROP TABLE IF EXISTS users');
-```
-{% endhint %}
+**Additional Changes:**
+
+1. The seed file also needs to drop and create the tables in the right order. Because `bookmarks` has a foreign key pointing at `users`, you can't drop `users` while `bookmarks` still references it — you'd get a constraint violation. You must drop dependent tables first:
+
+    ```js
+    // Drop in reverse dependency order
+    await pool.query('DROP TABLE IF EXISTS bookmarks');
+    await pool.query('DROP TABLE IF EXISTS users');
+    ```
+
+2. Then create them in forward order (`users` first, so `bookmarks` can reference it).
+
+3. Finally, to seed bookmarks you need the `user_id` values that Postgres generated for your seed users. Adding `RETURNING user_id` to the insert query gives you those values without a separate lookup:
+
+    ```js
+    // 1. Hash the passwords first
+    const aliceHash = await bcrypt.hash('password123', SALT_ROUNDS);
+    const bobHash = await bcrypt.hash('hunter2', SALT_ROUNDS);
+    const carolHash = await bcrypt.hash('opensesame', SALT_ROUNDS);
+
+    // 2. Define a SQL query string that returns the user_id
+    const insertUserSql = 'INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING user_id;';
+
+    // 3. Execute queries and store the full result objects
+    const aliceResponse = await pool.query(insertUserSql, ['alice', aliceHash]);
+    const bobResponse = await pool.query(insertUserSql, ['bob', bobHash]);
+    const carolResponse = await pool.query(insertUserSql, ['carol', carolHash]);
+
+    // 4. Extract the IDs for later use (e.g., seeding bookmarks)
+    const aliceId = aliceResponse.rows[0].user_id;
+    const bobId = bobResponse.rows[0].user_id;
+    const carolId = carolResponse.rows[0].user_id;
+
+    // NEW: seed some bookmarks so the app has data to display on first load
+    const bookmarkQuery = 'INSERT INTO bookmarks (user_id, title, url) VALUES ($1, $2, $3)';
+    await pool.query(bookmarkQuery, [aliceId, 'MDN Web Docs', 'https://developer.mozilla.org']);
+    await pool.query(bookmarkQuery, [aliceId, 'Node.js Docs', 'https://nodejs.org/en/docs']);
+    await pool.query(bookmarkQuery, [bobId, 'Express Docs', 'https://expressjs.com']);
+    await pool.query(bookmarkQuery, [bobId, 'PostgreSQL Docs', 'https://www.postgresql.org/docs']);
+    await pool.query(bookmarkQuery, [carolId, 'JavaScript.info', 'https://javascript.info']);
+    ```
+
+
+**<details><summary>🔍 Investigation: What happens if you swap the DROP TABLE order?</summary>**
+
+Look at the order the tables are dropped in the seed file. What would happen if you swapped the two `DROP TABLE` lines so that `users` was dropped before `bookmarks`?
+
+The `bookmarks` table has a `user_id` column that references `users(user_id)`, so Postgres won't allow `users` to be dropped while `bookmarks` still depends on it. You'd get a foreign key violation error. You always have to drop the dependent table first.
+
+</details>
+
+**<details><summary>🔍 Investigation: What breaks if you remove `ON DELETE CASCADE`?</summary>**
+
+Imagine you removed `ON DELETE CASCADE` from the `bookmarks` table definition. Describe what would break in two separate scenarios: (1) running `npm run db:seed`, and (2) a logged-in user clicking "Delete My Account" in the running app.
+
+(1) The seed script drops and re-creates the tables on every run. Without `CASCADE`, `DROP TABLE IF EXISTS users` would fail with a foreign key violation any time bookmark rows already exist — Postgres refuses to drop a table that other rows are still pointing at.
+
+(2) In the running app, `DELETE FROM users WHERE user_id = $1` would also fail with a foreign key violation if that user has any bookmarks. `ON DELETE CASCADE` tells Postgres to automatically delete all of a user's bookmarks when the user is deleted, solving both problems.
+
+</details>
+
+---
 
 ### The Bookmark Model
 
-The bookmark model follows the same conventions as the user model: methods return data or `null`, never throw to the controller deliberately, and use parameterized queries.
+The bookmark model follows the same conventions as `userModel.js`: every method returns data or `null`, uses parameterized queries, and never exposes more data than necessary.
 
-{% code title="server/models/bookmarkModel.js" %}
+This app has two list methods with different purposes:
+
+- `listByUser(user_id)` — returns bookmarks for one specific user. Used when rendering a user's profile.
+- `list()` — returns *all* bookmarks for the public feed. Because this is shown to anyone, each bookmark also needs to display who posted it — which means joining the `users` table to get the `username`.
+
+`listByUser` is the simpler of the two:
+
 ```js
-const pool = require('../db/pool');
-
 // Returns all bookmarks for a specific user
-module.exports.list = async (user_id) => {
+module.exports.listByUser = async (user_id) => {
   const query = `
     SELECT bookmark_id, title, url, user_id
     FROM bookmarks
@@ -254,8 +212,43 @@ module.exports.list = async (user_id) => {
   const { rows } = await pool.query(query, [user_id]);
   return rows;
 };
+```
 
-// Creates a bookmark owned by the user
+---
+
+**🔎 Challenge 2: Write `list()` with a JOIN**
+
+`list()` needs to return every bookmark across all users, but also include the `username` of whoever posted it. A `SELECT * FROM bookmarks` won't give you `username` — that lives in the `users` table.
+
+Complete the query in `list` so that each returned row includes `bookmark_id`, `title`, `url`, `user_id`, and `username`.
+
+**<details><summary>Solution</summary>**
+
+```js
+// Returns all bookmarks joined with the username of the owner
+module.exports.list = async () => {
+  const query = `
+    SELECT bookmarks.bookmark_id, bookmarks.title, bookmarks.url, bookmarks.user_id, users.username
+    FROM bookmarks
+    JOIN users ON bookmarks.user_id = users.user_id
+    ORDER BY bookmarks.bookmark_id
+  `;
+  const { rows } = await pool.query(query);
+  return rows;
+};
+```
+
+The `JOIN` connects each bookmark row to its matching user row on `user_id`, making `username` available in the result. Without it, the public feed would only have a `user_id` number — not a human-readable name.
+
+</details>
+
+---
+
+The remaining model methods — `create`, `find`, `update`, and `destroy` — follow the same patterns you've seen in `userModel.js`. One worth noting is `find`: it's used by the update and delete controllers to look up a bookmark's owner *before* deciding whether the request is allowed.
+
+{% code title="server/models/bookmarkModel.js" %}
+```js
+// Creates a bookmark owned by the given user
 module.exports.create = async (user_id, title, url) => {
   const query = `
     INSERT INTO bookmarks (user_id, title, url)
@@ -266,14 +259,14 @@ module.exports.create = async (user_id, title, url) => {
   return rows[0];
 };
 
-// Finds a single bookmark by id — used for ownership check before update/delete
+// Looks up a single bookmark — used to check ownership before update/delete
 module.exports.find = async (bookmark_id) => {
   const query = 'SELECT bookmark_id, title, url, user_id FROM bookmarks WHERE bookmark_id = $1';
   const { rows } = await pool.query(query, [bookmark_id]);
   return rows[0] || null;
 };
 
-// Updates a bookmark's title and url
+// Updates title and url, returns the updated row or null
 module.exports.update = async (bookmark_id, title, url) => {
   const query = `
     UPDATE bookmarks
@@ -285,7 +278,7 @@ module.exports.update = async (bookmark_id, title, url) => {
   return rows[0] || null;
 };
 
-// Deletes a bookmark — returns the deleted row or null
+// Deletes a bookmark, returns the deleted row or null
 module.exports.destroy = async (bookmark_id) => {
   const query = `
     DELETE FROM bookmarks
@@ -298,26 +291,54 @@ module.exports.destroy = async (bookmark_id) => {
 ```
 {% endcode %}
 
-Notice `find` — it's used specifically by the update and delete controllers before they check ownership. The controller needs to know *who owns* a bookmark before it can decide whether to allow the operation.
+### Bookmark Controllers and Routes
 
-### Bookmark Controllers
-
-The `listBookmarks` and `createBookmark` controllers are straightforward: they get `user_id` from the session, not the URL.
+There are five bookmark controllers. Two of them (`listBookmarks` and `listUserBookmarks`) are public and straightforward — they just call the model and send the result:
 
 {% code title="server/controllers/bookmarkControllers.js" %}
 ```js
 const bookmarkModel = require('../models/bookmarkModel');
 
-// GET /api/bookmarks — returns the current user's bookmarks
+// GET /api/bookmarks — all bookmarks with owner username (public)
 const listBookmarks = async (req, res, next) => {
   try {
-    const bookmarks = await bookmarkModel.list(req.session.userId);
+    const bookmarks = await bookmarkModel.list();
     res.send(bookmarks);
   } catch (err) {
     next(err);
   }
 };
 
+// GET /api/users/:user_id/bookmarks — bookmarks for one user (public)
+const listUserBookmarks = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.user_id);
+    const bookmarks = await bookmarkModel.listByUser(userId);
+    res.send(bookmarks);
+  } catch (err) {
+    next(err);
+  }
+};
+```
+{% endcode %}
+
+---
+
+**🔎 Challenge 3: Write `createBookmark`**
+
+Using `listBookmarks` as a guide, write the `createBookmark` controller for `POST /api/bookmarks { title, url }`. It should create a bookmark and send it back to the client. If an error occurs, pass it along to the error handling middleware with `next(err)`.
+
+The controller `bookmarkModel.create(user_id, title, url)` can be given the `title` and `url` from the body, but where does the `user_id` come from?
+
+- `req.body.user_id`?
+- `req.params.user_id`?
+- `req.session.userId`?
+
+Think about which of these the server can trust, and which could be forged by the client.
+
+**<details><summary>Solution</summary>**
+
+```js
 // POST /api/bookmarks { title, url }
 const createBookmark = async (req, res, next) => {
   try {
@@ -328,26 +349,23 @@ const createBookmark = async (req, res, next) => {
     next(err);
   }
 };
-
-// updateBookmark and deleteBookmark — see the challenge below
-
-module.exports = { listBookmarks, createBookmark, updateBookmark, deleteBookmark };
 ```
-{% endcode %}
 
-### Challenge: Ownership Checks
+`user_id` comes from `req.session.userId` — the session value set by the server when the user logged in. The client never supplies the owner. If you took `user_id` from `req.body` or `req.params` instead, any user could claim to be creating a bookmark on behalf of someone else. The server is the only trustworthy source of who is making the request.
 
-You've seen ownership checks in lesson 11's `updateUser` and `deleteUser`. The pattern for bookmarks is slightly different: in lesson 11, you could compare `req.params.user_id` directly to `req.session.userId`. For bookmarks, the URL param is a `bookmark_id` — you don't know who owns it until you look it up.
+</details>
 
-**Implement `updateBookmark` and `deleteBookmark` using this pattern:**
+---
 
-1. Convert `req.params.bookmark_id` to a number
-2. Call `bookmarkModel.find(bookmarkId)` to look up the bookmark
-3. If it doesn't exist → `404`
-4. If `existing.user_id !== req.session.userId` → `403`
-5. Otherwise → proceed with the update or delete
+#### Adding Ownership Checks
 
-**<details><summary>Solution: `updateBookmark` and `deleteBookmark`</summary>**
+You've seen ownership checks before — in lesson 11's `updateUser` and `deleteUser`, the check was:
+
+```js
+if (req.params.user_id !== req.session.userId) { ... }
+```
+
+That worked because the URL `PATCH /api/users/:user_id` contained the `user_id` directly. For bookmarks, the URL `PATCH /api/bookmarks/:bookmark_id` only contains a `bookmark_id`. You have to look up who owns that bookmark in the database:
 
 ```js
 // PATCH /api/bookmarks/:bookmark_id { title, url }
@@ -355,11 +373,9 @@ const updateBookmark = async (req, res, next) => {
   try {
     const bookmarkId = Number(req.params.bookmark_id);
 
-    // Look up the bookmark first so we can check ownership
     const existing = await bookmarkModel.find(bookmarkId);
     if (!existing) return res.status(404).send({ message: 'Bookmark not found' });
 
-    // Ownership check — the bookmark's user_id must match the session userId
     if (existing.user_id !== req.session.userId) {
       return res.status(403).send({ message: 'You can only update your own bookmarks.' });
     }
@@ -371,7 +387,15 @@ const updateBookmark = async (req, res, next) => {
     next(err);
   }
 };
+```
 
+**🔎 Challenge 4: Write `deleteBookmark`**
+
+Implement the `deleteBookmark` controller using the same pattern
+
+**<details><summary>Solution</summary>**
+
+```js
 // DELETE /api/bookmarks/:bookmark_id
 const deleteBookmark = async (req, res, next) => {
   try {
@@ -394,38 +418,77 @@ const deleteBookmark = async (req, res, next) => {
 
 </details>
 
-### Bookmark Routes
+---
 
-All four bookmark routes require authentication. Register them in `index.js` after the user routes:
+#### Adding Routes
+
+With all five controllers written, register their routes in `index.js`. The public GET routes don't need `checkAuthentication`. The write routes do — applied individually, since `GET /api/bookmarks` is public:
 
 {% code title="server/index.js" %}
 ```js
-const { listBookmarks, createBookmark, updateBookmark, deleteBookmark } = require('./controllers/bookmarkControllers');
+const { listBookmarks, listUserBookmarks, createBookmark, updateBookmark, deleteBookmark } = require('./controllers/bookmarkControllers');
 
-// ---- Bookmark Routes (all protected) ----
-app.get('/api/bookmarks', checkAuthentication, listBookmarks);
-app.post('/api/bookmarks', checkAuthentication, createBookmark);
-app.patch('/api/bookmarks/:bookmark_id', checkAuthentication, updateBookmark);
-app.delete('/api/bookmarks/:bookmark_id', checkAuthentication, deleteBookmark);
+// Under user routes — returns bookmarks for one user
+app.get('/api/users/:user_id/bookmarks', listUserBookmarks);
+
+// Bookmark routes
+app.get('/api/bookmarks', listBookmarks);                                    // public
+app.post('/api/bookmarks', checkAuthentication, createBookmark);             // must be logged in
+app.patch('/api/bookmarks/:bookmark_id', checkAuthentication, updateBookmark); // must be logged in + own
+app.delete('/api/bookmarks/:bookmark_id', checkAuthentication, deleteBookmark); // must be logged in + own
 ```
 {% endcode %}
 
-`checkAuthentication` gates every bookmark route. The ownership check for `PATCH` and `DELETE` then runs inside the controller, just like in lesson 11.
+{% hint style="info" %}
+**Why not `/api/users/:user_id/bookmarks` for all bookmark routes?**
+
+You might expect user-owned resources to be nested under the user in every URL — `POST /api/users/:user_id/bookmarks`, `DELETE /api/users/:user_id/bookmarks/:bookmark_id`. This seems intuitive, but it introduces a redundancy problem.
+
+For `POST /api/users/:user_id/bookmarks`, you'd still need to confirm `req.params.user_id === req.session.userId` — because a logged-in user could try to post a bookmark under a *different* user's ID. But `req.session.userId` already tells the server who the owner is. The `:user_id` URL param just adds something to validate that the session already knows.
+
+For `DELETE /api/users/:user_id/bookmarks/:bookmark_id`, the same applies: the ownership check should use the database (`bookmark.user_id`) as the source of truth, not the URL — so the nested `:user_id` is again redundant.
+
+The one exception is `GET /api/users/:user_id/bookmarks` — here, `:user_id` is doing real work by telling the server *whose* bookmarks to return, not asserting ownership.
+
+{% endhint %}
+
+**<details><summary>🔍 Investigation: Which bookmark routes need `checkAuthentication`, and why don't the GET routes need it?</summary>**
+
+Look at the four bookmark routes:
+
+```js
+app.get('/api/bookmarks', listBookmarks);                                      // public
+app.post('/api/bookmarks', checkAuthentication, createBookmark);               // must be logged in
+app.patch('/api/bookmarks/:bookmark_id', checkAuthentication, updateBookmark); // must be logged in + own
+app.delete('/api/bookmarks/:bookmark_id', checkAuthentication, deleteBookmark); // must be logged in + own
+```
+
+The two GET routes (`/api/bookmarks` and `/api/users/:user_id/bookmarks`) are public because they only *read* data — any visitor can see the bookmark feed or browse a user's profile without an account. There's no risk to a user's data.
+
+The POST, PATCH, and DELETE routes all *write* data, so they need a verified identity first. `checkAuthentication` runs before the controller and returns 401 if there's no session — the controller never runs for an unauthenticated request. The ownership check inside the controller is a second, separate gate: you must be logged in *and* you must own the resource.
+
+</details>
 
 ## Updating the Frontend
 
-The frontend gains a "My Bookmarks" tab in the nav (shown only when logged in), a form to add new bookmarks, and a list of bookmark cards with delete buttons. The split between `fetch-helpers.js`, `dom-helpers.js`, and `main.js` follows the same pattern established in lesson 8.
+The frontend changes are given here rather than as challenges — the new patterns in play (event delegation, `data-*` attributes, the profile-for-any-user design) are meaningful, but the core concepts of this lesson live in the backend. Study this code and make sure you understand how each piece connects to the server changes above.
 
 ### Fetch Helpers
 
-Three new functions — `getBookmarks`, `createBookmark`, and `deleteBookmark` — follow the same `handleFetch` pattern as everything else:
+Four new functions cover the bookmark endpoints. `getUserBookmarks` sits under Users because it hits a user route:
 
 {% code title="frontend/src/fetch-helpers.js" %}
 ```js
+// Returns bookmarks for one user — used when rendering a profile
+export const getUserBookmarks = (user_id) => {
+  return handleFetch(`${baseURL}/users/${user_id}/bookmarks`);
+};
+
 // ============================================
 // Bookmarks
 // ============================================
 
+// Returns all bookmarks with owner username — used for the public feed
 export const getBookmarks = () => {
   return handleFetch(`${baseURL}/bookmarks`);
 };
@@ -445,102 +508,207 @@ export const deleteBookmark = (bookmark_id) => {
 ```
 {% endcode %}
 
-Note what's absent: no `updateBookmark` fetch helper. The UI only supports adding and deleting — a deliberate scope decision to keep the frontend simple. The `PATCH` endpoint exists on the server; the frontend can be extended to use it later.
-
 ### DOM Helpers
 
-`renderBookmarks` builds a list of cards. Each card has a title link and a delete button. The delete button stores the `bookmark_id` in a `data-bookmark-id` attribute — `main.js` will read it when handling clicks.
+Two new render functions are added. Because both the public feed and the profile section render bookmark cards, a shared private helper `createBookmarkCard` builds the `<li>` element in one place — the two exported functions just call it with different options:
 
 {% code title="frontend/src/dom-helpers.js" %}
 ```js
-export const renderBookmarks = (bookmarks) => {
-  bookmarksList.innerHTML = '';
-  bookmarks.forEach((bookmark) => {
-    const li = document.createElement('li');
-    li.className = 'bookmark-card';
-    li.dataset.bookmarkId = bookmark.bookmark_id; // used by event delegation
+// Private helper — builds a single bookmark card element
+// showByline: include the @username attribution (public feed only)
+// showDelete: include the delete button (own bookmarks only)
+const createBookmarkCard = (bookmark, showDelete = false, showByline = false) => {
+  const li = document.createElement('li');
+  li.className = 'bookmark-card';
+  li.dataset.bookmarkId = bookmark.bookmark_id;
+  li.dataset.userId = bookmark.user_id; // owner — lets delete handlers re-navigate without a state variable
 
-    const link = document.createElement('a');
-    link.href = bookmark.url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = bookmark.title;
+  const link = document.createElement('a');
+  link.href = bookmark.url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = bookmark.title;
+  li.append(link);
 
+  if (showByline) {
+    const byline = document.createElement('span');
+    byline.className = 'bookmark-byline';
+    const usernameBtn = document.createElement('button');
+    usernameBtn.className = 'username-link';
+    usernameBtn.dataset.username = bookmark.username;
+    usernameBtn.textContent = `@${bookmark.username}`;
+    byline.append(usernameBtn);
+    li.append(byline);
+  }
+
+  if (showDelete) {
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'delete-bookmark-btn';
     deleteBtn.textContent = 'Delete';
+    li.append(deleteBtn);
+  }
 
-    li.append(link, deleteBtn);
-    bookmarksList.append(li);
+  return li;
+};
+```
+{% endcode %}
+
+**<details><summary>🔍 Investigation: Why isn't `createBookmarkCard` exported?</summary>**
+
+`createBookmarkCard` is a *private helper* — it exists to avoid repeating the card-building logic inside `renderBookmarks` and `renderProfile`, but it's an implementation detail of this module. `main.js` never needs to call it directly; it just calls `renderBookmarks` or `renderProfile` and gets back a fully populated list.
+
+Exporting it would expose an internal function that callers shouldn't depend on. If the card's HTML structure ever changed, you'd only need to update `createBookmarkCard` — not every file that imported it. Keeping it unexported makes that boundary explicit: this function belongs to `dom-helpers.js` and nothing else.
+
+</details>
+
+{% code title="frontend/src/dom-helpers.js" %}
+```js
+// Renders the public bookmarks feed
+// currentUser determines which cards get a delete button
+export const renderBookmarks = (bookmarks, currentUser) => {
+  bookmarksList.innerHTML = '';
+  if (bookmarks.length === 0) {
+    bookmarksList.innerHTML = 'No bookmarks added yet';
+    return;
+  }
+  bookmarks.forEach((bookmark) => {
+    const isBookmarkOwner = Boolean(currentUser && bookmark.user_id === currentUser.user_id);
+    bookmarksList.append(createBookmarkCard(bookmark, isBookmarkOwner, true));
   });
 };
 ```
 {% endcode %}
 
-`renderAuthView` is also updated to show or hide the bookmarks nav button alongside the profile button:
+**<details><summary>🔍 Investigation: What does `Boolean(currentUser && bookmark.user_id === currentUser.user_id)` evaluate to in each scenario?</summary>**
+
+`showDelete` in `createBookmarkCard` expects a boolean — `true` shows the delete button, `false` hides it. The expression passed in is `Boolean(currentUser && bookmark.user_id === currentUser.user_id)`.
+
+**Scenario 1: no one is logged in (`currentUser` is `null`)**
+
+`null && ...` short-circuits immediately — the right side is never evaluated. The result is `null`. `Boolean(null)` is `false`. No delete buttons appear for any bookmark. This is correct: guests can't delete anything.
+
+**Scenario 2: a user is logged in (`currentUser` is `{ user_id: 3, username: 'alice' }`)**
+
+`currentUser` is truthy, so the `&&` evaluates the right side. If `bookmark.user_id === 3`, the expression is `Boolean(true)` → `true` — Alice's bookmark gets a delete button. If `bookmark.user_id !== 3`, the expression is `Boolean(false)` → `false` — no delete button for bookmarks she doesn't own.
+
+`Boolean()` here makes the intent explicit: we're deliberately converting a potentially-null or boolean value into a guaranteed boolean before passing it as a flag argument.
+
+</details>
+
+{% code title="frontend/src/dom-helpers.js" %}
+```js
+// Renders any user's profile — info, bookmarks, and (for own profile) settings
+export const renderProfile = (user, bookmarks, isOwnProfile) => {
+  profileUsername.textContent = user.username;
+  profileUserId.textContent = user.user_id;
+
+  profileBookmarksList.innerHTML = '';
+  bookmarks.forEach((bookmark) => {
+    profileBookmarksList.append(createBookmarkCard(bookmark, isOwnProfile));
+  });
+
+  if (isOwnProfile) {
+    ownProfileSettings.classList.remove('hidden');
+  } else {
+    ownProfileSettings.classList.add('hidden');
+  }
+};
+```
+{% endcode %}
+
+`renderAuthView` is also updated to show or hide the add-bookmark form and the "My Profile" nav button depending on whether a user is logged in:
 
 ```js
 export const renderAuthView = (currentUser) => {
   if (currentUser) {
     // ...
-    showBookmarksBtn.classList.remove('hidden');
     showProfileBtn.classList.remove('hidden');
+    addBookmarkForm.classList.remove('hidden');
   } else {
     // ...
-    showBookmarksBtn.classList.add('hidden');
-    bookmarksSection.classList.add('hidden');
     showProfileBtn.classList.add('hidden');
     profileSection.classList.add('hidden');
+    addBookmarkForm.classList.add('hidden');
   }
 };
 ```
 
 ### Main
 
-`main.js` wires up three new interactions: the nav tab, the add form, and the delete button. The delete button uses event delegation — one listener on the list catches clicks on any card's button:
+`main.js` adds a `showProfile` helper. Because the profile section can now display *any* user (not just the logged-in user), `showProfile` centralizes the work of fetching that user's bookmarks, computing `isOwnProfile`, and navigating to the section:
 
 {% code title="frontend/src/main.js" %}
 ```js
-// Add bookmark: submit form -> create -> refresh list
-addBookmarkForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  hideError('add-bookmark-error');
-  const { data, error } = await createBookmark(
-    addBookmarkForm.title.value,
-    addBookmarkForm.url.value,
-  );
-  if (error) return showError('add-bookmark-error', 'Could not save bookmark.');
-  addBookmarkForm.reset();
-  await refreshBookmarks();
-});
+let currentUser = null;
 
-// Delete bookmark: click event bubbles up to the list
+// Fetches bookmarks for a user, renders their profile, and navigates to it
+const showProfile = async (user) => {
+  const { data: bookmarks } = await getUserBookmarks(user.user_id);
+  const isOwnProfile = currentUser && currentUser.user_id === user.user_id;
+  renderProfile(user, bookmarks || [], isOwnProfile);
+  showProfileSection();
+};
+```
+{% endcode %}
+
+Clicking a user card in the All Users list calls `showProfile` using data attributes that `renderUsers` stored on each `<li>` — no extra fetch needed:
+
+```js
+// data-user-id and data-username are set by renderUsers
+usersList.addEventListener('click', async (e) => {
+  const card = e.target.closest('.user-card');
+  if (!card) return;
+  await showProfile({
+    user_id: Number(card.dataset.userId),
+    username: card.dataset.username,
+  });
+});
+```
+
+The All Bookmarks list has two delegated click targets — the delete button and the `@username` byline link:
+
+```js
 bookmarksList.addEventListener('click', async (e) => {
+  const li = e.target.closest('.bookmark-card');
+  if (!li) return;
+
+  const deleteBtn = e.target.closest('.delete-bookmark-btn');
+  if (deleteBtn) {
+    const bookmarkId = Number(li.dataset.bookmarkId);
+    await deleteBookmark(bookmarkId);
+    await refreshBookmarks();
+    return;
+  }
+
+  const usernameBtn = e.target.closest('.username-link');
+  if (usernameBtn) {
+    await showProfile({
+      user_id: Number(li.dataset.userId),
+      username: usernameBtn.dataset.username,
+    });
+  }
+});
+```
+
+The profile bookmark list only needs to handle deletes — and after deleting, it re-renders the same profile. Rather than keeping a separate `profileUser` state variable, the handler reads the owner's id from the deleted card's `data-user-id` attribute (set by `createBookmarkCard`) and the username from the already-rendered `#profile-username` element:
+
+```js
+profileBookmarksList.addEventListener('click', async (e) => {
   const deleteBtn = e.target.closest('.delete-bookmark-btn');
   if (!deleteBtn) return;
   const li = deleteBtn.closest('.bookmark-card');
   const bookmarkId = Number(li.dataset.bookmarkId);
   await deleteBookmark(bookmarkId);
-  await refreshBookmarks();
-});
-
-// Nav: show My Bookmarks section
-showBookmarksBtn.addEventListener('click', async () => {
-  showBookmarksSection();
-  await refreshBookmarks();
+  await showProfile({
+    user_id: Number(li.dataset.userId),
+    username: document.querySelector('#profile-username').textContent,
+  });
 });
 ```
-{% endcode %}
-
-**<details><summary>Q: Why use event delegation for bookmark deletion instead of adding a listener to each button directly?</summary>**
-
-The bookmark cards are created dynamically by `renderBookmarks`. If you called `deleteBtn.addEventListener(...)` inside the `forEach`, you'd need to re-attach listeners every time the list re-renders. Event delegation attaches one listener to the static `#bookmarks-list` element and catches clicks that bubble up from any button inside it — regardless of when those buttons were created.
-
-</details>
 
 ## The Complete Picture
 
-Here is the full route list for the finished application, with the auth and ownership requirements for each:
+Here is the sequence for adding a bookmark, tracing the request from the browser through every layer:
 
 ```mermaid
 sequenceDiagram
@@ -569,26 +737,27 @@ sequenceDiagram
     F-->>M: { data: bookmark, error: null }
     M->>F: getBookmarks()
     F->>S: GET /api/bookmarks
-    S-->>F: 200 [{ bookmark_id, title, url }, ...]
+    S-->>F: 200 [{ bookmark_id, title, url, username }, ...]
     F-->>M: { data: bookmarks }
-    M->>B: renderBookmarks(bookmarks)
+    M->>B: renderBookmarks(bookmarks, currentUser)
   end
 ```
 
 And a summary of every route and its access rules:
 
-| Method   | Endpoint                        | Auth required | Ownership required |
-|----------|---------------------------------|---------------|--------------------|
-| `POST`   | `/api/auth/register`            | No            | —                  |
-| `POST`   | `/api/auth/login`               | No            | —                  |
-| `GET`    | `/api/auth/me`                  | No            | —                  |
-| `DELETE` | `/api/auth/logout`              | No            | —                  |
-| `GET`    | `/api/users`                    | No            | —                  |
-| `PATCH`  | `/api/users/:user_id`           | Yes           | Yes (own account)  |
-| `DELETE` | `/api/users/:user_id`           | Yes           | Yes (own account)  |
-| `GET`    | `/api/bookmarks`                | Yes           | — (filtered by session) |
-| `POST`   | `/api/bookmarks`                | Yes           | — (session sets owner)  |
-| `PATCH`  | `/api/bookmarks/:bookmark_id`   | Yes           | Yes (own bookmark) |
-| `DELETE` | `/api/bookmarks/:bookmark_id`   | Yes           | Yes (own bookmark) |
+| Method   | Endpoint                        | Auth required | Ownership required     |
+| -------- | ------------------------------- | ------------- | ---------------------- |
+| `POST`   | `/api/auth/register`            | No            | —                      |
+| `POST`   | `/api/auth/login`               | No            | —                      |
+| `GET`    | `/api/auth/me`                  | No            | —                      |
+| `DELETE` | `/api/auth/logout`              | No            | —                      |
+| `GET`    | `/api/users`                    | No            | —                      |
+| `GET`    | `/api/users/:user_id/bookmarks` | No            | —                      |
+| `PATCH`  | `/api/users/:user_id`           | Yes           | Yes (own account)      |
+| `DELETE` | `/api/users/:user_id`           | Yes           | Yes (own account)      |
+| `GET`    | `/api/bookmarks`                | No            | —                      |
+| `POST`   | `/api/bookmarks`                | Yes           | — (session sets owner) |
+| `PATCH`  | `/api/bookmarks/:bookmark_id`   | Yes           | Yes (own bookmark)     |
+| `DELETE` | `/api/bookmarks/:bookmark_id`   | Yes           | Yes (own bookmark)     |
 
-Every pattern in this table — from the model swap in lesson 8 to the ownership check in lesson 11 — you built yourself, one layer at a time.
+Every pattern in this table — from the model layer to the ownership check — you built yourself, one layer at a time.
