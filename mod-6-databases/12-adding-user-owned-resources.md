@@ -1,7 +1,7 @@
-# 12. Putting It All Together
+# 12. Adding User-Owned Resources
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-12-putting-it-all-together)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-12-adding-user-owned-resources)!
 {% endhint %}
 
 Across lessons 8–11 you built a complete authentication and authorization system from scratch. This lesson reviews what you've built and why each piece matters, then extends the app with a new user-owned resource — bookmarks — using every pattern you've learned.
