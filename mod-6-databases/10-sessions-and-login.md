@@ -264,28 +264,6 @@ The frontend calls `GET /api/auth/me` when the app loads in `main.js`.
 
 {% tabs %}
 
-{% tab title="main.js" %}
-
-```javascript
-// imports, etc...
-
-let currentUser = null;
-
-// event handlers, etc....
-
-const main = async () => {
-  const { data } = await getCurrentUser();
-  currentUser = data;           // null if not logged in, { user_id, username } if logged in
-  renderAuthView(currentUser);  // one function handles both guest and logged-in views
-  if (currentUser) renderProfile(currentUser);
-  await refreshUsers();         // always load the users list on startup
-};
-
-main();
-```
-
-{% endtab %}
-
 {% tab title="fetch-helpers.js" %}
 
 ```javascript
@@ -313,6 +291,28 @@ export const getCurrentUser = async () => {
 };
 
 // more fetch helpers...
+```
+
+{% endtab %}
+
+{% tab title="main.js" %}
+
+```javascript
+// imports, etc...
+
+let currentUser = null;
+
+// event handlers, etc....
+
+const main = async () => {
+  const { data } = await getCurrentUser();
+  currentUser = data;           // null if not logged in, { user_id, username } if logged in
+  renderAuthView(currentUser);  // one function handles both guest and logged-in views
+  if (currentUser) renderProfile(currentUser);
+  await refreshUsers();         // always load the users list on startup
+};
+
+main();
 ```
 
 {% endtab %}
