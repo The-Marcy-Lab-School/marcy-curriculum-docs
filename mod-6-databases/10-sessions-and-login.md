@@ -10,11 +10,12 @@ In lesson 9, you built a registration endpoint that hashes passwords and stores 
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
+- [Setup](#setup)
 - [The Problem: HTTP is Stateless](#the-problem-http-is-stateless)
 - [The Solution: Sessions and Cookies](#the-solution-sessions-and-cookies)
 - [Setting Up `cookie-session`](#setting-up-cookie-session)
+  - [Setting Cookie Data on Login](#setting-cookie-data-on-login)
   - [Auto-Login on Register](#auto-login-on-register)
-  - [The Login Controller](#the-login-controller)
   - [Staying Logged In With The `/api/auth/me` Pattern](#staying-logged-in-with-the-apiauthme-pattern)
   - [Logout](#logout)
 - [Putting It Together: Auth Endpoints](#putting-it-together-auth-endpoints)
@@ -42,6 +43,39 @@ By the end of this lesson, you should be able to answer these questions:
 * **`userModel.validatePassword(username, password)`** — the model method from lesson 9 that handles the username lookup and bcrypt comparison internally. Returns `{ user_id, username }` or `null`.
 * **`/api/auth/me`** — a convention for an endpoint that returns the currently logged-in user based on the session.
 
+## Setup
+
+1. Edit `db/pool.js` and update the user and password fields to match your local Postgres setup (On macOS you may be able to delete those fields entirely)
+
+2. Run these commands to set up the database, seed, and start the server:
+
+    ```sh
+    cd server
+
+    # Install dependencies
+    npm install
+
+    # Create the database (run once)
+    createdb users_db           # Mac
+    sudo -u postgres createdb users_db   # Windows/WSL
+
+    # Seed the database with hashed passwords
+    node db/seed.js
+
+    # Start the server (port 3000)
+    npm run dev
+    ```
+
+3. Open the app and sign in to one of the users below
+
+Seeded users (all have these passwords):
+
+| Username | Password    |
+| -------- | ----------- |
+| alice    | password123 |
+| bob      | hunter2     |
+| carol    | opensesame  |
+
 ## The Problem: HTTP is Stateless
 
 HTTP is a **stateless** protocol. Every request your server receives is completely independent — the server has no memory of previous requests.
@@ -54,15 +88,19 @@ Client → GET /api/auth/me
 Server → ??? I've never seen this person before.
 ```
 
-After a user logs in, the server processes the login request, sends back a response, and immediately forgets everything. The next request arrives as if the login never happened.
+After a user logs in, the server processes the login request, sends back a response, and immediately forgets everything. 
+
+This means that any time in the future that the user visits the page, or if they refresh, the user will have to login again.
 
 ## The Solution: Sessions and Cookies
 
-One common solution is **session cookies**: small files containing a unique identifier (e.g. a user ID) given to a client by a server. The client saves the cookie and automatically sends it back to the server with each subsequent request, showing that they've already been authenticated:
+Go to GitHub.com. Do you need to log in to your account or are you already logged in? If you were already logged in, that means that you have a **session cookie** stored in your browser.
+
+**Session cookies** are small files containing a unique identifier (e.g. a user ID) given to a client (the browser) by a server. When a user returns to the website, the client (the browser) automatically sends the session cookie back to the server showing that they've already been authenticated:
 
 ![The cookie is generated when a user logs in and is sent with every subsequent request.](./img/10-sessions-login/cookies-diagram.png)
 
-The cookie is sent automatically by the browser with every request to the same domain — no extra frontend code needed.
+This means that we don't have to write any frontend code to continue sending our login credentials to the server with ever request. **The cookie is sent automatically by the browser** with every request to the same domain.
 
 ## Setting Up `cookie-session`
 
@@ -119,9 +157,72 @@ const userId = req.session.userId; // 7
 req.session = null;
 ```
 
+### Setting Cookie Data on Login
+
+Now that we have `req.session`, we can send cookies to our users when they login.
+
+In our `login` controller, after the `userModel` validates the login credentials, we can save the validated user's ID in `req.session`. When we send the response, the session cookie will be included with that `userId` data:
+
+```js
+// controllers/authControllers.js
+const login = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await userModel.validatePassword(username, password);
+
+    if (!user) {
+      return res.status(401).send({ message: 'Invalid credentials' });
+    }
+
+    // Add a { userId } property to the session object with the new user's user_id value
+    req.session.userId = user.user_id;
+
+    res.send(user);
+  } catch (err) {
+    next(err);
+  }
+};
+```
+
+The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set a cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller.
+
+To see the cookie in you browser, try this out:
+1. Run the server and connect to it in your browser
+2. Open your browser's DevTools and go to Applications → Cookies → `http://localhost:8080`.
+3. Confirm that you have NO cookies
+4. Log in to one of the users using the registration form (username: `alice`, password: `password123`)
+5. Observe that new cookie has been stored in your browser with the name `session`! 
+  
+The `session.userId` data has been encoded using Base64 encoding. Unlike encryption, encoded strings can easily be reversed. Try copying the cookie from your browser and pasting it into this online decoder tool: [https://www.base64decode.org/](https://www.base64decode.org/)
+
+We can visualize this login flow like this:
+
+```mermaid
+sequenceDiagram
+  participant C as Client
+  participant S as Server (login)
+  participant M as userModel
+  participant DB as Postgres
+
+  C->>S: POST /api/auth/login { username, password }
+  S->>M: validatePassword(username, password)
+  M->>DB: SELECT * FROM users WHERE username = $1
+  DB-->>M: { user_id, username, password_hash }
+  M->>M: bcrypt.compare(password, password_hash)
+  alt invalid credentials
+    M-->>S: null
+    S-->>C: 401 { message: 'Invalid credentials' }
+  else valid credentials
+    M-->>S: { user_id, username }
+    S->>S: req.session.userId = user_id
+    S-->>C: 200 { user_id, username } + Set-Cookie
+  end
+```
+
 ### Auto-Login on Register
 
-Now that `req.session` is available, we can update the registration controller to save the newly created user's ID in `req.session`. When we send the response, the cookie will be included.
+We want to do the same thing when a user registers a new account:
 
 ```js
 const register = async (req, res, next) => {
@@ -146,69 +247,6 @@ const register = async (req, res, next) => {
     next(err);
   }
 };
-```
-
-The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set a cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller.
-
-To see the cookie in you browser, try this out:
-1. Run the server and connect to it in your browser
-2. Open your browser's DevTools and go to Applications → Cookies → `http://localhost:8080`.
-3. Confirm that you have NO cookies
-4. Create a new user using the registration form
-5. Observe that new cookie has been stored in your browser with the name `session`! 
-  
-The data has been encoded using Base64 encoding. Unlike encryption, encoded strings can easily be reversed. Try copying the cookie from your browser and pasting it into this online decoder tool: [https://www.base64decode.org/](https://www.base64decode.org/)
-
-### The Login Controller
-
-We want to do the same thing when a user logs in:
-
-```js
-// controllers/authControllers.js
-const userModel = require('../models/userModel');
-
-const login = async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-
-    const user = await userModel.validatePassword(username, password);
-
-    if (!user) {
-      return res.status(401).send({ message: 'Invalid credentials' });
-    }
-
-    // The user has been validated, add their user_id to the cookie
-    req.session.userId = user.user_id;
-
-    res.send(user);
-  } catch (err) {
-    next(err);
-  }
-};
-```
-
-We can visualize this login flow like this:
-
-```mermaid
-sequenceDiagram
-  participant C as Client
-  participant S as Server (login)
-  participant M as userModel
-  participant DB as Postgres
-
-  C->>S: POST /api/auth/login { username, password }
-  S->>M: validatePassword(username, password)
-  M->>DB: SELECT * FROM users WHERE username = $1
-  DB-->>M: { user_id, username, password_hash }
-  M->>M: bcrypt.compare(password, password_hash)
-  alt invalid credentials
-    M-->>S: null
-    S-->>C: 401 { message: 'Invalid credentials' }
-  else valid credentials
-    M-->>S: { user_id, username }
-    S->>S: req.session.userId = user_id
-    S-->>C: 200 { user_id, username } + Set-Cookie
-  end
 ```
 
 ### Staying Logged In With The `/api/auth/me` Pattern
