@@ -62,9 +62,6 @@ By the end of this lesson, you should be able to answer these questions:
     createdb users_db           # Mac
     sudo -u postgres createdb users_db   # Windows/WSL
 
-    # Copy the env template, then fill in a SESSION_SECRET value with a random 32+ char string
-    cp .env.template .env
-
     # Seed and start
     npm run db:seed
     npm run dev
@@ -178,9 +175,11 @@ Any HTTP client — curl, Postman, a script, a browser extension — can call th
 
 ## Writing Authorization Middleware
 
-The fix is to check for a valid session before the controller runs. If there's no session, it sends `401` and stops. The controller never runs.
+We need a way to authenticate users who are sending in requests to delete, update, or create resources owned by them. One solution would be to require that these requests include their username and password. But this would be an annoying experience for our users. If they are logged into their account, they should be able to freely manage their account.
 
-You could put this check inside every controller:
+Thankfully we already have something that automatically authenticates every request sent by our users: **session cookies**! Remember that session cookies are sent by authenticated users on every request. We can check for a valid session before the controller runs. If there's no session, it sends `401` and stops the controller from completing the action.
+
+This is what it would look like to add a session check inside of our `deleteUser` controller:
 
 ```js
 const deleteUser = async (req, res, next) => {
@@ -191,6 +190,18 @@ const deleteUser = async (req, res, next) => {
 };
 ```
 
+**<details><summary>Q: Under what circumstances will `req.session.userId` be a truthy value?</summary>**
+
+`req.session.userId` will only exist if the user had previously logged in or had just registered their account.
+
+The `login` and `register` endpoints both set the `req.session.userId`:
+
+```js
+req.session.userId = user.user_id;
+```
+
+</details>
+
 That works, but if you have many protected endpoints you'd write the same check over and over. Middleware solves this by extracting the check into one reusable function you register per route.
 
 ### The `checkAuthentication` Middleware
@@ -200,10 +211,8 @@ Open `server/middleware/checkAuthentication.js`. It's already written — read t
 {% code title="server/middleware/checkAuthentication.js" %}
 ```js
 const checkAuthentication = (req, res, next) => {
-  const { userId } = req.session;
-
   // No session — user is not logged in
-  if (!userId) {
+  if (!req.session.userId) {
     return res.status(401).send({ message: 'You must be logged in to do that.' });
   }
 
