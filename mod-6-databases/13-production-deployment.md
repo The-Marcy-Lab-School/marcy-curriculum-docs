@@ -1,7 +1,7 @@
 # 13. Production Deployment
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-12-putting-it-all-together)!
+Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-13-production-deployment)!
 {% endhint %}
 
 Your app works locally. This lesson covers what it takes to make it work for anyone, anywhere — deploying your Express server and Postgres database to the internet using [Render](https://render.com).
@@ -14,8 +14,11 @@ Before you can deploy safely, you need to move every secret and environment-spec
 - [Key Concepts](#key-concepts)
 - [Hardening for Deployment: Environment Variables](#hardening-for-deployment-environment-variables)
   - [What Goes in `.env`](#what-goes-in-env)
-  - [Updating `pool.js`](#updating-pooljs)
-  - [Updating `index.js`](#updating-indexjs)
+  - [What Is `PG_CONNECTION_STRING`?](#what-is-pg_connection_string)
+- [Updating Server Code To Use Environment Variables](#updating-server-code-to-use-environment-variables)
+  - [dotenv](#dotenv)
+  - [Using `process.env` Values in `pool.js` to Configure `pg.Pool`](#using-processenv-values-in-pooljs-to-configure-pgpool)
+  - [Using `process.env` Values in `index.js` to Configure `cookieSession`](#using-processenv-values-in-indexjs-to-configure-cookiesession)
   - [The `.env.template` Pattern](#the-envtemplate-pattern)
 - [Deploying to Render](#deploying-to-render)
   - [Step 1: Create a Postgres Database](#step-1-create-a-postgres-database)
@@ -48,11 +51,6 @@ By the end of this lesson, you should be able to answer these questions:
 The app as written in lesson 12 has two values hardcoded directly in the source code:
 
 ```js
-// server/index.js
-secret: 'dev-only-secret-replace-before-deploying',
-```
-
-```js
 // server/db/pool.js
 const config = {
   host: 'localhost',
@@ -61,7 +59,15 @@ const config = {
 };
 ```
 
-Neither of these will work in production. The session secret is a placeholder, and the database config points at your local machine. If you pushed this code to GitHub as-is, anyone reading your repo would see your secrets — and the app would fail the moment it tried to connect to a database that doesn't exist on the production server.
+```js
+// server/index.js
+secret: 'dev-only-secret-replace-before-deploying',
+```
+
+
+Neither of these will work in production:
+* The database config points at your local machine. While Render can host both a database server and an Express server, it is unlikely that they will run on the same hardware.
+* The session secret must never be shared. Publishing it in a GitHub repository would allow malicious users to forge fake cookies and impersonate users.
 
 The solution is environment variables: values that live outside the code, set differently per environment (your laptop vs. a Render server), and never committed to git.
 
@@ -69,28 +75,87 @@ The solution is environment variables: values that live outside the code, set di
 
 Any value that:
 - Is a secret (password, API key, session signing secret)
-- Varies between environments (dev database vs. production database)
+- Varies between environments (development database configurations vs. production database configurations)
 - Should never be visible in the codebase
 
-In this app, that means:
+In this app, that means having a `.env` file with the following:
 
-```
-SESSION_SECRET=some-long-random-string
+```sh
+# Generate your own session secret
+SESSION_SECRET=bbd40cc09435a51129a424042d78afaf79ec202be2310b85e51bbec230d7b1ee
 
 PGHOST=localhost
 PGPORT=5432
 PGDATABASE=users_db
 PGUSER=
 PGPASSWORD=
+
+# When deploying, set this to your hosted database URL instead of the vars above
+PG_CONNECTION_STRING=
 ```
 
 {% hint style="warning" %}
 `.env` must be in `.gitignore`. Never commit it. If you accidentally commit secrets, rotate them immediately — deleting the file doesn't remove it from git history.
 {% endhint %}
 
-### Updating `pool.js`
+To generate a `SESSION_SECRET` value, we can use a website like [https://randomkeygen.com/](https://randomkeygen.com/) or just enter the command below into your terminal:
 
-With those values in `.env`, the `pg` connection config reads from `process.env` instead of hardcoded values:
+```sh
+openssl rand -hex 32
+# → bbd40cc09435a51129a424042d78afaf79ec202be2310b85e51bbec230d7b1ee
+```
+
+This will generate a 32 random bytes and converts them into a 64-character hexadecimal string.
+
+### What Is `PG_CONNECTION_STRING`?
+
+Connecting to a Postgres database requires several pieces of information: a host, a port, a database name, a username, and a password. You can supply these as separate values, or you can combine them into a single **connection string** — a URL that encodes all of them:
+
+```
+postgres://username:password@hostname:5432/database_name
+```
+
+Render provides your hosted database's credentials in this format (called the **Internal Database URL**). Rather than splitting the URL back into individual parts, you can pass the whole string directly to `pg.Pool`.
+
+The `.env` file supports both approaches. During local development, the individual `PGHOST`, `PGDATABASE`, etc. variables point at your local Postgres instance. For production — or any time you have a connection string — you set `PG_CONNECTION_STRING` instead, and the individual variables are ignored.
+
+## Updating Server Code To Use Environment Variables
+
+### dotenv
+
+Open up `pool.js`, which we will want to update to use our environment variables. To access environment variables in a Node application, we use the `process.env` object. Print it out to see what is inside of `process.env`:
+
+```js
+// pool.js
+console.log(process.env);
+```
+
+Run the seed file which uses `pool.js` and you should see the environment variables printed to the console:
+
+```sh
+node db/seed.js
+```
+
+You'll notice that our environment variables `PGHOST`, `PGPORT`, etc. are not there!
+
+Having the `.env` file will not automatically add our environment variables to `process.env`. We need a tool like `dotenv` to do that for us:
+
+```sh
+npm install dotenv
+```
+
+Now, at the top of `pool.js`, add the following code to use dotenv:
+
+```js
+// 1. Import dotenv and run config(). Must be called before any process.env references
+require('dotenv').config(); 
+```
+
+This one line imports `dotenv` and then immediately invokes the `config()` method which looks for any `.env` files and loads them into `process.env`. If you run the seed file again you should see that our environment variables appear!
+
+### Using `process.env` Values in `pool.js` to Configure `pg.Pool`
+
+Now, we can update `pool.js` to set up the `pg` connection configuration to read from `process.env` instead of using hardcoded values:
 
 {% tabs %}
 
@@ -98,16 +163,26 @@ With those values in `.env`, the `pg` connection config reads from `process.env`
 
 {% code title="server/db/pool.js" %}
 ```js
+// 1. Import dotenv and run config(). Must be called before any process.env references
+require('dotenv').config(); 
 const { Pool } = require('pg');
 
-// Values come from .env via dotenv — never hardcode credentials
-const pool = new Pool({
-  host:     process.env.PGHOST,
-  port:     process.env.PGPORT,
-  database: process.env.PGDATABASE,
-  user:     process.env.PGUSER,
+// 2. Replace hard-coded values with `process.env`
+const devConfig = {
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
+  user: process.env.PGUSER,
   password: process.env.PGPASSWORD,
-});
+  database: process.env.PGDATABASE,
+};
+
+// 3. Create this separate config for production environments where we'll have a connection string
+const prodConfig = {
+  connectionString: process.env.PG_CONNECTION_STRING
+}
+
+// 4. Use PG_CONNECTION_STRING if available, otherwise use individual credentials.
+const pool = new Pool(process.env.PG_CONNECTION_STRING ? prodConfig : devConfig);
 
 module.exports = pool;
 ```
@@ -136,7 +211,13 @@ module.exports = pool;
 
 {% endtabs %}
 
-### Updating `index.js`
+The conditional `process.env.PG_CONNECTION_STRING ? prodConfig : devConfig` means:
+- **In production**: Render sets `PG_CONNECTION_STRING` to the hosted database's Internal URL. `pg.Pool` uses that connection string and ignores the individual variables.
+- **In development**: `PG_CONNECTION_STRING` is empty in `.env`, so `pg.Pool` uses the individual `PGHOST`, `PGDATABASE`, etc. values that point at your local database.
+
+This lets you use the same `pool.js` in both environments with no code changes — just different environment variable values.
+
+### Using `process.env` Values in `index.js` to Configure `cookieSession`
 
 Replace the hardcoded session secret and add `require('dotenv').config()` at the top so the `.env` values are loaded into `process.env` before anything else reads them:
 
@@ -163,6 +244,7 @@ app.use(cookieSession({
 {% tab title="Hardcoded (Old)" %}
 
 ```js
+// ⚠️ secret is hardcoded for development only — move to .env before deploying
 app.use(cookieSession({
   name: 'session',
   secret: 'dev-only-secret-replace-before-deploying',
@@ -178,7 +260,9 @@ app.use(cookieSession({
 
 ### The `.env.template` Pattern
 
-`.env` is gitignored — so how do teammates know which variables to set? The answer is `.env.template`: a committed file with all the variable names and empty (or example) values.
+`.env` is gitignored — so how do teammates know which variables to set? What would happen if they set `PG_HOST` instead of `PGHOST`?
+
+The solution is `.env.template`: a committed file with all the variable names and empty (or example) values.
 
 {% code title="server/.env.template" %}
 ```
@@ -189,10 +273,13 @@ PGPORT=5432
 PGDATABASE=users_db
 PGUSER=
 PGPASSWORD=
+
+# Set this to your hosted database connection string instead of the vars above
+PG_CONNECTION_STRING=
 ```
 {% endcode %}
 
-When a new developer clones the repo, their first step is:
+When a new developer clones the repo, their first step is to make a copy of that file called `.env`:
 
 ```sh
 cp server/.env.template server/.env
@@ -211,7 +298,7 @@ Render hosts both web services (your Express app) and managed Postgres databases
 
 1. Go to [render.com](https://render.com) and sign in
 2. Click **New +** → **PostgreSQL**
-3. Give it a name (e.g. `users-db`)
+3. Give it a name (e.g. `users_db`)
 4. Choose the **Free** tier
 5. Click **Create Database**
 
@@ -219,6 +306,8 @@ Once created, Render shows you a **Connection** panel with individual fields (ho
 
 {% hint style="info" %}
 Use the **Internal** URL (not External) when connecting from another Render service. Internal URLs route traffic within Render's private network, which is faster and doesn't count against bandwidth limits.
+
+You can also connect to the Render-hosted Postgres database in your local development environment by adding the internal database URL to your `.env` file as `PG_CONNECTION_STRING`.
 {% endhint %}
 
 ### Step 2: Deploy the Web Service
@@ -237,22 +326,25 @@ Render will attempt a first deploy. It will fail because the environment variabl
 
 In your web service dashboard, go to **Environment** and add the following key-value pairs:
 
-| Key | Value |
-| --- | ----- |
-| `SESSION_SECRET` | A long random string (e.g. generate one with `openssl rand -base64 32` in your terminal) |
-| `DATABASE_URL` | The Internal Database URL from Step 1 |
+| Key                    | Value                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| `SESSION_SECRET`       | A long random string (e.g. generate one with `openssl rand -hex 32` in your terminal) |
+| `PG_CONNECTION_STRING` | The Internal Database URL from Step 1                                                 |
 
-{% hint style="info" %}
-Rather than setting individual `PGHOST`, `PGPORT` etc. variables, it's common in production to use a single `DATABASE_URL` connection string. The `pg` library supports this directly — update `pool.js` to use it:
+{% hint style="warning" %}
+Render-hosted Postgres requires SSL when connecting from a Render web service. Add an `ssl` option to the connection string config in `pool.js`:
 
-```js
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-});
+{% code title="server/db/pool.js"%}
+```javascript
+// 3. Create this separate config for production environments where we'll have a connection string
+const prodConfig = {
+  connectionString: process.env.PG_CONNECTION_STRING,
+  ssl: { rejectUnauthorized: false },
+}
 ```
+{% endcode %}
 
-The `ssl` option is required when connecting to Render's hosted Postgres from a Render web service.
+The `ssl` option is only needed for the production connection string path — your local Postgres does not require SSL.
 {% endhint %}
 
 After saving, Render will trigger a new deploy. This one should succeed.
@@ -261,17 +353,17 @@ After saving, Render will trigger a new deploy. This one should succeed.
 
 Your production database is empty. You need to run the seed script against it once to create the tables.
 
-The easiest way is to temporarily set the `DATABASE_URL` in your local `.env`, point it at the **External** Database URL (for local → Render connections), and run the seed script:
+The easiest way is to temporarily set `PG_CONNECTION_STRING` in your local `.env` to the **External** Database URL (for local → Render connections), and run the seed script:
 
 ```sh
 # In server/.env, temporarily set:
-DATABASE_URL=<External Database URL from Render>
+PG_CONNECTION_STRING=<External Database URL from Render>
 
 # Then run:
 cd server
 node db/seed.js
 
-# Remove DATABASE_URL from .env when done
+# Remove or clear PG_CONNECTION_STRING from .env when done
 ```
 
 Alternatively, Render provides a **Shell** tab in the web service dashboard where you can run commands directly on the deployed server:
@@ -286,12 +378,12 @@ After seeding, visit your web service's public URL — the app should be fully f
 
 After deployment, the same app runs in two environments simultaneously:
 
-| | Development | Production |
-| --- | --- | --- |
-| **Server** | `localhost:8080` | Render Web Service |
-| **Database** | Local Postgres | Render Postgres |
-| **Secrets** | `server/.env` (gitignored) | Render Environment Variables |
-| **Session secret** | Value from `.env` | Value from Render env |
-| **DB connection** | `localhost` config in `.env` | `DATABASE_URL` from Render env |
+|                    | Development                  | Production                             |
+| ------------------ | ---------------------------- | -------------------------------------- |
+| **Server**         | `localhost:8080`             | Render Web Service                     |
+| **Database**       | Local Postgres               | Render Postgres                        |
+| **Secrets**        | `server/.env` (gitignored)   | Render Environment Variables           |
+| **Session secret** | Value from `.env`            | Value from Render env                  |
+| **DB connection**  | `localhost` config in `.env` | `PG_CONNECTION_STRING` from Render env |
 
 The code is identical in both environments. The only difference is *where the environment variables come from* — your local `.env` file in development, Render's environment panel in production. That's the entire purpose of environment variables: one codebase, multiple environments, no secrets in git.
