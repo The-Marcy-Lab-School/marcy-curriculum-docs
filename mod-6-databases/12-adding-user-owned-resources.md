@@ -10,6 +10,7 @@ Across lessons 8–11 you built a complete authentication and authorization syst
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
+- [Setup](#setup)
 - [Review: What We've Built So Far](#review-what-weve-built-so-far)
   - [The Route List](#the-route-list)
 - [Adding a User-Owned Resource: Bookmarks](#adding-a-user-owned-resource-bookmarks)
@@ -39,6 +40,29 @@ By the end of this lesson, you should be able to answer these questions:
 * **Foreign key** — a column in one table that references the primary key of another table, creating a relationship between rows.
 * **`ON DELETE CASCADE`** — a foreign key option that automatically deletes related rows when the referenced row is deleted. Deleting a user deletes all their bookmarks.
 * **`JOIN`** — a SQL clause that combines rows from two tables based on a matching column. Used here to attach a `username` to each bookmark row without storing it in the `bookmarks` table.
+
+## Setup
+
+1. Edit `server/db/pool.js` and update the user and password fields to match your local Postgres setup (On macOS you may be able to delete those fields entirely)
+
+2. Run these commands to set up the database, seed, and start the server:
+
+```sh
+cd server
+
+# Install dependencies
+npm install
+
+# Create the database (run once)
+createdb users_db           # Mac
+sudo -u postgres createdb users_db   # Windows/WSL
+
+# Seed the database
+npm run db:seed
+
+# Start the server
+npm run dev
+```
 
 ## Review: What We've Built So Far
 
