@@ -12,7 +12,7 @@ Before you can deploy safely, you need to move every secret and environment-spec
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
-- [Hardening for Deployment: Environment Variables](#hardening-for-deployment-environment-variables)
+- [Environment Variables](#environment-variables)
   - [What Goes in `.env`](#what-goes-in-env)
   - [What Is `PG_CONNECTION_STRING`?](#what-is-pg_connection_string)
 - [Updating Server Code To Use Environment Variables](#updating-server-code-to-use-environment-variables)
@@ -46,7 +46,7 @@ By the end of this lesson, you should be able to answer these questions:
 * **Render** — a cloud platform for deploying web services and hosted databases.
 * **Connection string** — a single URL that encodes all the information needed to connect to a database: host, port, database name, user, and password.
 
-## Hardening for Deployment: Environment Variables
+## Environment Variables
 
 The app as written in lesson 12 has two values hardcoded directly in the source code:
 
