@@ -40,7 +40,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 1. What is the difference between an in-memory model and a Postgres-backed model?
 2. When you swap a model from in-memory to Postgres, what changes in your controllers and routes?
-3. What is authentication? How does a server handle login and registration?
+3. What is authentication? What checks does the server do before logging in / registering a user?
 4. How should our server handle database errors?
 
 ## Key Concepts
