@@ -125,10 +125,11 @@ The `.env` file supports both approaches. During local development, the individu
 
 Open up `pool.js`, which we will want to update to use our environment variables. To access environment variables in a Node application, we use the `process.env` object. Print it out to see what is inside of `process.env`:
 
+{% code title="server/db/pool.js" %}
 ```js
-// pool.js
 console.log(process.env);
 ```
+{% endcode %}
 
 Run the seed file which uses `pool.js` and you should see the environment variables printed to the console:
 
@@ -146,10 +147,12 @@ npm install dotenv
 
 Now, at the top of `pool.js`, add the following code to use dotenv:
 
+{% code title="server/db/pool.js" %}
 ```js
 // 1. Import dotenv and run config(). Must be called before any process.env references
 require('dotenv').config(); 
 ```
+{% endcode %}
 
 This one line imports `dotenv` and then immediately invokes the `config()` method which looks for any `.env` files and loads them into `process.env`. If you run the seed file again you should see that our environment variables appear!
 
