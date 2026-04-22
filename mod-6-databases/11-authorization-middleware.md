@@ -31,9 +31,8 @@ By the end of this lesson, you should be able to answer these questions:
 1. What is the difference between authentication and authorization?
 2. Why isn't the frontend enough to protect an API endpoint?
 3. What problem does authorization middleware solve? Why not just put the check inside every controller?
-4. How does middleware use `next()` to either continue the request or short-circuit it?
-5. What is ownership-based authorization? How do you implement it?
-6. When should you return `401` vs. `403`?
+4. What is ownership-based authorization? How do you implement it?
+5. When should you return `401` vs. `403`?
 
 ## Key Concepts
 

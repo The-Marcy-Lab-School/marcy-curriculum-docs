@@ -24,13 +24,11 @@ In lesson 9, you built a registration endpoint that hashes passwords and stores 
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. What does it mean that HTTP is stateless? Why is that a problem for login?
+1. What does it mean that HTTP is stateless? Why is that a problem for keeping users logged-in?
 2. What is a session? What is a cookie? How do they work together?
-3. What does `cookie-session` do? What does `req.session` give you access to?
-4. What does "auto-login on register" mean? How is it implemented?
-5. What is the login flow, step by step?
-6. What is the `/api/auth/me` pattern? Why is it useful for frontends?
-7. How do you implement logout with `cookie-session`?
+3. How do we create, update, or delete cookies on the server?
+4. What is the login flow, step by step?
+5. What is the `/api/auth/me` pattern? Why is it useful for frontends?
 
 ## Key Concepts
 

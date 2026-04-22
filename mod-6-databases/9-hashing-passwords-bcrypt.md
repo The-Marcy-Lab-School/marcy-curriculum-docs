@@ -43,8 +43,7 @@ By the end of this lesson, you should be able to answer these questions:
 2. What two properties must every hashing function have, and why does each matter?
 3. How can a server verify a password if it never stores the actual password?
 4. What is a salt, and what kind of attack does it prevent against?
-5. How does our database schema change to store hashed passwords?
-6. Which layer should be responsible for hashing and validating passwords — the model or the controller?
+5. Which layer should be responsible for hashing and validating passwords — the model or the controller?
 
 ## Key Concepts
 

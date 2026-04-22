@@ -30,10 +30,10 @@ Across lessons 8–11 you built a complete authentication and authorization syst
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. When adding a new user-owned resource, which layers of the app need to change, and in what order?
+1. When adding a new user-owned resource, which layers of the app need to change? How does each layer change and in what order?
 2. When a model method needs data from two tables, what SQL clause do you use?
-3. When creating a resource, where does the `user_id` come from — and why shouldn't the client supply it?
-4. How do you check ownership for a resource like bookmarks, where the owner isn't in the URL?
+3. How do you check ownership for a resource like bookmarks in a manner that can be fully trusted?
+4. What should happen to user-owned resources likes bookmarks when the associated user is deleted?
 
 ## Key Concepts
 
