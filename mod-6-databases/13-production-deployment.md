@@ -24,7 +24,7 @@ Before you can deploy safely, you need to move every secret and environment-spec
 - [Updating Server Code To Use Environment Variables](#updating-server-code-to-use-environment-variables)
   - [dotenv](#dotenv)
   - [Using `process.env` Values in `pool.js` to Configure `pg.Pool`](#using-processenv-values-in-pooljs-to-configure-pgpool)
-  - [Using `process.env` Values in `index.js` to Configure `cookieSession`](#using-processenv-values-in-indexjs-to-configure-cookiesession)
+  - [Using `process.env` Values in `index.js` to Configure the `PORT` and `cookieSession`](#using-processenv-values-in-indexjs-to-configure-the-port-and-cookiesession)
   - [The `.env.template` Pattern](#the-envtemplate-pattern)
 - [Deploying to Render](#deploying-to-render)
   - [Step 1: Create a Postgres Database](#step-1-create-a-postgres-database)
@@ -230,7 +230,7 @@ This lets you use the same `pool.js` in both environments with no code changes â
 The `ssl` option in the production configuration is only needed for the production connection string path â€” your local Postgres does not require SSL.
 {% endhint %}
 
-### Using `process.env` Values in `index.js` to Configure `cookieSession`
+### Using `process.env` Values in `index.js` to Configure the `PORT` and `cookieSession`
 
 Replace the hardcoded session secret and add `require('dotenv').config()` at the top so the `.env` values are loaded into `process.env` before anything else reads them:
 
@@ -241,6 +241,11 @@ Replace the hardcoded session secret and add `require('dotenv').config()` at the
 {% code title="server/index.js" %}
 ```js
 require('dotenv').config(); // must be called before any process.env reads
+
+// ...
+
+// use the PORT env value if it exists, fallback to 8080
+const PORT = process.env.PORT || 8080; 
 
 // ...
 
