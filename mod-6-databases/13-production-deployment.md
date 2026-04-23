@@ -187,7 +187,6 @@ const devConfig = {
 // 3. Create this separate config for production environments where we'll have a connection string
 const prodConfig = {
   connectionString: process.env.PG_CONNECTION_STRING,
-  ssl: { rejectUnauthorized: false },
 }
 
 // 4. Use PG_CONNECTION_STRING if available, otherwise use individual credentials.
@@ -225,10 +224,6 @@ The conditional `process.env.PG_CONNECTION_STRING ? prodConfig : devConfig` mean
 - **In development**: `PG_CONNECTION_STRING` is empty in `.env`, so `pg.Pool` uses the individual `PGHOST`, `PGDATABASE`, etc. values that point at your local database.
 
 This lets you use the same `pool.js` in both environments with no code changes — just different environment variable values.
-
-{% hint style="info" %}
-The `ssl` option in the production configuration is only needed for the production connection string path — your local Postgres does not require SSL.
-{% endhint %}
 
 ### Using `process.env` Values in `index.js` to Configure the `PORT` and `cookieSession`
 
