@@ -336,7 +336,7 @@ You can also connect to the Render-hosted Postgres database in your local develo
 | Key                    | Value                                                                                                                       |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `SESSION_SECRET`       | A long random string (e.g. generate one with `openssl rand -hex 32` in your terminal or using Render's **generate** button) |
-| `PG_CONNECTION_STRING` | The Internal Database URL from Step 1                                                                                       |
+| `PG_CONNECTION_STRING` | The **Internal** Database URL from Step 1 (not the external URL)                                                            |
 
 8. Click **Create Web Service** — don't add environment variables yet
 
