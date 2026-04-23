@@ -2,6 +2,12 @@
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-13-production-deployment)!
+
+Checkout the `solution` branch to see the final version and practice deploying!
+
+```sh
+git checkout solution
+```
 {% endhint %}
 
 Your app works locally. This lesson covers what it takes to make it work for anyone, anywhere — deploying your Express server and Postgres database to the internet using [Render](https://render.com).
@@ -23,8 +29,7 @@ Before you can deploy safely, you need to move every secret and environment-spec
 - [Deploying to Render](#deploying-to-render)
   - [Step 1: Create a Postgres Database](#step-1-create-a-postgres-database)
   - [Step 2: Deploy the Web Service](#step-2-deploy-the-web-service)
-  - [Step 3: Set Environment Variables on Render](#step-3-set-environment-variables-on-render)
-  - [Step 4: Seed the Production Database](#step-4-seed-the-production-database)
+  - [Step 3: Seed the Production Database](#step-3-seed-the-production-database)
 - [The Complete Picture](#the-complete-picture)
 
 ## Essential Questions
@@ -181,7 +186,8 @@ const devConfig = {
 
 // 3. Create this separate config for production environments where we'll have a connection string
 const prodConfig = {
-  connectionString: process.env.PG_CONNECTION_STRING
+  connectionString: process.env.PG_CONNECTION_STRING,
+  ssl: { rejectUnauthorized: false },
 }
 
 // 4. Use PG_CONNECTION_STRING if available, otherwise use individual credentials.
@@ -219,6 +225,10 @@ The conditional `process.env.PG_CONNECTION_STRING ? prodConfig : devConfig` mean
 - **In development**: `PG_CONNECTION_STRING` is empty in `.env`, so `pg.Pool` uses the individual `PGHOST`, `PGDATABASE`, etc. values that point at your local database.
 
 This lets you use the same `pool.js` in both environments with no code changes — just different environment variable values.
+
+{% hint style="info" %}
+The `ssl` option in the production configuration is only needed for the production connection string path — your local Postgres does not require SSL.
+{% endhint %}
 
 ### Using `process.env` Values in `index.js` to Configure `cookieSession`
 
@@ -277,7 +287,7 @@ PGDATABASE=users_db
 PGUSER=
 PGPASSWORD=
 
-# Set this to your hosted database connection string instead of the vars above
+# When testing a production database, set this to your hosted database URL instead of the vars above
 PG_CONNECTION_STRING=
 ```
 {% endcode %}
@@ -321,38 +331,18 @@ You can also connect to the Render-hosted Postgres database in your local develo
 4. Set the **Build Command** to `npm install`
 5. Set the **Start Command** to `node index.js` (or `npm start` if you have that script)
 6. Choose the **Free** tier
-7. Click **Create Web Service** — don't add environment variables yet
+7. Set **Environment Variables**
 
-Render will attempt a first deploy. It will fail because the environment variables aren't set yet. That's expected — you'll fix it in the next step.
+| Key                    | Value                                                                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `SESSION_SECRET`       | A long random string (e.g. generate one with `openssl rand -hex 32` in your terminal or using Render's **generate** button) |
+| `PG_CONNECTION_STRING` | The Internal Database URL from Step 1                                                                                       |
 
-### Step 3: Set Environment Variables on Render
+8. Click **Create Web Service** — don't add environment variables yet
 
-In your web service dashboard, go to **Environment** and add the following key-value pairs:
+After saving, Render will deploy and connect to your database!
 
-| Key                    | Value                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------- |
-| `SESSION_SECRET`       | A long random string (e.g. generate one with `openssl rand -hex 32` in your terminal) |
-| `PG_CONNECTION_STRING` | The Internal Database URL from Step 1                                                 |
-
-{% hint style="warning" %}
-Render-hosted Postgres requires SSL when connecting from a Render web service. Add an `ssl` option to the connection string config in `pool.js`:
-
-{% code title="server/db/pool.js"%}
-```javascript
-// 3. Create this separate config for production environments where we'll have a connection string
-const prodConfig = {
-  connectionString: process.env.PG_CONNECTION_STRING,
-  ssl: { rejectUnauthorized: false },
-}
-```
-{% endcode %}
-
-The `ssl` option is only needed for the production connection string path — your local Postgres does not require SSL.
-{% endhint %}
-
-After saving, Render will trigger a new deploy. This one should succeed.
-
-### Step 4: Seed the Production Database
+### Step 3: Seed the Production Database
 
 Your production database is empty. You need to run the seed script against it once to create the tables.
 
