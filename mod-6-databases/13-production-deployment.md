@@ -29,7 +29,7 @@ Before you can deploy safely, you need to move every secret and environment-spec
 - [Deploying to Render](#deploying-to-render)
   - [Step 1: Create a Postgres Database](#step-1-create-a-postgres-database)
   - [Step 2: Deploy the Web Service](#step-2-deploy-the-web-service)
-  - [Step 3: Seed the Production Database](#step-3-seed-the-production-database)
+    - [A Quick Note On The Vite Build Command](#a-quick-note-on-the-vite-build-command)
 - [The Complete Picture](#the-complete-picture)
 
 ## Essential Questions
@@ -327,11 +327,12 @@ You can also connect to the Render-hosted Postgres database in your local develo
 
 1. Click **New +** → **Web Service**
 2. Connect your GitHub repository
-3. Set the **Root Directory** to `server`
-4. Set the **Build Command** to `npm install`
-5. Set the **Start Command** to `node index.js` (or `npm start` if you have that script)
-6. Choose the **Free** tier
-7. Set **Environment Variables**
+3. Set the **Branch** to `main` (if you are using the example repository above, use the `solution` branch) 
+4. Set the **Root Directory** to `server`
+5. Set the **Build Command** to `npm i && node db/seed.js && cd ../frontend && npm i && npm run build`
+6. Set the **Start Command** to `node index.js` (or `npm start` if you have that script)
+7. Choose the **Free** tier
+8. Set **Environment Variables**
 
 | Key                    | Value                                                                                                                       |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -342,30 +343,25 @@ You can also connect to the Render-hosted Postgres database in your local develo
 
 After saving, Render will deploy and connect to your database!
 
-### Step 3: Seed the Production Database
+#### A Quick Note On The Vite Build Command
 
-Your production database is empty. You need to run the seed script against it once to create the tables.
+Remember back when we were using Vite as a development server to serve our frontend static assets? For a while now, we haven't needed that development server because we learned how to build our own servers using Express! 
 
-The easiest way is to temporarily set `PG_CONNECTION_STRING` in your local `.env` to the **External** Database URL (for local → Render connections), and run the seed script:
+Recall that Vite provides another feature: a **build tool** that you can run with `npm run build`. That command will take the static assets and compress them into a `dist/` folder, optimizing the delivery of those assets to our users. 
 
-```sh
-# In server/.env, temporarily set:
-PG_CONNECTION_STRING=<External Database URL from Render>
+In our server's `index.js` file where we configure the `express.static()` middleware, notice that we are using the `process.env.NODE_ENV` value to conditionally set the `pathToFrontend` to either `../frontend/dist` or `../frontend`:
 
-# Then run:
-cd server
-node db/seed.js
+```js
+const pathToFrontend = process.env.NODE_ENV === 'production' ? '../frontend/dist' : '../frontend';
 
-# Remove or clear PG_CONNECTION_STRING from .env when done
+//...
+
+app.use(express.static(path.join(__dirname, pathToFrontend)));
 ```
 
-Alternatively, Render provides a **Shell** tab in the web service dashboard where you can run commands directly on the deployed server:
+When we deploy the server to Render, it will automatically set the `process.env.NODE_ENV` variable to `'production'`—we do not need to set this variable ourselves. As a result, our deployed server will look to serve static assets from the `../frontend/dist` folder.
 
-```sh
-node db/seed.js
-```
-
-After seeding, visit your web service's public URL — the app should be fully functional.
+This is why we include `cd ../frontend && npm i && npm run build` in the server's **Build Command** setting: we want to create the `dist/` folder so our server has static assets to serve!
 
 ## The Complete Picture
 
