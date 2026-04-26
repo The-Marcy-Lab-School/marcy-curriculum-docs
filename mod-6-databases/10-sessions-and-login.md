@@ -12,7 +12,7 @@ In lesson 9, you built a registration endpoint that hashes passwords and stores 
 - [Key Concepts](#key-concepts)
 - [Setup](#setup)
 - [The Problem: HTTP is Stateless](#the-problem-http-is-stateless)
-- [The Solution: Sessions and Cookies](#the-solution-sessions-and-cookies)
+- [The Solution: Session Cookies](#the-solution-session-cookies)
 - [Setting Up `cookie-session`](#setting-up-cookie-session)
   - [Setting Cookie Data on Login](#setting-cookie-data-on-login)
   - [Auto-Login on Register](#auto-login-on-register)
@@ -90,15 +90,22 @@ After a user logs in, the server processes the login request, sends back a respo
 
 This means that any time in the future that the user visits the page, or if they refresh, the user will have to login again.
 
-## The Solution: Sessions and Cookies
+## The Solution: Session Cookies
 
 Go to GitHub.com. Do you need to log in to your account or are you already logged in? If you were already logged in, that means that you have a **session cookie** stored in your browser.
 
-**Session cookies** are small files containing a unique identifier (e.g. a user ID) given to a client (the browser) by a server. When a user returns to the website, the client (the browser) automatically sends the session cookie back to the server showing that they've already been authenticated:
+**Session cookies** are small files containing a unique identifier (e.g. a user ID) given to a client (the browser) by a server. As long as the cookie is stored in the browser, it will be automatically sent to the server on all future requests. 
+
+Remember, HTTP is stateless and the server doesn't keep track of who is logged in. However, **if we only give cookies to users who have logged in**, our server can immediately authenticate them when they send future requests.
+
+This enables a few really useful security features:
+1. We can add authorization gates to specific endpoints (only logged-in users can see X)
+2. We can require ownership authorization to modify resources (in order to modify X, you must be logged-in AND be the owner of X)
+3. We can let users skip logging in if they logged-in within the session expiration time
 
 ![The cookie is generated when a user logs in and is sent with every subsequent request.](./img/10-sessions-login/cookies-diagram.png)
 
-This means that we don't have to write any frontend code to continue sending our login credentials to the server with ever request. **The cookie is sent automatically by the browser** with every request to the same domain.
+Remember, we don't have to write any frontend code to continue sending our login credentials to the server with every request: **the cookie is sent automatically by the browser** with every request to the same domain.
 
 ## Setting Up `cookie-session`
 
@@ -133,7 +140,7 @@ app.use(cookieSession({
 `cookieSession()` is a function that generates middleware for managing session cookies. It takes a configuration object with the following properties:
 * `name: 'session'` — defines the name of the cookie as it appears in the browser DevTools (go to Application → Cookies to see cookies). Defaults to `'session'`.
 * `secret: '...'` — defines a private string used to "sign" the cookie. The signature lets the server detect if the cookie was tampered with. The cookie data (e.g. `{ userId: 7 }`) is encoded, not encrypted — it is readable by anyone who has the cookie so we should never store sensitive data like passwords in the session.
-* `maxAge: 24 * 60 * 60 * 1000` — defines how long the cookie will be valid. In this case, we calculate 24 hours in milliseconds.
+* `maxAge: 24 * 60 * 60 * 1000` — by default session cookies are deleted from the browser when the tab is closed. This property defines how long the cookie will be valid before deletion. In this case, we calculate 24 hours in milliseconds.
 
 {% hint style="warning" %}
 The `secret` is used to "sign" the cookie, which prevents tampering. It is like the password for the cookie. It must be kept private — never commit it to GitHub in your production apps. Use a long, random string in production and always store it in a `.env` file.
@@ -157,7 +164,7 @@ req.session = null;
 
 ### Setting Cookie Data on Login
 
-Now that we have `req.session`, we can send cookies to our users when they login.
+In order to implement all of those security features above, we only want to give cookies to logged-in users. 
 
 In our `login` controller, after the `userModel` validates the login credentials, we can save the validated user's ID in `req.session`. When we send the response, the session cookie will be included with that `userId` data:
 
@@ -173,7 +180,7 @@ const login = async (req, res, next) => {
       return res.status(401).send({ message: 'Invalid credentials' });
     }
 
-    // Add a { userId } property to the session object with the new user's user_id value
+    // This creates a cookie with { userId = X } which is sent with the response
     req.session.userId = user.user_id;
 
     res.send(user);
@@ -183,7 +190,7 @@ const login = async (req, res, next) => {
 };
 ```
 
-The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set a cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller.
+The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set a cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller to perform authorization checks.
 
 To see the cookie in you browser, try this out:
 1. Run the server and connect to it in your browser
@@ -249,9 +256,11 @@ const register = async (req, res, next) => {
 
 ### Staying Logged In With The `/api/auth/me` Pattern
 
-So, why do we store the user ID in the cookie? Why not some other piece of data like their username?
+In this lesson, we'll start by implementing the third security feature: letting previously logged-in users skip logging in again on their next visit **as long as they have a valid cookie**.
 
-When a user returns to your app after previously logging in, their session cookie is still in their browser. The frontend needs a way to say: "I have a cookie, don't ask me to log in again!"
+When a user returns to your app after previously logging in, their session cookie is still in their browser for 24 hours (defined with `maxAge` when we configured the `cookieSession` middleware). 
+
+However, the cookie just has the user ID. To properly render a logged-in user's information, like their username and any other relevant information about them, we need a way for the frontend to immediately say the server, "I have a cookie, don't ask me to log in again! Just give me my user details".
 
 The `/api/auth/me` endpoint handles this. It uses `userModel.find(user_id)` — a new model method that looks up a user by their `user_id`:
 
