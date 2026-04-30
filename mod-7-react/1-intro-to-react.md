@@ -431,30 +431,26 @@ const InstagramPost = ({picture}) => {
 When we have an array of data that we want to turn into components, like `pictures`, we can use `array.map()` to create an array of components. We can insert that array of components directly inside of our JSX using the `{}` syntax, often inside of a `ul`:
 
 ```jsx
-const pictures = [
-  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
-  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
-  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
-];
-
 const Header = () => { /* ... */ }
 const InstagramPost = ({picture}) => { /* ... */ }
 
-// New Component: Converts pictures into an array of InstagramPost components
-const PicturesList = () => {
+const App = () => {
+  // We can take the pictures variable out of the global scope and use props to share its data
+  const pictures = [
+    { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
+    { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
+    { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+  ];
+
   return (
-    <ul>
-      {pictures.map((picture) => <InstagramPost picture={picture} key={picture.id} />)}
-    </ul>
+    <main>
+      <Header />
+      <ul>
+        {pictures.map((picture) => <InstagramPost picture={picture} key={picture.id} />)}
+      </ul>
+    </main>
   );
 };
-
-const App = () => (
-  <main>
-    <Header />
-    <PicturesList />
-  </main>
-);
 ```
 
 **Note:** Each rendered element needs a unique `key` prop so React can efficiently differentiate each element, typically an `id` is used.

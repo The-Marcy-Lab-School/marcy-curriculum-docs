@@ -6,7 +6,7 @@ Follow along with code examples in the `swe-casestudy-7-todo-app/` lecture repo!
 
 Over the past few days you have built a full-stack Todo app: an Express + Postgres backend and a React frontend that fetches, creates, updates, and deletes todos. Today we add **authentication**.
 
-No new React concepts are introduced here. This lesson is about composing everything you have already learned — `useState`, `useEffect`, controlled forms, and conditional rendering — with authentication.
+Most of this lesson is about composing everything you have already learned — `useState`, `useEffect`, controlled forms, and conditional rendering — with authentication. We also introduce one new JSX pattern: **short-circuit `&&`** for rendering elements conditionally.
 
 **Table of Contents**
 
@@ -18,6 +18,8 @@ No new React concepts are introduced here. This lesson is about composing everyt
 - [Auth-Dependent Effects](#auth-dependent-effects)
 - [currentUser as a Prop](#currentuser-as-a-prop)
 - [Conditional Rendering: Login vs. App](#conditional-rendering-login-vs-app)
+  - [Ternary: Switching Between Views](#ternary-switching-between-views)
+  - [Short-Circuit &&: Protecting Elements](#short-circuit--protecting-elements)
 - [Putting It All Together](#putting-it-all-together)
 - [Your Project Will Follow This Shape](#your-project-will-follow-this-shape)
 
@@ -29,7 +31,7 @@ By the end of this lesson you should be able to answer:
 2. What does it mean for an effect to be "auth-dependent," and how does `currentUser` in a dependency array achieve this?
 3. Why do we pass `currentUser` as a prop rather than using global state?
 4. What is the adapter pattern, and why split fetch helpers into domain-specific files instead of one large file?
-5. How does conditional rendering let a single-page app show different views for logged-in vs. logged-out users?
+5. How does conditional rendering (ternary and `&&`) let a single-page app show different views and protect UI elements based on auth state?
 
 ## Key Concepts
 
@@ -221,11 +223,13 @@ This is called **props drilling** — passing a value through multiple levels of
 
 ## Conditional Rendering: Login vs. App
 
+### Ternary: Switching Between Views
+
 The app has two distinct views:
 - **Not logged in**: show a login/register form
 - **Logged in**: show the todo list
 
-We use a ternary to switch between them based on `currentUser`:
+We use a **ternary** when we want to render one thing _or_ another. A single ternary on `currentUser` controls the entire app:
 
 ```jsx
 function App() {
@@ -259,7 +263,37 @@ function App() {
 }
 ```
 
-A single ternary controls the entire app. No routing needed for a two-view app.
+No routing needed for a two-view app.
+
+### Short-Circuit &&: Protecting Elements
+
+Use **short-circuit `&&`** when you want to render something _only if_ a condition is true, and render nothing otherwise:
+
+```jsx
+condition && <Component />
+```
+
+Now that `currentUser` flows down to `TodoItem` as a prop, we can use it to protect the delete button — only showing it when a user is logged in:
+
+```jsx
+function TodoItem({ todo, currentUser, onRefresh }) {
+  const handleDelete = async () => {
+    await deleteTodo(todo.id);
+    onRefresh();
+  };
+
+  return (
+    <li>
+      <span>{todo.title}</span>
+      {currentUser && (
+        <button onClick={handleDelete}>Delete</button>
+      )}
+    </li>
+  );
+}
+```
+
+If `currentUser` is `null`, the expression short-circuits and the button is simply not rendered. No `if`/`else` needed.
 
 ## Putting It All Together
 
