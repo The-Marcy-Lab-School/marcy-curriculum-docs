@@ -21,8 +21,7 @@ In this lesson, we will look at how to respond to events in React and use those 
 - [Forms and Lifting State Up](#forms-and-lifting-state-up)
   - [Lifting State Up](#lifting-state-up)
 - [Additional Reading](#additional-reading)
-- [Conditional Rendering](#conditional-rendering)
-  - [Ternary Operator](#ternary-operator)
+  - [Conditional Rendering with Ternary](#conditional-rendering-with-ternary)
   - [Controlled Forms](#controlled-forms)
 
 ## Essential Questions
@@ -30,10 +29,10 @@ In this lesson, we will look at how to respond to events in React and use those 
 By the end of this lesson you should be able to answer:
 
 1. What is state, and why can't a regular variable be used to track data that changes in a component?
-2. What does `useState` return, and how do you use each of the two returned values?
-3. What is a controlled form, and how does it differ from reading values directly from the DOM?
+2. How are event handlers similar and different in React?
+3. How do you use `useState`?
 4. What does "lifting state up" mean, and when is it necessary?
-5. What is conditional rendering, and what are the two common JSX patterns for it?
+5. What is a controlled form and when do you use it?
 
 ## Key Concepts
 
@@ -463,11 +462,9 @@ In summary, if Component A (the form) needs to change what Component B (the list
 
 ## Additional Reading
 
-## Conditional Rendering
+### Conditional Rendering with Ternary
 
 Often we want to show different UI based on the current state. React makes this easy with two common patterns.
-
-### Ternary Operator
 
 Use a **ternary** when you want to render one thing _or_ another:
 
