@@ -18,12 +18,12 @@ In this lesson, we will look at how to respond to events in React and use those 
   - [Invoke useState at the top of your component](#invoke-usestate-at-the-top-of-your-component)
   - [Use the setter function to update the state](#use-the-setter-function-to-update-the-state)
   - [All Together Now](#all-together-now)
-- [Conditional Rendering](#conditional-rendering)
-  - [Ternary Operator](#ternary-operator)
-  - [Conditional Rendering Challenge:](#conditional-rendering-challenge)
 - [Forms and Lifting State Up](#forms-and-lifting-state-up)
   - [Lifting State Up](#lifting-state-up)
-- [Bonus: Controlled Forms](#bonus-controlled-forms)
+- [Additional Reading](#additional-reading)
+- [Conditional Rendering](#conditional-rendering)
+  - [Ternary Operator](#ternary-operator)
+  - [Controlled Forms](#controlled-forms)
 
 ## Essential Questions
 
@@ -306,90 +306,6 @@ const TodoItem = ({ title }) => {
 `setIsComplete` does NOT change `isComplete` within the current function call — it schedules a re-render with the new value. Add `console.log(isComplete)` inside `handleClick` to see this: the logged value is still the old one. `setIsComplete` tells React what the next value _should_ be; the variable only updates on the next render.
 {% endhint %}
 
-## Conditional Rendering
-
-Often we want to show different UI based on the current state. React makes this easy with two common patterns.
-
-### Ternary Operator
-
-Use a **ternary** when you want to render one thing _or_ another:
-
-```jsx
-condition ? <ComponentA /> : <ComponentB />
-```
-
-We already have a ternary implemented using the `isComplete` state in `TodoItem` to change the content of the button.
-
-```jsx
-const TodoItem = ({ title }) => {
-  const [isComplete, setIsComplete] = useState(false);
-
-  const handleClick = () => {
-    setIsComplete((currentIsComplete) => !currentIsComplete);
-  };
-
-  return (
-    <li className="todo-item">
-      <span>{title}</span>
-      <button onClick={handleClick}>
-        {isComplete ? '✅' : '⬜'}
-      </button>
-    </li>
-  );
-};
-```
-
-Notice how much cleaner this is compared to using a full `if`/`else` statement to choose the return structure:
-
-```jsx
-const TodoItem = ({ title }) => {
-  const [isComplete, setIsComplete] = useState(false);
-
-  const handleClick = () => {
-    setIsComplete((currentIsComplete) => !currentIsComplete);
-  };
-
-  // Condition 1
-  if (isComplete) {
-    return (
-      <li className="todo-item">
-        <span>{title}</span>
-        <button onClick={handleClick}>✅</button>
-      </li>
-    );
-  } 
-  
-  // Condition 2:
-  else {
-    return (
-      <li className="todo-item">
-        <span>{title}</span>
-        <button onClick={handleClick}>⬜</button>
-      </li>
-    );
-  }
-};
-```
-
-### Conditional Rendering Challenge:
-
-Use conditional rendering to set a `className` on the `span`.
-* If `isComplete` is true, the class should be set to `'todo-complete'`.
-* Otherwise, just set it as an empty string `''`.
-
-**<details><summary>Solution</summary>**
-
-```jsx
-<li className="todo-item">
-  <span className={isComplete ? 'todo-complete' : ''}>{title}</span>
-  <button onClick={handleClick}>
-    {isComplete ? '✅' : '⬜'}
-  </button>
-</li>
-```
-
-</details>
-
 ## Forms and Lifting State Up
 
 Next up we'll make a form for the user to add new todos. There already is an `AddTodoForm` component in the `App.jsx` file. Include it in the `main` between the `h1` and the list of `TodoItem`s:
@@ -545,7 +461,91 @@ In summary, if Component A (the form) needs to change what Component B (the list
 * Data flows down (via props).
 * Actions flow up (via helper functions passed as props).
 
-## Bonus: Controlled Forms
+## Additional Reading
+
+## Conditional Rendering
+
+Often we want to show different UI based on the current state. React makes this easy with two common patterns.
+
+### Ternary Operator
+
+Use a **ternary** when you want to render one thing _or_ another:
+
+```jsx
+condition ? <ComponentA /> : <ComponentB />
+```
+
+We already have a ternary implemented using the `isComplete` state in `TodoItem` to change the content of the button.
+
+```jsx
+const TodoItem = ({ title }) => {
+  const [isComplete, setIsComplete] = useState(false);
+
+  const handleClick = () => {
+    setIsComplete((currentIsComplete) => !currentIsComplete);
+  };
+
+  return (
+    <li className="todo-item">
+      <span>{title}</span>
+      <button onClick={handleClick}>
+        {isComplete ? '✅' : '⬜'}
+      </button>
+    </li>
+  );
+};
+```
+
+Notice how much cleaner this is compared to using a full `if`/`else` statement to choose the return structure:
+
+```jsx
+const TodoItem = ({ title }) => {
+  const [isComplete, setIsComplete] = useState(false);
+
+  const handleClick = () => {
+    setIsComplete((currentIsComplete) => !currentIsComplete);
+  };
+
+  // Condition 1
+  if (isComplete) {
+    return (
+      <li className="todo-item">
+        <span>{title}</span>
+        <button onClick={handleClick}>✅</button>
+      </li>
+    );
+  } 
+  
+  // Condition 2:
+  else {
+    return (
+      <li className="todo-item">
+        <span>{title}</span>
+        <button onClick={handleClick}>⬜</button>
+      </li>
+    );
+  }
+};
+```
+
+**Challenge:** use conditional rendering to set a `className` on the `span`.
+* If `isComplete` is true, the class should be set to `'todo-complete'`.
+* Otherwise, just set it as an empty string `''`.
+
+**<details><summary>Solution</summary>**
+
+```jsx
+<li className="todo-item">
+  <span className={isComplete ? 'todo-complete' : ''}>{title}</span>
+  <button onClick={handleClick}>
+    {isComplete ? '✅' : '⬜'}
+  </button>
+</li>
+```
+
+</details>
+
+### Controlled Forms
 
 A **controlled form** is a form element whose input values are controlled by React state rather than through DOM manipulation.
 
