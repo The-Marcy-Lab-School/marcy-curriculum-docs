@@ -1,177 +1,123 @@
-# Fetching with useEffect
+# 3. Fetching with useEffect
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-2-async-useEffect)!
+Follow along with code examples in the lecture repo!
 {% endhint %}
 
-We've already learned about one hook, `useState`. Time for another one! In this lesson, we'll learn how to use the `useEffect` hook to send API fetch requests.
+We've already learned about `useState`. Time for another hook! In this lesson, we'll learn how to use the `useEffect` hook to connect our React frontend to a real backend API.
 
 **Table of Contents**
 
-* [Terms](3-fetching-useeffect.md#terms)
-* [Fetching with event handlers](3-fetching-useeffect.md#fetching-with-event-handlers)
-* [Challenge 1: Make a Dog API app](3-fetching-useeffect.md#challenge-1-make-a-dog-api-app)
-* [useEffect](3-fetching-useeffect.md#useeffect)
-  * [useEffect Syntax](3-fetching-useeffect.md#useeffect-syntax)
-  * [The Effect callback](3-fetching-useeffect.md#the-effect-callback)
-  * [The Dependency Array](3-fetching-useeffect.md#the-dependency-array)
-* [Challenge 2: Fetch On Render](3-fetching-useeffect.md#challenge-2-fetch-on-render)
-* [Fetching With a Form On Change](3-fetching-useeffect.md#fetching-with-a-form-on-change)
-* [Quiz](3-fetching-useeffect.md#quiz)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [The Todo API](#the-todo-api)
+- [Isolating Fetch Logic: fetch-helpers.js](#isolating-fetch-logic-fetch-helpersjs)
+- [Fetching with Event Handlers](#fetching-with-event-handlers)
+- [useEffect](#useeffect)
+  - [useEffect Syntax](#useeffect-syntax)
+  - [The Effect Callback](#the-effect-callback)
+  - [The Dependency Array](#the-dependency-array)
+- [GET: Fetch Todos on Mount](#get-fetch-todos-on-mount)
+- [POST: Add a Todo](#post-add-a-todo)
+- [PATCH and DELETE: Mutations in TodoItem](#patch-and-delete-mutations-in-todoitem)
+- [Quiz](#quiz)
+
+## Essential Questions
+
+By the end of this lesson you should be able to answer:
+
+1. What is a side effect in React, and why does fetching data count as one?
+2. What is the purpose of the dependency array in `useEffect`, and how does it control when the effect runs?
+3. Why can't the `useEffect` callback itself be `async`?
+4. Why do we isolate fetch logic in `fetch-helpers.js` instead of writing `fetch` calls directly inside components?
+5. What is the refetch-after-write pattern, and why does it keep the UI consistent with the server?
 
 ## Key Concepts
 
-* **Side effect** — Anything that happens outside of React such sending a `fetch` request, starting an animation, or setting up a server connection.
+* **Side effect** — Anything that happens outside of React such as sending a `fetch` request, starting an animation, or setting up a server connection.
   * Side effects can be triggered by user events like submitting a form or clicking a button.
-* **`useEffect`** – A react hook for executing "side effects" caused by a component rendering, not a particular event.
-  * **Hooks** — Functions that provide a wide variety of features for React components. They all begin with `use()`.
-* **Dependency Array** — The array of values provided to `useEffect` that React will watch for changes. If changes occur in the dependency array, the effect will run again.
-* **Conditional Rendering** — Rendering different JSX depending on the current state. This can be useful when fetching to show either the fetched data or an error message if the fetch failed.
+* **`useEffect`** – A React hook for executing "side effects" caused by a component rendering, not a particular event.
+* **Dependency Array** — The array of values provided to `useEffect` that React will watch for changes. If values in the dependency array change between renders, the effect will run again.
+* **`fetch-helpers.js`** — A file that isolates all API fetch logic from the React component. The same pattern works in Vanilla JS or React — it is framework-agnostic.
+* **Refetch-after-write** — The pattern of re-fetching the full list from the server after any mutation (POST, PATCH, DELETE) to keep the UI in sync.
 
-## Fetching with event handlers
+## The Todo API
 
-> For a refresher on how to fetch, look at the `src/utils/fetchData.js` helper function. It returns an array with two values `[data, error]` (a "tuple").
+Starting today, our React app connects to a real Express + Postgres backend. The API contract for the Todo app (no auth) is:
 
-In React, sending a fetch request is referred to as an "effect" or "side effect" since it happens outside of the normal scope of what React handles.
+| Method | Endpoint           | Description        | Request Body         |
+| ------ | ------------------ | ------------------ | -------------------- |
+| GET    | `/api/todos`       | Get all todos      | —                    |
+| POST   | `/api/todos`       | Create a todo      | `{ title }`          |
+| PATCH  | `/api/todos/:id`   | Update a todo      | `{ title?, is_complete? }` |
+| DELETE | `/api/todos/:id`   | Delete a todo      | —                    |
 
-Side effects are often executed in event handlers.
+A todo object looks like:
 
-Check out the `1-joke-fetch-on-click` React project. In our application, we can render utilize a random joke API to send a fetch request in response to a button click:
-
-```jsx
-const JOKE_API_URL = "https://v2.jokeai.dev/joke/Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart";
-
-const defaultJoke = {
-  setup: "What do you call a pile of cats?",
-  delivery: "A meowntain",
-};
-
-function App() {
-  // Create state for the fetched data
-  const [joke, setJoke] = useState(defaultJoke);
-  // Always create state to store any errors
-  const [error, setError] = useState('');
-
-  // Make the event handler async
-  const handleClick = async () => {
-    const [data, error] = await fetchData(JOKE_API_URL);
-    if (data) setJoke(data);
-    if (error) setError(error);
-  }
-
-  // Conditional Rendering
-  if (error) return <p>{error.message}</p>
-
-  return (
-    <>
-      <button onClick={handleClick}>Get Random Joke</button>
-
-      <div className="joke">
-        <h1>{joke.setup}</h1>
-        <p>{joke.delivery}</p>
-      </div>
-    </>
-  );
+```json
+{
+  "id": 1,
+  "title": "Buy groceries",
+  "is_complete": false
 }
 ```
 
-This example demonstrates a few important concepts:
+> **Vite proxy**: A `vite.config.js` is provided in the starter code. It forwards any request that starts with `/api` to the Express server running on port 8080. You don't need to worry about it yet — we'll look at it closely in Day 4.
 
-* When fetching, the fetched data should be stored in state (`joke`)
-* We should also make a piece of state to store an error if one is returned (`error`)
-* We can use conditional rendering to render an error message if there was one.
+## Isolating Fetch Logic: fetch-helpers.js
 
-## Challenge 1: Make a Dog API app
+Before we write any React components, let's talk about where the fetch code lives.
 
-Let's create an app that fetches from the dog API and shows a random dog picture whenever the user clicks on a button.
-
-The dog API https://dog.ceo/api/breeds/image/random returns an object like this:
+We keep all `fetch` calls in a separate file called **`fetch-helpers.js`**. This file has no JSX and no React — it only knows how to talk to the API.
 
 ```js
-{
-  "message": "https://images.dog.ceo/breeds/hound-walker/n02089867_1764.jpg",
-  "status": "success"
-}
-```
+// src/fetch-helpers.js
 
-**Instructions**:
-
-1. Create the app
-
-```sh
-npm create vite@latest
-# Name it dog-fetcher
-# Select React
-# Select JavaScript
-
-cd dog-fetcher
-npm i
-npm run dev
-
-# Delete the contents of App.jsx
-```
-
-1. Then, copy the the `src/utils` folder from the `1-joke-fetch-on-click` folder into your own `src/` folder.
-2. Use the code in the `1-joke-fetch-on-click/src` folder to guide you to creating this app
-3. The `App` should have a `dogPicture` and an `error` state. Visit the API https://dog.ceo/api/breeds/image/random to get an example object that you can use as the starting state for `dogPicture`. Something like this:
-
-```js
-{
-  "message": "https://images.dog.ceo/breeds/hound-walker/n02089867_1764.jpg",
-  "status": "success"
-}
-```
-
-4. Replace the `App` contents with your own app that has a `<button>` and an `<img>`. The `img` should render the `dogPicture.message`.
-5. When the user clicks on the button, it should send a fetch to the dogAPI and update either the `dogPicture` or `error` state depending on the returned tuple
-6. Add a conditional render to show the `error.message` if there is an error.
-
-```jsx
-if (error) return <p>{error.message}</p>
-```
-
-**<details><summary>Potential Solution</summary>**
-
-```jsx
-import { useState } from 'react'
-import fetchData from './utils/fetchData'
-import './App.css'
-
-const DOG_API = "https://dog.ceo/api/breeds/image/random";
-
-const defaultDog = {
-  "message": "https://images.dog.ceo/breeds/hound-walker/n02089867_1764.jpg",
-  "status": "success"
+export const fetchAllTodos = async () => {
+  const response = await fetch('/api/todos');
+  const data = await response.json();
+  return data;
 };
 
-function App() {
-  // Create state for the fetched data
-  const [dogPicture, setDogPicture] = useState(defaultDog);
-  // Always create state to store any errors
-  const [error, setError] = useState('');
+export const createTodo = async (title) => {
+  const response = await fetch('/api/todos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  });
+  const data = await response.json();
+  return data;
+};
 
-  // Make the event handler async
-  const handleClick = async () => {
-    const [data, error] = await fetchData(DOG_API);
-    if (data) setDogPicture(data);
-    if (error) setError(error);
-  }
+export const updateTodo = async (id, updates) => {
+  const response = await fetch(`/api/todos/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates),
+  });
+  const data = await response.json();
+  return data;
+};
 
-  // Conditional Rendering
-  if (error) return <p>{error.message}</p>
-
-  return (
-    <>
-      <button onClick={handleClick}>Get Random Dog Picture</button>
-      <img src={dogPicture.message} alt="" />
-    </>
-  );
-}
-
-export default App
+export const deleteTodo = async (id) => {
+  await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+};
 ```
 
-</details>
+**Why separate this out?**
+
+This is the same pattern you used when building Vanilla JS frontends — a dedicated file that handles API communication, completely separate from your UI code. Moving to React doesn't change how we talk to APIs. The fetch logic is the same whether the UI is written in Vanilla JS or React. It is the layer that communicates with your server, and it stays the same regardless of your UI framework.
+
+Keeping fetch logic isolated:
+- Makes components easier to read (no long fetch calls mixed into JSX)
+- Makes helpers reusable across multiple components
+- Makes it easy to swap the API URL or add error handling in one place
+
+## Fetching with Event Handlers
+
+We already know how to fetch inside an event handler — call an async helper on a button click, update state with the result. That works great for mutations (POST, PATCH, DELETE) triggered by the user.
+
+But what about loading the initial list of todos when the page first loads? We don't want to wait for a button click — we want the fetch to happen automatically.
 
 ## useEffect
 
@@ -180,9 +126,7 @@ There are two ways to perform a side effect like fetching:
 1. In response to user events
 2. In response to the component rendering ("reacting to the component rendering")
 
-In our current joke API app, we only send a fetch in response to the user clicking on the button. But what if we want to show a joke when the page first renders?
-
-We can accomplish this with the hook `useEffect` — a react hook for executing "side effects" caused by a component rendering, not a particular event.
+We can accomplish the second with the hook `useEffect` — a React hook for executing "side effects" caused by a component rendering, not a particular event.
 
 > **Q: How do we know that this is a hook?**
 
@@ -190,190 +134,197 @@ We can accomplish this with the hook `useEffect` — a react hook for executing 
 
 `useEffect` takes in two arguments:
 
-1. A callback function
+1. A callback function (the "effect")
 2. \[optional] A "dependency array"
 
-It should be invoked at the top of the component, next to the other hooks used by the component (often below `useState`)
+It should be invoked at the top of the component, next to the other hooks used by the component (often below `useState`):
 
 ```jsx
-function App() {
-  const [joke, setJoke] = useState(defaultJoke);
-  const [error, setError] = useState();
+import { useEffect } from 'react';
 
-  // invoke useEffect at the top of the component, next to
-  // the other hooks
+function App() {
   useEffect(() => {
-    const doFetch = async () => {
-      const [data, error] = await fetchData(JOKE_API_URL);
-      if (data) setJoke(data);
-      if (error) setError(error);
-    };
-    doFetch();
+    // this runs after the component renders
+    console.log('App rendered!');
   }, []);
 
-// handleClick
-// return JSX to render the joke
+  return <h1>Hello</h1>;
 }
 ```
 
-Notice that this callback creates a `async doFetch` function that fetches, and sets the `joke` or the `error` state depending on what is returned.
+### The Effect Callback
 
-### The Effect callback
-
-Why do we need to define `doFetch` and then invoke it? Why not just make the callback itself async.
-
-Unfortunately, we can't make the callback async — we get an error
+Why do we need to create an inner `async` function instead of making the callback itself async?
 
 ```jsx
-// Throws an error
+// This throws an error — you cannot make the useEffect callback async directly
 useEffect(async () => {
-  const [data, error] = await fetchData(JOKE_API_URL);
-  if (data) setJoke(data);
-  if (error) setError(error);
+  const todos = await fetchAllTodos();
+  setTodos(todos);
 }, []);
 ```
 
-So, inside of the callback, we make an `async` function that does the fetch and then invoke it immediately.
+So inside the callback, we define an `async` function and then immediately invoke it:
 
 ```jsx
-function App() {
-  const [joke, setJoke] = useState(defaultJoke);
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    const doFetch = async () => {
-      const [data, error] = await fetchData(JOKE_API_URL);
-      if (data) setJoke(data);
-      if (error) setError(error);
-    };
-    doFetch();
-  }, []);
-
-// handleClick
-// return JSX to render the joke
-}
+useEffect(() => {
+  const loadTodos = async () => {
+    const todos = await fetchAllTodos();
+    setTodos(todos);
+  };
+  loadTodos();
+}, []);
 ```
 
 ### The Dependency Array
 
-`useEffect(effect, dependencyArray)` needs to accept an `effect` callback but the second argument `dependencyArray` is optional. There are three ways that we can provide this value:
+`useEffect(effect, dependencyArray)` can receive the dependency array in three ways:
 
 ```jsx
-useEffect(effect); // execute after EVERY re-render
-useEffect(effect, []); // only execute the effect once
-useEffect(effect, [valueA, valueB]); // re-run the effect whenever the array changes between renders
+useEffect(effect);              // execute after EVERY re-render
+useEffect(effect, []);          // execute only once (on mount)
+useEffect(effect, [a, b]);      // re-run whenever a or b changes
 ```
 
-* If the array is omitted, the effect is executed on EVERY render of the component.
-* If the array is empty, the effect is only executed on the first render of the component.
-* If the dependency array is provided, the effect will be only re-run on future renders if the values in the array change between renders.
+* **No array**: runs after every render — usually not what you want
+* **Empty array `[]`**: runs once when the component first mounts — ideal for loading initial data
+* **Array with values**: re-runs when any of those values change between renders
 
-## Challenge 2: Fetch On Render
+## GET: Fetch Todos on Mount
 
-Add to your dog API app by having it render a dog image on the first render (and only on that first render!)
-
-**<details><summary>Potential Solution</summary>**
+Let's load todos when the app first renders using `useEffect` with an empty dependency array:
 
 ```jsx
-import { useState, useEffect } from 'react'
-import fetchData from './utils/fetchData'
-import './App.css'
-
-const DOG_API = "https://dog.ceo/api/breeds/image/random";
+import { useState, useEffect } from 'react';
+import { fetchAllTodos } from './fetch-helpers';
 
 function App() {
-  // Create state for the fetched data
-  const [dog, setDog] = useState();
-  // Always create state to store any errors
-  const [error, setError] = useState('');
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    const doFetch = async () => {
-      const [data, error] = await fetchData(DOG_API);
-      if (data) setDog(data.message);
-      if (error) setError(error);
-    }
-    doFetch();
+    const loadTodos = async () => {
+      const data = await fetchAllTodos();
+      setTodos(data);
+    };
+    loadTodos();
+  }, []); // empty array = run once on mount
+
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>{todo.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+The flow:
+1. Component mounts → `useEffect` fires
+2. `loadTodos` fetches `GET /api/todos`
+3. Response comes back → `setTodos(data)` triggers a re-render
+4. Component re-renders with the list of todos
+
+## POST: Add a Todo
+
+Controlled form + POST on submit + refetch:
+
+```jsx
+import { useState, useEffect } from 'react';
+import { fetchAllTodos, createTodo } from './fetch-helpers';
+
+function App() {
+  const [todos, setTodos] = useState([]);
+  const [title, setTitle] = useState('');
+
+  const loadTodos = async () => {
+    const data = await fetchAllTodos();
+    setTodos(data);
+  };
+
+  useEffect(() => {
+    loadTodos();
   }, []);
 
-  // Make the event handler async
-  const handleClick = async () => {
-    const [data, error] = await fetchData(DOG_API);
-    if (data) setDog(data.message);
-    if (error) setError(error);
-  }
-
-  // Conditional Rendering
-  if (error) return <p>{error.message}</p>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await createTodo(title);
+    setTitle('');
+    loadTodos(); // refetch to stay in sync with the server
+  };
 
   return (
     <>
-      <button onClick={handleClick}>Get Random Dog Picture</button>
-      <img src={dog} alt="" />
+      <form onSubmit={handleSubmit}>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="New todo..."
+        />
+        <button>Add</button>
+      </form>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
     </>
   );
 }
-
-export default App
 ```
 
-</details>
+Notice that `loadTodos` is now defined outside the `useEffect` so it can be called both on mount and after form submission. This is the **refetch-after-write** pattern:
 
-## Fetching With a Form On Change
+```
+User action → mutate (POST/PATCH/DELETE) → refetch (GET) → re-render
+```
 
-A cool way to fetch is using a form whenever the text input changes:
+## PATCH and DELETE: Mutations in TodoItem
+
+Both PATCH and DELETE follow the same shape: call the helper, then call `onRefresh()` to trigger a refetch in `App`. We can put both handlers in `TodoItem`:
 
 ```jsx
-function App() {
-  const [joke, setJoke] = useState(defaultJoke);
-  const [error, setError] = useState();
-  const [query, setQuery] = useState("");
+import { updateTodo, deleteTodo } from './fetch-helpers';
 
-  useEffect(() => {
-    const doFetch = async () => {
-      const [data, error] = await fetchData(`${JOKE_API_URL}&contains=${query}`);
-      if (data) setJoke(data);
-      if (error) setError(error);
-    };
-    doFetch();
-  }, [query]);
+function TodoItem({ todo, onRefresh }) {
+  const handleToggle = async () => {
+    await updateTodo(todo.id, { is_complete: !todo.is_complete });
+    onRefresh();
+  };
 
-  const handleClick = async () => {
-    const [data, error] = await fetchData(JOKE_API_URL);
-    if (data) setJoke(data);
-    if (error) setError(error);
-  }
-
-  if (error) return <p>{error.message}</p>
+  const handleDelete = async () => {
+    await deleteTodo(todo.id);
+    onRefresh();
+  };
 
   return (
-    <>
-      <form>
-        <input
-          type="text"
-          placeholder="query"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </form>
-
-      <button onClick={handleClick}>Get Random Joke</button>
-
-      <div className="joke">
-        <h1>{joke.setup}</h1>
-        <p>{joke.delivery}</p>
-      </div>
-    </>
+    <li>
+      <button onClick={handleToggle}>
+        {todo.is_complete ? '✅' : '⬜'}
+      </button>
+      <span style={{ textDecoration: todo.is_complete ? 'line-through' : 'none' }}>
+        {todo.title}
+      </span>
+      <button onClick={handleDelete}>🗑️</button>
+    </li>
   );
 }
 ```
 
-**<details><summary>Q: When / how many times will this effect run?</summary>**
+`App` passes its `loadTodos` function down as the `onRefresh` prop:
 
-Each time the `onChange` event fires (every input change)
-
-</details>
+```jsx
+<ul>
+  {todos.map((todo) => (
+    <TodoItem key={todo.id} todo={todo} onRefresh={loadTodos} />
+  ))}
+</ul>
+```
 
 ## Quiz
 
 * When should you `fetch` using `useEffect` vs. an event handler?
+* What is the purpose of the dependency array in `useEffect`?
+* Why can't the `useEffect` callback itself be `async`?
+* What is the refetch-after-write pattern and why does it keep the UI accurate?
+* Why do we put fetch logic in `fetch-helpers.js` instead of directly in components?

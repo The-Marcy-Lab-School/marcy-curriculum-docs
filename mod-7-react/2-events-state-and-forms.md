@@ -1,27 +1,39 @@
 # 2. Events, State, and Forms
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-1-managing-state-and-forms)!
+Follow along with code examples in the lecture repo!
 {% endhint %}
 
 In this lesson, we will look at how to respond to events in React and use those events to manage the ever-changing state in our application.
 
 **Table of Contents**
 
-* [Terms](2-events-state-and-forms.md#terms)
-* [Instapets](2-events-state-and-forms.md#instapets)
-* [Handling Changing State](2-events-state-and-forms.md#handling-changing-state)
-  * [Our Components Already Render Data](2-events-state-and-forms.md#our-components-already-render-data)
-  * [Changing A Variable In Reaction to Events](2-events-state-and-forms.md#changing-a-variable-in-reaction-to-events)
-* [`useState`](2-events-state-and-forms.md#usestate)
-  * [Import useState from react](2-events-state-and-forms.md#import-usestate-from-react)
-  * [Invoke useState at the top of your component](2-events-state-and-forms.md#invoke-usestate-at-the-top-of-your-component)
-  * [Use the setter function to update the state](2-events-state-and-forms.md#use-the-setter-function-to-update-the-state)
-  * [All Together Now](2-events-state-and-forms.md#all-together-now)
-  * [`setLikes` does NOT change the value of `likes`](2-events-state-and-forms.md#setlikes-does-not-change-the-value-of-likes)
-* [Forms](2-events-state-and-forms.md#forms)
-  * [Controlled Forms](2-events-state-and-forms.md#controlled-forms)
-* [Discussion! Lifting State Up](2-events-state-and-forms.md#discussion-lifting-state-up)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Local Todo List](#local-todo-list)
+- [Handling Changing State](#handling-changing-state)
+  - [Our Components Already Render Data](#our-components-already-render-data)
+  - [Changing A Variable In Reaction to Events](#changing-a-variable-in-reaction-to-events)
+- [`useState`](#usestate)
+  - [Invoke useState at the top of your component](#invoke-usestate-at-the-top-of-your-component)
+  - [Use the setter function to update the state](#use-the-setter-function-to-update-the-state)
+  - [All Together Now](#all-together-now)
+- [Forms](#forms)
+  - [Controlled Forms](#controlled-forms)
+- [Discussion! Lifting State Up](#discussion-lifting-state-up)
+- [Conditional Rendering](#conditional-rendering)
+  - [Ternary Operator](#ternary-operator)
+  - [Short-Circuit &&](#short-circuit-)
+
+## Essential Questions
+
+By the end of this lesson you should be able to answer:
+
+1. What is state, and why can't a regular variable be used to track data that changes in a component?
+2. What does `useState` return, and how do you use each of the two returned values?
+3. What is a controlled form, and how does it differ from reading values directly from the DOM?
+4. What does "lifting state up" mean, and when is it necessary?
+5. What is conditional rendering, and what are the two common JSX patterns for it?
 
 ## Key Concepts
 
@@ -31,90 +43,97 @@ In this lesson, we will look at how to respond to events in React and use those 
 * **`useState`** – A react hook for managing state within a React component. It returns an array with a state value and a setter function. It triggers the component to re-render when the state changes.
 * **Lifting state up** — A practice where state is defined in a parent component so that it can be used by its child components.
 * **Controlled Form** — A form whose value changes are controlled by a piece of state.
+* **Conditional Rendering** — Rendering different JSX depending on the current state or props.
 
-## Instapets
+## Local Todo List
 
-In this lesson, we'll be using an app called `instapets` to demonstrate building **stateful components**. A stateful component is one that depends on state and re-renders whenever the state changes.
+In this lesson, we'll build a **local Todo list** to demonstrate **stateful components**. A stateful component is one that depends on state and re-renders whenever the state changes.
 
-**State** is the data that is used by an application at a particular point in time. State is often mutable, meaning it can be changed over time, usually in response to user actions or other events
+**State** is the data that is used by an application at a particular point in time. State is often mutable, meaning it can change over time in response to user actions.
 
-Right now the app is not stateful. It renders 3 hard-coded pet pictures, the form doesn't work and neither do the "Like" buttons.
+Our todo list will start with a static array of todos and grow to support:
+- Toggling a todo between complete and incomplete
+- Adding new todos via a form
 
-![](../.gitbook/assets/instapets-demo.png)
+Right now the app is not stateful — it renders hard-coded todo items and neither the toggle buttons nor the form work yet.
+
+> **TODO: Add screenshot of static Todo list UI here**
 
 Let's build this thing!
 
 ## Handling Changing State
 
-Let's tackle the likes buttons first.
+Let's tackle the toggle buttons first.
 
 ### Our Components Already Render Data
 
-Each `InstagramPost` component renders a picture, a caption and a button to increment and display likes.
+Each `TodoItem` component renders a todo's title and a button to toggle it complete.
 
 > Notice how we added an `onClick` prop with the `handleClick` callback function.
 
-```js
-const InstagramPost = ({ picture }) => {
+```jsx
+const TodoItem = ({ todo }) => {
 
-  let likes = 0;
+  let isComplete = false;
 
-  const handleClick = {
+  const handleClick = () => {
     
   }
 
   return (
-    <div className="insta-pic">
-      <img alt={picture.caption} src={picture.src} />
-      <p>{picture.caption}</p>
-      <button onClick={handleClick}>❤️ {likes}</button>
-    </div>
+    <li className="todo-item">
+      <span>{todo.title}</span>
+      <button onClick={handleClick}>
+        {isComplete ? '✅' : '⬜'}
+      </button>
+    </li>
   );
 };
 
-export default InstagramPost;
+export default TodoItem;
 ```
 
 A stateful component is one that renders state — data values that may change.
 
 **<details><summary>Q: What data values does this component render? Is any of that considered "state"?</summary>**
 
-`likes` and `picture` These values are not considered state because they are hard-coded! They will not change.
+`isComplete` and `todo.title`. These values are not considered state because they are hard-coded or passed in as props! They will not change in response to user actions.
 
 </details>
 
 ### Changing A Variable In Reaction to Events
 
-Let's make `likes` a piece of mutable state.
+Let's make `isComplete` a piece of mutable state.
 
-We want to update `likes` each time we click on the `Like` button. So, maybe this will work?
+We want to toggle `isComplete` each time we click on the button. So, maybe this will work?
 
-```js
-const InstagramPost = ({ picture }) => {
-  console.log('rendering InstagramPost');
+```jsx
+const TodoItem = ({ todo }) => {
+  console.log('rendering TodoItem');
   
-  let likes = 0;
+  let isComplete = false;
 
   const handleClick = () => {
-    likes++;
-    console.log(likes);
+    isComplete = !isComplete;
+    console.log(isComplete);
   }
 
   return (
-    <div className="insta-pic">
-      <img alt={picture.caption} src={picture.src} />
-      <p>{picture.caption}</p>
-      <button onClick={handleClick}>❤️ {likes}</button>
-    </div>
+    <li className="todo-item">
+      <span>{todo.title}</span>
+      <button onClick={handleClick}>
+        {isComplete ? '✅' : '⬜'}
+      </button>
+    </li>
   );
 };
 ```
 
-While this _does_ increment the `likes` value, it doesn't cause the component to re-render because React isn't watching this value for changes.
+While this _does_ flip the `isComplete` value, it doesn't cause the component to re-render because React isn't watching this value for changes.
 
 ## `useState`
 
-So how do we make the component re-render with the updated `likes` value?
+So how do we make the component re-render with the updated `isComplete` value?
 
 We need a **hook**. Hooks in react are functions that perform a variety of jobs. They can be identified by their name which starts with "use":
 
@@ -129,104 +148,93 @@ The `useState` hook allows us to create a piece of state that React will watch a
 
 Here's how it works:
 
-### Import useState from react
-
-```jsx
-// InstagramPost.jsx
-import { useState } from "react";
-```
-
-* `useState` is a _named export_ of the `react` package (note the `{}` around the function in the `import` statement).
-
 ### Invoke useState at the top of your component
 
+Import `useState` as a named export from `react`, then call it at the top of your component:
+
 ```jsx
-const InstagramPost = () => {
-  const [likes, setLikes] = useState(0);
+// TodoItem.jsx
+import { useState } from "react";
+
+const TodoItem = ({ todo }) => {
+  const [isComplete, setIsComplete] = useState(false);
 
   // handleClick and the return statement
 };
 ```
 
 * `useState` _must_ be called at the top of a component. [Otherwise weird stuff happens](https://legacy.reactjs.org/docs/hooks-rules.html).
-* `useState(0)` returns an array with two values:
-  1. A piece of state data (`likes`) with a starting value (`0`)
-  2. A "setter" function for updating that state data (`likes`) and re-rendering the component
+* `useState(false)` returns an array with two values:
+  1. A piece of state data (`isComplete`) with a starting value (`false`)
+  2. A "setter" function for updating that state data and re-rendering the component
 * The convention is to name state variables like `[something, setSomething]` using array destructuring.
 
 ### Use the setter function to update the state
 
 ```jsx
 const handleClick = () => {
-  setLikes(likes + 1); // this is OK but can cause some race issues
-  setLikes((currentLikes) => currentLikes + 1); // this is better when the next value depends on the current value
-  likes++; // Don't do this
+  setIsComplete(!isComplete);           // this is OK
+  setIsComplete((current) => !current); // this is better when next value depends on current
+  isComplete = !isComplete;             // Don't do this
 };
 ```
 
-* When the event handler is clicked, we'll invoke `setLikes` which either accepts:
-  * the new value that we want to set `likes` to or...
-  * a callback function for turning the current value of `likes` into the next value of `likes`.
-* As we saw, incrementing `likes` directly does not cause the component to re-render
-* `setLikes` will cause the component to re-render with the provided value as the new value for `likes`
+* When the button is clicked, we invoke `setIsComplete` which either accepts:
+  * the new value we want to set `isComplete` to, or...
+  * a callback function for turning the current value into the next value.
+* As we saw, mutating `isComplete` directly does not cause the component to re-render.
+* `setIsComplete` will cause the component to re-render with the provided value as the new `isComplete`.
 
 ### All Together Now
 
 ```jsx
 import { useState } from 'react';
 
-const InstagramPost = ({ picture }) => {
-  const [likes, setLikes] = useState(0)
+const TodoItem = ({ todo }) => {
+  const [isComplete, setIsComplete] = useState(false);
 
   const handleClick = () => {
-    setLikes((currentLikes) => currentLikes + 1)
+    setIsComplete((current) => !current);
   }
 
   return (
-    <div className="insta-pic">
-      <img alt={picture.caption} src={picture.src} />
-      <p>{picture.caption}</p>
-      <button onClick={handleClick}>❤️ {likes}</button>
-    </div>
+    <li className="todo-item">
+      <span>{todo.title}</span>
+      <button onClick={handleClick}>
+        {isComplete ? '✅' : '⬜'}
+      </button>
+    </li>
   );
 };
 ```
 
 **Quiz!**
 
-* Why did we pass in `0` when we invoked `useState`?
+* Why did we pass in `false` when we invoked `useState`?
 * What does `useState()` return?
-* What does `setLikes()` do? What kinds of inputs does it take?
+* What does `setIsComplete()` do? What kinds of inputs does it take?
 
-### `setLikes` does NOT change the value of `likes`
-
-Interestingly `setLikes` does NOT change the value of `likes` within the `handleClick` callback. It tells React to re-render the `InstagramPost` component with a new value of `likes`.
-
-![](../.gitbook/assets/setLikes-rerender.svg)
-
-You can see this if you place a `console.log(likes)` statement inside of `handleClick` callback.
-
-This kind of makes sense: `setLikes` isn't actually changing any value. It's just saying what the next value _should_ be.
+{% hint style="warning" %}
+`setIsComplete` does NOT change `isComplete` within the current function call — it schedules a re-render with the new value. Add `console.log(isComplete)` inside `handleClick` to see this: the logged value is still the old one. `setIsComplete` tells React what the next value _should_ be; the variable only updates on the next render.
+{% endhint %}
 
 ## Forms
 
-Next up we'll make a form for the user to add new pet pictures.
+Next up we'll make a form for the user to add new todos.
 
-Creating a form using JSX in React is almost identical to creating a form using HTML. Take a look at `NewPetForm.jsx`:
+Creating a form using JSX in React is almost identical to creating a form using HTML. Take a look at `AddTodoForm`:
 
 ```jsx
-const NewPetForm = () => {
+const AddTodoForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="src-input">Image Source:</label>
-      <input type="text" name="src" id="src-input"/>
-      <label htmlFor="caption-input">Caption:</label>
-      <input type="text" name="caption" id="caption-input" />
-      <button>Submit</button>
+      <label htmlFor="title-input">Todo:</label>
+      <input type="text" name="title" id="title-input" />
+      <button>Add</button>
     </form>
   )
 }
@@ -250,75 +258,151 @@ To create a controlled form, we will:
 5. Remember to reset the state values after submission.
 
 ```jsx
-const NewPetForm = () => {
+const AddTodoForm = () => {
 
   // 1. Create a piece of state for each input we want to control
-  const [src, setSrc] = useState('');
-  const [caption, setCaption] = useState('');
+  const [title, setTitle] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // 4. When handling submissions, we can simply reference the input state values.
-    console.log(src, caption);
+    console.log(title);
 
     // 5. Remember to reset the state values after submission.
-    setSrc('');
-    setCaption('');
+    setTitle('');
   }
 
   // 2. Assign the `value` prop of the input to the input state value we just created
   // 3. Assign an `onChange` handler to the input that invokes the state setter function
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="src-input">Image Source:</label>
+      <label htmlFor="title-input">Todo:</label>
       <input 
         type="text" 
-        name="src" 
-        id="src-input" 
-        value={src} 
-        onChange={(e) => setSrc(e.target.value)} 
+        name="title" 
+        id="title-input" 
+        value={title} 
+        onChange={(e) => setTitle(e.target.value)} 
       />
-      <label htmlFor="caption-input">Caption:</label>
-      <input 
-        type="text" 
-        name="caption" 
-        id="caption-input" 
-        value={caption} 
-        onChange={(e) => setCaption(e.target.value)} 
-      />
-      <button>Submit</button>
+      <button>Add</button>
     </form>
   )
 }
 ```
 
 * Notice how each input has a `value` and an `onChange` prop associated with a particular piece of state.
-* When it is time to submit the form, we can easily use the `src` and `caption` state values without digging through the form.
+* When it is time to submit the form, we can easily use the `title` state value without digging through the form.
 
 ## Discussion! Lifting State Up
 
-The last step to putting this together is having the form submission actually add a new picture to the list of pictures.
+The last step to putting this together is having the form submission actually add a new todo to the list.
 
 Here is the component tree of the application:
 
-![](../.gitbook/assets/instapets-component-tree.svg)
+```
+App
+├── TodoList
+│   └── TodoItem (× n)
+└── AddTodoForm
+```
 
-The challenge is that `PicturesList` is where the `pictures` are defined but we want to update the list of pictures from `NewPetForm`.
+> **TODO: Add component tree diagram image here**
 
-If we were to turn the `pictures` array into some state like this:
+The challenge is that `TodoList` is where the `todos` are rendered but we want to update the list from `AddTodoForm`.
+
+If we were to turn the `todos` array into some state like this:
 
 ```jsx
-const [pictures, setPictures] = useState(initialPictures);
+const [todos, setTodos] = useState(initialTodos);
 ```
 
 **<details><summary>Q: Where should I put this? Why?</summary>**
 
-The state should be defined in the `App` which is the closest shared ancestor of the `NewPetForm` and the `PicturesList`. The `App` can then pass those values down to its children as props. This is called **"lifting state up"**. Check out the `1-instapets-final/` to see how this is done:
+The state should be defined in `App`, which is the closest shared ancestor of both `AddTodoForm` and `TodoList`. `App` can then pass the values down to its children as props. This is called **"lifting state up"**.
 
-* `App` uses `useState` to define the `pictures` and `setPictures` values
-* It passes down `pictures` to `PicturesList`
-* It makes an `addPicture` helper function and passes it down to `NewPetForm` to invoke upon submission.
-* Notice how `addPicture` sets the state by copying the existing array and adding a new object.
+* `App` uses `useState` to define the `todos` and `setTodos` values
+* It passes down `todos` to `TodoList`
+* It makes an `addTodo` helper function and passes it down to `AddTodoForm` to invoke upon submission
+
+```jsx
+const App = () => {
+  const [todos, setTodos] = useState([
+    { id: 1, title: 'Buy groceries', isComplete: false },
+    { id: 2, title: 'Walk the dog', isComplete: false },
+  ]);
+
+  const addTodo = (title) => {
+    const newTodo = { id: Date.now(), title, isComplete: false };
+    setTodos((current) => [...current, newTodo]);
+  };
+
+  return (
+    <>
+      <h1>My Todos</h1>
+      <TodoList todos={todos} />
+      <AddTodoForm onAddTodo={addTodo} />
+    </>
+  );
+};
+```
+
+Notice how `addTodo` sets the state by spreading the existing array and adding a new object — never mutating the array directly.
 
 </details>
+
+## Conditional Rendering
+
+Often we want to show different UI based on the current state. React makes this easy with two common patterns.
+
+### Ternary Operator
+
+Use a **ternary** when you want to render one thing _or_ another:
+
+```jsx
+condition ? <ComponentA /> : <ComponentB />
+```
+
+We already have `isComplete` state in `TodoItem`. Use it to change the button label and apply a strikethrough style:
+
+```jsx
+const TodoItem = ({ todo }) => {
+  const [isComplete, setIsComplete] = useState(false);
+
+  return (
+    <li>
+      <span style={{ textDecoration: isComplete ? 'line-through' : 'none' }}>
+        {todo.title}
+      </span>
+      <button onClick={() => setIsComplete((c) => !c)}>
+        {isComplete ? 'Mark Incomplete' : 'Mark Complete'}
+      </button>
+    </li>
+  );
+};
+```
+
+### Short-Circuit &&
+
+Use **short-circuit** when you want to render something _only if_ a condition is true and render nothing otherwise:
+
+```jsx
+condition && <Component />
+```
+
+A practical example — only show the "Delete" button when the user owns the todo (we'll have a `currentUser` in a later lesson):
+
+```jsx
+const TodoItem = ({ todo, currentUser }) => {
+  return (
+    <li>
+      <span>{todo.title}</span>
+      {currentUser && (
+        <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+      )}
+    </li>
+  );
+};
+```
+
+If `currentUser` is `null` or `undefined`, the button is simply not rendered. No need for an `if/else`.

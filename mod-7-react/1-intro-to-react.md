@@ -1,29 +1,45 @@
 # 1. Intro to React
 
 {% hint style="info" %}
-Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-0-0-intro-react-f23)!
+Follow along with code examples in the lecture repo!
 {% endhint %}
 
 In this lesson, you will learn the basics of React.
 
 **Table of Contents:**
 
-* [Terms:](1-intro-to-react.md#terms)
-* [What is React and Why Use It?](1-intro-to-react.md#what-is-react-and-why-use-it)
-  * [A. Say goodbye to the clunky DOM API](1-intro-to-react.md#a-say-goodbye-to-the-clunky-dom-api)
-  * [B. Component Composition is fast and easy to read](1-intro-to-react.md#b-component-composition-is-fast-and-easy-to-read)
-  * [C. The Virtual DOM offers some performance benefits when re-rendering components](1-intro-to-react.md#c-the-virtual-dom-offers-some-performance-benefits-when-re-rendering-components)
-* [Starting a React Project (with Vite)](1-intro-to-react.md#starting-a-react-project-with-vite)
-  * [Rendering the Root Component With ReactDOM](1-intro-to-react.md#rendering-the-root-component-with-reactdom)
-  * [Components and JSX](1-intro-to-react.md#components-and-jsx)
-  * [Nested Components](1-intro-to-react.md#nested-components)
-  * [Adding Classes and Style](1-intro-to-react.md#adding-classes-and-style)
-* [Rendering Data with React](1-intro-to-react.md#rendering-data-with-react)
-  * [Sharing Data Between Components With Props](1-intro-to-react.md#sharing-data-between-components-with-props)
-  * [Rendering A List of Elements](1-intro-to-react.md#rendering-a-list-of-elements)
-* [Under the hood: JSX Code must be compiled](1-intro-to-react.md#under-the-hood-jsx-code-must-be-compiled)
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [What is React and Why Use It?](#what-is-react-and-why-use-it)
+  - [JSX](#jsx)
+  - [Components](#components)
+- [Starting a React Project (with Vite)](#starting-a-react-project-with-vite)
+  - [index.html: All Content is Added to the Root Div](#indexhtml-all-content-is-added-to-the-root-div)
+  - [main.js: Rendering the Root Component (App)](#mainjs-rendering-the-root-component-app)
+  - [App.jsx: The Root Component](#appjsx-the-root-component)
+  - [Challenge: Component Composition](#challenge-component-composition)
+- [Rendering Data with React](#rendering-data-with-react)
+  - [Sharing Data Between Components With Props](#sharing-data-between-components-with-props)
+  - [Challenge: Props Refactor](#challenge-props-refactor)
+  - [Rendering A List of Elements](#rendering-a-list-of-elements)
+- [Under the Hood: JSX Code Must Be Compiled](#under-the-hood-jsx-code-must-be-compiled)
+  - [Vite in Development: The Dev Server](#vite-in-development-the-dev-server)
+  - [Vite in Production: npm run build](#vite-in-production-npm-run-build)
+  - [Serving the Build from Express](#serving-the-build-from-express)
+- [Bonus Reading: React's Virtual DOM](#bonus-reading-reacts-virtual-dom)
 
-## Key Concepts:
+
+## Essential Questions
+
+By the end of this lesson you should be able to answer:
+
+1. How does building UIs with React compare and contrast with building UIs with Vanilla JS and the DOM API?
+2. What is JSX and how do we write it?
+3. What is a component and how do you make one?
+4. What are props and how do we use them?
+5. What is compilation, when is it necessary, and how do we compile React code?
+
+## Key Concepts
 
 * **React** — a library for building reusable, composable, and scalable user-interfaces made up of components.
 * **Component** — a piece of the UI (user interface) that has its own logic and appearance. Components are functions that return JSX.
@@ -32,103 +48,108 @@ In this lesson, you will learn the basics of React.
 * **Root Component** — the top-level component that all other components are children of. Typically called `App`.
 * **`react-dom/client`** — a React package that lets you render React components on the client (in the browser)
 * **Prop** — a piece of data passed from a parent component to a child component.
+* **Compilation** — the process of translating code written in one programming language (which is easy for humans to read) into another format (which is easy for a computer to execute).
 
 ## What is React and Why Use It?
 
-**React** is a JavaScript library for building user-interfaces (UI).
+**React** is a JavaScript library for building user-interfaces (UI). Similar to the DOM API (`document.createElement()`), it lets us programmatically create and update HTML in a JavaScript file — but with two key advantages: JSX and components.
 
-React focuses on building reusable **components** that can be composed into larger components. This allows developers to build applications that scale efficiently.
+### JSX 
 
-Need more reasons to want to learn React?
+**JSX** is an extension of JavaScript that lets us write HTML-like syntax inside of functions.
 
-### A. Say goodbye to the clunky DOM API
+JSX allows us to create user interfaces **declaratively** (we describe the resulting HTML structure that we want to produce):
 
-Compare and contrast these code snippets for creating a dynamic text element.
+```jsx
+// React — declarative, readable
+const Text = ({ message }) => {
+  return <p className="header">{message}</p>;
+};
 
-Vanilla JS with the DOM API (imperative style):
+// Used like an HTML tag:
+const helloWorld = <Text message="hello world" />
+```
 
+Notice how we "invoke" the `Text` function by using it like an HTML element `<Text message="hello world" />`
+
+To produce the same structure with the DOM API and Vanilla JavaScript, we have to write **imperatively** (we give step-by-step instructions for assembling an element):
+
+{% hint style="danger" %}
 ```js
-const makeTextElement = (message) => {
+// Vanilla JS + DOM API — imperative, verbose
+const makeHeaderElement = (message) => {
   const p = document.createElement("p");
   p.className = "header";
   p.innerText = message;
   return p;
 };
+// Invoke the function to create the element
+const helloWorld = makeHeaderElement('Hello World');
 ```
+{% endhint %}
 
-React (declarative style):
+If you know what you're doing, the Vanilla JS approach works fine. However, React just makes the process of designing user interfaces more enjoyable while introducing performance optimizations under the hood.
+
+### Components
+
+**Components** are the functions that return JSX. Because they are functions, they are inherently reusable and composable meaning you can build small components and combine them into larger ones.
 
 ```jsx
-const Text = ({ message }) => {
-  return <p className="header">{message}</p>;
-};
-// This HTML-like syntax ^ is JSX
-```
+// Components are functions that return JSX. This is a one-liner with an implicit return
+const LikeButton = () => <button>❤️</button>;
 
-In React, we are able to return HTML-like syntax from functions. This is called **JSX** (JavaScript XML), which allows us to execute JavaScript expressions (inside `{}`) and/or pass in data. &#x20;
-
-### B. Component Composition is fast and easy to read
-
-**Components** let you split the UI into independent, reusable pieces and think about each piece in isolation.
-
-**Component Composition** is the process of combining smaller, reusable components together to create larger, more complex components
-
-Vanilla JS with the DOM API (imperative style):
-
-```js
-const makeCatInstaElement = () => {
-  const container = document.createElement("div");
-  container.className = "insta-pic";
-
-  const caption = document.createElement("p");
-  caption.className = "caption";
-  caption.innerText = "cute cat pics";
-
-  const img = document.createElement("img");
-  img.src = "img/cat.jpeg";
-
-  container.append(img, caption);
-  return container;
-};
-```
-
-React (declarative style):
-
-```jsx
-const Picture = ({ src }) => {
-  return <img src={src} />;
-};
-
-const Caption = ({ text }) => {
-  return <figcaption className="caption">{text}</figcaption>;
-};
-
-const InstagramPost = () => {
+// Components that return multiple lines use (). 
+// `src` and `text` are like parameters for the component called "props"
+const Figure = ({ src, text }) => {
   return (
-    <figure className="insta-pic">
-      <Picture src="./images/my-cat.jpg" />
-      <Caption text="cute cat" />
+    <figure>
+      <img src={src} />
+      <figcaption>{text}</figcaption>
     </figure>
   );
+}
+
+// A component can be made up of other components
+const InstagramPost = ({ src, text }) => {
+  return (
+    <div className="instagram-post-card">
+      <Figure src={src} text={text} />
+      <LikeButton />
+    </div>
+  );
 };
+
+// To "invoke" a component function, write it like an HTML element
+const post = <InstagramPost src={"img/cat.jpeg"} text={"meow"} />
 ```
 
-Notice that `<Caption />` and `<Picture />` start with a capital letter. That’s how you know it’s a React **component**.
+Here are a few rules about creating React components:
+* Component function names must use PascalCasing (UpperCamelCase).
+* A component must return a single surrounding element.
+* When returning multiple elements, wrap them in parentheses `()`.
+* Components can take in values from the parent component called "props". They behave like parameters.
 
-React component names must always start with a capital letter, while HTML tags must be lowercase.
+{% hint style="info" %}
+Since we are writing this HTML syntax in a JavaScript file, can't add a `class=""` attribute to our element because `class` is a reserved keyword. Instead we use `className=""`. Inspect the element in your browser and you'll see that the `className` attribute in JSX is converted into the HTML attribute `class` when rendered in the browser.
 
-### C. The Virtual DOM offers some performance benefits when re-rendering components
+Any HTML attribute that shares a name with a JavaScript keyword has an alternate name in React. The `for` attribute for `<label>` elements is another example of this since `for` is a reserved JavaScript keyword for making a loop. Instead, we use the `htmlFor` attribute.
 
-[Read more about it here](https://blog.logrocket.com/virtual-dom-react/#comparison-chart-real-virtual-shadow-dom)
+```jsx
+<label htmlFor="email">Email</label>
+<input id="email" name="email" type="text" />
+```
+{% endhint %}
 
 ## Starting a React Project (with Vite)
 
-React projects are essentially the same as the Vanilla JS projects you've been building so far. At the end of the day, they start with an `index.html` file that runs some JavaScript files.
+Now that we know the basics of React, let's see how a React application can be built.
+
+React projects are essentially the same as the Vanilla JS projects you've been building so far: they start with an `index.html` file that runs some JavaScript files.
 
 Vite provides a really great starting template for us to build React projects with:
 
 ```bash
-npm create vite@latest
+npm create vite
 # Choose Project Name
 ? Project name: <name of your project>
 # select React
@@ -138,22 +159,46 @@ cd <name of your project> && npm i
 npm run dev
 ```
 
-By default, you will be given the familiar counter app. Take a look around! Every React project made by Vite will have this rough structure:
+Let's look at the rest of the files. Every React project made by Vite will have the following key files:
 
 * `index.html` — the HTML file served to the client. It loads `src/main.jsx`.
 * `src/main.jsx` — the entry point of the app. It uses the `react-dom/client` package to render the **root component** `App` into the DOM.
 * `src/App.jsx` — the root component.
 * `package.json` — note that a React vite project has a few React-related dependencies that the Vanilla project does not have.
 
+Run the React application with `npm run dev` and you will see a simple counter application.
+
 > Notice the `.jsx` extension? Without it, we wouldn't be able to write JSX in this file.
 
-### Rendering the Root Component With ReactDOM
+### index.html: All Content is Added to the Root Div
+
+First, look at the `index.html` file and notice that it has an empty `body` except for a `div#root` element. In addition, it loads the `main.jsx` file. 
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
+With React, instead of adding HTML content directly to the `index.html` file, we will use JavaScript to dynamically generate *all* of the content inside of the `div#root` element!
+
+### main.js: Rendering the Root Component (App)
 
 How does all of this actually get to the screen? Head over to the `main.jsx` file.
 
 The primary purpose of this file is to render the root component `App`. To do so we:
 
-* Import a package called `ReactDOM`
+* Import a package called `react-dom/client`
 * Use the `createRoot` method to create a `root` object.
 * Then we call `createRoot(root).render()` and pass in the `App` component as the argument.
 
@@ -174,139 +219,91 @@ createRoot(document.getElementById('root')).render(
 ```
 
 A few notes:
+* `createRoot` is imported from the `client` version of `react-dom` (there is also a `native` version for mobile development).
+* We can import `.css` files directly into our JavaScript!
+* `createRoot()` takes in an HTML node to use as the root of the HTML structure. This is the only time we will use the DOM API!
+* The `.render()` method is invoked with React components and JSX inside. This is what inserts the `App` component inside of the `div#root` element.
+* `StrictMode` is a wrapper-component that detects potential React-related issues in our application. It doesn't render anything visible.
 
-* We're using the `client` version of `ReactDOM` (there is also a `native` version for mobile).
-* `StrictMode` is a wrapper-component that detects potential React-related in our application. It doesn't render anything visible.
+### App.jsx: The Root Component
 
-### Components and JSX
+In a Vite project, `App.jsx` is where you'll spend most of your time. `App` is the **root component** — every other component in the app will eventually be nested inside it.
 
-React components are functions that return a single JSX element.
+Delete the Vite boilerplate and replace the contents of `App` with some simple HTML:
 
-The first component that we create is typically called `App`
-
+{% code title="App.jsx" lineNumbers="true" %}
 ```jsx
-// inside App.jsx
+import './App.css'
+
 const App = () => {
   return (
-    <header>
-      <h1>Hello World</h1>
-      <p>It's a great day</p>
-    </header>
+    <main>
+      <h1>My Pet Pics</h1>
+      <figure>
+        <img alt="Reggie the cat" src="images/cat.jpeg" />
+        <figcaption>Check out my cute cat Reggie!</figcaption>
+      </figure>
+    </main>
   )
 }
 
 export default App
 ```
+{% endcode %}
 
-* Components are functions that return JSX.
-* Note the capitalized name. All components must use PascalCasing.
-* Components must return a single surrounding element. Here, we return a `header`.
-* When returning multiple elements, wrap the elements parentheses `()`.
+Everything is in one big component right now. That's fine to start — but as the app grows, we'll want to break pieces out into their own components.
 
-### Nested Components
+### Challenge: Component Composition
 
-React is at its best when we separate the UI into individual components and then combine them to create the entire UI.
+**Your turn:** Take the `App` component above and refactor it so that:
+1. The `<h1>` lives in its own `Header` component.
+2. The `<figure>` and its child elements live in its own `InstagramPost` component.
+3. `App` renders both using components inside of the `<main></main>` element. 
+4. Add the following CSS rule to the `index.css` file and apply it to the `figcaption` in the `InstagramPost` component.
 
-To render a component inside another component, we use the name of the component as if it were a self-closing HTML tag: `<ComponentName />`
+```css
+.italic {
+  font-style: italic;
+}
+```
+
+To render a component, use it like a self-closing HTML tag: 
 
 ```jsx
-const Header = () => {
-  return <h1>My Pet Pics</h1>;
-};
+<element>
+  <ChildComponentName />
+</element>
+```
+
+**<details><summary>Solution</summary>**
+
+```jsx
+const Header = () => <h1>My Pet Pics</h1>
 
 const InstagramPost = () => {
   return (
     <figure>
       <img alt="Reggie the cat" src="images/cat.jpeg" />
-      <figcaption>Check out my cute cat Reggie!</figcaption>
+      <figcaption className="italic">Check out my cute cat Reggie!</figcaption>
     </figure>
   );
 };
 
 const App = () => {
   return (
-    <> 
+    <main>
       <Header />
       <InstagramPost />
-    </>
+    </main>
   );
 };
 
 export default App
 ```
 
-**Q: Compare and Contrast how each of these components return their children. What do you notice?**
-
-**<details><summary>Answer</summary>**
-
-* `InstagramPost` and `App` each return more than one line of JSX so the returned value is wrapped in `()`
-* The `App` component uses fragments (`<>`) to wrap its child elements while `InstagramPost` uses a `<figure>`. Fragments let you group elements without a wrapper node. It is the same as if the elements were not grouped.
-
-</details>
-
-### Adding Classes and Style
-
-Imagine we had this style rule defined in a CSS file:
-
-```css
-.red {
-  color: red;
-}
-```
-
-We can add style by using the `className` attribute. Note that we aren't using `class`. In React, many of the HTML attributes that we've grown accustomed to will have _slightly_ different names.
-
-```jsx
-const Message = () => {
-  return <p className="red">Hello World!</p>;
-};
-
-const Messages = () => {
-  return (
-    <div>
-      <Message />
-      <Message />
-      <Message />
-    </div>
-  );
-};
-
-const App = () => {
-  return (
-    <>
-      <Header />
-      <NameHeader />
-      <Messages />
-      <InstagramPost />
-    </>
-  );
-};
-```
-
-**<details><summary>Q: What will this render?</summary>**
-
-<img src="../.gitbook/assets/message-example.png" alt="" data-size="original">
-
-Note how the `className` attribute in JSX is converted into the HTML attribute `class`.
-
-We can't use the name `class` for this attribute because it is a reserved keyword in JavaScript.
-
-The `for` attribute for `<label>` elements is another example of this. Instead, we use the `htmlFor` attribute.
-
-</details>
-
-**<details><summary>Q: How can I add a `class="insta-pic"` attribute to the `img` in my `InstagramPost` component?</summary>**
-
-```jsx
-const InstagramPost = () => {
-  return (
-    <figure >
-      <img alt="Reggie the cat" src="images/cat.jpeg" className="insta-pic"/>
-      <figcaption>Check out my cute cat Reggie!</figcaption>
-    </figure>
-  );
-};
-```
+**Notice:**
+* `InstagramPost` and `App` each return more than one line of JSX, so the return value is wrapped in `()`
+* `Header` only returns a single line of JSX so we can write it as a one-liner without `()`
 
 </details>
 
@@ -317,157 +314,260 @@ One of the most essential and useful features of React and JSX is how easy it is
 We can insert any JavaScript expression into our JSX using curly braces `{}`.
 
 ```jsx
-const catPicture = {
-  alt: "Reggie the cat",
-  src: "images/cat.jpeg",
-  caption: "Check out my cute cat Reggie!"
-}
+const pictures = [
+  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
+  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
+  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+];
 
+const Header = () => <h1>My Pet Pics — {pictures.length} Posts</h1>;
+// Produces the HTML: <h1>My Pet Pics — 3 Posts</h1>
+```
+
+We can also use JavaScript expressions to set attribute values:
+
+```jsx
 const InstagramPost = () => {
   return (
     <figure>
       <img 
-        src={catPicture.src} 
-        alt={`Photo of ${catPicture.alt}`}  
+        src={pictures[0].src} 
+        alt={`${pictures[0].alt} by ${pictures[0].user}`}
         className="insta-pic" 
       />
-      <figcaption style={{ fontStyle: 'italic' }}>{catPicture.caption}</figcaption>
+      <figcaption>{pictures[0].caption} by {pictures[0].user}</figcaption>
     </figure>
   );
 };
 ```
 
-Notice how the `alt` attribute uses string concatenation!
+There are two things to note here:
+1. Attributes expect a single value. So, we use string interpolation to combine the values `pictures[0].alt` and `pictures[0].user` into a single string.
+2. For the inner content of the `figcaption` element, React is smart enough to handle a mixture of values and will combine them intelligently without the need for interpolation.
 
-In the above example, `style={{}}` is not a special syntax, but a regular `{}` object inside the `style={ }` JSX curly braces. You can use the `style` attribute when your styles depend on JavaScript variables.
+{% hint style="info" %}
+You *could* write the contents of `figcaption` as a single expression:
+
+```jsx
+<figcaption>{`${pictures[0].alt} by ${pictures[0].user}`}</figcaption>
+```
+
+But this is not necessary and results in a poorer reading experience.
+{% endhint %}
 
 ### Sharing Data Between Components With Props
 
-What makes React so powerful is the ability to share data between components using **props**.
+Look at the previous example and notice that the `InstagramPost` component is hard-coded. It will always render the first picture in the `pictures` array, minimizing its value as a reusable component.
 
-Every React function-component is passed an argument called `props`. It is an object containing properties provided to the component by the parent.
+To make components reusable while incorporating outside data, we use **props** ("properties").
 
-In this example, the parent component is `App` and it provides a `pictureData` prop to each instance of the `InstagramPost` component.
+Props are values passed down to a React component by the parent component. Those properties are defined using `prop={value}` syntax, similar to attribute assignment:
 
 ```jsx
-const catPicture = {
-  alt: "Reggie the cat",
-  src: "images/cat.jpeg",
-  caption: "Check out my cute cat Reggie!"
-}
-const dogPicture = {
-  alt: "Robert the dog",
-  src: "images/dog.jpeg",
-  caption: "Check out my cute dog Robert!"
-}
-const duckPicture = {
-  alt: "Daffy the Duck",
-  src: "images/duck.jpeg",
-  caption: "Check out my cute duck Daffy!"
-}
+const pictures = [
+  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
+  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
+  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+];
 
-const InstagramPost = ({ pictureData }) => {
+// props will always be an object
+const InstagramPost = (props) => {
   return (
     <figure>
       <img 
-        src={pictureData.src} 
-        alt={`Photo of ${pictureData.alt}`}  
+        src={props.picture.src} 
+        alt={`${props.picture.alt} by ${props.picture.user}`}
         className="insta-pic" 
       />
-      <figcaption style={{ fontStyle: 'italic' }}>{pictureData.caption}</figcaption>
+      <figcaption>{props.picture.caption} by {props.picture.user}</figcaption>
     </figure>
   );
 };
 
-// Root component
-function App() {
-  // Component composition
-  return (
-    <>
-      <h1>My Pet Pics</h1>
-      <InstagramPost pictureData={catPicture} />
-      <InstagramPost pictureData={dogPicture} />
-      <InstagramPost pictureData={duckPicture} />
-    </>
-  )
-}
+// We set props with the syntax propName={value}
+<InstagramPost picture={pictures[0]} />
+<InstagramPost picture={pictures[1]} />
+<InstagramPost picture={pictures[2]} />
 ```
 
-**Q: What will this render?**
+You can pass as many props as you'd like and each will be listed inside the `props` argument:
+
+```jsx
+<ChildComponent prop1={value1} prop2={value2}>
+```
+
+Since `props` is an object, we often will immediately destructure the provided values in the parameter list of the child component:
+
+```jsx
+const ChildComponent = ({prop1, prop2}) => {
+  // ...
+};
+```
+
+### Challenge: Props Refactor
+
+Take the code sample above and refactor it such that `picture` prop is destructured from the `props` object. Update the rest of the code accordingly. How does this improve the code?
+
+**<details><summary>Solution</summary>**
+```jsx
+// Destructure picture out of the props object and replace `props.picture.X` with `picture.X`
+const InstagramPost = ({picture}) => {
+  return (
+    <figure>
+      <img 
+        src={picture.src} 
+        alt={`${picture.alt} by ${picture.user}`}
+        className="insta-pic" 
+      />
+      <figcaption>{picture.caption} by {picture.user}</figcaption>
+    </figure>
+  );
+};
+```
+</details>
 
 ### Rendering A List of Elements
 
-* Use array to store data
-* Render `{array.map}`
-* Give each element a `key` that should be unique (using the index of the array is okay but not ideal)
+When we have an array of data that we want to turn into components, like `pictures`, we can use `array.map()` to create an array of components. We can insert that array of components directly inside of our JSX using the `{}` syntax, often inside of a `ul`:
 
 ```jsx
-const InstagramPost = ({ pictureData }) => {
-  /* ... */
-};
-
-// Array of data
 const pictures = [
-  {
-    id: 1,
-    alt: "Reggie the cat",
-    src: "images/cat.jpeg",
-    caption: "Check out my cute cat Reggie!"
-  },
-  {
-    id: 2,
-    alt: "Robert the dog",
-    src: "images/dog.jpeg",
-    caption: "Check out my cute dog Robert!"
-  },
-  {
-    id: 3,
-    alt: "Daffy the Duck",
-    src: "images/duck.jpeg",
-    caption: "Check out my cute duck Daffy!"
-  }
-]
+  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
+  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
+  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+];
 
-// Render the array in a ul
+const Header = () => { /* ... */ }
+const InstagramPost = ({picture}) => { /* ... */ }
+
+// New Component: Converts pictures into an array of InstagramPost components
 const PicturesList = () => {
   return (
     <ul>
-      {
-        pictures.map((picture) => {
-          return (
-            <InstagramPost key={picture.id} pictureData={picture} />
-          );
-        })
-      }
+      {pictures.map((picture) => <InstagramPost picture={picture} key={picture.id} />)}
     </ul>
   );
 };
 
-const App = () => {
-  return (
-    <>
-      <Header />
-      <PicturesList />
-    </>
-  );
-};
+const App = () => (
+  <main>
+    <Header />
+    <PicturesList />
+  </main>
+);
 ```
 
-## Under the hood: JSX Code must be compiled
+**Note:** Each rendered element needs a unique `key` prop so React can efficiently differentiate each element, typically an `id` is used.
 
-JSX in our code (`<h1>...</h1>`) cannot simply be executed by our browser. It must first be **compiled** (converted) to vanilla JS.
+## Under the Hood: JSX Code Must Be Compiled
 
-**<details><summary>See what this code would look like if it were written without JSX</summary>**
+JSX in our code cannot simply be executed by our browser: browsers only understand plain JavaScript.
 
-Note how we have to use `React.createElement` here
+Try opening your `index.html` file directly in a browser — or trying to serve it from Express as a static file — and the browser will throw a `SyntaxError`. 
+
+The JSX syntax in `main.jsx` and `App.jsx` has to be transformed first in a process called **compilation**. Compilation is the process of translating code written in one programming language (which is easy for humans to read) into another format (which is easy for a computer to execute).
+
+Below you can see a simplified example of how React code in a `.jsx` file is compiled into pure JavaScript that can be executed by your browser.
+
+{% tabs %}
+
+{% tab title="JSX (Uncompiled)" %}
+
+This is what you write in your `.jsx` files. It looks like HTML, making it very intuitive to define the structure of your UI.
+
+```jsx
+function WelcomeCard({ user }) {
+  return (
+    <div className="card">
+      <h1 title="Header">Hello, {user.name}</h1>
+      <p>Your role is: {user.role}</p>
+    </div>
+  );
+}
+```
+
+{% endtab %}
+
+{% tab title="JavaScript (Compiled)" %}
+
+This is what the browser actually receives. The compiler has stripped away the "HTML" tags and replaced them with standard JavaScript function calls.
 
 ```js
-const rootEl = document.getElementById("root");
-const root = ReactDOM.createRoot(rootEl);
-
-root.render(React.createElement("h1", {}, "Hello World"));
+// This is a simplified version of the output
+function WelcomeCard({ user }) {
+  return React.createElement(
+    "div",
+    { className: "card" },
+    React.createElement(
+      "h1", 
+      { title: "Header" }, 
+      "Hello, ", 
+      user.name
+    ),
+    React.createElement(
+      "p", 
+      null, 
+      "Your role is: ", 
+      user.role
+    )
+  );
+}
 ```
 
-</details>
+{% endtab %}
 
-Vite is doing the heavy lifting when it comes to the rendering.
+{% endtabs %} 
+
+### Vite in Development: The Dev Server
+
+When you run `npm run dev`, Vite starts a **development server** that intercepts every request for a `.jsx` file and transforms JSX into plain JavaScript on the fly before sending it to the browser. This transformation happens in memory — nothing is written to disk.
+
+This is why the dev server is **development only**. It is fast and convenient for iteration, but you wouldn't run a Vite dev server in production.
+
+### Vite in Production: npm run build
+
+When you're ready to deploy, run:
+
+```bash
+npm run build
+```
+
+Vite compiles every `.jsx` file into plain JavaScript (and bundles everything together) and outputs the result into a `dist/` folder. The `dist/` folder contains only browser-ready files: HTML, CSS, and plain `.js`.
+
+```
+dist/
+├── index.html
+└── assets/
+    ├── index-abc123.js   ← your entire React app compiled to plain JS
+    └── index-abc123.css
+```
+
+You can open `dist/index.html` directly in a browser with no server at all — it's just static files.
+
+### Serving the Build from Express
+
+Now that the build output is plain static files, your Express server can serve them with a single line:
+
+```js
+// server/index.js
+app.use(express.static('frontend/dist'));
+```
+
+This tells Express: "for any request that doesn't match an API route, look for a matching file in `frontend/dist/` and send it."
+
+The full-stack setup looks like this:
+
+```
+my-app/
+├── server/          ← Express (serves API + the built frontend)
+│   └── index.js
+└── frontend/        ← Vite React app
+    ├── src/
+    └── dist/        ← npm run build outputs here
+```
+
+In development you run both servers separately (Vite dev server + Express). In production, only Express runs — it serves the static `dist/` files for the frontend and handles `/api/*` routes for the backend.
+
+## Bonus Reading: React's Virtual DOM
+
+[React's Virtual DOM](https://blog.logrocket.com/virtual-dom-react/#comparison-chart-real-virtual-shadow-dom).
