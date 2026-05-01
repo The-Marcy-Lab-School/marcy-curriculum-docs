@@ -239,7 +239,7 @@ const TodoItem = ({ title }) => {
   2. A setter function that re-renders the component with a new state value
 
 And some additional details:
-* `useState` _must_ be called at the top of a component [otherwise weird stuff happens](https://legacy.reactjs.org/docs/hooks-rules.html).
+* `useState` _must_ be called at the top-most scope of a component (never inside of an `if` statement, loop, or function). [Otherwise weird stuff happens](https://legacy.reactjs.org/docs/hooks-rules.html).
 * `useState()` is invoked with the starting value for the new piece of state (`false`)
 * The convention is to destructure the array to create variables that hold the state value and the setter function with names like `[something, setSomething]`
 

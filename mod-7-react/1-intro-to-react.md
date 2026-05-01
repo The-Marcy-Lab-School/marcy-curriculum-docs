@@ -13,13 +13,13 @@ In this lesson, you will learn the basics of React.
 - [What is React and Why Use It?](#what-is-react-and-why-use-it)
   - [JSX](#jsx)
   - [Components](#components)
-- [Starting a React Project (with Vite)](#starting-a-react-project-with-vite)
+- [The Structure of a React Application](#the-structure-of-a-react-application)
   - [index.html: All Content is Added to the Root Div](#indexhtml-all-content-is-added-to-the-root-div)
   - [main.js: Rendering the Root Component (App)](#mainjs-rendering-the-root-component-app)
   - [App.jsx: The Root Component](#appjsx-the-root-component)
   - [Challenge: Component Composition](#challenge-component-composition)
-- [Rendering Data with React](#rendering-data-with-react)
-  - [Sharing Data Between Components With Props](#sharing-data-between-components-with-props)
+- [Inserting Data into Components](#inserting-data-into-components)
+  - [Props: Sharing Data Between Components](#props-sharing-data-between-components)
   - [Challenge: Props Refactor](#challenge-props-refactor)
   - [Rendering A List of Elements](#rendering-a-list-of-elements)
 - [Under the Hood: JSX Code Must Be Compiled](#under-the-hood-jsx-code-must-be-compiled)
@@ -54,11 +54,13 @@ By the end of this lesson you should be able to answer:
 
 **React** is a JavaScript library for building user-interfaces (UI). Similar to the DOM API (`document.createElement()`), it lets us programmatically create and update HTML in a JavaScript file — but with two key advantages: JSX and components.
 
+Keep in mind that React is just a "wrapper" built on top of the DOM API. The result is a better experience for the developer and, in some cases, a more optimized experience for the user. But everything that we do in React can be implemented, with much more effort, with Vanilla JavaScript.
+
 ### JSX 
 
 **JSX** is an extension of JavaScript that lets us write HTML-like syntax inside of functions.
 
-JSX allows us to create user interfaces **declaratively** (we describe the resulting HTML structure that we want to produce):
+JSX allows developers to create user interfaces **declaratively** (we describe the resulting HTML structure that we want to produce):
 
 ```jsx
 // React — declarative, readable
@@ -72,7 +74,7 @@ const helloWorld = <Text message="hello world" />
 
 Notice how we "invoke" the `Text` function by using it like an HTML element `<Text message="hello world" />`
 
-To produce the same structure with the DOM API and Vanilla JavaScript, we have to write **imperatively** (we give step-by-step instructions for assembling an element):
+To produce the same structure with the DOM API and Vanilla JavaScript, developers write **imperatively** (we give step-by-step instructions for assembling an element):
 
 {% hint style="danger" %}
 ```js
@@ -88,11 +90,13 @@ const helloWorld = makeHeaderElement('Hello World');
 ```
 {% endhint %}
 
-If you know what you're doing, the Vanilla JS approach works fine. However, React just makes the process of designing user interfaces more enjoyable while introducing performance optimizations under the hood.
+If you know what you're doing, the Vanilla JS approach works fine. However, React makes the process of designing user interfaces more enjoyable while introducing performance optimizations under the hood.
 
 ### Components
 
-**Components** are the functions that return JSX. Because they are functions, they are inherently reusable and composable meaning you can build small components and combine them into larger ones.
+**Components** are the functions that return JSX and are the building blocks of a user interface. Every discrete piece of a user interface can be built as a component: a navigation bar, a product card, a single button.
+
+Because they are functions, they are inherently **reusable** and **composable**. This means that you can build small components and combine them into larger ones. For example, a group of `ProductCard` components can be assembled into a larger `ProductGrid` component.
 
 ```jsx
 // Components are functions that return JSX. This is a one-liner with an implicit return
@@ -140,7 +144,7 @@ Any HTML attribute that shares a name with a JavaScript keyword has an alternate
 ```
 {% endhint %}
 
-## Starting a React Project (with Vite)
+## The Structure of a React Application
 
 Now that we know the basics of React, let's see how a React application can be built.
 
@@ -307,7 +311,7 @@ export default App
 
 </details>
 
-## Rendering Data with React
+## Inserting Data into Components
 
 One of the most essential and useful features of React and JSX is how easy it is to utilize data to render components.
 
@@ -355,7 +359,7 @@ You *could* write the contents of `figcaption` as a single expression:
 But this is not necessary and results in a poorer reading experience.
 {% endhint %}
 
-### Sharing Data Between Components With Props
+### Props: Sharing Data Between Components
 
 Look at the previous example and notice that the `InstagramPost` component is hard-coded. It will always render the first picture in the `pictures` array, minimizing its value as a reusable component.
 
