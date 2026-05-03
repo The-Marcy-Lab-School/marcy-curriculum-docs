@@ -1,7 +1,7 @@
 # 3. Fetching with useEffect
 
 {% hint style="info" %}
-Follow along with code examples in the lecture repo!
+Follow along with code examples in the lecture [repo](https://github.com/The-Marcy-Lab-School/7-3-useEffect)!
 {% endhint %}
 
 We've already learned about `useState`. Time for another hook! In this lesson, we'll learn how to use the `useEffect` hook to connect our React frontend to a real backend API.
@@ -106,7 +106,7 @@ Keeping fetch logic isolated:
 
 ## The Fetching Pattern: Load → Event → Reload
 
-When building a full stack application, there are three key times when the frontend will fetch data from an API
+When building a full stack application, there are three key times when the frontend will fetch data from an API.
 
 1. **When a page first loads**—fetching existing data in the database to show to the user for the current page
 2. **When the user does something**—sending a POST, PATCH, or DELETE request
@@ -115,7 +115,7 @@ When building a full stack application, there are three key times when the front
 For example, consider the following user interactions with our todo app:
 * The user visits our application in their browser 
   * → the application sends a GET request to fetch all existing todos and display them
-* The user fill out the form to add a new todo 
+* The user fills out the form to add a new todo 
   * → the application sends a POST request to store the todo in the database
   * → the application sends a GET request to fetch the up-to-date todos and display them
 
@@ -363,7 +363,7 @@ User action → mutate (POST/PATCH/DELETE) → refetch (GET) → re-render
 
 ## Challenge
 
-Build a simple application that loads a random dog image from the endpoint `https://dog.ceo/api/breeds/image/random` on load and renders the image.
+Build a simple Vite project called `dog-app` that loads a random dog image from the endpoint `https://dog.ceo/api/breeds/image/random` on load and renders the image. Add a button that fetches and replaces the dog image.
 
 State required:
 * `dogImage` (defaults to `''` on load, set to the dog image when the fetch returns)
@@ -371,9 +371,10 @@ State required:
 **<details><summary>App.jsx Solution</summary>**
 
 ```jsx
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react'
+import './App.css'
 
-const App = () => {
+function App() {
   const [dogImage, setDogImage] = useState('');
 
   const loadDogImage = async () => {
@@ -385,13 +386,17 @@ const App = () => {
   useEffect(() => {
     loadDogImage();
   }, [])
-  
+
   return (
     <main>
-      <img src={dogImage} />
+      <img src={dogImage} alt="A picture of a random dog" />
+      <button onClick={loadDogImage}>Random Dog</button>
     </main>
   )
 }
+
+export default App
+
 ```
 
 </details>
