@@ -94,7 +94,7 @@ If you know what you're doing, the Vanilla JS approach works fine. However, Reac
 
 ### Components
 
-**Components** are the functions that return JSX and are the building blocks of a user interface. Every discrete piece of a user interface can be built as a component: a navigation bar, a product card, a single button.
+**Components** are the functions that return JSX. Every piece of a user interface can be built as a component: a navigation bar, a product card, a single button.
 
 Because they are functions, they are inherently **reusable** and **composable**. This means that you can build small components and combine them into larger ones. For example, a group of `ProductCard` components can be assembled into a larger `ProductGrid` component.
 
@@ -113,7 +113,7 @@ const Figure = ({ src, text }) => {
   );
 }
 
-// A component can be made up of other components
+// A component can be "composed" of other components
 const InstagramPost = ({ src, text }) => {
   return (
     <div className="instagram-post-card">
@@ -129,8 +129,7 @@ const post = <InstagramPost src={"img/cat.jpeg"} text={"meow"} />
 
 Here are a few rules about creating React components:
 * Component function names must use PascalCasing (UpperCamelCase).
-* A component must return a single surrounding element.
-* When returning multiple elements, wrap them in parentheses `()`.
+* A component must return a single surrounding element. When returning multiple elements, wrap them in parentheses `()`.
 * Components can take in values from the parent component called "props". They behave like parameters.
 
 {% hint style="info" %}
@@ -198,15 +197,9 @@ With React, instead of adding HTML content directly to the `index.html` file, we
 
 ### main.js: Rendering the Root Component (App)
 
-How does all of this actually get to the screen? Head over to the `main.jsx` file.
+Head over to the `main.jsx` file, this is the "entry point" for our React code.
 
-The primary purpose of this file is to render the root component `App`. To do so we:
-
-* Import a package called `react-dom/client`
-* Use the `createRoot` method to create a `root` object.
-* Then we call `createRoot(root).render()` and pass in the `App` component as the argument.
-
-This is mostly handled when Vite creates the project for you so no need to memorize it:
+The primary purpose of this file is to render the root component `App` inside of the `div#root` element. The code is boilerplate (the same every time) and looks like this:
 
 ```jsx
 // main.jsx
@@ -222,16 +215,16 @@ createRoot(document.getElementById('root')).render(
 )
 ```
 
-A few notes:
-* `createRoot` is imported from the `client` version of `react-dom` (there is also a `native` version for mobile development).
-* We can import `.css` files directly into our JavaScript!
-* `createRoot()` takes in an HTML node to use as the root of the HTML structure. This is the only time we will use the DOM API!
-* The `.render()` method is invoked with React components and JSX inside. This is what inserts the `App` component inside of the `div#root` element.
+When building a project with Vite, all of this logic is provided for you so no need to memorize it. That said, here are a few noteworthy things about this setup code:
 * `StrictMode` is a wrapper-component that detects potential React-related issues in our application. It doesn't render anything visible.
+* `createRoot` is imported from the `client` version of `react-dom` but there is also a `native` version for building mobile apps with React (a.k.a. "React Native").
+* We can import `.css` files directly into our JavaScript!
+* `createRoot()` takes in an HTML node (`document.getElementById('root')`) to use as the root of the HTML structure.
+* The `.render()` method is invoked with React components and JSX inside. This is what inserts the `App` component inside of the `div#root` element.
 
 ### App.jsx: The Root Component
 
-In a Vite project, `App.jsx` is where you'll spend most of your time. `App` is the **root component** — every other component in the app will eventually be nested inside it.
+`App` is the standard name for the **root component** — every other component in the app will eventually be nested inside it.
 
 Delete the Vite boilerplate and replace the contents of `App` with some simple HTML:
 
