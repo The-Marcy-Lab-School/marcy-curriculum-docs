@@ -41,10 +41,10 @@ By the end of this lesson you should be able to answer:
 
 In development we run two servers simultaneously:
 
-| Server      | Port | What it serves                     |
-| ----------- | ---- | ---------------------------------- |
-| Vite        | 5173 | Your React app (JSX → JS on the fly) |
-| Express     | 8080 | Your API (`/api/*` routes)         |
+| Server  | Port | What it serves                       |
+| ------- | ---- | ------------------------------------ |
+| Vite    | 5173 | Your React app (JSX → JS on the fly) |
+| Express | 8080 | Your API (`/api/*` routes)           |
 
 Without a proxy, a `fetch('/api/todos')` from the Vite page (origin `http://localhost:5173`) would try to reach `/api/todos` on the **same** origin — but your API lives at `http://localhost:8080`. The browser would get a 404.
 
