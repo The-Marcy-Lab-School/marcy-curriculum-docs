@@ -1,7 +1,7 @@
 # 1. Intro to React
 
 {% hint style="info" %}
-Follow along with code examples in the lecture repo!
+Follow along with code examples in the lecture [repo](https://github.com/The-Marcy-Lab-School/7-1-intro-to-react)!
 {% endhint %}
 
 In this lesson, you will learn the basics of React.
