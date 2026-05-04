@@ -65,7 +65,7 @@ const Text = ({ message }) => {
 // This HTML-like syntax ^ is JSX
 ```
 
-In React, we are able to return HTML-like syntax from functions. This is called **JSX** (JavaScript XML), which allows us to execute JavaScript expressions (inside `{}`) and/or pass in data. &#x20;
+In React, we are able to return HTML-like syntax from functions. This is called **JSX** (JavaScript XML), which allows us to execute JavaScript expressions (inside `{}`) and/or pass in data.
 
 ### B. Component Composition is fast and easy to read
 

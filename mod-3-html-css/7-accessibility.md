@@ -69,7 +69,7 @@ These are obviously not super intuitive, and I encourage you to practice around 
 
 ## Part 0: Why A11y?
 
-You know how Marcy is so great because it's all about opening doors that were shut to you? Well that's why accessibility is so important. **The internet should be for&#x20;**_**everyone**_, and it's pretty easy to hit that goal with just a _little_ bit of work on our end.
+You know how Marcy is so great because it's all about opening doors that were shut to you? Well that's why accessibility is so important. **The internet should be for *everyone***, and it's pretty easy to hit that goal with just a _little_ bit of work on our end.
 
 Also, and I cannot stress enough that we should care about _humans_ more than anything, but you may wind up at a cynical company that simply doesn't care about anything but the bottom line. Fine. They should know that inaccessible sites keep getting sued, so if they don't want to face a lawsuit over a few lines of code, they need to get their act together. Also, Google and bots are getting better, but not fast enough. If you really want SEO to work well with your site, give the bots as much information as possible.
 

@@ -98,7 +98,7 @@ This code breaks the DRY principle (Don't Repeat Yourself). In the `Student` cla
 
 ### `extends`
 
-A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"a Student&#x20;**_**is a**_**&#x20;Person"** to describe this relationship.
+A `Student` is essentially a specific kind of `Person`. In computer science, we would say that **"a Student is a Person"** to describe this relationship.
 
 In JavaScript, we formalize this relationship using the `Subclass extends Superclass` syntax:
 
