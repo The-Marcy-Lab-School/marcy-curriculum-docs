@@ -98,6 +98,8 @@ If you know what you're doing, the Vanilla JS approach works fine. However, Reac
 
 Because they are functions, they are inherently **reusable** and **composable**. This means that you can build small components and combine them into larger ones. For example, a group of `ProductCard` components can be assembled into a larger `ProductGrid` component.
 
+Here, we have a `InstagramPost` component made up of `Figure` and `LikeButton` components:
+
 ```jsx
 // Components are functions that return JSX. This is a one-liner with an implicit return
 const LikeButton = () => <button>❤️</button>;
