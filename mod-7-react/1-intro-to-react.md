@@ -458,7 +458,7 @@ const App = () => {
 };
 ```
 
-**Note:** Each rendered element needs a unique `key` prop so React can efficiently differentiate each element, typically an `id` is used.
+**Note:** Each rendered element needs a unique `key` prop so React can efficiently differentiate each element, typically an `id` value or the index of the value in the array is used.
 
 ## Under the Hood: JSX Code Must Be Compiled
 
