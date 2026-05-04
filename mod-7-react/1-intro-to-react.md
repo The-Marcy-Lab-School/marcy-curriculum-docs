@@ -17,6 +17,7 @@ In this lesson, you will learn the basics of React.
   - [index.html: All Content is Added to the Root Div](#indexhtml-all-content-is-added-to-the-root-div)
   - [main.js: Rendering the Root Component (App)](#mainjs-rendering-the-root-component-app)
   - [App.jsx: The Root Component](#appjsx-the-root-component)
+  - [Public Images](#public-images)
   - [Challenge: Component Composition](#challenge-component-composition)
 - [Inserting Data into Components](#inserting-data-into-components)
   - [Props: Sharing Data Between Components](#props-sharing-data-between-components)
@@ -252,6 +253,12 @@ export default App
 
 Everything is in one big component right now. That's fine to start — but as the app grows, we'll want to break pieces out into their own components.
 
+### Public Images
+
+The `public` folder is where we store static assets and files that our frontend uses directly.
+
+For example, our application references an image file with `src="images/cat.jpeg"`. That file should live in `public/images/`.
+
 ### Challenge: Component Composition
 
 **Your turn:** Take the `App` component above and refactor it so that:
@@ -260,13 +267,15 @@ Everything is in one big component right now. That's fine to start — but as th
 3. `App` renders both using components inside of the `<main></main>` element. 
 4. Add the following CSS rule to the `index.css` file and apply it to the `figcaption` in the `InstagramPost` component.
 
-```css
-.italic {
-  font-style: italic;
-}
-```
+    ```css
+    .italic {
+      font-style: italic;
+    }
+    ```
 
-To render a component, use it like a self-closing HTML tag: 
+5. Copy the `images` folder from the root of the repo into your `public` directory.
+
+Remember, to render a component, use it like a self-closing HTML tag: 
 
 ```jsx
 <element>
@@ -314,9 +323,9 @@ We can insert any JavaScript expression into our JSX using curly braces `{}`.
 
 ```jsx
 const pictures = [
-  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
-  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
-  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpg", caption: "Check out my cute cat Reggie!" },
+  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.png", caption: "Check out my cute dog Robert!" },
+  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.png", caption: "Check out my cute duck Daffy!" },
 ];
 
 const Header = () => <h1>My Pet Pics — {pictures.length} Posts</h1>;
@@ -332,9 +341,8 @@ const InstagramPost = () => {
       <img 
         src={pictures[0].src} 
         alt={`${pictures[0].alt} by ${pictures[0].user}`}
-        className="insta-pic" 
       />
-      <figcaption>{pictures[0].caption} by {pictures[0].user}</figcaption>
+      <figcaption className="italic">{pictures[0].caption} by {pictures[0].user}</figcaption>
     </figure>
   );
 };
@@ -364,9 +372,9 @@ Props are values passed down to a React component by the parent component. Those
 
 ```jsx
 const pictures = [
-  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
-  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
-  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+  { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpg", caption: "Check out my cute cat Reggie!" },
+  { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.png", caption: "Check out my cute dog Robert!" },
+  { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.png", caption: "Check out my cute duck Daffy!" },
 ];
 
 // props will always be an object
@@ -376,9 +384,8 @@ const InstagramPost = (props) => {
       <img 
         src={props.picture.src} 
         alt={`${props.picture.alt} by ${props.picture.user}`}
-        className="insta-pic" 
       />
-      <figcaption>{props.picture.caption} by {props.picture.user}</figcaption>
+      <figcaption className="italic">{props.picture.caption} by {props.picture.user}</figcaption>
     </figure>
   );
 };
@@ -416,9 +423,8 @@ const InstagramPost = ({picture}) => {
       <img 
         src={picture.src} 
         alt={`${picture.alt} by ${picture.user}`}
-        className="insta-pic" 
       />
-      <figcaption>{picture.caption} by {picture.user}</figcaption>
+      <figcaption className="italic">{picture.caption} by {picture.user}</figcaption>
     </figure>
   );
 };
@@ -436,9 +442,9 @@ const InstagramPost = ({picture}) => { /* ... */ }
 const App = () => {
   // We can take the pictures variable out of the global scope and use props to share its data
   const pictures = [
-    { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpeg", caption: "Check out my cute cat Reggie!" },
-    { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.jpeg", caption: "Check out my cute dog Robert!" },
-    { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.jpeg", caption: "Check out my cute duck Daffy!" },
+    { id: 1, user: "ada123", alt: "Reggie the cat", src: "images/cat.jpg", caption: "Check out my cute cat Reggie!" },
+    { id: 2, user: "ada123", alt: "Robert the dog", src: "images/dog.png", caption: "Check out my cute dog Robert!" },
+    { id: 3, user: "ada123", alt: "Daffy the Duck", src: "images/duck.png", caption: "Check out my cute duck Daffy!" },
   ];
 
   return (
