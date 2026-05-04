@@ -135,7 +135,7 @@ Here are a few rules about creating React components:
 * Components can take in values from the parent component called "props". They behave like parameters.
 
 {% hint style="info" %}
-Since we are writing this HTML syntax in a JavaScript file, can't add a `class=""` attribute to our element because `class` is a reserved keyword. Instead we use `className=""`. Inspect the element in your browser and you'll see that the `className` attribute in JSX is converted into the HTML attribute `class` when rendered in the browser.
+Since we are writing this HTML syntax in a JavaScript file, we can't add a `class=""` attribute to our element because `class` is a reserved keyword. Instead we use `className=""`. Inspect the element in your browser and you'll see that the `className` attribute in JSX is converted into the HTML attribute `class` when rendered in the browser.
 
 Any HTML attribute that shares a name with a JavaScript keyword has an alternate name in React. The `for` attribute for `<label>` elements is another example of this since `for` is a reserved JavaScript keyword for making a loop. Instead, we use the `htmlFor` attribute.
 
