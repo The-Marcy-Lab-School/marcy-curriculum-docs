@@ -549,10 +549,11 @@ You can open `dist/index.html` directly in a browser with no server at all — i
 
 Now that the build output is plain static files, your Express server can serve them with a single line:
 
-```js
-// server/index.js
-app.use(express.static('frontend/dist'));
+{% code title="server/index.js" %}
+```javascript
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 ```
+{% endcode %}
 
 This tells Express: "for any request that doesn't match an API route, look for a matching file in `frontend/dist/` and send it."
 
@@ -567,7 +568,9 @@ my-app/
     └── dist/        ← npm run build outputs here
 ```
 
-In development you run both servers separately (Vite dev server + Express). In production, only Express runs — it serves the static `dist/` files for the frontend and handles `/api/*` routes for the backend.
+In development you run both servers separately (Vite dev server + Express). The browser gets the frontend from the dev server while the API is served by the Express server.
+
+In production, only Express runs — it serves the static `dist/` files for the frontend and handles `/api/*` routes for the backend.
 
 ## Bonus Reading: React's Virtual DOM
 

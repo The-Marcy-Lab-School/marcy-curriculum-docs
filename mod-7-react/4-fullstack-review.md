@@ -37,6 +37,10 @@ By the end of this lesson you should be able to answer:
 
 ## The Vite Proxy
 
+{% hint style="info" %}
+💡 Before reading this section, make sure you've internalized this section from Chapter 1: [Under the Hood: JSX Code Must Be Compiled](./1-intro-to-react.md#under-the-hood-jsx-code-must-be-compiled) 
+{% endhint %}
+
 ### Why a Proxy?
 
 In development we run two servers simultaneously:
