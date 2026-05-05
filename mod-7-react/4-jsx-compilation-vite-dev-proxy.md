@@ -1,7 +1,7 @@
 # 4. JSX Compilation and Vite Dev Proxy
 
 {% hint style="info" %}
-Follow along with code examples in the lecture repo!
+Follow along with code examples in the lecture [repo](https://github.com/The-Marcy-Lab-School/7-4-compilation-vite-proxy)!
 {% endhint %}
 
 You've been writing JSX and running `npm run dev` without thinking too hard about what happens behind the scenes. Today we pull back the curtain. Understanding the build pipeline and the dev proxy turns "it just works" into "I know exactly why this works" — and gives you the mental model to debug it when it doesn't.
