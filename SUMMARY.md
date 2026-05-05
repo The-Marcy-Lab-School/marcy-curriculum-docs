@@ -116,7 +116,7 @@
   * [1. Intro to React](mod-7-react/1-intro-to-react.md)
   * [2. Events, State, and Forms](mod-7-react/2-events-state-and-forms.md)
   * [3. Fetching with useEffect](mod-7-react/3-fetching-useeffect.md)
-  * [4. Full-Stack Review](mod-7-react/4-fullstack-review.md)
+  * [4. JSX Compilation and Vite Dev Proxy](mod-7-react/4-jsx-compilation-vite-dev-proxy.md)
   * [5. Full-Stack Case Study](mod-7-react/5-fullstack-case-study.md)
   * [Project: Full-Stack React Application](mod-7-react/6-react-project.md)
   * [Cheat Sheet](mod-7-react/cheatsheet.md)

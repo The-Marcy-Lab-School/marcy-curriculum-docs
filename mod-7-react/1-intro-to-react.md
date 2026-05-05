@@ -23,10 +23,6 @@ In this lesson, you will learn the basics of React.
   - [Props: Sharing Data Between Components](#props-sharing-data-between-components)
   - [Challenge: Props Refactor](#challenge-props-refactor)
   - [Rendering A List of Elements](#rendering-a-list-of-elements)
-- [Under the Hood: JSX Code Must Be Compiled](#under-the-hood-jsx-code-must-be-compiled)
-  - [Vite in Development: The Dev Server](#vite-in-development-the-dev-server)
-  - [Vite in Production: npm run build](#vite-in-production-npm-run-build)
-  - [Serving the Build from Express](#serving-the-build-from-express)
 - [Bonus Reading: React's Virtual DOM](#bonus-reading-reacts-virtual-dom)
 
 
@@ -38,7 +34,6 @@ By the end of this lesson you should be able to answer:
 2. What is JSX and how do we write it?
 3. What is a component and how do you make one?
 4. What are props and how do we use them?
-5. What is compilation, when is it necessary, and how do we compile React code?
 
 ## Key Concepts
 
@@ -49,7 +44,7 @@ By the end of this lesson you should be able to answer:
 * **Root Component** — the top-level component that all other components are children of. Typically called `App`.
 * **`react-dom/client`** — a React package that lets you render React components on the client (in the browser)
 * **Prop** — a piece of data passed from a parent component to a child component.
-* **Compilation** — the process of translating code written in one programming language (which is easy for humans to read) into another format (which is easy for a computer to execute).
+
 
 ## What is React and Why Use It?
 
@@ -459,118 +454,6 @@ const App = () => {
 ```
 
 **Note:** Each rendered element needs a unique `key` prop so React can efficiently differentiate each element, typically an `id` value or the index of the value in the array is used.
-
-## Under the Hood: JSX Code Must Be Compiled
-
-JSX in our code cannot simply be executed by our browser: browsers only understand plain JavaScript.
-
-Try opening your `index.html` file directly in a browser — or trying to serve it from Express as a static file — and the browser will throw a `SyntaxError`. 
-
-The JSX syntax in `main.jsx` and `App.jsx` has to be transformed first in a process called **compilation**. Compilation is the process of translating code written in one programming language (which is easy for humans to read) into another format (which is easy for a computer to execute).
-
-Below you can see a simplified example of how React code in a `.jsx` file is compiled into pure JavaScript that can be executed by your browser.
-
-{% tabs %}
-
-{% tab title="JSX (Uncompiled)" %}
-
-This is what you write in your `.jsx` files. It looks like HTML, making it very intuitive to define the structure of your UI.
-
-```jsx
-function WelcomeCard({ user }) {
-  return (
-    <div className="card">
-      <h1 title="Header">Hello, {user.name}</h1>
-      <p>Your role is: {user.role}</p>
-    </div>
-  );
-}
-```
-
-{% endtab %}
-
-{% tab title="JavaScript (Compiled)" %}
-
-This is what the browser actually receives. The compiler has stripped away the "HTML" tags and replaced them with standard JavaScript function calls.
-
-```js
-// This is a simplified version of the output
-function WelcomeCard({ user }) {
-  return React.createElement(
-    "div",
-    { className: "card" },
-    React.createElement(
-      "h1", 
-      { title: "Header" }, 
-      "Hello, ", 
-      user.name
-    ),
-    React.createElement(
-      "p", 
-      null, 
-      "Your role is: ", 
-      user.role
-    )
-  );
-}
-```
-
-{% endtab %}
-
-{% endtabs %} 
-
-### Vite in Development: The Dev Server
-
-When you run `npm run dev`, Vite starts a **development server** that intercepts every request for a `.jsx` file and transforms JSX into plain JavaScript on the fly before sending it to the browser. This transformation happens in memory — nothing is written to disk.
-
-This is why the dev server is **development only**. It is fast and convenient for iteration, but you wouldn't run a Vite dev server in production.
-
-### Vite in Production: npm run build
-
-When you're ready to deploy, run:
-
-```bash
-npm run build
-```
-
-Vite compiles every `.jsx` file into plain JavaScript (and bundles everything together) and outputs the result into a `dist/` folder. The `dist/` folder contains only browser-ready files: HTML, CSS, and plain `.js`.
-
-```
-dist/
-├── index.html
-└── assets/
-    ├── index-abc123.js   ← your entire React app compiled to plain JS
-    └── index-abc123.css
-```
-
-You can open `dist/index.html` directly in a browser with no server at all — it's just static files.
-
-### Serving the Build from Express
-
-Now that the build output is plain static files, your Express server can serve them with a single line:
-
-{% code title="server/index.js" %}
-```javascript
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-```
-{% endcode %}
-
-This tells Express: "for any request that doesn't match an API route, look for a matching file in `frontend/dist/` and send it."
-
-The full-stack setup looks like this:
-
-```
-my-app/
-├── server/          ← Express (serves API + the built frontend)
-│   └── index.js
-└── frontend/        ← Vite React app
-    ├── src/
-    └── dist/        ← npm run build outputs here
-```
-
-In development you run both servers separately (Vite dev server + Express). The browser gets the frontend from the dev server while the API is served by the Express server.
-
-In production, only Express runs — it serves the static `dist/` files for the frontend and handles `/api/*` routes for the backend.
 
 ## Bonus Reading: React's Virtual DOM
 

@@ -12,14 +12,15 @@ We've already learned about `useState`. Time for another hook! In this lesson, w
 - [Key Concepts](#key-concepts)
 - [The Todo API](#the-todo-api)
   - [API Fetching Layer](#api-fetching-layer)
-- [The Fetching Pattern: Load → Event → Reload](#the-fetching-pattern-load--event--reload)
-- [Step 1: Fetch on Load with useEffect](#step-1-fetch-on-load-with-useeffect)
+- [The Fetching Pattern: Load → Mutate → Reload](#the-fetching-pattern-load--mutate--reload)
+- [Fetch on Load with useEffect](#fetch-on-load-with-useeffect)
   - [useEffect Syntax](#useeffect-syntax)
   - [The Dependency Array](#the-dependency-array)
   - [Async Effect Callback](#async-effect-callback)
-- [Steps 2 and 3: Fetching with Event Handlers](#steps-2-and-3-fetching-with-event-handlers)
+  - [Dog App Challenge](#dog-app-challenge)
+- [Mutate and Re-Fetch with Event Handlers](#mutate-and-re-fetch-with-event-handlers)
+  - [Challenge: PATCH and DELETE](#challenge-patch-and-delete)
 - [Quiz](#quiz)
-- [Challenge](#challenge)
 
 ## Essential Questions
 
@@ -46,24 +47,22 @@ Now that we know the basics of React—how to use JSX to create components and m
 
 Starting today, our React app connects to a real Express + Postgres backend. The API contract for the Todo app (no auth) is:
 
-| Method | Endpoint         | Description     | Request Body      |
-| ------ | ---------------- | --------------- | ----------------- |
-| GET    | `/api/todos`     | Get all todos   | —                 |
-| POST   | `/api/todos`     | Create a todo   | `{ title }`       |
-| PATCH  | `/api/todos/:id` | Toggle complete | `{ is_complete }` |
-| DELETE | `/api/todos/:id` | Delete a todo   | —                 |
+| Method | Endpoint              | Description     | Request Body      |
+| ------ | --------------------- | --------------- | ----------------- |
+| GET    | `/api/todos`          | Get all todos   | —                 |
+| POST   | `/api/todos`          | Create a todo   | `{ title }`       |
+| PATCH  | `/api/todos/:todo_id` | Toggle complete | `{ is_complete }` |
+| DELETE | `/api/todos/:todo_id` | Delete a todo   | —                 |
 
 A todo object looks like:
 
 ```json
 {
-  "id": 1,
+  "todo_id": 1,
   "title": "Buy groceries",
   "is_complete": false
 }
 ```
-
-> **Vite proxy**: A `vite.config.js` is provided in the starter code. It forwards any request that starts with `/api` to the Express server running on port 8080. You don't need to worry about it yet — we'll look at it closely in the next chapter.
 
 ### API Fetching Layer
 
@@ -104,12 +103,12 @@ Keeping fetch logic isolated:
 - Makes helpers reusable across multiple components
 - Makes it easy to swap the API URL or add error handling in one place
 
-## The Fetching Pattern: Load → Event → Reload
+## The Fetching Pattern: Load → Mutate → Reload
 
 When building a full stack application, there are three key times when the frontend will fetch data from an API.
 
 1. **When a page first loads**—fetching existing data in the database to show to the user for the current page
-2. **When the user does something**—sending a POST, PATCH, or DELETE request
+2. **When the user changes something**—sending a POST, PATCH, or DELETE request
 3. **After the user action resolves**—re-fetching data to get sync'ed with the database
 
 For example, consider the following user interactions with our todo app:
@@ -125,7 +124,7 @@ Import these helpers into the `App.jsx` file:
 import { fetchAllTodos, createTodo } from './fetch-helpers';
 ```
 
-## Step 1: Fetch on Load with useEffect
+## Fetch on Load with useEffect
 
 `useEffect()` is a React hook for executing "side effect" logic caused by a component rendering. Let's break that definition down.
 
@@ -156,7 +155,7 @@ import { useState, useEffect } from 'react';
 2. (optional) A "dependency array" that controls if/when the side effect can run again (e.g. when the component re-renders)
 
 ```jsx
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // ...
 
@@ -170,14 +169,10 @@ function App() {
   // 2. Set up sideEffect to run after the component renders
   useEffect(sideEffect);
 
-  const addTodo = (title) => {
-    console.log(`adding ${title}`);
-  }
-
   return (
     <main>
       <h1>My Todos</h1>
-      <AddTodoForm addTodo={addTodo} />
+      <AddTodoForm />
       <TodoList todos={todos} />
     </main>
   );
@@ -262,106 +257,7 @@ The result is an infinite loop!
 
 </details>
 
-## Steps 2 and 3: Fetching with Event Handlers
-
-We've taken care of the first step: fetching todos when the page first loads. Now we can add fetching when the user submits the form and then fetch the updated set of todos. To do this we will:
-1. Invoke `createTodo` from `fetch-helpers.js` to send a POST request with the form inputs
-2. Use the `loadTodos` side effect to once again send a GET request for the updated todos. 
-
-{% tabs %}
-
-{% tab title="App" %}
-
-```javascript
-function App() {
-  const [todos, setTodos] = useState([]);
-
-  const loadTodos = async () => {
-    const { data, error } = await fetchAllTodos();
-    if (error) return console.error(error);
-    setTodos(data);
-  };
-
-  useEffect(() => {
-    loadTodos();
-  }, []);
-
-  // Make this async, then createTodo -> loadTodos
-  const addTodo = async (title) => {
-    // Step 2: First send the POST request
-    const { error } = await createTodo(title);
-    if (error) return console.error(error);
-    
-    // Step 3: Refetch with a GET request
-    await loadTodos();
-  };
-
-  return (
-    <main>
-      <h1>My Todos</h1>
-      <AddTodoForm addTodo={addTodo} />
-      <TodoList todos={todos} />
-    </main>
-  );
-}
-```
-
-{% endtab %}
-
-{% tab title="AddTodoForm" %}
-
-```jsx
-const AddTodoForm = ({ addTodo }) => {
-  // This event handler is async now
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const title = form.elements.title.value;
-    // And use await
-    await addTodo(title);
-    form.reset();
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="title-input">Todo:</label>
-      <input type="text" name="title" id="title-input" />
-      <button>Add</button>
-    </form>
-  );
-};
-```
-
-{% endtab %}
-
-{% endtabs %} 
-
-Submit the form and check the console — you should see the new todo object in the database and the todo added to your list!
-
-When fetching with event handlers in React, the flow looks like this:
-1. User submits the form in `AddTodoForm` → `handleSubmit` invokes `addTodo()`
-2. `addTodo` fetches `POST /api/todos { title }`
-3. Response comes back → `addTodo` invokes `loadTodos()`
-4. `loadTodos` invokes `fetchAllTodos()`
-5. `fetchAllTodos` fetches `GET /api/todos`
-6. Response comes back → `loadTodos` invokes `setTodos()`
-7. Component re-renders with the updated list of todos
-
-This **refetch-after-write** pattern applies to any user action that produces a mutation request:
-
-```
-User action → mutate (POST/PATCH/DELETE) → refetch (GET) → re-render
-```
-
-## Quiz
-
-* When should you `fetch` using `useEffect` vs. an event handler?
-* What is the purpose of the dependency array in `useEffect`?
-* Why can't the `useEffect` callback itself be `async`?
-* What is the refetch-after-write pattern and why does it keep the UI accurate?
-* Why do we put fetch logic in `fetch-helpers.js` instead of directly in components?
-
-## Challenge
+### Dog App Challenge
 
 Build a simple Vite project called `dog-app` that loads a random dog image from the endpoint `https://dog.ceo/api/breeds/image/random` on load and renders the image. Add a button that fetches and replaces the dog image.
 
@@ -398,5 +294,181 @@ function App() {
 export default App
 
 ```
+</details>
+
+
+## Mutate and Re-Fetch with Event Handlers
+
+We've taken care of the first step: fetching todos when the page first loads. 
+
+Now, a user will see the form and the list of todos. They should be able to fill out the form, submit their todo, and see the list update. This is where the **Mutate -> Refetch** pattern comes in.
+
+Take a look at how we can update both `AddTodoForm` and `App` to accomplish this:
+
+{% tabs %}
+
+{% tab title="AddTodoForm" %}
+
+In the `AddTodoForm`, we 
+1. invoke `createTodo` from `fetch-helpers.js` to send a POST request with the form inputs
+2. use the `loadTodos` side effect to once again send a GET request for the updated todos. But this function is defined in the `App` so we need to receive it as a prop.
+
+```jsx
+const AddTodoForm = ({ loadTodos }) => {
+  // This event handler is async now
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const title = form.elements.title.value;
+    if (!title) return;
+
+    // Step 2: First send the POST request
+    const { error } = await createTodo(title);
+    if (error) return console.error(error);
+    
+    // Step 3: Refetch with a GET request
+    await loadTodos();
+    
+    form.reset();
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="title-input">Todo:</label>
+      <input type="text" name="title" id="title-input" />
+      <button>Add</button>
+    </form>
+  );
+};
+```
+
+{% endtab %}
+
+{% tab title="App" %}
+
+In `App`, we pass down the `loadTodos` function as a prop to `AddTodoForm`.
+
+```javascript
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  const loadTodos = async () => {
+    const { data, error } = await fetchAllTodos();
+    if (error) return console.error(error);
+    setTodos(data);
+  };
+
+  useEffect(() => {
+    loadTodos();
+  }, []);
+
+  return (
+    <main>
+      <h1>My Todos</h1>
+      <AddTodoForm loadTodos={loadTodos} />
+      <TodoList todos={todos} />
+    </main>
+  );
+}
+```
+
+{% endtab %}
+
+{% endtabs %} 
+
+Submit the form and check the console — you should see the new todo object in the database and the todo added to your list!
+
+When fetching with event handlers in React, the flow looks like this:
+1. User submits the form in `AddTodoForm` → `handleSubmit` is invoked
+2. `createTodo()` fetches `POST /api/todos { title }`  → Response comes back
+3. `loadTodos()` is invoked
+4. `fetchAllTodos()` fetches `GET /api/todos` → Response comes back 
+5. `setTodos()` updates the `todos` state and re-renders
+
+This **refetch-after-write** pattern applies to any user action that produces a mutation request:
+
+```
+User action → mutate (POST/PATCH/DELETE) → refetch (GET) → re-render
+```
+
+**<details><summary>Q: Why refetch after mutating the list? Why not just insert a new TodoItem component into the list?</summary>**
+
+In modern applications, many users may be sending in mutating requests at once. By refetching after performing a mutating action, the frontend treats the backend as the "source-of-truth". As a result, if other users were to make simultaneous mutation requests, we would see them all when we re-fetch. 
 
 </details>
+
+### Challenge: PATCH and DELETE
+
+The API contract for the Todo app is:
+
+| Method | Endpoint              | Description     | Request Body      |
+| ------ | --------------------- | --------------- | ----------------- |
+| GET    | `/api/todos`          | Get all todos   | —                 |
+| POST   | `/api/todos`          | Create a todo   | `{ title }`       |
+| PATCH  | `/api/todos/:todo_id` | Toggle complete | `{ is_complete }` |
+| DELETE | `/api/todos/:todo_id` | Delete a todo   | —                 |
+
+A todo object looks like:
+
+```json
+{
+  "todo_id": 1,
+  "title": "Buy groceries",
+  "is_complete": false
+}
+```
+
+Our application doesn't use the PATCH or DELETE endpoints at all. Update the todo application such that each todo has a checkbox to toggle it complete/incomplete and a button to delete it.
+
+The target HTML for each todo item is (the title and `checked` value may vary):
+
+```html
+<li class="todo-item">
+  <span>Take out the trash</span>
+  <div class="todo-item-controls">
+    <input type="checkbox" checked=true />
+    <button>Delete</button>
+  </div>
+</li>
+```
+
+Start with adding a checkbox for the `PATCH` request
+
+**Step 1 — Add a fetch helper to `fetch-helpers.js`**
+
+You'll need a new async function `toggleTodo` that sends a `PATCH /api/todos/:todo_id` request with `{ is_complete }` in the body
+
+Questions:
+* What does the function need as parameters?
+* What should the function return?
+
+**Step 2 — Add the checkbox to `TodoItem`**
+
+1. Add a checkbox to `TodoItem`'s JSX and import `toggleTodo` from `fetch-helpers.js`. 
+2. Add an `onChange` prop and a `handleChange` event handler inside `TodoItem` that calls `toggleTodo()`.
+
+Questions:
+* The checkbox needs a `checked` attribute. What value should it be set to?
+* The `onChange` handler receives an event `e`. How do you get the new checked value from `e`? What arguments does `toggleTodo` expect?
+
+At this point your handler can send the PATCH request — but how do you get the UI to update afterward? You need to call `loadTodos()`, but `loadTodos` is defined in `App`. How do you get it into `TodoItem`?
+
+**Step 3 — Pass `loadTodos` down as a prop**
+
+Pass `loadTodos` from `App` down through `TodoList` to `TodoItem`, then call it inside `handleChange` after the fetch resolves.
+
+Questions:
+* What props does `TodoList` need to accept and pass through to `TodoItem`?
+* Why can't you just define a new `loadTodos` inside `TodoItem` instead? Think about where `setTodos` lives.
+
+**Step 4 — Add the delete button on your own**
+
+Using everything you've just done as a model, add a delete button to `TodoItem` that calls `deleteTodo` and then re-fetches.
+
+## Quiz
+
+* When should you `fetch` using `useEffect` vs. an event handler?
+* What is the purpose of the dependency array in `useEffect`?
+* Why can't the `useEffect` callback itself be `async`?
+* What is the refetch-after-write pattern and why does it keep the UI accurate?
+* Why do we put fetch logic in `fetch-helpers.js` instead of directly in components?
