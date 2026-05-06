@@ -11,18 +11,17 @@
   * [Frontend](6-react-project.md#frontend)
   * [Documentation](6-react-project.md#documentation)
   * [Bonus](6-react-project.md#bonus)
-* [Project Planning Artifacts](6-react-project.md#project-planning-artifacts)
-  * [Proposal](6-react-project.md#proposal)
+* [Project Artifacts](6-react-project.md#project-artifacts)
   * [Scrum Board](6-react-project.md#scrum-board)
-* [Agile Practices](6-react-project.md#agile-practices)
-* [Project Presentation](6-react-project.md#project-presentation)
+  * [Planning Documentation](6-react-project.md#planning-documentation)
+  * [Project Presentation](6-react-project.md#project-presentation)
 * [Project Grading](6-react-project.md#project-grading)
 
 ## Welcome
 
 You have built a full-stack Express + Postgres backend and a React frontend that connects to it. Now you will build one from scratch — your own domain, your own schema, your own API.
 
-The Todo app case study (`swe-casestudy-7-todo-app`) is your reference implementation. Its API contract, schema, and user stories are the model for what you should produce for your own domain.
+The Todo app case study ([swe-casestudy-7-todo-app](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app)) is your reference implementation. Its API contract, schema, and user stories are the model for what you should produce for your own domain.
 
 ## Learning Objectives
 
@@ -34,27 +33,19 @@ The Todo app case study (`swe-casestudy-7-todo-app`) is your reference implement
 
 ## Timeline
 
-| Days  | Focus                                                                 |
-| ----- | --------------------------------------------------------------------- |
-| 8     | **Planning only**: finalize proposal, schema, and API contract        |
-| 9–10  | Backend build: database, models, controllers, auth                   |
-| 11–12 | Frontend build: session rehydration, CRUD, auth UI                   |
-| 13–14 | Polish, debugging, README, bonus features                             |
-| 15    | Presentations                                                         |
+| Days | Focus                                                          |
+| ---- | -------------------------------------------------------------- |
+| 1    | **Planning only**: finalize proposal, schema, and API contract |
+| 2–4  | Backend build: database, models, controllers, auth             |
+| 5–7  | Frontend build: session rehydration, CRUD, auth UI             |
+| 8    | Polish, debugging, README, bonus features                      |
+| 9    | Presentations                                                  |
 
-> **Day 8 is planning only. No code until the proposal, schema, and API contract are approved.**
+> **Day 1 is planning only. No code until the proposal, schema, and API contract are complete.**
 
 ## What You Will Build
 
 You will build a full-stack web application for a resource that **belongs to a user**. Think: a user has many things (todos, books, expenses, recipes…).
-
-### Default Option: Todo App
-
-If you are having trouble deciding on a domain, build the Todo app:
-
-* Follow the same spec as the case study (`swe-casestudy-7-todo-app`)
-* Your API contract, schema, and user stories should match the reference implementation
-* This option still requires building everything from scratch — you cannot copy the case study code
 
 ### Suggested Domains
 
@@ -68,135 +59,131 @@ Choose one, or propose your own (subject to instructor approval):
 
 ## Technical Requirements
 
+Your MVP is deliberately minimal — a working app that does a few things well is better than an ambitious app that doesn't run. Build in this order: schema → seed → auth → resource endpoints → frontend.
+
 ### Backend
 
-* [ ] Express server with `express.json()` middleware
-* [ ] PostgreSQL database with a **one-to-many schema** (users → resource of your choice)
-* [ ] Auth endpoints:
-  * [ ] `POST /api/auth/register`
-  * [ ] `POST /api/auth/login`
-  * [ ] `DELETE /api/auth/logout`
-  * [ ] `GET /api/auth/me`
-* [ ] CRUD endpoints for your resource:
-  * [ ] `GET /api/[resource]` — list all resources for the current user
-  * [ ] `POST /api/[resource]` — create a resource
-  * [ ] `PATCH /api/[resource]/:id` — update a resource
-  * [ ] `DELETE /api/[resource]/:id` — delete a resource
-* [ ] Authentication middleware that protects resource routes
-* [ ] Models use parameterized queries (no SQL injection)
-* [ ] `seed.js` that creates tables and inserts sample data
+Your Express + Postgres server needs:
+
+- A **one-to-many schema**: a `users` table and a resource table with a `user_id` foreign key
+- **Auth endpoints**: `POST /api/auth/register`, `POST /api/auth/login`, `DELETE /api/auth/logout`, and `GET /api/auth/me`
+- **Resource endpoints**: list all resources for the logged-in user (`GET`), create a resource (`POST`), and delete a resource (`DELETE`). Updating a resource (`PATCH`) is not a requirement.
+- **Authentication middleware** that protects all resource routes — unauthenticated requests get a 401
+- **Parameterized queries** in every model (no string interpolation in SQL)
+- A **`seed.js`** that drops, creates, and populates your tables
 
 ### Frontend
 
-* [ ] Vite + React project
-* [ ] `vite.config.js` proxy configured for same-origin dev setup
-* [ ] Fetch helpers organized by domain (e.g., `auth-helpers.js`, `[resource]-helpers.js`)
-* [ ] Session rehydration: `GET /api/auth/me` called on mount via `useEffect([], [])`
-* [ ] Auth-dependent data fetch: resource list fetched when `currentUser` changes
-* [ ] `currentUser` passed as a prop (Context not required)
-* [ ] Login and register forms (controlled) — conditional rendered when not logged in
-* [ ] Logout button
-* [ ] Display the list of resources
-* [ ] Create form (controlled) — POST + refetch
-* [ ] Delete button — DELETE + refetch
-* [ ] Update/edit form or inline toggle — PATCH + refetch
-* [ ] `isLoading` state shown while fetching
-* [ ] `error` state displayed when a fetch fails
+Your Vite + React app needs:
+
+- A **`vite.config.js` proxy** forwarding `/api` requests to Express so cookies work in development
+- **Fetch adapters** split into domain files (e.g., `auth-adapters.js`, `[resource]-adapters.js`)
+- **Session "rehydration"**: call `GET /api/auth/me` on mount so a returning user is still logged in after a page refresh
+- **Auth UI**: login and register forms shown when logged out; logout button shown when logged in
+- **Resource list**: display the logged-in user's resources
+- **Create form**: controlled form that POSTs and refetches
+- **Delete button**: removes a resource and refetches
+- **`isLoading` state**: show a loading indicator while any fetch is in flight
+- **`error` state**: display a message when a fetch fails
 
 ### Documentation
 
-* [ ] **API contract**: a Markdown table listing every endpoint, method, path, description, and request body (see the case study for format)
-* [ ] **Schema diagram**: an entity-relationship diagram showing your tables and their relationships
-* [ ] **User stories**: a list of "a user can…" statements covering all features
-* [ ] **README**: project description, setup instructions, and screenshots
+Before writing any code, add to your README:
+
+- **User stories**: "a user can…" statements for every feature
+- **Schema diagram**: your tables, columns, and relationships
+- **API contract**: a table of every endpoint (method, path, request body, response)
+
+By the time you submit, also include **setup instructions** (how to create the database, seed it, and start both servers) and **screenshots** of the working app.
 
 ### Bonus
 
-* [ ] React Router — multiple pages (e.g., list page → detail page)
-* [ ] Global Context — `currentUser` in a Context instead of props drilling
+Once MVP is complete and working:
 
-## Project Planning Artifacts
+- `PATCH /api/[resource]/:id` — update a resource, with an edit form on the frontend
+- React Router — multiple pages (e.g., list page → detail page)
+- Global Context — `currentUser` in Context instead of props drilling
 
-### Proposal
+## Project Artifacts
 
-Submit your proposal **by the end of Day 8**. It must include:
+### Scrum Board
+
+Create a GitHub repo on your personal account and a project scrum board with columns: **Backlog**, **In Progress**, **Done**.
+
+During this project you will practice the [Agile Methodology](https://www.atlassian.com/agile):
+
+* **Daily stand-up** — each morning, share with the class: what you did yesterday, what you plan to do today, any blockers.
+* **Scrum board** — visualize and manage your tasks.
+* **Timeline** — Day 1 is planning, Days 2–7 are build, Day 8 is polish and Day 9 is presentations.
+* **Retrospective** — at the end, reflect on what went well and what you'd do differently.
+
+### Planning Documentation
+
+At the root of your repo, create a `README.md` file with the outline of your project **by 9:00 AM of Day 2**. It must include:
 
 * Mission statement: who is this for, what does it do, and why would someone use it?
 * Schema diagram (tables, columns, relationships)
 * API contract (all endpoints)
 * MVP user stories ("a user can…")
-* Stretch user stories
+* Stretch user stories (what you will build if you complete MVP)
 
-Reference: `swe-casestudy-7-todo-app/API_CONTRACT.md` as a model for format and detail.
+Before you complete the project, you will also need to add setup steps.
 
-### Scrum Board
+Reference the [case study's README](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app/blob/main/README.md) as a model for format and detail.
 
-Create a GitHub repo and a project scrum board with columns: **Backlog**, **In Progress**, **Done**.
+{% hint style="info" %}
+💡 **Tip:** AI is an excellent planning partner and we *expect* and *encourage* you to use it here to refine your idea and to generate this documentation.
+{% endhint %}
 
-Each morning during stand-up, update the board and assign tasks for the day.
+### Project Presentation
 
-Assign one team member as **Project Manager (PM)**. The PM maintains the scrum board and keeps the team accountable to it.
+On the final day, you will present to the class:
 
-## Agile Practices
-
-During this project you will practice the [Agile Methodology](https://www.atlassian.com/agile):
-
-* **Daily stand-up** — each morning, share: what you did yesterday, what you plan to do today, any blockers.
-* **Scrum board** — visualize and manage your tasks.
-* **Timeline** — Day 8 is planning, Days 9–14 are build, Day 15 is presentations.
-* **Retrospective** — at the end, reflect on what went well and what you'd do differently.
-
-Write a short reflection (~250 words) on how your team practiced the Agile methodology. Specific questions are on Canvas. One reflection per group.
-
-## Project Presentation
-
-On Day 15 your team will present to the class:
-
-* Each team member has a speaking role
-* Include a short demo (under 2 minutes) of the working application
+* Include a short demo (under 2 minutes) of the working application. This can be live or recorded.
 * Total presentation: no longer than 5 minutes
 
 Cover:
-1. What the app does and who it's for
+1. What the app does, who it's for, and why you built it.
 2. One technical challenge you solved
 3. One thing you would build next
 
 ## Project Grading
 
-### Backend (20 points)
+Each checkbox is worth 1 point (22 points total).
 
-* [ ] One-to-many schema with users table (4 pts)
-* [ ] All four auth endpoints work correctly (4 pts)
-* [ ] CRUD endpoints return correct data and status codes (4 pts)
-* [ ] Authentication middleware protects resource routes (4 pts)
-* [ ] Parameterized queries — no SQL injection (2 pts)
-* [ ] Seed file creates tables and sample data (2 pts)
+### Backend (6 points)
 
-### Frontend (20 points)
+* [ ] One-to-many schema: users table + resource table with FK
+* [ ] All four auth endpoints work correctly
+* [ ] CRD resource endpoints return correct data and status codes
+* [ ] Authentication middleware protects resource routes
+* [ ] Parameterized queries — no SQL injection
+* [ ] Seed file creates tables and sample data
 
-* [ ] Session rehydration on mount (3 pts)
-* [ ] Auth-dependent data fetch (3 pts)
-* [ ] Login / register / logout UI (3 pts)
-* [ ] Full CRUD UI with refetch-after-write (4 pts)
-* [ ] `isLoading` and `error` states handled (3 pts)
-* [ ] Vite proxy configured correctly (2 pts)
-* [ ] Fetch logic in domain-specific helper files (2 pts)
+### Frontend (7 points)
 
-### Documentation (10 points)
+* [ ] Session rehydration on mount
+* [ ] Login / register / logout UI with conditional rendering
+* [ ] Resource list, create form, and delete button with refetch-after-write
+* [ ] `isLoading` and `error` states handled
+* [ ] Vite proxy configured correctly
+* [ ] Fetch logic in domain-specific adapter files
+* [ ] Correct use of `useState`, `useEffect`, and props
 
-* [ ] API contract (3 pts)
-* [ ] Schema diagram (3 pts)
-* [ ] User stories (2 pts)
-* [ ] README with setup instructions and screenshots (2 pts)
+### Documentation (4 points)
 
-### Agile (10 points)
+* [ ] User stories cover all features
+* [ ] Schema diagram is accurate
+* [ ] API contract covers all endpoints
+* [ ] README includes setup instructions and screenshots
 
-* [ ] Proposal submitted by end of Day 8 (3 pts)
-* [ ] Scrum board maintained throughout (4 pts)
-* [ ] Agile reflection written (3 pts)
+### Agile (2 points)
 
-### Presentation (5 points)
+* [ ] Planning doc submitted by 9:00 AM Day 2
+* [ ] Scrum board maintained throughout
 
-* [ ] Each member speaks (2 pts)
-* [ ] Demo shows a working application (2 pts)
-* [ ] Presentation under 5 minutes (1 pt)
+### Presentation (3 points)
+
+* [ ] Demo shows a working application
+* [ ] Presentation under 5 minutes
+* [ ] Presentation addresses all 3 questions
