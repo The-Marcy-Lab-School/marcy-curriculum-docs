@@ -78,6 +78,7 @@ In React, this "adapter" terminology comes from the idea that this layer acts as
 {% tab title="Auth Adapters" %}
 
 {% code title="src/adapters/auth-adapters.js" %}
+
 ```javascript
 const handleFetch = async (url, options = {}) => {
   try {
@@ -121,6 +122,7 @@ export const logout = async () => {
 {% tab title="Todo Adapters" %}
 
 {% code title="src/adapters/todo-adapters.js" %}
+
 ```javascript
 const handleFetch = async (url, options = {}) => {
   try {
