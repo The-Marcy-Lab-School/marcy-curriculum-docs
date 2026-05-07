@@ -13,6 +13,7 @@ Most of this lesson is about composing everything you have already learned — `
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Adding Auth to the Todo App](#adding-auth-to-the-todo-app)
+  - [Review: Authentication and Authorization](#review-authentication-and-authorization)
 - [Separation of Concerns](#separation-of-concerns)
   - [Fetch Adapters by Domain](#fetch-adapters-by-domain)
   - [Components Folder](#components-folder)
@@ -64,6 +65,33 @@ The same Todo server from Day 3 now has four additional auth endpoints with sess
 * The `/api/auth/logout` endpoint destroys the session cookie.
 
 Additionally, the todo endpoints now require authentication and only return todos that belong to the logged-in user.
+
+### Review: Authentication and Authorization
+
+**Bcrypt Hashing and Password Matching:**
+
+A password hash is stored in the database. When a user logs in, The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated.
+
+![Validating user credentials using bcrypt](../mod-6-databases/img/9-hashing-passwords-bcrypt/hashed-password-lookup.png)
+
+**Login and Creating Session Cookies:**
+
+That bcrypt hashing and password matching process is used in our login flow. Additionally, we include a cookie in the response along with the user information. Cookies let the user leave the website and return while remaining logged-in. They also support authorization for mutating user-owned resources.
+
+![When a user logs in successfully, a cookie is set and included in the response along with the user information.](../mod-6-databases/img/10-sessions-login/login-sequence.png)
+
+**Authorization with the checkAuthentication Middleware and Ownership Checks:**
+
+The checkAuthentication middleware and ownership checks for an endpoint like `DELETE /api/users/2` produces three possible scenarios:
+
+Scenario 1. The user is unauthenticated (no cookie):
+![Sequence diagram of scenario 1](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-no-cookie.png)
+
+Scenario 2. The user is authenticated but is not the owner of the resource (e.g. alice tries to delete user bob):
+![Sequence diagram of scenario 2](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-incorrect-user.png)
+
+Scenario 3. The user is authenticated and *is* the owner of the resource (e.g. alice deleting her own account):
+![Sequence diagram of scenario 3](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-correct-user.png)
 
 ## Separation of Concerns
 
