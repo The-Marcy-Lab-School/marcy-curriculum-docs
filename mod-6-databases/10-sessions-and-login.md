@@ -203,27 +203,7 @@ The `session.userId` data has been encoded using Base64 encoding. Unlike encrypt
 
 We can visualize this login flow like this:
 
-```mermaid
-sequenceDiagram
-  participant C as Client
-  participant S as Server (login)
-  participant M as userModel
-  participant DB as Postgres
-
-  C->>S: POST /api/auth/login { username, password }
-  S->>M: validatePassword(username, password)
-  M->>DB: SELECT * FROM users WHERE username = $1
-  DB-->>M: { user_id, username, password_hash }
-  M->>M: bcrypt.compare(password, password_hash)
-  alt invalid credentials
-    M-->>S: null
-    S-->>C: 401 { message: 'Invalid credentials' }
-  else valid credentials
-    M-->>S: { user_id, username }
-    S->>S: req.session.userId = user_id
-    S-->>C: 200 { user_id, username } + Set-Cookie
-  end
-```
+![When a user logs in successfully, a cookie is set and included in the response along with the user information.](./img/10-sessions-login/login-sequence.png)
 
 ### Auto-Login on Register
 

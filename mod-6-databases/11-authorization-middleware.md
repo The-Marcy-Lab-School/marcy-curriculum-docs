@@ -380,41 +380,17 @@ Because the user *is* authenticated — we know who they are. `401` specifically
 
 ### Tracing a Protected Request End to End
 
-Here is the complete flow for `DELETE /api/users/2` after both `checkAuthentication` and the ownership check are in place:
+The checkAuthentication middleware and ownership checks for the `DELETE /api/users/2` endpoint produce three possible scenarios:
 
-```mermaid
-sequenceDiagram
-  participant C as Client
-  participant MW as checkAuthentication
-  participant Ctrl as deleteUser controller
-  participant M as userModel
-  participant DB as Postgres
+**Scenario 1. The user is unauthenticated (no cookie):**
+![Sequence diagram of scenario 1](./img/11-authorization-middleware/sequence-protected-request-no-cookie.png)
 
-  alt no session cookie
-    C->>MW: DELETE /api/users/2 (no cookie)
-    MW-->>C: 401 { message: 'You must be logged in' }
-    Note over Ctrl,DB: Controller never runs
-  else valid session, wrong user (alice trying to delete bob)
-    C->>MW: DELETE /api/users/2 (session: userId=1)
-    MW->>MW: req.session.userId exists? ✓
-    MW->>Ctrl: next()
-    Ctrl->>Ctrl: Number('2') !== 1 → ownership check fails
-    Ctrl-->>C: 403 { message: 'You can only delete your own account.' }
-    Note over M,DB: Model never runs
-  else valid session, correct user (bob deleting his own account)
-    C->>MW: DELETE /api/users/2 (session: userId=2)
-    MW->>MW: req.session.userId exists? ✓
-    MW->>Ctrl: next()
-    Ctrl->>Ctrl: Number('2') === 2 → ownership check passes
-    Ctrl->>M: destroy(2)
-    M->>DB: DELETE FROM users WHERE user_id = 2 RETURNING ...
-    DB-->>M: { user_id: 2, username: 'bob' }
-    M-->>Ctrl: { user_id: 2, username: 'bob' }
-    Ctrl-->>C: 200 { user_id: 2, username: 'bob' }
-  end
-```
+**Scenario 2. The user is authenticated but is not the owner of the resource (e.g. alice tries to delete user bob):**
+![Sequence diagram of scenario 2](./img/11-authorization-middleware/sequence-protected-request-incorrect-user.png)
 
-Three possible outcomes — unauthenticated, authenticated but not the owner, and the owner — each gets a different status code.
+**Scenario 3. The user is authenticated and *is* the owner of the resource (e.g. alice deleting her own account):**
+![Sequence diagram of scenario 3](./img/11-authorization-middleware/sequence-protected-request-correct-user.png)
+
 
 ## Testing Protected Routes with curl
 
