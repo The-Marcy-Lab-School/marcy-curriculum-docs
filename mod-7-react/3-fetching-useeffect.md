@@ -73,6 +73,7 @@ When building frontend applications with Vanilla JS, we kept all functions with 
 export const fetchAllTodos = async () => {
   try {
     const response = await fetch('/api/todos');
+    if (!response.ok) return Error(`Error ${response.status} - ${response.statusText}`)
     const data = await response.json();
     return { data, error: null };
   } catch (error) {
@@ -87,6 +88,7 @@ export const createTodo = async (title) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title }),
     });
+    if (!response.ok) return Error(`Error ${response.status} - ${response.statusText}`)
     const data = await response.json();
     return { data, error: null };
   } catch (error) {
@@ -172,7 +174,7 @@ function App() {
   return (
     <main>
       <h1>My Todos</h1>
-      <AddTodoForm />
+      <AddTodoForm setTodos={setTodos} />
       <TodoList todos={todos} />
     </main>
   );
@@ -307,11 +309,42 @@ Take a look at how we can update both `AddTodoForm` and `App` to accomplish this
 
 {% tabs %}
 
+{% tab title="App" %}
+
+In `App`, instead of passing down `setTodos`, we pass down the `loadTodos` function as a prop to `AddTodoForm`. This keeps the ownership of updating the `todos` state in the `App` while still allowing the form to trigger the re-fetch.
+
+```javascript
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  const loadTodos = async () => {
+    const { data, error } = await fetchAllTodos();
+    if (error) return console.error(error);
+    setTodos(data);
+  };
+
+  useEffect(() => {
+    loadTodos();
+  }, []);
+
+  return (
+    <main>
+      <h1>My Todos</h1>
+      <AddTodoForm loadTodos={loadTodos} />
+      <TodoList todos={todos} />
+    </main>
+  );
+}
+```
+
+{% endtab %}
+
 {% tab title="AddTodoForm" %}
 
 In the `AddTodoForm`, we 
-1. invoke `createTodo` from `fetch-helpers.js` to send a POST request with the form inputs
-2. use the `loadTodos` side effect to once again send a GET request for the updated todos. But this function is defined in the `App` so we need to receive it as a prop.
+1. Receive `loadTodos` from the `App` as a prop instead of `setTodos`
+2. invoke `createTodo` from `fetch-helpers.js` to send a POST request with the form inputs
+3. use the `loadTodos` side effect to once again send a GET request for the updated todos. But this function is defined in the `App` so we need to receive it as a prop.
 
 ```jsx
 const AddTodoForm = ({ loadTodos }) => {
@@ -340,36 +373,6 @@ const AddTodoForm = ({ loadTodos }) => {
     </form>
   );
 };
-```
-
-{% endtab %}
-
-{% tab title="App" %}
-
-In `App`, we pass down the `loadTodos` function as a prop to `AddTodoForm`.
-
-```javascript
-function App() {
-  const [todos, setTodos] = useState([]);
-
-  const loadTodos = async () => {
-    const { data, error } = await fetchAllTodos();
-    if (error) return console.error(error);
-    setTodos(data);
-  };
-
-  useEffect(() => {
-    loadTodos();
-  }, []);
-
-  return (
-    <main>
-      <h1>My Todos</h1>
-      <AddTodoForm loadTodos={loadTodos} />
-      <TodoList todos={todos} />
-    </main>
-  );
-}
 ```
 
 {% endtab %}
