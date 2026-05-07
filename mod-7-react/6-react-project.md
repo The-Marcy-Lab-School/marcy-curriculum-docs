@@ -67,15 +67,15 @@ As you use AI, be sure to use it as a **partner, not a substitute** for you doin
 
 ### Timeline
 
-| Days | Focus                                                                |
-| ---- | -------------------------------------------------------------------- |
-| 1    | **Planning only**: draft your project plan, schema, and API contract |
-| 2–4  | Backend build: database, models, controllers, auth                   |
-| 5–7  | Frontend build: session rehydration, CRUD, auth UI                   |
-| 8    | Polish, debugging, README, bonus features                            |
-| 9    | Presentations                                                        |
+| Days  | Focus                                                                |
+| ----- | -------------------------------------------------------------------- |
+| 1–2   | **Planning only**: draft your project plan, schema, and API contract |
+| 3–4   | Backend build: database, models, controllers, auth                   |
+| 5–7   | Frontend build: session rehydration, CRUD, auth UI                   |
+| 8     | Polish, debugging, README, bonus features                            |
+| 9     | Presentations                                                        |
 
-> **Day 1 is planning only. No code until the project plan, schema, and API contract are complete.** That being said, this planning will remain "in draft" until your project is complete and you are expected to keep it up-to-date as you make changes.
+> **Days 1–2 are planning only. No code until the project plan, schema, and API contract are submitted by 9:00 AM on Day 3.** That being said, this planning will remain "in draft" until your project is complete and you are expected to keep it up-to-date as you make changes.
 
 ### Suggested Domains
 
@@ -132,7 +132,7 @@ Before writing any code, add to the `README.md` at the root of your project repo
 * **API contract** (all endpoints, request details, response details)
 * **MVP user stories** ("a user can…")
 
-Your "Day 1" version of this documentation can be rough. You are expected to update them as your project evolves. 
+Your Days 1–2 version of this documentation can be rough. You are expected to update it as your project evolves.
 
 By the time you submit, you must also include **setup instructions** (how to create the database, seed it, and start both servers) and a **roadmap** with future stretch features that you plan on implementing.
 
@@ -160,7 +160,7 @@ During this project you will practice the [Agile Methodology](https://www.atlass
 
 * **Daily stand-up** — each morning, share with the class: what you did yesterday, what you plan to do today, any blockers.
 * **Scrum board** — visualize and manage your tasks.
-* **Timeline** — Day 1 is planning, Days 2–7 are build, Day 8 is polish and Day 9 is presentations.
+* **Timeline** — Days 1–2 are planning, Days 3–7 are build, Day 8 is polish and Day 9 is presentations.
 * **Retrospective** — at the end, reflect on what went well and what you'd do differently.
 
 ### Project Presentation
@@ -208,7 +208,7 @@ Each checkbox is worth 1 point (23 points total).
 
 ### Project Management (2 points)
 
-* [ ] Planning doc submitted by 9:00 AM Day 2
+* [ ] Planning doc submitted by 9:00 AM Day 3
 * [ ] Scrum board maintained throughout the project
 
 ### Presentation (3 points)
