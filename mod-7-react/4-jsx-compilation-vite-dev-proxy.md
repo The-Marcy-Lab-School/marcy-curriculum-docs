@@ -18,6 +18,10 @@ You've been writing JSX and running `npm run dev` without thinking too hard abou
   - [Why a Proxy?](#why-a-proxy)
   - [Reading vite.config.js](#reading-viteconfigjs)
 - [Same-Origin vs. Cross-Origin](#same-origin-vs-cross-origin)
+- [React DevTools](#react-devtools)
+  - [Installation](#installation)
+  - [The Components Tab](#the-components-tab)
+  - [Try It](#try-it)
 
 ## Essential Questions
 
@@ -28,6 +32,7 @@ By the end of this lesson you should be able to answer:
 3. How does `express.static` connect to the React build output in production?
 4. Why do we need a Vite proxy in development, and what problem does it solve?
 5. What is the difference between a same-origin and cross-origin request, and why does it matter for session cookies?
+6. What does the React DevTools Components tab show you that the regular browser DevTools cannot?
 
 ## Key Concepts
 
@@ -38,6 +43,7 @@ By the end of this lesson you should be able to answer:
 * **Vite proxy** — A development-only configuration that forwards `/api/*` requests from the Vite dev server to your Express server, avoiding CORS issues and making fetch URLs simpler.
 * **Same-origin** — A request is same-origin when the scheme, host, and port all match. `fetch('/api/todos')` is always same-origin with the page serving it.
 * **Cross-origin** — A request is cross-origin when the URL has a different origin than the page. Browsers restrict these by default (CORS).
+* **React DevTools** — A browser extension that adds a **Components** tab to the browser's developer tools. It lets you inspect the React component tree and see each component's current props and state — the React-specific equivalent of the Elements tab.
 
 ## Under the Hood: JSX Code Must Be Compiled
 
@@ -228,3 +234,42 @@ fetch('https://dog.ceo/api/breeds/image/random')   ← cross-origin (different h
 When a request is **cross-origin**, the browser blocks cookies unless the server explicitly opts in with CORS headers. That's why we use the proxy instead of hardcoding `http://localhost:8080` in our fetch calls.
 
 **In production**, your Express server serves both the frontend (`dist/`) and the API (`/api/*`) from the same port. Everything is same-origin automatically — no proxy needed.
+
+## React DevTools
+
+The browser's built-in DevTools are great for inspecting the DOM, network requests, and cookies — but they know nothing about React. They can't tell you what a component's state is, or why a component re-rendered.
+
+**React DevTools** is a browser extension that fills that gap. It adds a **Components** tab alongside Elements, Console, and Network. The Components tab shows you the live React component tree and, for any selected component, its current props and state.
+
+### Installation
+
+Install the extension for your browser:
+
+- [Chrome / Edge](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
+
+After installing, open DevTools (`F12` or `Cmd+Option+I`) with a React app running and you will see a **Components** tab appear.
+
+### The Components Tab
+
+Click any component in the tree to select it. The panel on the right shows:
+
+- **props** — what was passed in from the parent
+- **state** (via hooks) — the current value of each `useState` variable
+
+![React DevTools components panel showing a selected component with its props and state](./img/4-jsx-compilation-vite-dev-proxy/react-dev-tools.png)
+
+This is the React-specific equivalent of clicking an element in the Elements tab: instead of seeing the rendered HTML, you see the component that produced it and the data it holds.
+
+### Try It
+
+Open the solution todo app from lesson 3 (`npm run dev`), then open DevTools and click the **Components** tab.
+
+1. Find the `App` component in the tree. What state does it hold?
+2. Click a `TodoItem` component. What props does it receive? Where do those values come from?
+3. Add a new todo via the form, then look at the component that holds the todos list in state. Did it update?
+4. Compare what you see in the Components tab with what you see in the Elements tab for the same element. What information does each one give you that the other doesn't?
+
+{% hint style="info" %}
+You'll use React DevTools heavily in the next lesson to trace how state flows through the authenticated Todo app. Get comfortable finding components and reading their state before moving on.
+{% endhint %}
