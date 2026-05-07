@@ -263,7 +263,7 @@ This is the React-specific equivalent of clicking an element in the Elements tab
 
 ### Try It
 
-Open the solution todo app from lesson 3 (`npm run dev`), then open DevTools and click the **Components** tab.
+Open the todo app (`npm run dev`), then open DevTools and click the **Components** tab.
 
 1. Find the `App` component in the tree. What state does it hold?
 2. Click a `TodoItem` component. What props does it receive? Where do those values come from?
