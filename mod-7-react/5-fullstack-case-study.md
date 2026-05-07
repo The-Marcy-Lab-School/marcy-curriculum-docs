@@ -10,7 +10,6 @@ Most of this lesson is about composing everything you have already learned — `
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [Adding Auth to the Todo App](#adding-auth-to-the-todo-app)
   - [Review: Authentication and Authorization](#review-authentication-and-authorization)
@@ -26,22 +25,12 @@ Most of this lesson is about composing everything you have already learned — `
   - [What does the user see while todos are loading?](#what-does-the-user-see-while-todos-are-loading)
   - [How does `TodoItem` handle mutations?](#how-does-todoitem-handle-mutations)
 - [Putting It All Together](#putting-it-all-together)
-- [Your Project Will Follow This Shape](#your-project-will-follow-this-shape)
-
-## Essential Questions
-
-By the end of this lesson you should be able to answer:
-
-1. Why doesn't React state survive a page refresh, and how does `GET /api/auth/me` solve that problem?
-2. Why does `TodoPage` fetch todos with `useEffect([])` rather than needing `currentUser` in the dependency array?
-3. How do `isLoading` and `error` state improve the user experience during and after a fetch?
-4. Why are `handleLogin`, `handleRegister`, and `handleLogout` defined in `App` rather than in the form components?
-5. What is the adapter pattern, and why split fetch helpers into domain-specific files instead of one large file?
-6. How can the ternary operator and `&&` short circuiting be used to conditionally render JSX?
+  - [Translate It to Your Domain](#translate-it-to-your-domain)
+  - [Your Project Will Follow This Shape](#your-project-will-follow-this-shape)
 
 ## Key Concepts
 
-* **Session check on mount** — On every page load, `App` calls `GET /api/auth/me` to ask the server if a session cookie is present. If it is, `currentUser` is set to the logged-in user. If not, it stays `null`. React state doesn't survive a page refresh, but session cookies do.
+* **Session check on mount** — The first time that `App` renders, it calls `GET /api/auth/me` to ask the server if a session cookie is present. If it is, `currentUser` is set to the logged-in user. If not, it stays `null`. React state doesn't survive a page refresh, but session cookies do.
 * **Conditional rendering with auth** — `TodoPage` only renders when `currentUser` is truthy while `AuthPage` is rendered when `currentUser` is `null`.
 * **Loading state** — A boolean (`isLoading`) that is `true` while a fetch is in flight. Used to render a placeholder instead of an empty UI.
 * **Error state** — A string stored in state so fetch failures are surfaced to the user rather than silently swallowed.
@@ -231,6 +220,12 @@ swe-casestudy-7-todo-app/
 
 **When a user first visits the app, are they logged in or logged out? How does `App` decide which component to render?**
 
+**Before reading the answer, try this:**
+
+1. Open the app in an incognito window (no existing session). What renders on screen?
+2. Open React DevTools and find the `App` component. What is the initial value of `currentUser`?
+3. Find the ternary in `App`'s return statement. Given that `currentUser` starts as `null`, which component renders?
+
 <details><summary>Answer</summary>
 
 When the app first loads, `currentUser` is initialized to `null` — no one is logged in yet. `App`'s return statement uses a **ternary** to switch between two views based on this value:
@@ -261,6 +256,12 @@ Since `null` is falsy, the ternary evaluates to `<AuthPage>`. The moment `curren
 
 **After a user submits the login form, what happens to `currentUser`? Trace the path from form submission all the way to the UI switching to `TodoPage`.**
 
+**Before reading the answer, try this:**
+
+1. Open the Network tab in DevTools. Submit the login form and inspect the `POST /api/auth/login` response. What does the server send back?
+2. Log out so you can log in again. This time, in React DevTools, watch `currentUser` before and after submitting the form. What changes?
+3. Find `handleLogin` in `App.jsx`. Where is it defined? How many components does it pass through before the form can call it?
+
 <details><summary>Answer</summary>
 
 `handleLogin` and `handleRegister` are defined in `App` — the component that owns `currentUser` state — and passed down as props to `AuthPage`:
@@ -289,6 +290,13 @@ const handleRegister = async (username, password) => {
 ### How does a returning user stay logged in?
 
 **A user logged in yesterday and closed the tab. When they open the app today, how do they end up on `TodoPage` without filling out the login form again?**
+
+**Before reading the answer, try this:**
+
+1. Log in, then refresh the page. Do you stay logged in?
+2. Open DevTools > Application > Cookies. Can you find the session cookie? What does it look like?
+3. Delete the session cookie and session signature (right-click > Delete), then refresh. What happens? Why?
+4. In the Network tab, find the `GET /api/auth/me` request that fires on load. Compare its *response* when you're logged in vs. after deleting the cookie.
 
 <details><summary>Answer</summary>
 
@@ -345,9 +353,15 @@ useEffect(() => {
 
 **Why is `loadTodos` defined outside of `useEffect`? What would break if it were defined inside the effect instead?**
 
+**Before reading the answer, try this:**
+
+1. Search the codebase for every place `loadTodos` is referenced. List them all. How many components use it?
+2. Add a `console.log('loadTodos called')` inside `loadTodos`. What causes it be triggered?
+3. Mentally move `loadTodos` inside the `useEffect` callback. Could you still pass it as a prop to `AddTodoForm` and `TodoList`? Why or why not?
+
 <details><summary>Answer</summary>
 
-`checkForSession` only ever needs to run once — on mount. Defining it inside the effect is fine because nothing else needs to call it.
+`checkForSession` only ever needs to run once — on mount (the first time the component loads). Defining it inside the effect is fine because nothing else needs to call it.
 
 `loadTodos` is different: it also runs on mount, but it needs to run again every time a todo is created, updated, or deleted. After any mutation, the component that performed the mutation calls `loadTodos()` to refetch the latest data from the server. This is the **refetch-after-write** pattern.
 
@@ -386,6 +400,12 @@ return (
 ### What does the user see while todos are loading?
 
 **Between when `fetchAllTodos` function is invoked and when the server responds with todos, what does the user see? What if the request fails?**
+
+**Before reading the answer, try this:**
+
+1. In the Network tab, set throttling to "Slow 3G" and reload the page while logged in. Can you see the loading indicator before the todos appear?
+2. Temporarily change the fetch URL in `fetchAllTodos` to `/api/wrong` and reload. Does an error message appear on screen?
+3. Find `isLoading` and `error` in React DevTools while the page loads. When is each one truthy vs. falsy?
 
 <details><summary>Answer</summary>
 
@@ -454,6 +474,12 @@ Use `&&` when you want to show something **or nothing**. Use a ternary (`conditi
 
 **`TodoItem` can both toggle a todo's completion status and delete a todo. After either action succeeds, what needs to happen — and how does `TodoItem` trigger it?**
 
+**Before reading the answer, try this:**
+
+1. Open the Network tab and delete a todo. How many requests fire, and in what order?
+2. Comment out the `loadTodos()` call inside `handleDelete`. Delete a todo — what happens to the UI? What does this tell you about why refetching is necessary?
+3. Trace `loadTodos` from where it's defined in `TodoPage` all the way to where `TodoItem` calls it. How many components does it pass through as a prop?
+
 <details><summary>Answer</summary>
 
 After any mutation (toggle or delete), the UI needs to reflect the latest data from the server. `TodoItem` does this by calling `loadTodos()` after a successful API call — the **refetch-after-write** pattern:
@@ -517,7 +543,27 @@ User logs out
        └─ todos state destroyed automatically → AuthPage renders
 ```
 
-## Your Project Will Follow This Shape
+### Translate It to Your Domain
+
+The case study is a Todo app, but your project will use a different domain. The structure stays the same — only the specifics change.
+
+Open the case study repo and annotate each of the following files with comments describing what you would change to build your app instead. You don't need to write working code — just mark up what's different.
+
+**`server/db/schema.sql`** — What would your resource table be called? What columns would it have?
+
+**`server/db/seed.js`** — What sample data would you seed?
+
+**`server/models/todo-model.js`** → renamed to your resource — What would `getAllTodos` become? What SQL would it run?
+
+**`frontend/src/adapters/todo-adapters.js`** → renamed to your resource — What functions would it export? What parameters would they take?
+
+**`frontend/src/components/TodoPage.jsx`** → renamed — What state would it own? What would the form fields be?
+
+**`frontend/src/components/TodoItem.jsx`** → renamed — What data does each list item display? What mutations does it support?
+
+If you haven't settled on a domain yet, use the Job Application Tracker as a stand-in. This annotation exercise is the first step of your Day 1 project planning.
+
+### Your Project Will Follow This Shape
 
 The full-stack project you're about to build follows exactly this same structure:
 
