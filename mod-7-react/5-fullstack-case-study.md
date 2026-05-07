@@ -13,17 +13,21 @@ Most of this lesson is about composing everything you have already learned — `
 - [Key Concepts](#key-concepts)
 - [Adding Auth to the Todo App](#adding-auth-to-the-todo-app)
   - [Review: Authentication and Authorization](#review-authentication-and-authorization)
+- [Setup and Running the App](#setup-and-running-the-app)
+  - [1. Database](#1-database)
+  - [2. Server](#2-server)
+  - [3. Frontend](#3-frontend)
 - [Separation of Concerns](#separation-of-concerns)
   - [Fetch Adapters by Domain](#fetch-adapters-by-domain)
   - [Components Folder](#components-folder)
 - [The App Component](#the-app-component)
-  - [What does a user see when they first visit the page?](#what-does-a-user-see-when-they-first-visit-the-page)
-  - [What happens after a user logs in or registers?](#what-happens-after-a-user-logs-in-or-registers)
-  - [How does a returning user stay logged in?](#how-does-a-returning-user-stay-logged-in)
+  - [Q1. What does a user see when they first visit the page?](#q1-what-does-a-user-see-when-they-first-visit-the-page)
+  - [Q2. What happens after a user logs in or registers?](#q2-what-happens-after-a-user-logs-in-or-registers)
+  - [Q3. How does a returning user stay logged in?](#q3-how-does-a-returning-user-stay-logged-in)
 - [The TodoPage Component](#the-todopage-component)
-  - [Why is `loadTodos` defined outside of `useEffect`?](#why-is-loadtodos-defined-outside-of-useeffect)
-  - [What does the user see while todos are loading?](#what-does-the-user-see-while-todos-are-loading)
-  - [How does `TodoItem` handle mutations?](#how-does-todoitem-handle-mutations)
+  - [Q4. Why is `loadTodos` defined outside of `useEffect`?](#q4-why-is-loadtodos-defined-outside-of-useeffect)
+  - [Q5. What does the user see while todos are loading?](#q5-what-does-the-user-see-while-todos-are-loading)
+  - [Q6. How does `TodoItem` handle mutations?](#q6-how-does-todoitem-handle-mutations)
 - [Putting It All Together](#putting-it-all-together)
   - [Translate It to Your Domain](#translate-it-to-your-domain)
   - [Your Project Will Follow This Shape](#your-project-will-follow-this-shape)
@@ -81,6 +85,62 @@ Scenario 2. The user is authenticated but is not the owner of the resource (e.g.
 
 Scenario 3. The user is authenticated and *is* the owner of the resource (e.g. alice deleting her own account):
 ![Sequence diagram of scenario 3](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-correct-user.png)
+
+## Setup and Running the App
+
+### 1. Database
+
+Create a local Postgres database:
+
+```sh
+createdb todos_casestudy
+```
+
+### 2. Server
+
+```sh
+cd server
+npm install
+cp .env.template .env
+```
+
+Open `.env` and fill in your Postgres credentials and a session secret. Then seed the database:
+
+```sh
+npm run db:seed
+```
+
+Start the server:
+
+```sh
+npm run dev
+```
+
+The server runs on `http://localhost:8080`.
+
+After running `npm run db:seed`, these accounts are available:
+
+| Username | Password    |
+| -------- | ----------- |
+| alice    | password123 |
+| bob      | password123 |
+
+### 3. Frontend
+
+In a second terminal:
+
+```sh
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend runs on `http://localhost:5173`. The Vite dev proxy forwards all `/api` requests to the Express server so session cookies work correctly.
+
+With the app running, try the following:
+- Open React DevTools, find `App`, inspect the `currentUser` state and the component structure
+- Observe how `currentUser` and the component structure changes as you move through the full user flow: 
+  - register → login → create a todo → delete → logout
 
 ## Separation of Concerns
 
@@ -216,7 +276,7 @@ swe-casestudy-7-todo-app/
 
 `App` has one job: manage who is logged in and decide which page to show based on that information. It owns `currentUser` state, defines the handlers that can change it, and renders either `TodoPage` or `AuthPage` based on whether a user is logged in.
 
-### What does a user see when they first visit the page?
+### Q1. What does a user see when they first visit the page?
 
 **When a user first visits the app, are they logged in or logged out? How does `App` decide which component to render?**
 
@@ -252,9 +312,9 @@ Since `null` is falsy, the ternary evaluates to `<AuthPage>`. The moment `curren
 
 </details>
 
-### What happens after a user logs in or registers?
+### Q2. What happens after a user logs in or registers?
 
-**After a user submits the login form, what happens to `currentUser`? Trace the path from form submission all the way to the UI switching to `TodoPage`.**
+**After a user submits the login form, what happens to `currentUser`? Trace the path from form submission all the way to the UI switching to `TodoPage`. Why is `handleLogin` defined in the `App` component and not in the `AuthPage`?**
 
 **Before reading the answer, try this:**
 
@@ -287,7 +347,7 @@ const handleRegister = async (username, password) => {
 
 </details>
 
-### How does a returning user stay logged in?
+### Q3. How does a returning user stay logged in?
 
 **A user logged in yesterday and closed the tab. When they open the app today, how do they end up on `TodoPage` without filling out the login form again?**
 
@@ -327,7 +387,7 @@ useEffect(() => {
 
 Once a user is logged in, `TodoPage` takes over. It owns all todo-related state — the list of todos, loading status, and any fetch errors. `App` passes in only `currentUser` (needed to display the username) and `handleLogout` (needed for the logout button).
 
-### Why is `loadTodos` defined outside of `useEffect`?
+### Q4. Why is `loadTodos` defined outside of `useEffect`?
 
 Compare how `checkForSession` is written in `App` versus how `loadTodos` is written in `TodoPage`. In `App`, the async function is defined *inside* the effect. In `TodoPage`, `loadTodos` is defined *outside* of it:
 
@@ -397,9 +457,9 @@ return (
 
 </details>
 
-### What does the user see while todos are loading?
+### Q5. What does the user see while todos are loading?
 
-**Between when `fetchAllTodos` function is invoked and when the server responds with todos, what does the user see? What if the request fails?**
+**Between when `fetchAllTodos` function is invoked and when the server responds with todos, what does the user see? What if the request fails? How does the `&&` short-circuit syntax work?**
 
 **Before reading the answer, try this:**
 
@@ -470,7 +530,7 @@ Use `&&` when you want to show something **or nothing**. Use a ternary (`conditi
 
 </details>
 
-### How does `TodoItem` handle mutations?
+### Q6. How does `TodoItem` handle mutations?
 
 **`TodoItem` can both toggle a todo's completion status and delete a todo. After either action succeeds, what needs to happen — and how does `TodoItem` trigger it?**
 
