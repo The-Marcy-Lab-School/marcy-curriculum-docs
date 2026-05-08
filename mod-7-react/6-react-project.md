@@ -5,17 +5,16 @@
   - [The Case Study and Using AI](#the-case-study-and-using-ai)
   - [Timeline](#timeline)
   - [Suggested Domains](#suggested-domains)
-- [Technical Requirements](#technical-requirements)
+- [Deliverables](#deliverables)
+  - [Documentation](#documentation)
   - [Backend](#backend)
   - [Frontend](#frontend)
-  - [Documentation](#documentation)
-  - [Bonus](#bonus)
-- [Project Artifacts](#project-artifacts)
   - [Scrum Board](#scrum-board)
   - [Project Presentation](#project-presentation)
+  - [Bonus](#bonus)
 - [Project Grading](#project-grading)
-  - [Backend (6 points)](#backend-6-points)
-  - [Frontend (8 points)](#frontend-8-points)
+  - [Backend (20 points)](#backend-20-points)
+  - [Frontend (15 points)](#frontend-15-points)
   - [Documentation (4 points)](#documentation-4-points)
   - [Project Management (2 points)](#project-management-2-points)
   - [Presentation (3 points)](#presentation-3-points)
@@ -67,13 +66,15 @@ As you use AI, be sure to use it as a **partner, not a substitute** for you doin
 
 ### Timeline
 
-| Days  | Focus                                                                |
-| ----- | -------------------------------------------------------------------- |
-| 1–2   | **Planning only**: draft your project plan, schema, and API contract |
-| 3–4   | Backend build: database, models, controllers, auth                   |
-| 5–7   | Frontend build: session rehydration, CRUD, auth UI                   |
-| 8     | Polish, debugging, README, bonus features                            |
-| 9     | Presentations                                                        |
+Build in this order: schema → seed → models → resource endpoints → auth → frontend → presentation
+
+| Days | Focus                                                                |
+| ---- | -------------------------------------------------------------------- |
+| 1–2  | **Planning only**: draft your project plan, schema, and API contract |
+| 3–4  | Backend build: database, models, controllers, auth                   |
+| 5–7  | Frontend build: session rehydration, CRUD, auth UI                   |
+| 8    | Polish, debugging, README, bonus features                            |
+| 9    | Presentations                                                        |
 
 > **Days 1–2 are planning only. No code until the project plan, schema, and API contract are submitted by 9:00 AM on Day 3.** That being said, this planning will remain "in draft" until your project is complete and you are expected to keep it up-to-date as you make changes.
 
@@ -89,68 +90,65 @@ Here are some suggestions for what you can build
 4. **Recipe Box** — users + recipes (title, description, ingredients, instructions)
 5. **Workout Log** — users + workouts (date, type: cardio/strength/flexibility, duration, notes)
 
-## Technical Requirements
+## Deliverables
 
-Your MVP is deliberately minimal — a working app that does a few things well is better than an ambitious app that doesn't run. Build in this order: schema → seed → auth → resource endpoints → frontend.
+Your MVP is deliberately minimal — a working app that does a few things well is better than an ambitious app that doesn't run. To complete this project you will need to build:
+1. Documentation that clearly explains the technical details of the project
+2. A backend server with Express and Postgres
+3. A frontend application with Vite and React
+4. A scrum board to track and manage your tasks
+5. A presentation to showcase your project and your development process
+
+### Documentation
+
+The `README.md` of your project must be a polished and professional landing page for any developer looking at your application. It should include the following:
+* a **mission statement** (who is this for and why would they use it)
+* a **schema diagram**
+* an **API contract** covering every endpoint with request and response details
+* **MVP user stories** written as "a user can…" statements.
+
+This should be the first thing that you create before you write any code. In the beginning, this document may be a rough draft. However, you are expected to refine it as the project evolves. By the end of the project, the README must also include
+* **setup instructions** (how to create the database, seed it, and run both servers)
+* a **roadmap** listing stretch features you'd build next.
+
+Reference the [case study's README](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app/blob/main/README.md) as a model for format and depth.
+
+{% hint style="info" %}
+💡 AI is an excellent planning partner and we *expect* and *encourage* you to use it here to refine your idea and generate this documentation.
+{% endhint %}
 
 ### Backend
 
-Your Express + Postgres server needs:
+Your backend is an Express + Postgres server built around a single **one-to-many relationship**: a `users` table and a resource table whose rows each belong to a user via a `user_id` foreign key. This is the same structure as the case study — the difference is only your domain.
 
-- A **one-to-many schema**: a `users` table and a resource table with a `user_id` foreign key
-- **Auth endpoints**: `POST /api/auth/register`, `POST /api/auth/login`, `DELETE /api/auth/logout`, and `GET /api/auth/me`
-- **Resource endpoints**: list all resources for the logged-in user (`GET`), create a resource (`POST`), and delete a resource (`DELETE`). Updating a resource (`PATCH`) is not a requirement.
-- **Authentication middleware** that protects all resource routes — unauthenticated requests get a 401
-- **Parameterized queries** in every model (no string interpolation in SQL)
-- A **`seed.js`** that drops, creates, and populates your tables
+The server exposes two groups of endpoints. 
+1. The **auth endpoints** (`POST /api/auth/register`, `POST /api/auth/login`, `DELETE /api/auth/logout`, `GET /api/auth/me`) handle session creation and destruction using cookies. 
+2. The **resource endpoints** let a logged-in user list their resources (`GET`), add a new one (`POST`), and remove one (`DELETE`). Resource routes should be protected by authentication middleware so that unauthenticated requests receive a 401 before they reach any model code.
+
+Your models must use `pg` with **parameterized queries** throughout and developer should be able to quickly get set up with a database by running a `seed.js` file that drops, creates, and populates your tables. 
+
+Sensitive values (database credentials, session secret) belong in a `.env` file, with a `.env.template` that documents the required variables without exposing real values.
 
 {% hint style="info" %}
-💡 When building your backend, start with implementing the schema and seeds, then build your models, then your endpoints, and finally layer authentication and authorization on top.
+💡 When building your backend, start with the schema and seed, then build your models, then your endpoints, and finally layer authentication and authorization on top. Leverage the case study for guidance!
 {% endhint %}
 
 ### Frontend
 
-Your Vite + React app needs:
+Your frontend is a **Vite + React** app. Its `vite.config.js` should proxy `/api` requests to your Express server so that session cookies work correctly during development.
 
-- A **`vite.config.js` proxy** forwarding `/api` requests to Express so cookies work in development
-- **Fetch adapters** split into domain files (e.g., `auth-adapters.js`, `[resource]-adapters.js`)
-- **Session "rehydration"**: call `GET /api/auth/me` on mount so a returning user is still logged in after a page refresh
-- **Auth UI**: login and register forms shown when logged out; logout button shown when logged in
-- **Resource list**: display the logged-in user's resources
-- **Create form**: controlled form that POSTs and refetches
-- **Delete button**: removes a resource and refetches
-- **`isLoading` state**: show a loading indicator while any fetch is in flight
-- **`error` state**: display a message when a fetch fails
-- **CSS**: the application is generally nice-looking (AI usage is encouraged here!)
+On load, the app calls `GET /api/auth/me` to **rehydrate the session** — this keeps a returning user logged in after a page refresh without requiring them to log in again. Additionally, the auth status of a user changes what they see: 
+* guests see login and register forms
+* logged-in users see their resources and a logout button.
 
-### Documentation
-
-Before writing any code, add to the `README.md` at the root of your project repo with the following:
-
-* **Mission statement:** who is this for, what does it do, and why would someone use it?
-* **Schema diagram** (tables, columns, relationships)
-* **API contract** (all endpoints, request details, response details)
-* **MVP user stories** ("a user can…")
-
-Your Days 1–2 version of this documentation can be rough. You are expected to update it as your project evolves.
-
-By the time you submit, you must also include **setup instructions** (how to create the database, seed it, and start both servers) and a **roadmap** with future stretch features that you plan on implementing.
-
-Reference the [case study's README](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app/blob/main/README.md) as a model for format and detail.
+The core resource UI consists of three pieces: 
+1. a **list** that displays the current user's resources
+2. a **create form** that POSTs a new resource and then refetches
+3. a **delete button** on each item. 
 
 {% hint style="info" %}
-💡 **Tip:** AI is an excellent planning partner and we *expect* and *encourage* you to use it here to refine your idea and to generate this documentation.
+💡 When it comes to styling your application, you are expected and encouraged to use AI! Writing CSS can be tedious to do by hand. We'd rather you spend your time designing and implementing the core server-side and React logic.
 {% endhint %}
-
-### Bonus
-
-Once MVP is complete and working:
-
-- `PATCH /api/[resource]/:id` — update a resource, with an edit form on the frontend
-- React Router — multiple pages (e.g., list page → detail page)
-- Global Context — `currentUser` in Context instead of props drilling
-
-## Project Artifacts
 
 ### Scrum Board
 
@@ -171,32 +169,61 @@ On the final day, you will present to the class:
 * Total presentation: no longer than 5 minutes
 
 Cover:
-1. What the app does, who it's for, and why you built it.
-2. One technical challenge you solved
-3. One thing you would build next
+1. What the app does, who it's for, and why you built it
+2. One technical challenge you solved and how you solved it
+3. One thing you would build next and how you would build it
+
+### Bonus
+
+Once MVP is complete and working:
+
+- `PATCH /api/[resource]/:id` — update a resource, with an edit form on the frontend
+- React Router — multiple pages (e.g., list page → detail page)
+- Global Context — `currentUser` in Context instead of props drilling
 
 ## Project Grading
 
-Each checkbox is worth 1 point (23 points total).
+Each checkbox is worth 1 point (44 points total).
 
-### Backend (6 points)
+### Backend (20 points)
 
-* [ ] One-to-many schema: users table + resource table with FK
-* [ ] All four auth endpoints work correctly
-* [ ] CRD resource endpoints return correct data and status codes
-* [ ] Authentication middleware protects resource routes
-* [ ] Parameterized queries — no SQL injection
+* [ ] Schema has a one-to-many relationship (users table + resource table with FK)
 * [ ] Seed file creates tables and sample data
+* [ ] User model uses `pg` to correctly send SQL queries to the database for necessary CRUD operations
+* [ ] Resource model uses `pg` to correctly send SQL queries to the database for necessary CRUD operations
+* [ ] Parameterized queries are used throughout — no SQL injection
+* [ ] Login auth endpoint works correctly and creates a session cookie
+* [ ] Register auth endpoint works correctly and creates a session cookie
+* [ ] Logout auth endpoint works correctly and deletes the session cookie
+* [ ] `/api/auth/me` endpoint works correctly
+* [ ] Read resource endpoint returns correct data and status codes
+* [ ] Create resource endpoint returns correct data and status codes
+* [ ] Delete resource endpoint returns correct data and status codes
+* [ ] `checkAuthentication` middleware is used to protect at least one resource route
+* [ ] Create and Delete endpoints use the session cookie to confirm ownership
+* [ ] Server `index.js` file uses a `logRoutes` middleware to log all incoming routes
+* [ ] Server `index.js` file has a catch-all error handler that sends a `5xx` error code for database errors
+* [ ] Environment variables are used to protect sensitive data and are stored in a `.env` file with a `.env.template` for other developers to copy
+* [ ] Static assets are served from the frontend's `dist` folder
+* [ ] `express.json()` middleware is used to parse incoming JSON requests
+* [ ] Code is modular and organized into separate folders for controllers, models, and middleware.
 
-### Frontend (8 points)
+### Frontend (15 points)
 
-* [ ] Session rehydration on mount
-* [ ] Login / register / logout UI with conditional rendering
-* [ ] Resource list, create form, and delete button with refetch-after-write
-* [ ] `isLoading` and `error` states handled
+* [ ] Created using Vite
 * [ ] Vite proxy configured correctly
-* [ ] Fetch logic is separated into domain-specific adapter files 
-* [ ] Correct use of `useState`, `useEffect`, and props
+* [ ] Session rehydration on mount
+* [ ] Login / register conditionally rendered for guest users and logout UI shown for logged-in users
+* [ ] Resources are displayed in a list or grid
+* [ ] A form is available to create a resource
+* [ ] A delete button is available to delete a resource
+* [ ] Mutation fetch requests trigger a refetch
+* [ ] `isLoading` state is handled and displayed to the user
+* [ ] `error` state is handled and displayed to the user
+* [ ] Components demonstrate correct use of `props`
+* [ ] Demonstrates correct use of `useState` at least once with state "lifted up" to be shared between components
+* [ ] Demonstrates correct use of `useEffect` at least once
+* [ ] Code is modular and organized into separate folders for adapters and components
 * [ ] CSS creates an aesthetically pleasing user interface
 
 ### Documentation (4 points)
