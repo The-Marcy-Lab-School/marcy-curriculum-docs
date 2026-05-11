@@ -68,15 +68,15 @@ As you use AI, be sure to use it as a **partner, not a substitute** for you doin
 
 Build in this order: schema → seed → models → resource endpoints → auth → frontend → presentation
 
-| Days | Focus                                                                |
-| ---- | -------------------------------------------------------------------- |
-| 1–2  | **Planning only**: draft your project plan, schema, and API contract |
-| 3–4  | Backend build: database, models, controllers, auth                   |
-| 5–7  | Frontend build: session rehydration, CRUD, auth UI                   |
-| 8    | Polish, debugging, README, bonus features                            |
-| 9    | Presentations                                                        |
+| Days | Focus                                                                 |
+| ---- | --------------------------------------------------------------------- |
+| 1–2  | **Planning First**: draft your project plan, schema, and API contract |
+| 3–4  | Backend build: database, models, controllers, auth                    |
+| 5–7  | Frontend build: session rehydration, CRUD, auth UI                    |
+| 8    | Polish, debugging, README, bonus features                             |
+| 9    | Presentations                                                         |
 
-> **Days 1–2 are planning only. No code until the project plan, schema, and API contract are submitted by 9:00 AM on Day 3.** That being said, this planning will remain "in draft" until your project is complete and you are expected to keep it up-to-date as you make changes.
+> **Days 1–2 are planning days. No code until the project plan, schema, and API contract are submitted by 9:00 AM on Day 3.** That being said, this planning will remain "in draft" until your project is complete and you are expected to keep it up-to-date as you make changes.
 
 ### Suggested Domains
 
