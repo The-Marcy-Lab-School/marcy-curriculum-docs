@@ -1,10 +1,11 @@
-# Mod 7 Project: Full-Stack PERN Application
+# Mod 7 Project: Full-Stack PERN Remix
 
 - [Overview](#overview)
   - [Learning Objectives](#learning-objectives)
   - [The Case Study and Using AI](#the-case-study-and-using-ai)
   - [Timeline](#timeline)
   - [Suggested Domains](#suggested-domains)
+  - [Git Workflow](#git-workflow)
 - [Deliverables](#deliverables)
   - [Documentation](#documentation)
   - [Backend](#backend)
@@ -21,17 +22,22 @@
 
 ## Overview
 
-This is your first chance to build a project using the full extent of the "PERN" tech stack (Postgres, Express, React, Node)!
+This is your first chance to build a project using the full extent of the "PERN" tech stack (Postgres, Express, React, Node)! But you won't need to build it entirely from scratch.
 
-For this project, you will get a chance to build a full stack project of your own design: you choose the domain, your design schema and API, and you build the frontend.
+On the job, you will rarely be building from scratch. Instead, you will be dumped into a large codebase that you need to internalize and adapt to on the fly in order to add your own features.
+
+For this project, you will get a chance to remix the [swe-casestudy-7-todo-app](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app) application to build a full stack project of your own design. The provided structures and best practices will largely remain the same, but you will choose the domain, you will design the schema and API, and you will build the frontend to match it.
 
 ### Learning Objectives
 
-Through building this project, your **systems-level understanding of PERN software** will become concrete and you will have a portfolio-worthy project to showcase your mastery.
+Through reading and internalizing a codebase that you did not write yourself, and then subsequently extending and remixing it, your **systems-level understanding of PERN software** will become concrete.
 
-Meanwhile the planning, documentation, and presentation will reflect your **development process** and the **decisions** you made while building it.
+Meanwhile the planning, documentation, and presentation will reflect your **development process** and the **decisions** you made along the way.
+
+In the end, you will have a portfolio-worthy project to showcase your mastery of the full stack curriculum.
 
 By building this project you will:
+* Read, internalize, remix, and extend a codebase that you did not write.
 * Make decisions and tradeoffs as you plan the MVP and stretch features of your application
 * Design and implement a database schema, Express API, and React frontend.
 * Create documentation and a presentation that highlights your development/design process and your decision-making.
@@ -72,8 +78,8 @@ Build in this order: schema → seed → models → resource endpoints → auth 
 | ---- | --------------------------------------------------------------------- |
 | 1–2  | **Planning First**: draft your project plan, schema, and API contract |
 | 3–4  | Backend build: database, models, controllers, auth                    |
-| 5–7  | Frontend build: session rehydration, CRUD, auth UI                    |
-| 8    | Polish, debugging, README, bonus features                             |
+| 5–7  | Frontend build: UI, session rehydration, CRUD, auth UI                |
+| 8    | Debugging, README polish, bonus features                              |
 | 9    | Presentations                                                         |
 
 > **Days 1–2 are planning days. No code until the project plan, schema, and API contract are submitted by 9:00 AM on Day 3.** That being said, this planning will remain "in draft" until your project is complete and you are expected to keep it up-to-date as you make changes.
@@ -89,6 +95,19 @@ Here are some suggestions for what you can build
 3. **Expense Tracker** — users + expenses (title, amount, category, date)
 4. **Recipe Box** — users + recipes (title, description, ingredients, instructions)
 5. **Workout Log** — users + workouts (date, type: cardio/strength/flexibility, duration, notes)
+
+### Git Workflow
+
+Expectations 
+- a `draft` branch contains your current development work, merging into `main` when features are completed and tested
+- the `main` branch is always stable
+- commits are made daily
+
+Key moments to merge `draft` into `main` include:
+* The completion of your README documentation
+* The completion of your backend API with MVP endpoints
+* The completion of your frontend with MVP features
+* Each additional stretch feature beyond MVP
 
 ## Deliverables
 
@@ -174,6 +193,7 @@ On the final day, you will present to the class in a "Science-Fair". You will ha
 Once MVP is complete and working:
 
 - `PATCH /api/[resource]/:id` — update a resource, with an edit form on the frontend
+- Add a many-to-many resource (e.g. comments or likes)
 - React Router — multiple pages (e.g., list page → detail page)
 - Global Context — `currentUser` in Context instead of props drilling
 
