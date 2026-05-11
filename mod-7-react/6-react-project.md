@@ -163,15 +163,11 @@ During this project you will practice the [Agile Methodology](https://www.atlass
 
 ### Project Presentation
 
-On the final day, you will present to the class:
-
-* Include a short demo (under 2 minutes) of the working application. This can be live or recorded.
-* Total presentation: no longer than 5 minutes
-
-Cover:
+On the final day, you will present to the class in a "Science-Fair". You will have a station to present your application in short elevator pitch-style presentations that lasts around 5 minutes. It should include:
 1. What the app does, who it's for, and why you built it
-2. One technical challenge you solved and how you solved it
-3. One thing you would build next and how you would build it
+2. A **live demonstration** of the working application (under 2 minutes)
+3. One technical challenge you solved and how you solved it
+4. One thing you would build next and how you would build it
 
 ### Bonus
 
