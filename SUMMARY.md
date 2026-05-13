@@ -123,12 +123,8 @@
   * [(Bonus) React Router](mod-7-react/7-react-router.md)
   * [(Bonus) React Context](mod-7-react/8-react-context.md)
   * [(Bonus) Global Context Pattern](mod-7-react/9-global-context-pattern.md)
-* [Civic Tech Hackathon](mod-9-civic-tech-hackathon/README.md)
-  * [Overview](mod-9-civic-tech-hackathon/Overview.md)
-  * [React Express Auth Template Overview](mod-9-civic-tech-hackathon/react-express-auth-overview.md)
-  * [Civic Tech Hackathon Rubric](mod-9-civic-tech-hackathon/rubric.md)
 * [Capstone](mod-10-capstone/README.md)
-  * [Overview](mod-10-capstone/overview.md)
+  * Under construction...
 * [Data Structures & Algorithms](mod-x-ds-a/README.md)
   * [Overview](mod-x-ds-a/Overview.md)
   * [1. Nodes & Linked Lists](mod-x-ds-a/1-nodes-linked-lists.md)
