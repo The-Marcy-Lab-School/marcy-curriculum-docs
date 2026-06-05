@@ -124,7 +124,7 @@
   * [(Bonus) React Context](mod-7-react/8-react-context.md)
   * [(Bonus) Global Context Pattern](mod-7-react/9-global-context-pattern.md)
 * [Capstone](mod-10-capstone/README.md)
-  * Under construction...
+  * [Applied AI Engineering Residency Field Guide](./mod-10-capstone/field-guide.md)
 * [Data Structures & Algorithms](mod-x-ds-a/README.md)
   * [Overview](mod-x-ds-a/Overview.md)
   * [1. Nodes & Linked Lists](mod-x-ds-a/1-nodes-linked-lists.md)
