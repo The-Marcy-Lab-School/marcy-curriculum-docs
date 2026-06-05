@@ -223,7 +223,7 @@ Learning FastAPI (or any of these frameworks for that matter) is necessary for b
 
 ### How to Learn Your Framework
 
-### Weeks 3-4: Research and Build!
+### Weeks 3-5: Research and Build!
 
 Your goal by end of Week 5 is to have a deployed MVP version of your application built, laying a strong foundation for your final project. This means user authentication and a single resource that users can manage.
 
@@ -287,7 +287,7 @@ If you aren’t sure yet about how to build your final project, start with a gen
 
 Your product spec develops continuously across the first five weeks. It is not a document you write once — it is a living artifact that gets sharper as your understanding of the project deepens.
 
-**Weeks 1-2: Project Proposal**
+**Week 2: Project Proposal**
 
 Before any framework code is written, your team submits a Project Proposal that includes a project overview, user personas, a feasibility check, and a first draft of user stories. This is not a final spec. It is evidence that you have thought seriously about who you are building for and why. This proposal serves as the foundation of your project’s documentation that will evolve and grow throughout these 10 weeks.
 
