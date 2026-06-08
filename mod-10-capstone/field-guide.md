@@ -7,6 +7,26 @@ You already know how to program. You know what a loop is, what a function does, 
 ---
 
 ## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Why Learn Python](#why-learn-python)
+- [Part 1: Learning Python](#part-1-learning-python)
+  - [The Big Idea](#the-big-idea)
+  - [How to Learn Python Syntax](#how-to-learn-python-syntax)
+  - [Syntax Differences (learn these fast)](#syntax-differences-learn-these-fast)
+  - [Design Decisions (spend real time here)](#design-decisions-spend-real-time-here)
+- [Part 2: Learning a Web Framework](#part-2-learning-a-web-framework)
+  - [Your Task](#your-task)
+  - [How to Learn Your Framework](#how-to-learn-your-framework)
+  - [Weeks 3-5: Research and Build!](#weeks-3-5-research-and-build)
+  - [Ideas for Throwaway Apps to Build](#ideas-for-throwaway-apps-to-build)
+- [Part 3: Building Your Project](#part-3-building-your-project)
+  - [The Product Spec](#the-product-spec)
+  - [The PR Workflow](#the-pr-workflow)
+- [Using AI as a Learning Tool](#using-ai-as-a-learning-tool)
+  - [When to Use It](#when-to-use-it)
+  - [When Not to Use It](#when-not-to-use-it)
+  - [A Useful Test](#a-useful-test)
+
 
 ---
 
