@@ -66,9 +66,9 @@ Category 1 you can pick up in a few hours. Category 2 is worth spending real tim
 
 You do not need a course. You need a good reference and a problem to solve. In order of usefulness:
 
-- **Python Cheatsheet** (pythoncheatsheet.org) — fast, scannable, great for syntax lookup. Links to classes and tutorials.
-- **Official Python documentation** (docs.python.org) — dense but authoritative. Use the tutorial section to start.
-- **LeetCode** — do easy problems you already know how to solve in JavaScript. Your only job is to translate.
+- **Python Cheatsheet** ([https://labex.io/pythoncheatsheet/](https://labex.io/pythoncheatsheet/)) — fast, scannable, great for syntax lookup. Links to classes and tutorials.
+- **LeetCode** ([leetcode.com](https://leetcode.com/problemset/)) — do easy problems you already know how to solve in JavaScript. Your only job is to translate.
+- **Official Python documentation** ([docs.python.org](https://docs.python.org/3/tutorial/index.html)) — dense but authoritative. Use the tutorial section to start.
 
 ### Syntax Differences (learn these fast)
 
