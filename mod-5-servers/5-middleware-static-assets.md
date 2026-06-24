@@ -18,7 +18,7 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 - [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
 - [Deploying Web Server to Render](#deploying-web-server-to-render)
   - [Create a New Web Service](#create-a-new-web-service)
-  - [Best Practice — Serving the Dist Folder and Continuous Deployment](#best-practice--serving-the-dist-folder-and-continuous-deployment)
+  - [Best Practice — Serving the Dist Folder and Automated Deployment](#best-practice--serving-the-dist-folder-and-automated-deployment)
 - [Complete Code](#complete-code)
 
 
@@ -43,7 +43,7 @@ By the end of this lesson, you should be able to answer these questions:
 * **Static Web Server** - a server that stores static assets and serves them directly to visiting clients, without generating content programmatically.
 * **`express.static()`** - a built-in Express function that generates middleware for serving files from a specified directory. When a request matches a file in that directory, the file is sent as the response; otherwise, the request is passed to the next middleware or controller.
 * **Same-Origin Fetch** - when a frontend is served by the same host as the API, fetch requests can use relative paths (e.g., `/api/data`) instead of absolute URLs. The browser sends the request to the same host that served the page.
-* **Continuous Deployment** - a practice where every new code commit automatically triggers a redeploy of the application. On Render, this means the build and start commands run on every commit, keeping the live server in sync with the repository.
+* **Automated Deployment** - a practice where every new code commit automatically triggers a redeploy of the application. On Render, this means the build and start commands run on every commit, keeping the live server in sync with the repository.
 
 ## Express Review
 
@@ -414,7 +414,7 @@ Any time that you want to make an update to your deployed server, just commit an
 
 ![alt text](../.gitbook/assets/web-service-dashboard.png)
 
-### Best Practice — Serving the Dist Folder and Continuous Deployment
+### Best Practice — Serving the Dist Folder and Automated Deployment
 
 For Vite projects, running `npm run build` bundles and minifies the static asset files into an optimized `dist` folder. All JavaScript and CSS is condensed into one file each. When we deploy our project, this means fewer requests, smaller files, and [hashed filenames for cache-busting](https://www.keycdn.com/support/what-is-cache-busting) for our users.
 
@@ -450,7 +450,7 @@ After the "Build" command runs, the "Start" command runs to start the server. To
 
 ![If your project had a vite-project folder for the frontend, and a server folder for the backend, your configuration would look like this](../.gitbook/assets/render-deploying-static-build-start.png)
 
-As a result, the **continuous deployment** process would look like this:
+As a result, the **automated build/deployment** process would look like this:
 
 1. A commit is made with changes to the project
 2. Render detects the commit and begins a new deployment
