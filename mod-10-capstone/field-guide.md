@@ -23,6 +23,7 @@ You already know how to program. You know what a loop is, what a function does, 
   - [The Product Specification Document](#the-product-specification-document)
   - [Capstone Project Team Roles](#capstone-project-team-roles)
     - [Shared Responsibilities](#shared-responsibilities)
+  - [Daily Stand Down Updates](#daily-stand-down-updates)
   - [The PR Workflow](#the-pr-workflow)
 - [Using AI as a Learning Tool](#using-ai-as-a-learning-tool)
   - [When to Use It](#when-to-use-it)
@@ -463,6 +464,99 @@ Regardless of role, every team member is expected to:
 - Present their section of the final Engineering Fair presentation
 
 ---
+
+### Daily Stand Down Updates
+
+As we move into the project build phase, how we communicate our progress becomes just as important as the code we write. To keep your team aligned, we are adopting a structured Daily Stand Down update format posted in Slack at the end of every working day.
+
+This is not a checklist to prove you were working. It is a tool to help you synthesize your progress, spot risks early, and practice communicating like a professional engineer. Your Scrum Master is responsible for making sure every team member posts their update each day.
+
+
+{% tabs %}
+
+{% tab title="Completions" %}
+
+**What it is:** What did you actually finish or meaningfully advance today?
+
+**The Golden Rule:** Don't just list the task — include the outcome or insight. What did you learn? What does it unblock?
+
+| Instead of...                  | Write...                                                                                                                                                             |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| "Worked on the login page"     | "Got the login form connected to the backend — users can now register and log in. Realized our token wasn't being stored correctly in localStorage; fixed that too." |
+| "Did some research on the API" | "Spent time reading the OpenAI API docs and figured out how to structure our prompt to return consistent JSON. Ready to start building the feature tomorrow."        |
+| "Fixed a bug"                  | "Fixed the bug where submitting the form twice was creating duplicate database entries — added a check on the backend to prevent it."                                |
+
+{% endtab %}
+
+{% tab title="Updates" %}
+
+**What it is:** Anything that changed today that your team should know about — schedule shifts, decisions made, feedback received, pivots taken.
+
+**The Golden Rule:** If the plan changed, say so here. This keeps everyone tracking the same roadmap and prevents your teammates from working toward something that is no longer the goal.
+
+| Instead of...                   | Write...                                                                                                                                                                                    |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| "We had a meeting"              | "Met with our Industry Stakeholder — she confirmed that users need to be able to filter by date, not just category. Updating our user stories to reflect this."                             |
+| "Changed something in the repo" | "Switched our database schema to use a junction table for the many-to-many relationship after talking with the Tech Lead — the previous design wouldn't have supported the filter feature." |
+
+{% endtab %}
+
+{% tab title="Focus / Working On" %}
+
+**What it is:** What are you working on next? This is what you are walking into tomorrow with.
+
+**The Golden Rule:** Keep this forward-looking and specific. If a deadline is coming up in the next 48 hours, the tasks leading directly to that deadline should dominate this section.
+
+| Instead of...             | Write...                                                                                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| "More backend work"       | "Building the GET /resources endpoint tomorrow — need it done by Wednesday so we can connect the frontend before deployment."                 |
+| "Finishing up my feature" | "Writing tests for the auth flow and submitting my PR by end of day tomorrow so the Tech Lead has time to review before the sprint deadline." |
+
+{% endtab %}
+
+{% tab title="Blockers / Notes" %}
+
+**What it is:** Anything slowing you down or stopping you entirely, and who you need help from.
+
+**The Golden Rule:** Be specific about what you are blocked on, what you have already tried, and who you need. Tag that person directly — blockers should be resolved peer-to-peer first, with escalation to your Engineering Manager only if the team cannot resolve it.
+
+| Instead of...                     | Write...                                                                                                                                                                                                                       |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| "Stuck on my feature"             | "Blocked by @Jordan — need you to merge your branch before I can build on top of it. Can you do that tonight or first thing tomorrow?"                                                                                         |
+| "Having issues with the database" | "Can't figure out why my foreign key constraint is failing on insert. Already checked the schema and the data types match. @Alex — I know you dealt with something similar last sprint. Can we pair on this tomorrow morning?" |
+
+**A note on blockers:** Surfacing a blocker early is a professional habit, not an admission of failure. The longer you sit on a blocker without flagging it, the more it risks the whole sprint. If a peer cannot unblock you within 24 hours, escalate to your Engineering Manager.
+
+{% endtab %}
+
+{% endtabs %} 
+
+**A Full Example:**
+
+Here is what a strong daily stand down update looks like:
+
+```
+Completions
+• Finished building the POST /reports endpoint — it saves to the database and returns the new record. Tested with Postman, works as expected.
+• Merged Jordan's PR after reviewing — left a comment about the error handling we should add in a follow-up ticket.
+
+Updates
+• Talked to our Industry Stakeholder via email — she wants users to be able to flag a report as "urgent." Adding this as a stretch feature ticket on the board.
+• Pushed our Wednesday deployment back to Thursday after checking in with the Tech Lead — we want auth fully tested before we go live.
+
+Focus / Working On
+• Writing the frontend form that connects to the POST /reports endpoint
+• Need to sync with Alex tomorrow about how we are handling form validation on the client side
+
+Blockers / Notes
+• Blocked by @Alex — waiting on the GET /users endpoint so I can populate the dropdown on the report form. Can you give me an ETA tonight?
+```
+
+**A Few Things to Keep in Mind**
+
+- **Post at the end of every working day**, including remote Fridays. Your Scrum Master will follow up if an update is missing.
+- **Blockers go to your teammates first.** Tag the specific person you need. Only escalate to your Engineering Manager if the team cannot resolve it within 24 hours.
+- **This structure is a starting point.** As your team finds its rhythm, you have the autonomy to adapt it. If you want to add a "Wins / Shoutouts" section to celebrate each other, do it. Own your communication process and iterate on it.
 
 ### The PR Workflow
 
