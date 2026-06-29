@@ -20,7 +20,9 @@ You already know how to program. You know what a loop is, what a function does, 
   - [Weeks 3-5: Research and Build!](#weeks-3-5-research-and-build)
   - [Ideas for Throwaway Apps to Build](#ideas-for-throwaway-apps-to-build)
 - [Part 3: Building Your Project](#part-3-building-your-project)
-  - [The Product Spec](#the-product-spec)
+  - [The Product Specification Document](#the-product-specification-document)
+  - [Capstone Project Team Roles](#capstone-project-team-roles)
+    - [Shared Responsibilities](#shared-responsibilities)
   - [The PR Workflow](#the-pr-workflow)
 - [Using AI as a Learning Tool](#using-ai-as-a-learning-tool)
   - [When to Use It](#when-to-use-it)
@@ -303,9 +305,9 @@ If you aren’t sure yet about how to build your final project, start with a gen
 
 ## Part 3: Building Your Project
 
-### The Product Spec
+### The Product Specification Document
 
-Your product spec develops continuously across the first five weeks. It is not a document you write once — it is a living artifact that gets sharper as your understanding of the project deepens.
+Your product specification document develops continuously first across the first five weeks and then is refined throughout the remainder of the Residency. It is not a document you write once — it is a living artifact that gets sharper as your understanding of the project deepens.
 
 **Week 2: Project Proposal**
 
@@ -330,6 +332,135 @@ Alongside your MVP build, your team formalizes the product spec. The final docum
 - **API contract** — all endpoints, HTTP methods, request bodies, and expected responses
 - **Wireframes** — visual mockups of all key screens
 - **Third-party APIs and libraries** — anything external you plan to integrate, with a brief rationale for each
+
+**Weeks 6+: Refinement**
+
+As your project grows and evolves, so should your Product Specification document. Think of this document as the source of truth that reflects the current state of your project.
+
+### Capstone Project Team Roles
+
+Every Capstone project team has three members, each with a distinct role. These roles are fixed for the duration of the project. They are not just titles — each role comes with real responsibilities that the team depends on you to fulfill.
+
+No role is more important than the others. A technically brilliant application that misses its deadlines, loses track of its tickets, or drifts from its user's actual needs is not a successful project. All three roles are essential.
+
+If there is a disagreement between the Tech Lead and the Product Leader that the team cannot resolve, bring it to your Engineering Manager. Do not let it stall your work.
+
+{% tabs %}
+
+{% tab title="Scrum Master / Project Manager" %}
+
+You are responsible for keeping the team organized, on track, and accountable. While everyone on the team builds the product, you make sure the team is always clear on what needs to get done, who is doing it, and when it is due.
+
+**You own the process.**
+
+**Responsibilities**:
+
+- **Sprint Planning**
+  - Lead sprint planning at the start of each sprint
+  - Work with the team to define sprint goals and break them into specific tasks
+  - Create tickets on the GitHub Projects board for every task, with clear descriptions and acceptance criteria
+  - Assign tickets to team members and set due dates
+- **During the Sprint**
+  - Keep the GitHub Projects board up to date — tickets should reflect reality at all times
+  - Follow up with teammates on the status of their tickets, especially as deadlines approach
+  - Flag any tasks that are at risk of not being completed so the team can adjust
+  - Take notes during team meetings and Engineering Manager check-ins
+- **Engineering Manager Check-In**
+  - You run the weekly Engineering Manager check-in
+  - Come prepared with a status update on the sprint board: what is done, what is in progress, what is blocked
+  - Flag any deadlines at risk and any unresolved team disagreements that need the Engineering Manager's input
+- **Deadlines**
+  - Track all Capstone deadlines — not just sprint deadlines but submission deadlines, deck due dates, and user testing sessions
+  - Give the team at least 48 hours of notice before any major deadline
+
+**What Good Looks Like**
+- The GitHub Projects board is always current and anyone could look at it and understand exactly where the project stands
+- No deadline surprises — the team always knows what is coming
+- Blockers are surfaced early, not the day before something is due
+
+{% endtab %}
+
+{% tab title="Product Leader" %}
+
+You are responsible for the product vision and the user experience. You make sure the team is always building the right thing — something that actually solves the problem for the people it is designed to serve.
+
+**You own the "what" and the "why."**
+
+**Responsibilities**
+
+- **Product Vision**
+  - Maintain and communicate a clear vision for the product throughout the project
+  - Ensure every feature the team builds connects back to the user's actual needs
+  - Make final decisions on product questions — what features to prioritize, what to cut, what the user experience should feel like
+
+- **User Research and Feedback**
+  - Serve as the primary point of contact with the Industry Stakeholder for your Civic Tech Challenge Area
+  - Communicate with the Industry Stakeholder via email to gather feedback on product direction and validate that the solution addresses the real problem
+  - Incorporate feedback from user testing sessions into product decisions for the next sprint
+  - Bring user insights back to the team in a clear, actionable way
+
+- **Product Spec**
+  - Lead the development of the Product Spec Sheet — personas, user stories, API contract, schema design, and wireframes
+  - Ensure the spec reflects the team's current understanding of the product and is updated as the product evolves
+
+- **Engineering Manager Check-In**
+  - Speak to product decisions made since the last check-in
+  - Raise any open questions about product direction that need input
+
+**What Good Looks Like**
+- The team always has a clear answer to "who is this for and why would they use it"
+- Product decisions are made deliberately and communicated clearly to the team
+- User feedback from testing sessions is translated into specific, actionable changes
+
+{% endtab %}
+
+{% tab title="Tech Lead" %}
+
+You are responsible for the technical quality of the codebase. You make final decisions on how the team builds things and you are accountable for the overall health of the repository.
+
+**You own the "how."**
+
+**Responsibilities**
+
+- **Technical Decision-Making**
+  - Make final decisions on technical questions — architecture, framework patterns, how to structure the database, how to implement a feature
+  - When the team is unsure how to approach something technically, you drive the decision
+  - Document significant technical decisions so the team has a record of why things were built the way they were
+
+- **Code Review**
+  - Review and approve all pull requests before they are merged into `main`
+  - Leave substantive code review comments — not just approvals
+  - Hold the team to the standard that `main` is always stable and nothing broken gets merged
+
+- **Repository Health**
+  - Ensure the repository is well-organized and the README is accurate and up to date
+  - Own the deployment — make sure the app is deployed and the deployment is stable
+  - Ensure automated tests are in place and passing before code is merged
+
+- **Engineering Manager Check-In**
+  - Speak to significant technical decisions made since the last check-in
+  - Raise any technical blockers that need input or escalation
+
+**What Good Looks Like**
+- `main` is always stable — no broken builds, no untested code merged without review
+- The team has a clear technical direction and does not spend time relitigating decisions that have already been made
+- Pull requests receive thoughtful feedback, not just rubber-stamp approvals
+
+{% endtab %}
+
+{% endtabs %} 
+
+#### Shared Responsibilities
+
+Regardless of role, every team member is expected to:
+
+- Contribute code throughout the project
+- Submit all individual Capstone deliverables (LinkedIn posts, README contributions, presentation sections)
+- Attend and participate in Engineering Manager check-ins
+- Review teammates' pull requests (the Tech Lead has final approval, but everyone reviews)
+- Participate in sprint planning and sprint retros
+- Conduct and participate in user testing sessions
+- Present their section of the final Engineering Fair presentation
 
 ---
 
