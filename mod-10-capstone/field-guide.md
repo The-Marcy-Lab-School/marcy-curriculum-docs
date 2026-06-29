@@ -19,16 +19,16 @@ You already know how to program. You know what a loop is, what a function does, 
   - [How to Learn Your Framework](#how-to-learn-your-framework)
   - [Weeks 3-5: Research and Build!](#weeks-3-5-research-and-build)
   - [Ideas for Throwaway Apps to Build](#ideas-for-throwaway-apps-to-build)
-- [Part 3: Building Your Project](#part-3-building-your-project)
-  - [The Product Specification Document](#the-product-specification-document)
+- [Part 3: The Project](#part-3-the-project)
+  - [Product Specification Document](#product-specification-document)
+  - [Sprints](#sprints)
+    - [Sprint 0 — Ship the MVP](#sprint-0--ship-the-mvp)
+    - [Sprint 1 — Build, Test, Learn](#sprint-1--build-test-learn)
+    - [Sprint 2 — Build, Test, Present](#sprint-2--build-test-present)
   - [Capstone Project Team Roles](#capstone-project-team-roles)
     - [Shared Responsibilities](#shared-responsibilities)
   - [Daily Stand Down Updates](#daily-stand-down-updates)
   - [The PR Workflow](#the-pr-workflow)
-- [Using AI as a Learning Tool](#using-ai-as-a-learning-tool)
-  - [When to Use It](#when-to-use-it)
-  - [When Not to Use It](#when-not-to-use-it)
-  - [A Useful Test](#a-useful-test)
 
 
 ---
@@ -304,9 +304,9 @@ If you aren’t sure yet about how to build your final project, start with a gen
 
 ---
 
-## Part 3: Building Your Project
+## Part 3: The Project
 
-### The Product Specification Document
+### Product Specification Document
 
 Your product specification document develops continuously first across the first five weeks and then is refined throughout the remainder of the Residency. It is not a document you write once — it is a living artifact that gets sharper as your understanding of the project deepens.
 
@@ -337,6 +337,102 @@ Alongside your MVP build, your team formalizes the product spec. The final docum
 **Weeks 6+: Refinement**
 
 As your project grows and evolves, so should your Product Specification document. Think of this document as the source of truth that reflects the current state of your project.
+
+### Sprints
+
+Weeks 4-9 can be viewed as three distinct "Sprints"
+
+**The Big Picture**
+
+| Sprint       | Weeks     | Goal                                              |
+| ------------ | --------- | ------------------------------------------------- |
+| **Sprint 0** | Weeks 4–5 | Finish your Product Spec Sheet and ship your MVP  |
+| **Sprint 1** | Weeks 6–7 | First feature sprint + user testing and feedback  |
+| **Sprint 2** | Weeks 8–9 | Second feature sprint + user testing and feedback |
+
+#### Sprint 0 — Ship the MVP
+
+**The goal of these two weeks is simple: deploy something real.**
+
+Deployment is not an end-of-project task: it is a Week 5 deadline. Teams that do not have a deployed MVP entering Sprint 1 are already behind.
+
+**Week 4**
+- Begin sketching your schema, API contract, and wireframes informally. These do not need to be in their final form yet for every feature you plan on building, but your team should have enough of a vision for the necessary architecture to build the MVP.
+- Continue daily code challenges and Python practice
+
+**Week 5**
+- Monday: Sprint planning session — define exactly what you're shipping by Friday and break it into daily milestones on your GitHub Projects board
+- Build: user auth, one-to-many relationship, deployed `main` branch
+- Complete and submit your full Product Spec Sheet alongside your deployed MVP
+
+**Key Deliverables**
+- [ ] Complete Product Spec Sheet submitted end of Week 4
+- [ ] Deployed MVP — stable `main` branch, live by end of Week 5
+
+#### Sprint 1 — Build, Test, Learn
+
+**You have a deployed MVP. Now make it better.**
+
+Sprint 1 is your first structured opportunity to build features, get real feedback from real users, and use that feedback to make deliberate decisions about what comes next. Every decision your team makes in Sprint 2 should be informed by what you learn this sprint.
+
+The sprint follows a fixed rhythm:
+
+| Day               | Activity                                                     |
+| ----------------- | ------------------------------------------------------------ |
+| Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
+| Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
+| Thursday (Day 9)  | Structured user testing session                              |
+| Friday (Day 10)   | Sprint retro                                                 |
+
+**Week 6 (Sprint 1, Week 1)**
+- Sprint 1 planning on Monday: define your stretch features, break them into tickets, assign owners
+- Each fellow owns feature branches and submits PRs for teammate review — no direct commits to `main`
+- Independent build time is the primary mode. Office hours are available daily for unblocking
+
+**Week 7 (Sprint 1, Week 2)**
+- All Sprint 1 changes merged and deployed by Wednesday
+- Thursday: structured user testing session — your team will be assigned approximately 3 other teams' apps to test. Testing is done via screen recording (Loom or equivalent) with testers narrating their experience aloud. Tester Feedback Forms submitted same day.
+- After testing: watch the recordings of people testing *your* app. Complete your Observation Form, identifying 2–3 concrete changes to carry into Sprint 2
+- Friday: Sprint 1 retro
+
+**Key Deliverables**
+- [ ] GitHub Projects board updated and active at start of Week 6
+- [ ] All Sprint 1 changes merged and deployed by Wednesday of Week 7
+- [ ] Tester Feedback Forms submitted Thursday of Week 7
+- [ ] Observation Forms submitted by end of Friday of Week 7
+- [ ] Sprint 1 LinkedIn post (deployed app + public feedback request) — reviewed and approved before posting
+
+#### Sprint 2 — Build, Test, Present
+
+**Sprint 2 is Sprint 1 with higher stakes.**
+
+You now have real user feedback. Use it. The features you build this sprint should reflect what you learned from testing — not just what your team thought would be cool two weeks ago. Teams that ignore user feedback and build what they originally planned are missing the point of the process.
+
+The sprint follows the same rhythm as Sprint 1.
+
+| Day               | Activity                                                     |
+| ----------------- | ------------------------------------------------------------ |
+| Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
+| Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
+| Thursday (Day 9)  | Structured user testing session                              |
+| Friday (Day 10)   | Sprint retro                                                 |
+
+**Week 8 (Sprint 2, Week 1)**
+- Sprint 2 planning on Monday, explicitly informed by user testing feedback from Sprint 1. Your Observation Form should be open in front of you during planning
+- Continue owning feature branches and submitting PRs
+- Begin building your presentation deck this week — don't wait until Week 9
+
+**Week 9 (Sprint 2, Week 2)**
+- All Sprint 2 changes merged and deployed by Wednesday
+- Thursday: second structured user testing session, same format as Sprint 1
+- Friday: Sprint 2 retro
+
+**Key Deliverables**
+- [ ] GitHub Projects board updated for Sprint 2 at start of Week 8
+- [ ] All Sprint 2 changes merged and deployed by Wednesday of Week 9
+- [ ] Tester Feedback Forms submitted Thursday of Week 9
+- [ ] Observation Forms submitted by end of Friday of Week 9
+- [ ] Sprint 2 LinkedIn post (updated app + public feedback request) — reviewed and approved before posting
 
 ### Capstone Project Team Roles
 
@@ -576,71 +672,3 @@ Once your team begins building in Week 5, all code goes through a pull request. 
 
 **On merge conflicts:**
 You will hit them. They are not emergencies. A merge conflict means two people changed the same part of the codebase and Git cannot automatically decide which version to keep. Resolving them is a skill — one worth learning now, because it comes up in every engineering job.
-
----
-
-## Using AI as a Learning Tool
-
-You have access to Claude Code during Capstone. Used well, it is one of the most powerful learning accelerants available to you. Used poorly, it will quietly rob you of the understanding you need to present your project, answer interview questions, and grow as an engineer.
-
-The principle that governs everything in this section is simple: **AI is most useful when you already have a question, not when you are trying to avoid having one.** If you open Claude Code before you have tried something yourself, you are outsourcing the thinking. If you open it after you have hit a wall and formed a specific question, you are using it as a thinking partner. The difference between those two behaviors is the difference between a fellow who learns Python and a fellow who has Python-shaped code they cannot explain.
-
----
-
-### When to Use It
-
-**To translate concepts from JavaScript to Python**
-
-You already have a mental model. Use Claude Code to map it onto Python. Good prompts sound like:
-
-- "I know how to write a higher-order function in JavaScript. Show me the Python equivalent and explain what's different."
-- "In Express, middleware works like this. What's the equivalent pattern in Flask?"
-- "I understand how `async/await` works in JavaScript. How does Python handle asynchronous code differently?"
-
-This is one of the highest-leverage uses of AI during the first two weeks. You are not asking it to think for you — you are asking it to translate.
-
-**To understand code you did not write**
-
-When documentation or a tutorial shows you code you do not fully understand, paste it into Claude Code and ask it to explain it line by line. Ask it to connect each line to something you already know. Ask it to tell you what would happen if you changed a specific part.
-
-This is much more effective than re-reading the same code five times hoping it will click.
-
-**To pull apart a generated skeleton**
-
-Here is a legitimate use of AI to accelerate framework learning: ask Claude Code to generate a minimal app with a specific set of features — for example, a Flask app with user authentication and one one-to-many relationship. Then close Claude Code and spend your time reading every line of what it produced. Before you run it, try to predict what each part does. After you run it, break something intentionally and figure out why it broke.
-
-The generated code is not the output. Your understanding of the generated code is the output.
-
-**As a rubber duck before office hours**
-
-Before you bring a problem to office hours or ask a teammate for help, try explaining it to Claude Code first. Describe what you expected to happen, what actually happened, and what you have already tried. This forces you to articulate the problem clearly — and a clearly articulated problem is often halfway to a solution. If Claude Code helps you solve it, great. If it does not, you now have a much clearer question to bring to a human.
-
-**To get unstuck on syntax**
-
-Syntax errors and small implementation questions are a completely reasonable thing to ask Claude Code about. "How do I iterate over a dictionary in Python?" or "What's the syntax for a list comprehension with a conditional?" are not cheating. They are what the tool is for. The goal is not to memorize everything — it is to understand what you are doing.
-
----
-
-### When Not to Use It
-
-**Do not use it to generate features for your project before you understand how to build them yourself.**
-
-There is a meaningful difference between "I understand how database relationships work in Django and I am using Claude Code to help me write the model" and "I have no idea how Django models work and I am asking Claude Code to write them for me." The first is professional. The second will catch up with you at the Engineering Fair when someone asks you how your schema is designed.
-
-**Do not use it as a first resort when you are confused.**
-
-Confusion is the feeling of your brain building a new connection. Sit with it for a few minutes before reaching for AI. Try reading the documentation again. Try writing down in plain English what you think should happen. Try changing one thing and observing what breaks. AI can resolve confusion quickly, but it can also prevent you from developing the debugging instinct that makes you a strong engineer.
-
-**Do not merge code into your project that you cannot explain line by line.**
-
-This is the hard rule. If you cannot walk a teammate through a piece of code you wrote — how it works, why you made the choices you made, what would happen if a specific line changed — that code should not be in your codebase. Not because there is something wrong with using AI to help you write it, but because you are presenting this project at the Engineering Fair and defending it in interviews. "Claude wrote it" is not an answer that gets you hired.
-
----
-
-### A Useful Test
-
-Before you submit a PR, ask yourself: if my interviewer pulled up this file and asked me to walk them through it, could I do that confidently? If the answer is no, keep working until it is yes.
-
----
-
-*This document is a starting point. The best version of it is the one you build through your own research, your own throwaway apps, your own team's conversations, and your own hard-won confusion. Go figure it out.*

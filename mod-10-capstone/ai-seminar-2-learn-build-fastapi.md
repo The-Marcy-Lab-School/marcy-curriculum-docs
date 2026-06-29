@@ -1,254 +1,134 @@
-# Learning and Building with Claude Code
+# Using AI as a Learning and Building Tool
 
 {% hint style="info" %}
 Follow along with the repo [here](https://github.com/The-Marcy-Lab-School/fastapi-ai-practice)!
 {% endhint %}
 
 **Table of Contents:**
-- [Overview](#overview)
-  - [Learning While Building with AI](#learning-while-building-with-ai)
-- [What is FastAPI? How is it similar to Express? What is Pydantic?](#what-is-fastapi-how-is-it-similar-to-express-what-is-pydantic)
-- [What you're building](#what-youre-building)
-  - [The API Contract](#the-api-contract)
-  - [Resource: Todo](#resource-todo)
-  - [Endpoints](#endpoints)
-  - [Additional behavior](#additional-behavior)
-  - [Seed data](#seed-data)
-- [Before you write a single prompt](#before-you-write-a-single-prompt)
-- [The prompts](#the-prompts)
-  - [The context-setting prompt](#the-context-setting-prompt)
-  - [The Getting Started prompt](#the-getting-started-prompt)
-    - [Comment Your Code!](#comment-your-code)
-  - [When you don't understand something](#when-you-dont-understand-something)
-  - [When you want to confirm your understanding](#when-you-want-to-confirm-your-understanding)
-  - [Setting the Long-Term Plan](#setting-the-long-term-plan)
-- [Submission](#submission)
+- [The New Distribution of Work](#the-new-distribution-of-work)
+- [Phase 1: Plan Before You Prompt](#phase-1-plan-before-you-prompt)
+- [Phase 2: Let AI Build](#phase-2-let-ai-build)
+- [Phase 3: Review, Understand, and Own It](#phase-3-review-understand-and-own-it)
+- [The Test Before Every PR](#the-test-before-every-pr)
+- [Using AI to Learn What Was Built](#using-ai-to-learn-what-was-built)
+- [What This Looks Like in Practice](#what-this-looks-like-in-practice)
 
+The way software gets built has changed. AI tools like Claude Code can generate working, production-quality code in seconds. Fighting that reality is not a useful use of your energy. Learning to work with it — deliberately, professionally, and in a way that actually makes you a stronger engineer — is.
 
-## Overview
-
-You're going to build a working API server for a Todo App in Python using a framework called **FastAPI**. FastAPI is the framework you'll be using for your Capstone project. It's one of the fastest-growing backend frameworks in the industry, and it's the direction the job market is moving for Python backend work. Learning it is not optional — but how you learn it is something you get to practice today.
-
-Today we will introduce a prompting strategy and approach to leveraging Claude Code that will enable you to rapidly learn an unfamiliar framework like FastAPI and build with it at the same time.
-
-### Learning While Building with AI
-
-Before Claude Code existed, picking up a new framework meant constantly context-switching in a slow and dizzying loop:
-1. write some code
-2. hit a wall
-3. Google the error
-4. find a Stack Overflow answer from four years ago
-5. read documentation that assumed knowledge you don't have yet
-6. try to adapt something that almost fits. 
-7. And on and on...
-
-The prompting strategy in this exercise compresses that loop. Instead of stopping to Google, you stay in the code and ask Claude to explain the unfamiliar thing in terms you already understand. You keep building while you're learning. That's genuinely new, and it's a professional skill worth developing deliberately.
-
-But it only works if you use it right. The same tool that can accelerate your learning can also let you skip it entirely (copy the output, run it, move on, never understand what you built). That catches up with you fast: in the assessment, in the Capstone, in a job interview where someone asks you to explain code you wrote.
-
-The prompting strategy in this exercise is designed specifically to prevent that by following a few essential principles:
-- Ask for one thing at a time. 
-- Require an explanation before you accept code. 
-- Write what you understood in your own words before moving on.
-
-These aren't just good AI habits, they're good learning habits.
-
-One more thing to name: some of you may feel like using Claude to help you build this is somehow cheating, or that it means you're not really learning. Others may feel the opposite — tempted to just ask Claude to build the whole thing and copy the output. Both of those instincts will hold you back. The professional skill is in the middle: using Claude to understand and accelerate your work, while staying in the driver's seat. That's what this exercise is designed to practice.
+This guide is built around one central idea: **AI changes *where* your effort goes, not how much effort you put in.**
 
 ---
 
-## What is FastAPI? How is it similar to Express? What is Pydantic?
+## The New Distribution of Work
 
-FastAPI is a Python web framework for building APIs. If you know Express, the core idea is familiar: you define routes, attach handler functions, and the framework takes care of the HTTP layer.
+Before AI tools, building a feature looked something like this:
 
-The differences are real and worth understanding as you build. But the mental model you already have from Express will carry over. So rest assured: you're not starting from zero.
+| Phase                    | Before AI |
+| ------------------------ | --------- |
+| Planning                 | 30%       |
+| Execution (writing code) | 60%       |
+| Revision & Review        | 10%       |
 
-One thing you'll notice immediately: FastAPI uses Python's type annotation system heavily, and it has a library called **Pydantic** built in for data validation. You haven't seen either of those yet. Claude will introduce them to you as you need them. Your job is to understand what they're doing before you move on — not just that they work.
+With AI, it looks more like this:
 
-And lastly, FastAPI has an amazing feature: a built-in UI for testing your routes in the browser at http://localhost:8000/docs.
+| Phase                    | With AI |
+| ------------------------ | ------- |
+| Planning                 | 45%     |
+| Execution (writing code) | 10%     |
+| Revision & Review        | 45%     |
 
----
-
-## What you're building
-
-A **TODO API** — a server that manages a list of tasks. No frontend. Just a server you can hit with `curl`.
-
-You'll build it in stages. Each stage adds one layer of complexity. You don't have to finish all stages today — getting through Stage 1 and into Stage 2 with genuine understanding is a complete, valuable outcome.
-
----
-
-### The API Contract
-
-This is the full spec for what the finished server should do. Read it now, before you build anything. You've seen API contracts before — this one works the same way.
-
-### Resource: Todo
-
-```
-{
-  "id": 1,
-  "title": "Learn FastAPI",
-  "completed": false
-}
-```
-
-### Endpoints
-
-| Method   | URL           | Description       | Request Body                                                          | Success Response               |
-| -------- | ------------- | ----------------- | --------------------------------------------------------------------- | ------------------------------ |
-| `GET`    | `/todos`      | Get all todos     | —                                                                     | `200` + array of todos         |
-| `GET`    | `/todos/{id}` | Get one todo      | —                                                                     | `200` + todo object, or `404`  |
-| `POST`   | `/todos`      | Create a new todo | `{ "title": "..." }`                                                  | `201` + created todo           |
-| `PATCH`  | `/todos/{id}` | Update a todo     | `{ "title": "...", "completed": true }` (either field, both optional) | `200` + updated todo, or `404` |
-| `DELETE` | `/todos/{id}` | Delete a todo     | —                                                                     | `204` no body, or `404`        |
-
-### Additional behavior
-
-- `GET /todos` supports an optional query parameter: `?completed=true` or `?completed=false` to filter results. Without the parameter, return all todos.
-- The server should log every incoming request (method, path, timestamp) — like the `logRoutes` middleware you've used in Express.
-- All write routes (`POST`, `PATCH`, `DELETE`) require a header `X-API-Key: marcy-secret`. Missing or wrong key returns `401`.
-
-### Seed data
-
-Start with these three todos already in memory when the server boots:
-
-```
-{ "id": 1, "title": "Read the FastAPI docs", "completed": false }
-{ "id": 2, "title": "Build something with Python", "completed": false }
-{ "id": 3, "title": "Understand Pydantic models", "completed": false }
-```
+Notice what this means: **the total effort doesn't go down.** What changes is where it goes. The mechanical work of typing out implementations shrinks dramatically. The intellectual work — thinking through what you're building and understanding what was built — expands to fill that space. Fellows who treat AI as a way to skip that intellectual work will produce code they can't explain, defend, or debug. That catches up with you fast.
 
 ---
 
-## Before you write a single prompt
+## Phase 1: Plan Before You Prompt
 
-Check your Python version. FastAPI requires **Python 3.8+** and works best on **3.10+**. In your terminal:
+The quality of what AI produces is almost entirely determined by the quality of what you ask for. Vague input produces vague output. This means planning is now the highest-leverage thing you can do.
 
-```bash
-python3 --version
-# Look for "Python 3.8.x" or higher
-```
+Before you write a single prompt, you should be able to answer:
 
-You will need two separate terminals for this exercise: one to run your server and one to run your Claude Code session.
+- **What problem am I solving?** Not "I need a route," but "I need a `PATCH /todos/:id` endpoint that accepts partial updates and returns a 404 if the ID doesn't exist."
+- **What does the data look like going in and coming out?** Define your inputs, outputs, and edge cases explicitly.
+- **What are the components of this feature?** Break it into the smallest pieces you can name.
+- **What do I already know that's relevant?** If you've solved something similar before, in any language or framework, name it. That prior knowledge becomes the reference frame for understanding what AI gives you.
 
-In one terminal at the root of the project, start a new session with `claude`:
+A well-scoped prompt sounds like: *"I need a PATCH endpoint that takes an ID as a URL parameter and a request body with optional fields. If the ID doesn't exist, return a 404. Otherwise update only the fields provided and return the updated object."*
 
-```bash
-# Inside the root of the fastapi-ai-practice directory
-claude
-```
+A poorly scoped prompt sounds like: *"Add an update route."*
 
-Then open a second terminal and move into the `server` directory to begin working.
+The second prompt will produce code too. But you'll spend the next hour trying to figure out if it's actually doing what you need.
 
----
-
-## The prompts
-
-### The context-setting prompt
-
-**Copy and paste this as your very first message in a new Claude Code conversation. Don't skip it — it shapes every response you'll get for the rest of the session.**
-
-> I'm a software engineer who knows JavaScript and Express well. I recently started learning the basics of Python and now I'm learning FastAPI for the first time. I want to learn and build at the same time — not just get working code I don't understand. When you show me Python or FastAPI code, always explain it by comparing it to the Express equivalent. Show me one concept at a time — don't build the whole server at once. When I ask you to add something new, first explain what it does and why, then show me the code, then explain what each part means. If there's no direct equivalent to something in Express, tell me that and explain what problem it's solving instead.
+**Plan on paper before you open Claude Code.** Write it out — even a few lines. The act of writing forces clarity that typing into a prompt box does not.
 
 ---
 
-### The Getting Started prompt
+## Phase 2: Let AI Build
 
-After you've set context, send this to get started:
+Once your plan is solid, give AI room to execute. This is the part that feels like cheating but isn't — provided you do Phase 3.
 
-> I want to build a FastAPI server. I know that with Node and Express I         
-  typically start by installing dependencies with `npm i express` and then run  
-  the server with `node index.js`. What is the Python and FastAPI equivalent? 
+A few things to know about working with AI during execution:
 
-Notice that this prompt does a few things:
-* States the objective (I want to build a FastAPI server)
-* States what you know (I know that with Node and Express...)
-* Asks to explain how to do something similar in Python and FastAPI
+**One piece at a time.** Ask for one component, one route, one function. Asking for the whole feature at once makes Phase 3 much harder. If you can't hold the scope of what was generated in your head, you can't review it effectively.
 
-Once you are able to get dependencies installed, Claude will likely suggest a next step. You can follow its lead or continue directing it with a prompt like this:
+**Use your prior knowledge as a reference frame.** If you know how something works in JavaScript, ask for the equivalent. "I know how middleware works in Express — what's the FastAPI equivalent and why?" is a much better prompt than "How do I add middleware?" It anchors the explanation to something you already understand.
 
-> I know how to create an Express server with `const app = express(); app.listen(8080)`. What's the FastAPI equivalent? Show me just the minimal server with no routes yet, and explain what each line does compared to Express.
+**Push back and ask follow-up questions.** If AI gives you something you don't immediately understand, don't move on. Ask it to explain a specific line. Ask what would happen if you changed something. Ask if there's a simpler approach. You are the engineer; AI is the tool.
 
-#### Comment Your Code!
+**Let it generate. Then stop.**
 
-At each stage, before you move on, add a comment block to your code. Include things like:
-* Descriptions of key functionality
-* Similarities and differences between Python/FastAPI and Node/Express
-* Any lingering questions to return to
-
-For example:
-
-```python
-# Import the FastAPI function from the fastapi module
-# Similar to `const express = require('express')` but the the module comes first and the value is second
-from fastapi import FastAPI
-
-# Creates the application instance, like `const app = express()`
-app = FastAPI()
-
-# Apparently uvicorn handles the app.listen() part but I still don't understand why
-```
-
-After you have a running server, **continue the same conversation — don't start a new one.** Ask Claude to add things one step at a time. 
-
-But before you continue building, check out the scenario prompts below.
+Do not read the output and immediately run it or paste it in. The next phase is not optional.
 
 ---
 
-### When you don't understand something
+## Phase 3: Review, Understand, and Own It
 
-If Claude shows you code and something doesn't make sense, use this:
+This is where the learning happens. It is also the phase most people skip when they're in a hurry — and the phase that determines whether you can actually call yourself the engineer who built this.
 
-> You showed me this code: [paste the specific lines]. I don't understand what [specific part] is doing. Don't rewrite it — just explain that part in terms of JavaScript or Express. If there's no direct equivalent, tell me that and explain what problem it's solving.
+**Read every line before you run it.** Not to verify syntax. To understand intent. For each section, ask yourself: do I know what this is doing? If not, that is your next question for AI.
 
-The key phrase is **"don't rewrite it."** When you ask Claude to simplify something, it often replaces the confusing part with something different rather than explaining what's already there. You want to understand what's in front of you.
+**Predict before you test.** Before running the code, write down what you expect to happen. Then run it. If the behavior matches your prediction, your mental model is accurate. If it doesn't, that gap is something to investigate — not ignore.
 
----
+**Add comments in your own words.** Not code comments that describe *what* the code does — those are for future readers. Comments that describe *why* and how it connects to things you already know. Writing forces understanding in a way that reading does not. If you can't write the comment, you don't understand it yet.
 
-### When you want to confirm your understanding
-
-Use this before moving from one stage to the next:
-
-> Before I move on: here's what I think this FastAPI code is doing compared to Express — [your explanation in your own words]. Is that right? What am I missing or getting wrong?
-
-If you can't write that explanation, you're not ready to move on. Go back and ask more questions. This isn't a gate to slow you down — it's the mechanism that makes the learning stick.
-
-### Setting the Long-Term Plan
-
-Now you're ready to start building. Rather than building the project all at once, it is best to break down the project into small digestible chunks. This is especially important when you want to slow down and ensure that you are learning along the way. Remember, the project itself is not the end goal: developing a strong understanding of FastAPI is.
-
-Here a prompt that you can use to provide clear guidance to Claude on where you'd like to go and how you'd like to break down the project into smaller chunks:
-
-> Let's work through these in order. Before moving on to the next stage, ask me to explain the current one to you.
-
-```md
-**Stage 1 — Get the server running and return todos**
-- Server starts and listens on a port
-- `GET /todos` returns the full list
-- `GET /todos/{id}` returns one todo or a 404
-
-**Stage 2 — Add write operations**
-- `POST /todos` creates a new todo
-- `PATCH /todos/{id}` updates one (any combination of fields)
-- `DELETE /todos/{id}` deletes one
-
-**Stage 3 — Add filtering**
-- `GET /todos?completed=true` filters the list
-
-**Stage 4 — Add middleware and auth**
-- Log every request (method, path, timestamp)
-- Require `X-API-Key: marcy-secret` on write routes
-```
-
-Note: Claude won't strictly enforce these stages. It'll acknowledge the instruction and then happily move on whenever you ask it to. This prompt just sets Claude's behavior, but the actual progress gate (not moving on until you can explain it) is on *you*, not on Claude.
+**The hard rule: don't keep code you can't explain.** If someone on your team or an interviewer pulled up this file and asked you to walk them through it, could you do that confidently? If the answer is no, keep working until it is yes. This isn't about having memorized everything — it's about being able to reason about the code in front of you.
 
 ---
 
-## Submission
+## The Test Before Every PR
 
-After the session, complete a short write-up and submit it on Google Classroom:
+Before you submit a pull request, ask yourself:
 
-1. **Prompts:** Paste the first Stage 1 prompt you wrote yourself (not the starter prompt). What made it specific or vague? What would you change?
-2. **Equivalence notes:** Your comment blocks — at least two.
-3. **One thing Claude got right** and how you verified it.
-4. **One thing Claude got wrong or that surprised you** — and how you caught it.
-5. **One question you still have** about FastAPI or how it works.
+1. Can I explain what every file I touched is doing?
+2. Can I explain why the approach I used makes sense?
+3. If something breaks in production, do I have enough understanding to debug it?
+
+If any of those answers is no, go back to Phase 3.
+
+---
+
+## Using AI to Learn What Was Built
+
+Sometimes you'll review code and realize you don't understand a piece of it. That's not failure — that's exactly when AI is most useful. Use it to close the gap:
+
+- *"You generated this code: [paste]. I don't understand what this specific part is doing. Don't rewrite it — explain what it does and why it's structured this way."*
+- *"Here's my understanding of this code: [your explanation]. Is that right? What am I missing?"*
+- *"What would happen if I changed this line to X? Why?"*
+
+The goal of these prompts is to build your mental model, not to produce more code. You are using AI as a tutor, not a ghostwriter.
+
+---
+
+## What This Looks Like in Practice
+
+| Situation                            | What to do                                                                        |
+| ------------------------------------ | --------------------------------------------------------------------------------- |
+| Starting a new feature               | Plan on paper first. Define inputs, outputs, edge cases. Then prompt.             |
+| AI gives you working code            | Read every line before running it. Add comments. Predict behavior before testing. |
+| You don't understand a line          | Ask AI to explain that specific line without rewriting it.                        |
+| You think you understand something   | Write your explanation in your own words and ask AI to verify it.                 |
+| You're about to open a PR            | Run the three-question test above.                                                |
+| Someone asks you how your code works | You should be able to answer without looking at it.                               |
+
+---
+
+*The engineers who will stand out — in the Engineering Fair, in interviews, and on the job — are not the ones who generated the most code. They're the ones who understood what they built well enough to explain it, defend it, and improve it. That understanding is what this process is designed to build.*
