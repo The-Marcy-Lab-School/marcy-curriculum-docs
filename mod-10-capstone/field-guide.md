@@ -21,13 +21,13 @@ You already know how to program. You know what a loop is, what a function does, 
   - [Ideas for Throwaway Apps to Build](#ideas-for-throwaway-apps-to-build)
 - [Part 3: The Project](#part-3-the-project)
   - [Product Specification Document](#product-specification-document)
+  - [Capstone Project Team Roles](#capstone-project-team-roles)
+    - [Shared Responsibilities](#shared-responsibilities)
+  - [Daily Stand Down Updates](#daily-stand-down-updates)
   - [Sprints](#sprints)
     - [Sprint 0 — Ship the MVP](#sprint-0--ship-the-mvp)
     - [Sprint 1 — Build, Test, Learn](#sprint-1--build-test-learn)
     - [Sprint 2 — Build, Test, Present](#sprint-2--build-test-present)
-  - [Capstone Project Team Roles](#capstone-project-team-roles)
-    - [Shared Responsibilities](#shared-responsibilities)
-  - [Daily Stand Down Updates](#daily-stand-down-updates)
   - [The PR Workflow](#the-pr-workflow)
 
 
@@ -338,102 +338,6 @@ Alongside your MVP build, your team formalizes the product spec. The final docum
 
 As your project grows and evolves, so should your Product Specification document. Think of this document as the source of truth that reflects the current state of your project.
 
-### Sprints
-
-Weeks 4-9 can be viewed as three distinct "Sprints"
-
-**The Big Picture**
-
-| Sprint       | Weeks     | Goal                                              |
-| ------------ | --------- | ------------------------------------------------- |
-| **Sprint 0** | Weeks 4–5 | Finish your Product Spec Sheet and ship your MVP  |
-| **Sprint 1** | Weeks 6–7 | First feature sprint + user testing and feedback  |
-| **Sprint 2** | Weeks 8–9 | Second feature sprint + user testing and feedback |
-
-#### Sprint 0 — Ship the MVP
-
-**The goal of these two weeks is simple: deploy something real.**
-
-Deployment is not an end-of-project task: it is a Week 5 deadline. Teams that do not have a deployed MVP entering Sprint 1 are already behind.
-
-**Week 4**
-- Begin sketching your schema, API contract, and wireframes informally. These do not need to be in their final form yet for every feature you plan on building, but your team should have enough of a vision for the necessary architecture to build the MVP.
-- Continue daily code challenges and Python practice
-
-**Week 5**
-- Monday: Sprint planning session — define exactly what you're shipping by Friday and break it into daily milestones on your GitHub Projects board
-- Build: user auth, one-to-many relationship, deployed `main` branch
-- Complete and submit your full Product Spec Sheet alongside your deployed MVP
-
-**Key Deliverables**
-- [ ] Complete Product Spec Sheet submitted end of Week 4
-- [ ] Deployed MVP — stable `main` branch, live by end of Week 5
-
-#### Sprint 1 — Build, Test, Learn
-
-**You have a deployed MVP. Now make it better.**
-
-Sprint 1 is your first structured opportunity to build features, get real feedback from real users, and use that feedback to make deliberate decisions about what comes next. Every decision your team makes in Sprint 2 should be informed by what you learn this sprint.
-
-The sprint follows a fixed rhythm:
-
-| Day               | Activity                                                     |
-| ----------------- | ------------------------------------------------------------ |
-| Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
-| Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
-| Thursday (Day 9)  | Structured user testing session                              |
-| Friday (Day 10)   | Sprint retro                                                 |
-
-**Week 6 (Sprint 1, Week 1)**
-- Sprint 1 planning on Monday: define your stretch features, break them into tickets, assign owners
-- Each fellow owns feature branches and submits PRs for teammate review — no direct commits to `main`
-- Independent build time is the primary mode. Office hours are available daily for unblocking
-
-**Week 7 (Sprint 1, Week 2)**
-- All Sprint 1 changes merged and deployed by Wednesday
-- Thursday: structured user testing session — your team will be assigned approximately 3 other teams' apps to test. Testing is done via screen recording (Loom or equivalent) with testers narrating their experience aloud. Tester Feedback Forms submitted same day.
-- After testing: watch the recordings of people testing *your* app. Complete your Observation Form, identifying 2–3 concrete changes to carry into Sprint 2
-- Friday: Sprint 1 retro
-
-**Key Deliverables**
-- [ ] GitHub Projects board updated and active at start of Week 6
-- [ ] All Sprint 1 changes merged and deployed by Wednesday of Week 7
-- [ ] Tester Feedback Forms submitted Thursday of Week 7
-- [ ] Observation Forms submitted by end of Friday of Week 7
-- [ ] Sprint 1 LinkedIn post (deployed app + public feedback request) — reviewed and approved before posting
-
-#### Sprint 2 — Build, Test, Present
-
-**Sprint 2 is Sprint 1 with higher stakes.**
-
-You now have real user feedback. Use it. The features you build this sprint should reflect what you learned from testing — not just what your team thought would be cool two weeks ago. Teams that ignore user feedback and build what they originally planned are missing the point of the process.
-
-The sprint follows the same rhythm as Sprint 1.
-
-| Day               | Activity                                                     |
-| ----------------- | ------------------------------------------------------------ |
-| Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
-| Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
-| Thursday (Day 9)  | Structured user testing session                              |
-| Friday (Day 10)   | Sprint retro                                                 |
-
-**Week 8 (Sprint 2, Week 1)**
-- Sprint 2 planning on Monday, explicitly informed by user testing feedback from Sprint 1. Your Observation Form should be open in front of you during planning
-- Continue owning feature branches and submitting PRs
-- Begin building your presentation deck this week — don't wait until Week 9
-
-**Week 9 (Sprint 2, Week 2)**
-- All Sprint 2 changes merged and deployed by Wednesday
-- Thursday: second structured user testing session, same format as Sprint 1
-- Friday: Sprint 2 retro
-
-**Key Deliverables**
-- [ ] GitHub Projects board updated for Sprint 2 at start of Week 8
-- [ ] All Sprint 2 changes merged and deployed by Wednesday of Week 9
-- [ ] Tester Feedback Forms submitted Thursday of Week 9
-- [ ] Observation Forms submitted by end of Friday of Week 9
-- [ ] Sprint 2 LinkedIn post (updated app + public feedback request) — reviewed and approved before posting
-
 ### Capstone Project Team Roles
 
 Every Capstone project team has three members, each with a distinct role. These roles are fixed for the duration of the project. They are not just titles — each role comes with real responsibilities that the team depends on you to fulfill.
@@ -651,6 +555,102 @@ Here is what a strong daily stand down update looks like:
 - **Post at the end of every working day**, including remote Fridays. Your Scrum Master will follow up if an update is missing.
 - **Blockers go to your teammates first.** Tag the specific person you need. Only escalate to your Engineering Manager if the team cannot resolve it within 24 hours.
 - **This structure is a starting point.** As your team finds its rhythm, you have the autonomy to adapt it. If you want to add a "Wins / Shoutouts" section to celebrate each other, do it. Own your communication process and iterate on it.
+
+### Sprints
+
+Weeks 4-9 can be viewed as three distinct "Sprints"
+
+**The Big Picture**
+
+| Sprint       | Weeks     | Goal                                              |
+| ------------ | --------- | ------------------------------------------------- |
+| **Sprint 0** | Weeks 4–5 | Finish your Product Spec Sheet and ship your MVP  |
+| **Sprint 1** | Weeks 6–7 | First feature sprint + user testing and feedback  |
+| **Sprint 2** | Weeks 8–9 | Second feature sprint + user testing and feedback |
+
+#### Sprint 0 — Ship the MVP
+
+**The goal of these two weeks is simple: deploy something real.**
+
+Deployment is not an end-of-project task: it is a Week 5 deadline. Teams that do not have a deployed MVP entering Sprint 1 are already behind.
+
+**Week 4**
+- Begin sketching your schema, API contract, and wireframes informally. These do not need to be in their final form yet for every feature you plan on building, but your team should have enough of a vision for the necessary architecture to build the MVP.
+- Continue daily code challenges and Python practice
+
+**Week 5**
+- Monday: Sprint planning session — define exactly what you're shipping by Friday and break it into daily milestones on your GitHub Projects board
+- Build: user auth, one-to-many relationship, deployed `main` branch
+- Complete and submit your full Product Spec Sheet alongside your deployed MVP
+
+**Key Deliverables**
+- [ ] Complete Product Spec Sheet submitted end of Week 4
+- [ ] Deployed MVP — stable `main` branch, live by end of Week 5
+
+#### Sprint 1 — Build, Test, Learn
+
+**You have a deployed MVP. Now make it better.**
+
+Sprint 1 is your first structured opportunity to build features, get real feedback from real users, and use that feedback to make deliberate decisions about what comes next. Every decision your team makes in Sprint 2 should be informed by what you learn this sprint.
+
+The sprint follows a fixed rhythm:
+
+| Day               | Activity                                                     |
+| ----------------- | ------------------------------------------------------------ |
+| Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
+| Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
+| Thursday (Day 9)  | Structured user testing session                              |
+| Friday (Day 10)   | Sprint retro                                                 |
+
+**Week 6 (Sprint 1, Week 1)**
+- Sprint 1 planning on Monday: define your stretch features, break them into tickets, assign owners
+- Each fellow owns feature branches and submits PRs for teammate review — no direct commits to `main`
+- Independent build time is the primary mode. Office hours are available daily for unblocking
+
+**Week 7 (Sprint 1, Week 2)**
+- All Sprint 1 changes merged and deployed by Wednesday
+- Thursday: structured user testing session — your team will be assigned approximately 3 other teams' apps to test. Testing is done via screen recording (Loom or equivalent) with testers narrating their experience aloud. Tester Feedback Forms submitted same day.
+- After testing: watch the recordings of people testing *your* app. Complete your Observation Form, identifying 2–3 concrete changes to carry into Sprint 2
+- Friday: Sprint 1 retro
+
+**Key Deliverables**
+- [ ] GitHub Projects board updated and active at start of Week 6
+- [ ] All Sprint 1 changes merged and deployed by Wednesday of Week 7
+- [ ] Tester Feedback Forms submitted Thursday of Week 7
+- [ ] Observation Forms submitted by end of Friday of Week 7
+- [ ] Sprint 1 LinkedIn post (deployed app + public feedback request) — reviewed and approved before posting
+
+#### Sprint 2 — Build, Test, Present
+
+**Sprint 2 is Sprint 1 with higher stakes.**
+
+You now have real user feedback. Use it. The features you build this sprint should reflect what you learned from testing — not just what your team thought would be cool two weeks ago. Teams that ignore user feedback and build what they originally planned are missing the point of the process.
+
+The sprint follows the same rhythm as Sprint 1.
+
+| Day               | Activity                                                     |
+| ----------------- | ------------------------------------------------------------ |
+| Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
+| Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
+| Thursday (Day 9)  | Structured user testing session                              |
+| Friday (Day 10)   | Sprint retro                                                 |
+
+**Week 8 (Sprint 2, Week 1)**
+- Sprint 2 planning on Monday, explicitly informed by user testing feedback from Sprint 1. Your Observation Form should be open in front of you during planning
+- Continue owning feature branches and submitting PRs
+- Begin building your presentation deck this week — don't wait until Week 9
+
+**Week 9 (Sprint 2, Week 2)**
+- All Sprint 2 changes merged and deployed by Wednesday
+- Thursday: second structured user testing session, same format as Sprint 1
+- Friday: Sprint 2 retro
+
+**Key Deliverables**
+- [ ] GitHub Projects board updated for Sprint 2 at start of Week 8
+- [ ] All Sprint 2 changes merged and deployed by Wednesday of Week 9
+- [ ] Tester Feedback Forms submitted Thursday of Week 9
+- [ ] Observation Forms submitted by end of Friday of Week 9
+- [ ] Sprint 2 LinkedIn post (updated app + public feedback request) — reviewed and approved before posting
 
 ### The PR Workflow
 
