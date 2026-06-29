@@ -535,22 +535,20 @@ This is not a checklist to prove you were working. It is a tool to help you synt
 
 Here is what a strong daily stand down update looks like:
 
-```
-Completions
-• Finished building the POST /reports endpoint — it saves to the database and returns the new record. Tested with Postman, works as expected.
-• Merged Jordan's PR after reviewing — left a comment about the error handling we should add in a follow-up ticket.
-
-Updates
-• Talked to our Industry Stakeholder via email — she wants users to be able to flag a report as "urgent." Adding this as a stretch feature ticket on the board.
-• Pushed our Wednesday deployment back to Thursday after checking in with the Tech Lead — we want auth fully tested before we go live.
-
-Focus / Working On
-• Writing the frontend form that connects to the POST /reports endpoint
-• Need to sync with Alex tomorrow about how we are handling form validation on the client side
-
-Blockers / Notes
-• Blocked by @Alex — waiting on the GET /users endpoint so I can populate the dropdown on the report form. Can you give me an ETA tonight?
-```
+> Completions
+> - Finished building the POST /reports endpoint — it saves to the database and returns the new record. Tested with Postman, works as expected.
+> - Merged Jordan's PR after reviewing — left a comment about the error handling we should add in a follow-up ticket.
+> 
+> Updates
+> - Talked to our Industry Stakeholder via email — she wants users to be able to flag a report as "urgent." Adding this as a stretch feature ticket on the board.
+> - Pushed our Wednesday deployment back to Thursday after checking in with the Tech Lead — we want auth fully tested before we go live.
+> 
+> Focus / Working On
+> - Writing the frontend form that connects to the POST /reports endpoint
+> - Need to sync with Alex tomorrow about how we are handling form validation on the client side
+> 
+> Blockers / Notes
+> - Blocked by @Alex — waiting on the GET /users endpoint so I can populate the dropdown on the report form. Can you give me an ETA tonight?
 
 **A Few Things to Keep in Mind**
 
