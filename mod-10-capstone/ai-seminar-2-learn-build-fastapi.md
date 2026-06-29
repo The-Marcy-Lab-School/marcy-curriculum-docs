@@ -1,4 +1,4 @@
-# Session 2 exercise: Learning and Building with Claude Code
+# Learning and Building with Claude Code
 
 {% hint style="info" %}
 Follow along with the repo [here](https://github.com/The-Marcy-Lab-School/fastapi-ai-practice)!
@@ -22,7 +22,7 @@ Follow along with the repo [here](https://github.com/The-Marcy-Lab-School/fastap
   - [When you don't understand something](#when-you-dont-understand-something)
   - [When you want to confirm your understanding](#when-you-want-to-confirm-your-understanding)
   - [Setting the Long-Term Plan](#setting-the-long-term-plan)
-- [Reflection](#reflection)
+- [Submission](#submission)
 
 
 ## Overview
@@ -219,35 +219,36 @@ Now you're ready to start building. Rather than building the project all at once
 Here a prompt that you can use to provide clear guidance to Claude on where you'd like to go and how you'd like to break down the project into smaller chunks:
 
 > Let's work through these in order. Before moving on to the next stage, ask me to explain the current one to you.
->  
->  **Stage 1 — Get the server running and return todos**
->  - Server starts and listens on a port
->  - `GET /todos` returns the full list
->  - `GET /todos/{id}` returns one todo or a 404
-> 
->  **Stage 2 — Add write operations**
->  - `POST /todos` creates a new todo
->  - `PATCH /todos/{id}` updates one (any combination of fields)
->  - `DELETE /todos/{id}` deletes one
-> 
->  **Stage 3 — Add filtering**
->  - `GET /todos?completed=true` filters the list
-> 
->  **Stage 4 — Add middleware and auth**
->  - Log every request (method, path, timestamp)
->  - Require `X-API-Key: marcy-secret` on write routes
 
+```md
+**Stage 1 — Get the server running and return todos**
+- Server starts and listens on a port
+- `GET /todos` returns the full list
+- `GET /todos/{id}` returns one todo or a 404
+
+**Stage 2 — Add write operations**
+- `POST /todos` creates a new todo
+- `PATCH /todos/{id}` updates one (any combination of fields)
+- `DELETE /todos/{id}` deletes one
+
+**Stage 3 — Add filtering**
+- `GET /todos?completed=true` filters the list
+
+**Stage 4 — Add middleware and auth**
+- Log every request (method, path, timestamp)
+- Require `X-API-Key: marcy-secret` on write routes
+```
 
 Note: Claude won't strictly enforce these stages. It'll acknowledge the instruction and then happily move on whenever you ask it to. This prompt just sets Claude's behavior, but the actual progress gate (not moving on until you can explain it) is on *you*, not on Claude.
 
 ---
 
-## Reflection
+## Submission
 
 After the session, complete a short write-up and submit it on Google Classroom:
 
-1. **Prompts:** Share the first Stage 1 prompt you wrote yourself (not the starter prompt). What made it specific or vague? What would you change?
-2. **Equivalence Notes:** Share your comment blocks — at least two — highlighting the similarities/differences between Express and FastAPI.
-3. **👏:** Share one thing Claude got right and how you verified it.
-4. **🤔:** One thing Claude got wrong or that surprised you and how you caught it.
-5. **Lingering Question:** about FastAPI or how it works.
+1. **Prompts:** Paste the first Stage 1 prompt you wrote yourself (not the starter prompt). What made it specific or vague? What would you change?
+2. **Equivalence notes:** Your comment blocks — at least two.
+3. **One thing Claude got right** and how you verified it.
+4. **One thing Claude got wrong or that surprised you** — and how you caught it.
+5. **One question you still have** about FastAPI or how it works.
