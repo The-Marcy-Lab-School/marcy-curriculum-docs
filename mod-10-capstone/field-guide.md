@@ -350,9 +350,9 @@ If there is a disagreement between the Tech Lead and the Product Leader that the
 
 {% tab title="Scrum Master / Project Manager" %}
 
-You are responsible for keeping the team organized, on track, and accountable. While everyone on the team builds the product, you make sure the team is always clear on what needs to get done, who is doing it, and when it is due.
-
 **You own the process.**
+
+You are responsible for keeping the team organized, on track, and accountable. While everyone on the team builds the product, you make sure the team is always clear on what needs to get done, who is doing it, and when it is due.
 
 **Responsibilities**:
 
@@ -383,9 +383,9 @@ You are responsible for keeping the team organized, on track, and accountable. W
 
 {% tab title="Product Leader" %}
 
-You are responsible for the product vision and the user experience. You make sure the team is always building the right thing — something that actually solves the problem for the people it is designed to serve.
-
 **You own the "what" and the "why."**
+
+You are responsible for the product vision and the user experience. You make sure the team is always building the right thing — something that actually solves the problem for the people it is designed to serve.
 
 **Responsibilities**
 
@@ -417,9 +417,9 @@ You are responsible for the product vision and the user experience. You make sur
 
 {% tab title="Tech Lead" %}
 
-You are responsible for the technical quality of the codebase. You make final decisions on how the team builds things and you are accountable for the overall health of the repository.
-
 **You own the "how."**
+
+You are responsible for the technical quality of the codebase. You make final decisions on how the team builds things and you are accountable for the overall health of the repository.
 
 **Responsibilities**
 
