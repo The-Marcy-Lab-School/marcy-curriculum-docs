@@ -127,6 +127,7 @@
   * [Applied AI Engineering Residency Field Guide](./mod-10-capstone/field-guide.md)
   * [AI Seminar I: What is AI and How Does It Actually Work?](./mod-10-capstone/ai-seminar-1-what-is-ai-how-does-it-work.md)
   * [AI Seminar II: Learning and Building with Claude Code](./mod-10-capstone/ai-seminar-2-learn-build-fastapi.md)
+  * [AI Seminar III: Using AI Tools](./mod-10-capstone/ai-seminar-3-using-ai-tools.md)
 * [Data Structures & Algorithms](mod-x-ds-a/README.md)
   * [Overview](mod-x-ds-a/Overview.md)
   * [1. Nodes & Linked Lists](mod-x-ds-a/1-nodes-linked-lists.md)
