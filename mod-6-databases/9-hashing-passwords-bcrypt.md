@@ -120,7 +120,7 @@ If a hash ever shows up in a breached database, a hacker with a rainbow table ca
 
 We take advantage of this weakness by adding a **salt** to the password. A salt is a random string mixed into the password before hashing.
 
-![A salt is added to a string before hashing to produce different results.](<../.gitbook/assets/salting (1).png>)
+![A salt is added to a string before hashing to produce different results.](../.gitbook/assets/salting.png)
 
 With a unique salt, the same password produces a different hash each time we use the hashing function, rendering a rainbow table useless.
 

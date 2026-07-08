@@ -61,7 +61,7 @@ Database management systems (DBMS) like PostgreSQL function similarly to web ser
 * **Interpretation**: It listens for incoming connections and interprets the SQL commands sent by the client.
 * **Execution**: It processes the incoming commands and sends the resulting data back to the requester.
 
-![A diagram showing databases running as a separate process from the Express application](<../.gitbook/assets/full-stack-diagram (1).png>)
+![A diagram showing databases running as a separate process from the Express application](../.gitbook/assets/full-stack-diagram.png)
 
 The primary distinction lies in the type of request being handled: while an Express server is built to parse HTTP requests, PostgreSQL is built to parse and execute **Structured Query Language (SQL)**.
 

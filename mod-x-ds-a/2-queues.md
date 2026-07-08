@@ -1,9 +1,9 @@
-# Queues
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [What is a Queue?](#what-is-a-queue)
-  - [Queue Implementation](#queue-implementation)
+# 2. Queues
 
+* [Essential Questions](2-queues.md#essential-questions)
+* [Key Concepts](2-queues.md#key-concepts)
+* [What is a Queue?](2-queues.md#what-is-a-queue)
+  * [Queue Implementation](2-queues.md#queue-implementation)
 
 ## Essential Questions
 
@@ -36,7 +36,7 @@ A Queue is a collection of values, similar to the Stack, with these two operatio
 * enqueue — inserts a new element to the "back" of the Queue.
 * dequeue — removes the element at the "front" of the Queue.
 
-![](./img/queue.png)
+![](../.gitbook/assets/queue.png)
 
 Queues are often referred to as "first in, first out" (FIFO) data structures.
 

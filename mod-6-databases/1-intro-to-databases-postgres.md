@@ -68,7 +68,7 @@ const customers = [
 
 A **database** is just data stored in some structured manner. For example, a spreadsheet stored in Google Sheets is a database.
 
-![A google sheet is a database](<../.gitbook/assets/google-sheets (1).png>)
+![A google sheet is a database](../.gitbook/assets/google-sheets.png)
 
 Databases are often **persistent**, meaning their data is written to durable storage (disk/hard drive) rather than held in the memory of a running process. This means that our servers can be shut down for updates, crash, and restart without disrupting the data.
 
@@ -113,7 +113,7 @@ A **table** represents a single type of resource (a.k.a. an **"entity"**) in the
 
 > View this database on [Google Sheets](https://docs.google.com/spreadsheets/d/1Ca8yKI8SwsQht-ZgPE569_2BBS8iAuad9LdgB3nJhUY/view)
 
-![Tables in a relational database are connected through primary and foreign keys.](<../.gitbook/assets/google-sheets-relationships (1).png>)
+![Tables in a relational database are connected through primary and foreign keys.](../.gitbook/assets/google-sheets-relationships.png)
 
 **Rows** represent individual resources (a.k.a. **"records"**) in the table (_e.g. a single customer record in the customers table_)
 
@@ -162,7 +162,7 @@ In many ways, DBMSs like PostgreSQL function similarly to web servers:
 * **Provides an Interface**: While servers provide endpoints for HTTP requests (GET `/api/customers`), PostgreSQL can interpret SQL queries (`SELECT * FROM customers`).
 * **Executes**: PostgreSQL executes the requested action on the database and sends the resulting data back to the requester.
 
-![PostgreSQL runs on a server and listens for SQL queries](<../.gitbook/assets/full-stack-diagram (1).png>)
+![PostgreSQL runs on a server and listens for SQL queries](../.gitbook/assets/full-stack-diagram.png)
 
 The primary distinction from an Express server lies in the type of request being handled: while an Express server parses HTTP requests, PostgreSQL parses and executes **Structured Query Language (SQL)** — the universal language for interacting with a relational database. We'll dig into SQL starting in the next lesson.
 

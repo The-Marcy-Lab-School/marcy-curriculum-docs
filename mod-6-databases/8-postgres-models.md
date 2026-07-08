@@ -340,7 +340,7 @@ Now that we understand how the application works, how will we use `pg` to make o
 
 When a client sends a `POST /api/auth/register` request, the server uses `pg` to run an `INSERT INTO users` SQL query against Postgres instead of pushing into a JavaScript array.
 
-![A diagram showing the database running as a separate process from the Express application](<../.gitbook/assets/full-stack-diagram (1).png>)
+![A diagram showing the database running as a separate process from the Express application](../.gitbook/assets/full-stack-diagram.png)
 
 The beauty of this MVC architecture is that our controllers won't need to change at all when we make this swap. Just the models.
 

@@ -1,13 +1,13 @@
-# Abstract Data Types and Stacks
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Introduction: Why Learn Data Structures?](#introduction-why-learn-data-structures)
-- [Abstract Data Types](#abstract-data-types)
-- [What is a Stack?](#what-is-a-stack)
-  - [Stack Implementation](#stack-implementation)
-  - [Classic Algorithm: Balanced Brackets](#classic-algorithm-balanced-brackets)
-    - [Implementation Challenge:](#implementation-challenge)
+# 1. Intro Abstract Data Structures & Stacks
 
+* [Essential Questions](1-adts-stacks.md#essential-questions)
+* [Key Concepts](1-adts-stacks.md#key-concepts)
+* [Introduction: Why Learn Data Structures?](1-adts-stacks.md#introduction-why-learn-data-structures)
+* [Abstract Data Types](1-adts-stacks.md#abstract-data-types)
+* [What is a Stack?](1-adts-stacks.md#what-is-a-stack)
+  * [Stack Implementation](1-adts-stacks.md#stack-implementation)
+  * [Classic Algorithm: Balanced Brackets](1-adts-stacks.md#classic-algorithm-balanced-brackets)
+    * [Implementation Challenge:](1-adts-stacks.md#implementation-challenge)
 
 ## Essential Questions
 
@@ -32,7 +32,9 @@ By the end of this lesson, you should be able to answer these questions:
 
 Let's start with a question.
 
-**<details><summary>Q: Why is it important to know different data structures? For example, if Arrays and Objects can both store collections of data, why should I know how to use both of them?</summary>**
+<details>
+
+<summary><strong>Q: Why is it important to know different data structures? For example, if Arrays and Objects can both store collections of data, why should I know how to use both of them?</strong></summary>
 
 Every data structure has advantages and disadvantages. While Arrays and Objects can both store collections of data, but the operations you can perform with them are different. Knowing their differences allows you to choose the right data structure for every situation.
 
@@ -42,9 +44,9 @@ Every data structure has advantages and disadvantages. While Arrays and Objects 
 
 An **abstract data type (ADT)** is a high-level ("abstract") description about how a particular type of data behaves _without concern for how it is implemented_.
 
-You can think of Classes in Object-Oriented Programming as a way of designing ADTs: you can design a Class with a set of methods and other parts of your program can use that Class without knowing the implementation. 
+You can think of Classes in Object-Oriented Programming as a way of designing ADTs: you can design a Class with a set of methods and other parts of your program can use that Class without knowing the implementation.
 
-For example, to manage a list of Todos, we can define a class with methods for adding, deleting and updating a todo item. We don't need to know how each method is implemented in order for us to build things with this Class. 
+For example, to manage a list of Todos, we can define a class with methods for adding, deleting and updating a todo item. We don't need to know how each method is implemented in order for us to build things with this Class.
 
 ```js
 class TodoList {
@@ -62,7 +64,8 @@ class TodoList {
 
 If the underlying implementation changes, as long as the Class's method signatures stay the same (the method names and parameters), the programs using the Class aren't affected.
 
-In the world of Computer Science, there are a few "classical" examples that are studied widely and have broad applications: 
+In the world of Computer Science, there are a few "classical" examples that are studied widely and have broad applications:
+
 * Dictionary/Map
 * Stacks
 * Queues
@@ -83,7 +86,7 @@ These ADTs give programmers universal "steering wheels" for managing data.
 
 You can visualize the data in a Stack as a pile of pancakes. Stacks follow the "last in, first out" (LIFO) access pattern (the last pancake you add to the stack is the first one you eat).
 
-<img width=400px src="../.gitbook/assets/pancakes.png">
+<img src="../.gitbook/assets/pancakes.png" alt="" width="400">
 
 A Stack has three basic operations:
 
@@ -91,11 +94,12 @@ A Stack has three basic operations:
 * pop — removes the top element of the stack
 * peek - look at the top element of the stack without removing it
 
-![](./img/stack.png)
+![](../.gitbook/assets/stack.png)
 
 Stacks show up in the wild in a few places, such as:
-* The "Undo" button: 
-  * Every time a user performs an action, push it to the top of the Stack 
+
+* The "Undo" button:
+  * Every time a user performs an action, push it to the top of the Stack
   * If the user wants to "Undo" an action, simply pop the most recent action from the Stack
 * The call stack:
   * Every time a function is invoked, it is pushed to the top of the call stack
@@ -136,15 +140,18 @@ But remember, the underlying implementation isn't what matters. It is what you c
 ### Classic Algorithm: Balanced Brackets
 
 **The Problem**: Given a string containing just the characters `(`, `)`, `{`, `}`, `[` and `]`, determine if the input string is valid.
-* Valid Examples: 
+
+* Valid Examples:
   * `{[()]}`
   * `[](){}`
   * `[[[[[[]]]]]]`
-* Invalid Examples: 
+* Invalid Examples:
   * `[(])` (The `(` was opened after the `[`, so it must be closed before the `[` can close).
   * `}}{{`
 
-**<details><summary>Q: What makes a Stack a perfect ADT to solve this problem? How does the LIFO access pattern show up in valid strings versus invalid strings?</summary>**
+<details>
+
+<summary><strong>Q: What makes a Stack a perfect ADT to solve this problem? How does the LIFO access pattern show up in valid strings versus invalid strings?</strong></summary>
 
 **Why a Stack is Perfect**: As you read the string from left to right, every time you see an opening bracket, it becomes the "active" bracket waiting for its partner. Because of the LIFO property, the last opening bracket you see is always the very first one that needs to be closed.
 
@@ -152,20 +159,19 @@ For example, in the string `{[()]}` the `(` is the last bracket opened so it mus
 
 </details>
 
-
 #### Implementation Challenge:
 
 **The Algorithm Steps**
+
 1. Initialize an empty stack.
 2. Loop through each character in the string:
    1. If it's an opening bracket (`(`, `{`, `[`), push it onto the stack.
    2. If it's a closing bracket (`)`, `}`, `]`), peek at the top of the stack. If the top of the stack is its matching opening partner, pop it off. If it doesn't match (or the stack is empty), the string is invalid.
 3. After checking the whole string, if the stack is completely empty (you peek at the top and nothing is there), the brackets are perfectly balanced. If there are still brackets left in the stack, someone forgot a closing bracket!
 
-Here is a visualization of that algorithm: 
+Here is a visualization of that algorithm:
 
 {% embed url="https://docs.google.com/presentation/d/1RZ-rg-AuhxZC0XIMrndSVXNfweK__Fca7wA_6eV8-eY/embed?start=false&loop=false&delayms=3000" %}
-
 
 Use the `Stack` class in your implementation:
 
@@ -191,7 +197,9 @@ const isBalanced = (str) => {
 }
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class Stack {
