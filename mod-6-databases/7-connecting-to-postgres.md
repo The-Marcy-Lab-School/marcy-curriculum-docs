@@ -51,7 +51,7 @@ With a seeded database, we know that we can run SQL queries directly in `psql` a
 
 Your Postgres database is an independent process running on your computer (or a remote server). Your Node application can't just call it like a function or use `fetch()` to send it an HTTP request.
 
-![A diagram showing databases running as a separate process from the Express application](<../.gitbook/assets/full-stack-diagram (1).png>)
+![A diagram showing databases running as a separate process from the Express application](../.gitbook/assets/full-stack-diagram.png)
 
 The `pg` library acts as the bridge between a Node application and Postgres. It:
 
@@ -104,7 +104,7 @@ A `Pool` instance manages a group of connections to your Postgres server (a.k.a 
 
 When your application needs to query the database, it needs an open **connection** — a dedicated channel to communicate with Postgres. When we use `pg` in our servers, each time a client sends an HTTP request to our server, our server will then send a SQL query to Postgres using that open connection.
 
-<img src="../.gitbook/assets/full-stack-diagram (1).png" alt="A diagram showing databases running as a separate process from the Express application" data-size="original">
+<img src="../.gitbook/assets/full-stack-diagram.png" alt="A diagram showing databases running as a separate process from the Express application" data-size="original">
 
 However, a connection can only process one SQL query at a time. If multiple users send HTTP requests to our server at the same time, we would end up with a bottleneck with more and more users waiting for their turn to use that one connection.
 

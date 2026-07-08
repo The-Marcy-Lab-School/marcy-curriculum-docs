@@ -101,7 +101,7 @@ With the foundation of our codebase set, you're ready to add bookmarks. A bookma
 
 One of the most important things to internalize as a full-stack developer is that adding a new resource isn't a one-file change — it touches every layer of the application:
 
-![A diagram showing databases running as a separate process from the Express application](<../.gitbook/assets/full-stack-diagram (1).png>)
+![A diagram showing databases running as a separate process from the Express application](../.gitbook/assets/full-stack-diagram.png)
 
 Every layer in the application needs an update. The order in which you build them matters too: start from the right (the database) and work your back to the browser, so each layer has something to build on before you need it.
 

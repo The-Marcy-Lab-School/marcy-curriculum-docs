@@ -10,7 +10,6 @@
     - [Implementation Challenge:](#implementation-challenge)
 - [A More Efficient Queue](#a-more-efficient-queue)
 
-
 ## Essential Questions
 
 By the end of this lesson, you should be able to answer these questions:
@@ -42,7 +41,7 @@ A Queue has three basic operations:
 * dequeue — removes the front element of the queue
 * peek - look at the front element of the queue without removing it
 
-![](./img/queue.png)
+![](../.gitbook/assets/queue.png)
 
 Queues show up in the wild in a few places, such as:
 * Task scheduling:
