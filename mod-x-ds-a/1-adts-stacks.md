@@ -184,6 +184,11 @@ class Stack {
   peek() {
     return this.#values[this.#values.length-1];
   }
+
+  // Though not required, it is standard to include a size method in a Stack
+  size() {
+    return this.#values.length;
+  }
 }
 
 const isBalanced = (str) => {
@@ -194,22 +199,6 @@ const isBalanced = (str) => {
 **<details><summary>Solution</summary>**
 
 ```js
-class Stack {
-  #values = [];
-
-  push(data) {
-    this.#values.push(data);
-  }
-
-  pop() {
-    return this.#values.pop();
-  }
-
-  peek() {
-    return this.#values[this.#values.length - 1];
-  }
-}
-
 function isBalanced(str) {
   // Instantiate your custom Stack class
   const stack = new Stack();
@@ -239,8 +228,9 @@ function isBalanced(str) {
     }
   }
 
-  // 3. If peek() is undefined, the stack is completely empty and balanced
-  return stack.peek() === undefined;
+  // 3. If the stack is completely empty, it is balanced
+  // Otherwise, an opening bracket remains un-closed
+  return stack.size() === 0;
 }
 
 // Test Cases

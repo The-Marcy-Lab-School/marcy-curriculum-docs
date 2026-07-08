@@ -6,7 +6,7 @@ We're going to take a brief detour from the more application-focused elements of
 
 * [1. Intro Abstract Data Structures & Stacks](./1-adts-stacks.md)
 * [2. Queues](./2-queues.md)
-* [3. Nodes & Linked Lists](./3-nodes-linked-lists.md)
-* [4. Singly & Doubly Linked Lists](./4-singly-doubly-linked-lists.md)
+* [3. Nodes and Linked Lists](./3-nodes-linked-lists.md)
+* [4. Singly and Doubly Linked Lists](./4-singly-doubly-linked-lists.md)
 * [5. Recursion](./5-recursion.md)
 * [6. Trees](./6-trees.md)
