@@ -1,10 +1,30 @@
-# 6-0-1-linked-list-continued
+# Singly and Doubly Linked Lists
 
-## Singly and Doubly Linked list
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Singly Linked List](#singly-linked-list)
+- [Doubly Linked List](#doubly-linked-list)
+- [Tradeoffs](#tradeoffs)
+- [Cycles](#cycles)
+  - [Check to see if a linked list is a cycle](#check-to-see-if-a-linked-list-is-a-cycle)
 
-### Singly Linked list
+## Essential Questions
 
-A singly Linked list only contains a link (pointer) to the next node, which means that it can only be traversed in one direction from head to tail. This takes up less space in memory.
+By the end of this lesson, you should be able to answer these questions:
+
+1. What is the difference between a singly linked list and a doubly linked list?
+2. What are the tradeoffs between a singly linked list and a doubly linked list?
+3. What is a cycle in a linked list, and how can you detect one?
+
+## Key Concepts
+
+* **Singly Linked List** - a linked list where each node only stores a pointer to the `next` node, allowing traversal in one direction only (head to tail). Uses less memory than a doubly linked list.
+* **Doubly Linked List** - a linked list where each node stores pointers to both the `next` and `prev` node, allowing traversal in both directions. Uses more memory than a singly linked list, but supports constant-time insertion at a known position and reverse traversal.
+* **Cycle** - a situation where a node's `next` pointer (directly or indirectly) points back to an earlier node in the list, creating a loop with no end. Traversing a cyclic list without protection will continue indefinitely.
+
+## Singly Linked List
+
+A singly linked list only contains a link (pointer) to the next node, which means that it can only be traversed in one direction from head to tail. This takes up less space in memory.
 
 This is pretty much what we covered in the last lecture.
 
@@ -50,9 +70,9 @@ Update the tail reference: Update the tail reference to point to the node you fo
 
 Return the data of the removed node: Finally, return the data of the removed node (which was the tail of the list).
 
-### Doubly Linked list
+## Doubly Linked List
 
-A doubly Linked list contains both a link to the next node and a link to the previous node. This means that it can be traversed in both directions, but takes up more space in memory.
+A doubly linked list contains both a link to the next node and a link to the previous node. This means that it can be traversed in both directions, but takes up more space in memory.
 
 ```js
 class Node {
@@ -128,7 +148,7 @@ class LinkedList {
 }
 ```
 
-## tradeoffs
+## Tradeoffs
 
 * Doubly linked lists require more memory (they must store the data value, the next pointer, and the previous pointer)
 
@@ -144,10 +164,10 @@ A cycle in a Linked list is a situation where the last node of the list points t
 
 ```js
 const list = new LinkedList();
-list.append(1);
-list.append(2);
-list.append(3);
-list.append(4);
+list.appendToTail(1);
+list.appendToTail(2);
+list.appendToTail(3);
+list.appendToTail(4);
 
 // create a cycle by making the last node point to the first node
 list.tail.next = list.head;

@@ -1,30 +1,54 @@
-# 1. Nodes & Linked Lists
+# Nodes & Linked Lists
+
+- [Essential Questions](#essential-questions)
+- [Key Concepts](#key-concepts)
+- [Nodes](#nodes)
+    - [Linked Lists](#linked-lists)
+    - [Doubly Linked Lists](#doubly-linked-lists)
+    - [Trees](#trees)
+- [Making a Node Class for Linked Lists](#making-a-node-class-for-linked-lists)
+- [Making a Linked List Class](#making-a-linked-list-class)
+- [Algorithm: Prepend to head](#algorithm-prepend-to-head)
+- [Algorithm: Append to tail](#algorithm-append-to-tail)
+- [Algorithm: isCyclic](#algorithm-iscyclic)
 
 ## Essential Questions
 
-* What are the qualities of Graphs
-* What are the tradeoffs between linked lists and arrays?
-* What are the tradeoffs between singly linked lists and doubly linked lists?
-* What are the run times for insertion, deletion, and accessing from linked lists?
+By the end of this lesson, you should be able to answer these questions:
 
-## Key Terms
+1. What is a graph, and what do all graphs have in common?
+2. What is a node? What does the `head` of a linked list refer to? What does the `tail` refer to?
+3. What are the tradeoffs between linked lists and arrays?
+4. What are the tradeoffs between singly linked lists and doubly linked lists?
+5. What are the run times for insertion, deletion, and accessing values in a linked list?
 
-* Graph
-* Node
-* Singly linked list
-* Doubly linked list
-* Random access
-* Sequential access
+## Key Concepts
+
+* **Graph** - a category of abstract data type used to organize collections of data with *relationships*. All graphs are made up of nodes containing each data point and edges connecting them.
+  * **Node** - a single unit of data storage in a graph. Depending on the structure, a node may point to a `next`, `prev` (previous), `parent`, or `children` node.
+  * **Edge** - a connection between two nodes.
+* **Linked List** - a graph structure made of nodes chained together in a single-file line, where each node points to the `next` node in the sequence. To access any node in the list, you must start at the `head` node of the list and traverse through the `next` pointers of each node.
+  * **Singly Linked List** - a linked list where each node *only* points to the `next` node, allowing traversal in one direction only.
+  * **Doubly Linked List** - a linked list where each node points to both the `next` and `prev` node, allowing traversal in both directions.
+  * **`head`** - the first node in a linked list.
+  * **`tail`** - the last node in a linked list.
+* **Traverse** - to visit the nodes of a data structure in a particular order.
+* **Random Access** - the ability to access any element in a collection directly (e.g. by index), regardless of its position. Arrays support random access.
+* **Sequential Access** - the requirement to visit elements of a collection in order, starting from the beginning, to reach a given element. Linked lists only support sequential access.
 
 ## Nodes
-
-In the Stack and Queue data structure,
 
 A **Graph** is a category of abstract data type that is used to organize relationships between data.
 
 The thing that all graphs share is that they are comprised of **nodes** that hold a single piece of data, and **edges** that connect two nodes.
 
-**Q: Consider the abstract data structures below. What do the nodes in each structure point to?**
+**<details><summary>Q: Consider the abstract data structures below. What do the nodes in each structure point to?</summary>**
+
+* In a **linked list**, each node points to the `next` node in the list.
+* In a **doubly linked list**, each node points to both the `next` and `prev` node.
+* In a **tree**, each node points to its `children` nodes (and sometimes a `parent` node).
+
+</details>
 
 #### Linked Lists
 
@@ -57,7 +81,7 @@ class Node {
 
 const nodeA = new Node("a");
 const nodeB = new Node("b");
-const nodeC = new Node("C");
+const nodeC = new Node("c");
 
 nodeA.next = nodeB;
 nodeB.next = nodeC;
@@ -65,7 +89,11 @@ nodeB.next = nodeC;
 console.log(nodeA, nodeB, nodeC); // What do you expect to see?
 ```
 
-**Q: What is the head of the linked list? What is the tail**?
+**<details><summary>Q: What is the head of a linked list? What is the tail?</summary>**
+
+The `head` is the first node in the linked list — the entry point for traversing the rest of the list. The `tail` is the last node in the list, identifiable because its `next` pointer is `null`.
+
+</details>
 
 ## Making a Linked List Class
 
@@ -89,7 +117,11 @@ class LinkedList {
 
 > "Traversing" is a fancy word for "visiting the nodes in a particular order" in a data structure.
 
-**Q: What is the way/what are the ways that we can traverse a linked list?**
+**<details><summary>Q: What are the ways that we can traverse a linked list?</summary>**
+
+A singly linked list can only be traversed in one direction: starting at the `head` and following each node's `next` pointer until reaching the `tail`. A doubly linked list can also be traversed in reverse, starting at the `tail` and following each node's `prev` pointer back to the `head`.
+
+</details>
 
 Some linked lists may also implement:
 
@@ -120,7 +152,7 @@ console.log(list.head.next.next);
 **<details><summary>Solution</summary>**
 
 ```js
-class LinkList {
+class LinkedList {
     constructor() {
         this.head = null;
     }
@@ -163,7 +195,7 @@ console.log(list.head.next.next);
 **<details><summary>Solution</summary>**
 
 ```js
-class LinkList {
+class LinkedList {
     constructor() {
         this.head = null;
     }

@@ -1,11 +1,12 @@
 # Mod 6 - Data Structures & Algorithms
 
-We are about halfway through the program which means you will soon be diving into your first technical interviews! To celebrate this milestone, we're going to take a brief detour and learn some of the most important concepts that you will encounter in those technical interviews. Data Structures & Algorithms is a fun chance to dive deep into code challenges!
+We're going to take a brief detour from the more application-focused elements of software development and learn some of the most important concepts in Computer Science theory that you will encounter in technical interviews.
 
 ## Chapters
 
-* [1. Nodes & Linked Lists](1-nodes-linked-lists.md)
-* [2. Singly & Doubly Linked Lists](2-singly-doubly-linked-lists.md)
-* [3. Stacks & Queues](3-stacks-queues.md)
-* [4. Recursion](4-recursion.md)
-* [5. Trees](5-trees.md)
+* [1. Intro Abstract Data Structures & Stacks](./1-adts-stacks.md)
+* [2. Queues](./2-queues.md)
+* [3. Nodes & Linked Lists](./3-nodes-linked-lists.md)
+* [4. Singly & Doubly Linked Lists](./4-singly-doubly-linked-lists.md)
+* [5. Recursion](./5-recursion.md)
+* [6. Trees](./6-trees.md)
