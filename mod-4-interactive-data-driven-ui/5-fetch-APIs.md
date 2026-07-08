@@ -118,25 +118,33 @@ In addition to the message body, the response will contain a three-digit **statu
 
 ### APIs Pop Quiz!
 
-**<details><summary>Q1: A Web API is an interface for exchanging ____ via _____</summary>**
+<details>
+
+<summary><strong>Q1: A Web API is an interface for exchanging ____ via _____</strong></summary>
 
 A Web API is an interface for exchanging data via the internet (HTTP)
 
 </details>
 
-**<details><summary>Q2: What do we call the cycle that describes how we get det data from a Web API?</summary>**
+<details>
+
+<summary><strong>Q2: What do we call the cycle that describes how we get det data from a Web API?</strong></summary>
 
 The HTTP Request and Response cycle
 
 </details>
 
-**<details><summary>Q3: What do we call the specific URL that we send a requst to?</summary>**
+<details>
+
+<summary><strong>Q3: What do we call the specific URL that we send a requst to?</strong></summary>
 
 The endpoint
 
 </details>
 
-**<details><summary>Q4: What are the four HTTP request verbs and what do they each mean?</summary>**
+<details>
+
+<summary><strong>Q4: What are the four HTTP request verbs and what do they each mean?</strong></summary>
 
 * `"GET"` - Request to get data from the API's dataset (the default)
 * `"POST"` - Request to create data to be added to the API's dataset
@@ -145,7 +153,9 @@ The endpoint
 
 </details>
 
-**<details><summary>Q5: How is data typically formatted when sent via HTTP?</summary>**
+<details>
+
+<summary><strong>Q5: How is data typically formatted when sent via HTTP?</strong></summary>
 
 Using JSON (JavaScript Object Notation)
 
@@ -168,7 +178,9 @@ The `fetch(url, config)` sends an HTTP request to the API endpoint specified by 
 * The `config` parameter is optional and is used to specify the type of request (`GET`, `POST`, etc.) but we can omit it when sending a `GET` request.
 * A `Promise` object is returned. It will resolve to the `Response` object (or an error)
 
-**<details><summary>Q: How can we handle the promise from fetch once it resolves or rejects?</summary>**
+<details>
+
+<summary><strong>Q: How can we handle the promise from fetch once it resolves or rejects?</strong></summary>
 
 Using `.then()` and `.catch()`!
 
@@ -285,7 +297,9 @@ Step 3 is a "guard clause" for step 4: we don't want to start reading the body i
 
 When an HTTP request is sent to a web API, the response data isn't sent back all at once. Instead, it is sent back in a continuous "stream" of data chunks. That's what the `ReadableStream` in the `response.body` is.
 
-**<details><summary>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</summary>**
+<details>
+
+<summary><strong>Q: Why might it be useful to send data in a stream of chunks, rather than all at once</strong></summary>
 
 Getting data from another source requires two steps: first downloading the data and then reading it. If the data is really large, downloading the data can become a blocking task.
 
@@ -311,7 +325,9 @@ return readingPromise
 
 When we send a request, it is entirely possible that the request fails.
 
-**<details><summary>Q: Can you think of a reason for a request failing?</summary>**
+<details>
+
+<summary><strong>Q: Can you think of a reason for a request failing?</strong></summary>
 
 Here are some common reasons:
 
@@ -421,7 +437,7 @@ const fetchPromise = fetch('https://dog.ceo/api/breeds/image/randomOOPS');
 There are two likely causes of errors / rejected Promises:
 
 * A `fetch()` Promise rejects when the request itself fails. For example, the URL might be malformed (`hxxp://example.com`) or there is a network error (you don't have internet).
-  * **Note**: a `fetch()` promise can still resolve but have `response.ok` be `false`. For example, if the URL is properly formatted but the API you are requesting from is down, the `fetch()` call itself will work but `response.ok` will be `false`. You can check the [HTTP status code](2-fetch.md#http-status-codes) to see exactly what caused the request to fail. In this case, we manually throw our own `Error` in step 3.
+  * **Note**: a `fetch()` promise can still resolve but have `response.ok` be `false`. For example, if the URL is properly formatted but the API you are requesting from is down, the `fetch()` call itself will work but `response.ok` will be `false`. You can check the [HTTP status code](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-4-interactive-data-driven-ui/2-fetch.md#http-status-codes) to see exactly what caused the request to fail. In this case, we manually throw our own `Error` in step 3.
 * A `response.json()` Promise rejects when the `response` body is NOT in JSON format and therefore cannot be read.
 
 ## Challenge: Joke API

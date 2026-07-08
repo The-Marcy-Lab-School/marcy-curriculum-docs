@@ -4,33 +4,33 @@
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/swe-casestudy-6-social-bookmark-manager)!
 {% endhint %}
 
-- [Setup](#setup)
-- [Overview](#overview)
-- [Schema](#schema)
-- [API Endpoints](#api-endpoints)
-- [Explore the Solution](#explore-the-solution)
-  - [Trace the Flow](#trace-the-flow)
-    - [Scenario 1: The page loads and the public feed is rendered](#scenario-1-the-page-loads-and-the-public-feed-is-rendered)
-    - [Scenario 2: The user submits the registration form](#scenario-2-the-user-submits-the-registration-form)
-    - [Scenario 3: A logged-in user submits the Add Bookmark form](#scenario-3-a-logged-in-user-submits-the-add-bookmark-form)
-    - [Scenario 4: A logged-in user clicks the Like button on a bookmark](#scenario-4-a-logged-in-user-clicks-the-like-button-on-a-bookmark)
-    - [Scenario 5: A logged-in user clicks Delete on their own bookmark](#scenario-5-a-logged-in-user-clicks-delete-on-their-own-bookmark)
-  - [Guided Reading Questions](#guided-reading-questions)
-    - [`server/db/pool.js`](#serverdbpooljs)
-    - [`server/db/seed.js`](#serverdbseedjs)
-    - [`server/index.js`](#serverindexjs)
-    - [`server/models/userModel.js`](#servermodelsusermodeljs)
-    - [`server/models/bookmarkModel.js`](#servermodelsbookmarkmodeljs)
-    - [`server/middleware/checkAuthentication.js`](#servermiddlewarecheckauthenticationjs)
-    - [`server/controllers/authControllers.js`](#servercontrollersauthcontrollersjs)
-    - [`server/controllers/bookmarkControllers.js`](#servercontrollersbookmarkcontrollersjs)
-    - [`frontend/src/fetch-helpers.js`](#frontendsrcfetch-helpersjs)
-- [Concepts Checklist](#concepts-checklist)
-  - [Core — Databases \& Postgres](#core--databases--postgres)
-  - [Core — Authentication \& Authorization](#core--authentication--authorization)
-  - [Core — Fullstack Application](#core--fullstack-application)
-  - [Core — Frontend](#core--frontend)
-  - [Extension — Likes (Many-to-Many)](#extension--likes-many-to-many)
+* [Setup](case-study.md#setup)
+* [Overview](case-study.md#overview)
+* [Schema](case-study.md#schema)
+* [API Endpoints](case-study.md#api-endpoints)
+* [Explore the Solution](case-study.md#explore-the-solution)
+  * [Trace the Flow](case-study.md#trace-the-flow)
+    * [Scenario 1: The page loads and the public feed is rendered](case-study.md#scenario-1-the-page-loads-and-the-public-feed-is-rendered)
+    * [Scenario 2: The user submits the registration form](case-study.md#scenario-2-the-user-submits-the-registration-form)
+    * [Scenario 3: A logged-in user submits the Add Bookmark form](case-study.md#scenario-3-a-logged-in-user-submits-the-add-bookmark-form)
+    * [Scenario 4: A logged-in user clicks the Like button on a bookmark](case-study.md#scenario-4-a-logged-in-user-clicks-the-like-button-on-a-bookmark)
+    * [Scenario 5: A logged-in user clicks Delete on their own bookmark](case-study.md#scenario-5-a-logged-in-user-clicks-delete-on-their-own-bookmark)
+  * [Guided Reading Questions](case-study.md#guided-reading-questions)
+    * [`server/db/pool.js`](case-study.md#serverdbpooljs)
+    * [`server/db/seed.js`](case-study.md#serverdbseedjs)
+    * [`server/index.js`](case-study.md#serverindexjs)
+    * [`server/models/userModel.js`](case-study.md#servermodelsusermodeljs)
+    * [`server/models/bookmarkModel.js`](case-study.md#servermodelsbookmarkmodeljs)
+    * [`server/middleware/checkAuthentication.js`](case-study.md#servermiddlewarecheckauthenticationjs)
+    * [`server/controllers/authControllers.js`](case-study.md#servercontrollersauthcontrollersjs)
+    * [`server/controllers/bookmarkControllers.js`](case-study.md#servercontrollersbookmarkcontrollersjs)
+    * [`frontend/src/fetch-helpers.js`](case-study.md#frontendsrcfetch-helpersjs)
+* [Concepts Checklist](case-study.md#concepts-checklist)
+  * [Core — Databases & Postgres](case-study.md#core--databases--postgres)
+  * [Core — Authentication & Authorization](case-study.md#core--authentication--authorization)
+  * [Core — Fullstack Application](case-study.md#core--fullstack-application)
+  * [Core — Frontend](case-study.md#core--frontend)
+  * [Extension — Likes (Many-to-Many)](case-study.md#extension--likes-many-to-many)
 
 ## Setup
 
@@ -65,20 +65,22 @@ This case study demonstrates a Postgres-backed MVC server, user authentication w
 The completed solution files are:
 
 **Server**
-- `server/index.js` — Express server, middleware, and routes
-- `server/db/pool.js` — Shared Postgres connection pool
-- `server/db/seed.js` — Drops, recreates schema, and inserts sample data
-- `server/models/userModel.js` — User data access and password validation
-- `server/models/bookmarkModel.js` — Bookmark data access with JOIN queries
-- `server/controllers/authControllers.js` — Register, login, me, logout
-- `server/controllers/bookmarkControllers.js` — Bookmark CRUD and likes
-- `server/middleware/checkAuthentication.js` — Auth guard middleware
+
+* `server/index.js` — Express server, middleware, and routes
+* `server/db/pool.js` — Shared Postgres connection pool
+* `server/db/seed.js` — Drops, recreates schema, and inserts sample data
+* `server/models/userModel.js` — User data access and password validation
+* `server/models/bookmarkModel.js` — Bookmark data access with JOIN queries
+* `server/controllers/authControllers.js` — Register, login, me, logout
+* `server/controllers/bookmarkControllers.js` — Bookmark CRUD and likes
+* `server/middleware/checkAuthentication.js` — Auth guard middleware
 
 **Frontend**
-- `frontend/index.html` — Single-page HTML structure
-- `frontend/src/main.js` — Page load logic and event handlers
-- `frontend/src/fetch-helpers.js` — Functions that call the API
-- `frontend/src/dom-helpers.js` — Functions that update the DOM
+
+* `frontend/index.html` — Single-page HTML structure
+* `frontend/src/main.js` — Page load logic and event handlers
+* `frontend/src/fetch-helpers.js` — Functions that call the API
+* `frontend/src/dom-helpers.js` — Functions that update the DOM
 
 ## Schema
 
@@ -108,7 +110,7 @@ CREATE TABLE bookmark_likes (
 
 **Entity relationship diagram:**
 
-![users, bookmarks, and bookmark_likes connected in an ERD](./img/case-study/erd.png)
+![users, bookmarks, and bookmark\_likes connected in an ERD](../.gitbook/assets/erd.png)
 
 ## API Endpoints
 
@@ -133,13 +135,15 @@ Below, you will find 5 scenarios that exist in this application. For each, draw 
 
 Scenario 1 and 2 are both fully worked examples — study the diagrams and detailed breakdown to understand the pattern. For Scenarios 3–5, draw your own sequence diagram first, then expand the answer to compare your diagram and check your breakdown.
 
----
+***
 
 #### Scenario 1: The page loads and the public feed is rendered
 
-![A sequence diagram for scenario 1](./img/case-study/sequence-1.png)
+![A sequence diagram for scenario 1](../.gitbook/assets/sequence-1.png)
 
-**<details><summary>Detailed Breakdown</summary>**
+<details>
+
+<summary><strong>Detailed Breakdown</strong></summary>
 
 1. **`frontend/src/main.js`**: `main()` is called on page load.
 2. **`frontend/src/main.js`**: `await getCurrentUser()` is called to check whether a session already exists.
@@ -160,13 +164,13 @@ Scenario 1 and 2 are both fully worked examples — study the diagrams and detai
 
 </details>
 
----
+***
 
 #### Scenario 2: The user submits the registration form
 
 Note: Observe how the diagram visualizes the two pathways: if the username was taken or if the username is available.
 
-![A sequence diagram for scenario 2](./img/case-study/sequence-2.png)
+![A sequence diagram for scenario 2](../.gitbook/assets/sequence-2.png)
 
 **Detailed Breakdown**
 
@@ -182,15 +186,17 @@ Note: Observe how the diagram visualizes the two pathways: if the username was t
 10. **`frontend/src/fetch-helpers.js`**: Parses the response and returns `{ data: user, error: null }`.
 11. **`frontend/src/main.js`**: Destructures `{ data: user }`. If `user` is `null` (registration failed), the handler returns early. Otherwise, `currentUser = user`, `renderAuthView(user)` is called — hides auth forms, shows "My Bookmarks" section, and re-renders the feed with like buttons enabled.
 
----
+***
 
 #### Scenario 3: A logged-in user submits the Add Bookmark form
 
 Draw a sequence diagram for this scenario, then expand to check your answer.
 
-**<details><summary>Answer</summary>**
+<details>
 
-![A sequence diagram for scenario 3](./img/case-study/sequence-3.png)
+<summary><strong>Answer</strong></summary>
+
+![A sequence diagram for scenario 3](../.gitbook/assets/sequence-3.png)
 
 **Detailed Breakdown**
 
@@ -206,15 +212,17 @@ Draw a sequence diagram for this scenario, then expand to check your answer.
 
 </details>
 
----
+***
 
 #### Scenario 4: A logged-in user clicks the Like button on a bookmark
 
 Draw a sequence diagram for this scenario, then expand to check your answer.
 
-**<details><summary>Answer</summary>**
+<details>
 
-![A sequence diagram for scenario 4](./img/case-study/sequence-4.png)
+<summary><strong>Answer</strong></summary>
+
+![A sequence diagram for scenario 4](../.gitbook/assets/sequence-4.png)
 
 **Detailed Breakdown**
 
@@ -231,18 +239,21 @@ Draw a sequence diagram for this scenario, then expand to check your answer.
 
 </details>
 
----
+***
 
 #### Scenario 5: A logged-in user clicks Delete on their own bookmark
 
 Draw a sequence diagram for this scenario, then expand to check your answer. Be sure to include separate sequences for these outcomes:
+
 1. The bookmark was not found
 2. The user sending the request is not the owner of the bookmark
 3. The user sending the request is the owner and is authorized to delete
 
-**<details><summary>Answer</summary>**
+<details>
 
-![A sequence diagram for scenario 5](./img/case-study/sequence-5.png)
+<summary><strong>Answer</strong></summary>
+
+![A sequence diagram for scenario 5](../.gitbook/assets/sequence-5.png)
 
 **Detailed Breakdown**
 
@@ -260,25 +271,27 @@ Draw a sequence diagram for this scenario, then expand to check your answer. Be 
 
 </details>
 
----
+***
 
 ### Guided Reading Questions
 
 Open each file and answer the questions.
 
----
+***
 
 #### `server/db/pool.js`
 
 1. `pool.js` checks for `process.env.PG_CONNECTION_STRING` first and falls back to individual variables (`PG_HOST`, `PG_PORT`, etc.) if it isn't set. Look into connection strings provided by Render. Then consider: how does `pool.js` make it possible to change which configuration is used depending on the provided environment variables?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. Hosting providers like Render provide a single `DATABASE_URL` connection string for deployed databases. Individual variables (`PG_HOST`, `PG_PORT`, etc.) are more convenient when configuring a local database by hand. `pool.js` creates two separate configurations: one using the `PG_CONNECTION_STRING` and the other using individual variables. It checks to see if this `PG_CONNECTION_STRING` exists, and if it does, it uses the production configuration. If not, it uses the development configuration. This makes it possible to use this same file in both situations without modification. Instead, we just change which environment variables we provide.
 
 </details>
 
----
+***
 
 #### `server/db/seed.js`
 
@@ -289,10 +302,12 @@ Open each file and answer the questions.
 5. Both `bookmarks` and `bookmark_likes` reference `users` with `ON DELETE CASCADE`. What does `ON DELETE CASCADE` mean? What happens to a user's bookmarks and likes when their account is deleted?
 6. The `bookmark_likes` table has a `bookmark_likes_id SERIAL PRIMARY KEY` column and a separate `UNIQUE (user_id, bookmark_id)` constraint. What does the `UNIQUE` constraint enforce? Why does this table need both a surrogate primary key and a unique constraint on the pair of foreign keys?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. The seed data includes passwords that must be hashed with `bcrypt` before being stored — plain-text passwords can never go into the database. `bcrypt.hash()` is a JavaScript function; there is no equivalent in SQL. A `.sql` file is just static text with no way to call external libraries. Any seed data that requires runtime computation must live in JavaScript.
-2. `Promise.all()` runs all three `bcrypt.hash()` calls concurrently — all three start at the same time and the code waits for all of them to finish together. Awaiting each call in sequence runs them one at a time. Since bcrypt is intentionally slow (~300ms per hash at 12 rounds), sequential hashing would take ~900ms total. `Promise.all()` cuts that to ~300ms regardless of how many passwords there are.
+2. `Promise.all()` runs all three `bcrypt.hash()` calls concurrently — all three start at the same time and the code waits for all of them to finish together. Awaiting each call in sequence runs them one at a time. Since bcrypt is intentionally slow (\~300ms per hash at 12 rounds), sequential hashing would take \~900ms total. `Promise.all()` cuts that to \~300ms regardless of how many passwords there are.
 3. `bookmark_likes` has a foreign key referencing `bookmarks`, and `bookmarks` has a foreign key referencing `users`. Dropping `users` first would violate the foreign key constraint — Postgres won't allow dropping a table that other tables still reference. You must drop dependent tables first, working from the most dependent (`bookmark_likes`) back to the least (`users`).
 4. After each `INSERT`, Postgres assigns auto-incremented IDs via `SERIAL`. The actual values depend on the sequence state — if the seed has been run before, the sequence has already advanced and `user_id` 1 may not exist. `RETURNING` captures the real IDs that Postgres just assigned so the likes insert references rows that are guaranteed to exist. Hardcoded IDs would silently produce wrong data or throw a foreign key violation on any run after the first.
 5. `ON DELETE CASCADE` means that when a row in the referenced table is deleted, all rows in this table that reference it are automatically deleted too. Deleting a user automatically deletes all of their bookmarks (via `bookmarks.user_id`) and all of their likes (via `bookmark_likes.user_id`).
@@ -300,23 +315,25 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 #### `server/index.js`
 
 1. The global error handler `handleError` has four parameters `(err, req, res, next)` instead of the usual three. Why does Express require exactly four parameters to treat a function as an error handler? What would happen if you wrote it with three?
-2. Why must `app.use(handleError)` be registered *after* all routes and other middleware? What would happen if it were placed before them?
+2. Why must `app.use(handleError)` be registered _after_ all routes and other middleware? What would happen if it were placed before them?
 3. The handler always sends a generic `500` response rather than forwarding `err.message`. Why is this safer?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. Express identifies error-handling middleware solely by the number of parameters in the function signature — it must be exactly four. If you write it with three parameters, Express treats it as regular middleware and it will never receive errors forwarded with `next(err)`. The `next` parameter is required even if you never call it inside the handler.
-2. Express processes middleware in the order it is registered. `next(err)` forwards the error to the *next* error handler in the chain. If `handleError` were registered before the routes, no errors from those routes would reach it. It must be last so it can catch errors that bubble up from any route above it.
+2. Express processes middleware in the order it is registered. `next(err)` forwards the error to the _next_ error handler in the chain. If `handleError` were registered before the routes, no errors from those routes would reach it. It must be last so it can catch errors that bubble up from any route above it.
 3. Errors that reach the global handler are unexpected failures — a database crash, connection timeout, or a bug in the code. `err.message` in these cases might expose internal details like table names, file paths, or query strings that an attacker could use. A generic message keeps those details server-side (logged with `console.error`) while still returning a useful status code. Intentional error messages (like `"Bookmark not found"`) are handled inline in the controllers and never reach this handler.
 
 </details>
 
----
+***
 
 #### `server/models/userModel.js`
 
@@ -324,7 +341,9 @@ Open each file and answer the questions.
 2. `validatePassword` returns `null` on failure. What does it return on success, and why is that a security problem? Why return `null` instead of throwing an error, and how does the controller use this return value?
 3. `validatePassword` needs to look up a user by username, but it does not call `findByUsername` internally. Why not? What would break if it did?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. `validatePassword` is the only function that selects `password_hash` (it does so through `SELECT *`). It needs the password hash to call `bcrypt.compare(password, user.password_hash)` — comparing the plain-text password from the login request against the stored hash. After the comparison it returns the full database row, which includes `password_hash`. This is an intentional flaw that the `authControllers.js` questions ask you to find.
 2. On success, `validatePassword` returns all the matched user's data which includes `password_hash`. That hash should never leave the server — if `login` controller sends this object directly to the client, the hashed password is exposed in the response. It should instead return only `{ user_id, username }`. Returning `null` on failure signals "this operation produced no result" without crashing the program. The controller can check `if (!user) return res.status(401).json(...)` and handle it gracefully. Throwing an error would require a `try/catch` in the controller and is semantically more appropriate for unexpected failures, not an expected case like "wrong password."
@@ -332,7 +351,7 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 #### `server/models/bookmarkModel.js`
 
@@ -340,7 +359,9 @@ Open each file and answer the questions.
 2. The query uses `GROUP BY bookmarks.bookmark_id, users.username`. Why is `GROUP BY` required here? What would happen without it?
 3. Look at how `listBookmarks` in `bookmarkControllers.js` calls `bookmarkModel.list()` — it just calls it and sends the result, with no knowledge of how the data is fetched. Now look at the implementation of `list()` in this file. What does this tell you about the relationship between the model and controller layers? What would the controller need to change if you swapped this SQL implementation for one that read from an in-memory array instead?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. We use `LEFT JOIN` for `bookmark_likes` because it's permissive — bookmarks with zero likes still appear in the results. `INNER JOIN users` excludes any bookmarks without a matching user—but that's okay because the schema guarantees via foreign key that every bookmark has a matching user, so no rows would be dropped anyway.
 2. `GROUP BY` is required whenever you use an aggregate function like `COUNT`. Without it, Postgres doesn't know how to collapse the multiple rows produced by the join (one row per like) into a single row per bookmark. `GROUP BY bookmarks.bookmark_id, users.user_id` tells Postgres to group all rows with the same `bookmark_id` together so `COUNT` can total the likes for each bookmark.
@@ -348,7 +369,7 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 #### `server/middleware/checkAuthentication.js`
 
@@ -356,7 +377,9 @@ Open each file and answer the questions.
 2. `checkAuthentication` returns `401` when `req.session.user_id` is missing. Open `deleteBookmark` in `bookmarkControllers.js` — it also rejects some requests, but with a `403` instead. What is the difference between what these two status codes communicate? Why is `403` the right choice there rather than `401`?
 3. Look at the bookmark routes in `index.js`. `checkAuthentication` appears on some routes but not others — `POST` and `DELETE` routes have it, but `GET /api/bookmarks` does not. Why isn't `checkAuthentication` applied to all routes at once with `app.use(checkAuthentication)`? What would break if it were?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. `req.session.user_id` is set in the `register` and `login` controllers after successful authentication. The `cookie-session` middleware serializes the session data into a signed cookie and sends it to the browser. On every subsequent request, the browser automatically includes this cookie, and `cookie-session` deserializes it back into `req.session` — so the server can read `req.session.user_id` on any request where the user is logged in.
 2. `401 Unauthorized` means "you are not authenticated — I don't know who you are." `403 Forbidden` means "I know who you are, but you don't have permission to do this." `deleteBookmark` should use `403` when a logged-in user tries to delete another user's bookmark — the server knows their identity (they passed `checkAuthentication`), but they are not authorized to perform this specific action.
@@ -364,15 +387,17 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 #### `server/controllers/authControllers.js`
 
 1. The `register` controller checks for an existing username before creating a new user. What HTTP status code does it return if the username is already taken, and why is that the appropriate code?
-2. After a successful registration and login, the controller sets `req.session.user_id = user.user_id`. Where does `req.session` come from and why are we storing only `user.user_id` in it as opposed to the entire `user` object? 
+2. After a successful registration and login, the controller sets `req.session.user_id = user.user_id`. Where does `req.session` come from and why are we storing only `user.user_id` in it as opposed to the entire `user` object?
 3. In the `login` controller, `res.send(user)` sends the result of `userModel.validatePassword()` directly to the client. Open `userModel.js` and look at what `validatePassword` returns on success. Is everything in that object safe to send? What would you change?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. `400 Bad Request` — the request itself was understood but cannot be fulfilled because the input is invalid (a duplicate username). `409 Conflict` is also a valid choice for duplicate resource errors. `401` would be wrong here because this isn't an authentication failure.
 2. `req.session` represents the cookie created by the `cookie-session` middleware (see `index.js`). Storing only `user_id` keeps the session small and avoids stale data. If you stored the full user object and the user later changed their username, the session would contain the old value. Storing just `user_id` means the server always fetches fresh user data from the database when needed (e.g., in the `GET /api/auth/me` endpoint).
@@ -380,7 +405,7 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 #### `server/controllers/bookmarkControllers.js`
 
@@ -390,7 +415,9 @@ Open each file and answer the questions.
 4. Every controller wraps its logic in `try/catch` and calls `next(err)` in the catch block. What does `next(err)` do? What would happen if the `try/catch` were missing and a database query threw an error?
 5. `listBookmarks` has no validation logic — it just fetches and responds. Why is it still worth wrapping in `try/catch` even for a simple read operation?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. `404 Not Found` if the bookmark doesn't exist — the requested resource is absent. `403 Forbidden` if it exists but belongs to another user — the resource exists but the requester doesn't have permission to modify it. These are different because they communicate different problems to the client: "that thing doesn't exist" versus "that thing exists but it's not yours."
 2. A single `toggleLike` controller would first query the `bookmark_likes` table to check if the like exists, then either insert or delete based on the result. The two-controller approach is simpler and more RESTful — `POST` to create a resource, `DELETE` to remove it — which is consistent with how the rest of the API is designed. The tradeoff is that the client must track like state and choose the right method, whereas a toggle endpoint offloads that logic to the server.
@@ -400,7 +427,7 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 #### `frontend/src/fetch-helpers.js`
 
@@ -408,7 +435,9 @@ Open each file and answer the questions.
 2. `getCurrentUser()` is called on every page load. What does it return when no one is logged in? How does `main.js` use this return value to decide which UI sections to show and hide?
 3. Every fetch function in this file returns `{ data, error }` instead of returning the data or `null` directly. Why is this pattern useful? How does `main.js` use the destructured result from `login()` and `getCurrentUser()`?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 1. `handleFetch` solves the problem of repeated try/catch boilerplate — without it, every fetch function would need its own error handling and would have to manually construct the `{ data, error }` return shape. The `baseUrl` variables solve the problem of duplicated strings: if the API path changes, there is one variable to update instead of every fetch call that uses that prefix.
 2. When no session exists, the server sends `res.sendStatus(401)` from the `getMe` controller. `getCurrentUser()` receives the 401 response and, because a 401 here is expected rather than an error, returns `{ data: null, error: null }`. `main()` sets `currentUser = data` (null) and calls `renderAuthView(null)` — auth forms are shown and the "My Bookmarks" section is hidden. The same `currentUser` value is passed to `renderFeed()` so like buttons can be enabled or disabled based on login state.
@@ -416,63 +445,63 @@ Open each file and answer the questions.
 
 </details>
 
----
+***
 
 ## Concepts Checklist
 
 ### Core — Databases & Postgres
 
-- [ ] `CREATE TABLE IF NOT EXISTS` with `SERIAL PRIMARY KEY`, `TEXT`, `INT`, `NOT NULL`, `UNIQUE`
-- [ ] Foreign keys with `REFERENCES` and `ON DELETE CASCADE`
-- [ ] `UNIQUE (col1, col2)` constraint to enforce uniqueness across a pair of columns
-- [ ] `INSERT`, `SELECT`, `UPDATE`, `DELETE` with parameterized queries (`$1`, `$2`)
-- [ ] `INNER JOIN` to combine rows from two tables
-- [ ] `LEFT JOIN` to include rows with no matching records in the joined table
-- [ ] `COUNT` aggregate with `GROUP BY`
-- [ ] `ORDER BY` to sort results
-- [ ] Connection pool with `pg` (`new Pool(config)`)
-- [ ] Dual connection config: `PG_CONNECTION_STRING` for production, individual vars for development
-- [ ] `npm run db:seed` via `server/db/seed.js` to drop, recreate, and seed the database
+* [ ] `CREATE TABLE IF NOT EXISTS` with `SERIAL PRIMARY KEY`, `TEXT`, `INT`, `NOT NULL`, `UNIQUE`
+* [ ] Foreign keys with `REFERENCES` and `ON DELETE CASCADE`
+* [ ] `UNIQUE (col1, col2)` constraint to enforce uniqueness across a pair of columns
+* [ ] `INSERT`, `SELECT`, `UPDATE`, `DELETE` with parameterized queries (`$1`, `$2`)
+* [ ] `INNER JOIN` to combine rows from two tables
+* [ ] `LEFT JOIN` to include rows with no matching records in the joined table
+* [ ] `COUNT` aggregate with `GROUP BY`
+* [ ] `ORDER BY` to sort results
+* [ ] Connection pool with `pg` (`new Pool(config)`)
+* [ ] Dual connection config: `PG_CONNECTION_STRING` for production, individual vars for development
+* [ ] `npm run db:seed` via `server/db/seed.js` to drop, recreate, and seed the database
 
 ### Core — Authentication & Authorization
 
-- [ ] `bcrypt.hash(password, saltRounds)` to hash passwords on registration
-- [ ] `bcrypt.compare(password, hash)` to verify passwords on login
-- [ ] Functional user model: `create`, `find`, `findByUsername`, `validatePassword`
-- [ ] `validatePassword` as the only function that accesses `password_hash`
-- [ ] `cookie-session` middleware setup with `SESSION_SECRET`
-- [ ] Setting `req.session.user_id` on successful login or registration
-- [ ] `GET /api/auth/me` pattern for restoring session state on page load
-- [ ] `checkAuthentication` middleware: `401` when session is missing, `next()` when present
-- [ ] Ownership check in controller: `403` when resource belongs to another user
-- [ ] Route namespacing: `/api/auth/` for identity, `/api/bookmarks/` for data
+* [ ] `bcrypt.hash(password, saltRounds)` to hash passwords on registration
+* [ ] `bcrypt.compare(password, hash)` to verify passwords on login
+* [ ] Functional user model: `create`, `find`, `findByUsername`, `validatePassword`
+* [ ] `validatePassword` as the only function that accesses `password_hash`
+* [ ] `cookie-session` middleware setup with `SESSION_SECRET`
+* [ ] Setting `req.session.user_id` on successful login or registration
+* [ ] `GET /api/auth/me` pattern for restoring session state on page load
+* [ ] `checkAuthentication` middleware: `401` when session is missing, `next()` when present
+* [ ] Ownership check in controller: `403` when resource belongs to another user
+* [ ] Route namespacing: `/api/auth/` for identity, `/api/bookmarks/` for data
 
 ### Core — Fullstack Application
 
-- [ ] Build order: database → model → controllers → frontend
-- [ ] Layer-by-layer testing: `psql`/TablePlus → scratch script → Postman → browser
-- [ ] MVC model swap: controller is unchanged when swapping in-memory model for Postgres model
-- [ ] `RETURNING` clause in `INSERT`/`UPDATE`/`DELETE` to get the affected row back
-- [ ] Tracing a request across all layers: frontend fetch → controller → model → Postgres → response
-- [ ] `try/catch` in async controllers to catch unexpected errors
-- [ ] `next(err)` to forward errors to Express error-handling middleware
-- [ ] Global error handler with 4-argument signature `(err, req, res, next)` registered after all routes
-- [ ] Always sending a generic message from the global handler to avoid leaking internal error details
+* [ ] Build order: database → model → controllers → frontend
+* [ ] Layer-by-layer testing: `psql`/TablePlus → scratch script → Postman → browser
+* [ ] MVC model swap: controller is unchanged when swapping in-memory model for Postgres model
+* [ ] `RETURNING` clause in `INSERT`/`UPDATE`/`DELETE` to get the affected row back
+* [ ] Tracing a request across all layers: frontend fetch → controller → model → Postgres → response
+* [ ] `try/catch` in async controllers to catch unexpected errors
+* [ ] `next(err)` to forward errors to Express error-handling middleware
+* [ ] Global error handler with 4-argument signature `(err, req, res, next)` registered after all routes
+* [ ] Always sending a generic message from the global handler to avoid leaking internal error details
 
 ### Core — Frontend
 
-- [ ] `GET /api/auth/me` on page load to restore session and render correct UI state
-- [ ] Show/hide sections with `hidden` class based on auth state
-- [ ] Login and register forms with `fetch` to `/api/auth/` endpoints
-- [ ] Re-fetching after mutations to keep UI in sync with server state
-- [ ] `{ data, error }` return pattern from fetch helper functions
-- [ ] `data-*` attributes to store IDs on DOM elements (e.g. `data-bookmark-id`)
-- [ ] Event delegation with `closest()` for dynamically rendered lists
+* [ ] `GET /api/auth/me` on page load to restore session and render correct UI state
+* [ ] Show/hide sections with `hidden` class based on auth state
+* [ ] Login and register forms with `fetch` to `/api/auth/` endpoints
+* [ ] Re-fetching after mutations to keep UI in sync with server state
+* [ ] `{ data, error }` return pattern from fetch helper functions
+* [ ] `data-*` attributes to store IDs on DOM elements (e.g. `data-bookmark-id`)
+* [ ] Event delegation with `closest()` for dynamically rendered lists
 
 ### Extension — Likes (Many-to-Many)
 
-- [ ] Junction table (`bookmark_likes`) to represent a many-to-many relationship
-- [ ] Composite primary key to enforce "one like per user per bookmark"
-- [ ] `LEFT JOIN` + `COUNT` + `GROUP BY` to count likes per bookmark
-- [ ] Like with `POST` to the nested route (`/api/bookmarks/:bookmark_id/likes`)
-- [ ] `{ data: true, error: null }` as the return shape for fetch functions with no response body (204 / like)
+* [ ] Junction table (`bookmark_likes`) to represent a many-to-many relationship
+* [ ] Composite primary key to enforce "one like per user per bookmark"
+* [ ] `LEFT JOIN` + `COUNT` + `GROUP BY` to count likes per bookmark
+* [ ] Like with `POST` to the nested route (`/api/bookmarks/:bookmark_id/likes`)
+* [ ] `{ data: true, error: null }` as the return shape for fetch functions with no response body (204 / like)

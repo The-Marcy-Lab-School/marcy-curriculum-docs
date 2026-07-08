@@ -8,20 +8,20 @@ You've been writing JSX and running `npm run dev` without thinking too hard abou
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Under the Hood: JSX Code Must Be Compiled](#under-the-hood-jsx-code-must-be-compiled)
-  - [Vite in Development: The Dev Server](#vite-in-development-the-dev-server)
-  - [Vite in Production: npm run build](#vite-in-production-npm-run-build)
-  - [Serving the Build from Express](#serving-the-build-from-express)
-- [The Vite Proxy](#the-vite-proxy)
-  - [Why a Proxy?](#why-a-proxy)
-  - [Reading vite.config.js](#reading-viteconfigjs)
-- [Same-Origin vs. Cross-Origin](#same-origin-vs-cross-origin)
-- [React DevTools](#react-devtools)
-  - [Installation](#installation)
-  - [The Components Tab](#the-components-tab)
-  - [Try It](#try-it)
+* [Essential Questions](4-jsx-compilation-vite-dev-proxy.md#essential-questions)
+* [Key Concepts](4-jsx-compilation-vite-dev-proxy.md#key-concepts)
+* [Under the Hood: JSX Code Must Be Compiled](4-jsx-compilation-vite-dev-proxy.md#under-the-hood-jsx-code-must-be-compiled)
+  * [Vite in Development: The Dev Server](4-jsx-compilation-vite-dev-proxy.md#vite-in-development-the-dev-server)
+  * [Vite in Production: npm run build](4-jsx-compilation-vite-dev-proxy.md#vite-in-production-npm-run-build)
+  * [Serving the Build from Express](4-jsx-compilation-vite-dev-proxy.md#serving-the-build-from-express)
+* [The Vite Proxy](4-jsx-compilation-vite-dev-proxy.md#the-vite-proxy)
+  * [Why a Proxy?](4-jsx-compilation-vite-dev-proxy.md#why-a-proxy)
+  * [Reading vite.config.js](4-jsx-compilation-vite-dev-proxy.md#reading-viteconfigjs)
+* [Same-Origin vs. Cross-Origin](4-jsx-compilation-vite-dev-proxy.md#same-origin-vs-cross-origin)
+* [React DevTools](4-jsx-compilation-vite-dev-proxy.md#react-devtools)
+  * [Installation](4-jsx-compilation-vite-dev-proxy.md#installation)
+  * [The Components Tab](4-jsx-compilation-vite-dev-proxy.md#the-components-tab)
+  * [Try It](4-jsx-compilation-vite-dev-proxy.md#try-it)
 
 ## Essential Questions
 
@@ -49,16 +49,14 @@ By the end of this lesson you should be able to answer:
 
 JSX in our code cannot simply be executed by our browser: browsers only understand plain JavaScript.
 
-Try opening your `index.html` file directly in a browser — or trying to serve it from Express as a static file — and the browser will throw a `SyntaxError`. 
+Try opening your `index.html` file directly in a browser — or trying to serve it from Express as a static file — and the browser will throw a `SyntaxError`.
 
 The JSX syntax in `main.jsx` and `App.jsx` has to be transformed first in a process called **compilation**. Compilation is the process of translating code written in one programming language (which is easy for humans to read) into another format (which is easy for a computer to execute).
 
 Below you can see a simplified example of how React code in a `.jsx` file is compiled into pure JavaScript that can be executed by your browser.
 
 {% tabs %}
-
 {% tab title="JSX (Uncompiled)" %}
-
 This is what you write in your `.jsx` files. It looks like HTML, making it very intuitive to define the structure of your UI.
 
 ```jsx
@@ -71,11 +69,9 @@ function WelcomeCard({ user }) {
   );
 }
 ```
-
 {% endtab %}
 
 {% tab title="JavaScript (Compiled)" %}
-
 This is what the browser actually receives. The compiler has stripped away the "HTML" tags and replaced them with standard JavaScript function calls.
 
 ```js
@@ -99,12 +95,10 @@ function WelcomeCard({ user }) {
   );
 }
 ```
-
 {% endtab %}
+{% endtabs %}
 
-{% endtabs %} 
-
-### Vite in Development: The Dev Server
+\### Vite in Development: The Dev Server
 
 When you run `npm run dev`, Vite starts a **local development server** (by default on port 5173). It:
 
@@ -245,8 +239,8 @@ The browser's built-in DevTools are great for inspecting the DOM, network reques
 
 Install the extension for your browser:
 
-- [Chrome / Edge](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
-- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
+* [Chrome / Edge](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+* [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
 
 After installing, open DevTools (`F12` or `Cmd+Option+I`) with a React app running and you will see a **Components** tab appear.
 
@@ -254,10 +248,10 @@ After installing, open DevTools (`F12` or `Cmd+Option+I`) with a React app runni
 
 Click any component in the tree to select it. The panel on the right shows:
 
-- **props** — what was passed in from the parent
-- **state** (via hooks) — the current value of each `useState` variable
+* **props** — what was passed in from the parent
+* **state** (via hooks) — the current value of each `useState` variable
 
-![React DevTools components panel showing a selected component with its props and state](./img/4-jsx-compilation-vite-dev-proxy/react-dev-tools.png)
+![React DevTools components panel showing a selected component with its props and state](../.gitbook/assets/react-dev-tools.png)
 
 This is the React-specific equivalent of clicking an element in the Elements tab: instead of seeing the rendered HTML, you see the component that produced it and the data it holds.
 

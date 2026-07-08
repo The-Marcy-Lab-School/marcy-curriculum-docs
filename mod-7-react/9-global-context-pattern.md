@@ -1,4 +1,4 @@
-# 7. Global Context Pattern
+# (Bonus) Global Context Pattern
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-1-global-context-pattern)!
@@ -6,16 +6,16 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
 
 **Table of Contents**:
 
-* [Global Context Design Pattern](7-global-context-pattern.md#global-context-design-pattern-1)
-  * [1) Create a `ContextProvider` wrapper component](7-global-context-pattern.md#1-create-a-contextprovider-wrapper-component)
-  * [2) Import and Render the ContextProvider component in main.jsx](7-global-context-pattern.md#2-import-and-render-the-contextprovider-component-in-mainjsx)
-  * [3) Refactor other components as necessary](7-global-context-pattern.md#3-refactor-other-components-as-necessary)
+* [Global Context Design Pattern](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-7-react/7-global-context-pattern.md#global-context-design-pattern-1)
+  * [1) Create a `ContextProvider` wrapper component](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-7-react/7-global-context-pattern.md#1-create-a-contextprovider-wrapper-component)
+  * [2) Import and Render the ContextProvider component in main.jsx](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-7-react/7-global-context-pattern.md#2-import-and-render-the-contextprovider-component-in-mainjsx)
+  * [3) Refactor other components as necessary](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-7-react/7-global-context-pattern.md#3-refactor-other-components-as-necessary)
 
 ## Global Context Design Pattern
 
 ![](../.gitbook/assets/instagram-context-diagram.svg)
 
-The illustration above shows how we can **wrap the *entire* `App` component in our context**, but in the example we only wrap the `PostList` component.
+The illustration above shows how we can **wrap the&#x20;**_**entire**_ **`App` component in our context**, but in the example we only wrap the `PostList` component.
 
 ```jsx
 import Header from "./components/Header";

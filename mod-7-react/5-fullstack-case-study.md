@@ -1,4 +1,4 @@
-# 5. Full-Stack Case Study: Todo App with Auth
+# 5. Full-Stack Case Study
 
 {% hint style="info" %}
 Follow along with code examples in the lecture [repo](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app)!
@@ -10,27 +10,27 @@ Most of this lesson is about composing everything you have already learned — `
 
 **Table of Contents**
 
-- [Key Concepts](#key-concepts)
-- [Adding Auth to the Todo App](#adding-auth-to-the-todo-app)
-  - [Review: Authentication and Authorization](#review-authentication-and-authorization)
-- [Setup and Running the App](#setup-and-running-the-app)
-  - [1. Database](#1-database)
-  - [2. Server](#2-server)
-  - [3. Frontend](#3-frontend)
-- [Separation of Concerns](#separation-of-concerns)
-  - [Fetch Adapters by Domain](#fetch-adapters-by-domain)
-  - [Components Folder](#components-folder)
-- [The App Component](#the-app-component)
-  - [Q1. What does a user see when they first visit the page?](#q1-what-does-a-user-see-when-they-first-visit-the-page)
-  - [Q2. What happens after a user logs in or registers?](#q2-what-happens-after-a-user-logs-in-or-registers)
-  - [Q3. How does a returning user stay logged in?](#q3-how-does-a-returning-user-stay-logged-in)
-- [The TodoPage Component](#the-todopage-component)
-  - [Q4. Why is `loadTodos` defined outside of `useEffect`?](#q4-why-is-loadtodos-defined-outside-of-useeffect)
-  - [Q5. What does the user see while todos are loading?](#q5-what-does-the-user-see-while-todos-are-loading)
-  - [Q6. How does `TodoItem` handle mutations?](#q6-how-does-todoitem-handle-mutations)
-- [Putting It All Together](#putting-it-all-together)
-  - [Translate It to Your Domain](#translate-it-to-your-domain)
-  - [Your Project Will Follow This Shape](#your-project-will-follow-this-shape)
+* [Key Concepts](5-fullstack-case-study.md#key-concepts)
+* [Adding Auth to the Todo App](5-fullstack-case-study.md#adding-auth-to-the-todo-app)
+  * [Review: Authentication and Authorization](5-fullstack-case-study.md#review-authentication-and-authorization)
+* [Setup and Running the App](5-fullstack-case-study.md#setup-and-running-the-app)
+  * [1. Database](5-fullstack-case-study.md#1-database)
+  * [2. Server](5-fullstack-case-study.md#2-server)
+  * [3. Frontend](5-fullstack-case-study.md#3-frontend)
+* [Separation of Concerns](5-fullstack-case-study.md#separation-of-concerns)
+  * [Fetch Adapters by Domain](5-fullstack-case-study.md#fetch-adapters-by-domain)
+  * [Components Folder](5-fullstack-case-study.md#components-folder)
+* [The App Component](5-fullstack-case-study.md#the-app-component)
+  * [Q1. What does a user see when they first visit the page?](5-fullstack-case-study.md#q1-what-does-a-user-see-when-they-first-visit-the-page)
+  * [Q2. What happens after a user logs in or registers?](5-fullstack-case-study.md#q2-what-happens-after-a-user-logs-in-or-registers)
+  * [Q3. How does a returning user stay logged in?](5-fullstack-case-study.md#q3-how-does-a-returning-user-stay-logged-in)
+* [The TodoPage Component](5-fullstack-case-study.md#the-todopage-component)
+  * [Q4. Why is `loadTodos` defined outside of `useEffect`?](5-fullstack-case-study.md#q4-why-is-loadtodos-defined-outside-of-useeffect)
+  * [Q5. What does the user see while todos are loading?](5-fullstack-case-study.md#q5-what-does-the-user-see-while-todos-are-loading)
+  * [Q6. How does `TodoItem` handle mutations?](5-fullstack-case-study.md#q6-how-does-todoitem-handle-mutations)
+* [Putting It All Together](5-fullstack-case-study.md#putting-it-all-together)
+  * [Translate It to Your Domain](5-fullstack-case-study.md#translate-it-to-your-domain)
+  * [Your Project Will Follow This Shape](5-fullstack-case-study.md#your-project-will-follow-this-shape)
 
 ## Key Concepts
 
@@ -65,26 +65,23 @@ Additionally, the todo endpoints now require authentication and only return todo
 
 A password hash is stored in the database. When a user logs in, The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated.
 
-![Validating user credentials using bcrypt](../mod-6-databases/img/9-hashing-passwords-bcrypt/hashed-password-lookup.png)
+![Validating user credentials using bcrypt](<../.gitbook/assets/hashed-password-lookup (1).png>)
 
 **Login and Creating Session Cookies:**
 
 That bcrypt hashing and password matching process is used in our login flow. Additionally, we include a cookie in the response along with the user information. Cookies let the user leave the website and return while remaining logged-in. They also support authorization for mutating user-owned resources.
 
-![When a user logs in successfully, a cookie is set and included in the response along with the user information.](../mod-6-databases/img/10-sessions-login/login-sequence.png)
+![When a user logs in successfully, a cookie is set and included in the response along with the user information.](../.gitbook/assets/login-sequence.png)
 
 **Authorization with the checkAuthentication Middleware and Ownership Checks:**
 
 The checkAuthentication middleware and ownership checks for an endpoint like `DELETE /api/users/2` produces three possible scenarios:
 
-Scenario 1. The user is unauthenticated (no cookie):
-![Sequence diagram of scenario 1](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-no-cookie.png)
+Scenario 1. The user is unauthenticated (no cookie): ![Sequence diagram of scenario 1](../.gitbook/assets/sequence-protected-request-no-cookie.png)
 
-Scenario 2. The user is authenticated but is not the owner of the resource (e.g. alice tries to delete user bob):
-![Sequence diagram of scenario 2](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-incorrect-user.png)
+Scenario 2. The user is authenticated but is not the owner of the resource (e.g. alice tries to delete user bob): ![Sequence diagram of scenario 2](../.gitbook/assets/sequence-protected-request-incorrect-user.png)
 
-Scenario 3. The user is authenticated and *is* the owner of the resource (e.g. alice deleting her own account):
-![Sequence diagram of scenario 3](../mod-6-databases/img/11-authorization-middleware/sequence-protected-request-correct-user.png)
+Scenario 3. The user is authenticated and _is_ the owner of the resource (e.g. alice deleting her own account): ![Sequence diagram of scenario 3](../.gitbook/assets/sequence-protected-request-correct-user.png)
 
 ## Setup and Running the App
 
@@ -138,9 +135,10 @@ npm run dev
 The frontend runs on `http://localhost:5173`. The Vite dev proxy forwards all `/api` requests to the Express server so session cookies work correctly.
 
 With the app running, try the following:
-- Open React DevTools, find `App`, inspect the `currentUser` state and the component structure
-- Observe how `currentUser` and the component structure changes as you move through the full user flow: 
-  - register → login → create a todo → delete → logout
+
+* Open React DevTools, find `App`, inspect the `currentUser` state and the component structure
+* Observe how `currentUser` and the component structure changes as you move through the full user flow:
+  * register → login → create a todo → delete → logout
 
 ## Separation of Concerns
 
@@ -151,11 +149,8 @@ With auth in the picture we have two distinct concerns: auth operations and todo
 In React, this "adapter" terminology comes from the idea that this layer acts as a bridge that translates the data from your API and adapts the data to be used seamlessly with your React application.
 
 {% tabs %}
-
 {% tab title="Auth Adapters" %}
-
 {% code title="src/adapters/auth-adapters.js" %}
-
 ```javascript
 const handleFetch = async (url, options = {}) => {
   try {
@@ -193,13 +188,10 @@ export const logout = async () => {
 };
 ```
 {% endcode %}
-
 {% endtab %}
 
 {% tab title="Todo Adapters" %}
-
 {% code title="src/adapters/todo-adapters.js" %}
-
 ```javascript
 const handleFetch = async (url, options = {}) => {
   try {
@@ -237,12 +229,12 @@ export const deleteTodo = async (todo_id) => {
 };
 ```
 {% endcode %}
-
 {% endtab %}
-
 {% endtabs %}
 
-**<details><summary>Q: Why is splitting into domain files better than one big `fetch-helpers.js`?</summary>**
+<details>
+
+<summary><strong>Q: Why is splitting into domain files better than one big <code>fetch-helpers.js</code>?</strong></summary>
 
 Each file has one responsibility. When the auth API changes, you only touch `auth-adapters.js`. When the todo API changes, you only touch `todo-adapters.js`. Compare that to a single large file where every concern is mixed together.
 
@@ -286,7 +278,9 @@ swe-casestudy-7-todo-app/
 2. Open React DevTools and find the `App` component. What is the initial value of `currentUser`?
 3. Find the ternary in `App`'s return statement. Given that `currentUser` starts as `null`, which component renders?
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 When the app first loads, `currentUser` is initialized to `null` — no one is logged in yet. `App`'s return statement uses a **ternary** to switch between two views based on this value:
 
@@ -322,7 +316,9 @@ Since `null` is falsy, the ternary evaluates to `<AuthPage>`. The moment `curren
 2. Log out so you can log in again. This time, in React DevTools, watch `currentUser` before and after submitting the form. What changes?
 3. Find `handleLogin` in `App.jsx`. Where is it defined? How many components does it pass through before the form can call it?
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 `handleLogin` and `handleRegister` are defined in `App` — the component that owns `currentUser` state — and passed down as props to `AuthPage`:
 
@@ -356,9 +352,11 @@ const handleRegister = async (username, password) => {
 1. Log in, then refresh the page. Do you stay logged in?
 2. Open DevTools > Application > Cookies. Can you find the session cookie? What does it look like?
 3. Delete the session cookie and session signature (right-click > Delete), then refresh. What happens? Why?
-4. In the Network tab, find the `GET /api/auth/me` request that fires on load. Compare its *response* when you're logged in vs. after deleting the cookie.
+4. In the Network tab, find the `GET /api/auth/me` request that fires on load. Compare its _response_ when you're logged in vs. after deleting the cookie.
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 When the user logged in, the server created a **session cookie** and sent it to the browser. Even though cookies persist across page loads, React state does not—each time the user refreshes the browser tab, the previous `currentUser` state is deleted and then set to `null` again.
 
@@ -376,8 +374,8 @@ useEffect(() => {
 
 `GET /api/auth/me` checks the session cookie and returns the logged-in user object if a valid session exists, or `null` if not. Either way, `setCurrentUser` is called and the appropriate page component is rendered:
 
-- **Session exists** → `setCurrentUser(user)` → `currentUser` is truthy → `TodoPage` renders
-- **No session** → `setCurrentUser(null)` → `currentUser` is falsy → `AuthPage` renders
+* **Session exists** → `setCurrentUser(user)` → `currentUser` is truthy → `TodoPage` renders
+* **No session** → `setCurrentUser(null)` → `currentUser` is falsy → `AuthPage` renders
 
 **Key Takeaway:** The session cookie is the source of truth; we use the `/api/auth/me` endpoint to ensure that the `currentUser` state in React state always mirrors it.
 
@@ -389,7 +387,7 @@ Once a user is logged in, `TodoPage` takes over. It owns all todo-related state 
 
 ### Q4. Why is `loadTodos` defined outside of `useEffect`?
 
-Compare how `checkForSession` is written in `App` versus how `loadTodos` is written in `TodoPage`. In `App`, the async function is defined *inside* the effect. In `TodoPage`, `loadTodos` is defined *outside* of it:
+Compare how `checkForSession` is written in `App` versus how `loadTodos` is written in `TodoPage`. In `App`, the async function is defined _inside_ the effect. In `TodoPage`, `loadTodos` is defined _outside_ of it:
 
 ```jsx
 // App.jsx — checkForSession is only ever called once, on mount
@@ -419,7 +417,9 @@ useEffect(() => {
 2. Add a `console.log('loadTodos called')` inside `loadTodos`. What causes it be triggered?
 3. Mentally move `loadTodos` inside the `useEffect` callback. Could you still pass it as a prop to `AddTodoForm` and `TodoList`? Why or why not?
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 `checkForSession` only ever needs to run once — on mount (the first time the component loads). Defining it inside the effect is fine because nothing else needs to call it.
 
@@ -467,7 +467,9 @@ return (
 2. Temporarily change the fetch URL in `fetchAllTodos` to `/api/wrong` and reload. Does an error message appear on screen?
 3. Find `isLoading` and `error` in React DevTools while the page loads. When is each one truthy vs. falsy?
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 Every fetch has three possible states: pending ("in flight"), succeeded, or failed. Without handling all three, the UI either shows a blank screen while loading or silently breaks on error. Two pieces of state make all three states visible: `isLoading` and `error`
 
@@ -521,8 +523,9 @@ This is called **short-circuiting**. When React renders `null`, `false`, or `und
 ```
 
 So `{isLoading && <p>Loading todos...</p>}` works like this:
-- When `isLoading` is `false` → `&&` short-circuits and returns `false` → React renders nothing
-- When `isLoading` is `true` → `&&` evaluates the right side → React renders the `<p>`
+
+* When `isLoading` is `false` → `&&` short-circuits and returns `false` → React renders nothing
+* When `isLoading` is `true` → `&&` evaluates the right side → React renders the `<p>`
 
 Use `&&` when you want to show something **or nothing**. Use a ternary (`condition ? <A /> : <B />`) when you need to swap between two elements.
 
@@ -540,7 +543,9 @@ Use `&&` when you want to show something **or nothing**. Use a ternary (`conditi
 2. Comment out the `loadTodos()` call inside `handleDelete`. Delete a todo — what happens to the UI? What does this tell you about why refetching is necessary?
 3. Trace `loadTodos` from where it's defined in `TodoPage` all the way to where `TodoItem` calls it. How many components does it pass through as a prop?
 
-<details><summary>Answer</summary>
+<details>
+
+<summary>Answer</summary>
 
 After any mutation (toggle or delete), the UI needs to reflect the latest data from the server. `TodoItem` does this by calling `loadTodos()` after a successful API call — the **refetch-after-write** pattern:
 

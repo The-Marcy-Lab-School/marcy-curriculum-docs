@@ -1,27 +1,27 @@
 # Cheat Sheet
-- [How the Internet Works](#how-the-internet-works)
-  - [Internet Basics](#internet-basics)
-  - [HTTP: The Request-Response Cycle](#http-the-request-response-cycle)
-  - [HTTP Status Codes](#http-status-codes)
-- [Server Basics](#server-basics)
-  - [Host, Port, and Localhost](#host-port-and-localhost)
-  - [A `node:http` Server](#a-nodehttp-server)
-- [Express](#express)
-  - [Express Basics](#express-basics)
-  - [Middleware](#middleware)
-  - [Serving Static Assets](#serving-static-assets)
-  - [Environment Variables](#environment-variables)
-  - [Sending Frontend-to-Backend Requests (Vite Proxy)](#sending-frontend-to-backend-requests-vite-proxy)
-- [RESTful CRUD API](#restful-crud-api)
-  - [REST Principles](#rest-principles)
-  - [CRUD and HTTP Methods](#crud-and-http-methods)
-  - [Route Parameters](#route-parameters)
-  - [Handling POST and PATCH Request Bodies](#handling-post-and-patch-request-bodies)
-- [Model-View-Controller (MVC)](#model-view-controller-mvc)
-  - [MVC Architecture](#mvc-architecture)
-  - [Example](#example)
-- [Use `curl` to Test Endpoints](#use-curl-to-test-endpoints)
 
+* [How the Internet Works](cheatsheet.md#how-the-internet-works)
+  * [Internet Basics](cheatsheet.md#internet-basics)
+  * [HTTP: The Request-Response Cycle](cheatsheet.md#http-the-request-response-cycle)
+  * [HTTP Status Codes](cheatsheet.md#http-status-codes)
+* [Server Basics](cheatsheet.md#server-basics)
+  * [Host, Port, and Localhost](cheatsheet.md#host-port-and-localhost)
+  * [A `node:http` Server](cheatsheet.md#a-nodehttp-server)
+* [Express](cheatsheet.md#express)
+  * [Express Basics](cheatsheet.md#express-basics)
+  * [Middleware](cheatsheet.md#middleware)
+  * [Serving Static Assets](cheatsheet.md#serving-static-assets)
+  * [Environment Variables](cheatsheet.md#environment-variables)
+  * [Sending Frontend-to-Backend Requests (Vite Proxy)](cheatsheet.md#sending-frontend-to-backend-requests-vite-proxy)
+* [RESTful CRUD API](cheatsheet.md#restful-crud-api)
+  * [REST Principles](cheatsheet.md#rest-principles)
+  * [CRUD and HTTP Methods](cheatsheet.md#crud-and-http-methods)
+  * [Route Parameters](cheatsheet.md#route-parameters)
+  * [Handling POST and PATCH Request Bodies](cheatsheet.md#handling-post-and-patch-request-bodies)
+* [Model-View-Controller (MVC)](cheatsheet.md#model-view-controller-mvc)
+  * [MVC Architecture](cheatsheet.md#mvc-architecture)
+  * [Example](cheatsheet.md#example)
+* [Use `curl` to Test Endpoints](cheatsheet.md#use-curl-to-test-endpoints)
 
 ![](../.gitbook/assets/client-server-database.svg)
 
@@ -128,8 +128,6 @@ server.listen(8080, () => console.log('Listening on http://localhost:8080'));
 
 ## Express
 
-![](<../.gitbook/assets/express-middleware-model (3).svg>)
-
 ### Express Basics
 
 * **Express `app`** — an object that listens for requests and routes them to the appropriate controller.
@@ -227,7 +225,7 @@ app.get('/api/stories', serveStories);
 
 **Why use the server as a middleman?** Client-side code is visible in the browser's Network tab — API keys embedded in frontend requests are publicly exposed. The server keeps the API key hidden.
 
-![](<../.gitbook/assets/express-api-middleman (3).svg>)
+![](../.gitbook/assets/express-api-middleman.svg)
 
 ### Sending Frontend-to-Backend Requests (Vite Proxy)
 
@@ -391,8 +389,6 @@ const deleteFellow = async (id) => {
 * **Model** — manages the data. Provides methods (an interface) for creating, reading, updating, and deleting data. Does not know about `req` or `res`.
 * **View** — renders the UI. In a PERN app, this is the React frontend.
 * **Controller** — the middleman. Parses requests, calls model methods, and sends responses. Does not directly touch the data.
-
-![](<../.gitbook/assets/express-middleware-model (3).svg>)
 
 **Recommended server folder structure:**
 

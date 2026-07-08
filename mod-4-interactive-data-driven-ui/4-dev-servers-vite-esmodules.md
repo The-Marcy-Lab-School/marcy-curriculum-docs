@@ -62,7 +62,7 @@ Well, Google is "hosted" on a server that lets you access it over the internet.
 
 A **server** is any computer that stores, manages, and shares resources over the internet.
 
-![The client server interaction](<../.gitbook/assets/client-server-interaction (2).png>)
+![The client server interaction](../.gitbook/assets/client-server-interaction.png)
 
 A user's computer plays the role of the **"client"** and sends an **HTTP request** to get resources from the server using the `https://` protocol (the hypertext transfer protocol).The server then sends an **HTTP response** with the requested content.
 

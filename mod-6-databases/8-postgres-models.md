@@ -1,4 +1,4 @@
-# 8. Postgres Models
+# 8. Postgres-Backed Models
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-8-postgres-models)!
@@ -12,27 +12,27 @@ By the end of this lesson, you'll have a working app — and two obvious problem
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Setup](#setup)
-  - [File Structure](#file-structure)
-  - [Test the Endpoints](#test-the-endpoints)
-- [Building the User API](#building-the-user-api)
-  - [The In-Memory User Model](#the-in-memory-user-model)
-  - [User Controllers](#user-controllers)
-  - [Auth Controllers](#auth-controllers)
-  - [API Routes](#api-routes)
-- [Where Does `pg` Fit Into an Express Application?](#where-does-pg-fit-into-an-express-application)
-  - [`pg.Pool` Setup](#pgpool-setup)
-  - [Challenge: Write the Postgres User Model](#challenge-write-the-postgres-user-model)
-  - [The Model Swap](#the-model-swap)
-- [Error Handling](#error-handling)
-  - [`try/catch` in Every Controller](#trycatch-in-every-controller)
-  - [Error-Handling Middleware](#error-handling-middleware)
-  - [Tracing a Request End to End](#tracing-a-request-end-to-end)
-- [The Frontend Application](#the-frontend-application)
-  - [Tracing a Login Request End to End](#tracing-a-login-request-end-to-end)
-- [What's Wrong With This Code?](#whats-wrong-with-this-code)
+* [Essential Questions](8-postgres-models.md#essential-questions)
+* [Key Concepts](8-postgres-models.md#key-concepts)
+* [Setup](8-postgres-models.md#setup)
+  * [File Structure](8-postgres-models.md#file-structure)
+  * [Test the Endpoints](8-postgres-models.md#test-the-endpoints)
+* [Building the User API](8-postgres-models.md#building-the-user-api)
+  * [The In-Memory User Model](8-postgres-models.md#the-in-memory-user-model)
+  * [User Controllers](8-postgres-models.md#user-controllers)
+  * [Auth Controllers](8-postgres-models.md#auth-controllers)
+  * [API Routes](8-postgres-models.md#api-routes)
+* [Where Does `pg` Fit Into an Express Application?](8-postgres-models.md#where-does-pg-fit-into-an-express-application)
+  * [`pg.Pool` Setup](8-postgres-models.md#pgpool-setup)
+  * [Challenge: Write the Postgres User Model](8-postgres-models.md#challenge-write-the-postgres-user-model)
+  * [The Model Swap](8-postgres-models.md#the-model-swap)
+* [Error Handling](8-postgres-models.md#error-handling)
+  * [`try/catch` in Every Controller](8-postgres-models.md#trycatch-in-every-controller)
+  * [Error-Handling Middleware](8-postgres-models.md#error-handling-middleware)
+  * [Tracing a Request End to End](8-postgres-models.md#tracing-a-request-end-to-end)
+* [The Frontend Application](8-postgres-models.md#the-frontend-application)
+  * [Tracing a Login Request End to End](8-postgres-models.md#tracing-a-login-request-end-to-end)
+* [What's Wrong With This Code?](8-postgres-models.md#whats-wrong-with-this-code)
 
 ## Essential Questions
 
@@ -197,9 +197,9 @@ module.exports.destroy = (user_id) => {
 
 A few things worth noticing before moving on:
 
-- Every method returns only `user_id` and `username` — the password is **never** sent back to a caller
-- `findByUsername()` is used only by `register` to check whether a username is already taken — because it returns no password, it's safe to hand back to the controller as-is
-- `validatePassword()` handles login: it does the internal lookup, compares the password, and returns `{ user_id, username }` on success or `null` on failure — the controller never touches the password field directly
+* Every method returns only `user_id` and `username` — the password is **never** sent back to a caller
+* `findByUsername()` is used only by `register` to check whether a username is already taken — because it returns no password, it's safe to hand back to the controller as-is
+* `validatePassword()` handles login: it does the internal lookup, compares the password, and returns `{ user_id, username }` on success or `null` on failure — the controller never touches the password field directly
 
 These conventions carry over directly to the Postgres version.
 
@@ -309,7 +309,7 @@ module.exports = { register, login };
 ```
 {% endcode %}
 
-Notice that `validatePassword` encapsulates the lookup *and* the comparison — the controller never touches the password field directly. The comparison itself is still a plain `!==` string check, which works but has a serious security flaw we'll address in lesson 9.
+Notice that `validatePassword` encapsulates the lookup _and_ the comparison — the controller never touches the password field directly. The comparison itself is still a plain `!==` string check, which works but has a serious security flaw we'll address in lesson 9.
 
 ### API Routes
 
@@ -340,13 +340,13 @@ Now that we understand how the application works, how will we use `pg` to make o
 
 When a client sends a `POST /api/auth/register` request, the server uses `pg` to run an `INSERT INTO users` SQL query against Postgres instead of pushing into a JavaScript array.
 
-![A diagram showing the database running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
+![A diagram showing the database running as a separate process from the Express application](<../.gitbook/assets/full-stack-diagram (1).png>)
 
 The beauty of this MVC architecture is that our controllers won't need to change at all when we make this swap. Just the models.
 
 ### `pg.Pool` Setup
 
-1. First, edit `db/pool.js` and update the user and password fields to match your local Postgres setup. (On macOS you may be able to delete those fields entirely)
+1.  First, edit `db/pool.js` and update the user and password fields to match your local Postgres setup. (On macOS you may be able to delete those fields entirely)
 
     ```js
     const { Pool } = require('pg');
@@ -375,7 +375,7 @@ const pool = require('../db/pool');
 There is one shared pool of connections across the whole server. You never run queries inside `pool.js` — it just creates and exports the pool. Querying is the model's job.
 {% endhint %}
 
-2. Then, run the commands below to create the `users_db` and seed it:
+2.  Then, run the commands below to create the `users_db` and seed it:
 
     ```sh
     # Create the database (run once)
@@ -389,7 +389,6 @@ There is one shared pool of connections across the whole server. You never run q
     # Start the server
     npm run dev
     ```
-
 
 ### Challenge: Write the Postgres User Model
 
@@ -451,7 +450,9 @@ module.exports.destroy = async (user_id) => {
 
 Use `userModel-in-memory.js` as your reference for what each function should accept and return. Only the internals change — every method is now `async`, data comes from Postgres instead of an array, and `RETURNING user_id, username` replaces the manual return object.
 
-**<details><summary>Solution: `userModel.js`</summary>**
+<details>
+
+<summary><strong>Solution: <code>userModel.js</code></strong></summary>
 
 ```javascript
 const pool = require('../db/pool');
@@ -530,11 +531,13 @@ Every controller in this repo follows the same pattern:
 2. Send a success response if everything worked, or a `4xx` if the client made a mistake
 3. In `catch`, call `next(err)` and let the error-handling middleware take it from there
 
-**<details><summary>Q: Why handle user errors (`4xx`) separately from the `catch` block?</summary>**
+<details>
 
-`user === null` means the query *succeeded* but found no matching row — that's a 404, the resource doesn't exist.
+<summary><strong>Q: Why handle user errors (<code>4xx</code>) separately from the <code>catch</code> block?</strong></summary>
 
-An error caught by `catch` means something actually *broke* — a database failure, a malformed query, a connection timeout. That's a 500.
+`user === null` means the query _succeeded_ but found no matching row — that's a 404, the resource doesn't exist.
+
+An error caught by `catch` means something actually _broke_ — a database failure, a malformed query, a connection timeout. That's a 500.
 
 These are different problems that deserve different status codes. `if (!user)` handles the "not found" case; `catch` handles the "something went wrong" case.
 
@@ -556,10 +559,10 @@ app.use(handleError);
 ```
 {% endcode %}
 
-This must be registered *after* all your routes. When any controller calls `next(err)`, Express skips all remaining middleware and routes and passes control directly to this handler.
+This must be registered _after_ all your routes. When any controller calls `next(err)`, Express skips all remaining middleware and routes and passes control directly to this handler.
 
 {% hint style="warning" %}
-Express identifies an error-handling middleware *only* by its four-parameter signature `(err, req, res, next)`. If you write it with three parameters, Express will treat it as regular middleware and never call it for errors.
+Express identifies an error-handling middleware _only_ by its four-parameter signature `(err, req, res, next)`. If you write it with three parameters, Express will treat it as regular middleware and never call it for errors.
 {% endhint %}
 
 ### Tracing a Request End to End
@@ -586,11 +589,13 @@ sequenceDiagram
 
 Each layer only knows about the layers directly next to it:
 
-- The client knows nothing about Express internals
-- The controller knows nothing about SQL
-- The model knows nothing about HTTP
+* The client knows nothing about Express internals
+* The controller knows nothing about SQL
+* The model knows nothing about HTTP
 
-**<details><summary>Q: What does the flow look like when a database error occurs?</summary>**
+<details>
+
+<summary><strong>Q: What does the flow look like when a database error occurs?</strong></summary>
 
 Suppose two users try to register with the same username. The `username` column has a `UNIQUE` constraint, so Postgres will reject the second insert:
 
@@ -620,13 +625,15 @@ sequenceDiagram
 
 The repo includes a minimal frontend built with Vanilla JS. The frontend has three sections:
 
-- **Auth** — login and register forms, hidden until "Log In / Register" is clicked
-- **All Users** — a list of every registered user, always visible
-- **My Profile** — view your username/ID, change your password, or delete your account (visible after login)
+* **Auth** — login and register forms, hidden until "Log In / Register" is clicked
+* **All Users** — a list of every registered user, always visible
+* **My Profile** — view your username/ID, change your password, or delete your account (visible after login)
 
 The questions below guide you through how the frontend is structured. Try to answer each one by reading the code before opening the answer.
 
-**<details><summary>1. What is each file responsible for? Why split them at all?</summary>**
+<details>
+
+<summary><strong>1. What is each file responsible for? Why split them at all?</strong></summary>
 
 | File               | Responsibility                                                                                                                                       |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -638,7 +645,9 @@ The split means each file can be read and understood in isolation. If something 
 
 </details>
 
-**<details><summary>2. What does the CSS class `"hidden"` do?</summary>**
+<details>
+
+<summary><strong>2. What does the CSS class <code>"hidden"</code> do?</strong></summary>
 
 In `styles.css`:
 
@@ -650,33 +659,39 @@ In `styles.css`:
 
 Adding the `hidden` class to an element removes it from the layout entirely. Removing it makes the element visible again. The `!important` ensures no other rule can override it.
 
-In JavaScript, `element.classList.add('hidden')` hides an element and `element.classList.remove('hidden')` shows it. This logic is used throughout the functions found in `dom-helpers.js`. 
+In JavaScript, `element.classList.add('hidden')` hides an element and `element.classList.remove('hidden')` shows it. This logic is used throughout the functions found in `dom-helpers.js`.
 
 </details>
 
-**<details><summary>3. Which sections are shown / hidden for guests?</summary>**
+<details>
+
+<summary><strong>3. Which sections are shown / hidden for guests?</strong></summary>
 
 On initial load, `currentUser` is `null` and `renderAuthView(null)` runs. In that state:
 
-- **Visible:** `#guest-controls` (the "Log In / Register" button), `#users-section` (All Users list)
-- **Hidden:** `#auth-controls` (username display), `#auth-section` (login/register forms), `#show-profile-btn` (My Profile tab), `#profile-section`
+* **Visible:** `#guest-controls` (the "Log In / Register" button), `#users-section` (All Users list)
+* **Hidden:** `#auth-controls` (username display), `#auth-section` (login/register forms), `#show-profile-btn` (My Profile tab), `#profile-section`
 
 The auth forms only appear when the guest clicks "Log In / Register".
 
 </details>
 
-**<details><summary>4. Which sections can logged-in users see / access?</summary>**
+<details>
+
+<summary><strong>4. Which sections can logged-in users see / access?</strong></summary>
 
 After a successful login or register, `renderAuthView(currentUser)` runs with a real user object:
 
-- **Visible:** `#auth-controls` (shows `@username` in the header), `#show-profile-btn` (My Profile tab), `#users-section`
-- **Hidden:** `#guest-controls`, `#auth-section`
+* **Visible:** `#auth-controls` (shows `@username` in the header), `#show-profile-btn` (My Profile tab), `#users-section`
+* **Hidden:** `#guest-controls`, `#auth-section`
 
 The profile section becomes accessible via the nav — it shows username, user ID, a change-password form, and a delete-account button.
 
 </details>
 
-**<details><summary>5. How is the fetch code organized? What is the point of the `baseURL` variable?</summary>**
+<details>
+
+<summary><strong>5. How is the fetch code organized? What is the point of the <code>baseURL</code> variable?</strong></summary>
 
 All fetch calls live in `fetch-helpers.js` and flow through a single `handleFetch` wrapper:
 
@@ -703,7 +718,9 @@ export const getUsers = () => handleFetch(`${baseURL}/users`);
 
 </details>
 
-**<details><summary>6. How does the frontend keep track of the logged-in user's information?</summary>**
+<details>
+
+<summary><strong>6. How does the frontend keep track of the logged-in user's information?</strong></summary>
 
 A plain JavaScript variable in `main.js`:
 
@@ -722,8 +739,9 @@ It is set back to `null` when the account is deleted. There is no cookie, no `lo
 
 </details>
 
+<details>
 
-**<details><summary>7. What happens when the user refreshes the page?</summary>**
+<summary><strong>7. What happens when the user refreshes the page?</strong></summary>
 
 All JavaScript restarts from scratch and `currentUser` initialises to `null` again. There is no `GET /api/auth/me` call on startup — this server has no session endpoint — so the server never tells the frontend who was logged in. The user always appears as a guest after a refresh, even if they had just logged in seconds before.
 
@@ -731,7 +749,9 @@ This is the fundamental problem that lesson 10 solves with `cookie-session`.
 
 </details>
 
-**<details><summary>8. Every fetch function returns `{ data, error }`. Why check `if (error)` rather than `if (!data)`?</summary>**
+<details>
+
+<summary><strong>8. Every fetch function returns <code>{ data, error }</code>. Why check <code>if (error)</code> rather than <code>if (!data)</code>?</strong></summary>
 
 Because `data` can legitimately be `null` even when a request succeeds.
 
@@ -741,7 +761,9 @@ Checking `if (error)` is precise: it triggers only when `handleFetch`'s `catch` 
 
 </details>
 
-**<details><summary>9. `renderAuthView` is called with either a user object or `null`. How does one function handle both states?</summary>**
+<details>
+
+<summary><strong>9. <code>renderAuthView</code> is called with either a user object or <code>null</code>. How does one function handle both states?</strong></summary>
 
 ```javascript
 export const renderAuthView = (currentUser) => {
@@ -805,7 +827,9 @@ sequenceDiagram
 
 Each layer only communicates with the layers directly beside it. `main.js` knows nothing about SQL. `userModel.js` knows nothing about the DOM. The boundary between `fetch-helpers.js` and `authControllers.js` is the HTTP request — the line that crosses from browser to server.
 
-**<details><summary>Generate a Sequence Diagram of Your Own Using Mermaid!</summary>**
+<details>
+
+<summary><strong>Generate a Sequence Diagram of Your Own Using Mermaid!</strong></summary>
 
 Go to [https://mermaid.ai/](https://mermaid.ai/) and make a new Diagram. Then, paste the syntax below into the editor on the left:
 

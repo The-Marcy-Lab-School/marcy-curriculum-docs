@@ -38,7 +38,7 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/3
       ```
 *   **Grid tracks** are lines that indicate the start and end of a column. For example, grid track 1 and grid track 2 outline the first column.
 
-    ![a grid with grid tracks](<../.gitbook/assets/grid-span-with-tracks (1).png>)
+    ![a grid with grid tracks](../.gitbook/assets/grid-span-with-tracks.png)
 * **Responsive Web Design** is a strategy for creating websites that adapt their layout and content to ensure usability across devices of all sizes (phones, tablets, desktops, etc...).
   * **Media queries** allow us to apply CSS _in response_ to changes to the device's screen size (and other things too!).
   * **Breakpoints** are specific screen sizes at which a responsive web design will shift. We define them in CSS using media queries `@media (min-width)` and `@media(max-width)`
@@ -83,7 +83,9 @@ We've learned that Flexbox is a `display` type that allows us to arrange items i
 
 ![Flexbox lets us make one dimensional layouts while grid lets us make two-dimensional layouts](../.gitbook/assets/flex-vs-grid.png)
 
-**<details><summary>Q: Consider the gallery in the image below. It is made using grid. How many rows and columns are there?</summary>**
+<details>
+
+<summary><strong>Q: Consider the gallery in the image below. It is made using grid. How many rows and columns are there?</strong></summary>
 
 There are 5 columns and 5 rows
 
@@ -147,7 +149,9 @@ We can simplify this using the `repeat()` function:
 
 ![](../.gitbook/assets/template-columns.png)
 
-**<details><summary>Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?</summary>**
+<details>
+
+<summary><strong>Q: There are 9 elements but only 4 columns. What do you notice happens when the elements overflow? How is the row height determined?</strong></summary>
 
 * If there are more elements than columns, they will flow into a new row that is created automatically.
 * By default, row height is determined by the largest row item.
@@ -155,7 +159,9 @@ We can simplify this using the `repeat()` function:
 
 </details>
 
-**<details><summary>Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.</summary>**
+<details>
+
+<summary><strong>Q: How would you adjust this to make columns of different sizes? For example, make the middle two columns twice as wide as the outer two.</strong></summary>
 
 We can make columns of different sizes by adjusting the relative `fr` units. To make the middle columns twice as wide as the outer columns, use `2fr` instead of `1fr`
 
@@ -221,7 +227,9 @@ Open the example in `3-media-queries/index.html` and notice how the background c
 
 **Challenge**: At `700px` add a second column. At `800px` to set the background to `mediumpurple` and text color to `white`. At `900px` add a third column.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 To set the number of grid columns to 2 at 700 pixels, we need to add a second ruleset to the media query.
 
@@ -270,7 +278,9 @@ Using media queries and the `display: flex` properties, achieve the responsive d
 
 ![](../.gitbook/assets/flexbox-media-query-challenge.png)
 
-**<details><summary>Q: What do you notice if different about the two layouts?</summary>**
+<details>
+
+<summary><strong>Q: What do you notice if different about the two layouts?</strong></summary>
 
 * Mobile view: navigation links are in a row and are above the `main`
 * Desktop view: navigation links are in a column and are to the side of `main`

@@ -1,4 +1,4 @@
-# 10. Sessions and Login
+# 10. Session Cookies: Keeping Users Logged In
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-10-sessions-and-login)!
@@ -8,17 +8,17 @@ In lesson 9, you built a registration endpoint that hashes passwords and stores 
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Setup](#setup)
-- [The Problem: HTTP is Stateless](#the-problem-http-is-stateless)
-- [The Solution: Session Cookies](#the-solution-session-cookies)
-- [Setting Up `cookie-session`](#setting-up-cookie-session)
-  - [Setting Cookie Data on Login](#setting-cookie-data-on-login)
-  - [Auto-Login on Register](#auto-login-on-register)
-  - [Staying Logged In With The `/api/auth/me` Pattern](#staying-logged-in-with-the-apiauthme-pattern)
-  - [Logout](#logout)
-- [Putting It Together: Auth Endpoints](#putting-it-together-auth-endpoints)
+* [Essential Questions](10-sessions-and-login.md#essential-questions)
+* [Key Concepts](10-sessions-and-login.md#key-concepts)
+* [Setup](10-sessions-and-login.md#setup)
+* [The Problem: HTTP is Stateless](10-sessions-and-login.md#the-problem-http-is-stateless)
+* [The Solution: Session Cookies](10-sessions-and-login.md#the-solution-session-cookies)
+* [Setting Up `cookie-session`](10-sessions-and-login.md#setting-up-cookie-session)
+  * [Setting Cookie Data on Login](10-sessions-and-login.md#setting-cookie-data-on-login)
+  * [Auto-Login on Register](10-sessions-and-login.md#auto-login-on-register)
+  * [Staying Logged In With The `/api/auth/me` Pattern](10-sessions-and-login.md#staying-logged-in-with-the-apiauthme-pattern)
+  * [Logout](10-sessions-and-login.md#logout)
+* [Putting It Together: Auth Endpoints](10-sessions-and-login.md#putting-it-together-auth-endpoints)
 
 ## Essential Questions
 
@@ -44,8 +44,7 @@ By the end of this lesson, you should be able to answer these questions:
 ## Setup
 
 1. Edit `db/pool.js` and update the user and password fields to match your local Postgres setup (On macOS you may be able to delete those fields entirely)
-
-2. Run these commands to set up the database, seed, and start the server:
+2.  Run these commands to set up the database, seed, and start the server:
 
     ```sh
     cd server
@@ -63,7 +62,6 @@ By the end of this lesson, you should be able to answer these questions:
     # Start the server (port 3000)
     npm run dev
     ```
-
 3. Open the app and sign in to one of the users below
 
 Seeded users (all have these passwords):
@@ -86,7 +84,7 @@ Client → GET /api/auth/me
 Server → ??? I've never seen this person before.
 ```
 
-After a user logs in, the server processes the login request, sends back a response, and immediately forgets everything. 
+After a user logs in, the server processes the login request, sends back a response, and immediately forgets everything.
 
 This means that any time in the future that the user visits the page, or if they refresh, the user will have to login again.
 
@@ -94,25 +92,27 @@ This means that any time in the future that the user visits the page, or if they
 
 Go to GitHub.com. Do you need to log in to your account or are you already logged in? If you were already logged in, that means that you have a **session cookie** stored in your browser.
 
-**Session cookies** are small files containing a unique identifier (e.g. a user ID) given to a client (the browser) by a server. As long as the cookie is stored in the browser, it will be automatically sent to the server on all future requests. 
+**Session cookies** are small files containing a unique identifier (e.g. a user ID) given to a client (the browser) by a server. As long as the cookie is stored in the browser, it will be automatically sent to the server on all future requests.
 
 Remember, HTTP is stateless and the server doesn't keep track of who is logged in. However, **if we only give cookies to users who have logged in**, our server can immediately authenticate them when they send future requests.
 
 This enables a few really useful security features:
+
 1. We can add authorization gates to specific endpoints (only logged-in users can see X)
 2. We can require ownership authorization to modify resources (in order to modify X, you must be logged-in AND be the owner of X)
 3. We can let users skip logging in if they logged-in within the session expiration time
 
-![The cookie is generated when a user logs in and is sent with every subsequent request.](./img/10-sessions-login/cookies-diagram.png)
+![The cookie is generated when a user logs in and is sent with every subsequent request.](../.gitbook/assets/cookies-diagram.png)
 
 Remember, we don't have to write any frontend code to continue sending our login credentials to the server with every request: **the cookie is sent automatically by the browser** with every request to the same domain.
 
 ## Setting Up `cookie-session`
 
 To implement session cookies, we will use the `cookie-session` package. It handles:
-- Creating session cookies
-- Sending them to the client
-- Extracting cookies from requests
+
+* Creating session cookies
+* Sending them to the client
+* Extracting cookies from requests
 
 Install the package:
 
@@ -138,6 +138,7 @@ app.use(cookieSession({
 ```
 
 `cookieSession()` is a function that generates middleware for managing session cookies. It takes a configuration object with the following properties:
+
 * `name: 'session'` — defines the name of the cookie as it appears in the browser DevTools (go to Application → Cookies to see cookies). Defaults to `'session'`.
 * `secret: '...'` — defines a private string used to "sign" the cookie. The signature lets the server detect if the cookie was tampered with. The cookie data (e.g. `{ userId: 7 }`) is encoded, not encrypted — it is readable by anyone who has the cookie so we should never store sensitive data like passwords in the session.
 * `maxAge: 24 * 60 * 60 * 1000` — by default session cookies are deleted from the browser when the tab is closed. This property defines how long the cookie will be valid before deletion. In this case, we calculate 24 hours in milliseconds.
@@ -147,6 +148,7 @@ The `secret` is used to "sign" the cookie, which prevents tampering. It is like 
 {% endhint %}
 
 Once this middleware is in place, `req.session` is available in every controller
+
 * You can read from it to see if a user has a valid cookie
 * You can write to it when a user logs in / registers to set their cookie
 * You can also set it to `null` to delete the cookie
@@ -164,7 +166,7 @@ req.session = null;
 
 ### Setting Cookie Data on Login
 
-In order to implement all of those security features above, we only want to give cookies to logged-in users. 
+In order to implement all of those security features above, we only want to give cookies to logged-in users.
 
 In our `login` controller, after the `userModel` validates the login credentials, we can save the validated user's ID in `req.session`. When we send the response, the session cookie will be included with that `userId` data:
 
@@ -193,17 +195,18 @@ const login = async (req, res, next) => {
 The one new line — `req.session.userId = user.user_id` — tells `cookie-session` to set a cookie containing the user's ID. Every subsequent request from that browser will include that cookie, and `req.session.userId` will be available in any controller to perform authorization checks.
 
 To see the cookie in you browser, try this out:
+
 1. Run the server and connect to it in your browser
 2. Open your browser's DevTools and go to Applications → Cookies → `http://localhost:8080`.
 3. Confirm that you have NO cookies
 4. Log in to one of the users using the registration form (username: `alice`, password: `password123`)
-5. Observe that new cookie has been stored in your browser with the name `session`! 
-  
+5. Observe that new cookie has been stored in your browser with the name `session`!
+
 The `session.userId` data has been encoded using Base64 encoding. Unlike encryption, encoded strings can easily be reversed. Try copying the cookie from your browser and pasting it into this online decoder tool: [https://www.base64decode.org/](https://www.base64decode.org/)
 
 We can visualize this login flow like this:
 
-![When a user logs in successfully, a cookie is set and included in the response along with the user information.](./img/10-sessions-login/login-sequence.png)
+![When a user logs in successfully, a cookie is set and included in the response along with the user information.](../.gitbook/assets/login-sequence.png)
 
 ### Auto-Login on Register
 
@@ -238,7 +241,7 @@ const register = async (req, res, next) => {
 
 In this lesson, we'll start by implementing the third security feature: letting previously logged-in users skip logging in again on their next visit **as long as they have a valid cookie**.
 
-When a user returns to your app after previously logging in, their session cookie is still in their browser for 24 hours (defined with `maxAge` when we configured the `cookieSession` middleware). 
+When a user returns to your app after previously logging in, their session cookie is still in their browser for 24 hours (defined with `maxAge` when we configured the `cookieSession` middleware).
 
 However, the cookie just has the user ID. To properly render a logged-in user's information, like their username and any other relevant information about them, we need a way for the frontend to immediately say the server, "I have a cookie, don't ask me to log in again! Just give me my user details".
 
@@ -256,8 +259,9 @@ module.exports.find = async (user_id) => {
 ```
 
 The `getMe` controller can invoke `userModel.find()` with the user id stored in the session cookie
+
 * If there is no `userId` in the cookie or there no user with the given `userId`: the user is not logged in → `401` Not Authenticated.
-* If there *is* a found user: `200` and send them their `user` data!
+* If there _is_ a found user: `200` and send them their `user` data!
 
 ```js
 // GET /api/auth/me
@@ -283,14 +287,13 @@ const getMe = async (req, res, next) => {
 };
 ```
 
-The frontend calls `GET /api/auth/me` when the app loads in `main.js`. 
-* If it returns a user, `currentUser` is set and the logged-in view and the profile are rendered 
+The frontend calls `GET /api/auth/me` when the app loads in `main.js`.
+
+* If it returns a user, `currentUser` is set and the logged-in view and the profile are rendered
 * If it returns `401`, `currentUser` stays `null` and the guest view is rendered
 
 {% tabs %}
-
 {% tab title="fetch-helpers.js" %}
-
 ```javascript
 const handleFetch = async (url, config) => {
   try {
@@ -317,11 +320,9 @@ export const getCurrentUser = async () => {
 
 // more fetch helpers...
 ```
-
 {% endtab %}
 
 {% tab title="main.js" %}
-
 ```javascript
 // imports, etc...
 
@@ -339,9 +340,7 @@ const main = async () => {
 
 main();
 ```
-
 {% endtab %}
-
 {% endtabs %}
 
 ```mermaid
@@ -381,7 +380,9 @@ sequenceDiagram
   M->>B: renderUsers(users)
 ```
 
-**<details><summary>Q: Why call `/api/auth/me` on every page load instead of just after login?</summary>**
+<details>
+
+<summary><strong>Q: Why call <code>/api/auth/me</code> on every page load instead of just after login?</strong></summary>
 
 When a user logs in and is redirected to a new page, that page loads fresh — it doesn't inherit any JavaScript state from the login page. Calling `/api/auth/me` on every page load lets the app determine the current auth state from the session, regardless of how the user arrived at the page.
 
@@ -403,7 +404,9 @@ Setting `req.session = null` tells `cookie-session` to remove the cookie from th
 
 Try it out with your DevTools open and see the cookie disappear!
 
-**<details><summary>Q: A user logs out, but they saved their session cookie before logging out and manually restore it in their browser. Can they log back in?</summary>**
+<details>
+
+<summary><strong>Q: A user logs out, but they saved their session cookie before logging out and manually restore it in their browser. Can they log back in?</strong></summary>
 
 With `cookie-session` (client-side sessions), yes — in theory. Because `cookie-session` doesn't maintain a server-side session store, it can't invalidate old cookies after they're issued. Setting `req.session = null` clears the cookie from the browser, but a saved copy of the old cookie value would still work.
 
@@ -496,26 +499,25 @@ Here's a summary of the four auth endpoints:
 
 With these four endpoints, your application has a complete authentication system. The next lesson adds **authorization** — protecting routes so only authenticated users can access them.
 
-**<details><summary>Q: A user visits your app for the first time. Walk through exactly which auth endpoints get called and when.</summary>**
+<details>
+
+<summary><strong>Q: A user visits your app for the first time. Walk through exactly which auth endpoints get called and when.</strong></summary>
 
 1. **App loads** → frontend calls `GET /api/auth/me`
-   - No session cookie exists
-   - Server returns `401`
-   - Frontend shows the login/register form
-
+   * No session cookie exists
+   * Server returns `401`
+   * Frontend shows the login/register form
 2. **User registers** → frontend calls `POST /api/auth/register`
-   - Server hashes the password, creates the user
-   - Server sets `req.session.userId` and returns the user
-   - Frontend shows the logged-in view
-
+   * Server hashes the password, creates the user
+   * Server sets `req.session.userId` and returns the user
+   * Frontend shows the logged-in view
 3. **User returns the next day** → browser sends the session cookie automatically
-   - Frontend calls `GET /api/auth/me`
-   - Server reads `req.session.userId`, looks up the user
-   - Frontend shows the logged-in view without requiring a new login
-
+   * Frontend calls `GET /api/auth/me`
+   * Server reads `req.session.userId`, looks up the user
+   * Frontend shows the logged-in view without requiring a new login
 4. **User logs out** → frontend calls `DELETE /api/auth/logout`
-   - Server sets `req.session = null`
-   - Cookie is cleared
-   - Frontend shows the login form
+   * Server sets `req.session = null`
+   * Cookie is cleared
+   * Frontend shows the login form
 
 </details>

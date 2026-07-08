@@ -8,19 +8,18 @@ In the last lecture, we learned about the basics of Express: endpoints and contr
 
 **Table of Contents:**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Express Review](#express-review)
-- [Middleware and `next()`](#middleware-and-next)
-- [Static Web Servers](#static-web-servers)
-  - [Serving Vite Static Assets](#serving-vite-static-assets)
-  - [`express.static()` Middleware](#expressstatic-middleware)
-- [Fetch Requests to the Same Origin](#fetch-requests-to-the-same-origin)
-- [Deploying Web Server to Render](#deploying-web-server-to-render)
-  - [Create a New Web Service](#create-a-new-web-service)
-  - [Best Practice — Serving the Dist Folder and Automated Deployment](#best-practice--serving-the-dist-folder-and-automated-deployment)
-- [Complete Code](#complete-code)
-
+* [Essential Questions](5-middleware-static-assets.md#essential-questions)
+* [Key Concepts](5-middleware-static-assets.md#key-concepts)
+* [Express Review](5-middleware-static-assets.md#express-review)
+* [Middleware and `next()`](5-middleware-static-assets.md#middleware-and-next)
+* [Static Web Servers](5-middleware-static-assets.md#static-web-servers)
+  * [Serving Vite Static Assets](5-middleware-static-assets.md#serving-vite-static-assets)
+  * [`express.static()` Middleware](5-middleware-static-assets.md#expressstatic-middleware)
+* [Fetch Requests to the Same Origin](5-middleware-static-assets.md#fetch-requests-to-the-same-origin)
+* [Deploying Web Server to Render](5-middleware-static-assets.md#deploying-web-server-to-render)
+  * [Create a New Web Service](5-middleware-static-assets.md#create-a-new-web-service)
+  * [Best Practice — Serving the Dist Folder and Automated Deployment](5-middleware-static-assets.md#best-practice--serving-the-dist-folder-and-automated-deployment)
+* [Complete Code](5-middleware-static-assets.md#complete-code)
 
 ## Essential Questions
 
@@ -103,7 +102,9 @@ app.listen(port, () => {
 
 In this example, we use `app.use()` to add a "fallback" controller to our `app`. Notice that we don't specify an endpoint or a method type: this means that the `serve404` controller can run for any request type and any URL. However, if any of the previous controllers send a response, then `serve404` won't run. Because of this, we _must_ place this endpoint last (after the other calls to `app.get()`).
 
-**<details><summary>Q: What would happen if we put `app.use(serve404)` before the other calls to `app.get()`?</summary>**
+<details>
+
+<summary><strong>Q: What would happen if we put <code>app.use(serve404)</code> before the other calls to <code>app.get()</code>?</strong></summary>
 
 The `serve404` controller would be invoked for any request method and URL preventing the other controllers from ever running.
 
@@ -123,7 +124,9 @@ For example, suppose that you wanted the server to keep track of every request t
 * the request method (`GET` or `POST`, etc...)
 * the time the request was received
 
-**<details><summary>Q: Why would it be helpful to log information about every incoming request?</summary>**
+<details>
+
+<summary><strong>Q: Why would it be helpful to log information about every incoming request?</strong></summary>
 
 Logging incoming HTTP requests can be incredibly helpful for debugging purposes.
 
@@ -154,7 +157,7 @@ However, now we also need to add this code to `serveData`. If we had more contro
 
 Instead, we can use a **middleware**. Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.
 
-![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](<../.gitbook/assets/express-middleware (2).svg>)
+![Middleware in Express is a controller that can be invoked for all incoming requests before the final controller sends a response.](../.gitbook/assets/express-middleware.svg)
 
 In many ways, middleware is like a controller. It receives the `req`, `res`, and `next` values. There are two key differences:
 
@@ -194,13 +197,17 @@ Examples of this include:
 * Error handling middleware like [`errorhandler`](https://expressjs.com/en/resources/middleware/errorhandler.html)
 {% endhint %}
 
-**<details><summary>Q: So, if a user sends a request to `http://localhost:8080/api/hello`, which functions are invoked and in what order?</summary>**
+<details>
+
+<summary><strong>Q: So, if a user sends a request to <code>http://localhost:8080/api/hello</code>, which functions are invoked and in what order?</strong></summary>
 
 First the `logRoutes` middleware is invoked. The `next()` function is called which passes the request to the next controller, `serveHello`.
 
 </details>
 
-**<details><summary>Q: What would happen if the `logRoutes` controller DID send a response to the client? What would happen if it didn't invoke `next()`?</summary>**
+<details>
+
+<summary><strong>Q: What would happen if the <code>logRoutes</code> controller DID send a response to the client? What would happen if it didn't invoke <code>next()</code>?</strong></summary>
 
 If `logRoutes` did invoke `res.send()`, the `serveHello` controller would NOT be invoked as a response has already been sent.
 
@@ -405,7 +412,7 @@ Start by creating an account using your **GitHub** account. This will let you ea
    * Instance Type - select **Free**
 6.  Add Any environment variables your application may need:
 
-    ![Add environment variables individually or paste multiple values at a time from a .env file.](../.gitbook/assets/environment-variables-configuration-render.png)
+    ![Add environment variables individually or paste multiple values at a time from a .env file.](../.gitbook/assets/render-env-config.png)
 7. Select **Deploy Web Service**
 
 This should take you to your web service's dashboard where you can see the latest build information and the URL. In a few minutes your server will be up and running!

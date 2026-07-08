@@ -10,20 +10,20 @@ This module, we'll learn about the tools needed to build a truly "fullstack" web
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Databases and Database Management Systems](#databases-and-database-management-systems)
-  - [What Is a Database?](#what-is-a-database)
-  - [What is a Database Management System?](#what-is-a-database-management-system)
-- [PostgreSQL and Relational Database Management Systems](#postgresql-and-relational-database-management-systems)
-  - [Tables (Entities), Rows (Records), and Columns](#tables-entities-rows-records-and-columns)
-  - [Primary and Foreign Keys](#primary-and-foreign-keys)
-- [How Does PostgreSQL Work?](#how-does-postgresql-work)
-- [Installing Postgres](#installing-postgres)
-- [Two Ways to Talk to Postgres](#two-ways-to-talk-to-postgres)
-  - [Creating a Sample Database](#creating-a-sample-database)
-  - [The `psql` CLI](#the-psql-cli)
-  - [TablePlus](#tableplus)
+* [Essential Questions](1-intro-to-databases-postgres.md#essential-questions)
+* [Key Concepts](1-intro-to-databases-postgres.md#key-concepts)
+* [Databases and Database Management Systems](1-intro-to-databases-postgres.md#databases-and-database-management-systems)
+  * [What Is a Database?](1-intro-to-databases-postgres.md#what-is-a-database)
+  * [What is a Database Management System?](1-intro-to-databases-postgres.md#what-is-a-database-management-system)
+* [PostgreSQL and Relational Database Management Systems](1-intro-to-databases-postgres.md#postgresql-and-relational-database-management-systems)
+  * [Tables (Entities), Rows (Records), and Columns](1-intro-to-databases-postgres.md#tables-entities-rows-records-and-columns)
+  * [Primary and Foreign Keys](1-intro-to-databases-postgres.md#primary-and-foreign-keys)
+* [How Does PostgreSQL Work?](1-intro-to-databases-postgres.md#how-does-postgresql-work)
+* [Installing Postgres](1-intro-to-databases-postgres.md#installing-postgres)
+* [Two Ways to Talk to Postgres](1-intro-to-databases-postgres.md#two-ways-to-talk-to-postgres)
+  * [Creating a Sample Database](1-intro-to-databases-postgres.md#creating-a-sample-database)
+  * [The `psql` CLI](1-intro-to-databases-postgres.md#the-psql-cli)
+  * [TablePlus](1-intro-to-databases-postgres.md#tableplus)
 
 ## Essential Questions
 
@@ -68,7 +68,7 @@ const customers = [
 
 A **database** is just data stored in some structured manner. For example, a spreadsheet stored in Google Sheets is a database.
 
-![A google sheet is a database](./img/1-intro-to-databases-postgres/google-sheets.png)
+![A google sheet is a database](<../.gitbook/assets/google-sheets (1).png>)
 
 Databases are often **persistent**, meaning their data is written to durable storage (disk/hard drive) rather than held in the memory of a running process. This means that our servers can be shut down for updates, crash, and restart without disrupting the data.
 
@@ -78,9 +78,11 @@ A database on its own is just structured data in a file. The software that we us
 
 For example, Google Sheets is the DBMS that lets you manipulate a Google Sheets spreadsheet. It provides a GUI with buttons, dropdowns, and functions for interacting with the data.
 
-**<details><summary>Q: Can you think of any real world analogies to a database and a database management system? Think about collections of things and the person, tool, or system that makes it easier to use that collection.</summary>**
+<details>
 
-<img src="../.gitbook/assets/library (2).png" alt="If a database is like a library, then a database management system is the librarian, keeping it all organized" data-size="original">
+<summary><strong>Q: Can you think of any real world analogies to a database and a database management system? Think about collections of things and the person, tool, or system that makes it easier to use that collection.</strong></summary>
+
+<img src="../.gitbook/assets/library.png" alt="If a database is like a library, then a database management system is the librarian, keeping it all organized" data-size="original">
 
 A library is like a database and a librarian is like a database management system.
 
@@ -91,6 +93,7 @@ The books are inside of the library, however, without a librarian the books may 
 ## PostgreSQL and Relational Database Management Systems
 
 **PostgreSQL** (often shortened to "Postgres") is one of the most popular database management systems in the world for a number of reasons:
+
 * It is free and open-source
 * It has a strong reputation for reliability
 * It has a long history of updates and maintenance (since 1986!)
@@ -110,17 +113,19 @@ A **table** represents a single type of resource (a.k.a. an **"entity"**) in the
 
 > View this database on [Google Sheets](https://docs.google.com/spreadsheets/d/1Ca8yKI8SwsQht-ZgPE569_2BBS8iAuad9LdgB3nJhUY/view)
 
-![Tables in a relational database are connected through primary and foreign keys.](./img/1-intro-to-databases-postgres/google-sheets-relationships.png)
+![Tables in a relational database are connected through primary and foreign keys.](<../.gitbook/assets/google-sheets-relationships (1).png>)
 
 **Rows** represent individual resources (a.k.a. **"records"**) in the table (_e.g. a single customer record in the customers table_)
 
 **Columns** define the properties that all records of a table share (_e.g. a customers table has `customer_id`, `name`, `address` and `phone_number` columns_).
 
 {% hint style="info" %}
-Tables in SQL-based DBMSs like PostgreSQL exclusively use lowercase table and column names. Because of this, **lower_snake_case** is the standard naming convention used.
+Tables in SQL-based DBMSs like PostgreSQL exclusively use lowercase table and column names. Because of this, **lower\_snake\_case** is the standard naming convention used.
 {% endhint %}
 
-**<details><summary>Q: What relationships do you see between these three tables? What do those relationships tell us?</summary>**
+<details>
+
+<summary><strong>Q: What relationships do you see between these three tables? What do those relationships tell us?</strong></summary>
 
 Each row in the `orders` table refers to a specific row in each of the `customers` and `products` table. This relationship tells us for a given order which product was purchased and who purchased the product.
 
@@ -130,15 +135,17 @@ Each row in the `orders` table refers to a specific row in each of the `customer
 
 Relationships between tables are accomplished using **primary and foreign keys**:
 
-![Tables in a relational database are connected through primary and foreign keys.](./img/1-intro-to-databases-postgres/primary-foreign-keys.png)
+![Tables in a relational database are connected through primary and foreign keys.](../.gitbook/assets/primary-foreign-keys.png)
 
-A **primary key** is a column that uniquely identifies each record in the table. 
-* Primary keys are named after their table: `customer_id`, `product_id`, `order_id`. This naming convention avoids ambiguity when looking at many tables. 
+A **primary key** is a column that uniquely identifies each record in the table.
+
+* Primary keys are named after their table: `customer_id`, `product_id`, `order_id`. This naming convention avoids ambiguity when looking at many tables.
 * Primary key values are often sequential numbers and are often generated by the DBMS so that the developer doesn't need to. This avoids human error and ensures unique primary keys are used.
 
-A **foreign key** is a column in a table that points to the primary key of another table, thus creating a relationship between the tables. 
+A **foreign key** is a column in a table that points to the primary key of another table, thus creating a relationship between the tables.
+
 * Foreign key columns use the same name as the primary key they reference.
-* In the example above, every order has a reference to a particular `customer_id` (the customer who placed the order) and a `product_id` (the product they purchased). 
+* In the example above, every order has a reference to a particular `customer_id` (the customer who placed the order) and a `product_id` (the product they purchased).
 
 A table that connects data from two other tables is often called a **bridge table** or **association table**.
 
@@ -155,7 +162,7 @@ In many ways, DBMSs like PostgreSQL function similarly to web servers:
 * **Provides an Interface**: While servers provide endpoints for HTTP requests (GET `/api/customers`), PostgreSQL can interpret SQL queries (`SELECT * FROM customers`).
 * **Executes**: PostgreSQL executes the requested action on the database and sends the resulting data back to the requester.
 
-![PostgreSQL runs on a server and listens for SQL queries](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
+![PostgreSQL runs on a server and listens for SQL queries](<../.gitbook/assets/full-stack-diagram (1).png>)
 
 The primary distinction from an Express server lies in the type of request being handled: while an Express server parses HTTP requests, PostgreSQL parses and executes **Structured Query Language (SQL)** — the universal language for interacting with a relational database. We'll dig into SQL starting in the next lesson.
 
@@ -170,86 +177,70 @@ Now that we know what a database is and how PostgreSQL fits into your overall so
 1. Go to [https://postgresapp.com/](https://postgresapp.com/) and download the Latest Release version for your Mac.
 2. Open the downloaded file, drag Postgres.app to your Applications folder, and run it.
 3. Click **Initialize** to create your first database cluster. The app should now show **Running**.
-4. Add the Postgres CLI tools to your PATH so you can use `psql` from any terminal window:
+4.  Add the Postgres CLI tools to your PATH so you can use `psql` from any terminal window:
 
-   ```sh
-   sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
-   ```
+    ```sh
+    sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
+    ```
 
-   {% hint style="info" %}
-   If you are using a Marcy loaner laptop, you will get an error that says `Marcy_Student not on sudoers list`. If that is the case then first run the following command:
+    <div data-gb-custom-block data-tag="hint" data-style="info" class="hint hint-info"><p>If you are using a Marcy loaner laptop, you will get an error that says <code>Marcy_Student not on sudoers list</code>. If that is the case then first run the following command:</p><pre class="language-sh"><code class="lang-sh">su marcyadmin
+    </code></pre><p>The password is <code>unlock#</code>. This will open a temporary session in your terminal as the super user <code>marcyadmin</code>.</p><p>Then, copy and paste the <code>sudo mkdir ...</code> command above and then type and enter <code>exit</code> to exit the super user session.</p></div>
+5.  **Restart your terminal**, then verify the installation:
 
-   ```sh
-   su marcyadmin
-   ```
+    ```sh
+    psql --version
+    ```
 
-   The password is `unlock#`. This will open a temporary session in your terminal as the super user `marcyadmin`. 
-   
-   Then, copy and paste the `sudo mkdir ...` command above and then type and enter `exit` to exit the super user session.
-   {% endhint %}
-
-5. **Restart your terminal**, then verify the installation:
-
-   ```sh
-   psql --version
-   ```
-
-   You should see a version number (e.g. `psql (PostgreSQL) 16.x`).
+    You should see a version number (e.g. `psql (PostgreSQL) 16.x`).
 {% endtab %}
 
 {% tab title="Windows + WSL Instructions" %}
 1. Open your Ubuntu terminal.
-2. Update your package list:
+2.  Update your package list:
 
-   ```sh
-   sudo apt update
-   ```
+    ```sh
+    sudo apt update
+    ```
+3.  Install Postgres:
 
-3. Install Postgres:
+    ```sh
+    sudo apt install postgresql postgresql-contrib
+    ```
 
-   ```sh
-   sudo apt install postgresql postgresql-contrib
-   ```
+    Type `Y` if prompted to confirm.
+4.  Verify the installation:
 
-   Type `Y` if prompted to confirm.
+    ```sh
+    psql --version
+    ```
+5.  Start the Postgres service:
 
-4. Verify the installation:
+    ```sh
+    sudo service postgresql start
+    ```
+6.  Confirm it is running:
 
-   ```sh
-   psql --version
-   ```
+    ```sh
+    sudo service postgresql status
+    ```
 
-5. Start the Postgres service:
+    You should see it listed as **online** on port `5432`.
+7.  Connect to Postgres as the default `postgres` user to set a password:
 
-   ```sh
-   sudo service postgresql start
-   ```
+    ```sh
+    sudo -u postgres psql
+    ```
+8.  Inside `psql`, run the following (replace `your_password` with something short and memorable — `123` is fine for local dev):
 
-6. Confirm it is running:
+    ```sql
+    ALTER USER postgres WITH ENCRYPTED PASSWORD 'your_password';
+    ```
 
-   ```sh
-   sudo service postgresql status
-   ```
+    Then quit:
 
-   You should see it listed as **online** on port `5432`.
-
-7. Connect to Postgres as the default `postgres` user to set a password:
-
-   ```sh
-   sudo -u postgres psql
-   ```
-
-8. Inside `psql`, run the following (replace `your_password` with something short and memorable — `123` is fine for local dev):
-
-   ```sql
-   ALTER USER postgres WITH ENCRYPTED PASSWORD 'your_password';
-   ```
-
-   Then quit:
-
-   ```sql
-   \q
-   ```
+    ```sql
+    \q
+    ```
 {% endtab %}
 {% endtabs %}
 
@@ -276,6 +267,7 @@ The follow-along repo for this lesson includes a `setup.sql` file. Running it wi
 psql -f setup.sql
 ```
 {% endtab %}
+
 {% tab title="Windows + WSL" %}
 ```sh
 sudo -u postgres psql -f setup.sql
@@ -322,6 +314,7 @@ After the script runs you should see output confirming the database and table we
 psql films_db
 ```
 {% endtab %}
+
 {% tab title="Windows + WSL" %}
 ```sh
 sudo -u postgres psql films_db
@@ -369,7 +362,9 @@ SELECT * FROM films;
 \q                
 ```
 
-**<details><summary>Q: What's the difference between a `psql` backslash command and a SQL statement?</summary>**
+<details>
+
+<summary><strong>Q: What's the difference between a <code>psql</code> backslash command and a SQL statement?</strong></summary>
 
 Backslash commands (like `\l`, `\dt`, `\q`) are built into the `psql` application itself — they don't get sent to Postgres. They control the `psql` tool (list databases, switch connections, quit).
 
@@ -387,10 +382,10 @@ TablePlus is a GUI application that connects to your PostgreSQL databases and le
 
 1. Click **Create a new connection** and select **PostgreSQL**
 2. Fill in the connection details — **User** and **Password** differ by OS (see below):
-   - **Name:** `films_db` (just a label)
-   - **Host:** `127.0.0.1`
-   - **Port:** `5432`
-   - **Database:** `films_db`
+   * **Name:** `films_db` (just a label)
+   * **Host:** `127.0.0.1`
+   * **Port:** `5432`
+   * **Database:** `films_db`
 3. Click **Test** — all fields should highlight green
 4. Click **Connect**
 
@@ -402,12 +397,12 @@ Postgres.app configures your macOS username as a superuser and trusts all local 
 {% endtab %}
 
 {% tab title="Windows + WSL" %}
-- **User:** `postgres`
-- **Password:** the password you set during installation
+* **User:** `postgres`
+* **Password:** the password you set during installation
 
 **Why does WSL require a password when Mac doesn't?**
 
-Postgres controls who can connect through a configuration file called `pg_hba.conf`. In that file, "local" means a **Unix socket connection** — a low-level file-based connection that never touches the network. It does *not* mean "my own machine."
+Postgres controls who can connect through a configuration file called `pg_hba.conf`. In that file, "local" means a **Unix socket connection** — a low-level file-based connection that never touches the network. It does _not_ mean "my own machine."
 
 TablePlus connects over **TCP** to `127.0.0.1:5432`. Even though that's your own computer, Postgres classifies it as a network connection and applies stricter rules. WSL's default Postgres installation requires a username and password for all TCP connections. Mac's Postgres.app is configured to trust them.
 
@@ -421,7 +416,9 @@ Think of it this way: `psql` in your terminal uses a Unix socket (no password ne
 * Click the **SQL** button in the top toolbar to open a query editor — try running `SELECT * FROM films;` (don't forget the `;`!)
 * Results appear in the main panel with rows and columns clearly labeled
 
-**<details><summary>Q: When should you use `psql` vs. TablePlus?</summary>**
+<details>
+
+<summary><strong>Q: When should you use <code>psql</code> vs. TablePlus?</strong></summary>
 
 Both tools connect to the same PostgreSQL database — the choice is about workflow preference.
 

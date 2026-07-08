@@ -1,24 +1,24 @@
-# Mod 7 Project: Full-Stack PERN Remix
+# Project: Full-Stack React Application
 
-- [Overview](#overview)
-  - [Learning Objectives](#learning-objectives)
-  - [The Case Study and Using AI](#the-case-study-and-using-ai)
-  - [Timeline](#timeline)
-  - [Suggested Domains](#suggested-domains)
-  - [Git Workflow](#git-workflow)
-- [Deliverables](#deliverables)
-  - [Documentation](#documentation)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-  - [Scrum Board](#scrum-board)
-  - [Project Presentation](#project-presentation)
-  - [Bonus](#bonus)
-- [Project Grading](#project-grading)
-  - [Backend (20 points)](#backend-20-points)
-  - [Frontend (15 points)](#frontend-15-points)
-  - [Documentation (4 points)](#documentation-4-points)
-  - [Project Management (2 points)](#project-management-2-points)
-  - [Presentation (3 points)](#presentation-3-points)
+* [Overview](6-react-project.md#overview)
+  * [Learning Objectives](6-react-project.md#learning-objectives)
+  * [The Case Study and Using AI](6-react-project.md#the-case-study-and-using-ai)
+  * [Timeline](6-react-project.md#timeline)
+  * [Suggested Domains](6-react-project.md#suggested-domains)
+  * [Git Workflow](6-react-project.md#git-workflow)
+* [Deliverables](6-react-project.md#deliverables)
+  * [Documentation](6-react-project.md#documentation)
+  * [Backend](6-react-project.md#backend)
+  * [Frontend](6-react-project.md#frontend)
+  * [Scrum Board](6-react-project.md#scrum-board)
+  * [Project Presentation](6-react-project.md#project-presentation)
+  * [Bonus](6-react-project.md#bonus)
+* [Project Grading](6-react-project.md#project-grading)
+  * [Backend (20 points)](6-react-project.md#backend-20-points)
+  * [Frontend (15 points)](6-react-project.md#frontend-15-points)
+  * [Documentation (4 points)](6-react-project.md#documentation-4-points)
+  * [Project Management (2 points)](6-react-project.md#project-management-2-points)
+  * [Presentation (3 points)](6-react-project.md#presentation-3-points)
 
 ## Overview
 
@@ -37,6 +37,7 @@ Meanwhile the planning, documentation, and presentation will reflect your **deve
 In the end, you will have a portfolio-worthy project to showcase your mastery of the full stack curriculum.
 
 By building this project you will:
+
 * Read, internalize, remix, and extend a codebase that you did not write.
 * Make decisions and tradeoffs as you plan the MVP and stretch features of your application
 * Design and implement a database schema, Express API, and React frontend.
@@ -62,6 +63,7 @@ In summary: you will choose the project domain but are expected to use the same 
 **AI:**
 
 You are also encouraged to use AI to help you build this project. In particular, we encourage you to use AI in the following ways:
+
 * as a thought-partner to help you plan your project's design (decide MVP features, plan database schema, define your API contract, etc...)
 * to generate clean Markdown documentation for your project's README
 * to generate CSS styling for your React application
@@ -98,12 +100,14 @@ Here are some suggestions for what you can build
 
 ### Git Workflow
 
-Expectations 
-- a `draft` branch contains your current development work, merging into `main` when features are completed and tested
-- the `main` branch is always stable
-- commits are made daily
+Expectations
+
+* a `draft` branch contains your current development work, merging into `main` when features are completed and tested
+* the `main` branch is always stable
+* commits are made daily
 
 Key moments to merge `draft` into `main` include:
+
 * The completion of your README documentation
 * The completion of your backend API with MVP endpoints
 * The completion of your frontend with MVP features
@@ -112,6 +116,7 @@ Key moments to merge `draft` into `main` include:
 ## Deliverables
 
 Your MVP is deliberately minimal — a working app that does a few things well is better than an ambitious app that doesn't run. To complete this project you will need to build:
+
 1. Documentation that clearly explains the technical details of the project
 2. A backend server with Express and Postgres
 3. A frontend application with Vite and React
@@ -121,30 +126,33 @@ Your MVP is deliberately minimal — a working app that does a few things well i
 ### Documentation
 
 The `README.md` of your project must be a polished and professional landing page for any developer looking at your application. It should include the following:
+
 * a **mission statement** (who is this for and why would they use it)
 * a **schema diagram**
 * an **API contract** covering every endpoint with request and response details
 * **MVP user stories** written as "a user can…" statements.
 
 This should be the first thing that you create before you write any code. In the beginning, this document may be a rough draft. However, you are expected to refine it as the project evolves. By the end of the project, the README must also include
+
 * **setup instructions** (how to create the database, seed it, and run both servers)
 * a **roadmap** listing stretch features you'd build next.
 
 Reference the [case study's README](https://github.com/The-Marcy-Lab-School/swe-casestudy-7-todo-app/blob/main/README.md) as a model for format and depth.
 
 {% hint style="info" %}
-💡 AI is an excellent planning partner and we *expect* and *encourage* you to use it here to refine your idea and generate this documentation.
+💡 AI is an excellent planning partner and we _expect_ and _encourage_ you to use it here to refine your idea and generate this documentation.
 {% endhint %}
 
 ### Backend
 
 Your backend is an Express + Postgres server built around a single **one-to-many relationship**: a `users` table and a resource table whose rows each belong to a user via a `user_id` foreign key. This is the same structure as the case study — the difference is only your domain.
 
-The server exposes two groups of endpoints. 
-1. The **auth endpoints** (`POST /api/auth/register`, `POST /api/auth/login`, `DELETE /api/auth/logout`, `GET /api/auth/me`) handle session creation and destruction using cookies. 
+The server exposes two groups of endpoints.
+
+1. The **auth endpoints** (`POST /api/auth/register`, `POST /api/auth/login`, `DELETE /api/auth/logout`, `GET /api/auth/me`) handle session creation and destruction using cookies.
 2. The **resource endpoints** let a logged-in user list their resources (`GET`), add a new one (`POST`), and remove one (`DELETE`). Resource routes should be protected by authentication middleware so that unauthenticated requests receive a 401 before they reach any model code.
 
-Your models must use `pg` with **parameterized queries** throughout and developer should be able to quickly get set up with a database by running a `seed.js` file that drops, creates, and populates your tables. 
+Your models must use `pg` with **parameterized queries** throughout and developer should be able to quickly get set up with a database by running a `seed.js` file that drops, creates, and populates your tables.
 
 Sensitive values (database credentials, session secret) belong in a `.env` file, with a `.env.template` that documents the required variables without exposing real values.
 
@@ -156,18 +164,18 @@ Sensitive values (database credentials, session secret) belong in a `.env` file,
 
 Your frontend is a **Vite + React** app. Its `vite.config.js` should proxy `/api` requests to your Express server so that session cookies work correctly during development.
 
-On load, the app calls `GET /api/auth/me` to **rehydrate the session** — this keeps a returning user logged in after a page refresh without requiring them to log in again. Additionally, the auth status of a user changes what they see: 
+On load, the app calls `GET /api/auth/me` to **rehydrate the session** — this keeps a returning user logged in after a page refresh without requiring them to log in again. Additionally, the auth status of a user changes what they see:
+
 * guests see login and register forms
 * logged-in users see their resources and a logout button.
 
-The core resource UI consists of three pieces: 
+The core resource UI consists of three pieces:
+
 1. a **list** that displays the current user's resources
 2. a **create form** that POSTs a new resource and then refetches
-3. a **delete button** on each item. 
+3. a **delete button** on each item.
 
-{% hint style="info" %}
 💡 When it comes to styling your application, you are expected and encouraged to use AI! Writing CSS can be tedious to do by hand. We'd rather you spend your time designing and implementing the core server-side and React logic.
-{% endhint %}
 
 ### Scrum Board
 
@@ -183,6 +191,7 @@ During this project you will practice the [Agile Methodology](https://www.atlass
 ### Project Presentation
 
 On the final day, you will present to the class in a "Science-Fair". You will have a station to present your application in short elevator pitch-style presentations that lasts around 5 minutes. It should include:
+
 1. What the app does, who it's for, and why you built it
 2. A **live demonstration** of the working application (under 2 minutes)
 3. One technical challenge you solved and how you solved it
@@ -192,10 +201,10 @@ On the final day, you will present to the class in a "Science-Fair". You will ha
 
 Once MVP is complete and working:
 
-- `PATCH /api/[resource]/:id` — update a resource, with an edit form on the frontend
-- Add a many-to-many resource (e.g. comments or likes)
-- React Router — multiple pages (e.g., list page → detail page)
-- Global Context — `currentUser` in Context instead of props drilling
+* `PATCH /api/[resource]/:id` — update a resource, with an edit form on the frontend
+* Add a many-to-many resource (e.g. comments or likes)
+* React Router — multiple pages (e.g., list page → detail page)
+* Global Context — `currentUser` in Context instead of props drilling
 
 ## Project Grading
 
