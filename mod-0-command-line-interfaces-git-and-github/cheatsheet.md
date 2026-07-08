@@ -2,15 +2,17 @@
 
 **Table of Contents**
 
-* [Review Branching](git-cheatsheet.md#review-branching)
-* [Creating Branches](git-cheatsheet.md#creating-branches)
-* [Commit Changes](git-cheatsheet.md#commit-changes)
-* [Merge before you push](git-cheatsheet.md#merge-before-you-push)
-* [Push and make a PR](git-cheatsheet.md#push-and-make-a-pr)
+* [Review Branching](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-0-command-line-interfaces-git-and-github/git-cheatsheet.md#review-branching)
+* [Creating Branches](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-0-command-line-interfaces-git-and-github/git-cheatsheet.md#creating-branches)
+* [Commit Changes](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-0-command-line-interfaces-git-and-github/git-cheatsheet.md#commit-changes)
+* [Merge before you push](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-0-command-line-interfaces-git-and-github/git-cheatsheet.md#merge-before-you-push)
+* [Push and make a PR](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-0-command-line-interfaces-git-and-github/git-cheatsheet.md#push-and-make-a-pr)
 
 ## Review Branching
 
-**<details><summary>When should we create a new branch?</summary>**
+<details>
+
+<summary><strong>When should we create a new branch?</strong></summary>
 
 Branches are used to diverge from the main code base. They are useful because they create a copy of existing code without modifying the existing code. Think of it as your very own sandbox where you can create anything new.
 
@@ -18,13 +20,17 @@ Therefore, a new branch should be created for any new change to any of the files
 
 </details>
 
-**<details><summary>When do merge conflicts occur?</summary>**
+<details>
+
+<summary><strong>When do merge conflicts occur?</strong></summary>
 
 Merge conflicts occur when we have code that could possibly overwrite code that was already there. They are bound to happen if multiple people are working on the same file.
 
 </details>
 
-**<details><summary>Things to avoid</summary>**
+<details>
+
+<summary><strong>Things to avoid</strong></summary>
 
 The `main` branch should always have working code so as a best practice...
 
@@ -101,7 +107,7 @@ git merge main
 
 You may need to resolve merge conflicts at this point. To resolve a conflict, delete the `<<<<<<< HEAD`, `=======`, and `>>>>>>> main` markers and keep the code that you want.
 
-![](<../.gitbook/assets/merge-conflict (2).png>)
+![](<../.gitbook/assets/merge-conflict (1).png>)
 
 Finally, make a new commit to finish resolving these conflicts:
 
@@ -122,4 +128,4 @@ Once you have merged `main` into your branch, go ahead and `git push`.
 * Ask your teammates to review your code and then merge!
 * If you want to continue working on your branch, do NOT delete the branch.
 
-Your teammates can then follow the steps listed in [merge before you push](git-cheatsheet.md#merge-before-you-push) to update their local repositories.
+Your teammates can then follow the steps listed in [merge before you push](https://github.com/The-Marcy-Lab-School/marcy-curriculum-docs/blob/main/mod-0-command-line-interfaces-git-and-github/git-cheatsheet.md#merge-before-you-push) to update their local repositories.

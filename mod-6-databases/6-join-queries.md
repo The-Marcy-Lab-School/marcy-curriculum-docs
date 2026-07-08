@@ -20,20 +20,20 @@ A **JOIN** combines rows from two tables based on a matching column — typicall
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Setup](#setup)
-- [One-to-Many: Users and Posts](#one-to-many-users-and-posts)
-- [JOINs](#joins)
-  - [INNER JOIN — Only Matching Rows](#inner-join--only-matching-rows)
-  - [INNER JOIN Practice](#inner-join-practice)
-  - [LEFT JOIN — All Rows](#left-join--all-rows)
-  - [LEFT JOIN Practice](#left-join-practice)
-- [GROUP BY with JOINs](#group-by-with-joins)
-  - [Smart GROUP BY with Primary Keys](#smart-group-by-with-primary-keys)
-- [Many-to-Many Relationships](#many-to-many-relationships)
-  - [Association Tables and Three-Way JOINs](#association-tables-and-three-way-joins)
-- [Challenge: JOIN Queries](#challenge-join-queries)
+* [Essential Questions](6-join-queries.md#essential-questions)
+* [Key Concepts](6-join-queries.md#key-concepts)
+* [Setup](6-join-queries.md#setup)
+* [One-to-Many: Users and Posts](6-join-queries.md#one-to-many-users-and-posts)
+* [JOINs](6-join-queries.md#joins)
+  * [INNER JOIN — Only Matching Rows](6-join-queries.md#inner-join--only-matching-rows)
+  * [INNER JOIN Practice](6-join-queries.md#inner-join-practice)
+  * [LEFT JOIN — All Rows](6-join-queries.md#left-join--all-rows)
+  * [LEFT JOIN Practice](6-join-queries.md#left-join-practice)
+* [GROUP BY with JOINs](6-join-queries.md#group-by-with-joins)
+  * [Smart GROUP BY with Primary Keys](6-join-queries.md#smart-group-by-with-primary-keys)
+* [Many-to-Many Relationships](6-join-queries.md#many-to-many-relationships)
+  * [Association Tables and Three-Way JOINs](6-join-queries.md#association-tables-and-three-way-joins)
+* [Challenge: JOIN Queries](6-join-queries.md#challenge-join-queries)
 
 ## Essential Questions
 
@@ -48,7 +48,7 @@ By the end of this lesson, you should be able to answer these questions:
 ## Key Concepts
 
 * **`INNER JOIN`** — returns only rows where both tables have a matching value on the join condition. Rows with no match on either side are excluded.
-* **`LEFT JOIN`** — returns all rows from the *left* table. Rows with no match in the right table have `NULL` for all right-side columns.
+* **`LEFT JOIN`** — returns all rows from the _left_ table. Rows with no match in the right table have `NULL` for all right-side columns.
 * **Join condition** — the `ON` clause specifying which columns must match, usually a foreign key equaling a primary key.
 * **Many-to-many** — a relationship where each row in table A can relate to many rows in table B, and vice versa. Represented in SQL with an association table.
 * **Association/junction table** — a table that represents a many-to-many relationship by holding (at minimum) two foreign keys, one for each side.
@@ -70,6 +70,7 @@ psql -f setup.sql
 psql social_db
 ```
 {% endtab %}
+
 {% tab title="Windows + WSL" %}
 ```sh
 # Create the database
@@ -88,20 +89,23 @@ sudo -u postgres psql social_db
 
 Consider the "flat" table of users and the posts they've made:
 
-| post_id | title             | user_id | username  | email              |
-| ------- | ----------------- | ------- | --------- | ------------------ |
-| 1       | My First Post     | 1       | ann_duong | ann@example.com    |
-| 2       | Learning SQL      | 1       | ann_duong | ann@example.com    |
-| 3       | Postgres Tips     | 2       | reuben_o  | reuben@example.com |
-| 4       | Why I Love Coding | 3       | carmen_s  | carmen@example.com |
-| 5       | Advanced Joins    | 2       | reuben_o  | reuben@example.com |
+| post\_id | title             | user\_id | username   | email              |
+| -------- | ----------------- | -------- | ---------- | ------------------ |
+| 1        | My First Post     | 1        | ann\_duong | ann@example.com    |
+| 2        | Learning SQL      | 1        | ann\_duong | ann@example.com    |
+| 3        | Postgres Tips     | 2        | reuben\_o  | reuben@example.com |
+| 4        | Why I Love Coding | 3        | carmen\_s  | carmen@example.com |
+| 5        | Advanced Joins    | 2        | reuben\_o  | reuben@example.com |
 
-**<details><summary>Q: What is the problem with storing all of this data in a single flat table instead of two separate tables?</summary>**
+<details>
+
+<summary><strong>Q: What is the problem with storing all of this data in a single flat table instead of two separate tables?</strong></summary>
 
 A flat table like this breaks the normalization rule requiring every column to be dependent on the primary key. `username` and `email` are dependent on `user_id`, not on `post_id`:
-- `username` and `email` are duplicated on every post row for the same user
-- If a user changes their email, you'd need to update every post they've ever written
-- A user with no posts would have no row at all
+
+* `username` and `email` are duplicated on every post row for the same user
+* If a user changes their email, you'd need to update every post they've ever written
+* A user with no posts would have no row at all
 
 Splitting into two tables eliminates all of this. The user's info lives in one row in `users`. Posts reference it via `user_id`. Change the email once — all posts see the update automatically through the foreign key.
 
@@ -111,24 +115,24 @@ To create a normalized schema, we split the data into two tables: `users` and `p
 
 **`users` table:**
 
-| user_id | username  | email              |
-| ------- | --------- | ------------------ |
-| 1       | ann_duong | ann@example.com    |
-| 2       | reuben_o  | reuben@example.com |
-| 3       | carmen_s  | carmen@example.com |
-| 4       | ben_s     | ben@example.com    |
+| user\_id | username   | email              |
+| -------- | ---------- | ------------------ |
+| 1        | ann\_duong | ann@example.com    |
+| 2        | reuben\_o  | reuben@example.com |
+| 3        | carmen\_s  | carmen@example.com |
+| 4        | ben\_s     | ben@example.com    |
 
 **`posts` table:**
 
-| post_id | title             | user_id |
-| ------- | ----------------- | ------- |
-| 1       | My First Post     | 1       |
-| 2       | Learning SQL      | 1       |
-| 3       | Postgres Tips     | 2       |
-| 4       | Why I Love Coding | 3       |
-| 5       | Advanced Joins    | 2       |
+| post\_id | title             | user\_id |
+| -------- | ----------------- | -------- |
+| 1        | My First Post     | 1        |
+| 2        | Learning SQL      | 1        |
+| 3        | Postgres Tips     | 2        |
+| 4        | Why I Love Coding | 3        |
+| 5        | Advanced Joins    | 2        |
 
-Notice: `ben_s` (user_id 4) has no posts. This will matter when we compare INNER JOIN and LEFT JOIN.
+Notice: `ben_s` (user\_id 4) has no posts. This will matter when we compare INNER JOIN and LEFT JOIN.
 
 With two separate tables, you can answer questions about each one independently:
 
@@ -139,9 +143,9 @@ SELECT * FROM posts;
 
 But what about questions that cross the boundary between tables?
 
-- What posts did `ann_duong` write?
-- Who wrote the post titled `'Advanced Joins'`?
-- How many posts has each user written?
+* What posts did `ann_duong` write?
+* Who wrote the post titled `'Advanced Joins'`?
+* How many posts has each user written?
 
 None of these can be answered from a single table. `posts` knows the `user_id` of each post's author, but not their username — that lives in `users`. To answer them, you need a JOIN.
 
@@ -149,7 +153,7 @@ None of these can be answered from a single table. `posts` knows the `user_id` o
 
 JOIN statements in SQL use data across multiple tables. There are multiple types of JOINs that combine tables in slightly different ways but the two that are used most often are `LEFT JOIN` and `INNER JOIN`.
 
-![Copyright C.L. Moffat 2008](./img/6-joins/join-venn-diagrams.png)
+![Copyright C.L. Moffat 2008](../.gitbook/assets/join-venn-diagrams.png)
 
 ### INNER JOIN — Only Matching Rows
 
@@ -167,13 +171,13 @@ The `ON` keyword defines the join condition.
 
 Result:
 
-| user_id | username  | email              | post_id | title             | user_id |
-| ------- | --------- | ------------------ | ------- | ----------------- | ------- |
-| 1       | ann_duong | ann@example.com    | 1       | My First Post     | 1       |
-| 1       | ann_duong | ann@example.com    | 2       | Learning SQL      | 1       |
-| 2       | reuben_o  | reuben@example.com | 3       | Postgres Tips     | 2       |
-| 3       | carmen_s  | carmen@example.com | 4       | Why I Love Coding | 3       |
-| 2       | reuben_o  | reuben@example.com | 5       | Advanced Joins    | 2       |
+| user\_id | username   | email              | post\_id | title             | user\_id |
+| -------- | ---------- | ------------------ | -------- | ----------------- | -------- |
+| 1        | ann\_duong | ann@example.com    | 1        | My First Post     | 1        |
+| 1        | ann\_duong | ann@example.com    | 2        | Learning SQL      | 1        |
+| 2        | reuben\_o  | reuben@example.com | 3        | Postgres Tips     | 2        |
+| 3        | carmen\_s  | carmen@example.com | 4        | Why I Love Coding | 3        |
+| 2        | reuben\_o  | reuben@example.com | 5        | Advanced Joins    | 2        |
 
 `ben_s` does not appear — they have no posts, so there is no matching row in `posts`.
 
@@ -190,13 +194,13 @@ FROM users
 
 Result:
 
-| username  | post_id | title             |
-| --------- | ------- | ----------------- |
-| ann_duong | 1       | My First Post     |
-| ann_duong | 2       | Learning SQL      |
-| reuben_o  | 3       | Postgres Tips     |
-| carmen_s  | 4       | Why I Love Coding |
-| reuben_o  | 5       | Advanced Joins    |
+| username   | post\_id | title             |
+| ---------- | -------- | ----------------- |
+| ann\_duong | 1        | My First Post     |
+| ann\_duong | 2        | Learning SQL      |
+| reuben\_o  | 3        | Postgres Tips     |
+| carmen\_s  | 4        | Why I Love Coding |
+| reuben\_o  | 5        | Advanced Joins    |
 
 {% hint style="info" %}
 `JOIN` without a type is an alias for `INNER JOIN`. Always write `INNER JOIN` explicitly — the type is part of the meaning. When you learn `LEFT JOIN`, `RIGHT JOIN`, and `FULL JOIN`, you'll already be in the habit of naming the type on every join.
@@ -206,7 +210,9 @@ Result:
 
 For each of the questions below, use a SQL query with `INNER JOIN` and specific column names to find the answer:
 
-**<details><summary>Q: What are the titles of all posts written by `ann_duong`?</summary>**
+<details>
+
+<summary><strong>Q: What are the titles of all posts written by <code>ann_duong</code>?</strong></summary>
 
 ```sql
 SELECT posts.title
@@ -217,7 +223,9 @@ WHERE users.username = 'ann_duong';
 
 </details>
 
-**<details><summary>Q: Which user wrote the post titled `'Advanced Joins'`?</summary>**
+<details>
+
+<summary><strong>Q: Which user wrote the post titled <code>'Advanced Joins'</code>?</strong></summary>
 
 ```sql
 SELECT users.username
@@ -228,7 +236,9 @@ WHERE posts.title = 'Advanced Joins';
 
 </details>
 
-**<details><summary>Q: How many posts has `reuben_o` written?</summary>**
+<details>
+
+<summary><strong>Q: How many posts has <code>reuben_o</code> written?</strong></summary>
 
 ```sql
 SELECT COUNT(*) AS post_count
@@ -256,20 +266,22 @@ FROM users
 
 Result:
 
-| username  | post_id | title             |
-| --------- | ------- | ----------------- |
-| ann_duong | 1       | My First Post     |
-| ann_duong | 2       | Learning SQL      |
-| reuben_o  | 3       | Postgres Tips     |
-| carmen_s  | 4       | Why I Love Coding |
-| reuben_o  | 5       | Advanced Joins    |
-| ben_s     | NULL    | NULL              |
+| username   | post\_id | title             |
+| ---------- | -------- | ----------------- |
+| ann\_duong | 1        | My First Post     |
+| ann\_duong | 2        | Learning SQL      |
+| reuben\_o  | 3        | Postgres Tips     |
+| carmen\_s  | 4        | Why I Love Coding |
+| reuben\_o  | 5        | Advanced Joins    |
+| ben\_s     | NULL     | NULL              |
 
 `ben_s` now appears with `NULL` for all `posts` columns.
 
 ### LEFT JOIN Practice
 
-**<details><summary>Q: How would you use a `LEFT JOIN` to find all users who have *not* written any posts?</summary>**
+<details>
+
+<summary><strong>Q: How would you use a <code>LEFT JOIN</code> to find all users who have </strong><em><strong>not</strong></em><strong> written any posts?</strong></summary>
 
 When a `LEFT JOIN` finds no match in the right table, the right-side columns are `NULL`. Filter for exactly those rows:
 
@@ -311,6 +323,7 @@ ORDER BY post_count DESC;
 ```
 
 Here are some things to note:
+
 * We are grouping by both `users.user_id` and `users.username`
 * `COUNT(posts.post_id)` counts non-NULL values, so users with no posts get `0`. Using `COUNT(*)` instead would count the NULL row as 1, giving the wrong answer for users with no posts.
 
@@ -335,10 +348,12 @@ GROUP BY users.user_id;
 ```
 
 {% hint style="info" %}
-The smart `GROUP BY` optimization applies to the table whose primary key you're grouping by. Columns from the *joined* table (e.g., `posts`) still need to be inside an aggregate function or explicitly listed in `GROUP BY`.
+The smart `GROUP BY` optimization applies to the table whose primary key you're grouping by. Columns from the _joined_ table (e.g., `posts`) still need to be inside an aggregate function or explicitly listed in `GROUP BY`.
 {% endhint %}
 
-**<details><summary>Q: Write a query that returns each user's `user_id`, `username`, and `email` along with the number of posts they've written. Include users with zero posts, ordered by post count descending.</summary>**
+<details>
+
+<summary><strong>Q: Write a query that returns each user's <code>user_id</code>, <code>username</code>, and <code>email</code> along with the number of posts they've written. Include users with zero posts, ordered by post count descending.</strong></summary>
 
 ```sql
 SELECT
@@ -364,30 +379,30 @@ Some relationships are many-to-many. In `social_db`, a post can have many tags, 
 
 The four tables in `social_db` and how they connect:
 
-- `users` — one row per user; independent table
-- `posts` — one row per post; references `users` via `user_id` (the one-to-many you've been working with)
-- `tags` — one row per tag (`sql`, `databases`, `beginner`, etc.); independent table
-- `post_tags` — one row per post-tag pairing; holds `post_id` and `tag_id` as foreign keys (the association table)
+* `users` — one row per user; independent table
+* `posts` — one row per post; references `users` via `user_id` (the one-to-many you've been working with)
+* `tags` — one row per tag (`sql`, `databases`, `beginner`, etc.); independent table
+* `post_tags` — one row per post-tag pairing; holds `post_id` and `tag_id` as foreign keys (the association table)
 
 **`tags` table:**
 
-| tag_id | name       |
-| ------ | ---------- |
-| 1      | javascript |
-| 2      | sql        |
-| 3      | databases  |
-| 4      | beginner   |
+| tag\_id | name       |
+| ------- | ---------- |
+| 1       | javascript |
+| 2       | sql        |
+| 3       | databases  |
+| 4       | beginner   |
 
 **`post_tags` table:**
 
-| post_tag_id | post_id | tag_id |
-| ----------- | ------- | ------ |
-| 1           | 1       | 4      |
-| 2           | 2       | 2      |
-| 3           | 2       | 3      |
-| 4           | 3       | 2      |
-| 5           | 3       | 3      |
-| 6           | 5       | 2      |
+| post\_tag\_id | post\_id | tag\_id |
+| ------------- | -------- | ------- |
+| 1             | 1        | 4       |
+| 2             | 2        | 2       |
+| 3             | 2        | 3       |
+| 4             | 3        | 2       |
+| 5             | 3        | 3       |
+| 6             | 5        | 2       |
 
 To query across a many-to-many relationship, JOIN through the association table:
 
@@ -410,7 +425,9 @@ FROM posts
 WHERE tags.name = 'sql';
 ```
 
-**<details><summary>Q: Why can't you represent a many-to-many relationship with just a foreign key on one of the two main tables?</summary>**
+<details>
+
+<summary><strong>Q: Why can't you represent a many-to-many relationship with just a foreign key on one of the two main tables?</strong></summary>
 
 A foreign key column holds one value per row — it can reference exactly one row in the other table. If you put `tag_id` on `posts`, a post could only have one tag. If you put `post_id` on `tags`, a tag could only belong to one post.
 
@@ -418,7 +435,9 @@ Neither captures "many on both sides." The association table solves this by givi
 
 </details>
 
-**<details><summary>Q: How many posts use the `'sql'` tag? Write the query.</summary>**
+<details>
+
+<summary><strong>Q: How many posts use the <code>'sql'</code> tag? Write the query.</strong></summary>
 
 ```sql
 SELECT COUNT(DISTINCT post_tags.post_id) AS post_count
@@ -433,7 +452,9 @@ WHERE tags.name = 'sql';
 
 Write each query yourself before opening the solution.
 
-**<details><summary>Q: List every user's `username` alongside the titles of their posts. Users with no posts should not appear.</summary>**
+<details>
+
+<summary><strong>Q: List every user's <code>username</code> alongside the titles of their posts. Users with no posts should not appear.</strong></summary>
 
 ```sql
 SELECT users.username, posts.title
@@ -443,7 +464,9 @@ FROM users
 
 </details>
 
-**<details><summary>Q: List every user's `username` and their post count. Include users with zero posts. Order by post count descending.</summary>**
+<details>
+
+<summary><strong>Q: List every user's <code>username</code> and their post count. Include users with zero posts. Order by post count descending.</strong></summary>
 
 ```sql
 SELECT users.username, COUNT(posts.post_id) AS post_count
@@ -455,7 +478,9 @@ ORDER BY post_count DESC;
 
 </details>
 
-**<details><summary>Q: Which posts are tagged `'databases'`? Return the post title and the author's `username`.</summary>**
+<details>
+
+<summary><strong>Q: Which posts are tagged <code>'databases'</code>? Return the post title and the author's <code>username</code>.</strong></summary>
 
 ```sql
 SELECT posts.title, users.username

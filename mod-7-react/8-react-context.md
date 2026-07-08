@@ -1,4 +1,4 @@
-# 6. React Context
+# (Bonus) React Context
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7-1-0-react-context)!
@@ -6,14 +6,14 @@ Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/7
 
 **Table of Contents**:
 
-* [Terms](6-react-context.md#terms)
-* [Problem: Props Drilling](6-react-context.md#problem-props-drilling)
-  * [Passing State From App to LikesButton](6-react-context.md#passing-state-from-app-to-likesbutton)
-* [Solution: useContext](6-react-context.md#solution-usecontext)
-  * [1. Create a context object](6-react-context.md#1-create-a-context-object)
-  * [2. Render a Context Provider](6-react-context.md#2-render-a-context-provider)
-  * [3. Use the Context](6-react-context.md#3-use-the-context)
-* [Summary](6-react-context.md#summary)
+* [Terms](8-react-context.md#terms)
+* [Problem: Props Drilling](8-react-context.md#problem-props-drilling)
+  * [Passing State From App to LikesButton](8-react-context.md#passing-state-from-app-to-likesbutton)
+* [Solution: useContext](8-react-context.md#solution-usecontext)
+  * [1. Create a context object](8-react-context.md#1-create-a-context-object)
+  * [2. Render a Context Provider](8-react-context.md#2-render-a-context-provider)
+  * [3. Use the Context](8-react-context.md#3-use-the-context)
+* [Summary](8-react-context.md#summary)
 
 ## Key Concepts
 

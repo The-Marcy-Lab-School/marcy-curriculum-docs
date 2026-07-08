@@ -22,7 +22,7 @@ High quality tickets should include a description of the task to be completed, c
 
 This practice is essential for ensuring that every task is completed and every team member is contributing meaningfully.
 
-![A scrumboard is a tool for managing tasks called "tickets"](<../.gitbook/assets/scrumboard (1).png>)
+![A scrumboard is a tool for managing tasks called "tickets"](../.gitbook/assets/scrumboard.png)
 
 ## Daily stand-up and stand-down
 
@@ -32,7 +32,7 @@ Stand-up and stand-down meetings are held daily and are meant to take only a few
 * What tickets do they plan on assigning themselves next?
 * What are they stuck on and may need help with?
 
-![A stand-up meeting looking over the scrum board](<../.gitbook/assets/stand-up (1).png>)
+![A stand-up meeting looking over the scrum board](../.gitbook/assets/stand-up.png)
 
 By sharing these details, the scrum board is meticulously maintained, every team member can be aware of the overall progress made on the project, and blockers can be handled quickly.
 

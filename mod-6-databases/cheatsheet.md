@@ -20,7 +20,7 @@
   * [Authorization Middleware](cheatsheet.md#authorization-middleware)
   * [Ownership-Based Authorization](cheatsheet.md#ownership-based-authorization)
 
-![](<../.gitbook/assets/client-server-database (1).svg>)
+![](../.gitbook/assets/client-server-database.svg)
 
 ## SQL + Postgres
 
@@ -33,7 +33,7 @@
 * **Postgres** - a popular "relational" database management system that stores data in a table-like manner
 * **SQL (Structured Query Language)** - a language used by relational database management systems to create, read, update, or delete data from a database.
 
-![](<../.gitbook/assets/labeled-erd (3).png>)
+![](../.gitbook/assets/labeled-erd.png)
 
 ### One-To-Many Table
 
@@ -97,7 +97,7 @@ WHERE people.name = 'Ann Duong';
 * **Many-to-Many** - a relationship between two tables in which the instances of each table can be referenced by many instances in the other table.
 * **Association/Junction Table** - a table used to create a many-to-many relationship using two foreign keys to reference two tables.
 
-![](<../.gitbook/assets/labeled-erd (3).png>)
+![](../.gitbook/assets/labeled-erd.png)
 
 > _created using https://dbdiagram.io/_
 
@@ -113,7 +113,7 @@ WHERE products.id = 2;
 
 ## `pg`
 
-![](<../.gitbook/assets/client-server-database (1).svg>)
+![](../.gitbook/assets/client-server-database.svg)
 
 ### `pg` Basics
 
@@ -424,7 +424,7 @@ const userId = req.session.userId;
 req.session = null;
 ```
 
-![](<../.gitbook/assets/cookies (3).png>)
+![](../.gitbook/assets/cookies.png)
 
 ### Auth Endpoints
 

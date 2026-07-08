@@ -8,21 +8,21 @@ In this lesson, we will look at how to respond to events in React and use those 
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [What is State?](#what-is-state)
-- [Event Handlers](#event-handlers)
-  - [Adding Event Handlers to Components](#adding-event-handlers-to-components)
-  - [Changing A Variable In Reaction to Events](#changing-a-variable-in-reaction-to-events)
-- [`useState`](#usestate)
-  - [Invoke useState at the top of your component](#invoke-usestate-at-the-top-of-your-component)
-  - [Use the setter function to update the state](#use-the-setter-function-to-update-the-state)
-  - [All Together Now](#all-together-now)
-- [Forms and Lifting State Up](#forms-and-lifting-state-up)
-  - [Lifting State Up](#lifting-state-up)
-- [Additional Reading](#additional-reading)
-  - [Conditional Rendering with Ternary](#conditional-rendering-with-ternary)
-  - [Controlled Forms](#controlled-forms)
+* [Essential Questions](2-events-state-and-forms.md#essential-questions)
+* [Key Concepts](2-events-state-and-forms.md#key-concepts)
+* [What is State?](2-events-state-and-forms.md#what-is-state)
+* [Event Handlers](2-events-state-and-forms.md#event-handlers)
+  * [Adding Event Handlers to Components](2-events-state-and-forms.md#adding-event-handlers-to-components)
+  * [Changing A Variable In Reaction to Events](2-events-state-and-forms.md#changing-a-variable-in-reaction-to-events)
+* [`useState`](2-events-state-and-forms.md#usestate)
+  * [Invoke useState at the top of your component](2-events-state-and-forms.md#invoke-usestate-at-the-top-of-your-component)
+  * [Use the setter function to update the state](2-events-state-and-forms.md#use-the-setter-function-to-update-the-state)
+  * [All Together Now](2-events-state-and-forms.md#all-together-now)
+* [Forms and Lifting State Up](2-events-state-and-forms.md#forms-and-lifting-state-up)
+  * [Lifting State Up](2-events-state-and-forms.md#lifting-state-up)
+* [Additional Reading](2-events-state-and-forms.md#additional-reading)
+  * [Conditional Rendering with Ternary](2-events-state-and-forms.md#conditional-rendering-with-ternary)
+  * [Controlled Forms](2-events-state-and-forms.md#controlled-forms)
 
 ## Essential Questions
 
@@ -51,16 +51,19 @@ In this lesson, we'll build a simple Todo list application to demonstrate **stat
 **State** is the data that is used by an application at a particular point in time. State is often mutable, meaning it can change over time in response to user actions.
 
 Our todo list will start with a static array of todos and grow to support:
-- Toggling a todo between complete and incomplete
-- Adding new todos via a form
+
+* Toggling a todo between complete and incomplete
+* Adding new todos via a form
 
 Right now the app is not stateful or interactive: it renders hard-coded todo items, the toggle buttons don't work, and there is no form.
 
-![A todo list with three items](./img/2-events-state-forms/todo-list-starter.png)
+![A todo list with three items](../.gitbook/assets/todo-list-starter.png)
 
 Before we jump into adding in state, take a moment and analyze the code in the `todo-app` directory. It should be mostly a review the previous lessons. As you look over the code, attempt to answer these questions:
 
-**<details><summary>1. How would you get this project up and running?</summary>**
+<details>
+
+<summary><strong>1. How would you get this project up and running?</strong></summary>
 
 The project is a Vite project so we would do:
 
@@ -72,33 +75,43 @@ npm run dev # start the development server
 
 </details>
 
-**<details><summary>2. What files are executed by the browser and in what order?</summary>**
+<details>
+
+<summary><strong>2. What files are executed by the browser and in what order?</strong></summary>
 
 The Vite development server first provides the `index.html` file to the browser. It then loads the `main.jsx` file which renders the `App` component in the `App.jsx` file.
 
 </details>
 
-**<details><summary>3. Why do we need to use `className=""` instead of `class=""` in JSX?</summary>**
+<details>
+
+<summary><strong>3. Why do we need to use <code>className=""</code> instead of <code>class=""</code> in JSX?</strong></summary>
 
 We are writing HTML-like syntax in a JavaScript file and `class` is a reserved JavaScript keyword. So in JSX we use a slightly different attribute name `className`.
 
 </details>
 
-**<details><summary>4. How is the `todos` array used to generate a list of `TodoItem` components?</summary>**
+<details>
+
+<summary><strong>4. How is the <code>todos</code> array used to generate a list of <code>TodoItem</code> components?</strong></summary>
 
 In `App`, `todos.map` is called to create an array of `TodoItem` components, one per todo object. That array is inserted inside of the `ul` using `{}` syntax.
 
 </details>
 
-**<details><summary>5. What is a prop? What props are used in these components? And what do they do?</summary>**
+<details>
+
+<summary><strong>5. What is a prop? What props are used in these components? And what do they do?</strong></summary>
 
 A prop is a value provided to a component by its parent component. It is like a parameter for a component. For example, the `TodoItem` component receives a `title` prop from the `App` component, allowing each `TodoItem` to display a different task.
 
 </details>
 
-**<details><summary>6. Why is every todo item showing up as incomplete (⬜) instead of complete (✅)?</summary>**
+<details>
 
-The button element in the `TodoItem` component uses a ternary to show ⬜ or ✅ depending on the value of `isComplete`. 
+<summary><strong>6. Why is every todo item showing up as incomplete (⬜) instead of complete (✅)?</strong></summary>
+
+The button element in the `TodoItem` component uses a ternary to show ⬜ or ✅ depending on the value of `isComplete`.
 
 ```jsx
 <button>
@@ -114,11 +127,11 @@ However, `isComplete` value is hard-coded to `false` so all todo items appear in
 
 Users interacting with applications is one of the primary ways that an application's state will change. For example, with a todo list a user might click on a button to change the state of a todo item between "incomplete" and "complete" states. Our user interface can then update to those changes in state.
 
-![Clicking on a todo list item marks the item as complete with a checkmark.](./img/2-events-state-forms/todo-list-interactive.gif)
+![Clicking on a todo list item marks the item as complete with a checkmark.](../.gitbook/assets/todo-list-interactive.gif)
 
 ### Adding Event Handlers to Components
 
-When learning the DOM API, we used `element.addEventListener()` to set up event handling. We would opt for patterns like **event delegation** to minimize the total number of event listeners when, say, handling click events in a list of elements. 
+When learning the DOM API, we used `element.addEventListener()` to set up event handling. We would opt for patterns like **event delegation** to minimize the total number of event listeners when, say, handling click events in a list of elements.
 
 We also explicitly avoided using in-line event handlers like this as it meant that we would be combining HTML and JavaScript:
 
@@ -152,10 +165,7 @@ Notice that we are treating `onClick` as a prop and providing the function `hand
 
 Also notice that we use camel case `onClick` instead of `onclick`. This naming change applies to all inline event handlers listed below:
 
-**Mouse**: `onclick`, `ondblclick`, `onmouseover`, `onmouseout`, `onmousedown`, `onmouseup`.
-**Keyboard**: `onkeydown`, `onkeyup`, `onkeypress`.
-**Form**: `onsubmit`, `onchange`, `onfocus`, `onblur`, `oninput`.
-**Window/Global**: `onload`, `onresize`, `onscroll`, `onerror`
+**Mouse**: `onclick`, `ondblclick`, `onmouseover`, `onmouseout`, `onmousedown`, `onmouseup`. **Keyboard**: `onkeydown`, `onkeyup`, `onkeypress`. **Form**: `onsubmit`, `onchange`, `onfocus`, `onblur`, `oninput`. **Window/Global**: `onload`, `onresize`, `onscroll`, `onerror`
 
 {% hint style="info" %}
 💡 **In React, we can completely ignore event delegation**. React handles all of the optimizations for us under the hood!
@@ -208,7 +218,7 @@ We need a **hook**. Hooks in react are functions that perform a variety of jobs.
 
 The `useState` hook allows us to create a special piece of state that is attached to a component. React can monitor that state and when its value changes, React will re-render the component.
 
-![](./img/2-events-state-forms/re-render-on-click.png)
+![](../.gitbook/assets/re-render-on-click.png)
 
 Let's look at how it works:
 
@@ -216,7 +226,7 @@ Let's look at how it works:
 
 First import `useState` as a named export from `react`.
 
-Then, delete the existing `isComplete` variable and instead call `useState()` at the top of the component. This "attaches" the state to the component: 
+Then, delete the existing `isComplete` variable and instead call `useState()` at the top of the component. This "attaches" the state to the component:
 
 ```jsx
 import { useState } from "react";
@@ -233,19 +243,21 @@ const TodoItem = ({ title }) => {
 ```
 
 `useState` works like this:
+
 * **Input**: the starting value for a new state piece of state
 * **Output**: an array with two values:
   1. The current state value, attached to the component
   2. A setter function that re-renders the component with a new state value
 
 And some additional details:
+
 * `useState` _must_ be called at the top-most scope of a component (never inside of an `if` statement, loop, or function). [Otherwise weird stuff happens](https://legacy.reactjs.org/docs/hooks-rules.html).
 * `useState()` is invoked with the starting value for the new piece of state (`false`)
 * The convention is to destructure the array to create variables that hold the state value and the setter function with names like `[something, setSomething]`
 
 ### Use the setter function to update the state
 
-Our code that uses the `isComplete` variable can stay exactly the same. 
+Our code that uses the `isComplete` variable can stay exactly the same.
 
 However, `handleClick` now needs to use `setIsComplete()` to change the `isComplete` state and make the component re-render.
 
@@ -267,12 +279,13 @@ const handleClick = () => {
 ```
 
 When we invoke a state setter like `setIsComplete()`, we can provide either:
+
 * the new value we want to set `isComplete` to, or...
 * a callback function that uses the current `isComplete` value to compute and return the new `isComplete` value
 
 In approaches 1 and 2, `setIsComplete()` will re-render the component with the new state.
 
-Interestingly, the value of the state doesn't change in the "initial" render. Conversely, mutating `isComplete = !isComplete` directly *does* change its value in the initial render but does not cause the component to re-render so the user never sees the change!
+Interestingly, the value of the state doesn't change in the "initial" render. Conversely, mutating `isComplete = !isComplete` directly _does_ change its value in the initial render but does not cause the component to re-render so the user never sees the change!
 
 ### All Together Now
 
@@ -319,7 +332,8 @@ Next up we'll make a form for the user to add new todos. There already is an `Ad
 </main>
 ```
 
-Creating a form using JSX in React is *almost* identical to creating a form using HTML, with a few tweaks that should be familiar by now:
+Creating a form using JSX in React is _almost_ identical to creating a form using HTML, with a few tweaks that should be familiar by now:
+
 * Instead of `for` we use `htmlFor` when connecting labels and inputs.
 * We use `onSubmit` instead of using `addEventListener`.
 
@@ -381,6 +395,7 @@ const handleSubmit = (e) => {
 Mutating `todos` in "this" rendering will not cause the components to re-render with the updated data. Users will still see the old todo list.
 
 The `todos` array needs to be come a mutable piece of state such that
+
 * `App` can use `todos` to render the list of `TodoItem` elements
 * `AddTodoForm` can use `setTodos` to update the `todos` array and trigger a re-render
 
@@ -428,9 +443,9 @@ function App() {
 };
 ```
 
-Notice how `addTodo` sets the new state as `[...currentTodos, newTodo]`? React is "lazy" and only checks if the memory address (the reference) of your state has changed, not the content inside it. If we just pushed a value into `todos` and wrote `setTodos(todos)`, then React would never re-render since the memory address stays the same. 
+Notice how `addTodo` sets the new state as `[...currentTodos, newTodo]`? React is "lazy" and only checks if the memory address (the reference) of your state has changed, not the content inside it. If we just pushed a value into `todos` and wrote `setTodos(todos)`, then React would never re-render since the memory address stays the same.
 
-Instead, we must update the state to a *new* array containing the current contents of the todos array and the new todo object.
+Instead, we must update the state to a _new_ array containing the current contents of the todos array and the new todo object.
 
 Finally, the `AddTodoForm` can invoke `addTodo` in the submit handler which will cause the `App` to re-render.
 
@@ -457,6 +472,7 @@ const AddTodoForm = ({ addTodo }) => {
 ```
 
 In summary, if Component A (the form) needs to change what Component B (the list) shows, the state cannot live in either one. It must live in their closest common parent (in this case, App).
+
 * Data flows down (via props).
 * Actions flow up (via helper functions passed as props).
 
@@ -526,10 +542,13 @@ const TodoItem = ({ title }) => {
 ```
 
 **Challenge:** use conditional rendering to set a `className` on the `span`.
+
 * If `isComplete` is true, the class should be set to `'todo-complete'`.
 * Otherwise, just set it as an empty string `''`.
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```jsx
 <li className="todo-item">
@@ -590,5 +609,6 @@ const AddTodoForm = () => {
 Notice how each input has a `value` and an `onChange` prop associated with a particular piece of state. When it is time to submit the form, we can easily use the `title` state value without digging through the form.
 
 Controlled forms present a tradeoff:
+
 * They are most useful if you need **instant validation** on input (e.g. an input cannot include numbers and you want to immediately tell the user when they enter a number, not after they submit).
 * However, because the state is updated on every change to the form input, that can cause a much higher number of re-renders. So, for simple forms like this, **uncontrolled forms** (using `form.elements`) is preferred.

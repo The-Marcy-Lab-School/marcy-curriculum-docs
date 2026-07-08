@@ -10,25 +10,25 @@ SQL is what you use to ask Postgres for data, add new data, change existing data
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Review: How does PostgreSQL Work?](#review-how-does-postgresql-work)
-- [What is SQL?](#what-is-sql)
-- [SQL Syntax Rules](#sql-syntax-rules)
-  - [Rule 1: The Semicolon Terminator](#rule-1-the-semicolon-terminator)
-  - [Rule 2: Capitalize Keywords](#rule-2-capitalize-keywords)
-  - [Rule 3: Single Quotes for Strings](#rule-3-single-quotes-for-strings)
-  - [Rule 4: Logical Clause Order](#rule-4-logical-clause-order)
-- [CRUD With SQL](#crud-with-sql)
-  - [SELECT — Reading Data](#select--reading-data)
-  - [Modifier Clauses (WHERE, AND, OR, ORDER BY, LIMIT)](#modifier-clauses-where-and-or-order-by-limit)
-    - [WHERE — Filter Results](#where--filter-results)
-    - [ORDER BY — Sort Results](#order-by--sort-results)
-    - [LIMIT — Top N Results](#limit--top-n-results)
-  - [INSERT — Creating Data](#insert--creating-data)
-  - [UPDATE — Modifying Data](#update--modifying-data)
-  - [DELETE — Removing Data](#delete--removing-data)
-- [Challenge: CRUD in SQL](#challenge-crud-in-sql)
+* [Essential Questions](2-intro-to-sql.md#essential-questions)
+* [Key Concepts](2-intro-to-sql.md#key-concepts)
+* [Review: How does PostgreSQL Work?](2-intro-to-sql.md#review-how-does-postgresql-work)
+* [What is SQL?](2-intro-to-sql.md#what-is-sql)
+* [SQL Syntax Rules](2-intro-to-sql.md#sql-syntax-rules)
+  * [Rule 1: The Semicolon Terminator](2-intro-to-sql.md#rule-1-the-semicolon-terminator)
+  * [Rule 2: Capitalize Keywords](2-intro-to-sql.md#rule-2-capitalize-keywords)
+  * [Rule 3: Single Quotes for Strings](2-intro-to-sql.md#rule-3-single-quotes-for-strings)
+  * [Rule 4: Logical Clause Order](2-intro-to-sql.md#rule-4-logical-clause-order)
+* [CRUD With SQL](2-intro-to-sql.md#crud-with-sql)
+  * [SELECT — Reading Data](2-intro-to-sql.md#select--reading-data)
+  * [Modifier Clauses (WHERE, AND, OR, ORDER BY, LIMIT)](2-intro-to-sql.md#modifier-clauses-where-and-or-order-by-limit)
+    * [WHERE — Filter Results](2-intro-to-sql.md#where--filter-results)
+    * [ORDER BY — Sort Results](2-intro-to-sql.md#order-by--sort-results)
+    * [LIMIT — Top N Results](2-intro-to-sql.md#limit--top-n-results)
+  * [INSERT — Creating Data](2-intro-to-sql.md#insert--creating-data)
+  * [UPDATE — Modifying Data](2-intro-to-sql.md#update--modifying-data)
+  * [DELETE — Removing Data](2-intro-to-sql.md#delete--removing-data)
+* [Challenge: CRUD in SQL](2-intro-to-sql.md#challenge-crud-in-sql)
 
 ## Essential Questions
 
@@ -42,7 +42,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 ## Key Concepts
 
-* **SQL (Structured Query Language)** — the language used to interact with a relational database. SQL is declarative: you describe *what* you want, and the database figures out *how* to get it.
+* **SQL (Structured Query Language)** — the language used to interact with a relational database. SQL is declarative: you describe _what_ you want, and the database figures out _how_ to get it.
 * **Statement** — a complete SQL instruction ending with a semicolon (`;`).
 * **Clause** — a component of a SQL statement that modifies its behavior (e.g., `WHERE`, `ORDER BY`, `LIMIT`).
 * **`SELECT`** — retrieves rows from a table.
@@ -61,7 +61,7 @@ Database management systems (DBMS) like PostgreSQL function similarly to web ser
 * **Interpretation**: It listens for incoming connections and interprets the SQL commands sent by the client.
 * **Execution**: It processes the incoming commands and sends the resulting data back to the requester.
 
-![A diagram showing databases running as a separate process from the Express application](./img/1-intro-to-databases-postgres/full-stack-diagram.png)
+![A diagram showing databases running as a separate process from the Express application](<../.gitbook/assets/full-stack-diagram (1).png>)
 
 The primary distinction lies in the type of request being handled: while an Express server is built to parse HTTP requests, PostgreSQL is built to parse and execute **Structured Query Language (SQL)**.
 
@@ -71,7 +71,7 @@ The primary distinction lies in the type of request being handled: while an Expr
 
 For example, consider the database table and SQL statements below. What do you think they do?
 
-![A users table with user_id, name, and email columns](./img/2-intro-to-sql/users-table-example.png)
+![A users table with user\_id, name, and email columns](../.gitbook/assets/users-table-example.png)
 
 ```sql
 INSERT INTO users (name, email) VALUES ('Ada Lovelace', 'ada@mail.com');
@@ -87,7 +87,9 @@ UPDATE users SET name = 'Alexa Johnson' WHERE id = 1001;
 DELETE FROM users WHERE id = 1002;
 ```
 
-**<details><summary>Q: What do the SQL statements above do?</summary>**
+<details>
+
+<summary><strong>Q: What do the SQL statements above do?</strong></summary>
 
 1. Create a new record in the `users` table
 2. Get all of the data from the `users` table
@@ -109,7 +111,7 @@ SQL statements are made up of **clauses** and **keywords**:
 
 SQL is highly structured. The database acts as a strict interpreter that expects instructions in a specific format. Keep these four rules in mind to avoid syntax errors.
 
-You can practice these rules using `psql` by connecting to the `films_db` database that you created in [the previous lesson](./1-intro-to-databases-postgres.md#the-psql-cli).
+You can practice these rules using `psql` by connecting to the `films_db` database that you created in [the previous lesson](1-intro-to-databases-postgres.md#the-psql-cli).
 
 {% tabs %}
 {% tab title="Mac" %}
@@ -117,13 +119,13 @@ You can practice these rules using `psql` by connecting to the `films_db` databa
 psql films_db
 ```
 {% endtab %}
+
 {% tab title="Windows + WSL" %}
 ```sh
 sudo -u postgres psql films_db
 ```
 {% endtab %}
 {% endtabs %}
-
 
 ### Rule 1: The Semicolon Terminator
 
@@ -214,7 +216,9 @@ SELECT title, genre FROM films;
 SELECT title, year, director FROM films;
 ```
 
-**<details><summary>Q: Why would you choose specific columns over `SELECT *`?</summary>**
+<details>
+
+<summary><strong>Q: Why would you choose specific columns over <code>SELECT *</code>?</strong></summary>
 
 `SELECT *` returns more data than you might need, which is slower on large tables and makes your code harder to understand. Specifying columns makes your intent clear and is more efficient. In production code, `SELECT *` is generally avoided.
 
@@ -265,7 +269,9 @@ SELECT * FROM films WHERE genre = 'sci-fi' AND year > 2010;
 SELECT * FROM films WHERE genre = 'horror' OR genre = 'thriller';
 ```
 
-**<details><summary>Q: Which films have titles that start with 'The'?</summary>**
+<details>
+
+<summary><strong>Q: Which films have titles that start with 'The'?</strong></summary>
 
 ```sql
 -- Films whose title starts with 'The'
@@ -276,7 +282,9 @@ Just 'The Matrix'!
 
 </details>
 
-**<details><summary>Q: Which film has the `film_id` 4?</summary>**
+<details>
+
+<summary><strong>Q: Which film has the <code>film_id</code> 4?</strong></summary>
 
 ```sql
 -- Films whose title starts with 'The'
@@ -314,7 +322,9 @@ SELECT * FROM films LIMIT 3;
 SELECT * FROM films ORDER BY year DESC LIMIT 3;
 ```
 
-**<details><summary>Q: What does this query do? `SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;`</summary>**
+<details>
+
+<summary><strong>Q: What does this query do? <code>SELECT title FROM films WHERE genre = 'sci-fi' ORDER BY year DESC LIMIT 2;</code></strong></summary>
 
 It returns the titles of the 2 most recently released sci-fi films, sorted from newest to oldest.
 
@@ -343,7 +353,9 @@ VALUES
   ('Us', 'Jordan Peele', 2019, 'horror');
 ```
 
-**<details><summary>Q: You try to insert a film but forget to include the `title` column, which has a `NOT NULL` constraint. What happens?</summary>**
+<details>
+
+<summary><strong>Q: You try to insert a film but forget to include the <code>title</code> column, which has a <code>NOT NULL</code> constraint. What happens?</strong></summary>
 
 Postgres returns an error: `ERROR: null value in column "title" violates not-null constraint`. The row is not inserted. Constraints are enforced at write time — the database rejects any data that violates the rules defined when the table was created.
 
@@ -403,7 +415,6 @@ DELETE FROM films WHERE year = 1999;
 -- ❌ This deletes EVERY row in the table
 DELETE FROM films;
 ```
-
 {% endhint %}
 
 ## Challenge: CRUD in SQL
@@ -428,7 +439,10 @@ Use your new SQL skills to get data from the `films_db` database using `psql` or
 7. Delete the film with the ID of 1
 8. Get all films again to verify your changes
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
+
 ```sql
 -- 1. Get all films
 SELECT * FROM films;
@@ -455,9 +469,12 @@ DELETE FROM films WHERE film_id = 1;
 -- 8. Verify your changes
 SELECT * FROM films;
 ```
+
 </details>
 
-**<details><summary>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with `film_id = 3` and then insert a new film. What `film_id` does the new film get?</summary>**
+<details>
+
+<summary><strong>Q: There are 7 films with IDs 1-7 (inclusive). You delete a row with <code>film_id = 3</code> and then insert a new film. What <code>film_id</code> does the new film get?</strong></summary>
 
 The new film gets the next value in the `SERIAL` sequence — it does **not** reuse the deleted ID. If the sequence was at 7, the new film gets `film_id = 8`. Primary key values are never reused. This is intentional: reusing IDs could cause bugs if anything (a foreign key, a cached reference) still points to the old row.
 

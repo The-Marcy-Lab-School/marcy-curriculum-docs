@@ -8,21 +8,21 @@ You now have a server that hashes passwords, issues session cookies, and can tel
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Setup](#setup)
-  - [File Structure](#file-structure)
-- [Authentication vs. Authorization](#authentication-vs-authorization)
-- [The Frontend as a First Line of Defense](#the-frontend-as-a-first-line-of-defense)
-- [Why the Frontend Isn't Enough](#why-the-frontend-isnt-enough)
-- [Writing Authorization Middleware](#writing-authorization-middleware)
-  - [The `checkAuthentication` Middleware](#the-checkauthentication-middleware)
-  - [Applying It to Routes](#applying-it-to-routes)
-- [Ownership-Based Authorization](#ownership-based-authorization)
-  - [Tracing a Protected Request End to End](#tracing-a-protected-request-end-to-end)
-- [Testing Protected Routes with curl](#testing-protected-routes-with-curl)
-- [How the Frontend Handles 401 and 403](#how-the-frontend-handles-401-and-403)
-- [The Complete Auth Picture](#the-complete-auth-picture)
+* [Essential Questions](11-authorization-middleware.md#essential-questions)
+* [Key Concepts](11-authorization-middleware.md#key-concepts)
+* [Setup](11-authorization-middleware.md#setup)
+  * [File Structure](11-authorization-middleware.md#file-structure)
+* [Authentication vs. Authorization](11-authorization-middleware.md#authentication-vs-authorization)
+* [The Frontend as a First Line of Defense](11-authorization-middleware.md#the-frontend-as-a-first-line-of-defense)
+* [Why the Frontend Isn't Enough](11-authorization-middleware.md#why-the-frontend-isnt-enough)
+* [Writing Authorization Middleware](11-authorization-middleware.md#writing-authorization-middleware)
+  * [The `checkAuthentication` Middleware](11-authorization-middleware.md#the-checkauthentication-middleware)
+  * [Applying It to Routes](11-authorization-middleware.md#applying-it-to-routes)
+* [Ownership-Based Authorization](11-authorization-middleware.md#ownership-based-authorization)
+  * [Tracing a Protected Request End to End](11-authorization-middleware.md#tracing-a-protected-request-end-to-end)
+* [Testing Protected Routes with curl](11-authorization-middleware.md#testing-protected-routes-with-curl)
+* [How the Frontend Handles 401 and 403](11-authorization-middleware.md#how-the-frontend-handles-401-and-403)
+* [The Complete Auth Picture](11-authorization-middleware.md#the-complete-auth-picture)
 
 ## Essential Questions
 
@@ -36,8 +36,8 @@ By the end of this lesson, you should be able to answer these questions:
 
 ## Key Concepts
 
-* **Authentication** — verifying *who you are* (proving your identity, typically through login).
-* **Authorization** — determining *what you're allowed to do* (checking permissions after identity is established).
+* **Authentication** — verifying _who you are_ (proving your identity, typically through login).
+* **Authorization** — determining _what you're allowed to do_ (checking permissions after identity is established).
 * **Protected route** — an endpoint that requires a valid session to access.
 * **`checkAuthentication` middleware** — a custom middleware function that checks for a valid session and either allows the request to continue (`next()`) or sends a `401` and stops.
 * **Ownership** — a resource that belongs to a specific user. Ownership authorization confirms the logged-in user owns the resource before allowing modifications.
@@ -48,7 +48,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 1. Clone down the repo linked above
 2. Open `db/pool.js` and update the user and password fields to match your local Postgres setup (On macOS you may be able to delete those fields entirely).
-3. Then run:
+3.  Then run:
 
     ```sh
     # cd into server
@@ -100,13 +100,15 @@ The terms authentication and authorization are related and often grouped togethe
 | **How**                  | Login (username + password) | Session check + permission check            |
 | **Status on failure**    | 401 Unauthorized            | 403 Forbidden                               |
 | **Order**                | Before authorization        | After authentication                        |
-| **Example**              | Logging into an app         | Editing *your own* post, not someone else's |
+| **Example**              | Logging into an app         | Editing _your own_ post, not someone else's |
 
 Authentication always comes first. You can't authorize someone whose identity you haven't verified.
 
-**<details><summary>Q: A logged-in user tries to delete another user's account. Is this an authentication failure or an authorization failure?</summary>**
+<details>
 
-**Authorization failure.** The user is authenticated — we know who they are (they have a valid session). But they don't have *permission* to delete someone else's account. The server should return `403 Forbidden`, not `401 Unauthorized`.
+<summary><strong>Q: A logged-in user tries to delete another user's account. Is this an authentication failure or an authorization failure?</strong></summary>
+
+**Authorization failure.** The user is authenticated — we know who they are (they have a valid session). But they don't have _permission_ to delete someone else's account. The server should return `403 Forbidden`, not `401 Unauthorized`.
 
 * `401` — "I don't know who you are. Log in."
 * `403` — "I know who you are, but you can't do this."
@@ -119,9 +121,9 @@ With the server running, open the frontend in your browser. Register a new accou
 
 The profile section shows your username and user ID, a form to change your password, and a button: **Delete My Account**.
 
-![The profile section shows the logged-in user's details and a single Delete My Account button](./img/11-authorization-middleware/profile-section.png)
+![The profile section shows the logged-in user's details and a single Delete My Account button](../.gitbook/assets/profile-section.png)
 
-Notice what the frontend does *not* show: a list of all users with delete buttons. There's no way to accidentally delete someone else's account using this UI. The only delete button is for the account you're currently logged into.
+Notice what the frontend does _not_ show: a list of all users with delete buttons. There's no way to accidentally delete someone else's account using this UI. The only delete button is for the account you're currently logged into.
 
 A well-designed UI like this guides users towards using the application the right way while making it hard to do things they aren't allowed or supposed to do. Open `frontend/src/main.js` and trace through what happens when you click **Delete My Account**:
 
@@ -146,7 +148,7 @@ Then register a new account so you have a user to work with.
 
 ## Why the Frontend Isn't Enough
 
-The frontend protects against *accidents*. It does nothing to stop an *attacker*.
+The frontend protects against _accidents_. It does nothing to stop an _attacker_.
 
 The frontend is just HTML, CSS, and JavaScript running in the browser. Anyone with network access can skip the UI entirely and talk to your API directly — no cookie, no confirmation dialog, no login required. Open a terminal and run:
 
@@ -189,7 +191,9 @@ const deleteUser = async (req, res, next) => {
 };
 ```
 
-**<details><summary>Q: Under what circumstances will `req.session.userId` be a truthy value?</summary>**
+<details>
+
+<summary><strong>Q: Under what circumstances will <code>req.session.userId</code> be a truthy value?</strong></summary>
 
 `req.session.userId` will only exist if the user had previously logged in or had just registered their account.
 
@@ -233,6 +237,10 @@ Every code path through a middleware must either call `next()`, call `next(err)`
 Import `checkAuthentication` at the top of the `index.js`:
 
 {% code title="server/index.js" %}
+```
+```
+{% endcode %}
+
 ```js
 const checkAuthentication = require('./middleware/checkAuthentication');
 ```
@@ -276,11 +284,14 @@ curl -X DELETE http://localhost:8080/api/users/1
 ```
 
 The route is protected. When a request hits `DELETE /api/users/1`:
+
 1. Express calls `checkAuthentication`
 2. If session is missing → `401`, stops here. `deleteUser` never runs.
 3. If session is valid → `next()` is called, Express calls `deleteUser`
 
-**<details><summary>Q: If you wanted only logged in users to be able to see the full list of users, what would you do?</summary>**
+<details>
+
+<summary><strong>Q: If you wanted only logged in users to be able to see the full list of users, what would you do?</strong></summary>
 
 ```js
 app.get('/api/users', checkAuthentication, listUsers);
@@ -316,7 +327,7 @@ fetch(`api/users/2`, { method: 'DELETE' });
 
 Alice deleted Bob! She was authenticated — she had a valid session — but she shouldn't be authorized to delete someone else's account.
 
-**Being logged in is necessary but shouldn't be sufficient.** Some actions require that you *own* the resource too. Ownership authorization goes inside the controller, after `checkAuthentication` has already confirmed the user is logged in:
+**Being logged in is necessary but shouldn't be sufficient.** Some actions require that you _own_ the resource too. Ownership authorization goes inside the controller, after `checkAuthentication` has already confirmed the user is logged in:
 
 {% code title="server/controllers/userControllers.js" %}
 ```js
@@ -363,6 +374,7 @@ const deleteUser = async (req, res, next) => {
 {% endcode %}
 
 The flow for a complete ownership check:
+
 1. `checkAuthentication` confirms `req.session.userId` exists — if not, `401` and stop
 2. The controller converts the route param to a number: `Number(req.params.user_id)`
 3. If `userId !== req.session.userId` → `403 Forbidden`
@@ -372,9 +384,11 @@ The flow for a complete ownership check:
 Route params (`req.params.user_id`) are always strings. `req.session.userId` is the number you stored at login. Use `Number()` to convert before comparing with `!==`.
 {% endhint %}
 
-**<details><summary>Q: Why does ownership authorization return `403` instead of `401`?</summary>**
+<details>
 
-Because the user *is* authenticated — we know who they are. `401` specifically means "I don't know who you are, please log in." Since we do know who they are and are denying them based on permissions, the correct code is `403 Forbidden`.
+<summary><strong>Q: Why does ownership authorization return <code>403</code> instead of <code>401</code>?</strong></summary>
+
+Because the user _is_ authenticated — we know who they are. `401` specifically means "I don't know who you are, please log in." Since we do know who they are and are denying them based on permissions, the correct code is `403 Forbidden`.
 
 </details>
 
@@ -382,15 +396,11 @@ Because the user *is* authenticated — we know who they are. `401` specifically
 
 The checkAuthentication middleware and ownership checks for the `DELETE /api/users/2` endpoint produce three possible scenarios:
 
-**Scenario 1. The user is unauthenticated (no cookie):**
-![Sequence diagram of scenario 1](./img/11-authorization-middleware/sequence-protected-request-no-cookie.png)
+**Scenario 1. The user is unauthenticated (no cookie):** ![Sequence diagram of scenario 1](../.gitbook/assets/sequence-protected-request-no-cookie.png)
 
-**Scenario 2. The user is authenticated but is not the owner of the resource (e.g. alice tries to delete user bob):**
-![Sequence diagram of scenario 2](./img/11-authorization-middleware/sequence-protected-request-incorrect-user.png)
+**Scenario 2. The user is authenticated but is not the owner of the resource (e.g. alice tries to delete user bob):** ![Sequence diagram of scenario 2](../.gitbook/assets/sequence-protected-request-incorrect-user.png)
 
-**Scenario 3. The user is authenticated and *is* the owner of the resource (e.g. alice deleting her own account):**
-![Sequence diagram of scenario 3](./img/11-authorization-middleware/sequence-protected-request-correct-user.png)
-
+**Scenario 3. The user is authenticated and&#x20;**_**is**_**&#x20;the owner of the resource (e.g. alice deleting her own account):** ![Sequence diagram of scenario 3](../.gitbook/assets/sequence-protected-request-correct-user.png)
 
 ## Testing Protected Routes with curl
 
@@ -441,7 +451,9 @@ if (error) return showError('change-password-error', 'Could not update password.
 
 In practice, the frontend will never trigger a `403` — it always sends `currentUser.user_id`, which matches the session. The middleware and ownership check protect against direct API calls from outside the UI.
 
-**<details><summary>Q: Should the frontend redirect to a login page when it receives a 401?</summary>**
+<details>
+
+<summary><strong>Q: Should the frontend redirect to a login page when it receives a 401?</strong></summary>
 
 It depends on the app. A single-page application that checks `/api/auth/me` on every load already handles the "not logged in" state by rendering a guest view. For those apps, receiving a `401` on an API call is best handled by re-calling `getCurrentUser()` and letting `renderAuthView` react appropriately — which might show the login form.
 

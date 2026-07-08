@@ -71,7 +71,9 @@ This architecture pattern organizes our code into three distinct "layers"":
 Often times, it can be hard to implement your application such that it strictly adheres to any one framework or architecture. Keep in mind that architectures like MVC present an ideal to strive for, not a strict pattern that must be followed at all times.
 {% endhint %}
 
-**<details><summary>What separate components of this architecture does our application already have?</summary>**
+<details>
+
+<summary><strong>What separate components of this architecture does our application already have?</strong></summary>
 
 We have a Vanilla JS frontend application acting as the view component.
 
@@ -86,7 +88,6 @@ With our current application structure, we already have clear separation between
 However, our controller and model logic is intertwined:
 
 {% hint style="danger" %}
-
 Notice that the controllers handle both the logic of parsing request inputs AND the logic of managing the data.
 
 ```javascript
@@ -139,7 +140,9 @@ const findFellow = (req, res) => {
 ```
 {% endhint %}
 
-**<details><summary>Q: Is it possible to test ONLY the code that interacts with the `fellows` array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</summary>**
+<details>
+
+<summary><strong>Q: Is it possible to test ONLY the code that interacts with the <code>fellows</code> array? For example, can we check to see if our logic for finding a fellow works without sending our server a request?</strong></summary>
 
 No! And this is the main issue with our current implementation. Because the concerns are not separated, we can't easily test the different aspects of our server. If we separate the logic that interacts with the `fellows` array from the logic that interacts with the `req` and `res` objects, testing becomes possible.
 
@@ -147,7 +150,7 @@ No! And this is the main issue with our current implementation. Because the conc
 
 We need to create a separate model that focuses solely on managing the `fellows` database and provides methods for our controllers to use.
 
-![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](./img/8-model-view-controller/express-middleware-model.jpg)
+![Controllers now use the Fellow Model interface to update the "database" before sending a response back to the client.](../.gitbook/assets/express-middleware-model.jpg)
 
 ### Server Organization
 
@@ -294,14 +297,13 @@ Notice that the controllers no longer reference `fellows` directly — all data 
 
 Finally, `index.js` acts as the coordinator / orchestrator. It builds the `app`, configures middleware, imports the controllers, and registers each endpoint. It does not contain any data logic or controller logic itself.
 
-* Import the collection of controllers (it is an object containing all of our controller methods):
+*   Import the collection of controllers (it is an object containing all of our controller methods):
 
     ```js
     // Import the entire exports object
     const fellowControllers = require('./controllers/fellowControllers');
     ```
-
-* Register each endpoint, passing the corresponding controller as the handler:
+*   Register each endpoint, passing the corresponding controller as the handler:
 
     ```js
     app.get('/api/fellows', fellowControllers.listFellows);
@@ -311,7 +313,7 @@ Finally, `index.js` acts as the coordinator / orchestrator. It builds the `app`,
     app.delete('/api/fellows/:id', fellowControllers.deleteFellow);
     ```
 
-`index.js` knows *what* routes exist and *which controller* handles each one — nothing more. The three layers are now cleanly separated.
+`index.js` knows _what_ routes exist and _which controller_ handles each one — nothing more. The three layers are now cleanly separated.
 
 ## Challenge
 

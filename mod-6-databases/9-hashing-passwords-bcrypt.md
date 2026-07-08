@@ -1,4 +1,4 @@
-# 9. Hashing Passwords with BCrypt
+# 9. Hashing Passwords with Bcrypt
 
 {% hint style="info" %}
 Follow along with code examples [here](https://github.com/The-Marcy-Lab-School/6-9-hashing-passwords-bcrypt)!
@@ -20,20 +20,20 @@ The fix is **hashing** — a technique that makes it safe to store and verify pa
 
 **Table of Contents**
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Setup](#setup)
-- [Why We Never Store Passwords in Plaintext](#why-we-never-store-passwords-in-plaintext)
-- [How Hashing Works](#how-hashing-works)
-  - [Authenticating with a Hash](#authenticating-with-a-hash)
-  - [Salting: Simple Hashing Isn't Enough](#salting-simple-hashing-isnt-enough)
-- [Bcrypt](#bcrypt)
-  - [Hashing a Password with `bcrypt.hash(str, saltRounds)`](#hashing-a-password-with-bcrypthashstr-saltrounds)
-  - [Comparing Passwords with `bcrypt.compare(plaintext, hash)`](#comparing-passwords-with-bcryptcompareplaintext-hash)
-- [Applying Bcrypt to the User Model](#applying-bcrypt-to-the-user-model)
-  - [Seeding with Hashed Passwords](#seeding-with-hashed-passwords)
-  - [The User Model](#the-user-model)
-  - [Tracing the Auth Flows](#tracing-the-auth-flows)
+* [Essential Questions](9-hashing-passwords-bcrypt.md#essential-questions)
+* [Key Concepts](9-hashing-passwords-bcrypt.md#key-concepts)
+* [Setup](9-hashing-passwords-bcrypt.md#setup)
+* [Why We Never Store Passwords in Plaintext](9-hashing-passwords-bcrypt.md#why-we-never-store-passwords-in-plaintext)
+* [How Hashing Works](9-hashing-passwords-bcrypt.md#how-hashing-works)
+  * [Authenticating with a Hash](9-hashing-passwords-bcrypt.md#authenticating-with-a-hash)
+  * [Salting: Simple Hashing Isn't Enough](9-hashing-passwords-bcrypt.md#salting-simple-hashing-isnt-enough)
+* [Bcrypt](9-hashing-passwords-bcrypt.md#bcrypt)
+  * [Hashing a Password with `bcrypt.hash(str, saltRounds)`](9-hashing-passwords-bcrypt.md#hashing-a-password-with-bcrypthashstr-saltrounds)
+  * [Comparing Passwords with `bcrypt.compare(plaintext, hash)`](9-hashing-passwords-bcrypt.md#comparing-passwords-with-bcryptcompareplaintext-hash)
+* [Applying Bcrypt to the User Model](9-hashing-passwords-bcrypt.md#applying-bcrypt-to-the-user-model)
+  * [Seeding with Hashed Passwords](9-hashing-passwords-bcrypt.md#seeding-with-hashed-passwords)
+  * [The User Model](9-hashing-passwords-bcrypt.md#the-user-model)
+  * [Tracing the Auth Flows](9-hashing-passwords-bcrypt.md#tracing-the-auth-flows)
 
 ## Essential Questions
 
@@ -57,7 +57,7 @@ By the end of this lesson, you should be able to answer these questions:
 
 ## Setup
 
-1. First, run these commands to install the dependencies in the `server` directory
+1.  First, run these commands to install the dependencies in the `server` directory
 
     ```sh
     # cd into server
@@ -70,7 +70,6 @@ By the end of this lesson, you should be able to answer these questions:
     createdb users_db           # Mac
     sudo -u postgres createdb users_db   # Windows/WSL
     ```
-
 2. Then open `db/pool.js` and update the user and password fields to match your local Postgres setup (On macOS you may be able to delete those fields entirely).
 
 ## Why We Never Store Passwords in Plaintext
@@ -102,7 +101,7 @@ Both are required. A function that is pure but not one-way lets attackers revers
 
 Because hashing is pure and one-way, a server can verify a password without ever storing the plaintext version. It just needs the hash:
 
-![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated.](./img/9-hashing-passwords-bcrypt/hashed-password-lookup.png)
+![The server uses the given username to find the associated hashed password in the database. If the given password produces the same hash, then the user is authenticated.](<../.gitbook/assets/hashed-password-lookup (1).png>)
 
 1. The user submits a username and password
 2. The server retrieves the stored`password_hash` for that username
@@ -115,13 +114,13 @@ The original password never needs to be recovered — or stored.
 
 Even a strong one-way hashing function has a weakness: if `"password123"` always produces the same hash, an attacker can build a **rainbow table** — a precomputed lookup of common passwords and their hashes.
 
-![A rainbow table contains precomputed hashes.](./img/9-hashing-passwords-bcrypt/rainbow-table.png)
+![A rainbow table contains precomputed hashes.](../.gitbook/assets/rainbow-table.png)
 
 If a hash ever shows up in a breached database, a hacker with a rainbow table can quickly look up the original password. Rainbow tables have one weakness though: they are incredibly time and resource consuming to generate.
 
 We take advantage of this weakness by adding a **salt** to the password. A salt is a random string mixed into the password before hashing.
 
-![A salt is added to a string before hashing to produce different results.](./img/9-hashing-passwords-bcrypt/salting.png)
+![A salt is added to a string before hashing to produce different results.](<../.gitbook/assets/salting (1).png>)
 
 With a unique salt, the same password produces a different hash each time we use the hashing function, rendering a rainbow table useless.
 
@@ -138,11 +137,9 @@ npm install
 Then import it:
 
 {% code title="server/bcrypt-test.js" %}
-
 ```javascript
 const bcrypt = require('bcrypt');
 ```
-
 {% endcode %}
 
 The `bcrypt` module provides two key methods:
@@ -155,7 +152,6 @@ The `bcrypt` module provides two key methods:
 `bcrypt.hash(str, saltRounds)` takes a plaintext string `str` and a `saltRounds` number, and returns a Promise that resolves to the hash string:
 
 {% code title="server/bcrypt-test.js" %}
-
 ```javascript
 const bcrypt = require('bcrypt');
 
@@ -173,7 +169,6 @@ const main = async () => {
 
 main();
 ```
-
 {% endcode %}
 
 Invoke it twice with the same password and you get two different hashes — because bcrypt generates a new salt each time.
@@ -208,8 +203,9 @@ bcrypt.compare('secret', hash1); // ?
 bcrypt.compare('secret', hash2); // ?
 ```
 
-**<details><summary>Answer</summary>**
+<details>
 
+<summary><strong>Answer</strong></summary>
 
 `true`. Both hashes were produced from `'secret'` with different salts, but `bcrypt.compare` extracts the correct salt from whichever hash you pass it. Either hash correctly represents the password `'secret'`.
 
@@ -225,18 +221,18 @@ $2a$12$R9h/lRnG9v5Iy.EBk92.uOayWp.mB199P9W.oX076/75S2pT.Dq.
 ```
 
 It is divided into sections by the `$` symbol:
-- **Prefix (`$2a$`)**: Identifies the version of the bcrypt algorithm used.
-- **Cost Factor/Salt Rounds (`$12$`)**: This tells the computer how many iterations ($2^{12}$ or 4,096 rounds) to run. This is what makes bcrypt "slow" and resistant to brute-force attacks.
-- **Salt (the next 22 characters)**: This is the random "noise" added to the password before hashing.
-- **Hash (the remaining characters)**: This is the final result of the password + salt + multiple rounds of computation.
+
+* **Prefix (`$2a$`)**: Identifies the version of the bcrypt algorithm used.
+* **Cost Factor/Salt Rounds (`$12$`)**: This tells the computer how many iterations ($2^{12}$ or 4,096 rounds) to run. This is what makes bcrypt "slow" and resistant to brute-force attacks.
+* **Salt (the next 22 characters)**: This is the random "noise" added to the password before hashing.
+* **Hash (the remaining characters)**: This is the final result of the password + salt + multiple rounds of computation.
 
 Counterintuitively, the salt doesn't need to be a secret in order for the hashed password to be secure. As long as the salt is unique and the original password is unknown, it is still impossible to reverse the hashing function.
 
 And the nice thing is that `bcrypt.compare()` extracts the embedded salt automatically for you — you never need to manage it directly.
-
 {% endhint %}
 
----
+***
 
 ## Applying Bcrypt to the User Model
 
@@ -255,9 +251,7 @@ In lesson 8, the seed file was a `.sql` file that stored passwords in plaintext.
 **The file type.** We can't use a `.sql` file because SQL has no way to call `bcrypt.hash`. The seed file needs to be JavaScript:
 
 {% tabs %}
-
 {% tab title="JS Seed (New)" %}
-
 ```javascript
 // db/seed.js
 const bcrypt = require('bcrypt');
@@ -287,11 +281,9 @@ const seed = async () => {
 
 seed();
 ```
-
 {% endtab %}
 
 {% tab title="SQL Seed (Old)" %}
-
 ```sql
 -- seed.sql
 \c users_db
@@ -308,9 +300,7 @@ INSERT INTO users (username, password) VALUES
   ('alice', 'password123'),
   ('bob',   'hunter2');
 ```
-
 {% endtab %}
-
 {% endtabs %}
 
 Run it once to create the table and insert sample data:
@@ -321,12 +311,12 @@ node db/seed.js
 
 ### The User Model
 
-Next, we need to update our model. 
-* Previously the model was designed using plaintext passwords. Validation was as simple as selecting the password from the database and comparing it to a given password with `===`. 
+Next, we need to update our model.
+
+* Previously the model was designed using plaintext passwords. Validation was as simple as selecting the password from the database and comparing it to a given password with `===`.
 * Now, we want to use `bcrypt.hash()` to hash passwords before storing them and use `bcrypt.compare()` to validate passwords against the hashes.
 
 Three methods are unchanged because they have nothing to do with passwords. Three are updated to use bcrypt:
-
 
 | Method             | Changes?                                   |
 | ------------------ | ------------------------------------------ |
@@ -338,9 +328,7 @@ Three methods are unchanged because they have nothing to do with passwords. Thre
 | `update`           | Yes — hash new password before updating    |
 
 {% tabs %}
-
 {% tab title="Hashed Passwords with Bcrypt" %}
-
 ```javascript
 const bcrypt = require('bcrypt');
 const pool = require('../db/pool');
@@ -395,11 +383,9 @@ module.exports.destroy = async (user_id) => {
   return rows[0] || null;
 };
 ```
-
 {% endtab %}
 
 {% tab title="Plaintext Passwords" %}
-
 ```javascript
 const pool = require('../db/pool');
 
@@ -440,10 +426,8 @@ module.exports.destroy = async (user_id) => {
   return rows[0] || null;
 };
 ```
-
 {% endtab %}
-
-{% endtabs %} 
+{% endtabs %}
 
 {% hint style="info" %}
 `validatePassword` is the only function that selects the password with `SELECT *` — but it ensures the hash never leaves the model by returning only `{ user_id, username }`.
