@@ -4,8 +4,8 @@ We're going to take a brief detour from the more application-focused elements of
 
 ## Chapters
 
-* [1. Intro Abstract Data Structures & Stacks](./1-adts-stacks.md)
-* [2. Queues](./2-queues.md)
+* [1. Intro to Data Structures and Algorithms: Arrays and Hashmaps](./1-intro-to-dsa.md)
+* [2. Stacks and Queues](./2-stacks-queues.md)
 * [3. Nodes and Linked Lists](./3-nodes-linked-lists.md)
 * [4. Singly and Doubly Linked Lists](./4-singly-doubly-linked-lists.md)
 * [5. Recursion](./5-recursion.md)
