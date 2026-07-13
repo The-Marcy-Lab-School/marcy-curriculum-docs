@@ -7,7 +7,7 @@
 - [Hash Maps: Fast Existence Checks](#hash-maps-fast-existence-checks)
 - [Choosing Between Them](#choosing-between-them)
   - [Comparison: Find the First Non-Repeating Character](#comparison-find-the-first-non-repeating-character)
-- [Binary Search](#binary-search)
+- [Sorted Array and Binary Search](#sorted-array-and-binary-search)
 - [What's Next](#whats-next)
 
 ## Essential Questions
@@ -49,14 +49,14 @@ Because they're fast at different things.
 
 ![Arrays store data in contiguous memory. The variable points to the first address and indexes calculate the subsequent addresses.](./img/contiguous-memory-arrays.png)
 
-An Array stores its values in contiguous memory, one right after another. Because of this, the computer can calculate the exact memory address of `myArr[3]` using simple arithmetic (`start address + 3 * size of one element`) without looking at anything else in the array.
+An Array stores its values in contiguous memory, one right after another. Because of this, the computer can calculate the exact memory address of `myArr[2]` using simple arithmetic (`start address + 2 * size of one element`) without looking at anything else in the array.
 
 ```js
 let myArr = [10, 25, 42, 56];
-myArr[3]; // O(1) — the computer jumps directly to this address
+myArr[2]; // O(1) — the computer jumps directly to this address
 ```
 
-This is why **array access by index is a constant time operation O(1)**: it doesn't matter if the array has 10 elements or 10 million, reading `arr[3]` takes the same amount of time.
+This is why **array access by index is a constant time operation O(1)**: it doesn't matter if the array has 10 elements or 10 million, reading `arr[2]` takes the same amount of time.
 
 But what if you don't know the index? What if you only have the value and need to find *where* it is, or whether it's in the array at all?
 
@@ -140,7 +140,9 @@ const firstNonRepeating = (str) => {
 };
 ```
 
+**<details><summary>Q: What is the runtime of this solution? Use Big-O notation. </summary>**
 For every character, this re-scans the *entire* string to count occurrences — an O(n) operation nested inside another O(n) loop, making this **O(n²)**.
+</details>
 
 **Hash-map-based approach:**
 
@@ -162,7 +164,9 @@ const firstNonRepeating = (str) => {
 };
 ```
 
+**<details><summary>Q: What is the runtime of this solution?</summary>**
 This makes two full passes over the string — but each pass is O(n), and a hash map lookup/update is O(1), so the total is **O(n)**. Trading one nested loop for a hash map turned a quadratic solution into a linear one.
+</details>
 
 <details>
 
@@ -172,34 +176,84 @@ On the first pass, you don't yet know the final count for a character — a char
 
 </details>
 
-This is the first instance of the module's recurring thread: **the same problem, solved with two different structures, at two different costs.** You'll see this comparison again with Queues (array vs. linked list) and with tree search (BFS vs. DFS).
+This is the first instance of a recurring thread within Data Structures & Algorithms: **the same problem, solved with two different structures, at two different costs.** You'll see this comparison again with Queues (array vs. linked list) and with tree search (BFS vs. DFS).
 
-## Binary Search
+## Sorted Array and Binary Search
 
-A Hash Map isn't the only way to speed up a slow Array search — sometimes you can get a similar speedup **without changing data structures at all**, just by taking advantage of a property the Array already has: being sorted.
 
-**The Problem**: Given a sorted array, determine whether it contains a target value.
+We saw that Hashmaps give us O(1) value lookups while Arrays give us O(n) lookups. Now, let's look at a way to improve the efficiency of searching an Array for a value. 
 
-Searching an unsorted array is O(n) — you must check every element. But if the array is **sorted**, you can do dramatically better by repeatedly eliminating half of the remaining possibilities:
+**The Problem**: Given an array, determine whether it contains a target value.
+
+**<details><summary>Q: If I told you to find the word "platypus" in a dictionary with 1000 pages, how many pages would you need to look at in order to find it? What would be your approach?</summary>**
+
+P is the 16th letter in the dictionary which puts it at about 60% of the way through the alphabet.
+
+If you looked at every single page starting with the first, you would end up looking at close to 600 pages before arriving at the word "Platypus". This would be a linear algorithm.
+
+However, if you opened the dictionary to the middle (around the letter "M"), you would flip to the right half of the dictionary (between "M" and "Z") to keep looking. Repeat this process again and again, each time cutting the dictionary in half and choosing the left or right and you would only need to look at about **10 pages**!
+
+This is called **Binary Search** which is a **logarithmic** algorithm.
+
+</details>
+
+Searching an unsorted array is O(n) — you must check every element.
+
+```js
+const contains = (arr, target) => {
+  for (let i = 0; i < arr.length; i++){ 
+    if (numbers[i] === target) {
+      return true;
+    }
+  }
+  return false;
+}
+```
+
+But if we add the constraint that the array must be sorted then the more efficient **Binary Search** approach becomes possible.
+
+Binary Search is a **Divide and Conquer** algorithm: it takes a given "solution space" (the values in an Array) and divides the possibilities by 2 over and over again.
+
+{% embed url="https://docs.google.com/presentation/d/1L5Ce4lsijELlFKor6KxjdmHumMeQm7wEwBJSv9UbZK8/embed?start=false&loop=false&delayms=3000" %}
+
+
+Each comparison eliminates half of the remaining search space, giving us a runtime of **O(log n)**. To put that into context, for an array of a million elements, binary search needs at most ~20 comparisons.
+
+![O(log n) or "Logarithmic" runtime is the most efficient runtime. It is nearly as good as constant time.](./img/big-o.png)
+
+To implement this in code is an interesting exercise that you can try figuring out yourself. To help, here are a few questions to consider:
+1. What kind of iteration is best here, a `for` loop or a `while` loop?
+2. For each iteration, how will you calculate the middle of the remaining solution space?
+3. For each iteration, how will you shrink the remaining solution space?
+4. When will you know that you've searched the entire space and can stop iterating?
+
+
+
+**<details><summary>Solution</summary>**
 
 ```js
 const binarySearch = (sortedArr, target) => {
-  let low = 0;
-  let high = sortedArr.length - 1;
+  let left = 0;
+  let right = sortedArr.length - 1;
 
-  while (low <= high) {
-    const mid = Math.floor((low + high) / 2);
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
 
     if (sortedArr[mid] === target) return mid;
-    if (sortedArr[mid] < target) low = mid + 1;  // target is in the right half
-    else high = mid - 1;                          // target is in the left half
+    if (sortedArr[mid] < target) left = mid + 1;  // target is in the right half
+    else right = mid - 1;                          // target is in the left half
   }
 
   return -1; // not found
 };
 ```
 
-Each comparison eliminates half of the remaining search space, giving **O(log n)** — for an array of a million elements, binary search needs at most ~20 comparisons.
+1. A `while` loop is best here because we don't know how many loops to run.
+2. A `mid` pointer is calculated by using two pointers to track the boundaries of the solution space: `left` starts at index `0` and `right` starts at the last index of the Array.
+3. The solution space is shrunk by moving either the `left` pointer or the `right` pointer to just beside the `mid` pointer. On the next iteration, the solution space is shrunk in half.
+4. We know that we can stop looping when the `left` pointer and the `right` pointer have crossed paths (`left <= right`).
+
+</details>
 
 <details>
 
