@@ -1,4 +1,4 @@
-# 0. Intro to Data Structures & Algorithms: Arrays, Strings & Hash Maps
+# 0. Intro to Data Structures & Algorithms: Arrays & Hash Maps
 
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
@@ -14,10 +14,9 @@
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. What makes array access O(1), and what makes array search O(n)?
-2. What makes hash map lookup O(1) on average, and when does that guarantee break down?
-3. Given a problem, how do you decide whether an array or a hash map is the better fit?
-4. Why does binary search require sorted data, and what run time does it achieve?
+1. What makes array access (e.g. `arr[2]`) an O(1) operation, and what makes array search (`arr.includes(target)`) an O(n) operation?
+2. What makes hash map lookup (e.g. `obj['key']`) an O(1) operation on average, and when does that guarantee break down?
+3. How does Binary Search work and what makes it an efficient algorithm?
 
 ## Key Concepts
 
@@ -84,12 +83,13 @@ Indexed access works because position tells the computer exactly where to look. 
 A Hash Map solves exactly the problem Arrays are slow at: "is this value in here?" and "what value is associated with this key?"
 
 ```js
-const ages = {};
-ages['sam'] = 25;
-ages['ari'] = 30;
+const ages = {
+  sam: 25,
+  ari: 30
+};
 
 console.log(ages['sam']); // 25 — O(1) average lookup
-console.log('sam' in ages); // true — O(1) average existence check
+console.log('ari' in ages); // true — O(1) average existence check
 ```
 
 Internally, a hash map runs your key through a **hash function** that converts it into a number, and uses that number as a shortcut directly to the value's location — similar in spirit to how an array uses an index, except *you* don't have to know the index. The hash function computes it for you from the key itself.
@@ -210,14 +210,13 @@ const contains = (arr, target) => {
 }
 ```
 
-But if we add the constraint that the array must be sorted then the more efficient **Binary Search** approach becomes possible.
+But, if we add the constraint that the array must be sorted, the more efficient **Binary Search** approach becomes possible.
 
-Binary Search is a **Divide and Conquer** algorithm: it takes a given "solution space" (the values in an Array) and divides the possibilities by 2 over and over again.
+Binary Search is an algorithm that efficiently finds a target value using a **Divide and Conquer** approach: it takes the values in a sorted Array and splits them into two halves. It then determines which half the target might exist in and "throws away" the other half. It then repeats this process, dividing the space in half over and over again until the target is found or the entire Array is searched.
 
 {% embed url="https://docs.google.com/presentation/d/1L5Ce4lsijELlFKor6KxjdmHumMeQm7wEwBJSv9UbZK8/embed?start=false&loop=false&delayms=3000" %}
 
-
-Each comparison eliminates half of the remaining search space, giving us a runtime of **O(log n)**. To put that into context, for an array of a million elements, binary search needs at most ~20 comparisons.
+Each comparison eliminates half of the remaining search space which is called a **logarithmic runtime O(log n)**. To put that into context, for an array of a million elements, binary search needs at most ~20 comparisons.
 
 ![O(log n) or "Logarithmic" runtime is the most efficient runtime. It is nearly as good as constant time.](./img/big-o.png)
 
@@ -226,8 +225,6 @@ To implement this in code is an interesting exercise that you can try figuring o
 2. For each iteration, how will you calculate the middle of the remaining solution space?
 3. For each iteration, how will you shrink the remaining solution space?
 4. When will you know that you've searched the entire space and can stop iterating?
-
-
 
 **<details><summary>Solution</summary>**
 
