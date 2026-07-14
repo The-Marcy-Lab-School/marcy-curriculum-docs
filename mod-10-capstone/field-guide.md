@@ -27,7 +27,7 @@ You already know how to program. You know what a loop is, what a function does, 
   - [Sprints](#sprints)
     - [Sprint 0 — Ship the MVP](#sprint-0--ship-the-mvp)
     - [Sprint 1 — Build, Test, Learn](#sprint-1--build-test-learn)
-    - [Sprint 2 — Build, Test, Present](#sprint-2--build-test-present)
+    - [Sprint 2 — Refine, Test, Present](#sprint-2--refine-test-present)
   - [The PR Workflow](#the-pr-workflow)
 
 
@@ -562,11 +562,11 @@ Weeks 4-9 can be viewed as three distinct "Sprints"
 
 **The Big Picture**
 
-| Sprint       | Weeks     | Goal                                              |
-| ------------ | --------- | ------------------------------------------------- |
-| **Sprint 0** | Weeks 4–5 | Finish your Product Spec Sheet and ship your MVP  |
-| **Sprint 1** | Weeks 6–7 | First feature sprint + user testing and feedback  |
-| **Sprint 2** | Weeks 8–9 | Second feature sprint + user testing and feedback |
+| Sprint       | Weeks     | Goal                                             |
+| ------------ | --------- | ------------------------------------------------ |
+| **Sprint 0** | Weeks 4–5 | Finish your Product Spec Sheet and ship your MVP |
+| **Sprint 1** | Weeks 6–7 | First feature sprint + user testing and feedback |
+| **Sprint 2** | Weeks 8–9 | Final feature sprint + presentation              |
 
 #### Sprint 0 — Ship the MVP
 
@@ -620,37 +620,38 @@ The sprint follows a fixed rhythm:
 - [ ] Observation Forms submitted by end of Friday of Week 7
 - [ ] Sprint 1 LinkedIn post (deployed app + public feedback request) — reviewed and approved before posting
 
-#### Sprint 2 — Build, Test, Present
+#### Sprint 2 — Refine, Test, Present
 
 **Sprint 2 is Sprint 1 with higher stakes.**
 
 You now have real user feedback. Use it. The features you build this sprint should reflect what you learned from testing — not just what your team thought would be cool two weeks ago. Teams that ignore user feedback and build what they originally planned are missing the point of the process.
 
-The sprint follows the same rhythm as Sprint 1.
+In addition to taking the user feedback and implementing it to refine your product, you will be presenting your project and Applied AI Residency journey to your peers and stakeholders!
+
+The sprint follows a similar rhythm as Sprint 1 with presentations taking the place of user testing.
 
 | Day               | Activity                                                     |
 | ----------------- | ------------------------------------------------------------ |
 | Monday (Day 1)    | Sprint planning — define goals, update GitHub Projects board |
 | Wednesday (Day 8) | All sprint changes merged into `main` and deployed           |
-| Thursday (Day 9)  | Structured user testing session                              |
+| Thursday (Day 9)  | Final stakeholder presentations                              |
 | Friday (Day 10)   | Sprint retro                                                 |
 
 **Week 8 (Sprint 2, Week 1)**
+- Begin building your presentation deck this week — don't wait until Week 9
 - Sprint 2 planning on Monday, explicitly informed by user testing feedback from Sprint 1. Your Observation Form should be open in front of you during planning
 - Continue owning feature branches and submitting PRs
-- Begin building your presentation deck this week — don't wait until Week 9
 
 **Week 9 (Sprint 2, Week 2)**
 - All Sprint 2 changes merged and deployed by Wednesday
-- Thursday: second structured user testing session, same format as Sprint 1
+- Thursday: Final formal presentations with industry stakeholders
 - Friday: Sprint 2 retro
 
 **Key Deliverables**
 - [ ] GitHub Projects board updated for Sprint 2 at start of Week 8
+- [ ] Presentation drafts submitted Friday of Week 8
 - [ ] All Sprint 2 changes merged and deployed by Wednesday of Week 9
-- [ ] Tester Feedback Forms submitted Thursday of Week 9
-- [ ] Observation Forms submitted by end of Friday of Week 9
-- [ ] Sprint 2 LinkedIn post (updated app + public feedback request) — reviewed and approved before posting
+- [ ] Final presentations submitted by Wednesday EOD of Week 9
 
 ### The PR Workflow
 
