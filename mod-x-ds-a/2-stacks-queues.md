@@ -1,16 +1,17 @@
-# 1. Stacks and Queues
+# 2. Stacks and Queues
 
 **Table of Contents:**
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Problem: Balanced Brackets](#problem-balanced-brackets)
-- [What is an Abstract Data Type?](#what-is-an-abstract-data-type)
-  - [What is a Stack?](#what-is-a-stack)
-  - [Queues](#queues)
-- [Solving Balanced Brackets](#solving-balanced-brackets)
-  - [The Algorithm](#the-algorithm)
-  - [Implementation](#implementation)
-- [Summary](#summary)
+
+* [Essential Questions](2-stacks-queues.md#essential-questions)
+* [Key Concepts](2-stacks-queues.md#key-concepts)
+* [Problem: Balanced Brackets](2-stacks-queues.md#problem-balanced-brackets)
+* [What is an Abstract Data Type?](2-stacks-queues.md#what-is-an-abstract-data-type)
+  * [What is a Stack?](2-stacks-queues.md#what-is-a-stack)
+  * [Queues](2-stacks-queues.md#queues)
+* [Solving Balanced Brackets](2-stacks-queues.md#solving-balanced-brackets)
+  * [The Algorithm](2-stacks-queues.md#the-algorithm)
+  * [Implementation](2-stacks-queues.md#implementation)
+* [Summary](2-stacks-queues.md#summary)
 
 ## Essential Questions
 
@@ -55,9 +56,10 @@ To help us think about how to implement this, let's look at **Abstract Data Type
 
 ## What is an Abstract Data Type?
 
-An **Abstract Data Type (ADT)** is a high-level description of a collection of data and what operations you can perform with that data. 
+An **Abstract Data Type (ADT)** is a high-level description of a collection of data and what operations you can perform with that data.
 
 Two ADTs that you have already encountered are the List and Map:
+
 * **List**: Defines a sequential collection of elements where the relative order of items matters. It specifies abstract operations like:
   * `insert(index, element)`: Adds an item at a specific position, shifting subsequent items down.
   * `append(element)`: Adds an item to the very end of the list.
@@ -76,12 +78,14 @@ Abstract Data Types help us conceptualize how to solve problems based on what th
 By contrast, **concrete data structures**—like Arrays and Objects in JavaScript—are the actual tools we use to bring those abstract concepts to life in our code.
 
 {% hint style="info" %}
-💡 You can think of this relationship between ADTs and concrete data structures like the difference between the general concept of a car and a specific Honda Civic. A car is an abstract idea: a vehicle with wheels and an engine that can be operated with a steering wheel, a brake pedal, and an acceleration pedal. A Honda Civic is a concrete implementation of the "Car" concept. 
+💡 You can think of this relationship between ADTs and concrete data structures like the difference between the general concept of a car and a specific Honda Civic. A car is an abstract idea: a vehicle with wheels and an engine that can be operated with a steering wheel, a brake pedal, and an acceleration pedal. A Honda Civic is a concrete implementation of the "Car" concept.
 
 Understanding the abstract concept of a "Car" versus, say, a "Bike" helps us think about the problem of commuting to work: "should I drive my car or ride my bike?". Then when it comes time to actually get to work, you take your Honda Civic or your Cannondale (a brand of bicycle).
 {% endhint %}
 
-**<details><summary>Q: Can you think of any other real-world examples of abstract ideas and their concrete implementations?</summary>**
+<details>
+
+<summary><strong>Q: Can you think of any other real-world examples of abstract ideas and their concrete implementations?</strong></summary>
 
 * Ice Cream: Ben & Jerry's Tonight Dough
 * Hat: New York Yankees Baseball Cap
@@ -95,7 +99,7 @@ Now, let's learn about two more Abstract Data Types that will help us solve this
 
 A Stack is an Abstract Data Type that organizes data as a vertical pile, kind of like stack of plates: you only add/remove plates to/from the top.
 
-<img src="./img/plates.png" alt="A stack of plates" width="400">
+<img src="../.gitbook/assets/plates.png" alt="A stack of plates" width="400">
 
 A Stack has three basic operations:
 
@@ -135,6 +139,7 @@ A Queue has three basic operations:
 This is more formally known as **FIFO**: **first in, first out** (the first person in line is the first person who gets served).
 
 Queues show up in a few common places in Software Development such as:
+
 * **Handling requests to a server** — requests are handled in the order they came in, not in reverse.
 * **Task scheduling in an operating system** — new tasks join the back of the line, and the OS works through them in the order they arrived.
 
@@ -143,14 +148,18 @@ Queues show up in a few common places in Software Development such as:
 Now, back to the problem: given a string containing just the characters `(`, `)`, `{`, `}`, `[` and `]`, determine if the input string is balanced.
 
 As you think about the problem, consider the example invalid inputs `}}{{` and `[(])` and these questions:
+
 1. If you just counted the number of each type of bracket, would that tell you if a string is balanced? Try it on `}}{{`.
 2. As you read left to right, what do you need to remember about the brackets you've already seen?
 3. Looking at `[(])`, when you hit the first closing bracket `]`, which opening bracket is it trying to close? Can you generalize that observation into a rule?
 4. Between a Stack and Queue, which Abstract Data Type can we use to solve this problem? Do brackets appear in LIFO or FIFO order?
 
-**<details><summary>Answers</summary>**
+<details>
+
+<summary><strong>Answers</strong></summary>
 
 Considering the questions above leads us to learn that:
+
 * the order of the brackets matters, not just how many pairs there are
 * we need to keep track of opening brackets that haven't been closed yet
 * a closing bracket must always pair with the most recently opened, still-unclosed bracket
@@ -161,22 +170,26 @@ Considering the questions above leads us to learn that:
 ### The Algorithm
 
 To turn this into an Algorithm, we should consider:
+
 * When you see an opening bracket, what should happen to it?
 * When you see a closing bracket, what's the first thing you need to check?
 * What do you do if it matches?
 * What do you do if it doesn't match?
 
-**<details><summary>Algorithm Solution</summary>**
+<details>
+
+<summary><strong>Algorithm Solution</strong></summary>
 
 And here is an algorithm we can use to solve the problem
 
 1. Initialize an empty stack
 2. Loop through each character in the string:
    1. If it's an opening bracket (`(`, `{`, `[`), "push" it onto the stack.
-   2. If it's a closing bracket (`)`, `}`, `]`), "peek" at the top of the stack. 
-      1. If the top of the stack is its matching opening partner, "pop" it off the stack. 
+   2. If it's a closing bracket (`)`, `}`, `]`), "peek" at the top of the stack.
+      1. If the top of the stack is its matching opening partner, "pop" it off the stack.
       2. If it doesn't match (or the stack is empty), the string is invalid.
 3. After checking the whole string, if the stack is completely empty (you peek at the top and nothing is there), the brackets are perfectly balanced. If there are still brackets left in the stack, someone forgot a closing bracket!
+
 </details>
 
 Here is a visualization of the algorithm:
@@ -186,11 +199,14 @@ Here is a visualization of the algorithm:
 ### Implementation
 
 Finally, we can translate that algorithm into JavaScript. Consider these questions:
+
 * What concrete data structure can I use to represent the Stack?
 * How can I quickly look up whether a given closing bracket matches a given opening bracket?
 
-**<details><summary>Solution</summary>**
- 
+<details>
+
+<summary><strong>Solution</strong></summary>
+
 ```js
 function isBalanced(str) {
   // An array can easily be used as a Stack since it has push and pop methods
@@ -239,12 +255,11 @@ console.log(isBalanced("[{()"));   // false
 
 ## Summary
 
-An **Abstract Data Type (ADT)** describes *what* operations a collection supports without dictating *how* they're implemented — it's a way of thinking about a problem before choosing a concrete data structure to solve it. Lists and Maps are the ADTs implemented by Arrays and Objects in JavaScript.
+An **Abstract Data Type (ADT)** describes _what_ operations a collection supports without dictating _how_ they're implemented — it's a way of thinking about a problem before choosing a concrete data structure to solve it. Lists and Maps are the ADTs implemented by Arrays and Objects in JavaScript.
 
 * A **Stack** supports `push`, `pop`, and `peek`, and follows **LIFO** ("last in, first out") ordering. You'll find Stacks behind the call stack, "Undo" buttons, and depth-first traversal.
 * A **Queue** supports `enqueue`, `dequeue`, and `peek`, and follows **FIFO** ("first in, first out") ordering. You'll find Queues behind request handling and task scheduling.
 
-The "Balanced Brackets" problem showed how recognizing the *shape* of a problem — here, that the most recently opened bracket must be the next one closed — points you to the right ADT. Once we knew a Stack's LIFO behavior matched the problem, an Array (JavaScript's concrete stand-in for a Stack) was all we needed to implement it.
+The "Balanced Brackets" problem showed how recognizing the _shape_ of a problem — here, that the most recently opened bracket must be the next one closed — points you to the right ADT. Once we knew a Stack's LIFO behavior matched the problem, an Array (JavaScript's concrete stand-in for a Stack) was all we needed to implement it.
 
 This is the same theme from the last lesson: just as choosing between an Array and a Hash Map depends on the operations a problem needs, choosing between a Stack and a Queue depends on whether the data needs to come out in LIFO or FIFO order. Next, we'll look at **Linked Lists** — a structure that reorganizes how data is stored in memory to solve a limitation Arrays run into.
-

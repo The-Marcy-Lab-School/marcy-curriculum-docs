@@ -1,23 +1,23 @@
-# Nodes and Linked Lists
+# 3. Nodes & Linked Lists
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Problem: What Happens When an Array Runs Out of Room?](#problem-what-happens-when-an-array-runs-out-of-room)
-- [Linked Lists and Nodes](#linked-lists-and-nodes)
-  - [Arrays vs. Linked Lists](#arrays-vs-linked-lists)
-- [Implementing a Linked Lists](#implementing-a-linked-lists)
-  - [Node Class](#node-class)
-  - [LinkedList Class](#linkedlist-class)
-  - [Append](#append)
-  - [Prepend](#prepend)
-  - [removeHead](#removehead)
-  - [removeTail](#removetail)
-  - [contains](#contains)
-  - [insertAtIndex](#insertatindex)
-  - [removeAtIndex](#removeatindex)
-- [Revisiting Stacks and Queues](#revisiting-stacks-and-queues)
-- [Algorithm: Reverse a Linked List](#algorithm-reverse-a-linked-list)
-- [Linked Lists are Graphs](#linked-lists-are-graphs)
+* [Essential Questions](3-nodes-linked-lists.md#essential-questions)
+* [Key Concepts](3-nodes-linked-lists.md#key-concepts)
+* [Problem: What Happens When an Array Runs Out of Room?](3-nodes-linked-lists.md#problem-what-happens-when-an-array-runs-out-of-room)
+* [Linked Lists and Nodes](3-nodes-linked-lists.md#linked-lists-and-nodes)
+  * [Arrays vs. Linked Lists](3-nodes-linked-lists.md#arrays-vs-linked-lists)
+* [Implementing a Linked Lists](3-nodes-linked-lists.md#implementing-a-linked-lists)
+  * [Node Class](3-nodes-linked-lists.md#node-class)
+  * [LinkedList Class](3-nodes-linked-lists.md#linkedlist-class)
+  * [Append](3-nodes-linked-lists.md#append)
+  * [Prepend](3-nodes-linked-lists.md#prepend)
+  * [removeHead](3-nodes-linked-lists.md#removehead)
+  * [removeTail](3-nodes-linked-lists.md#removetail)
+  * [contains](3-nodes-linked-lists.md#contains)
+  * [insertAtIndex](3-nodes-linked-lists.md#insertatindex)
+  * [removeAtIndex](3-nodes-linked-lists.md#removeatindex)
+* [Revisiting Stacks and Queues](3-nodes-linked-lists.md#revisiting-stacks-and-queues)
+* [Algorithm: Reverse a Linked List](3-nodes-linked-lists.md#algorithm-reverse-a-linked-list)
+* [Linked Lists are Graphs](3-nodes-linked-lists.md#linked-lists-are-graphs)
 
 ## Essential Questions
 
@@ -31,11 +31,11 @@ By the end of this lesson, you should be able to answer these questions:
 
 ## Key Concepts
 
-* **Graph** - a category of abstract data type used to organize collections of data with *relationships*. All graphs are made up of nodes containing each data point and edges connecting them.
+* **Graph** - a category of abstract data type used to organize collections of data with _relationships_. All graphs are made up of nodes containing each data point and edges connecting them.
   * **Node** - a single unit of data storage in a graph. Depending on the structure, a node may point to a `next`, `prev` (previous), `parent`, or `children` node.
   * **Edge** - a connection between two nodes.
 * **Linked List** - a graph structure made of nodes chained together in a single-file line, where each node points to the `next` node in the sequence. To access any node in the list, you must start at the `head` node of the list and traverse through the `next` pointers of each node.
-  * **Singly Linked List** - a linked list where each node *only* points to the `next` node, allowing traversal in one direction only.
+  * **Singly Linked List** - a linked list where each node _only_ points to the `next` node, allowing traversal in one direction only.
   * **`head`** - the first node in a linked list.
   * **`tail`** - the last node in a linked list.
 * **Traverse** - to visit the nodes of a data structure in a particular order.
@@ -46,11 +46,13 @@ By the end of this lesson, you should be able to answer these questions:
 
 An Array's values live in **contiguous memory** — one right after another, with no gaps. That's exactly what makes indexed access O(1): the computer can calculate the address of `arr[3]` with simple arithmetic, because it knows every element is packed tightly next to the last.
 
-![Arrays store values in contiguous memory.](./img/contiguous-memory-arrays.png)
+![Arrays store values in contiguous memory.](../.gitbook/assets/contiguous-memory-arrays.png)
 
 But contiguous memory comes with a few downsides. Picture an Array that's been allocated a block of memory just big enough to hold its current values (let's say 4 values).
 
-**<details><summary>Q: What happens when you need to add a value to an Array that has no room left in its allocated block?</summary>**
+<details>
+
+<summary><strong>Q: What happens when you need to add a value to an Array that has no room left in its allocated block?</strong></summary>
 
 The new value can't simply be tacked onto the end — the memory address right after the array might already be occupied by something else entirely. So the runtime has to:
 
@@ -67,7 +69,9 @@ In practice, JavaScript engines soften this by over-allocating (grabbing more ro
 
 Additionally, consider how indexing works when adding or removing values from anywhere but the end of the contiguous block of memory.
 
-**<details><summary>Q: What happens when you need to remove a value from the beginning of an Array (`array.shift()` or from the middle of an Array (`array.splice()`)?</summary>**
+<details>
+
+<summary><strong>Q: What happens when you need to remove a value from the beginning of an Array (<code>array.shift()</code> or from the middle of an Array (<code>array.splice()</code>)?</strong></summary>
 
 If we deleted the value at index `0` and did nothing else, then the first real value in the array would now live at index `1`. As a result, a previously easy operation to perform like "give me the 3rd value in the Array" would now require us to remember to start counting at `1` (not `0`) and go to index `3` (not `2`).
 
@@ -82,7 +86,9 @@ While that's also an **O(n)** operation in the worst case (removing the first va
 
 </details>
 
-**<details><summary>Q: If you wanted a structure that could grow infinitely without being confined to a contiguous block of memory, what would you have to give up?</summary>**
+<details>
+
+<summary><strong>Q: If you wanted a structure that could grow infinitely without being confined to a contiguous block of memory, what would you have to give up?</strong></summary>
 
 Without contiguous memory you would lose indexed access. If elements are allowed to live anywhere in memory instead of packed next to each other you'd lose the "calculate the address directly" trick that makes `arr[3]` instant, since there's no longer a predictable arithmetic relationship between an index and a memory address.
 
@@ -90,16 +96,16 @@ This trade-off — give up contiguous memory (and the fast indexed access it buy
 
 </details>
 
-
 ## Linked Lists and Nodes
 
-A **Linked List** is a way to structure data in memory as such that values can be placed anywhere in memory. 
+A **Linked List** is a way to structure data in memory as such that values can be placed anywhere in memory.
 
-In order to maintain a sense of order, each memory address must store two data points: 
+In order to maintain a sense of order, each memory address must store two data points:
+
 1. The value itself
 2. A pointer to the location of the next value
 
-![A linked list is a collection of nodes that can be placed anywhere in memory.](./img/linked-list-memory.png)
+![A linked list is a collection of nodes that can be placed anywhere in memory.](../.gitbook/assets/linked-list-memory.png)
 
 Together, we call this value/pointer pairing a **node**. In other words, a Linked List is an "ordered list of linked nodes". A Linked List typically maintains a reference to the **head node** and the **tail node**.
 
@@ -117,8 +123,9 @@ Arrays and Linked Lists are both ordered lists but differ in how that order is m
 | Insert/remove in the middle | O(n) — elements after have to shift | O(n) — traverse through the list until you find the node, then repoint `next` pointers around the node |
 
 Neither is "better" — they're solving for different operations.
-* An Array optimizes for O(1) random access and insertion/removal at the end (except when re-sizing is needed). Arrays sacrifice O(n) insertion/removal at the front. 
-* A Linked List optimizes for O(1) insertion/removal at the front and insertion at the end. Linked Lists sacrifice O(n) indexed access. 
+
+* An Array optimizes for O(1) random access and insertion/removal at the end (except when re-sizing is needed). Arrays sacrifice O(n) insertion/removal at the front.
+* A Linked List optimizes for O(1) insertion/removal at the front and insertion at the end. Linked Lists sacrifice O(n) indexed access.
 
 To better understand these runtimes, let's build a `Node` class which we can use to experiment with Linked Lists.
 
@@ -157,7 +164,9 @@ With a `Node` class, we can now begin to think through the logic for some basic 
 
 ### LinkedList Class
 
-**<details><summary>Q: What is the head of a linked list? What is the tail?</summary>**
+<details>
+
+<summary><strong>Q: What is the head of a linked list? What is the tail?</strong></summary>
 
 The `head` is the first node in the linked list — the entry point for traversing the rest of the list. The `tail` is the last node in the list, identifiable because its `next` pointer is `null`.
 
@@ -218,7 +227,9 @@ console.log(list.head.next.next);
 // Node { value: 'c', next: null }
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -267,7 +278,9 @@ console.log(list.head.next.next);
 // Node { value: 'c', next: null }
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -310,7 +323,9 @@ console.log(list.removeHead()); // 'a'
 console.log(list.head.value);   // 'b'
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -360,11 +375,13 @@ console.log(list.tail.value);   // 'b'
 
 <summary><strong>Q: `removeHead` is O(1). Why can't `removeTail` reuse the same trick?</strong></summary>
 
-`removeHead` works by moving the `head` pointer forward — but nodes only know what comes *after* them, not what comes *before*. To remove the tail, something needs to update the second-to-last node's `next` pointer to `null`, and the only way to find the second-to-last node is to start at `head` and walk forward until you're one node short of the tail.
+`removeHead` works by moving the `head` pointer forward — but nodes only know what comes _after_ them, not what comes _before_. To remove the tail, something needs to update the second-to-last node's `next` pointer to `null`, and the only way to find the second-to-last node is to start at `head` and walk forward until you're one node short of the tail.
 
 </details>
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -395,7 +412,7 @@ class LinkedList {
 
 1. If the list is empty, there's nothing to remove.
 2. If there's only one node, removing it empties the whole list.
-3. Otherwise, traverse from `head` until `currNode.next` *is* the tail — that makes `currNode` the new second-to-last node.
+3. Otherwise, traverse from `head` until `currNode.next` _is_ the tail — that makes `currNode` the new second-to-last node.
 4. Detach the old tail by setting `currNode.next = null`, then update `tail` to point at `currNode`.
 
 This is **O(n)** — the traversal to find the node just before the tail is unavoidable with only a `next` pointer on each node (this is exactly the kind of removal a Doubly Linked List's `prev` pointer would make O(1) instead).
@@ -419,7 +436,9 @@ console.log(list.contains('b')); // true
 console.log(list.contains('z')); // false
 ```
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -476,7 +495,9 @@ console.log(list.head.next.next.next);
 
 </details>
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -537,11 +558,13 @@ console.log(list.head.next.value);  // 'c'
 
 <summary><strong>Q: This has a lot in common with `removeTail` — what do the two have in common, runtime-wise?</strong></summary>
 
-Both require traversing from `head` to find the node just *before* the one being removed, since a singly linked list's nodes only point forward. `removeTail` is really just a special case of `removeAtIndex` (removing at the last index) — the general version has to do the same kind of traversal for any index in the middle.
+Both require traversing from `head` to find the node just _before_ the one being removed, since a singly linked list's nodes only point forward. `removeTail` is really just a special case of `removeAtIndex` (removing at the last index) — the general version has to do the same kind of traversal for any index in the middle.
 
 </details>
 
-**<details><summary>Solution</summary>**
+<details>
+
+<summary><strong>Solution</strong></summary>
 
 ```js
 class LinkedList {
@@ -587,16 +610,17 @@ class LinkedList {
 ## Revisiting Stacks and Queues
 
 Recall that for Stacks and Queues are Abstract Data Types (ADTs) that describe operations for a list:
+
 * A Stack uses last in, first out (LIFO) order with the methods `push`, `pop`, and `peek`
 * A Stack uses first in, first out (FIFO) order with the methods `enqueue`, `dequeue`, and `peek`
 
-**<details><summary>Q: Based on what you know now about the tradeoffs between Arrays and Linked Lists, would you use an Array or a Linked List to implement a Stack? What about a Queue?</summary>**
+<details>
 
-An Array is optimized for insertions and removal at 
+<summary><strong>Q: Based on what you know now about the tradeoffs between Arrays and Linked Lists, would you use an Array or a Linked List to implement a Stack? What about a Queue?</strong></summary>
+
+An Array is optimized for insertions and removal at
 
 </details>
-
-
 
 Back in the Queues lesson, the array-based `Queue` had one weak point:
 
@@ -638,11 +662,11 @@ class Queue {
 
 <summary><strong>Q: `dequeue` is now O(1) instead of O(n). Concretely — what is it *not* doing anymore that the array version had to do?</strong></summary>
 
-It's not shifting anything. `removeHead` only touches one pointer: `this.head = this.head.next`. None of the other nodes need to be told this happened — their `next` pointers already point wherever they were pointing before. Compare that to the array version, where every remaining element's *index* changes, which is exactly why `shift()` has to walk the whole array updating each one.
+It's not shifting anything. `removeHead` only touches one pointer: `this.head = this.head.next`. None of the other nodes need to be told this happened — their `next` pointers already point wherever they were pointing before. Compare that to the array version, where every remaining element's _index_ changes, which is exactly why `shift()` has to walk the whole array updating each one.
 
 </details>
 
-Notice that nothing about how the Queue is *used* changed — `enqueue`, `dequeue`, and `peek` still mean the same thing to any code calling them. Only the implementation underneath was swapped out for a faster one, by building it on top of an ADT you'd already built rather than starting from `Node`s again. That's the power of treating Queue as an ADT: the interface stayed identical while `dequeue` went from O(n) to O(1).
+Notice that nothing about how the Queue is _used_ changed — `enqueue`, `dequeue`, and `peek` still mean the same thing to any code calling them. Only the implementation underneath was swapped out for a faster one, by building it on top of an ADT you'd already built rather than starting from `Node`s again. That's the power of treating Queue as an ADT: the interface stayed identical while `dequeue` went from O(n) to O(1).
 
 ## Algorithm: Reverse a Linked List
 
@@ -717,12 +741,11 @@ This runs in **O(n) time** (one pass through the list) and **O(1) extra space** 
 
 </details>
 
-
 ## Linked Lists are Graphs
 
 Linked Lists are an example of the broader Abstract Data Type (ADT) called a **Graph** which is any data structure comprised of **nodes** and **edges** that connect two nodes. Graphs can come in many different "shapes".
 
-![alt text](./img/graph.png)
+![alt text](../.gitbook/assets/graph.png)
 
 A linked list is simply a Graph in which each Node has exactly one edge:
 
