@@ -39,19 +39,9 @@ Before this module, you've mostly used Arrays and Objects because JavaScript han
 > Every data structure makes a deliberate tradeoff. It makes some operations fast by making other operations slow. Key operations include: insertion, retrieval, deletion, and search.
 > These tradeoffs help us decide which data structure to use for a given problem.
 
-<details>
+**<details><summary>Q: Arrays and Objects can both store collections of data. What are their tradeoffs? What kinds of problems are they each suited for?</summary>**
 
-<summary><strong>Q: Arrays and Objects can both store collections of data. What are their tradeoffs? What kinds of problems are they each suited for?</strong></summary>
-
-| Operation | Array | Hashmap | Resources |
-| --------- | ----- | ------- | --------- |
-| Insertion |       |         |           |
-| Retrieval |       |         |           |
-|           |       |         |           |
-|           |       |         |           |
-
-
-Because they're fast at different things. 
+Arrays and Objects are fast at different things. 
 * An Array is fast when you care about *order* and *position*. 
 * An Object (or Hash Map) is fast when you care about *looking something up by name* without caring where it lives. 
 
