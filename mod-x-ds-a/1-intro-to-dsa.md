@@ -3,20 +3,24 @@
 - [Essential Questions](#essential-questions)
 - [Key Concepts](#key-concepts)
 - [What is a Data Structure?](#what-is-a-data-structure)
-- [Arrays: Fast Access, Slow Search](#arrays-fast-access-slow-search)
-- [Hash Maps: Fast Existence Checks](#hash-maps-fast-existence-checks)
+- [Arrays: Fast Insertion, Access by Index, Slow Search](#arrays-fast-insertion-access-by-index-slow-search)
+- [Hash Maps: Fast Insertion, Fast Search, No Access by Position](#hash-maps-fast-insertion-fast-search-no-access-by-position)
 - [Choosing Between Them](#choosing-between-them)
-  - [Comparison: Find the First Non-Repeating Character](#comparison-find-the-first-non-repeating-character)
 - [Sorted Array and Binary Search](#sorted-array-and-binary-search)
+  - [Binary Search Challenge](#binary-search-challenge)
+  - [Comparison: Find the First Non-Repeating Character](#comparison-find-the-first-non-repeating-character)
 - [What's Next](#whats-next)
 
 ## Essential Questions
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. What makes array access (e.g. `arr[2]`) an O(1) operation, and what makes array search (`arr.includes(target)`) an O(n) operation?
-2. What makes hash map lookup (e.g. `obj['key']`) an O(1) operation on average, and when does that guarantee break down?
-3. How does Binary Search work and what makes it an efficient algorithm?
+1. How are Arrays stored in memory?
+2. What is the runtime for retrieving a value by its index in an Array (e.g. arr[2]) and why?
+3. What is the runtime for checking for the existence of a value in an array (e.g. arr.includes(target)) and why?
+4. How are Objects/Hash Maps stored in memory?
+5. What is the runtime for checking for the existence of a value in an object/hash map and why?
+6. How does Binary Search work?
 
 ## Key Concepts
 
@@ -32,11 +36,20 @@ By the end of this lesson, you should be able to answer these questions:
 
 Before this module, you've mostly used Arrays and Objects because JavaScript hands them to you for free. They're the first and most common example of the central idea of this entire module:
 
-> Every data structure makes a deliberate tradeoff. It makes some operations fast by making other operations slow (or impossible). These tradeoffs help us decide which data structure to use for a given problem.
+> Every data structure makes a deliberate tradeoff. It makes some operations fast by making other operations slow. Key operations include: insertion, retrieval, deletion, and search.
+> These tradeoffs help us decide which data structure to use for a given problem.
 
 <details>
 
 <summary><strong>Q: Arrays and Objects can both store collections of data. What are their tradeoffs? What kinds of problems are they each suited for?</strong></summary>
+
+| Operation | Array | Hashmap | Resources |
+| --------- | ----- | ------- | --------- |
+| Insertion |       |         |           |
+| Retrieval |       |         |           |
+|           |       |         |           |
+|           |       |         |           |
+
 
 Because they're fast at different things. 
 * An Array is fast when you care about *order* and *position*. 
@@ -44,20 +57,34 @@ Because they're fast at different things.
 
 </details>
 
-## Arrays: Fast Access, Slow Search
+## Arrays: Fast Insertion, Access by Index, Slow Search
 
-![Arrays store data in contiguous memory. The variable points to the first address and indexes calculate the subsequent addresses.](./img/contiguous-memory-arrays.png)
+An Array stores its values as a contiguous block of memory: a series of addresses right next to each other. 
 
-An Array stores its values in contiguous memory, one right after another. Because of this, the computer can calculate the exact memory address of `myArr[2]` using simple arithmetic (`start address + 2 * size of one element`) without looking at anything else in the array.
+{% embed url="https://docs.google.com/presentation/d/11hsADA3LByJfqix8ZwmAx9yBW4-wl4aCe_vxpaYgg1w/embed?start=false&loop=false&delayms=3000" %}
+
+Because of this, the computer just needs to track the first address in order to can calculate the exact memory address of the next available address for O(1) insertion. The arithmetic is simple: 
+
+```
+next_addr = start_addr + (length * size of one element)
+```
+
+This calculation is also how we can access value by its index in constant time:
+
+```
+addr = start_addr + (index * size of one element)
+```
 
 ```js
-let myArr = [10, 25, 42, 56];
+let myArr = [10, 25, 42];
 myArr[2]; // O(1) — the computer jumps directly to this address
 ```
 
-This is why **array access by index is a constant time operation O(1)**: it doesn't matter if the array has 10 elements or 10 million, reading `arr[2]` takes the same amount of time.
+It doesn't matter if the array has 10 elements or 10 million, reading `arr[2]` takes the same amount of time.
 
-But what if you don't know the index? What if you only have the value and need to find *where* it is, or whether it's in the array at all?
+**<details><summary>Q: What if you don't know the index? What if you only have the value and need to find *where* it is, or whether it's in the array at all??</summary>**
+
+There's no shortcut here — in the worst case (the value is last, or not present at all), you have to check every element. This is why **array search is O(n)**.
 
 ```js
 const contains = (arr, target) => {
@@ -68,17 +95,11 @@ const contains = (arr, target) => {
 };
 ```
 
-There's no shortcut here — in the worst case (the value is last, or not present at all), you have to check every element. This is why **array search is O(n)**.
-
-<details>
-
-<summary><strong>Q: Why can't the computer do for search what it does for indexed access — jump straight to the answer?</strong></summary>
-
 Indexed access works because position tells the computer exactly where to look. Search is different: the *value* you're looking for doesn't tell the computer anything about *where* it lives in memory. Without additional information (like the array being sorted — more on that later), the only option is to check elements one by one.
 
 </details>
 
-## Hash Maps: Fast Existence Checks
+## Hash Maps: Fast Insertion, Fast Search, No Access by Position
 
 A Hash Map solves exactly the problem Arrays are slow at: "is this value in here?" and "what value is associated with this key?"
 
@@ -92,7 +113,9 @@ console.log(ages['sam']); // 25 — O(1) average lookup
 console.log('ari' in ages); // true — O(1) average existence check
 ```
 
-Internally, a hash map runs your key through a **hash function** that converts it into a number, and uses that number as a shortcut directly to the value's location — similar in spirit to how an array uses an index, except *you* don't have to know the index. The hash function computes it for you from the key itself.
+Rather than inserting values in insertion order, a hash map runs your key through a **hash function** that converts the key into its index. Then, the address can be calculated using the same arithmetic as Arrays. The difference is that *you* don't have to know the index. The hash function computes it for you from the key itself.
+
+However, as a result Hash maps lose the ability to look up values by insertion order.
 
 ![Hashmaps use a hashing function to calculate the index based on the key.](./img/hashmap-memory.png)
 
@@ -110,76 +133,14 @@ When two different keys hash to the same location, a **collision** occurs. If th
 
 The decision usually comes down to one question: **does this problem need fast lookup by order/position, or does it need fast lookup by value?**
 
-| Need...                                    | Use...   |
-| ------------------------------------------ | -------- |
-| To access the 5th item                     | Array    |
-| To preserve insertion order                | Array    |
-| To check "have I seen this before?" fast   | Hash Map |
-| To count how many times something occurred | Hash Map |
-| To associate a value with a name/label     | Hash Map |
 
-### Comparison: Find the First Non-Repeating Character
-
-**The Problem**: Given a string, return the first character that appears only once. If every character repeats, return `null`.
-
-* `firstNonRepeating('aabbc')` → `'c'`
-* `firstNonRepeating('abcabc')` → `null`
-
-**Array-based approach (nested loop):**
-
-```js
-const firstNonRepeating = (str) => {
-  for (let i = 0; i < str.length; i++) {
-    let count = 0;
-    for (let j = 0; j < str.length; j++) {
-      if (str[i] === str[j]) count++;
-    }
-    if (count === 1) return str[i];
-  }
-  return null;
-};
-```
-
-**<details><summary>Q: What is the runtime of this solution? Use Big-O notation. </summary>**
-For every character, this re-scans the *entire* string to count occurrences — an O(n) operation nested inside another O(n) loop, making this **O(n²)**.
-</details>
-
-**Hash-map-based approach:**
-
-```js
-const firstNonRepeating = (str) => {
-  const counts = {};
-
-  // first pass: count every character
-  for (const char of str) {
-    counts[char] = (counts[char] || 0) + 1;
-  }
-
-  // second pass: find the first one with a count of 1
-  for (const char of str) {
-    if (counts[char] === 1) return char;
-  }
-
-  return null;
-};
-```
-
-**<details><summary>Q: What is the runtime of this solution?</summary>**
-This makes two full passes over the string — but each pass is O(n), and a hash map lookup/update is O(1), so the total is **O(n)**. Trading one nested loop for a hash map turned a quadratic solution into a linear one.
-</details>
-
-<details>
-
-<summary><strong>Q: Why does the hash map version need two separate passes instead of one?</strong></summary>
-
-On the first pass, you don't yet know the final count for a character — a character you've seen once so far might repeat later in the string. You need the *complete* counts before you can trust any of them, so counting (pass 1) and checking (pass 2) can't be collapsed into a single pass.
-
-</details>
-
-This is the first instance of a recurring thread within Data Structures & Algorithms: **the same problem, solved with two different structures, at two different costs.** You'll see this comparison again with Queues (array vs. linked list) and with tree search (BFS vs. DFS).
+| Operation                    | Array                    | Object/Hash Map |
+| ---------------------------- | ------------------------ | --------------- |
+| Insertion                    | O(1) but only at the end | O(1)            |
+| Search by Value              | O(n)                     | O(1)            |
+| Retrieval by Insertion Order | O(1)                     | Not Possible    |
 
 ## Sorted Array and Binary Search
-
 
 We saw that Hashmaps give us O(1) value lookups while Arrays give us O(n) lookups. Now, let's look at a way to improve the efficiency of searching an Array for a value. 
 
@@ -216,9 +177,19 @@ Binary Search is an algorithm that efficiently finds a target value using a **Di
 
 {% embed url="https://docs.google.com/presentation/d/1L5Ce4lsijELlFKor6KxjdmHumMeQm7wEwBJSv9UbZK8/embed?start=false&loop=false&delayms=3000" %}
 
-Each comparison eliminates half of the remaining search space which is called a **logarithmic runtime O(log n)**. To put that into context, for an array of a million elements, binary search needs at most ~20 comparisons.
+Each comparison eliminates half of the remaining search space which is called a **logarithmic runtime O(log n)**.
 
 ![O(log n) or "Logarithmic" runtime is the most efficient runtime. It is nearly as good as constant time.](./img/big-o.png)
+
+To put that into context, for an array of a million elements, binary search needs at most ~20 comparisons.
+
+{% hint style="info" %}
+💡 The logarithm operation is the opposite of an exponent. If you raise `2^10` you would get `1024`. In reverse, you can take the logarithm (base 2) of `1024` to get `10`.
+
+This is basically saying "how many times would you need to divide `1024` by `2` in order to reach `1`? `10` times!"
+{% endhint %}
+
+### Binary Search Challenge
 
 To implement this in code is an interesting exercise that you can try figuring out yourself. To help, here are a few questions to consider:
 1. What kind of iteration is best here, a `for` loop or a `while` loop?
@@ -259,6 +230,80 @@ const binarySearch = (sortedArr, target) => {
 Checking the middle element only tells you anything useful if you can trust that everything to its left is smaller and everything to its right is larger. That trust *is* the sorted invariant. Without it, finding a mismatch at the midpoint gives you no information about which half to search next — you'd have no choice but to check every element.
 
 </details>
+
+### Comparison: Find the First Non-Repeating Character
+
+**The Problem**: Given an array of characters, return the first character that appears only once. If every character repeats, return `null`.
+
+* `firstNonRepeating(['a', 'a', 'b', 'b', 'c'])` → `'c'`
+* `firstNonRepeating(['a', 'b', 'c', 'a', 'b', 'c'])` → `null`
+
+**<details><summary>Q: Before you start thinking about code, does this problem need fast lookup by order/position or fast lookup by value?</summary>**
+
+To solve this problem you need to know how many occurrences there are of each character. Then we want to look up that number based on the character, not based on its position. So, we want to use a Hashmap to solve this problem.
+
+```js
+{
+  a: 2,
+  b: 2,
+  c: 1
+}
+```
+
+</details>
+
+**Array-based approach (nested loop):**
+
+```js
+const firstNonRepeating = (arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    let count = 0;
+    for (let j = 0; j < arr.length; j++) {
+      if (arr[i] === arr[j]) count++;
+    }
+    if (count === 1) return arr[i];
+  }
+  return null;
+};
+```
+
+**<details><summary>Q: What is the runtime of this solution? Use Big-O notation. </summary>**
+For every character, this re-scans the *entire* array to count occurrences — an O(n) operation nested inside another O(n) loop, making this **O(n²)**.
+</details>
+
+**Hash-map-based approach:**
+
+```js
+const firstNonRepeating = (str) => {
+  const counts = {};
+
+  // first pass: count every character
+  for (const char of str) {
+    counts[char] = (counts[char] || 0) + 1;
+  }
+
+  // second pass: find the first one with a count of 1
+  for (const char of str) {
+    if (counts[char] === 1) return char;
+  }
+
+  return null;
+};
+```
+
+**<details><summary>Q: What is the runtime of this solution?</summary>**
+This makes two full passes over the string — but each pass is O(n), and a hash map lookup/update is O(1), so the total is **O(n)**. Trading one nested loop for a hash map turned a quadratic solution into a linear one.
+</details>
+
+<details>
+
+<summary><strong>Q: Why does the hash map version need two separate passes instead of one?</strong></summary>
+
+On the first pass, you don't yet know the final count for a character — a character you've seen once so far might repeat later in the string. You need the *complete* counts before you can trust any of them, so counting (pass 1) and checking (pass 2) can't be collapsed into a single pass.
+
+</details>
+
+This is the first instance of a recurring thread within Data Structures & Algorithms: **the same problem, solved with two different structures, at two different costs.** You'll see this comparison again with Queues (array vs. linked list) and with tree search (BFS vs. DFS).
 
 ## What's Next
 
