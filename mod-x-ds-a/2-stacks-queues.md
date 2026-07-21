@@ -134,7 +134,7 @@ A Queue has three basic operations:
 * `dequeue()` — removes the front element of the queue
 * `peek()` — look at the front element of the queue without removing it
 
-![A Queue is an Abstract Data Type with three operations: enqueue, dequeue, and peek](../.gitbook/assets/queue.png)
+![A Queue is an Abstract Data Type with three operations: enqueue, dequeue, and peek](./img/queue-diagram.png)
 
 This is more formally known as **FIFO**: **first in, first out** (the first person in line is the first person who gets served).
 
