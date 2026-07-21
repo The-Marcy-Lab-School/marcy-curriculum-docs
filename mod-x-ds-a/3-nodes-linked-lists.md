@@ -23,7 +23,7 @@
 
 By the end of this lesson, you should be able to answer these questions:
 
-1. Why can adding a value to a full Array be an expensive (O(n)) operation, even though `push` looks constant-time?
+1. What happens when you add a value to a full Array? What is the runtime of the `push` operation in this situation?
 2. What is a graph, and what do all graphs have in common?
 3. What is a node? What does the `head` of a linked list refer to? What does the `tail` refer to?
 4. What are the tradeoffs between linked lists and arrays?
@@ -42,17 +42,38 @@ By the end of this lesson, you should be able to answer these questions:
 * **Random Access** - the ability to access any element in a collection directly (e.g. by index), regardless of its position. Arrays support random access.
 * **Sequential Access** - the requirement to visit elements of a collection in order, starting from the beginning, to reach a given element. Linked lists only support sequential access.
 
-## Problem: What Happens When an Array Runs Out of Room?
+## Arrays: The Downsides of Contiguous Memory
 
-An Array's values live in **contiguous memory** — one right after another, with no gaps. That's exactly what makes indexed access O(1): the computer can calculate the address of `arr[3]` with simple arithmetic, because it knows every element is packed tightly next to the last.
+We've learned that an Array's values live in **contiguous memory** (one right after another, with no gaps). That's what makes insertion and indexed access O(1): the computer can calculate memory addresses with simple arithmetic.
 
-![Arrays store values in contiguous memory.](../.gitbook/assets/contiguous-memory-arrays.png)
+{% embed url="https://docs.google.com/presentation/d/11hsADA3LByJfqix8ZwmAx9yBW4-wl4aCe_vxpaYgg1w/embed?delayms=3000&loop=false&slide=id.p&start=false" %}
 
-But contiguous memory comes with a few downsides. Picture an Array that's been allocated a block of memory just big enough to hold its current values (let's say 4 values).
+But contiguous memory comes with two distinct downsides.
+1. Removing values from the beginning or middle is slow
+2. The Array must be moved to a larger block of memory when it fills up
 
-<details>
+**<details><summary>(1) What happens when you remove a value from the beginning of an Array (`array.shift()`) or from the middle of an Array (`array.splice()`)? What is the runtime of these operations?</summary>**
 
-<summary><strong>Q: What happens when you need to add a value to an Array that has no room left in its allocated block?</strong></summary>
+In order for Arrays to maintain O(1) retrieval, the Array's contents must:
+1. Be stored contiguously (no gaps between values)
+2. Have the first value in the first address
+
+As a result, removing values from anywhere other than the end of an Array requires the computer to shift all values forward to close the gaps:
+
+1. Values before the removed index remain in their original position
+2. Values after the removed index are shifted forward by 1
+
+While these are **O(n)** operations, they only have to happen at the moment a value is removed. Performing these removals in O(n) time allows future retrievals by index to run in O(1) time.
+
+**What would it look like if we didn't close the gaps?** 
+
+If we deleted the value at index `0` and did nothing else, then the first real value in the array would now live at index `1`. When calculating the position of any other value by position (e.g. `arr[3]`), we would need to remember to start at the second address. This is still constant time but it adds an additional piece of meta-data to track.
+
+However, if we also removed values from the middle of the Array, leaving gaps in the Array, we would no longer be able to reliably calculate the address of any value in the Array. We'd have to loop through the addresses and checking to see if a gap exists, making retrieval O(n).
+
+</details>
+
+**<details><summary>Q: Why do Arrays need to be moved to a larger block of memory when they fill up?</summary>**
 
 The new value can't simply be tacked onto the end — the memory address right after the array might already be occupied by something else entirely. So the runtime has to:
 
@@ -67,53 +88,19 @@ In practice, JavaScript engines soften this by over-allocating (grabbing more ro
 
 </details>
 
-Additionally, consider how indexing works when adding or removing values from anywhere but the end of the contiguous block of memory.
-
-<details>
-
-<summary><strong>Q: What happens when you need to remove a value from the beginning of an Array (<code>array.shift()</code> or from the middle of an Array (<code>array.splice()</code>)?</strong></summary>
-
-If we deleted the value at index `0` and did nothing else, then the first real value in the array would now live at index `1`. As a result, a previously easy operation to perform like "give me the 3rd value in the Array" would now require us to remember to start counting at `1` (not `0`) and go to index `3` (not `2`).
-
-But what if we also removed values from the middle of the Array? Tracking all gaps in the Array would increase the complexity of this operation to the point that we would need to essentially track every single index in the Array, making it an O(n) operation!
-
-Instead, removing a value from anywhere other than the end of an Array requires the runtime to shift all values forward to close the gap:
-
-1. Values before the removed index remain in their original position
-2. Values after the removed index are shifted forward by 1
-
-While that's also an **O(n)** operation in the worst case (removing the first value), this operation only has to happen at the moment a value is removed. Any future queries to find a value by index return to constant time.
-
-</details>
-
-<details>
-
-<summary><strong>Q: If you wanted a structure that could grow infinitely without being confined to a contiguous block of memory, what would you have to give up?</strong></summary>
-
-Without contiguous memory you would lose indexed access. If elements are allowed to live anywhere in memory instead of packed next to each other you'd lose the "calculate the address directly" trick that makes `arr[3]` instant, since there's no longer a predictable arithmetic relationship between an index and a memory address.
-
-This trade-off — give up contiguous memory (and the fast indexed access it buys you) in exchange for fast insertion — is exactly what a **Linked List** is built for.
-
-</details>
-
 ## Linked Lists and Nodes
 
-A **Linked List** is a way to structure data in memory as such that values can be placed anywhere in memory.
+A **Linked List** is an ordered collection of **Nodes** that each hold a data value and a `next` pointer. Since each node holds a pointer to the address of the next node, the nodes can be placed anywhere in memory.
 
-In order to maintain a sense of order, each memory address must store two data points:
-
-1. The value itself
-2. A pointer to the location of the next value
 
 ![A linked list is a collection of nodes that can be placed anywhere in memory.](../.gitbook/assets/linked-list-memory.png)
 
-Together, we call this value/pointer pairing a **node**. In other words, a Linked List is an "ordered list of linked nodes". A Linked List typically maintains a reference to the **head node** and the **tail node**.
+By keeping a reference to the **head node** and the **tail node**, a Linked List gets O(1) runtime for insertion at the front/end as well as removal from the front.
 
 ![A linked list is a collection of nodes with a single next pointer.](../.gitbook/assets/linked-list.png)
 
 ### Arrays vs. Linked Lists
 
-Arrays and Linked Lists are both ordered lists but differ in how that order is maintained. As a result of this, they are optimized to perform different kinds of operations:
 
 | Operation                   | Array                               | Linked List                                                                                            |
 | --------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -122,7 +109,7 @@ Arrays and Linked Lists are both ordered lists but differ in how that order is m
 | Insert/remove at the end    | O(1) (unless re-sizing is needed)   | O(1) insertion, O(n) removal                                                                           |
 | Insert/remove in the middle | O(n) — elements after have to shift | O(n) — traverse through the list until you find the node, then repoint `next` pointers around the node |
 
-Neither is "better" — they're solving for different operations.
+In the same way that we compare Arrays and Hashmaps, comparing Arrays and Linked Lists gives us a way to decide on the right data structure for the problem at hand. Neither is "better" — they're solving for different operations.
 
 * An Array optimizes for O(1) random access and insertion/removal at the end (except when re-sizing is needed). Arrays sacrifice O(n) insertion/removal at the front.
 * A Linked List optimizes for O(1) insertion/removal at the front and insertion at the end. Linked Lists sacrifice O(n) indexed access.
@@ -143,34 +130,51 @@ class Node {
     }
 }
 
-const nodeA = new Node("a");
-const nodeB = new Node("b");
-const nodeC = new Node("c");
-
 // Assembling a linked list by manually assigning next pointers
-nodeA.next = nodeB;
-nodeB.next = nodeC;
+let head = new Node("a");
+head.next = new Node("b");
+head.next.next = new Node("c");
 
-console.log(nodeA, nodeB, nodeC); // What do you expect to see?
+console.log(head); // What do you expect to see?
 ```
 
 With a `Node` class, we can now begin to think through the logic for some basic list manipulations:
+* Inserting at the tail
+* Removing the head
+* Inserting at the head
+* Removing the tail
+
+For each of these, consider: **what is the runtime complexity in Big-O notation?**
 
 {% embed url="https://docs.google.com/presentation/d/1k9Kr1BGxy5B6k2lhUrGc0lChPqsRhr_nmXNZra0Pnj8/embed?start=false&loop=false&delayms=3000" %}
 
-{% hint style="info" %}
-💡 In singly-linked lists, nodes just have a `next` pointer. In other types of graphs, nodes can have `prev`, `children`, or other pointers.
-{% endhint %}
+**<details><summary>Q: How does the runtime of adding/removing from the tail change with/without tracking a `tail` pointer?</summary>**
 
-### LinkedList Class
+Adding to the tail:
+* With a `tail` pointer, adding to the tail of the linked list is O(1). We just set the tails `next` pointer to the new node and update the `tail` to the new node.
+* Without a `tail` pointer, we have to traverse the linked list from the `head` to reach the tail before insertion. This is O(n).
 
-<details>
-
-<summary><strong>Q: What is the head of a linked list? What is the tail?</strong></summary>
-
-The `head` is the first node in the linked list — the entry point for traversing the rest of the list. The `tail` is the last node in the list, identifiable because its `next` pointer is `null`.
+Removing the tail:
+* Without a `tail` pointer, we have to traverse the linked list from the `head` to reach the *second-to-last* node and set its `next` pointer to `null`. This is O(n).
+* With a `tail` pointer, we still have to traverse since we don't have any other way to access the *second-to-last* node. So it is still O(n).
 
 </details>
+
+**<details><summary>Q: What would giving each Node a `prev` pointer enable us to do? What would the tradeoff be?</summary>**
+
+If each Node tracked the `prev` pointer, then removing the `tail` would become an O(1) operation with three steps:
+
+1. Get the second-to-last node: `tail.prev`
+2. Set it's `next` to `null`: `tail.prev.next = null`
+3. Reset the `tail` to point to that node: `tail = tail.prev`
+
+The tradeoff is that you have to store more data for each Node. If memory is not a concern, then adding a `prev` pointer is just upside if runtime efficiency is your primary concern.
+
+A Linked List with both a `next` and a `prev` pointer is called a **Doubly Linked List**
+
+</details>
+
+### LinkedList Class
 
 While the `Node` class manages pointers to subsequent nodes, the `LinkedList` itself holds only a reference to the `head` node, the `tail` node and methods for inserting, deleting, and traversing/searching the list.
 
@@ -612,13 +616,15 @@ class LinkedList {
 Recall that for Stacks and Queues are Abstract Data Types (ADTs) that describe operations for a list:
 
 * A Stack uses last in, first out (LIFO) order with the methods `push`, `pop`, and `peek`
-* A Stack uses first in, first out (FIFO) order with the methods `enqueue`, `dequeue`, and `peek`
+* A Queue uses first in, first out (FIFO) order with the methods `enqueue`, `dequeue`, and `peek`
 
 <details>
 
 <summary><strong>Q: Based on what you know now about the tradeoffs between Arrays and Linked Lists, would you use an Array or a Linked List to implement a Stack? What about a Queue?</strong></summary>
 
-An Array is optimized for insertions and removal at
+An Array is optimized for insertions and removal at the end. Since Queues need insertion at the end but removal at the front, Arrays aren't the best choice.
+
+Linked Lists on the other hand are optimized for insertion at the end (with a `tail` pointer) and removal from the front (just set `head = head.next`) making it a perfect choice for a Queue.
 
 </details>
 
