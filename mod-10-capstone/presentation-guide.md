@@ -35,9 +35,13 @@
 
 This guide will support you in planning the script and narrative for your presentation. All of the information/content that you are being asked to create through this guide should NOT live in the slides. Instead, this information/content should live in a script or on index cards while the slides serve as a high-level summary and reference for you and the audience while also providing engaging visual aides.
 
-Check out these slides from a previous Capstone presentation. Note that heavy use of visuals and the minimal text on each slide.
+Check out these slides from a previous Capstone presentation. Observe the strong use of visuals and the minimal text on each slide.
 
 {% embed url="https://docs.google.com/presentation/d/1r7gaARf8NjqZDH0PBMzOOmsE_wPjfnPhGDQmNVJzjuw/embed?start=false&loop=false&delayms=3000" %}
+
+{% hint style="info" %}
+💡 Note: these slides were from a prior fellowship year with a different format for presentations. Just take note of the manner in which the presentation is built, not the specific structure or sequence of information.
+{% endhint %}
 
 ## Presentation Structure
 
