@@ -133,6 +133,23 @@ Now, let's get to know the VS Code layout!
 
     ![Disable AI Features](../.gitbook/assets/vs-code-disable-ai-features.png)
 
+### Download Useful Extensions
+
+VS Code includes a number of features out-of-the-box but it also allows you to customize your experience with **extensions**. VS Code extensions let you add languages, debuggers, and tools to your installation to support your development workflow.
+
+You can browse and install extensions from within VS Code. Bring up the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of VS Code.
+
+![VS Code Extensions Icon](https://code.visualstudio.com/assets/docs/configure/extensions/extension-marketplace/extensions-view-icon.png)
+
+From the Extensions view you can search for and brose popular extensions.
+
+![Browse the VS Code Extensions Marketplace](https://code.visualstudio.com/assets/docs/configure/extensions/extension-marketplace/extensions-popular.png)
+
+Start by installing these extensions:
+
+* **Code Spell Checker** — spelling checker for source code
+* **Error Lens** — highlights errors directly in your code
+
 ### Download Node and NPM
 
 > Note: These instructions are based on Microsoft's documentation found [here](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-nvm-nodejs-and-npm).

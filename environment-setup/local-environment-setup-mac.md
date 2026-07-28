@@ -1,25 +1,26 @@
 # Local Environment Setup - Mac
 
-Today, we'll be setting up our local development environment for Mac. For the Windows instructions, see [here](local-environment-setup-windows.md).
+Today, we'll be setting up our local development environment for Mac. Click here for the [Windows instructions](local-environment-setup-windows.md).
 
 ## Table of Contents
 
-* [Table of Contents](local-environment-setup-mac.md#table-of-contents)
-* [Set up local `Development` directory](local-environment-setup-mac.md#set-up-local-development-directory)
-* [Download VS Code](local-environment-setup-mac.md#download-vs-code)
-  * [Familiarize yourself with VS Code](local-environment-setup-mac.md#familiarize-yourself-with-vs-code)
-  * [Configure VS Code](local-environment-setup-mac.md#configure-vs-code)
-* [Download Node and NPM](local-environment-setup-mac.md#download-node-and-npm)
-* [Write your first JavaScript program](local-environment-setup-mac.md#write-your-first-javascript-program)
+- [Table of Contents](#table-of-contents)
+- [Set up local `Development` directory](#set-up-local-development-directory)
+- [Download VS Code](#download-vs-code)
+  - [Familiarize yourself with VS Code](#familiarize-yourself-with-vs-code)
+  - [Configure VS Code](#configure-vs-code)
+  - [Download Useful Extensions](#download-useful-extensions)
+- [Download Node and NPM](#download-node-and-npm)
+- [Write your first JavaScript program](#write-your-first-javascript-program)
 
 ## Set up local `Development` directory
 
 First, let's get familiar with the **Terminal**. It's an application that you can use to manage your file system. At first, it may seem slow but you'll quickly learn how to use it and see how powerful it can be!
 
-1.  Open the Terminal application. You can do this via Spotlight Search (<kbd>Command+Spacebar</kbd>) and search for "Terminal". Once it opens, type in the `ls` command and hit <kbd>Enter</kbd>
+1. Open the Terminal application. You can do this via Spotlight Search (<kbd>Command+Spacebar</kbd>) and search for "Terminal". Once it opens, type in the `ls` command and hit <kbd>Enter</kbd>
 
     ![The list command shows the directories at the root (\~) of your file system](../.gitbook/assets/terminal-list.png)
-2.  Using your Terminal, create a folder structure where you can put all your Marcy Lab code by entering these commands, one at a time:
+2. Using your Terminal, create a folder structure where you can put all your Marcy Lab code by entering these commands, one at a time:
 
     ```sh
     ls                
@@ -49,9 +50,9 @@ While the Terminal can be used to manage files, we'll use VS Code to actually wr
 
 VS Code is a code editor we can use to edit files and write programs. First, make sure that you don't already have VS Code installed.
 
-* Search for Visual Studio Code on your computer. You can so this via Spotlight Search (Command+Spacebar) and type "Visual Studio Code":
+* Search for Visual Studio Code on your computer. You can so this via Spotlight Search (Command+Space) and type "Visual Studio Code":
 
-![](../.gitbook/assets/vs-code-spotlight.png)
+![VS Code Spotlight](../.gitbook/assets/vs-code-spotlight.png)
 
 If it shows up, then you can skip to the next section, [Familiarize yourself with VS Code](local-environment-setup-mac.md#familiarize-yourself-with-vs-code).
 
@@ -76,39 +77,56 @@ Now, let's get to know the VS Code layout!
 
 First, we'll add the very helpful `code` command which can quickly open up a VS Code window from the Terminal.
 
-1.  Open VS Code and open the Command Palette by typing Shift+Command+P (⇧⌘P). Then type 'shell command' to find the Shell Command: Install 'code' command in PATH command. Click it to install.
+1. Open VS Code and open the Command Palette by typing Shift+Command+P (⇧⌘P). Then type 'shell command' to find the Shell Command: Install 'code' command in PATH command. Click it to install.
 
     ![shell](../.gitbook/assets/shell.png)
-2.  If the Shell Command install was successful, you should see this pop-up in the bottom-right of your VS Code:
+2. If the Shell Command install was successful, you should see this pop-up in the bottom-right of your VS Code:
 
     ![installed](../.gitbook/assets/installed.png)
-3.  Test out that this worked by opening up your Terminal application
+3. Test out that this worked by opening up your Terminal application
 
     * Enter `cd ~` to switch to the root folder (\~).
     * Enter `ls` to see the directories at the root.
     * Enter `code Development` to open a new VS Code window rooted in the `~/Development/` folder
 
     Remember this `code` command in the future. It can be used to open up a VS Code window in whatever folder you choose!
-4.  Go to your settings (click on the cog in the bottom-left corner) and search for "save".
+4. Go to your settings (click on the cog in the bottom-left corner) and search for "save".
 
     * Set **Files: Auto Save** to **onFocusChange**
     * CHECK the checkbox for **Editor: Format On Save**
 
     ![Turn on Auto Save and Format on Save.](../.gitbook/assets/vs-code-save-settings.png)
-5.  Stay in your settings and search for "compact folders":
+5. Stay in your settings and search for "compact folders":
 
     * UNCHECK the checkbox for **Explorer: Compact Folders**.
 
     ![Turn off Compact Folders](../.gitbook/assets/vs-code-compact-folders.png)
-6.  Finally, in your settings search for "AI Features"
+6. Finally, in your settings search for "AI Features"
 
     * CHECK the checkbox for **Chat: Disable AI Features**.
 
     ![Disable AI Features](../.gitbook/assets/vs-code-disable-ai-features.png)
 
+### Download Useful Extensions
+
+VS Code includes a number of features out-of-the-box but it also allows you to customize your experience with **extensions**. VS Code extensions let you add languages, debuggers, and tools to your installation to support your development workflow.
+
+You can browse and install extensions from within VS Code. Bring up the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of VS Code.
+
+![VS Code Extensions Icon](https://code.visualstudio.com/assets/docs/configure/extensions/extension-marketplace/extensions-view-icon.png)
+
+From the Extensions view you can search for and brose popular extensions.
+
+![Browse the VS Code Extensions Marketplace](https://code.visualstudio.com/assets/docs/configure/extensions/extension-marketplace/extensions-popular.png)
+
+Start by installing these extensions:
+
+* **Code Spell Checker** — spelling checker for source code
+* **Error Lens** — highlights errors directly in your code
+
 ## Download Node and NPM
 
-1.  [Download Node from their website](https://nodejs.org/en/download). When you visit the site, it should detect your system settings and recommend the appropriate version. You should be able to use the commands below:
+1. [Download Node from their website](https://nodejs.org/en/download). When you visit the site, it should detect your system settings and recommend the appropriate version. You should be able to use the commands below:
 
     ```sh
     # Download and install nvm:
