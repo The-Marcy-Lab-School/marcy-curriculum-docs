@@ -1,20 +1,22 @@
 **Table of Contents:**
 - [Overview](#overview)
-- [How to Use This Guide](#how-to-use-this-guide)
-- [Presentation Structure](#presentation-structure)
-- [Part 2: Framing the Presentation: Problem \& Objective to Set Up Decisions and Impact](#part-2-framing-the-presentation-problem--objective-to-set-up-decisions-and-impact)
-- [Parts 3-5: Telling The Story of Your Residency](#parts-3-5-telling-the-story-of-your-residency)
-  - [Part 3: Product Decision-Making](#part-3-product-decision-making)
-  - [Part 4: Technical Decision-Making](#part-4-technical-decision-making)
-  - [Part 5a: Teamwork and Collaboration](#part-5a-teamwork-and-collaboration)
-  - [Part 5b: Planning and Documentation](#part-5b-planning-and-documentation)
-  - [Part 5c: Navigating Technical and Interpersonal Challenges](#part-5c-navigating-technical-and-interpersonal-challenges)
-- [Part 6: The Demo](#part-6-the-demo)
-  - [Should the Demo be Live or Recorded?](#should-the-demo-be-live-or-recorded)
-  - [Tips for Live Demo](#tips-for-live-demo)
-  - [Tips for Recording Demo](#tips-for-recording-demo)
-  - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
-- [Part 7: Q\&A](#part-7-qa)
+  - [How to Use This Guide](#how-to-use-this-guide)
+  - [Presentation Structure](#presentation-structure)
+- [Part-By-Part Guides](#part-by-part-guides)
+  - [Part 1: Team Introduction](#part-1-team-introduction)
+  - [Part 2: Framing the Presentation: Problem + Objective](#part-2-framing-the-presentation-problem--objective)
+  - [Parts 3-5: Telling The Story of Your Residency](#parts-3-5-telling-the-story-of-your-residency)
+    - [Part 3: Product Decision-Making](#part-3-product-decision-making)
+    - [Part 4: Technical Decision-Making](#part-4-technical-decision-making)
+    - [Part 5a: Teamwork and Collaboration](#part-5a-teamwork-and-collaboration)
+    - [Part 5b: Planning and Documentation](#part-5b-planning-and-documentation)
+    - [Part 5c: Navigating Technical and Interpersonal Challenges](#part-5c-navigating-technical-and-interpersonal-challenges)
+  - [Part 6: The Demo](#part-6-the-demo)
+    - [Should the Demo be Live or Recorded?](#should-the-demo-be-live-or-recorded)
+    - [Tips for Live Demo](#tips-for-live-demo)
+    - [Tips for Recording Demo](#tips-for-recording-demo)
+    - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
+  - [Part 7: Q\&A](#part-7-qa)
 
 
 ## Overview
@@ -31,7 +33,7 @@
 - Each team member must have a speaking role
 - Voting to decide on the final 4 presentations
 
-## How to Use This Guide
+### How to Use This Guide
 
 This guide will support you in planning the script and narrative for your presentation. All of the information/content that you are being asked to create through this guide should NOT live in the slides. Instead, this information/content should live in a script or on index cards while the slides serve as a high-level summary and reference for you and the audience while also providing engaging visual aides.
 
@@ -43,50 +45,61 @@ Check out these slides from a previous Capstone presentation. Observe the strong
 💡 Note: these slides were from a prior fellowship year with a different format for presentations. Just take note of the manner in which the presentation is built, not the specific structure or sequence of information.
 {% endhint %}
 
-## Presentation Structure
+### Presentation Structure
 
 The content below is required. It outlines all of the details that you are expected to speak on but you are free to craft a narrative structure that deviates from the path below if you feel that it more strongly conveys your story.
 
-**Part 1. Team & Roles** *[1 min]*
+**Part 1: Team Introduction** *[1 min]*
 
 - Who did what, and why the roles were split that way.
 - One sentence per person on what they owned.
 
-**Part 2. Problem & Objective** *[2 min]*
+**Part 2: Problem + Objective** *[2 min]*
 
 - Who has this problem, and what does it cost them today? Share your research or personal anecdotes to bring the problem to life.
 - What was your hypothesis? Before you wrote a line of code or thought about a product, what did you think was the solution to the problem you were seeing. Not “we thought that an app that takes attendance would improve learning” but “if students had stronger attendance, they would have stronger learning outcomes”
 - What was your specific objective? (e.g. not "build an app that takes attendance” but “improve learning outcomes by making it easier to take attendance”)
 
-**Part 3. Product Leader: Product Decision** *[2 min, STAR structure]*
+**Part 3: Product Leader: Product Decision** *[2 min, STAR structure]*
 
 - The single most important product trade-off you made
 - What you chose, what you gave up, and the rationale for the decision you made.
 
-**Part 4. Technical Lead(s): Technical Challenge** *[2 min, STAR structure]*
+**Part 4: Technical Lead(s): Technical Challenge** *[2 min, STAR structure]*
 
 - The single most important technical decision you made
 - What you chose, what you gave up, and the rationale for the decision you made.
 
-**Part 5. Scrum Master: Teamwork/Collaboration/Planning/Interpersonal Challenge and Growth** *[2 min, STAR structure]*
+**Part 5: Scrum Master: Teamwork/Collaboration/Planning/Interpersonal Challenge and Growth** *[2 min, STAR structure]*
 
 - Choose one of the following:
     - A description of your team’s approach to collaboration that supported the development of your application and an anecdote of *how* this approach made an impact.
     - A description of how your team used planning and documentation to support the development of your application and an anecdote of *how* this approach made an impact.
     - An anecdote that captures a critical interpersonal moment that your team had to move past in order to work more productively
 
-**Part 6. Demo** *[3 min]*
+**Part 6: Demo** *[3 min]*
 
 - Show the feature that most directly demonstrates the decision from slide 3 — not necessarily your flashiest feature.
 
-**Part 7. Q&A** *[3 min] (Be prepared to answer the questions below)*
+**Part 7: Q&A** *[3 min] (Be prepared to answer the questions below)*
 
 - What was unfamiliar going in (Python/FastAPI, AI tooling, whatever applies)? What was your actual process for learning and getting productive — concrete, not "I studied harder."
 - How did you use AI to speed up your development? What were examples where you had to push back on what AI gave you and tell it to create something else?
 - How would your approach be different if you were to do this project again knowing what you know now?
 - What would you build next if you had more time?
 
-## Part 2: Framing the Presentation: Problem & Objective to Set Up Decisions and Impact
+## Part-By-Part Guides
+
+### Part 1: Team Introduction
+
+Keep this short and simple:
+* Choose a nice picture for each team member
+* Include your name and role
+* Introduce yourselves and your project
+
+> *"Hello, my name is ___, .... and we are the creators of _____, an application built to tackle the challenge of ____."*
+
+### Part 2: Framing the Presentation: Problem + Objective
 
 What you are doing in this first section is setting up the entire presentation to answer, in this order:
 
@@ -109,7 +122,7 @@ If you find yourself narrating *what the code does* instead of *what you decided
 
 > *“Teachers had no way to know which students were falling behind mid-lesson and shy students weren’t willing to raise their hands when they had a question. We wanted to create a tool that would minimize any embarrassment of letting your classmates know you are behind while providing teachers with insight to support those students. Our hypothesis was that if a student could anonymously signal that they were struggling, and the teacher could see it in real time, teachers could provide a lesson that was targeted specifically to the needs of their classroom and shy students wouldn’t fall behind. So, we built a live lesson dashboard that makes it easier for teachers to track their students’ understanding in real time. Let’s look at how!”*
 
-## Parts 3-5: Telling The Story of Your Residency
+### Parts 3-5: Telling The Story of Your Residency
 
 Now that you have properly set up your audience to understand the problem, your objective, and your hypothesis, you can start telling the story of *how* you built an application to solve it.
 
@@ -121,7 +134,7 @@ You also don't need a dramatic story for every category. A quiet, specific momen
 
 For Part 5, choose one story but all members of the team should be prepared to share anecdotes from the other options during the Q&A
 
-### Part 3: Product Decision-Making
+#### Part 3: Product Decision-Making
 
 What you're proving: you understand the target audience and can prioritize the features that matter most to them and solve their problem
 
@@ -141,7 +154,7 @@ Prompts:
 > *“We were deciding between building an add-on app to Google Classroom or building a stand-alone learning management system. Ultimately, we considered the needs of our target audience (teachers who were looking for better insights into student performance) and determined that having to switch back and forth between the raw data in Google Classroom and the analysis in our application would introduce too much context switching that would distract from their goal. Our research on context switching as a detriment to analysis supported this decision.”*
 > 
 
-### Part 4: Technical Decision-Making
+#### Part 4: Technical Decision-Making
 
 What you're proving: you can weigh trade-offs, not just implement a spec someone handed you.
 
@@ -159,7 +172,7 @@ Prompts:
 > *“we needed the ability to send emails to our users through the application. The two leading options were an API called Resend and python’s built-in `smtp` library. Resend looked promising at first since all we would have to do is make an API call and Resend would handle the rest, however it required a registered domain which we would need to purchase. Looking into `smtp` revealed that we could send emails in a development environment without a problem, but we would need to a paid tier on our production hosting service Render in order to send emails. After weighing the costs, it turned out that purchasing a domain and using Render would be the cheaper and simpler option overall.”*
 > 
 
-### Part 5a: Teamwork and Collaboration
+#### Part 5a: Teamwork and Collaboration
 
 What you're proving: you can work *with* people, not just alongside them.
 
@@ -179,7 +192,7 @@ Prompts:
 > *“I couldn’t test the login feature because I was waiting for Reuben to finish the login endpoint. We used daily stand down updates which made it easy for me to share this blocker with Reuben who responded, asking for help. Since I had finished my ticket, I was free to support him and fix the bug in the endpoint. It turned out that the JSON wasn’t being parsed from the request body. Once the bug was fixed we were able to quickly test and ship the feature!”*
 > 
 
-### Part 5b: Planning and Documentation
+#### Part 5b: Planning and Documentation
 
 What you're proving: your team's success wasn't an accident — you can run a process.
 
@@ -199,7 +212,7 @@ Prompts:
 
 During Sprint 1, Priya and I had decided to work on the login feature but ended up both working on the backend endpoint. We’d both picked up overlapping tickets without realizing it and because our daily updates were vague, just ‘working on login’, so we didn’t catch it in time. After this mistake, as Scrum Master I made sure that future tickets had clearly assigned owners and that as a team we gave more detailed stand down updates. After this change we never made this mistake again!”*
 
-### Part 5c: Navigating Technical and Interpersonal Challenges
+#### Part 5c: Navigating Technical and Interpersonal Challenges
 
 What you're proving: you don't fall apart when things break — technically or between people.
 
@@ -221,7 +234,7 @@ Prompts:
 
 ---
 
-## Part 6: The Demo
+### Part 6: The Demo
 
 Just like the rest of the presentation, a strong demo keeps the problem that you’re trying to solve at it core. So, **before you do anything else, answer this:** what's the one thing this demo needs to prove, and what's the shortest path through the app that proves it? Everything else is optional and should probably be cut.
 
@@ -235,8 +248,6 @@ A useful test: if you only read the narration out loud, would it still make sens
 
 Three minutes is enough for one real user journey, told well — not enough for a full tour. Take one of your core user personas and build a demo around them:
 
-
-
 * **[0:00–0:20] Anchor it back to the problem.**         
   * One sentence connecting the demo to what you said in slides 1 and 3. "Remember the problem was X, and we decided to do Y — here's what that actually looks like.
 * **[0:20–2:20] Walk one real journey start to finish.** 
@@ -245,7 +256,7 @@ Three minutes is enough for one real user journey, told well — not enough for 
 * **[2:20–3:00] Land it.**                               
   * Show the actual outcome/result state, and say explicitly what it proves. Don't just end on a click — end on the screen that shows the problem is solved.
 
-### Should the Demo be Live or Recorded?
+#### Should the Demo be Live or Recorded?
 
 Both are fine. The choice should come down to how much your demo depends on things outside your control, not personal preference.
 
@@ -263,7 +274,7 @@ Both are fine. The choice should come down to how much your demo depends on thin
 
 **Regardless of which you pick: have a recorded backup ready to go.** Wifi drops, servers hiccup, laptops don't connect to the projector — none of that is a reflection of your work, but it will eat your 3 minutes if you don't have a fallback cued up. This isn't optional insurance, it's part of the deliverable.
 
-### Tips for Live Demo
+#### Tips for Live Demo
 
 - **Rehearse the exact path you'll click, more than once, on the actual machine/network you'll present on.** Not "I know the app" — the literal sequence of clicks, timed.
 - **Seed your data ahead of time.** Don't create a test user or fill out a form live unless that specific action is the point of the demo — it's dead time otherwise.
@@ -271,7 +282,7 @@ Both are fine. The choice should come down to how much your demo depends on thin
 - **Narrate slightly ahead of your clicks**, not after. "Now I'm going to submit this, which should trigger—" then click. Talking after the fact ("...and that's what just happened") reads as reactive and makes the room wait on you.
 - **Know your escape hatch.** Decide in advance what you'll say and do if it breaks. "Let me show you a recording of this same flow" said confidently costs you nothing.
 
-### Tips for Recording Demo
+#### Tips for Recording Demo
 
 - **Script the narration, don't improvise a voiceover.** A recorded demo with dead air or "umm, so here we're gonna..." reads worse than a live demo with minor imperfections, because the audience knows you had unlimited takes.
 - **Cut the dead time.** No sitting on a loading spinner, no waiting for a page to render. Edit around it, or speed it up.
@@ -279,7 +290,7 @@ Both are fine. The choice should come down to how much your demo depends on thin
 - **Keep it exactly to time.** A recorded demo has no excuse for running long — you had editing control. If it's 3:40, cut something before showcase day, not during it.
 - **Play it yourself in the room and narrate live over it if that fits your team**, rather than sitting silently while it plays — this keeps you actively presenting instead of just pressing play and stepping back.
 
-### Common Mistakes to Avoid
+#### Common Mistakes to Avoid
 
 - **Breadth over Depth.** Clicking through every page you built because you built it, with no throughline. If a viewer can't say what problem each screen solves, cut the screen.
 - **Silence while things load or while you click around deciding what to show next.** Dead air is more noticeable in a demo than anywhere else in the talk — you should know exactly what you're clicking before you click it.
@@ -287,7 +298,7 @@ Both are fine. The choice should come down to how much your demo depends on thin
 - **No connection back to the rest of the talk.** A demo that could be dropped into any other team's presentation without changing a word means it wasn't actually anchored to your specific problem and decision.
 - **Trying to cram in a second user role "just to show it works."** This is almost always the first thing to cut when you're over time — cut it before showcase day, not by rushing through it live.
 
-## Part 7: Q&A
+### Part 7: Q&A
 
 Be prepared to answer the following questions:
 
