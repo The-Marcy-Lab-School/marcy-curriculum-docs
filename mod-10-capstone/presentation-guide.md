@@ -124,7 +124,7 @@ If you find yourself narrating *what the code does* instead of *what you decided
 
 ### Parts 3-5: Telling The Story of Your Residency
 
-Now that you have properly set up your audience to understand the problem, your objective, and your hypothesis, you can start telling the story of *how* you built an application to solve it.
+Now that you have properly set up your audience to understand the problem, your objective, and your hypothesis, you can start telling the story of *how* you built an application to solve it. These stories should all tie back to the problem you are trying to solve and should convey clearly how each experience made a positive impact on your team’s ability to build an application that solves the problem. Lastly, these stories will give you an opportunity to show (not tell) your individual contribution on the project. In interviews, these stories will be an essential part of your toolkit for questions like "tell me about a time when you contributed to a team project".
 
 Below are five areas of your AI Residency experience that you should be prepared to speak on during your presentation and in interviews.
 
@@ -236,11 +236,13 @@ Prompts:
 
 ### Part 6: The Demo
 
+You’ve done all of the work to build up the anticipation for this moment. The audience understand the problem you are trying to solve, what motivated you to build it, and how you built it. Now is the payoff: you finally get to show them what you’ve built and they will understand exactly how and why you built it in this way.
+
 Just like the rest of the presentation, a strong demo keeps the problem that you’re trying to solve at it core. So, **before you do anything else, answer this:** what's the one thing this demo needs to prove, and what's the shortest path through the app that proves it? Everything else is optional and should probably be cut.
 
 A strong demo is *not* a tour of every single feature. Jumping around to various features will feel disconnected and will make it harder to see how your application solves the problem. This might mean that some bonus or peripheral features (like editing a profile) are skipped.
 
-Instead, take the perspective of your audience and plan a demo that shows how *they* would use the application and that highlights the ways in which it solves their problem.
+Instead, take the perspective of one of your core user personas (from the Product Spec Sheet) and plan a demo that shows how *they* would use the application in a way that highlights the ways in which it solves their problem.
 
 A useful test: if you only read the narration out loud, would it still make sense as a story? If the narration is just "and then I click here, and then this happens," you're demoing clicks, not a decision.
 
