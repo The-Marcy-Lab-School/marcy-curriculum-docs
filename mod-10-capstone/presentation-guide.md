@@ -12,7 +12,7 @@
     - [Part 5b: Planning and Documentation](#part-5b-planning-and-documentation)
     - [Part 5c: Navigating Technical and Interpersonal Challenges](#part-5c-navigating-technical-and-interpersonal-challenges)
   - [Part 6: The Demo](#part-6-the-demo)
-    - [Should the Demo be Live or Recorded?](#should-the-demo-be-live-or-recorded)
+    - [Live and Recorded Demos](#live-and-recorded-demos)
     - [Tips for Live Demo](#tips-for-live-demo)
     - [Tips for Recording Demo](#tips-for-recording-demo)
     - [Common Mistakes to Avoid](#common-mistakes-to-avoid)
@@ -258,23 +258,11 @@ Three minutes is enough for one real user journey, told well — not enough for 
 * **[2:20–3:00] Land it.**                               
   * Show the actual outcome/result state, and say explicitly what it proves. Don't just end on a click — end on the screen that shows the problem is solved.
 
-#### Should the Demo be Live or Recorded?
+#### Live and Recorded Demos
 
-Both are fine. The choice should come down to how much your demo depends on things outside your control, not personal preference.
+A live demo demonstrates confidence in the application and that you've spent the time to prepare. However, things can always go wrong — Wifi drops, servers hiccup, laptops don't connect to the projector, etc.
 
-**Lean recorded if:**
-
-- Your demo depends on real-time behavior that's hard to guarantee on cue (webhooks, third-party APIs, anything with network latency you don't control, timing-sensitive features).
-- You're worried about the room's wifi/AV setup, or you've had flaky behavior in rehearsal you haven't fully diagnosed.
-- You want tight control over pacing within the 3 minutes — recording lets you cut dead time in editing that you can't cut live.
-
-**Lean live if:**
-
-- The interactivity itself is part of what you're proving (e.g., showing you can handle an unexpected question or state change in the moment).
-- Your app is fast and stable enough that a live click-through won't have awkward waiting.
-- You want the credibility bump of the room seeing it's real, unedited, happening now.
-
-**Regardless of which you pick: have a recorded backup ready to go.** Wifi drops, servers hiccup, laptops don't connect to the projector — none of that is a reflection of your work, but it will eat your 3 minutes if you don't have a fallback cued up. This isn't optional insurance, it's part of the deliverable.
+So, **you are expected to be prepared for a live demo** *and* **have a recorded backup ready to go.** This isn't optional insurance, it's required.
 
 #### Tips for Live Demo
 
