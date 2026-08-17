@@ -68,7 +68,7 @@ _Note: these competencies often will overlap and support each other. For example
 
 <details>
 
-<summary><strong>1. Technical Communication: Clearly articulating the "what, how, and why" of technical decisions and product development to diverse audiences, from stakeholders to teammates.</strong></summary>
+<summary><strong>1. Technical Communication</strong>: Clearly articulating what you built, how you built it, and why to diverse audiences.</summary>
 
 As a software engineer, you must be able to communicate effectively for a variety of audiences: hiring managers, teammates, junior engineers, AI chatbots. Across the many domains in which you must be able to communicate effectively, the _what_, the _how_, and the _why_ and all three must be delivered with the utmost clarity:
 
@@ -93,7 +93,7 @@ The ability to communicate well improves team collaboration and instills confide
 
 <details>
 
-<summary><strong>2. Building Mental Models: Creating simplified abstractions of complex systems to focus on essential concepts, enabling faster learning and better problem-solving.</strong></summary>
+<summary><strong>2. Building Mental Models</strong>: Simplifying complex concepts such that they can be easily understood.</summary>
 
 Software engineering is full of complexity. Not only is there a vast scope of concepts, tools, and technologies to learn, any given software project can contain millions of lines of code, hundreds or more files, and dozens or more interdependent parts. To deal with this complexity, you need the ability to quickly build mental models for any topic.
 
@@ -117,7 +117,7 @@ Mental models also enable us to organize the great variety of concepts we must l
 
 <details>
 
-<summary><strong>3. Thinking in Systems: Analyzing how individual components and dependencies interact within a larger framework to design reliable, scalable, and maintainable software.</strong></summary>
+<summary><strong>3. Thinking in Systems</strong>: Analyzing how individual components interact with and depend on each other within a larger system.</summary>
 
 Any set of things that work together can be considered a system. Systems can range in scale from a simple algorithm to a complex, multi-layered application.
 
@@ -143,41 +143,45 @@ Systems-level thinking enables us to design, reason about, implement, and debug 
 
 <details>
 
-<summary><strong>4. Methodical Debugging: Applying a structured, methodical approach to identify root causes and implement comprehensive fixes rather than relying on guesswork.</strong></summary>
+<summary><strong>4. Methodical Problem Solving:</strong> Applying a structured, methodical approach to plan, implement, test, and debug, and refine code.</summary>
 
-Mental models may allow you “vibe-code” your way to a sloppily hacked-together application, but once things break, a real engineer will know how to follow a methodical approach to debug the problem, identify the root cause, and implement a fix. Randomly trying solutions or guessing at the root cause won’t cut it!
+Mental models may allow you “vibe-code” your way to a sloppily hacked-together application. However, once things break, a real engineer will know how to follow a methodical approach to debug the problem, identify the root cause, and implement a fix. Randomly trying solutions or guessing at the root cause won’t cut it! 
+
+Additionally, code that works today can still cause problems tomorrow if it isn't implemented with care. Experienced engineers will carefully plan before they code and then will review, refine, and refactor existing solutions to reduce redundancy, improve their efficiency, and improve readability.
 
 **Indicators**
 
-* Debugs with a structured approach instead of randomly trying fixes. (see [Problem Solving & Debugging Process](https://www.notion.so/Problem-Solving-Debugging-Process-262b1966ed7480b5842ed3d5c8d0b189?pvs=21) )
+* Makes a plan before implementing code
+* Can trace through code execution to understand program behavior.
+* Tests solutions comprehensively, ensuring edge cases are covered.
 * Reads error messages and test output carefully and investigates root causes.
 * Tries multiple strategies when initial approach fails.
 * Seeks to understand root causes rather than applying surface-level fixes.
-* Can trace through code execution to understand program behavior.
-* Tests solutions comprehensively, ensuring edge cases are covered.
+* Identifies areas where solutions can be improved to reduce redundancy, improve efficiency, or improve readability
 
-**Pitfalls:** frequently “guessing” at what the problem is without systematically finding the root, jumping into code without planning an approach first, ignoring error messages, not asking for help in a timely manner, giving up too quickly when the initial approach doesn’t work.
+**Pitfalls:** jumping into code without planning an approach first, frequently “guessing” at what the problem is without systematically finding the root,  ignoring error messages, not asking for help in a timely manner, giving up too quickly when the initial approach doesn’t work, accepting code that works without evaluating it's long-term effectiveness.
 
 </details>
 
 <details>
 
-<summary><strong>5. Detail Orientation: Taking professional pride in producing clean, well-documented code and error-free materials that adhere to industry best practices and team standards.</strong></summary>
+<summary><strong>5. Quality Discernment</strong>: Taking professional pride in producing high-quality software, documentation, and presentation materials while having a keen eye for what does not meet the bar.</summary>
 
-As a professional software engineer you are going to be working on a team. Therefore writing functional code is just the prerequisite. The quality of _how_ you code, communicate, and collaborate will be what distinguishes you from the crowd as an engineer that teams want to work with.
+Writing functional code is the prerequisite for being a professional Software Engineer. The quality of _how_ you code, communicate, and collaborate is what will distinguish you as an engineer that teams want to work with.
 
-Detail Orientation is about taking pride in every line of code you write and in every document that you produce.
+Quality Discernment is about taking pride in every line of code you write (or AI writes for you) and in every document and presentation that you produce.
 
 **Indicators**
 
 * Reads documentation and instructions thoroughly.
-* Writes clean, readable code that follows established style guides and coding conventions.
+* Writes clean, organized and readable code that follows established style guides and coding conventions.
 * Creates well-structured, error-free documentation, READMEs, and presentations
 * Double-checks work before submitting for review or presentation.
+* Reviews code generated by AI with a critical eye.
 * Proactively seeks feedback and implements learnings in subsequent work.
 * Follows git best practices
 
-**Pitfalls:** Submitting code that raises numerous linting flags and doesn’t adhere to known style guides. Creating documentation, technical writing, and technical presentations that are error-filled or contain typos or technical inaccuracies. Repeating the same mistakes without incorporating feedback.
+**Pitfalls:** Submitting code that raises numerous linting flags and doesn’t adhere to known style guides. Creating documentation, technical writing, and technical presentations that are error-filled or contain typos or technical inaccuracies. Repeating the same mistakes without incorporating feedback. Accepting AI-generated code without evaluating it carefully.
 
 </details>
 
