@@ -20,7 +20,7 @@
   * [How to Deploy on GitHub Pages](projects/5-deploying-vite-with-github-pages.md)
   * [How to Deploy on Render](projects/6-deploying-using-render.md)
   * [Agile Methodologies](projects/7-agile-methodologies.md)
-* [Prework](projects/README.md)
+* [Prework](./prework/README.md)
   * [Prework Project Overview](./prework/Overview.md)
   * [Project Structure](./prework/weekly-project-structure.md)
   * [Getting Help](./prework/getting-help.md)
