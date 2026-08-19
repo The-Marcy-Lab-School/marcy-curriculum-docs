@@ -6,17 +6,17 @@
 
 **Table of Contents**
 
-* [What is Scratch](Overview.md#what-is-scratch)
-* [Why Scratch?](Overview.md#why-scratch)
-* [What This Assignment Is Actually Measuring](Overview.md#what-this-assignment-is-actually-measuring)
-* [Timeline & Touch Points](Overview.md#timeline--touch-points)
-* [Core Build Requirements](Overview.md#core-build-requirements)
-* [Written Reflection (Submit with Final Project)](Overview.md#written-reflection-submit-with-final-project)
-* [Getting Started](Overview.md#getting-started)
-* [Managing Your Time on a Complex Project](Overview.md#managing-your-time-on-a-complex-project)
-  * [Sample Weekly Project Plan](Overview.md#sample-weekly-project-plan)
-* [Feeling Stuck and Where to Turn For Help](Overview.md#feeling-stuck-and-where-to-turn-for-help)
-* [Need More Information about Scratch?](Overview.md#need-more-information-about-scratch)
+- [Overview](#overview)
+  - [Why Scratch?](#why-scratch)
+  - [What This Assignment Is Actually Measuring](#what-this-assignment-is-actually-measuring)
+  - [Requirements and Deliverables](#requirements-and-deliverables)
+  - [Written Reflection (Submit with Final Project)](#written-reflection-submit-with-final-project)
+  - [Getting Started](#getting-started)
+- [Office Hours and Geekouts](#office-hours-and-geekouts)
+- [Resources for Managing Your Time and Getting Help](#resources-for-managing-your-time-and-getting-help)
+  - [Sample Weekly Project Plan](#sample-weekly-project-plan)
+  - [Feeling Stuck and Where to Turn For Help](#feeling-stuck-and-where-to-turn-for-help)
+  - [Need More Information about Scratch?](#need-more-information-about-scratch)
 
 ## Overview
 
