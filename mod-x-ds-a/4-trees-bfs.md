@@ -1,17 +1,17 @@
-# Trees & Breadth-First Search
+# 4. Trees & Breadth-First Search
 
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Problem: Fast Search *and* Fast Insert](#problem-fast-search-and-fast-insert)
-  - [Review: Binary Search in a Sorted Array](#review-binary-search-in-a-sorted-array)
-- [Tree Terminology](#tree-terminology)
-- [Binary Search Trees](#binary-search-trees)
-  - [Insert](#insert)
-  - [Search](#search)
-  - [When a BST Degrades to O(n)](#when-a-bst-degrades-to-on)
-- [Traversing a Tree: Breadth-First Search](#traversing-a-tree-breadth-first-search)
-  - [BFS Implementation](#bfs-implementation)
-  - [When to Use BFS](#when-to-use-bfs)
+* [Essential Questions](4-trees-bfs.md#essential-questions)
+* [Key Concepts](4-trees-bfs.md#key-concepts)
+* [Problem: Fast Search _and_ Fast Insert](4-trees-bfs.md#problem-fast-search-and-fast-insert)
+  * [Review: Binary Search in a Sorted Array](4-trees-bfs.md#review-binary-search-in-a-sorted-array)
+* [Tree Terminology](4-trees-bfs.md#tree-terminology)
+* [Binary Search Trees](4-trees-bfs.md#binary-search-trees)
+  * [Insert](4-trees-bfs.md#insert)
+  * [Search](4-trees-bfs.md#search)
+  * [When a BST Degrades to O(n)](4-trees-bfs.md#when-a-bst-degrades-to-on)
+* [Traversing a Tree: Breadth-First Search](4-trees-bfs.md#traversing-a-tree-breadth-first-search)
+  * [BFS Implementation](4-trees-bfs.md#bfs-implementation)
+  * [When to Use BFS](4-trees-bfs.md#when-to-use-bfs)
 
 ## Essential Questions
 
@@ -36,7 +36,7 @@ By the end of this lesson, you should be able to answer these questions:
 * **Binary Search Tree (BST)** - a binary tree with an ordering property: every node in a node's left subtree is smaller than it, and every node in its right subtree is larger.
 * **Breadth-First Search (BFS)** - a traversal algorithm that visits a tree level by level, using a Queue to keep track of which nodes to visit next.
 
-## Problem: Fast Search *and* Fast Insert
+## Problem: Fast Search _and_ Fast Insert
 
 **The Problem**: You need to maintain a growing collection of numbers, and support two operations quickly: checking whether a value exists, and inserting a new value.
 
@@ -61,13 +61,13 @@ A Linked List (with a `tail` pointer) has this exact same profile: appending is 
 
 ### Review: Binary Search in a Sorted Array
 
-Recall Binary Search from a couple lessons ago: if an Array is sorted, you can eliminate *half* of the remaining values at every single comparison instead of checking them one at a time
+Recall Binary Search from a couple lessons ago: if an Array is sorted, you can eliminate _half_ of the remaining values at every single comparison instead of checking them one at a time
 
-For a sorted Array of 1,000 values, Binary Search needs at most ~10 comparisons; for 1,000,000 values, only ~20. That's what makes it **O(log n)** instead of O(n).
+For a sorted Array of 1,000 values, Binary Search needs at most \~10 comparisons; for 1,000,000 values, only \~20. That's what makes it **O(log n)** instead of O(n).
 
 {% embed url="https://docs.google.com/presentation/d/1L5Ce4lsijELlFKor6KxjdmHumMeQm7wEwBJSv9UbZK8/embed?start=false&loop=false&delayms=3000" %}
 
-**But keeping the Array sorted has a cost.** A new value usually can't just be pushed onto the end anymore — it has to land in the correct spot to keep everything in order. Binary Search can *find* that spot in O(log n), but actually placing the value there means shifting every element after it over by one, to make room:
+**But keeping the Array sorted has a cost.** A new value usually can't just be pushed onto the end anymore — it has to land in the correct spot to keep everything in order. Binary Search can _find_ that spot in O(log n), but actually placing the value there means shifting every element after it over by one, to make room:
 
 So a sorted Array trades away the O(1) insert an unsorted Array had, in exchange for O(log n) search. Every option so far gives you one fast operation at the cost of the other:
 
@@ -82,7 +82,7 @@ This is exactly the gap a **Tree** fills — the first non-linear structure in t
 
 ## Tree Terminology
 
-![A tree.](./img/tree.jpeg)
+![A tree.](<../.gitbook/assets/tree (1).jpeg>)
 
 A Tree is a **hierarchical data structure** made of **nodes** connected by **edges**, arranged so that:
 
@@ -91,26 +91,30 @@ A Tree is a **hierarchical data structure** made of **nodes** connected by **edg
 * A node can have zero or more **children**.
 * Nodes with no children are called **leaves**.
 
-Two more terms describe *position* within the tree:
+Two more terms describe _position_ within the tree:
 
 * **Depth** — how far a node is from the root (the root itself has depth `0`).
 * **Height** — the longest path from a given node down to a leaf below it (a leaf has height `0`).
 
 Trees aren't only useful for fast search and insert — their branching shape also naturally models hierarchical data: an HTML document (`<html>` containing `<head>` and `<body>`, each containing more elements), a file system (folders containing files and other folders), or an org chart (a CEO managing directors, who each manage reports).
 
-**<details><summary>Q: Since Trees have Nodes and Edges, what Abstract Data Type can we classify them under?</summary>**
+<details>
+
+<summary><strong>Q: Since Trees have Nodes and Edges, what Abstract Data Type can we classify them under?</strong></summary>
 
 Trees are a type of Graph!
 
 </details>
 
-**<details><summary>Q: In a file system, what would the "root" be? What would a "leaf" be?</summary>**
+<details>
+
+<summary><strong>Q: In a file system, what would the "root" be? What would a "leaf" be?</strong></summary>
 
 The root would be the top-level directory (e.g. `/`). A leaf would be any file or empty folder — anything with nothing nested underneath it. A folder containing other folders/files would be an internal node (a parent with children, but not a leaf itself).
 
 </details>
 
-Most of this module focuses on a **Binary Tree** — a tree where every node has *at most two* children, conventionally called `left` and `right`:
+Most of this module focuses on a **Binary Tree** — a tree where every node has _at most two_ children, conventionally called `left` and `right`:
 
 ```js
 class BinaryTreeNode {
@@ -138,10 +142,11 @@ A **Binary Search Tree (BST)** is a Binary Tree with one additional rule, applie
       4   7 13
 ```
 
+The ordering rule is relative to _every_ ancestor, not just the immediate parent. For example, `6` only needs to be smaller than `8` to belong anywhere in `8`'s left subtree, and larger than `3` to belong in `3`'s right subtree. Both are true at once: `3 < 6 < 8`.
 
-The ordering rule is relative to *every* ancestor, not just the immediate parent. For example, `6` only needs to be smaller than `8` to belong anywhere in `8`'s left subtree, and larger than `3` to belong in `3`'s right subtree. Both are true at once: `3 < 6 < 8`.
+<details>
 
-**<details><summary>Q: Where would the value 9 be inserted? What about 5?</summary>**
+<summary><strong>Q: Where would the value 9 be inserted? What about 5?</strong></summary>
 
 `12` is greater than `8` so it would go in the right subtree. Since it is less than `10` and `10` has no left subtree, it would end up as the left leaf of the `10` node.
 
@@ -196,7 +201,7 @@ function insert(root, value) {
 
 <summary><strong>Q: Why does a new value always end up at a leaf position (as a new leaf), never in the middle of the tree?</strong></summary>
 
-At every node, the only two moves are "go left" or "go right" — there's no operation that inserts a node *between* an existing parent and child. So the search for where to place the new value always continues until it falls off the bottom of the tree (hits a `null`), which is by definition a new leaf position.
+At every node, the only two moves are "go left" or "go right" — there's no operation that inserts a node _between_ an existing parent and child. So the search for where to place the new value always continues until it falls off the bottom of the tree (hits a `null`), which is by definition a new leaf position.
 
 </details>
 
@@ -224,7 +229,7 @@ In a **balanced** BST (roughly the same number of nodes on the left and right of
 
 <summary><strong>Q: What happens to search time if you insert values in already-sorted order — 1, 2, 3, 4, 5 — into an empty BST?</strong></summary>
 
-Every value is larger than the one before it, so every new node becomes the *right* child of the previous one. The "tree" ends up as a single chain leaning entirely to the right — structurally identical to a Linked List:
+Every value is larger than the one before it, so every new node becomes the _right_ child of the previous one. The "tree" ends up as a single chain leaning entirely to the right — structurally identical to a Linked List:
 
 ```
 1
@@ -264,7 +269,7 @@ BFS on this tree visits: `8, 3, 10, 1, 6, 14`.
 
 <summary><strong>Q: You already built a data structure whose entire job is "keep track of what to process next, in the order it was discovered." Which one, and how might it help traverse level by level?</strong></summary>
 
-A **Queue**. If you enqueue a node's children right after visiting it, the Queue naturally keeps every node at the *current* level ahead of every node at the *next* level — because they were discovered (enqueued) first. Dequeuing in FIFO order automatically produces a level-by-level visit order, without ever having to track "which level am I on" explicitly.
+A **Queue**. If you enqueue a node's children right after visiting it, the Queue naturally keeps every node at the _current_ level ahead of every node at the _next_ level — because they were discovered (enqueued) first. Dequeuing in FIFO order automatically produces a level-by-level visit order, without ever having to track "which level am I on" explicitly.
 
 </details>
 

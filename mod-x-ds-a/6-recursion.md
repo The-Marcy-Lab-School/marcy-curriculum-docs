@@ -1,17 +1,18 @@
-# Recursion
+# 6. Recursion
 
 You've now built both BFS and DFS iteratively, using a Queue and a Stack you managed by hand. Recursion is a different way to get the same traversal behavior — one where the call stack does that bookkeeping for you, automatically.
 
-![](./img/recursion-is.png)
+![](../.gitbook/assets/recursion-is.png)
 
 **Table of Contents:**
-- [Essential Questions](#essential-questions)
-- [Key Concepts](#key-concepts)
-- [Problem: Triangle Sum](#problem-triangle-sum)
-- [Base Case \& Recursive Case](#base-case--recursive-case)
-- [The Recursive Process](#the-recursive-process)
-- [Challenge: Recursive DFS](#challenge-recursive-dfs)
-- [Recursion vs. Iteration](#recursion-vs-iteration)
+
+* [Essential Questions](6-recursion.md#essential-questions)
+* [Key Concepts](6-recursion.md#key-concepts)
+* [Problem: Triangle Sum](6-recursion.md#problem-triangle-sum)
+* [Base Case & Recursive Case](6-recursion.md#base-case--recursive-case)
+* [The Recursive Process](6-recursion.md#the-recursive-process)
+* [Challenge: Recursive DFS](6-recursion.md#challenge-recursive-dfs)
+* [Recursion vs. Iteration](6-recursion.md#recursion-vs-iteration)
 
 ## Essential Questions
 
@@ -65,8 +66,6 @@ triangleSum(4) = 4 + triangleSum(3) = 4 + (3 + 2 + 1)
 triangleSum(5) = 5 + triangleSum(4) = 5 + (4 + 3 + 2 + 1)
 ```
 
-<!-- [insert visual: staircase-of-squares progression showing tSum(1) through tSum(5) growing, from slides 6-7 of the old deck — a good candidate to split across several clickable slides showing the staircase grow one step at a time] -->
-
 <details>
 
 <summary><strong>Q: Based on the pattern above, how does `triangleSum(n)` relate to `triangleSum(n - 1)`?</strong></summary>
@@ -93,8 +92,6 @@ function triangleSum(n) {
   }
 }
 ```
-
-<!-- [insert visual: nested-boxes diagram showing X=5 containing X=4 containing X=3... from slide 9 of the old deck — pairs well with explaining what the call stack looks like mid-recursion] -->
 
 Each call to `triangleSum` is pushed onto the **call stack** and stays there — waiting on the result of the next call — until the base case is finally reached. Once the base case returns a real value, every waiting call resolves in reverse order, from the inside out.
 
@@ -163,7 +160,7 @@ function dfs(node) {
 1. The base case handles a `null` node — the recursion naturally stops once it walks off the bottom of the tree.
 2. The recursive case visits the current node, then calls `dfs` again on the left child and the right child — **trusting** that each of those calls already knows how to correctly traverse everything below it, the exact same way `triangleSum(n - 1)` trusted that a smaller version of itself was already solved.
 
-Compare this to the iterative version: there, you had to manually `push` and `pop` nodes from your own `Stack` to keep track of where to go next. Here, every call to `dfs` *is* a push onto the call stack, and every `return` is a pop — the recursion handles the exact bookkeeping you were previously doing by hand.
+Compare this to the iterative version: there, you had to manually `push` and `pop` nodes from your own `Stack` to keep track of where to go next. Here, every call to `dfs` _is_ a push onto the call stack, and every `return` is a pop — the recursion handles the exact bookkeeping you were previously doing by hand.
 
 </details>
 
@@ -171,7 +168,7 @@ Compare this to the iterative version: there, you had to manually `push` and `po
 
 <summary><strong>Q: This visits the node, then its left subtree, then its right subtree — which DFS ordering is that?</strong></summary>
 
-Pre-order traversal (node, then left, then right). Moving the `console.log(node.value)` line to *between* the two recursive calls gives you in-order; moving it *after* both gives you post-order — the position of "visit the node" relative to the recursive calls is the only thing that changes between the three orderings.
+Pre-order traversal (node, then left, then right). Moving the `console.log(node.value)` line to _between_ the two recursive calls gives you in-order; moving it _after_ both gives you post-order — the position of "visit the node" relative to the recursive calls is the only thing that changes between the three orderings.
 
 </details>
 
@@ -200,4 +197,4 @@ A recursive solution is an alternative to an iterative one — anything you can 
 
 Recall from the Stacks lesson that the call stack — the mechanism behind every function call — is itself a Stack. Recursive DFS is where that fact stops being trivia and starts mattering directly: the iterative version made you manage a `Stack` yourself; the recursive version is doing the exact same push/pop bookkeeping, just automatically, one call stack frame at a time.
 
-This is also why recursive DFS is a completely natural fit and recursive BFS is awkward and rarely used: DFS's "explore fully, then backtrack" behavior *is* LIFO order, which the call stack already gives you for free. BFS's "explore level by level" behavior is FIFO order — the opposite of what a call stack provides — which is exactly why BFS stayed married to an explicit Queue instead.
+This is also why recursive DFS is a completely natural fit and recursive BFS is awkward and rarely used: DFS's "explore fully, then backtrack" behavior _is_ LIFO order, which the call stack already gives you for free. BFS's "explore level by level" behavior is FIFO order — the opposite of what a call stack provides — which is exactly why BFS stayed married to an explicit Queue instead.
