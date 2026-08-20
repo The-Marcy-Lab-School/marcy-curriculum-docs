@@ -13,8 +13,7 @@
 - [Overview](#overview)
   - [Why Scratch?](#why-scratch)
   - [What This Assignment Is Actually Measuring](#what-this-assignment-is-actually-measuring)
-  - [Requirements and Deliverables](#requirements-and-deliverables)
-  - [Written Reflection (Submit with Final Project)](#written-reflection-submit-with-final-project)
+  - [Requirements, Deliverables, and Due Dates](#requirements-deliverables-and-due-dates)
   - [Getting Started](#getting-started)
 - [Office Hours and Geekouts](#office-hours-and-geekouts)
 - [Resources for Managing Your Time and Getting Help](#resources-for-managing-your-time-and-getting-help)
@@ -74,26 +73,16 @@ We also want you to be able to develop the essential skills needed to navigate c
 * Normalizing that getting stuck is an inherent part of programming and getting unstuck is a skill to practice
 * Shifting the conversation from _“I’m good at this vs. I’m bad at this”_ to _“Where am I in my learning journey and what is my next step?”_
 
-### Requirements and Deliverables
+### Requirements, Deliverables, and Due Dates
 
-Before you start building, keep in mind that your project must include **3 of the 4 requirements below**:
+Before you start building, keep in mind that your Scratch project must include **3 of the 4 requirements below**:
 
 * **At least two dynamic variables** (e.g., `score`, `time`, `balance`) that change while the program runs
 * **Conditional statements** (an `if/else` statement)
 * **At least two event triggers** (e.g. using Scratch's “When \[Flag] Clicked” block)
 * **A main execution loop** (e.g., `forever` or `repeat`)
 
-To ensure that you stay on track, there will be **three clear due dates and deliverables.** These deliverables are opportunities to demonstrate your **time and task management** and **communication.** If you're going to miss a checkpoint deadline, **message us before it's due, not after.** That single behavior tells us more about how you'll do in the fellowship than the deliverable content itself.\\
-
-**Deliverable Due Dates:**
-
-<table><thead><tr><th width="119.4375">Due</th><th>Deliverable</th></tr></thead><tbody><tr><td>Friday, Week 1</td><td>A short written description (a few sentences is fine): what you're planning to build and why. Doesn't need to be final — plans can change.</td></tr><tr><td>Friday, Week 2</td><td>A screenshot or short screen recording of your project so far, working or not. We want to see where you are, not a finished product.</td></tr><tr><td>Friday, Week 3</td><td>Your finished Scratch project + written reflection (below). Presented in person during Orientation Week.</td></tr></tbody></table>
-
-If you're stuck at any checkpoint — truly stuck, not just behind — reach out. Asking for help early is a skill, not a weakness, and we'd rather hear from you in week 1 than get silence until week 3.
-
-### Written Reflection (Submit with Final Project)
-
-As you build, reflect on the questions below. Then, when you are finished, write up your responses in your own words. There's no minimum length — a clear, honest paragraph beats a long and verbose one. This is a technical communication exercise as much as anything else.
+In addition, when you are finished, you will be asked to write up your responses to the questions below in your own words.
 
 1. **What did you build?**
 2. **Why did you build it?** (What made you choose this idea?)
@@ -103,7 +92,13 @@ As you build, reflect on the questions below. Then, when you are finished, write
 6. **Describe one bug or unexpected behavior you ran into, and how you figured out what was wrong.** (Every project has at least one of these — tell us about the process, not just the fix.)
 7. **What would you add if you had more time?**
 
-Your answers to these questions will support you as you share your project with your classmates in person during Orientation Week. Come ready to briefly walk someone through what you built, run it live, and answer questions about your reflection above — particularly the debugging story. Treat it like showing a project to a new coworker: assume they haven't seen it, and make it easy for them to follow what's happening and why.
+To ensure that you stay on track, there will be **three clear due dates and deliverables.** These deliverables are opportunities to demonstrate your **time and task management** and **communication.** If you're going to miss a checkpoint deadline, **message us before it's due, not after.** That single behavior tells us more about how you'll do in the fellowship than the deliverable content itself.\\
+
+**Deliverable Due Dates:**
+
+<table><thead><tr><th width="119.4375">Due</th><th>Deliverable</th></tr></thead><tbody><tr><td>Friday, Week 1</td><td>A short written description (a few sentences is fine): what you're planning to build and why. Doesn't need to be final — plans can change.</td></tr><tr><td>Friday, Week 2</td><td>A screenshot or short screen recording of your project so far, working or not. We want to see where you are, not a finished product.</td></tr><tr><td>Friday, Week 3</td><td>Your finished Scratch project + written reflection. Presented in person during Orientation Week.</td></tr></tbody></table>
+
+If you're stuck at any checkpoint — truly stuck, not just behind — reach out. Asking for help early is a skill, not a weakness, and we'd rather hear from you in week 1 than get silence until week 3.
 
 ### Getting Started
 
