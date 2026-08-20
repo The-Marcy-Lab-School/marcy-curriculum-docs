@@ -15,7 +15,7 @@
   - [What This Assignment Is Actually Measuring](#what-this-assignment-is-actually-measuring)
   - [Requirements, Deliverables, and Due Dates](#requirements-deliverables-and-due-dates)
   - [Getting Started](#getting-started)
-- [Office Hours and Geekouts](#office-hours-and-geekouts)
+- [Office Hours and Geekout!](#office-hours-and-geekout)
 - [Resources for Managing Your Time and Getting Help](#resources-for-managing-your-time-and-getting-help)
   - [Sample Weekly Project Plan](#sample-weekly-project-plan)
   - [Feeling Stuck and Where to Turn For Help](#feeling-stuck-and-where-to-turn-for-help)
@@ -111,16 +111,12 @@ If you've never used Scratch before, start here:
 * **Explore the Scratch Community:** https://scratch.mit.edu/explore/projects/all
 * **Find a YouTube Tutorial!** https://www.youtube.com/watch?v=zOa5o9Yq\_ZU
 
-## Office Hours and Geekouts
+## Office Hours and Geekout!
 
-To support you in completing this assignment, we will be hosting **three Zoom Office Hours** sessions and **three in-person “Geekouts”**
+To support you in completing this assignment, we will be hosting **three Zoom Office Hours** sessions and **one in-person “Geekout”**:
 
-* **Office hours will occur every Friday on Zoom**. They are times to receive direct support and attention for your instructors.
-* The **Geekouts will occur every Wednesday at Marcy**. They will serve the purpose of community building, sharing progress and excitement about the project with your classmates and instructors, and fostering collaboration and support between classmates.
-
-**Geek Out Schedule**
-
-<table><thead><tr><th width="127.9375">Touch Point</th><th width="119.4375">When</th><th width="108.54296875">Where</th><th>What's expected</th></tr></thead><tbody><tr><td><strong>Geek Out #1</strong></td><td>Wednesday, Week 1</td><td>In Person</td><td>Share some existing Scratch games you’ve found and enjoyed. Remix a project from the Scratch Community together in pairs. Meet your future classmates!</td></tr><tr><td><strong>Geek Out #2</strong></td><td>Wednesday, Week 2</td><td>In Person</td><td>Share your progress so far. Play around with each others’ projects and gather feedback about ideas for finishing it. If you are behind, get help with getting started.</td></tr><tr><td><strong>Geek Out #3</strong></td><td>Wednesday, Week 3</td><td>In Person</td><td>Get feedback about playability and brainstorm ideas to make your game better.</td></tr></tbody></table>
+* **Office Hours** are times to receive direct support and attention for your instructors. They will occur **every Friday on Zoom**.
+* A **"Geekout"** is an opportunity for community building, sharing progress and excitement about the project with your classmates and instructors, and fostering collaboration and support between classmates. The Geekout will take place on **Wednesday during the second week of Prework**.
 
 ## Resources for Managing Your Time and Getting Help
 
