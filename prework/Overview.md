@@ -1,8 +1,12 @@
 # Prework Project Overview
 
-**Duration:** 3 weeks
+**TLDR:**
+* **Duration:** 3 weeks
 
-**Format:** Independent build + written reflection + in-person presentation during Orientation Week
+* **Format:** Independent build + written reflection + in-person presentation during Orientation Week
+
+  - Create something using Scratch that reveals something about your interests, identity, community, or something you care about.
+  - Short presentation: What did you build? Why? What decisions did you make? What was challenging? What would you add with more time? 
 
 **Table of Contents**
 
@@ -31,7 +35,7 @@ What you build for this project is entirely up to you! For example you could bui
 * **A simulator** — a simple weather system, a traffic light, a vending machine, or a "virtual pet" whose stats change over time and based on user input
 * **A story or dialogue app** — multiple characters (sprites) that communicate via broadcasts, with a variable like "trust" or "mood" that shifts the story's direction
 
-You don't have to pick one of these — if you have your own idea that meets the requirements below, go for it!
+Then, we want to hear from you: **what did you build, how did you build it, and why did you choose this project?**
 
 ### Why Scratch?
 
