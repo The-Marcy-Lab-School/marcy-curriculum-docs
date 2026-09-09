@@ -56,7 +56,7 @@
   - [6. Polymorphism](mod-2-oop/6-polymorphism.md)
   - [7. Introduction to System Design & UML Diagrams](mod-2-oop/7-system-design-uml.md)
   - [8. System Design Strategies and Principles](mod-2-oop/8-system-design-strategies.md)
-  - [Case Study: Dragon Slayer](mod-2-oop/8-system-design-strategies.md)
+  - [Case Study: Dragon Slayer](mod-2-oop/case-study.md)
   - [Cheat Sheet](mod-2-oop/cheatsheet.md)
 - [Mod 3 - HTML & CSS](mod-3-html-css/README.md)
   - [Overview](mod-3-html-css/Overview.md)
